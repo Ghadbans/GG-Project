@@ -120,7 +120,12 @@ function parseMarketingContent(rawBrief) {
 /**
  * Agency-Grade Commercial Advertisement Flyer Generator (1080x1080 SVG)
  */
-function generateSvgFlyerBase64(copyOrHeadline, details = '', badge = 'SPECIAL OFFER', productImage = null) {
+function generateSvgFlyerBase64(copyOrHeadline, details = '', badge = 'SPECIAL OFFER', productImage = null, theme = 'villa', isFullFlyer = false) {
+  // If user uploaded a full finished flyer directly (ChatGPT / designer):
+  if (isFullFlyer && productImage && typeof productImage === 'string' && productImage.startsWith('data:image')) {
+    return productImage;
+  }
+
   let headline, subtitle, badgeText, badges;
   if (typeof copyOrHeadline === 'object' && copyOrHeadline !== null) {
     headline = copyOrHeadline.headline || 'PROMOTIONAL OFFER';
@@ -128,6 +133,8 @@ function generateSvgFlyerBase64(copyOrHeadline, details = '', badge = 'SPECIAL O
     badgeText = copyOrHeadline.badge || 'SPECIAL OFFER';
     badges = copyOrHeadline.badges || [];
     productImage = productImage || copyOrHeadline.productImage;
+    if (copyOrHeadline.theme) theme = copyOrHeadline.theme;
+    if (copyOrHeadline.isFullFlyer) isFullFlyer = copyOrHeadline.isFullFlyer;
   } else {
     const parsed = parseMarketingContent(copyOrHeadline);
     headline = parsed.headline;
@@ -136,32 +143,38 @@ function generateSvgFlyerBase64(copyOrHeadline, details = '', badge = 'SPECIAL O
     badges = parsed.badges;
   }
 
+  if (isFullFlyer && productImage && typeof productImage === 'string' && productImage.startsWith('data:image')) {
+    return productImage;
+  }
+
   const safeBadge = String(badgeText || 'SPECIAL OFFER').toUpperCase();
   const safeHeadline = String(headline || 'PREMIUM PROMOTION').toUpperCase().replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-  const safeSubtitle = String(subtitle || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  const safeSubtitle = String(subtitle || 'Strength, durability and precision for high-quality construction.').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
   let productSlotSvg = '';
   if (productImage && typeof productImage === 'string' && productImage.startsWith('data:image')) {
     productSlotSvg = `
-      <!-- Product Card Container -->
-      <rect x="80" y="240" width="920" height="430" rx="20" fill="#131c2e" stroke="#334155" stroke-width="2" filter="url(#dropShadow)"/>
+      <!-- Center 3D Showcase Pedestal -->
+      <ellipse cx="540" cy="635" rx="390" ry="48" fill="#000000" opacity="0.75" />
+      <ellipse cx="540" cy="600" rx="360" ry="42" fill="url(#pedestalGrad)" stroke="#f59e0b" stroke-width="2.5" />
+      <ellipse cx="540" cy="595" rx="280" ry="24" fill="#000000" opacity="0.85" filter="url(#dropShadow)" />
       
-      <!-- Backlight Radial Glow -->
-      <circle cx="540" cy="455" r="210" fill="url(#productGlow)"/>
-      
-      <!-- High-Res Product Image -->
-      <image href="${productImage}" x="110" y="260" width="860" height="390" preserveAspectRatio="xMidYMid meet" />
+      <!-- Overhead Spotlight -->
+      <ellipse cx="540" cy="560" rx="420" ry="220" fill="url(#overheadSpotlight)" />
+
+      <!-- Product Image Centered on Pedestal with Cast Shadow -->
+      <image href="${productImage}" x="180" y="270" width="720" height="340" preserveAspectRatio="xMidYMid meet" filter="url(#dropShadow)" />
     `;
   } else {
     productSlotSvg = `
-      <!-- Graphic Banner Container -->
-      <rect x="80" y="240" width="920" height="430" rx="20" fill="#131c2e" stroke="#334155" stroke-width="2" filter="url(#dropShadow)"/>
-      <circle cx="540" cy="455" r="230" fill="url(#productGlow)"/>
-      <rect x="390" y="320" width="300" height="150" rx="16" fill="#1e293b" stroke="#f59e0b" stroke-width="2"/>
-      <text x="540" y="380" font-family="'Montserrat', Arial, sans-serif" font-weight="900" font-size="28" fill="#f59e0b" text-anchor="middle">CERTIFIED QUALITY</text>
-      <text x="540" y="420" font-family="Arial, sans-serif" font-weight="600" font-size="18" fill="#94a3b8" text-anchor="middle">GLOBAL GATE STANDARDS</text>
-      <text x="540" y="530" font-family="'Montserrat', Arial, sans-serif" font-weight="800" font-size="32" fill="#ffffff" text-anchor="middle">BUILT TO ENDURE</text>
-      <text x="540" y="570" font-family="Arial, sans-serif" font-weight="500" font-size="20" fill="#cbd5e1" text-anchor="middle">Proven Performance in Mining &amp; Construction</text>
+      <!-- Center 3D Showcase Pedestal with Graphic Centerpiece -->
+      <ellipse cx="540" cy="635" rx="390" ry="48" fill="#000000" opacity="0.75" />
+      <ellipse cx="540" cy="600" rx="360" ry="42" fill="url(#pedestalGrad)" stroke="#f59e0b" stroke-width="2.5" />
+      <ellipse cx="540" cy="560" rx="420" ry="220" fill="url(#overheadSpotlight)" />
+
+      <rect x="360" y="460" width="360" height="130" rx="16" fill="#1e293b" stroke="#f59e0b" stroke-width="2" filter="url(#dropShadow)"/>
+      <text x="540" y="520" font-family="'Montserrat', Arial, sans-serif" font-weight="900" font-size="26" fill="#f59e0b" text-anchor="middle">CERTIFIED QUALITY</text>
+      <text x="540" y="555" font-family="Arial, sans-serif" font-weight="700" font-size="16" fill="#94a3b8" text-anchor="middle">GLOBAL GATE STANDARDS</text>
     `;
   }
 
@@ -173,107 +186,171 @@ function generateSvgFlyerBase64(copyOrHeadline, details = '', badge = 'SPECIAL O
 
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" viewBox="0 0 1080 1080">
     <defs>
-      <linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0%" stop-color="#0a101d"/>
-        <stop offset="50%" stop-color="#11192b"/>
-        <stop offset="100%" stop-color="#080c15"/>
+      <!-- Twilight Sky Gradient -->
+      <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#060b18"/>
+        <stop offset="40%" stop-color="#101a2f"/>
+        <stop offset="75%" stop-color="#251d38"/>
+        <stop offset="100%" stop-color="#3a2b38"/>
       </linearGradient>
+
+      <!-- Luxury Villa Window Glow -->
+      <linearGradient id="windowGlow" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="rgba(245, 158, 11, 0.45)"/>
+        <stop offset="50%" stop-color="rgba(251, 191, 36, 0.65)"/>
+        <stop offset="100%" stop-color="rgba(245, 158, 11, 0.35)"/>
+      </linearGradient>
+
+      <!-- Infinity Pool Water Gradient -->
+      <linearGradient id="poolGrad" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#0e7490"/>
+        <stop offset="50%" stop-color="#075985"/>
+        <stop offset="100%" stop-color="#082f49"/>
+      </linearGradient>
+
+      <!-- Polished Pedestal Disc Gradient -->
+      <linearGradient id="pedestalGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#222f46"/>
+        <stop offset="50%" stop-color="#151f32"/>
+        <stop offset="100%" stop-color="#0d1320"/>
+      </linearGradient>
+
+      <!-- Gold Accent Gradient -->
       <linearGradient id="goldGrad" x1="0" y1="0" x2="1" y2="0">
         <stop offset="0%" stop-color="#f59e0b"/>
         <stop offset="100%" stop-color="#fbbf24"/>
       </linearGradient>
-      <radialGradient id="productGlow" cx="50%" cy="50%" r="50%">
-        <stop offset="0%" stop-color="rgba(245, 158, 11, 0.22)"/>
-        <stop offset="50%" stop-color="rgba(56, 189, 248, 0.08)"/>
-        <stop offset="100%" stop-color="rgba(19, 28, 46, 0)"/>
+
+      <!-- Overhead Spotlight Radial Gradient -->
+      <radialGradient id="overheadSpotlight" cx="50%" cy="30%" r="60%">
+        <stop offset="0%" stop-color="rgba(255, 255, 255, 0.16)"/>
+        <stop offset="50%" stop-color="rgba(245, 158, 11, 0.08)"/>
+        <stop offset="100%" stop-color="rgba(0, 0, 0, 0)"/>
       </radialGradient>
+
+      <!-- Soft Drop Shadow Filter -->
       <filter id="dropShadow" x="-10%" y="-10%" width="120%" height="120%">
-        <feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#000000" flood-opacity="0.6"/>
+        <feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#000000" flood-opacity="0.65"/>
       </filter>
     </defs>
 
-    <!-- Deep Modern Slate Canvas -->
-    <rect width="1080" height="1080" fill="url(#bgGrad)"/>
-    <rect x="0" y="0" width="1080" height="14" fill="url(#goldGrad)"/>
+    <!-- 1. Architectural Dusk Sky Canvas -->
+    <rect width="1080" height="1080" fill="url(#skyGrad)"/>
+    <rect x="0" y="0" width="1080" height="12" fill="url(#goldGrad)"/>
 
-    <!-- Subtle Background Architecture Geometry -->
-    <circle cx="990" cy="180" r="320" fill="none" stroke="rgba(245, 158, 11, 0.08)" stroke-width="2"/>
-    <circle cx="990" cy="180" r="480" fill="none" stroke="rgba(56, 189, 248, 0.04)" stroke-width="1"/>
+    <!-- Evening Sky Stars -->
+    <circle cx="120" cy="80" r="1.5" fill="#ffffff" opacity="0.4"/>
+    <circle cx="310" cy="60" r="1.5" fill="#ffffff" opacity="0.4"/>
+    <circle cx="540" cy="95" r="1.5" fill="#ffffff" opacity="0.4"/>
+    <circle cx="780" cy="50" r="1.5" fill="#ffffff" opacity="0.4"/>
+    <circle cx="920" cy="110" r="1.5" fill="#ffffff" opacity="0.4"/>
 
-    <!-- Top Header: Brand & Badge -->
-    <g transform="translate(80, 50)">
-      <rect x="0" y="0" width="56" height="56" rx="14" fill="#1e293b" stroke="#f59e0b" stroke-width="2"/>
-      <text x="28" y="38" font-family="'Montserrat', 'Arial Black', sans-serif" font-weight="900" font-size="26" fill="#f59e0b" text-anchor="middle">GG</text>
-      <text x="74" y="28" font-family="'Montserrat', Arial, sans-serif" font-weight="900" font-size="28" fill="#ffffff" letter-spacing="3">GLOBAL GATE</text>
-      <text x="74" y="50" font-family="Arial, sans-serif" font-weight="700" font-size="13" fill="#94a3b8" letter-spacing="5">GENERAL SERVICES</text>
+    <!-- 2. Modernist Luxury Villa Architecture (Upper Cantilever Floor) -->
+    <rect x="360" y="190" width="660" height="140" rx="12" fill="#141c2b" stroke="#2d3b55" stroke-width="2"/>
+    <rect x="385" y="210" width="610" height="95" fill="url(#windowGlow)"/>
+
+    <!-- Vertical Architectural Window Mullions -->
+    <rect x="475" y="210" width="6" height="95" fill="#0f172a"/>
+    <rect x="565" y="210" width="6" height="95" fill="#0f172a"/>
+    <rect x="655" y="210" width="6" height="95" fill="#0f172a"/>
+    <rect x="745" y="210" width="6" height="95" fill="#0f172a"/>
+    <rect x="835" y="210" width="6" height="95" fill="#0f172a"/>
+    <rect x="925" y="210" width="6" height="95" fill="#0f172a"/>
+
+    <!-- Villa Lower Floor & Columns Pavilion -->
+    <rect x="440" y="330" width="580" height="120" fill="#0f172a"/>
+    <rect x="470" y="335" width="220" height="70" fill="rgba(251, 191, 36, 0.3)"/>
+    <rect x="480" y="330" width="18" height="120" fill="#1e293b"/>
+    <rect x="600" y="330" width="18" height="120" fill="#1e293b"/>
+    <rect x="740" y="330" width="18" height="120" fill="#1e293b"/>
+
+    <!-- Pool Terrace & Swimming Pool Water Reflections -->
+    <rect x="460" y="450" width="560" height="190" rx="14" fill="url(#poolGrad)"/>
+    <line x1="480" y1="480" x2="820" y2="480" stroke="rgba(56, 189, 248, 0.35)" stroke-width="2"/>
+    <line x1="540" y1="510" x2="960" y2="510" stroke="rgba(56, 189, 248, 0.35)" stroke-width="2"/>
+    <line x1="500" y1="540" x2="980" y2="540" stroke="rgba(56, 189, 248, 0.35)" stroke-width="2"/>
+    <line x1="580" y1="570" x2="970" y2="570" stroke="rgba(56, 189, 248, 0.35)" stroke-width="2"/>
+
+    <!-- Golden Light Reflection on Water -->
+    <line x1="560" y1="495" x2="760" y2="495" stroke="rgba(245, 158, 11, 0.28)" stroke-width="2"/>
+    <line x1="600" y1="525" x2="820" y2="525" stroke="rgba(245, 158, 11, 0.28)" stroke-width="2"/>
+
+    <!-- Stone Terrace Ground -->
+    <path d="M 0 440 L 460 440 L 460 660 L 0 660 Z" fill="#151d2d"/>
+
+    <!-- 3. Top Header: Brand & Badge -->
+    <g transform="translate(80, 42)">
+      <rect x="0" y="0" width="54" height="54" rx="12" fill="#1e293b" stroke="#f59e0b" stroke-width="2"/>
+      <text x="27" y="36" font-family="'Montserrat', 'Arial Black', sans-serif" font-weight="900" font-size="24" fill="#f59e0b" text-anchor="middle">GG</text>
+      <text x="70" y="26" font-family="'Montserrat', Arial, sans-serif" font-weight="900" font-size="26" fill="#ffffff" letter-spacing="2">GLOBAL GATE</text>
+      <text x="70" y="46" font-family="Arial, sans-serif" font-weight="700" font-size="12" fill="#94a3b8" letter-spacing="4">GENERAL SERVICES</text>
     </g>
 
     <!-- Badge Pill Top Right -->
-    <g transform="translate(710, 52)">
-      <rect x="0" y="0" width="290" height="50" rx="25" fill="#ef4444" filter="url(#dropShadow)"/>
-      <text x="145" y="32" font-family="'Montserrat', Arial, sans-serif" font-weight="900" font-size="19" fill="#ffffff" text-anchor="middle" letter-spacing="2">${safeBadge}</text>
+    <g transform="translate(720, 44)">
+      <rect x="0" y="0" width="280" height="50" rx="25" fill="#ef4444" filter="url(#dropShadow)"/>
+      <text x="140" y="32" font-family="'Montserrat', Arial, sans-serif" font-weight="900" font-size="18" fill="#ffffff" text-anchor="middle" letter-spacing="2">${safeBadge}</text>
     </g>
 
-    <!-- Main Headline with Angled Gold Bar -->
-    <rect x="80" y="145" width="8" height="58" fill="url(#goldGrad)" rx="4"/>
-    <text x="105" y="185" font-family="'Montserrat', 'Arial Black', sans-serif" font-weight="900" font-size="36" fill="#ffffff" letter-spacing="1">${safeHeadline.substring(0, 42)}</text>
-    <text x="105" y="218" font-family="Arial, sans-serif" font-weight="500" font-size="20" fill="#94a3b8">${safeSubtitle.substring(0, 80)}</text>
+    <!-- 4. Dynamic Headline & Subtitle Ribbon (Angled Slate Glass Bar) -->
+    <g transform="translate(80, 125)">
+      <rect x="0" y="0" width="920" height="85" rx="16" fill="rgba(15, 23, 42, 0.88)" stroke="#334155" stroke-width="1.5" filter="url(#dropShadow)"/>
+      <rect x="16" y="12" width="8" height="60" fill="url(#goldGrad)" rx="3"/>
+      <text x="40" y="40" font-family="'Montserrat', 'Arial Black', sans-serif" font-weight="900" font-size="32" fill="#ffffff" letter-spacing="1">${safeHeadline.substring(0, 42)}</text>
+      <text x="40" y="70" font-family="Arial, sans-serif" font-weight="500" font-size="18" fill="#94a3b8">${safeSubtitle.substring(0, 78)}</text>
+    </g>
 
-    <!-- Product Showcase Slot -->
+    <!-- 5. Center 3D Showcase Slot (Pedestal + Product Photo) -->
     ${productSlotSvg}
 
-    <!-- Callout Slogan Banner -->
-    <text x="540" y="705" font-family="'Montserrat', Arial, sans-serif" font-weight="800" font-size="22" fill="#f8fafc" text-anchor="middle">Not all products are created equal. <tspan fill="#f59e0b">Build with confidence.</tspan></text>
+    <!-- 6. Callout Slogan Banner -->
+    <text x="540" y="695" font-family="'Montserrat', Arial, sans-serif" font-weight="800" font-size="21" fill="#f8fafc" text-anchor="middle">Not all products are created equal. <tspan fill="#f59e0b">Build with confidence.</tspan></text>
 
-    <!-- 4 Value Badges (Agency Grid) -->
-    <g transform="translate(80, 725)">
+    <!-- 7. 4 Value Badges (Agency Grid) -->
+    <g transform="translate(80, 720)">
       <!-- Badge 1 -->
-      <rect x="0" y="0" width="215" height="110" rx="14" fill="#131c2e" stroke="#25334d" stroke-width="1.5"/>
-      <circle cx="107" cy="34" r="18" fill="#1e293b"/>
-      <text x="107" y="41" font-size="18" text-anchor="middle">💪</text>
-      <text x="107" y="72" font-family="'Montserrat', Arial, sans-serif" font-weight="800" font-size="15" fill="#ffffff" text-anchor="middle">${badge1.title}</text>
-      <text x="107" y="93" font-family="Arial, sans-serif" font-weight="500" font-size="12" fill="#94a3b8" text-anchor="middle">${badge1.sub}</text>
+      <rect x="0" y="0" width="215" height="105" rx="14" fill="#131c2e" stroke="#25334d" stroke-width="1.5"/>
+      <text x="107" y="34" font-size="18" text-anchor="middle">💪</text>
+      <text x="107" y="65" font-family="'Montserrat', Arial, sans-serif" font-weight="800" font-size="14" fill="#ffffff" text-anchor="middle">${badge1.title}</text>
+      <text x="107" y="86" font-family="Arial, sans-serif" font-weight="500" font-size="11" fill="#94a3b8" text-anchor="middle">${badge1.sub}</text>
 
       <!-- Badge 2 -->
-      <rect x="235" y="0" width="215" height="110" rx="14" fill="#131c2e" stroke="#25334d" stroke-width="1.5"/>
-      <circle cx="342" cy="34" r="18" fill="#1e293b"/>
-      <text x="342" y="41" font-size="18" text-anchor="middle">🛡️</text>
-      <text x="342" y="72" font-family="'Montserrat', Arial, sans-serif" font-weight="800" font-size="15" fill="#ffffff" text-anchor="middle">${badge2.title}</text>
-      <text x="342" y="93" font-family="Arial, sans-serif" font-weight="500" font-size="12" fill="#94a3b8" text-anchor="middle">${badge2.sub}</text>
+      <rect x="235" y="0" width="215" height="105" rx="14" fill="#131c2e" stroke="#25334d" stroke-width="1.5"/>
+      <text x="342" y="34" font-size="18" text-anchor="middle">🛡️</text>
+      <text x="342" y="65" font-family="'Montserrat', Arial, sans-serif" font-weight="800" font-size="14" fill="#ffffff" text-anchor="middle">${badge2.title}</text>
+      <text x="342" y="86" font-family="Arial, sans-serif" font-weight="500" font-size="11" fill="#94a3b8" text-anchor="middle">${badge2.sub}</text>
 
       <!-- Badge 3 -->
-      <rect x="470" y="0" width="215" height="110" rx="14" fill="#131c2e" stroke="#25334d" stroke-width="1.5"/>
-      <circle cx="577" cy="34" r="18" fill="#1e293b"/>
-      <text x="577" y="41" font-size="18" text-anchor="middle">📏</text>
-      <text x="577" y="72" font-family="'Montserrat', Arial, sans-serif" font-weight="800" font-size="15" fill="#ffffff" text-anchor="middle">${badge3.title}</text>
-      <text x="577" y="93" font-family="Arial, sans-serif" font-weight="500" font-size="12" fill="#94a3b8" text-anchor="middle">${badge3.sub}</text>
+      <rect x="470" y="0" width="215" height="105" rx="14" fill="#131c2e" stroke="#25334d" stroke-width="1.5"/>
+      <text x="577" y="34" font-size="18" text-anchor="middle">📏</text>
+      <text x="577" y="65" font-family="'Montserrat', Arial, sans-serif" font-weight="800" font-size="14" fill="#ffffff" text-anchor="middle">${badge3.title}</text>
+      <text x="577" y="86" font-family="Arial, sans-serif" font-weight="500" font-size="11" fill="#94a3b8" text-anchor="middle">${badge3.sub}</text>
 
       <!-- Badge 4 -->
-      <rect x="705" y="0" width="215" height="110" rx="14" fill="#131c2e" stroke="#25334d" stroke-width="1.5"/>
-      <circle cx="812" cy="34" r="18" fill="#1e293b"/>
-      <text x="812" y="41" font-size="18" text-anchor="middle">🏛️</text>
-      <text x="812" y="72" font-family="'Montserrat', Arial, sans-serif" font-weight="800" font-size="15" fill="#ffffff" text-anchor="middle">${badge4.title}</text>
-      <text x="812" y="93" font-family="Arial, sans-serif" font-weight="500" font-size="12" fill="#94a3b8" text-anchor="middle">${badge4.sub}</text>
+      <rect x="705" y="0" width="215" height="105" rx="14" fill="#131c2e" stroke="#25334d" stroke-width="1.5"/>
+      <text x="812" y="34" font-size="18" text-anchor="middle">🏛️</text>
+      <text x="812" y="65" font-family="'Montserrat', Arial, sans-serif" font-weight="800" font-size="14" fill="#ffffff" text-anchor="middle">${badge4.title}</text>
+      <text x="812" y="86" font-family="Arial, sans-serif" font-weight="500" font-size="11" fill="#94a3b8" text-anchor="middle">${badge4.sub}</text>
     </g>
 
-    <!-- Bottom Commercial Action Bar -->
-    <g transform="translate(80, 875)">
+    <!-- 8. Bottom Commercial Action Bar -->
+    <g transform="translate(80, 845)">
       <!-- Order Now Button -->
-      <rect x="0" y="0" width="280" height="74" rx="18" fill="url(#goldGrad)" filter="url(#dropShadow)"/>
-      <text x="140" y="46" font-family="'Montserrat', 'Arial Black', sans-serif" font-weight="900" font-size="24" fill="#0f172a" text-anchor="middle" letter-spacing="1">ORDER NOW!</text>
+      <rect x="0" y="0" width="275" height="74" rx="18" fill="url(#goldGrad)" filter="url(#dropShadow)"/>
+      <text x="137" y="46" font-family="'Montserrat', 'Arial Black', sans-serif" font-weight="900" font-size="24" fill="#0f172a" text-anchor="middle" letter-spacing="1">ORDER NOW!</text>
 
       <!-- WhatsApp Button -->
-      <rect x="305" y="0" width="370" height="74" rx="18" fill="#10b981" filter="url(#dropShadow)"/>
-      <text x="490" y="46" font-family="'Montserrat', Arial, sans-serif" font-weight="800" font-size="22" fill="#ffffff" text-anchor="middle">💬 0827722222</text>
+      <rect x="295" y="0" width="375" height="74" rx="18" fill="#10b981" filter="url(#dropShadow)"/>
+      <text x="482" y="46" font-family="'Montserrat', Arial, sans-serif" font-weight="800" font-size="22" fill="#ffffff" text-anchor="middle">💬 0827722222</text>
 
       <!-- Location Badge -->
-      <rect x="700" y="0" width="220" height="74" rx="18" fill="#1e293b" stroke="#334155" stroke-width="2"/>
-      <text x="810" y="34" font-family="Arial, sans-serif" font-weight="700" font-size="14" fill="#f59e0b" text-anchor="middle">📍 LOCATION</text>
-      <text x="810" y="56" font-family="'Montserrat', Arial, sans-serif" font-weight="800" font-size="15" fill="#ffffff" text-anchor="middle">KOLWEZI - DRC</text>
+      <rect x="690" y="0" width="230" height="74" rx="18" fill="#1e293b" stroke="#334155" stroke-width="1.5"/>
+      <text x="805" y="34" font-family="Arial, sans-serif" font-weight="bold" font-size="13" fill="#f59e0b" text-anchor="middle">📍 LOCATION</text>
+      <text x="805" y="56" font-family="'Montserrat', Arial, sans-serif" font-weight="800" font-size="15" fill="#ffffff" text-anchor="middle">KOLWEZI - DRC</text>
     </g>
 
     <!-- Corporate Footer Note -->
-    <text x="540" y="1000" font-family="Arial, sans-serif" font-weight="500" font-size="17" fill="#64748b" text-anchor="middle">Global Gate SARL • Kolwezi, Lualaba Province, DR Congo</text>
+    <text x="540" y="965" font-family="Arial, sans-serif" font-weight="500" font-size="16" fill="#64748b" text-anchor="middle">Global Gate SARL • Kolwezi, Lualaba Province, DR Congo</text>
   </svg>`;
 
   return `data:image/svg+xml;base64,${Buffer.from(svg).toString('base64')}`;
@@ -392,7 +469,7 @@ router.get('/flyer', (req, res) => {
  * POST /publish - Generate flyer and publish to Facebook and/or WhatsApp
  */
 router.post('/publish', verifyMarketingAccess, async (req, res) => {
-  const { brief, whatsappNumber, platforms = {}, productImage = null, previewOnly = false } = req.body;
+  const { brief, whatsappNumber, platforms = {}, productImage = null, previewOnly = false, theme = 'villa', isFullFlyer = false } = req.body;
 
   if (!brief || !String(brief).trim()) {
     return res.status(400).json({ success: false, error: 'Promotional brief is required.' });
@@ -416,6 +493,8 @@ router.post('/publish', verifyMarketingAccess, async (req, res) => {
         sendWhatsAppStatus,
         postToInstagram,
         productImage,
+        theme,
+        isFullFlyer,
         previewOnly
       }),
       signal: AbortSignal.timeout(60000)
@@ -473,6 +552,14 @@ router.post('/publish', verifyMarketingAccess, async (req, res) => {
 
     if (tempProductImagePath && fs.existsSync(tempProductImagePath)) {
       args.push(`--product-image=${tempProductImagePath}`);
+    }
+
+    if (theme) {
+      args.push(`--theme=${theme}`);
+    }
+
+    if (isFullFlyer) {
+      args.push('--full-flyer');
     }
 
     return execFile('node', args, { cwd: AGENT_DIR, timeout: 120000 }, (error, stdout, stderr) => {
@@ -556,7 +643,7 @@ router.post('/publish', verifyMarketingAccess, async (req, res) => {
   console.log('[Marketing] Running in remote environment. Generating agency-grade flyer...');
   try {
     const copyData = parseMarketingContent(brief);
-    const flyerBase64 = generateSvgFlyerBase64(copyData, '', copyData.badge, productImage);
+    const flyerBase64 = generateSvgFlyerBase64(copyData, '', copyData.badge, productImage, theme, isFullFlyer);
     const caption = copyData.caption;
 
     const svgBuffer = Buffer.from(flyerBase64.replace(/^data:image\/svg\+xml;base64,/, ''), 'base64');

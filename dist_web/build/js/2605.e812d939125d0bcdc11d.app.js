@@ -813,7 +813,26 @@ function PurchaseOrderInfoView() {
         fontSize: '20px',
         width: '100%'
       }
-    }, "PO-", String(row.outNumber).padStart(6, '0'), " ", row.IpRelated && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, " Reference: IP-", String(row.IpRelated.number).padStart(6, '0')))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("section", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, {
+    }, "PO-", String(row.outNumber).padStart(6, '0'), " ", row.IpRelated && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, " Reference: IP-", String(row.IpRelated.number).padStart(6, '0')))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("section", {
+      style: {
+        display: 'flex',
+        alignItems: 'center'
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, {
+      variant: "contained",
+      disableElevation: true,
+      onClick: handleOpenPrint2,
+      startIcon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_icons_material_LocalPrintshop__WEBPACK_IMPORTED_MODULE_37__/* ["default"] */ .A, null),
+      sx: {
+        bgcolor: '#30368a',
+        fontWeight: 'bold',
+        textTransform: 'none',
+        mr: 1,
+        '&:hover': {
+          bgcolor: '#1e2460'
+        }
+      }
+    }, "Print"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, {
       "aria-controls": open ? 'demo-customized-menu' : undefined,
       "aria-haspopup": "true",
       "aria-expanded": open ? 'true' : undefined,
@@ -854,14 +873,14 @@ function PurchaseOrderInfoView() {
         gap: '20px',
         color: 'gray'
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_icons_material_LocalPrintshop__WEBPACK_IMPORTED_MODULE_37__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "Print Without All")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_icons_material_LocalPrintshop__WEBPACK_IMPORTED_MODULE_37__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "Print Supplier Order (Qty Only / No Prices)")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
       onClick: handleOpenPrint2,
       sx: {
         display: 'flex',
         gap: '20px',
         color: 'gray'
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_icons_material_LocalPrintshop__WEBPACK_IMPORTED_MODULE_37__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "Print With All")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_icons_material_LocalPrintshop__WEBPACK_IMPORTED_MODULE_37__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "Print Full Order (With Prices & Totals)")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
       onClick: () => handleShow1(2)
     }, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
       style: {
@@ -933,166 +952,323 @@ function PurchaseOrderInfoView() {
         fontSize: '13px'
       }
     }, row.reference !== undefined && row.reference !== null ? row.reference.referenceName + ' ' + row.description : row.description))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("table", {
-      className: "firstTable",
       style: {
-        position: 'relative',
-        fontSize: '70%',
-        left: '83px',
-        marginBottom: '10px',
-        pageBreakInside: 'auto'
+        minWidth: "220px",
+        width: "38%",
+        fontSize: "11px",
+        borderCollapse: "collapse",
+        marginLeft: "auto",
+        marginBottom: "10px"
       }
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tbody", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
       style: {
-        backgroundColor: 'white',
-        border: 'none',
-        textAlign: 'left'
+        backgroundColor: "white",
+        border: "none",
+        textAlign: "left",
+        fontWeight: "bold",
+        padding: "2px 4px",
+        color: "#334155",
+        width: "45%"
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "Order #")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+    }, "Order #"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
       style: {
-        backgroundColor: 'white',
-        border: 'none',
-        textAlign: 'right'
+        backgroundColor: "white",
+        border: "none",
+        textAlign: "right",
+        fontWeight: "bold",
+        padding: "2px 4px",
+        width: "55%"
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "PO-", String(row.outNumber).padStart(6, '0')))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+    }, "PO-", String(row.outNumber).padStart(6, "0"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
       style: {
-        backgroundColor: 'white',
-        border: 'none',
-        textAlign: 'left'
+        backgroundColor: "white",
+        border: "none",
+        textAlign: "left",
+        fontWeight: "bold",
+        padding: "2px 4px",
+        color: "#334155"
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "Date")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+    }, "Date"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
       style: {
-        backgroundColor: 'white',
-        border: 'none',
-        textAlign: 'right'
+        backgroundColor: "white",
+        border: "none",
+        textAlign: "right",
+        padding: "2px 4px"
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, dayjs__WEBPACK_IMPORTED_MODULE_38___default()(row.itemOutDate).format('DD/MM/YYYY')))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+    }, dayjs__WEBPACK_IMPORTED_MODULE_38___default()(row.itemOutDate).format("DD/MM/YYYY"))), row.manufacturer ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
       style: {
-        backgroundColor: 'white',
-        border: 'none',
-        textAlign: 'left'
+        backgroundColor: "white",
+        border: "none",
+        textAlign: "left",
+        fontWeight: "bold",
+        padding: "2px 4px",
+        color: "#334155"
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "Manufacturer")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+    }, "Manufacturer"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
       style: {
-        backgroundColor: 'white',
-        border: 'none',
-        textAlign: 'right'
+        backgroundColor: "white",
+        border: "none",
+        textAlign: "right",
+        padding: "2px 4px"
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, row.manufacturer))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+    }, row.manufacturer)) : null, row.manufacturerNumber ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
       style: {
-        backgroundColor: 'white',
-        border: 'none',
-        textAlign: 'left'
+        backgroundColor: "white",
+        border: "none",
+        textAlign: "left",
+        fontWeight: "bold",
+        padding: "2px 4px",
+        color: "#334155"
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "Reference")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+    }, "Reference"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
       style: {
-        backgroundColor: 'white',
-        border: 'none',
-        textAlign: 'right'
+        backgroundColor: "white",
+        border: "none",
+        textAlign: "right",
+        padding: "2px 4px"
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, row.manufacturerNumber))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+    }, row.manufacturerNumber)) : null, row.reason ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
       style: {
-        backgroundColor: 'white',
-        border: 'none',
-        textAlign: 'left'
+        backgroundColor: "white",
+        border: "none",
+        textAlign: "left",
+        fontWeight: "bold",
+        padding: "2px 4px",
+        color: "#334155"
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "Subject")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+    }, "Subject"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
       style: {
-        backgroundColor: 'white',
-        border: 'none',
-        textAlign: 'right'
+        backgroundColor: "white",
+        border: "none",
+        textAlign: "right",
+        padding: "2px 4px"
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, row.reason)))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("section", {
+    }, row.reason)) : null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("section", {
       style: {}
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("table", {
       className: "secondTable",
       style: {
-        fontSize: '70%',
-        border: '1px solid #DDD'
+        width: "100%",
+        fontSize: "10px",
+        border: "1px solid #cbd5e1",
+        borderCollapse: "collapse"
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("th", {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", {
       style: {
-        width: '100px',
-        borderBottom: '1px solid #DDD',
-        backgroundColor: '#e8f7fe'
+        backgroundColor: "#f1f5f9"
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("th", {
+      style: {
+        width: "4%",
+        border: "1px solid #cbd5e1",
+        padding: "5px 4px",
+        textAlign: "center"
       }
     }, "#"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("th", {
       style: {
-        width: '150px',
-        borderBottom: '1px solid #DDD',
-        backgroundColor: '#e8f7fe'
-      },
-      align: "left"
+        width: "28%",
+        border: "1px solid #cbd5e1",
+        padding: "5px 4px",
+        textAlign: "left"
+      }
     }, "Item"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("th", {
       style: {
-        width: '400px',
-        borderBottom: '1px solid #DDD',
-        backgroundColor: '#e8f7fe'
-      },
-      align: "left"
-    }, "Description"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("th", {
-      style: {
-        width: '100px',
-        borderBottom: '1px solid #DDD',
-        backgroundColor: '#e8f7fe'
-      },
-      align: "left"
+        width: "8%",
+        border: "1px solid #cbd5e1",
+        padding: "5px 4px",
+        textAlign: "right"
+      }
     }, "Qty Need"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("th", {
       style: {
-        width: '100px',
-        borderBottom: '1px solid #DDD',
-        backgroundColor: '#e8f7fe'
-      },
-      align: "left"
-    }, "Qty Buy"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tbody", null, newArray2 === null || newArray2 === void 0 ? void 0 : newArray2.map((Item, i) => {
+        width: "8%",
+        border: "1px solid #cbd5e1",
+        padding: "5px 4px",
+        textAlign: "right"
+      }
+    }, "Qty Buy"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("th", {
+      style: {
+        width: "10%",
+        border: "1px solid #cbd5e1",
+        padding: "5px 4px",
+        textAlign: "right"
+      }
+    }, "Price($)"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("th", {
+      style: {
+        width: "13%",
+        border: "1px solid #cbd5e1",
+        padding: "5px 4px",
+        textAlign: "right"
+      }
+    }, "Amount Paid(FC)"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("th", {
+      style: {
+        width: "8%",
+        border: "1px solid #cbd5e1",
+        padding: "5px 4px",
+        textAlign: "right"
+      }
+    }, "Rate"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("th", {
+      style: {
+        width: "10%",
+        border: "1px solid #cbd5e1",
+        padding: "5px 4px",
+        textAlign: "right"
+      }
+    }, "Amount Paid($)"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("th", {
+      style: {
+        width: "11%",
+        border: "1px solid #cbd5e1",
+        padding: "5px 4px",
+        textAlign: "right"
+      }
+    }, "Total($)"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tbody", null, newArray2 === null || newArray2 === void 0 ? void 0 : newArray2.map((Item, i) => {
       var _Item$itemName2, _Item$itemName3;
       var relatedUnit = item.find(Item1 => {
         var _Item$itemName;
         return Item1._id === ((_Item$itemName = Item.itemName) === null || _Item$itemName === void 0 ? void 0 : _Item$itemName._id);
       });
+      var isBlankRow = Boolean(Item.newDescription && String(Item.newDescription).trim() !== "" && (!((_Item$itemName2 = Item.itemName) !== null && _Item$itemName2 !== void 0 && _Item$itemName2._id) || ((_Item$itemName3 = Item.itemName) === null || _Item$itemName3 === void 0 ? void 0 : _Item$itemName3.itemName) === "empty" || !Item.itemName || (typeof Item.itemName === "string" ? Item.itemName.trim() === "" : !Item.itemName.itemName)));
+      if (isBlankRow) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", {
+          key: Item.idRow || i
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+          style: {
+            textAlign: "center",
+            border: "1px solid #cbd5e1",
+            padding: "5px 4px"
+          }
+        }, i + 1), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+          colSpan: 8,
+          style: {
+            textAlign: "center",
+            fontWeight: "bold",
+            border: "1px solid #cbd5e1",
+            backgroundColor: "#f8f9fa",
+            padding: "5px 4px"
+          }
+        }, Item.newDescription));
+      }
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", {
-        key: Item.idRow
-      }, Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName._id && !Item.itemName.itemName))) ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(react__WEBPACK_IMPORTED_MODULE_2__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+        key: Item.idRow || i
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
         style: {
-          textAlign: 'center'
-        }
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, i + 1)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
-        colSpan: 6,
-        style: {
-          textAlign: 'center',
-          border: '1px solid #DDD'
-        },
-        align: "center"
-      }, Item.newDescription)) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(react__WEBPACK_IMPORTED_MODULE_2__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
-        style: {
-          textAlign: 'center',
-          width: '30px'
+          textAlign: "center",
+          border: "1px solid #cbd5e1",
+          padding: "5px 4px"
         }
       }, i + 1), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
         style: {
-          width: '200px',
-          borderLeft: '1px solid #DDD'
+          textAlign: "left",
+          border: "1px solid #cbd5e1",
+          padding: "5px 4px"
         }
-      }, typeof Item.itemName === 'object' ? ((_Item$itemName2 = Item.itemName) === null || _Item$itemName2 === void 0 ? void 0 : _Item$itemName2.itemName) !== 'empty' ? (_Item$itemName3 = Item.itemName) === null || _Item$itemName3 === void 0 ? void 0 : _Item$itemName3.itemName : '' : Item.itemName || ''), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
         style: {
-          textAlign: 'left',
-          width: '250px',
-          borderLeft: '1px solid #DDD',
-          textTransform: 'uppercase'
+          fontWeight: "600"
         }
-      }, Item.itemDescription ? String(Item.itemDescription).toUpperCase() : ''), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+      }, Item.itemName ? typeof Item.itemName === "object" ? Item.itemName.itemName && Item.itemName.itemName !== "empty" ? Item.itemName.itemName.toUpperCase() : "" : String(Item.itemName).toUpperCase() : ""), Item.itemDescription ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("div", {
         style: {
-          textAlign: 'right',
-          width: '30px',
-          borderLeft: '1px solid #DDD'
+          fontSize: "9px",
+          color: "#475569",
+          textTransform: "uppercase"
         }
-      }, Item.itemQty, " ", relatedUnit !== null && relatedUnit !== void 0 && relatedUnit.unit ? String(relatedUnit.unit).toUpperCase() : ''), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+      }, Item.itemDescription.toUpperCase(), " ", relatedUnit !== null && relatedUnit !== void 0 && relatedUnit.itemBrand ? "(".concat(relatedUnit.itemBrand.toUpperCase(), ")") : "") : null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
         style: {
-          textAlign: 'right',
-          width: '30px',
-          borderLeft: '1px solid #DDD'
+          textAlign: "right",
+          border: "1px solid #cbd5e1",
+          padding: "5px 4px"
         }
-      }, Item.qtyBuy)));
-    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tbody", null)))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tfoot", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("div", {
+      }, Item.itemQty, " ", relatedUnit !== null && relatedUnit !== void 0 && relatedUnit.unit ? String(relatedUnit.unit).toUpperCase() : ""), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+        style: {
+          textAlign: "right",
+          border: "1px solid #cbd5e1",
+          padding: "5px 4px",
+          fontWeight: "bold"
+        }
+      }, Item.qtyBuy, " ", relatedUnit !== null && relatedUnit !== void 0 && relatedUnit.unit ? String(relatedUnit.unit).toUpperCase() : ""), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+        style: {
+          textAlign: "right",
+          border: "1px solid #cbd5e1",
+          padding: "5px 4px"
+        }
+      }, "$", Item.itemRate !== undefined ? parseFloat(Item.itemRate).toLocaleString(undefined, {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 2
+      }) : "0"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+        style: {
+          textAlign: "right",
+          border: "1px solid #cbd5e1",
+          padding: "5px 4px"
+        }
+      }, "FC", Item.totalAmountFC !== undefined ? parseFloat(Item.totalAmountFC).toLocaleString() : "0"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+        style: {
+          textAlign: "right",
+          border: "1px solid #cbd5e1",
+          padding: "5px 4px"
+        }
+      }, Item.Taux !== undefined ? parseFloat(Item.Taux).toLocaleString() : "0"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+        style: {
+          textAlign: "right",
+          border: "1px solid #cbd5e1",
+          padding: "5px 4px",
+          fontWeight: "600"
+        }
+      }, "$", Item.totalAmount !== undefined ? parseFloat(Item.totalAmount).toLocaleString(undefined, {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 2
+      }) : "0"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+        style: {
+          textAlign: "right",
+          border: "1px solid #cbd5e1",
+          padding: "5px 4px",
+          fontWeight: "bold"
+        }
+      }, "$", Item.fcConvertToUsdTotal !== undefined ? parseFloat(Item.fcConvertToUsdTotal).toLocaleString(undefined, {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 2
+      }) : "0"));
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tfoot", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", {
+      style: {
+        backgroundColor: "#f8fafc",
+        fontWeight: "bold"
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+      colSpan: 5,
+      style: {
+        border: "1px solid #cbd5e1",
+        padding: "6px 8px",
+        textAlign: "right"
+      }
+    }, "Total"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+      style: {
+        border: "1px solid #cbd5e1",
+        padding: "6px 8px",
+        textAlign: "right"
+      }
+    }, "FC", row.totalFC !== undefined ? parseFloat(row.totalFC).toLocaleString() : "0"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+      style: {
+        border: "1px solid #cbd5e1",
+        padding: "6px 8px",
+        textAlign: "center"
+      }
+    }, "-"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+      style: {
+        border: "1px solid #cbd5e1",
+        padding: "6px 8px",
+        textAlign: "right"
+      }
+    }, "$", row.total !== undefined ? parseFloat(row.total).toLocaleString(undefined, {
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 2
+    }) : "0"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+      style: {
+        border: "1px solid #cbd5e1",
+        padding: "6px 8px",
+        textAlign: "right"
+      }
+    }, "$", row.totalUSD !== undefined ? parseFloat(row.totalUSD).toLocaleString(undefined, {
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 2
+    }) : "0")))))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tfoot", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("div", {
       style: {
         position: 'relative',
         marginTop: '20px'
@@ -1152,75 +1328,98 @@ function PurchaseOrderInfoView() {
         fontSize: '13px'
       }
     }, row.reference !== undefined && row.reference !== null ? row.reference.referenceName + ' ' + row.description : row.description))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("table", {
-      className: "firstTable",
       style: {
-        position: 'relative',
-        fontSize: '70%',
-        left: '83px',
-        marginBottom: '10px',
-        pageBreakInside: 'auto'
+        minWidth: "220px",
+        width: "38%",
+        fontSize: "11px",
+        borderCollapse: "collapse",
+        marginLeft: "auto",
+        marginBottom: "10px"
       }
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tbody", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
       style: {
-        backgroundColor: 'white',
-        border: 'none',
-        textAlign: 'left'
+        backgroundColor: "white",
+        border: "none",
+        textAlign: "left",
+        fontWeight: "bold",
+        padding: "2px 4px",
+        color: "#334155",
+        width: "45%"
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "Order #")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+    }, "Order #"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
       style: {
-        backgroundColor: 'white',
-        border: 'none',
-        textAlign: 'right'
+        backgroundColor: "white",
+        border: "none",
+        textAlign: "right",
+        fontWeight: "bold",
+        padding: "2px 4px",
+        width: "55%"
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "PO-", String(row.outNumber).padStart(6, '0')))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+    }, "PO-", String(row.outNumber).padStart(6, "0"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
       style: {
-        backgroundColor: 'white',
-        border: 'none',
-        textAlign: 'left'
+        backgroundColor: "white",
+        border: "none",
+        textAlign: "left",
+        fontWeight: "bold",
+        padding: "2px 4px",
+        color: "#334155"
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "Date")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+    }, "Date"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
       style: {
-        backgroundColor: 'white',
-        border: 'none',
-        textAlign: 'right'
+        backgroundColor: "white",
+        border: "none",
+        textAlign: "right",
+        padding: "2px 4px"
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, dayjs__WEBPACK_IMPORTED_MODULE_38___default()(row.itemOutDate).format('DD/MM/YYYY')))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+    }, dayjs__WEBPACK_IMPORTED_MODULE_38___default()(row.itemOutDate).format("DD/MM/YYYY"))), row.manufacturer ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
       style: {
-        backgroundColor: 'white',
-        border: 'none',
-        textAlign: 'left'
+        backgroundColor: "white",
+        border: "none",
+        textAlign: "left",
+        fontWeight: "bold",
+        padding: "2px 4px",
+        color: "#334155"
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "Manufacturer")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+    }, "Manufacturer"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
       style: {
-        backgroundColor: 'white',
-        border: 'none',
-        textAlign: 'right'
+        backgroundColor: "white",
+        border: "none",
+        textAlign: "right",
+        padding: "2px 4px"
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, row.manufacturer))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+    }, row.manufacturer)) : null, row.manufacturerNumber ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
       style: {
-        backgroundColor: 'white',
-        border: 'none',
-        textAlign: 'left'
+        backgroundColor: "white",
+        border: "none",
+        textAlign: "left",
+        fontWeight: "bold",
+        padding: "2px 4px",
+        color: "#334155"
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "Reference")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+    }, "Reference"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
       style: {
-        backgroundColor: 'white',
-        border: 'none',
-        textAlign: 'right'
+        backgroundColor: "white",
+        border: "none",
+        textAlign: "right",
+        padding: "2px 4px"
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, row.manufacturerNumber))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+    }, row.manufacturerNumber)) : null, row.reason ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
       style: {
-        backgroundColor: 'white',
-        border: 'none',
-        textAlign: 'left'
+        backgroundColor: "white",
+        border: "none",
+        textAlign: "left",
+        fontWeight: "bold",
+        padding: "2px 4px",
+        color: "#334155"
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "Subject")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+    }, "Subject"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
       style: {
-        backgroundColor: 'white',
-        border: 'none',
-        textAlign: 'right'
+        backgroundColor: "white",
+        border: "none",
+        textAlign: "right",
+        padding: "2px 4px"
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, row.reason)))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("section", {
+    }, row.reason)) : null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("section", {
       style: {}
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("table", {
       className: "secondTable",
@@ -1437,75 +1636,98 @@ function PurchaseOrderInfoView() {
         fontSize: '13px'
       }
     }, row.reference !== undefined && row.reference !== null ? row.reference.referenceName + ' ' + row.description : row.description))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("table", {
-      className: "firstTable",
       style: {
-        position: 'relative',
-        fontSize: '70%',
-        left: '83px',
-        marginBottom: '10px',
-        pageBreakInside: 'auto'
+        minWidth: "220px",
+        width: "38%",
+        fontSize: "11px",
+        borderCollapse: "collapse",
+        marginLeft: "auto",
+        marginBottom: "10px"
       }
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tbody", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
       style: {
-        backgroundColor: 'white',
-        border: 'none',
-        textAlign: 'left'
+        backgroundColor: "white",
+        border: "none",
+        textAlign: "left",
+        fontWeight: "bold",
+        padding: "2px 4px",
+        color: "#334155",
+        width: "45%"
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "Order #")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+    }, "Order #"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
       style: {
-        backgroundColor: 'white',
-        border: 'none',
-        textAlign: 'right'
+        backgroundColor: "white",
+        border: "none",
+        textAlign: "right",
+        fontWeight: "bold",
+        padding: "2px 4px",
+        width: "55%"
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "PO-", String(row.outNumber).padStart(6, '0')))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+    }, "PO-", String(row.outNumber).padStart(6, "0"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
       style: {
-        backgroundColor: 'white',
-        border: 'none',
-        textAlign: 'left'
+        backgroundColor: "white",
+        border: "none",
+        textAlign: "left",
+        fontWeight: "bold",
+        padding: "2px 4px",
+        color: "#334155"
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "Date")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+    }, "Date"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
       style: {
-        backgroundColor: 'white',
-        border: 'none',
-        textAlign: 'right'
+        backgroundColor: "white",
+        border: "none",
+        textAlign: "right",
+        padding: "2px 4px"
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, dayjs__WEBPACK_IMPORTED_MODULE_38___default()(row.itemOutDate).format('DD/MM/YYYY')))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+    }, dayjs__WEBPACK_IMPORTED_MODULE_38___default()(row.itemOutDate).format("DD/MM/YYYY"))), row.manufacturer ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
       style: {
-        backgroundColor: 'white',
-        border: 'none',
-        textAlign: 'left'
+        backgroundColor: "white",
+        border: "none",
+        textAlign: "left",
+        fontWeight: "bold",
+        padding: "2px 4px",
+        color: "#334155"
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "Manufacturer")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+    }, "Manufacturer"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
       style: {
-        backgroundColor: 'white',
-        border: 'none',
-        textAlign: 'right'
+        backgroundColor: "white",
+        border: "none",
+        textAlign: "right",
+        padding: "2px 4px"
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, row.manufacturer))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+    }, row.manufacturer)) : null, row.manufacturerNumber ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
       style: {
-        backgroundColor: 'white',
-        border: 'none',
-        textAlign: 'left'
+        backgroundColor: "white",
+        border: "none",
+        textAlign: "left",
+        fontWeight: "bold",
+        padding: "2px 4px",
+        color: "#334155"
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "Reference")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+    }, "Reference"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
       style: {
-        backgroundColor: 'white',
-        border: 'none',
-        textAlign: 'right'
+        backgroundColor: "white",
+        border: "none",
+        textAlign: "right",
+        padding: "2px 4px"
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, row.manufacturerNumber))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+    }, row.manufacturerNumber)) : null, row.reason ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
       style: {
-        backgroundColor: 'white',
-        border: 'none',
-        textAlign: 'left'
+        backgroundColor: "white",
+        border: "none",
+        textAlign: "left",
+        fontWeight: "bold",
+        padding: "2px 4px",
+        color: "#334155"
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "Subject")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+    }, "Subject"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
       style: {
-        backgroundColor: 'white',
-        border: 'none',
-        textAlign: 'right'
+        backgroundColor: "white",
+        border: "none",
+        textAlign: "right",
+        padding: "2px 4px"
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, row.reason)))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("section", {
+    }, row.reason)) : null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("section", {
       style: {
         position: 'relative',
         float: 'right',

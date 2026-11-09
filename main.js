@@ -315,7 +315,7 @@ const fs = require('fs');
 const { execFile } = require('child_process');
 
 ipcMain.handle('run-marketing', async (event, payload) => {
-  const { brief, whatsappNumber, platforms = {}, productImage = null, previewOnly = false } = payload || {};
+  const { brief, whatsappNumber, platforms = {}, productImage = null, previewOnly = false, theme = 'villa', isFullFlyer = false } = payload || {};
   const agentDir = 'C:\\Users\\GG\\fb-whatsapp-agent';
   const agentScript = path.join(agentDir, 'agent.js');
   const flyerPath = path.join(agentDir, 'generated_flyer.png');
@@ -372,6 +372,14 @@ ipcMain.handle('run-marketing', async (event, payload) => {
 
   if (tempProductImagePath && fs.existsSync(tempProductImagePath)) {
     args.push(`--product-image=${tempProductImagePath}`);
+  }
+
+  if (theme) {
+    args.push(`--theme=${theme}`);
+  }
+
+  if (isFullFlyer) {
+    args.push('--full-flyer');
   }
 
   const waCount = String(whatsappNumber || '').split(/[,;]+/).filter((s) => s.trim()).length;

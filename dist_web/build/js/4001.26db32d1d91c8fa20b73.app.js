@@ -2338,51 +2338,66 @@ function PurchaseOrderViewAdmin() {
       fontSize: '13px'
     }
   }, itemPurchaseView.reference !== undefined && itemPurchaseView.reference !== null ? itemPurchaseView.reference.referenceName : itemPurchaseView.description))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("table", {
-    className: "firstTable",
     style: {
-      position: 'relative',
-      fontSize: '70%',
-      left: '83px',
-      marginBottom: '10px',
-      pageBreakInside: 'auto'
+      minWidth: '220px',
+      width: '38%',
+      fontSize: '11px',
+      borderCollapse: 'collapse',
+      marginLeft: 'auto',
+      marginBottom: '10px'
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tbody", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     style: {
       backgroundColor: 'white',
       border: 'none',
-      textAlign: 'left'
+      textAlign: 'left',
+      fontWeight: 'bold',
+      padding: '2px 4px',
+      color: '#334155',
+      width: '45%'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "Order #")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+  }, "Order #"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     style: {
       backgroundColor: 'white',
       border: 'none',
-      textAlign: 'right'
+      textAlign: 'right',
+      fontWeight: 'bold',
+      padding: '2px 4px',
+      width: '55%'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "PO-0", itemPurchaseView.outNumber))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+  }, "PO-", String(itemPurchaseView.outNumber).padStart(6, '0'))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     style: {
       backgroundColor: 'white',
       border: 'none',
-      textAlign: 'left'
+      textAlign: 'left',
+      fontWeight: 'bold',
+      padding: '2px 4px',
+      color: '#334155'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "Date")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+  }, "Date"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     style: {
       backgroundColor: 'white',
       border: 'none',
-      textAlign: 'right'
+      textAlign: 'right',
+      padding: '2px 4px'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, dayjs__WEBPACK_IMPORTED_MODULE_43___default()(itemPurchaseView.itemOutDate).format('DD/MM/YYYY')))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+  }, dayjs__WEBPACK_IMPORTED_MODULE_43___default()(itemPurchaseView.itemOutDate).format('DD/MM/YYYY'))), itemPurchaseView.reason ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     style: {
       backgroundColor: 'white',
       border: 'none',
-      textAlign: 'left'
+      textAlign: 'left',
+      fontWeight: 'bold',
+      padding: '2px 4px',
+      color: '#334155'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "Subject")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+  }, "Subject"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     style: {
       backgroundColor: 'white',
       border: 'none',
-      textAlign: 'right'
+      textAlign: 'right',
+      padding: '2px 4px'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, itemPurchaseView.reason)))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("section", {
+  }, itemPurchaseView.reason)) : null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("section", {
     style: {}
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("table", {
     className: "secondTable",

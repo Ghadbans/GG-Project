@@ -116,6 +116,8 @@ function MarketingViewAdmin() {
   const [whatsappNumber, setWhatsappNumber] = useState('');
   const [productImage, setProductImage] = useState(null);
   const [productImageName, setProductImageName] = useState('');
+  const [theme, setTheme] = useState('villa'); // 'villa' | 'corporate' | 'industrial' | 'solar'
+  const [isFullFlyer, setIsFullFlyer] = useState(false);
   const [targetPlatforms, setTargetPlatforms] = useState({
     facebook: true,
     whatsapp: true,
@@ -402,6 +404,8 @@ function MarketingViewAdmin() {
       brief: brief.trim(),
       whatsappNumber: buildWhatsappNumbers(),
       productImage: productImage || null,
+      theme,
+      isFullFlyer,
       previewOnly: true,
       platforms: {
         facebook: targetPlatforms.facebook,
@@ -484,6 +488,8 @@ function MarketingViewAdmin() {
       brief: brief.trim(),
       whatsappNumber: buildWhatsappNumbers(),
       productImage: productImage || null,
+      theme,
+      isFullFlyer,
       previewOnly: false,
       platforms: {
         facebook: targetPlatforms.facebook,
@@ -680,11 +686,81 @@ function MarketingViewAdmin() {
                       sx={{ mb: 2.5, backgroundColor: '#ffffff' }}
                     />
 
+                    {/* Flyer Mode Toggle & Architectural Theme Selector */}
+                    <Box sx={{ mb: 2.5, p: 2, backgroundColor: '#f8fafc', borderRadius: 2, border: '1px solid #e2e8f0' }}>
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            checked={isFullFlyer}
+                            onChange={(e) => {
+                              setIsFullFlyer(e.target.checked);
+                              setPreviewGenerated(false);
+                              setResult(null);
+                            }}
+                            sx={{ color: '#f59e0b', '&.Mui-checked': { color: '#f59e0b' } }}
+                          />
+                        }
+                        label={
+                          <Box>
+                            <Typography variant="body2" sx={{ fontWeight: 700, color: '#0f172a' }}>
+                              🎨 Ready-Made Flyer Mode (Upload from ChatGPT / Designer)
+                            </Typography>
+                            <Typography variant="caption" sx={{ color: '#64748b' }}>
+                              When enabled, your uploaded image is published 100% full-bleed directly without re-compositing.
+                            </Typography>
+                          </Box>
+                        }
+                        sx={{ alignItems: 'flex-start', mb: isFullFlyer ? 0 : 1.5 }}
+                      />
+
+                      {!isFullFlyer && (
+                        <Box sx={{ mt: 1 }}>
+                          <Typography variant="subtitle2" sx={{ fontWeight: 600, color: '#475569', mb: 1 }}>
+                            🏛️ Architectural 3D Scene Theme:
+                          </Typography>
+                          <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
+                            <Chip
+                              label="🏡 Luxury Modern Villa"
+                              clickable
+                              color={theme === 'villa' ? 'primary' : 'default'}
+                              variant={theme === 'villa' ? 'filled' : 'outlined'}
+                              onClick={() => { setTheme('villa'); setPreviewGenerated(false); setResult(null); }}
+                              sx={{ fontWeight: 600 }}
+                            />
+                            <Chip
+                              label="🏢 Corporate Plaza"
+                              clickable
+                              color={theme === 'corporate' ? 'primary' : 'default'}
+                              variant={theme === 'corporate' ? 'filled' : 'outlined'}
+                              onClick={() => { setTheme('corporate'); setPreviewGenerated(false); setResult(null); }}
+                              sx={{ fontWeight: 600 }}
+                            />
+                            <Chip
+                              label="🏭 Industrial Complex"
+                              clickable
+                              color={theme === 'industrial' ? 'primary' : 'default'}
+                              variant={theme === 'industrial' ? 'filled' : 'outlined'}
+                              onClick={() => { setTheme('industrial'); setPreviewGenerated(false); setResult(null); }}
+                              sx={{ fontWeight: 600 }}
+                            />
+                            <Chip
+                              label="☀️ Clean Energy & Solar"
+                              clickable
+                              color={theme === 'solar' ? 'primary' : 'default'}
+                              variant={theme === 'solar' ? 'filled' : 'outlined'}
+                              onClick={() => { setTheme('solar'); setPreviewGenerated(false); setResult(null); }}
+                              sx={{ fontWeight: 600 }}
+                            />
+                          </Box>
+                        </Box>
+                      )}
+                    </Box>
+
                     {/* Product Photo Uploader (Optional) */}
                     <Box sx={{ mb: 2.5 }}>
                       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1 }}>
                         <Typography variant="subtitle2" sx={{ fontWeight: 600, color: '#475569' }}>
-                          Product Photo (Optional - Embedded into Flyer)
+                          {isFullFlyer ? 'Ready-Made Flyer Graphic (ChatGPT / Designer Image) *' : 'Product Photo (Embedded on 3D Pedestal in Architectural Scene)'}
                         </Typography>
                         {productImage && (
                           <Button
@@ -728,10 +804,10 @@ function MarketingViewAdmin() {
                           />
                           <CloudUploadIcon sx={{ fontSize: 36, color: '#64748b', mb: 0.5 }} />
                           <Typography variant="body2" sx={{ fontWeight: 600, color: '#334155' }}>
-                            Click or Drag to Upload Product Photo
+                            {isFullFlyer ? 'Click or Drag to Upload Finished Flyer' : 'Click or Drag to Upload Product Photo'}
                           </Typography>
                           <Typography variant="caption" sx={{ color: '#94a3b8' }}>
-                            PNG, JPG, WEBP up to 15MB (Fitted with preserved aspect ratio & 24px padding)
+                            {isFullFlyer ? 'Full-size 1080x1080 flyer image (PNG, JPG, WEBP)' : 'PNG, JPG, WEBP up to 15MB (Rendered with 3D pedestal & drop shadow)'}
                           </Typography>
                         </Box>
                       ) : (
@@ -761,10 +837,10 @@ function MarketingViewAdmin() {
                           />
                           <Box sx={{ flexGrow: 1, overflow: 'hidden' }}>
                             <Typography variant="body2" sx={{ fontWeight: 600, color: '#1e293b' }} noWrap>
-                              {productImageName || 'Selected Product Photo'}
+                              {productImageName || 'Selected Image'}
                             </Typography>
                             <Typography variant="caption" sx={{ color: '#10b981', fontWeight: 600, display: 'flex', alignItems: 'center', gap: 0.5 }}>
-                              <CheckCircleIcon sx={{ fontSize: 14 }} /> Ready for flyer composition
+                              <CheckCircleIcon sx={{ fontSize: 14 }} /> {isFullFlyer ? 'Ready for direct full-bleed broadcast' : 'Ready for 3D architectural composition'}
                             </Typography>
                           </Box>
                         </Box>
@@ -1251,14 +1327,14 @@ function MarketingViewAdmin() {
                       )}
 
                       {/* Generated Flyer Image */}
-                      {result.flyerBase64 ? (
+                      {(result.flyerBase64 || (isFullFlyer && productImage)) ? (
                         <Box sx={{ textAlign: 'center', mt: 1.5 }}>
                           <Typography variant="subtitle2" sx={{ fontWeight: 600, color: '#475569', mb: 1, textAlign: 'left' }}>
-                            Generated Flyer (1080x1080)
+                            {isFullFlyer ? 'Ready-Made Flyer Graphic (Direct Broadcast)' : 'Generated 3D Scene Flyer (1080x1080)'}
                           </Typography>
                           <img
-                            src={result.flyerBase64}
-                            alt="Generated Flyer"
+                            src={result.flyerBase64 || productImage}
+                            alt="Flyer Preview"
                             style={{
                               width: '100%',
                               maxHeight: 380,
