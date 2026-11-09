@@ -271,7 +271,7 @@ function ProjectReportInfo({ onMonth, onProjectName, onPayment }) {
                                 return (
                                   <tr key={Item.idRow}>
                                     {
-                                      (Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName._id && !Item.itemName.itemName)))) ? (
+                                      (Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName?._id || Item.itemName?.itemName === 'empty' || !Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName.itemName)))) ? (
                                           <>
                                             <td style={{ textAlign: 'center', border: '1px solid #DDD' }} colSpan={5}>{Item.newDescription}</td>
                                           </>
@@ -488,7 +488,7 @@ function ProjectReportInfo({ onMonth, onProjectName, onPayment }) {
                           row1.items.map((Item) => (
                             <tr key={Item.idRow}>
                               {
-                                (Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName._id && !Item.itemName.itemName)))) ? (
+                                (Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName?._id || Item.itemName?.itemName === 'empty' || !Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName.itemName)))) ? (
                                     <>
                                       <td style={{ textAlign: 'center', border: '1px solid #DDD' }} colSpan={5}>{Item.newDescription}</td>
                                     </>

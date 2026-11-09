@@ -1788,7 +1788,7 @@ const isItemMatch = (item1, item2) => {
                                         </thead>
                                         <tbody>
                                           {row.items?.map((Item, i) => {
-                                            if (Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName._id && !Item.itemName.itemName)))) {
+                                            if (Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName?._id || Item.itemName?.itemName === 'empty' || !Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName.itemName)))) {
                                               return (
                                                 <tr key={Item.idRow}>
                                                   <td style={{ padding: '10px', textAlign: 'center', border: '1px solid #DDD' }}><span>{i + 1}</span></td>

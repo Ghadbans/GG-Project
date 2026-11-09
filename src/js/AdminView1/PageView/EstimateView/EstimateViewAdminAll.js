@@ -1014,7 +1014,7 @@ function EstimateViewAdminAll() {
                                                             Item.itemDescription !== 'Labor Fees' ? (
                                                               <>
                                                                 {
-                                                                  (Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName._id && !Item.itemName.itemName)))) ?
+                                                                  (Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName?._id || Item.itemName?.itemName === 'empty' || !Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName.itemName)))) ?
                                                                     (
                                                                       <>
                                                                         <td style={{ textAlign: 'center' }}><span>{i + 1}</span></td>
@@ -1298,7 +1298,7 @@ function EstimateViewAdminAll() {
                                                   Item.itemDescription !== 'Labor Fees' ? (
                                                     <>
                                                       {
-                                                        (Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName._id && !Item.itemName.itemName)))) ?
+                                                        (Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName?._id || Item.itemName?.itemName === 'empty' || !Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName.itemName)))) ?
                                                           (
                                                             <>
                                                               <td style={{ textAlign: 'center' }}><span>{i + 1}</span></td>

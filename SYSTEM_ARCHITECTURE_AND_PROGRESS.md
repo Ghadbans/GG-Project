@@ -4462,31 +4462,6 @@ The standardized `renderStatusBadge` helper was seamlessly integrated into all 1
 
 ### 3. Multi-Platform Verification & Packaging
 - **AST Quality Gate**: Verified `0` syntax or structural errors across all 239 source files (`node scripts/pre-build-check.js`).
-- **Version Bump**: Bumped to `v3.6.36` in `package.json`, `server/package.json`, and `server/routes/downloadRoutes.js`.
-- **Production Bundles**: Compiled desktop and web production bundles via Webpack with zero errors.
-- **Android APK**: Compiled via Gradle to `android/app/build/outputs/apk/debug/app-debug.apk` (15.02 MB) and synchronized to `server/public/downloads/GlobalGate-v3.6.36.apk` and `server/public/downloads/GlobalGate.apk`.
-- **Windows Executable**: Packaged `dist/Global Gate Setup 3.6.36.exe` (95.80 MB) and synchronized to `server/public/downloads/GlobalGate-v3.6.36.exe` and `server/public/downloads/GlobalGateSetup.exe`.
-- **Deployment**: Committed and pushed to GitHub `origin main`.
-
-
----
-
-## [2026-11-09] - Release v3.6.35: Clean Daily Expenses Table Layout (Removed Direct Table Print Column)
-
-### 1. Requirements & User Request
-- The user instructed: *"Good Moring, I saw the printing in Daily Expenses. Direct Table Print Button: Added a Print action column in the master table next to View, enabling 1-click printing directly from the list without opening the modal first. no need for it remove it .. keep In-Modal Print Button: Added a dedicated Print () icon button directly in the modal header right next to the Close (X) button in the expense details view."*
-- Objective: Streamline the Daily Expenses master DataGrid table by removing the direct `Print` action column while maintaining the full, branded in-modal voucher printing capability.
-
-### 2. Implementation Changes
-1. **`DailyExpenses.js` Table Action Columns**:
-   - Removed the `{ field: 'print', headerName: 'Print', ... }` column from the DataGrid `columns` array.
-   - Cleaned up the table layout back to standard action columns: `View` (eye icon), `Edit` (pencil icon), and `Delete` (trash icon).
-   - Preserved the dedicated **Print** (<LocalPrintshop />) button in the Expense Details modal header next to the Close (`X`) button.
-   - Streamlined `handleOpenView` and removed unused `autoPrintAfterLoad` state.
-   - Preserved all A4 portrait voucher styling (`@page`, `PrintHeader`, `PrintFooter`, 3-column authorization signatures, and unrolled table print layout).
-
-### 3. Multi-Platform Verification & Packaging
-- **AST Quality Gate**: Verified `0` syntax or structural errors across all 239 source files (`node scripts/pre-build-check.js`).
 - **Version Bump**: Bumped to `v3.6.35` across `package.json`, `server/package.json`, and `server/routes/downloadRoutes.js`.
 - **Production Bundles**: Compiled desktop and web production bundles via Webpack.
 - **Windows Executable**: Packaged `dist/Global Gate Setup 3.6.35.exe` (95.80 MB) and synchronized to `server/public/downloads/Global Gate Setup 3.6.35.exe`, `GlobalGate-v3.6.35.exe`, and `GlobalGateSetup.exe`.
@@ -4537,4 +4512,55 @@ The standardized `renderStatusBadge` helper was seamlessly integrated into all 1
 - **Production Bundles**: Compiled desktop and web production bundles via Webpack with zero errors.
 - **Android APK**: Compiled via Gradle to `android/app/build/outputs/apk/debug/app-debug.apk` (15.02 MB) and synchronized to `server/public/downloads/GlobalGate-v3.6.36.apk` and `server/public/downloads/GlobalGate.apk`.
 - **Windows Executable**: Packaged `dist/Global Gate Setup 3.6.36.exe` (95.80 MB) and synchronized to `server/public/downloads/GlobalGate-v3.6.36.exe` and `server/public/downloads/GlobalGateSetup.exe`.
+- **Deployment**: Committed and pushed to GitHub `origin main`.
+
+---
+
+## [2026-11-09] - Release v3.6.37: Maintenance Blank Row View Rendering & Table ColSpan Alignment
+
+### 1. Requirements & User Requests
+1. **Maintenance Blank Row Display in Information View**:
+   - The user reported: *"working fine now .. but when i save it doesnt appers check screenshut number 2 ... and its converting normaly to invoice good !! but check why it doesnt show in screen shut number two it should show same in screenshut number 4 !"*
+   - In Screenshot 1, the user added a blank row in Update Maintenance with text `"2ND QUARTER VISIT NOV26 28UNITS"`.
+   - In Screenshot 3, when converted to an invoice, the blank row converted and rendered properly.
+   - In Screenshot 2 (`SOFI BANQUE | M-001338`), viewing the saved maintenance record in Maintenance Information displayed an empty row with `$0 / 0% / $0.00` financial values instead of the bold centered blank row banner shown in Screenshot 4 (`NOVOTEL | M-001277` with `"1ST QUARTER VISIT 19OCT26"`).
+2. **Success Criteria**:
+   - Blank rows saved from Maintenance creation/update must be recognized in the view components when `Item.itemName.itemName === 'empty'` or `!Item.itemName?._id`.
+   - The row must render bold, centered, and span across the full width of the table (`colSpan={7}` in overview table, `colSpan={4}` in technician items table, and `colSpan={9}` in cost analysis table).
+
+### 2. Root Cause Analysis
+- When saving blank description rows from `MaintenanceFormView.js` or `MaintenanceUpdateView.js`, the system stores the item as:
+  `{ newDescription: "...", itemName: { _id: "", itemName: "empty" }, ... }`
+- In `MaintenanceViewInformation.js` (lines 1608, 1680, 1915) and 9 other view/report files, the condition was:
+  `Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName._id && !Item.itemName.itemName)))`
+- The check `!Item.itemName.itemName` evaluated `!"empty"`, which yielded `false`.
+- Because this evaluated to `false`, the blank row check failed and the view fell through to the standard item row branch, displaying blank item cells with `$0.00` rates and totals.
+- Additionally, `colSpan` was hardcoded to `5` in line 1610 (overview table has 7 columns: `Parts/s Model`, `Description`, `Brand`, `Qty`, `Price`, `Discount`, `Total`) and `5` in line 1917 (cost analysis table has 9 columns), leaving gaps on the right.
+
+### 3. Implementation Changes
+1. **Maintenance & Reports View Components Blank Row Recognition**:
+   - Fortified the blank row detection condition to recognize `{ itemName: 'empty' }` objects:
+     `Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName?._id || Item.itemName?.itemName === 'empty' || !Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName.itemName)))`
+   - Adjusted `colSpan` and styling across view tables:
+     - Overview Finance Table: `colSpan={7}` with `fontWeight: 'bold'`, centered, gray background `#f8f9fa`
+     - Technician Items Table: `colSpan={4}` with `fontWeight: 'bold'`, centered
+     - Cost Analysis Table: `colSpan={9}` with `fontWeight: 'bold'`, centered
+   - Files updated:
+     - `src/js/AdminView1/PageView/MaintenanceView/MaintenanceViewInformation.js`
+     - `src/js/AdminView1/PageView/MaintenanceOrder/MaintenanceOrderViewInformation.js`
+     - `src/js/AdminView1/PageView/EstimateView/EstimateViewAdminAll.js`
+     - `src/js/AdminView1/PageView/InvoiceView/InvoiceViewAdminAll.js`
+     - `src/js/AdminView1/PageView/PurchasesView/PurchasesViewAdminAll.js`
+     - `src/js/AdminView1/PageView/DashboardInfo/InvoiceReportInfo.js`
+     - `src/js/AdminView1/PageView/DashboardInfo/MaintenanceReportInfo.js`
+     - `src/js/AdminView1/PageView/DashboardInfo/ProjectReportInfo.js`
+     - `src/js/AdminView1/PageView/DashboardInfo/PosReportInvoice.js`
+     - `src/js/AdminView1/PageView/ProjectView/ProjectViewInformation.js`
+
+### 4. Multi-Platform Verification & Packaging
+- **AST Quality Gate**: Verified `0` syntax or structural errors across all source files (`node scripts/pre-build-check.js`).
+- **Version Bump**: Bumped to `v3.6.37` in `package.json`, `server/package.json`, and `server/routes/downloadRoutes.js`.
+- **Production Bundles**: Compiled desktop and web production bundles via Webpack (`dist_web/`) with zero errors.
+- **Android APK**: Synchronized Capacitor container and compiled via Gradle to `GlobalGate-v3.6.37.apk` (15.02 MB) and synchronized to `server/public/downloads/GlobalGate.apk`.
+- **Windows Executable**: Packaged `dist/Global Gate Setup 3.6.37.exe` (95.80 MB) via `electron-builder` and synchronized to `server/public/downloads/GlobalGate-v3.6.37.exe` and `server/public/downloads/GlobalGateSetup.exe`.
 - **Deployment**: Committed and pushed to GitHub `origin main`.

@@ -214,7 +214,7 @@ function PurchaseItemRow({ Item, i, relatedUnit, formatDate2, itemPurchase, item
     row1.itemsQtyArray?.some((it) => isItemMatch(it, Item))
   ) || [];
 
-  const isSectionDivider = Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName._id && !Item.itemName.itemName)));
+  const isSectionDivider = Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName?._id || Item.itemName?.itemName === 'empty' || !Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName.itemName)));
   if (isSectionDivider) {
     return (
       <tr key={Item.idRow || i}>
@@ -1174,7 +1174,7 @@ function PurchasesViewAdminAll() {
                                                       return (
                                                         <tr key={Item.idRow || i}>
                                                           {
-                                                            (Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName._id && !Item.itemName.itemName)))) ?
+                                                            (Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName?._id || Item.itemName?.itemName === 'empty' || !Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName.itemName)))) ?
                                                               (
                                                                 <>
                                                                   <td style={{ textAlign: 'center', border: '1px solid #DDD' }}><span>{i + 1}</span></td>

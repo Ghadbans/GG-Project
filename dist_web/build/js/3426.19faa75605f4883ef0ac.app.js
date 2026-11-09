@@ -347,7 +347,7 @@ var isItemMatch = (item1, item2) => {
   return false;
 };
 function PurchaseItemRow(_ref9) {
-  var _Item$itemName, _Item$itemName2;
+  var _Item$itemName, _Item$itemName2, _Item$itemName3, _Item$itemName4;
   var Item = _ref9.Item,
     i = _ref9.i,
     relatedUnit = _ref9.relatedUnit,
@@ -363,7 +363,7 @@ function PurchaseItemRow(_ref9) {
     var _row1$itemsQtyArray;
     return (_row1$itemsQtyArray = row1.itemsQtyArray) === null || _row1$itemsQtyArray === void 0 ? void 0 : _row1$itemsQtyArray.some(it => isItemMatch(it, Item));
   })) || [];
-  var isSectionDivider = Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName._id && !Item.itemName.itemName)));
+  var isSectionDivider = Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!((_Item$itemName = Item.itemName) !== null && _Item$itemName !== void 0 && _Item$itemName._id) || ((_Item$itemName2 = Item.itemName) === null || _Item$itemName2 === void 0 ? void 0 : _Item$itemName2.itemName) === 'empty' || !Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName.itemName)));
   if (isSectionDivider) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", {
       key: Item.idRow || i
@@ -411,7 +411,7 @@ function PurchaseItemRow(_ref9) {
       border: '1px solid #DDD'
     },
     align: "left"
-  }, !Item.itemName || String(typeof Item.itemName === 'string' ? Item.itemName : (_Item$itemName = Item.itemName) === null || _Item$itemName === void 0 ? void 0 : _Item$itemName.itemName).trim().toLowerCase() === 'empty' ? null : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(react__WEBPACK_IMPORTED_MODULE_2__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, typeof Item.itemName === 'string' ? Item.itemName.toUpperCase() : ((_Item$itemName2 = Item.itemName) === null || _Item$itemName2 === void 0 || (_Item$itemName2 = _Item$itemName2.itemName) === null || _Item$itemName2 === void 0 ? void 0 : _Item$itemName2.toUpperCase()) || ''), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("br", null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, Item.itemDescription ? Item.itemDescription.toUpperCase() : '')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+  }, !Item.itemName || String(typeof Item.itemName === 'string' ? Item.itemName : (_Item$itemName3 = Item.itemName) === null || _Item$itemName3 === void 0 ? void 0 : _Item$itemName3.itemName).trim().toLowerCase() === 'empty' ? null : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(react__WEBPACK_IMPORTED_MODULE_2__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, typeof Item.itemName === 'string' ? Item.itemName.toUpperCase() : ((_Item$itemName4 = Item.itemName) === null || _Item$itemName4 === void 0 || (_Item$itemName4 = _Item$itemName4.itemName) === null || _Item$itemName4 === void 0 ? void 0 : _Item$itemName4.toUpperCase()) || ''), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("br", null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, Item.itemDescription ? Item.itemDescription.toUpperCase() : '')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     style: {
       border: '1px solid #DDD'
     },
@@ -945,8 +945,8 @@ function PurchasesViewAdminAll() {
   var newArray = search !== '' ? purchase.filter(row => {
     var _row$customerName, _row$customerName2, _row$projectName3, _row$projectName4;
     return row.purchaseName.toLowerCase().includes(search.toLowerCase()) || row.description && row.description.toLowerCase().includes(search.toLowerCase()) || (typeof row.customerName === 'string' ? row.customerName : ((_row$customerName = row.customerName) === null || _row$customerName === void 0 ? void 0 : _row$customerName.Customer) || ((_row$customerName2 = row.customerName) === null || _row$customerName2 === void 0 ? void 0 : _row$customerName2.customerName) || '').toLowerCase().includes(search.toLowerCase()) || (typeof row.projectName === 'string' ? row.projectName : ((_row$projectName3 = row.projectName) === null || _row$projectName3 === void 0 ? void 0 : _row$projectName3.projectName) || ((_row$projectName4 = row.projectName) === null || _row$projectName4 === void 0 ? void 0 : _row$projectName4.name) || '').toLowerCase().includes(search.toLowerCase()) || row.items && row.items.some(Item => {
-      var _Item$itemName3;
-      var nameToCheck = typeof Item.itemName === 'string' ? Item.itemName : ((_Item$itemName3 = Item.itemName) === null || _Item$itemName3 === void 0 ? void 0 : _Item$itemName3.itemName) || '';
+      var _Item$itemName5;
+      var nameToCheck = typeof Item.itemName === 'string' ? Item.itemName : ((_Item$itemName5 = Item.itemName) === null || _Item$itemName5 === void 0 ? void 0 : _Item$itemName5.itemName) || '';
       return nameToCheck.toLowerCase().includes(search.toLowerCase());
     }) || row.items && row.items.some(Item => Item.itemDescription && Item.itemDescription.toLowerCase().includes(search.toLowerCase()));
   }) : purchase;
@@ -971,8 +971,8 @@ function PurchasesViewAdminAll() {
     fecthItemPurchase();
   }, [id]);
   var newArray2 = search2 !== '' ? filteredPurchase.filter(Item => {
-    var _Item$itemName4;
-    var nameToCheck = typeof Item.itemName === 'string' ? Item.itemName : ((_Item$itemName4 = Item.itemName) === null || _Item$itemName4 === void 0 ? void 0 : _Item$itemName4.itemName) || '';
+    var _Item$itemName6;
+    var nameToCheck = typeof Item.itemName === 'string' ? Item.itemName : ((_Item$itemName6 = Item.itemName) === null || _Item$itemName6 === void 0 ? void 0 : _Item$itemName6.itemName) || '';
     return nameToCheck.toLowerCase().includes(search2.toLowerCase()) || Item.itemDescription && Item.itemDescription.toLowerCase().includes(search2.toLowerCase()) || Item.newDescription && Item.newDescription.toLowerCase().includes(search2.toLowerCase());
   }) : filteredPurchase;
   var _React$useState5 = react__WEBPACK_IMPORTED_MODULE_2__.useState(true),
@@ -992,10 +992,10 @@ function PurchasesViewAdminAll() {
     };
   });
   var data5 = items.map((Item, i) => {
-    var _Item$itemName5;
+    var _Item$itemName7;
     return {
       no: i + 1,
-      item: (typeof Item.itemName === 'string' ? Item.itemName : (_Item$itemName5 = Item.itemName) === null || _Item$itemName5 === void 0 ? void 0 : _Item$itemName5.itemName) || Item.newDescription || '',
+      item: (typeof Item.itemName === 'string' ? Item.itemName : (_Item$itemName7 = Item.itemName) === null || _Item$itemName7 === void 0 ? void 0 : _Item$itemName7.itemName) || Item.newDescription || '',
       itemDescription: Item.itemDescription,
       itemQty: Item.itemQty,
       itemCost: '$' + Item.itemCost,
@@ -1665,14 +1665,14 @@ function PurchasesViewAdminAll() {
       },
       align: "left"
     }, "I-Out"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tbody", null, (_ref16 = search2 !== '' ? filteredPurchase.filter(Item => {
-      var _Item$itemName6;
-      var nameToCheck = typeof Item.itemName === 'string' ? Item.itemName : ((_Item$itemName6 = Item.itemName) === null || _Item$itemName6 === void 0 ? void 0 : _Item$itemName6.itemName) || '';
+      var _Item$itemName8;
+      var nameToCheck = typeof Item.itemName === 'string' ? Item.itemName : ((_Item$itemName8 = Item.itemName) === null || _Item$itemName8 === void 0 ? void 0 : _Item$itemName8.itemName) || '';
       return nameToCheck.toLowerCase().includes(search2.toLowerCase()) || Item.itemDescription && Item.itemDescription.toLowerCase().includes(search2.toLowerCase()) || Item.newDescription && Item.newDescription.toLowerCase().includes(search2.toLowerCase());
     }) : filteredPurchase) === null || _ref16 === void 0 ? void 0 : _ref16.map((Item, i) => {
-      var _Item$itemName8, _Item$itemName9;
+      var _Item$itemName0, _Item$itemName1, _Item$itemName10, _Item$itemName11;
       var relatedUnit = item.find(Item1 => {
-        var _Item$itemName7;
-        return String(Item1._id) === String(((_Item$itemName7 = Item.itemName) === null || _Item$itemName7 === void 0 ? void 0 : _Item$itemName7._id) || Item.itemName);
+        var _Item$itemName9;
+        return String(Item1._id) === String(((_Item$itemName9 = Item.itemName) === null || _Item$itemName9 === void 0 ? void 0 : _Item$itemName9._id) || Item.itemName);
       });
       var matchedPurchases = (itemPurchase || []).flatMap(ip => (ip.itemsQtyArray || ip.items || []).filter(it => isItemMatch(it, Item)).map(it => ({
         qty: parseFloat(it.newItemOut || it.itemQty || 0),
@@ -1688,7 +1688,7 @@ function PurchasesViewAdminAll() {
       var netOutQty = hasOutMovements ? Math.max(0, matchedOutQty - matchedReturnQty) : parseFloat(Item.itemOut) || 0;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", {
         key: Item.idRow || i
-      }, Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName._id && !Item.itemName.itemName))) ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(react__WEBPACK_IMPORTED_MODULE_2__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+      }, Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!((_Item$itemName0 = Item.itemName) !== null && _Item$itemName0 !== void 0 && _Item$itemName0._id) || ((_Item$itemName1 = Item.itemName) === null || _Item$itemName1 === void 0 ? void 0 : _Item$itemName1.itemName) === 'empty' || !Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName.itemName))) ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(react__WEBPACK_IMPORTED_MODULE_2__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
         style: {
           textAlign: 'center',
           border: '1px solid #DDD'
@@ -1711,7 +1711,7 @@ function PurchasesViewAdminAll() {
           border: '1px solid #DDD'
         },
         align: "left"
-      }, !Item.itemName || String(typeof Item.itemName === 'string' ? Item.itemName : (_Item$itemName8 = Item.itemName) === null || _Item$itemName8 === void 0 ? void 0 : _Item$itemName8.itemName).trim().toLowerCase() === 'empty' ? null : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(react__WEBPACK_IMPORTED_MODULE_2__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, typeof Item.itemName === 'string' ? Item.itemName.toUpperCase() : ((_Item$itemName9 = Item.itemName) === null || _Item$itemName9 === void 0 || (_Item$itemName9 = _Item$itemName9.itemName) === null || _Item$itemName9 === void 0 ? void 0 : _Item$itemName9.toUpperCase()) || ''), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("br", null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, Item.itemDescription ? Item.itemDescription.toUpperCase() : '')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+      }, !Item.itemName || String(typeof Item.itemName === 'string' ? Item.itemName : (_Item$itemName10 = Item.itemName) === null || _Item$itemName10 === void 0 ? void 0 : _Item$itemName10.itemName).trim().toLowerCase() === 'empty' ? null : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(react__WEBPACK_IMPORTED_MODULE_2__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, typeof Item.itemName === 'string' ? Item.itemName.toUpperCase() : ((_Item$itemName11 = Item.itemName) === null || _Item$itemName11 === void 0 || (_Item$itemName11 = _Item$itemName11.itemName) === null || _Item$itemName11 === void 0 ? void 0 : _Item$itemName11.toUpperCase()) || ''), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("br", null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, Item.itemDescription ? Item.itemDescription.toUpperCase() : '')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
         style: {
           border: '1px solid #DDD'
         },
@@ -1936,13 +1936,13 @@ function PurchasesViewAdminAll() {
       },
       align: "left"
     }, "I-Out"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tbody", null, (_ref17 = search2 !== '' ? filteredPurchase.filter(Item => {
-      var _Item$itemName0;
-      var nameToCheck = typeof Item.itemName === 'string' ? Item.itemName : ((_Item$itemName0 = Item.itemName) === null || _Item$itemName0 === void 0 ? void 0 : _Item$itemName0.itemName) || '';
+      var _Item$itemName12;
+      var nameToCheck = typeof Item.itemName === 'string' ? Item.itemName : ((_Item$itemName12 = Item.itemName) === null || _Item$itemName12 === void 0 ? void 0 : _Item$itemName12.itemName) || '';
       return nameToCheck.toLowerCase().includes(search2.toLowerCase()) || Item.itemDescription && Item.itemDescription.toLowerCase().includes(search2.toLowerCase()) || Item.newDescription && Item.newDescription.toLowerCase().includes(search2.toLowerCase());
     }) : filteredPurchase) === null || _ref17 === void 0 ? void 0 : _ref17.map((Item, i) => {
       var relatedUnit = item.find(Item1 => {
-        var _Item$itemName1;
-        return String(Item1._id) === String(((_Item$itemName1 = Item.itemName) === null || _Item$itemName1 === void 0 ? void 0 : _Item$itemName1._id) || Item.itemName);
+        var _Item$itemName13;
+        return String(Item1._id) === String(((_Item$itemName13 = Item.itemName) === null || _Item$itemName13 === void 0 ? void 0 : _Item$itemName13._id) || Item.itemName);
       });
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(PurchaseItemRow, {
         key: Item.idRow || i,

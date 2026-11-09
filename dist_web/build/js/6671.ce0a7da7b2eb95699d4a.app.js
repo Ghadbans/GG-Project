@@ -2768,23 +2768,24 @@ function MaintenanceOrderViewInformation() {
         border: '1px solid black'
       }
     }, "Qty"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tbody", null, (row.items || []).map((Item, i) => {
-      var _Item$itemName3, _Item$itemName4, _Item$itemName5;
+      var _Item$itemName3, _Item$itemName4, _Item$itemName5, _Item$itemName6, _Item$itemName7;
       var relatedUnit = itemMap[(_Item$itemName3 = Item.itemName) === null || _Item$itemName3 === void 0 ? void 0 : _Item$itemName3._id];
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", {
         key: Item.idRow
-      }, Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName._id && !Item.itemName.itemName))) ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(react__WEBPACK_IMPORTED_MODULE_2__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+      }, Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!((_Item$itemName4 = Item.itemName) !== null && _Item$itemName4 !== void 0 && _Item$itemName4._id) || ((_Item$itemName5 = Item.itemName) === null || _Item$itemName5 === void 0 ? void 0 : _Item$itemName5.itemName) === 'empty' || !Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName.itemName))) ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(react__WEBPACK_IMPORTED_MODULE_2__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
         style: {
           textAlign: 'center',
-          border: '1px solid black'
+          border: '1px solid black',
+          fontWeight: 'bold'
         },
-        colSpan: 4
+        colSpan: 7
       }, Item.newDescription)) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(react__WEBPACK_IMPORTED_MODULE_2__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
         style: {
           border: '1px solid black'
         }
       }, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
-        hidden: Item.itemName ? String(typeof Item.itemName === 'string' ? Item.itemName : (_Item$itemName4 = Item.itemName) === null || _Item$itemName4 === void 0 ? void 0 : _Item$itemName4.itemName).trim().toLowerCase() === 'empty' : ''
-      }, ((_Item$itemName5 = Item.itemName) === null || _Item$itemName5 === void 0 || (_Item$itemName5 = _Item$itemName5.itemName) === null || _Item$itemName5 === void 0 ? void 0 : _Item$itemName5.toUpperCase()) || '')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+        hidden: Item.itemName ? String(typeof Item.itemName === 'string' ? Item.itemName : (_Item$itemName6 = Item.itemName) === null || _Item$itemName6 === void 0 ? void 0 : _Item$itemName6.itemName).trim().toLowerCase() === 'empty' : ''
+      }, ((_Item$itemName7 = Item.itemName) === null || _Item$itemName7 === void 0 || (_Item$itemName7 = _Item$itemName7.itemName) === null || _Item$itemName7 === void 0 ? void 0 : _Item$itemName7.toUpperCase()) || '')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
         style: {
           border: '1px solid black'
         }
@@ -3319,26 +3320,27 @@ function MaintenanceOrderViewInformation() {
         border: '1px solid black'
       }
     }, "Total Cost"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tbody", null, (row.items || []).map((Item, i) => {
-      var _Item$itemName7, _Item$itemName8, _parseFloat;
+      var _Item$itemName9, _Item$itemName0, _Item$itemName1, _Item$itemName10, _parseFloat;
       var relatedUnit = item.find(Item1 => {
-        var _Item$itemName6;
-        return Item1._id === ((_Item$itemName6 = Item.itemName) === null || _Item$itemName6 === void 0 ? void 0 : _Item$itemName6._id);
+        var _Item$itemName8;
+        return Item1._id === ((_Item$itemName8 = Item.itemName) === null || _Item$itemName8 === void 0 ? void 0 : _Item$itemName8._id);
       });
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", {
         key: Item.idRow
-      }, Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName._id && !Item.itemName.itemName))) ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(react__WEBPACK_IMPORTED_MODULE_2__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+      }, Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!((_Item$itemName9 = Item.itemName) !== null && _Item$itemName9 !== void 0 && _Item$itemName9._id) || ((_Item$itemName0 = Item.itemName) === null || _Item$itemName0 === void 0 ? void 0 : _Item$itemName0.itemName) === 'empty' || !Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName.itemName))) ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(react__WEBPACK_IMPORTED_MODULE_2__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
         style: {
           textAlign: 'center',
-          border: '1px solid black'
+          border: '1px solid black',
+          fontWeight: 'bold'
         },
-        colSpan: 4
+        colSpan: 9
       }, Item.newDescription)) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(react__WEBPACK_IMPORTED_MODULE_2__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
         style: {
           border: '1px solid black'
         }
       }, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
-        hidden: Item.itemName ? String(typeof Item.itemName === 'string' ? Item.itemName : (_Item$itemName7 = Item.itemName) === null || _Item$itemName7 === void 0 ? void 0 : _Item$itemName7.itemName).trim().toLowerCase() === 'empty' : ''
-      }, ((_Item$itemName8 = Item.itemName) === null || _Item$itemName8 === void 0 || (_Item$itemName8 = _Item$itemName8.itemName) === null || _Item$itemName8 === void 0 ? void 0 : _Item$itemName8.toUpperCase()) || '')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+        hidden: Item.itemName ? String(typeof Item.itemName === 'string' ? Item.itemName : (_Item$itemName1 = Item.itemName) === null || _Item$itemName1 === void 0 ? void 0 : _Item$itemName1.itemName).trim().toLowerCase() === 'empty' : ''
+      }, ((_Item$itemName10 = Item.itemName) === null || _Item$itemName10 === void 0 || (_Item$itemName10 = _Item$itemName10.itemName) === null || _Item$itemName10 === void 0 ? void 0 : _Item$itemName10.toUpperCase()) || '')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
         style: {
           border: '1px solid black',
           width: '200px'

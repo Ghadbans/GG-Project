@@ -4259,8 +4259,8 @@ function ProjectViewInformation() {
           backgroundColor: '#e8f7fe'
         }
       }, "Total"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tbody", null, (_row$items = row.items) === null || _row$items === void 0 ? void 0 : _row$items.map((Item, i) => {
-        var _Item$itemName6;
-        if (Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName._id && !Item.itemName.itemName)))) {
+        var _Item$itemName5, _Item$itemName6, _Item$itemName8;
+        if (Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!((_Item$itemName5 = Item.itemName) !== null && _Item$itemName5 !== void 0 && _Item$itemName5._id) || ((_Item$itemName6 = Item.itemName) === null || _Item$itemName6 === void 0 ? void 0 : _Item$itemName6.itemName) === 'empty' || !Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName.itemName)))) {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", {
             key: Item.idRow
           }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
@@ -4279,8 +4279,8 @@ function ProjectViewInformation() {
           }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, Item.newDescription)));
         }
         var relatedUnit = item.find(Item1 => {
-          var _Item$itemName5;
-          return Item1._id === ((_Item$itemName5 = Item.itemName) === null || _Item$itemName5 === void 0 ? void 0 : _Item$itemName5._id) || Item1._id === Item.itemName;
+          var _Item$itemName7;
+          return Item1._id === ((_Item$itemName7 = Item.itemName) === null || _Item$itemName7 === void 0 ? void 0 : _Item$itemName7._id) || Item1._id === Item.itemName;
         });
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", {
           key: Item.idRow
@@ -4295,7 +4295,7 @@ function ProjectViewInformation() {
             padding: '10px',
             border: '1px solid #DDD'
           }
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, ((_Item$itemName6 = Item.itemName) === null || _Item$itemName6 === void 0 ? void 0 : _Item$itemName6.itemName) || (typeof Item.itemName === 'string' ? Item.itemName : ''))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, ((_Item$itemName8 = Item.itemName) === null || _Item$itemName8 === void 0 ? void 0 : _Item$itemName8.itemName) || (typeof Item.itemName === 'string' ? Item.itemName : ''))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
           style: {
             padding: '10px',
             textAlign: 'left',
@@ -4786,8 +4786,8 @@ function ProjectViewInformation() {
         },
         align: "left"
       }, "Total-Cost"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tbody", null, (_row$items2 = row.items) === null || _row$items2 === void 0 ? void 0 : _row$items2.filter(Item => parseFloat(Item.itemQty) >= 0 || parseFloat(Item.itemBuy) > 0 || parseFloat(Item.itemOut) > 0 || Boolean(Item.newDescription && String(Item.newDescription).trim() !== '')).map((Item, i) => {
-        var _Item$itemName7;
-        var relatedUnit = itemMap[(_Item$itemName7 = Item.itemName) === null || _Item$itemName7 === void 0 ? void 0 : _Item$itemName7._id];
+        var _Item$itemName9;
+        var relatedUnit = itemMap[(_Item$itemName9 = Item.itemName) === null || _Item$itemName9 === void 0 ? void 0 : _Item$itemName9._id];
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(Row3, {
           key: i,
           row: Item,
@@ -5273,8 +5273,8 @@ function ProjectViewInformation() {
     },
     align: "left"
   }, "Total-Cost"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tbody", null, (_printData$items = printData.items) === null || _printData$items === void 0 ? void 0 : _printData$items.filter(Item => parseFloat(Item.itemQty) >= 0 || parseFloat(Item.itemBuy) > 0 || parseFloat(Item.itemOut) > 0).map((Item, i) => {
-    var _Item$itemName8;
-    var relatedUnit = itemMap[(_Item$itemName8 = Item.itemName) === null || _Item$itemName8 === void 0 ? void 0 : _Item$itemName8._id];
+    var _Item$itemName0;
+    var relatedUnit = itemMap[(_Item$itemName0 = Item.itemName) === null || _Item$itemName0 === void 0 ? void 0 : _Item$itemName0._id];
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(Row3, {
       key: i,
       row: Item,
