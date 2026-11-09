@@ -5598,10 +5598,10 @@ function MaintenanceFormClone() {
     draggableId: "droppable".concat(Item.idRow),
     index: i
   }, (provided, snapshot) => {
-    var _Item$itemName, _Item$itemName2, _Item$itemName3, _Item$itemName4;
+    var _Item$itemName, _Item$itemName2, _Item$itemName3, _Item$itemName4, _Item$itemName5, _Item$itemName6;
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("tr", _extends({
       ref: provided.innerRef
-    }, provided.draggableProps), Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName._id && !Item.itemName.itemName))) ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", provided.dragHandleProps, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
+    }, provided.draggableProps), Item.newDescription !== undefined && (!((_Item$itemName = Item.itemName) !== null && _Item$itemName !== void 0 && _Item$itemName._id) || ((_Item$itemName2 = Item.itemName) === null || _Item$itemName2 === void 0 ? void 0 : _Item$itemName2.itemName) === 'empty' || !Item.itemName) ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", provided.dragHandleProps, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
       colSpan: 5
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
       required: true,
@@ -5629,18 +5629,18 @@ function MaintenanceFormClone() {
       style: {
         height: '100px'
       }
-    }, Boolean(((_Item$itemName = Item.itemName) === null || _Item$itemName === void 0 ? void 0 : _Item$itemName._id) || typeof Item.itemName === 'string' && Item.itemName.trim() !== '' || ((_Item$itemName2 = Item.itemName) === null || _Item$itemName2 === void 0 ? void 0 : _Item$itemName2.itemName) && String(Item.itemName.itemName).trim() !== '' || Item.itemDescription && String(Item.itemDescription).trim() !== '') ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    }, Boolean(((_Item$itemName3 = Item.itemName) === null || _Item$itemName3 === void 0 ? void 0 : _Item$itemName3._id) || typeof Item.itemName === 'string' && Item.itemName.trim() !== '' || ((_Item$itemName4 = Item.itemName) === null || _Item$itemName4 === void 0 ? void 0 : _Item$itemName4.itemName) && String(Item.itemName.itemName).trim() !== '' || Item.itemDescription && String(Item.itemDescription).trim() !== '') ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
       style: {
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center'
       }
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
-      hidden: Item.itemName ? String(typeof Item.itemName === 'string' ? Item.itemName : (_Item$itemName3 = Item.itemName) === null || _Item$itemName3 === void 0 ? void 0 : _Item$itemName3.itemName).trim().toLowerCase() === 'empty' : '',
+      hidden: Item.itemName ? String(typeof Item.itemName === 'string' ? Item.itemName : (_Item$itemName5 = Item.itemName) === null || _Item$itemName5 === void 0 ? void 0 : _Item$itemName5.itemName).trim().toLowerCase() === 'empty' : '',
       sx: {
         fontSize: '23px'
       }
-    }, (_Item$itemName4 = Item.itemName) !== null && _Item$itemName4 !== void 0 && _Item$itemName4.itemName && String(Item.itemName.itemName).trim().toLowerCase() !== 'empty' ? Item.itemName.itemName : typeof Item.itemName === 'string' && Item.itemName.trim().toLowerCase() !== 'empty' ? Item.itemName : ''), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+    }, (_Item$itemName6 = Item.itemName) !== null && _Item$itemName6 !== void 0 && _Item$itemName6.itemName && String(Item.itemName.itemName).trim().toLowerCase() !== 'empty' ? Item.itemName.itemName : typeof Item.itemName === 'string' && Item.itemName.trim().toLowerCase() !== 'empty' ? Item.itemName : ''), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
       name: "itemDescription",
       id: "itemDescription",
       value: Item.itemDescription,

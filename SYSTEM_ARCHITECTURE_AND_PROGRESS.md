@@ -4422,6 +4422,52 @@ The standardized `renderStatusBadge` helper was seamlessly integrated into all 1
 - **Android APK**: Compiled via Gradle to `android/app/build/outputs/apk/debug/app-debug.apk` (15.02 MB) and synchronized to `server/public/downloads/GlobalGate-v3.6.34.apk` and `server/public/downloads/GlobalGate.apk`.
 - **Deployment**: Committed and pushed to GitHub `origin main`.
 
+---
+
+## [2026-11-09] - Release v3.6.36: Maintenance Blank Row Restoration & Agency-Grade Marketing Flyer Engine
+
+### 1. Requirements & User Requests
+1. **Maintenance Blank Row Fix**:
+   - The user reported: *"when i press on the Gray + button to add an blank row is opening an item box ! and if i pressed the second button to add black row is opening to and empty item box .. its supposed to open same the last screenshut and i can write anything inside it ! ( it was working fine why it changed )"*
+   - In Screenshot 5, the user showed the intended design: a single wide text input (`colSpan`) with grip handle and delete icon, allowing free-form input for headers and notes (e.g. `1ST QUARTER VISIT 19OCT26`) without any autocomplete dropdown, shopping cart icon, or item columns.
+   - Root Cause: In a previous fortification audit (commit `e2168c09`), the condition was overly constrained to `Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' ...)`. When clicking the floating or in-row Gray `+` button, a new row is initialized with `newDescription: ""`. Since `""` is falsy, the component failed the blank row test and fell into the item row branch, displaying an item autocomplete box and shopping cart icon.
+2. **Marketing Module Professional Flyer Generator**:
+   - The user noticed that when submitting `"CONCRETE BLOCK ALL SIZES AVAIBLE . MAKE PRO FESSIONAL FLYER DONT USE TO MUCH TEXT !"`, the system literally printed their private instructions onto a basic template box.
+   - The user requested agency-level output matching ChatGPT/DALL-E 3 (Screenshot 2: modern luxury villa backdrop, bold gold/navy angled headers, 4 feature badges for strength/durability/quality/luxury, "ORDER NOW!" button, WhatsApp `0827722222`, and location `KOLWEZI - LUBUMBASHI`).
+
+### 2. Implementation Changes
+1. **Maintenance & Financial Form Components (Blank Row Restored)**:
+   - Updated the conditional check across 13 form files:
+     `Item.newDescription !== undefined && (!Item.itemName?._id || Item.itemName?.itemName === 'empty' || !Item.itemName)`
+   - Files updated:
+     - `src/js/AdminView1/PageView/MaintenanceView/MaintenanceFormView.js`
+     - `src/js/AdminView1/PageView/MaintenanceView/MaintenanceUpdateView.js`
+     - `src/js/AdminView1/PageView/MaintenanceView/MaintenanceFormClone.js`
+     - `src/js/AdminView1/PageView/MaintenanceView/MaintenanceConvertToInvoice.js`
+     - `src/js/AdminView1/PageView/MaintenanceOrder/MaintenanceOrderUpdate.js`
+     - `src/js/AdminView1/PageView/EstimateView/EstimateInvoiceForm.js`
+     - `src/js/AdminView1/PageView/EstimateView/EstimateInvoiceFormUpdate.js`
+     - `src/js/AdminView1/PageView/EstimateView/EstimateFormClone.js`
+     - `src/js/AdminView1/PageView/EstimateView/EstimateConvertToMaintenance.js`
+     - `src/js/AdminView1/PageView/EstimateView/EstimateViewConvertToInvoice.js`
+     - `src/js/AdminView1/PageView/InvoiceView/InvoiceForm.js`
+     - `src/js/AdminView1/PageView/InvoiceView/InvoiceFormUpdate.js`
+     - `src/js/AdminView1/PageView/InvoiceView/InvoiceFormClone.js`
+   - Both the floating Gray `+` button (`addItemWhite`) and in-row Gray `+` button (`addItemWhiteRow`) now immediately render the single full-width text field spanning all columns, allowing typing of notes and section headers freely.
+2. **Marketing Module AI Copywriting & Agency Flyer Engine**:
+   - **`sanitizeUserBrief` / `sanitizeBrief`**: Filters out conversational instructions (`make professional flyer`, `dont use too much text`, `urgent`, `fast please`) so private user commands never appear on generated flyers or captions.
+   - **`parseMarketingContent` Engine**: Analyzes product domains (Concrete Blocks, Solar/Energy, Mining/Safety, General B2B) and synthesizes clean headlines, value subtitles, and 4 commercial feature badges (`High Strength`, `Long Durability`, `Consistent Quality`, `Villas & Heavy Builds`).
+   - **Agency-Grade 1080x1080 Flyer SVG Generator**: Renders a luxury dark slate architectural canvas with gold accent ribbons, official `GLOBAL GATE GENERAL SERVICES` branding, prominent product showcase container with backlight glow, 4 feature badges with custom icons, and commercial footer with gold `ORDER NOW!` button, WhatsApp `+243 827 722 222`, and location `KOLWEZI - DRC`.
+   - **`fb-whatsapp-agent/agent.js`**: Enhanced with domain-intelligent copy engine, sanitized brief inputs, and extended AI timeout (12s) to prevent premature fallback.
+
+### 3. Multi-Platform Verification & Packaging
+- **AST Quality Gate**: Verified `0` syntax or structural errors across all 239 source files (`node scripts/pre-build-check.js`).
+- **Version Bump**: Bumped to `v3.6.36` in `package.json`, `server/package.json`, and `server/routes/downloadRoutes.js`.
+- **Production Bundles**: Compiled desktop and web production bundles via Webpack with zero errors.
+- **Android APK**: Compiled via Gradle to `android/app/build/outputs/apk/debug/app-debug.apk` (15.02 MB) and synchronized to `server/public/downloads/GlobalGate-v3.6.36.apk` and `server/public/downloads/GlobalGate.apk`.
+- **Windows Executable**: Packaged `dist/Global Gate Setup 3.6.36.exe` (95.80 MB) and synchronized to `server/public/downloads/GlobalGate-v3.6.36.exe` and `server/public/downloads/GlobalGateSetup.exe`.
+- **Deployment**: Committed and pushed to GitHub `origin main`.
+
 
 ---
 
@@ -4445,4 +4491,50 @@ The standardized `renderStatusBadge` helper was seamlessly integrated into all 1
 - **Production Bundles**: Compiled desktop and web production bundles via Webpack.
 - **Windows Executable**: Packaged `dist/Global Gate Setup 3.6.35.exe` (95.80 MB) and synchronized to `server/public/downloads/Global Gate Setup 3.6.35.exe`, `GlobalGate-v3.6.35.exe`, and `GlobalGateSetup.exe`.
 - **Android APK**: Compiled via Gradle to `android/app/build/outputs/apk/debug/app-debug.apk` (15.02 MB) and synchronized to `server/public/downloads/GlobalGate-v3.6.35.apk` and `server/public/downloads/GlobalGate.apk`.
+- **Deployment**: Committed and pushed to GitHub `origin main`.
+
+---
+
+## [2026-11-09] - Release v3.6.36: Maintenance Blank Row Restoration & Agency-Grade Marketing Flyer Engine
+
+### 1. Requirements & User Requests
+1. **Maintenance Blank Row Fix**:
+   - The user reported: *"when i press on the Gray + button to add an blank row is opening an item box ! and if i pressed the second button to add black row is opening to and empty item box .. its supposed to open same the last screenshut and i can write anything inside it ! ( it was working fine why it changed )"*
+   - In Screenshot 5, the user showed the intended design: a single wide text input (`colSpan`) with grip handle and delete icon, allowing free-form input for headers and notes (e.g. `1ST QUARTER VISIT 19OCT26`) without any autocomplete dropdown, shopping cart icon, or item columns.
+   - Root Cause: In a previous fortification audit (commit `e2168c09`), the condition was overly constrained to `Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' ...)`. When clicking the floating or in-row Gray `+` button, a new row is initialized with `newDescription: ""`. Since `""` is falsy, the component failed the blank row test and fell into the item row branch, displaying an item autocomplete box and shopping cart icon.
+2. **Marketing Module Professional Flyer Generator**:
+   - The user noticed that when submitting `"CONCRETE BLOCK ALL SIZES AVAIBLE . MAKE PRO FESSIONAL FLYER DONT USE TO MUCH TEXT !"`, the system literally printed their private instructions onto a basic template box.
+   - The user requested agency-level output matching ChatGPT/DALL-E 3 (Screenshot 2: modern luxury villa backdrop, bold gold/navy angled headers, 4 feature badges for strength/durability/quality/luxury, "ORDER NOW!" button, WhatsApp `0827722222`, and location `KOLWEZI - LUBUMBASHI`).
+
+### 2. Implementation Changes
+1. **Maintenance & Financial Form Components (Blank Row Restored)**:
+   - Updated the conditional check across 13 form files:
+     `Item.newDescription !== undefined && (!Item.itemName?._id || Item.itemName?.itemName === 'empty' || !Item.itemName)`
+   - Files updated:
+     - `src/js/AdminView1/PageView/MaintenanceView/MaintenanceFormView.js`
+     - `src/js/AdminView1/PageView/MaintenanceView/MaintenanceUpdateView.js`
+     - `src/js/AdminView1/PageView/MaintenanceView/MaintenanceFormClone.js`
+     - `src/js/AdminView1/PageView/MaintenanceView/MaintenanceConvertToInvoice.js`
+     - `src/js/AdminView1/PageView/MaintenanceOrder/MaintenanceOrderUpdate.js`
+     - `src/js/AdminView1/PageView/EstimateView/EstimateInvoiceForm.js`
+     - `src/js/AdminView1/PageView/EstimateView/EstimateInvoiceFormUpdate.js`
+     - `src/js/AdminView1/PageView/EstimateView/EstimateFormClone.js`
+     - `src/js/AdminView1/PageView/EstimateView/EstimateConvertToMaintenance.js`
+     - `src/js/AdminView1/PageView/EstimateView/EstimateViewConvertToInvoice.js`
+     - `src/js/AdminView1/PageView/InvoiceView/InvoiceForm.js`
+     - `src/js/AdminView1/PageView/InvoiceView/InvoiceFormUpdate.js`
+     - `src/js/AdminView1/PageView/InvoiceView/InvoiceFormClone.js`
+   - Both the floating Gray `+` button (`addItemWhite`) and in-row Gray `+` button (`addItemWhiteRow`) now immediately render the single full-width text field spanning all columns, allowing typing of notes and section headers freely.
+2. **Marketing Module AI Copywriting & Agency Flyer Engine**:
+   - **`sanitizeUserBrief` / `sanitizeBrief`**: Filters out conversational instructions (`make professional flyer`, `dont use too much text`, `urgent`, `fast please`) so private user commands never appear on generated flyers or captions.
+   - **`parseMarketingContent` Engine**: Analyzes product domains (Concrete Blocks, Solar/Energy, Mining/Safety, General B2B) and synthesizes clean headlines, value subtitles, and 4 commercial feature badges (`High Strength`, `Long Durability`, `Consistent Quality`, `Villas & Heavy Builds`).
+   - **Agency-Grade 1080x1080 Flyer SVG Generator**: Renders a luxury dark slate architectural canvas with gold accent ribbons, official `GLOBAL GATE GENERAL SERVICES` branding, prominent product showcase container with backlight glow, 4 feature badges with custom icons, and commercial footer with gold `ORDER NOW!` button, WhatsApp `+243 827 722 222`, and location `KOLWEZI - DRC`.
+   - **`fb-whatsapp-agent/agent.js`**: Enhanced with domain-intelligent copy engine, sanitized brief inputs, and extended AI timeout (12s) to prevent premature fallback.
+
+### 3. Multi-Platform Verification & Packaging
+- **AST Quality Gate**: Verified `0` syntax or structural errors across all 239 source files (`node scripts/pre-build-check.js`).
+- **Version Bump**: Bumped to `v3.6.36` in `package.json`, `server/package.json`, and `server/routes/downloadRoutes.js`.
+- **Production Bundles**: Compiled desktop and web production bundles via Webpack with zero errors.
+- **Android APK**: Compiled via Gradle to `android/app/build/outputs/apk/debug/app-debug.apk` (15.02 MB) and synchronized to `server/public/downloads/GlobalGate-v3.6.36.apk` and `server/public/downloads/GlobalGate.apk`.
+- **Windows Executable**: Packaged `dist/Global Gate Setup 3.6.36.exe` (95.80 MB) and synchronized to `server/public/downloads/GlobalGate-v3.6.36.exe` and `server/public/downloads/GlobalGateSetup.exe`.
 - **Deployment**: Committed and pushed to GitHub `origin main`.

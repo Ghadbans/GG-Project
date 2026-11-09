@@ -4154,10 +4154,10 @@ function MaintenanceConvertToInvoice() {
     draggableId: "droppable".concat(Item.idRow),
     index: i
   }, (provided, snapshot) => {
-    var _Item$itemName, _Item$itemName2, _Item$itemName3, _Item$itemName4, _Item$itemName5;
+    var _Item$itemName, _Item$itemName2, _Item$itemName3, _Item$itemName4, _Item$itemName5, _Item$itemName6, _Item$itemName7;
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("tr", _extends({
       ref: provided.innerRef
-    }, provided.draggableProps), Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName._id && !Item.itemName.itemName))) ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", provided.dragHandleProps, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
+    }, provided.draggableProps), Item.newDescription !== undefined && (!((_Item$itemName = Item.itemName) !== null && _Item$itemName !== void 0 && _Item$itemName._id) || ((_Item$itemName2 = Item.itemName) === null || _Item$itemName2 === void 0 ? void 0 : _Item$itemName2.itemName) === 'empty' || !Item.itemName) ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", provided.dragHandleProps, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
       colSpan: 6
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
       required: true,
@@ -4185,18 +4185,18 @@ function MaintenanceConvertToInvoice() {
       style: {
         height: '100px'
       }
-    }, Boolean(((_Item$itemName = Item.itemName) === null || _Item$itemName === void 0 ? void 0 : _Item$itemName._id) || typeof Item.itemName === 'string' && Item.itemName.trim() !== '' || ((_Item$itemName2 = Item.itemName) === null || _Item$itemName2 === void 0 ? void 0 : _Item$itemName2.itemName) && String(Item.itemName.itemName).trim() !== '' || Item.itemDescription && String(Item.itemDescription).trim() !== '') ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    }, Boolean(((_Item$itemName3 = Item.itemName) === null || _Item$itemName3 === void 0 ? void 0 : _Item$itemName3._id) || typeof Item.itemName === 'string' && Item.itemName.trim() !== '' || ((_Item$itemName4 = Item.itemName) === null || _Item$itemName4 === void 0 ? void 0 : _Item$itemName4.itemName) && String(Item.itemName.itemName).trim() !== '' || Item.itemDescription && String(Item.itemDescription).trim() !== '') ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
       style: {
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center'
       }
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
-      hidden: Boolean(!Item.itemName || String(typeof Item.itemName === 'string' ? Item.itemName : (_Item$itemName3 = Item.itemName) === null || _Item$itemName3 === void 0 ? void 0 : _Item$itemName3.itemName).trim().toLowerCase() === 'empty' || String(((_Item$itemName4 = Item.itemName) === null || _Item$itemName4 === void 0 ? void 0 : _Item$itemName4.itemName) || '').trim() === ''),
+      hidden: Boolean(!Item.itemName || String(typeof Item.itemName === 'string' ? Item.itemName : (_Item$itemName5 = Item.itemName) === null || _Item$itemName5 === void 0 ? void 0 : _Item$itemName5.itemName).trim().toLowerCase() === 'empty' || String(((_Item$itemName6 = Item.itemName) === null || _Item$itemName6 === void 0 ? void 0 : _Item$itemName6.itemName) || '').trim() === ''),
       sx: {
         fontSize: '23px'
       }
-    }, Item.itemName ? typeof Item.itemName === 'string' ? Item.itemName.toUpperCase() : ((_Item$itemName5 = Item.itemName) === null || _Item$itemName5 === void 0 || (_Item$itemName5 = _Item$itemName5.itemName) === null || _Item$itemName5 === void 0 ? void 0 : _Item$itemName5.toUpperCase()) || '' : ''), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+    }, Item.itemName ? typeof Item.itemName === 'string' ? Item.itemName.toUpperCase() : ((_Item$itemName7 = Item.itemName) === null || _Item$itemName7 === void 0 || (_Item$itemName7 = _Item$itemName7.itemName) === null || _Item$itemName7 === void 0 ? void 0 : _Item$itemName7.toUpperCase()) || '' : ''), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
       name: "itemDescription",
       id: "itemDescription",
       value: Item.itemDescription,
@@ -4370,10 +4370,10 @@ function MaintenanceConvertToInvoice() {
     draggableId: "droppable".concat(Item.idRow),
     index: i
   }, (provided, snapshot) => {
-    var _Item$itemName6, _Item$itemName7, _Item$itemName8, _Item$itemName9, _Item$itemName0;
+    var _Item$itemName8, _Item$itemName9, _Item$itemName0, _Item$itemName1, _Item$itemName10, _Item$itemName11, _Item$itemName12;
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("tr", _extends({
       ref: provided.innerRef
-    }, provided.draggableProps), Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName._id && !Item.itemName.itemName))) ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", provided.dragHandleProps, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
+    }, provided.draggableProps), Item.newDescription !== undefined && (!((_Item$itemName8 = Item.itemName) !== null && _Item$itemName8 !== void 0 && _Item$itemName8._id) || ((_Item$itemName9 = Item.itemName) === null || _Item$itemName9 === void 0 ? void 0 : _Item$itemName9.itemName) === 'empty' || !Item.itemName) ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", provided.dragHandleProps, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
       colSpan: 6
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
       required: true,
@@ -4402,18 +4402,18 @@ function MaintenanceConvertToInvoice() {
       style: {
         height: '100px'
       }
-    }, Boolean(((_Item$itemName6 = Item.itemName) === null || _Item$itemName6 === void 0 ? void 0 : _Item$itemName6._id) || typeof Item.itemName === 'string' && Item.itemName.trim() !== '' || ((_Item$itemName7 = Item.itemName) === null || _Item$itemName7 === void 0 ? void 0 : _Item$itemName7.itemName) && String(Item.itemName.itemName).trim() !== '' || Item.itemDescription && String(Item.itemDescription).trim() !== '') ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    }, Boolean(((_Item$itemName0 = Item.itemName) === null || _Item$itemName0 === void 0 ? void 0 : _Item$itemName0._id) || typeof Item.itemName === 'string' && Item.itemName.trim() !== '' || ((_Item$itemName1 = Item.itemName) === null || _Item$itemName1 === void 0 ? void 0 : _Item$itemName1.itemName) && String(Item.itemName.itemName).trim() !== '' || Item.itemDescription && String(Item.itemDescription).trim() !== '') ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
       style: {
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center'
       }
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
-      hidden: Boolean(!Item.itemName || String(typeof Item.itemName === 'string' ? Item.itemName : (_Item$itemName8 = Item.itemName) === null || _Item$itemName8 === void 0 ? void 0 : _Item$itemName8.itemName).trim().toLowerCase() === 'empty' || String(((_Item$itemName9 = Item.itemName) === null || _Item$itemName9 === void 0 ? void 0 : _Item$itemName9.itemName) || '').trim() === ''),
+      hidden: Boolean(!Item.itemName || String(typeof Item.itemName === 'string' ? Item.itemName : (_Item$itemName10 = Item.itemName) === null || _Item$itemName10 === void 0 ? void 0 : _Item$itemName10.itemName).trim().toLowerCase() === 'empty' || String(((_Item$itemName11 = Item.itemName) === null || _Item$itemName11 === void 0 ? void 0 : _Item$itemName11.itemName) || '').trim() === ''),
       sx: {
         fontSize: '23px'
       }
-    }, Item.itemName ? typeof Item.itemName === 'string' ? Item.itemName.toUpperCase() : ((_Item$itemName0 = Item.itemName) === null || _Item$itemName0 === void 0 || (_Item$itemName0 = _Item$itemName0.itemName) === null || _Item$itemName0 === void 0 ? void 0 : _Item$itemName0.toUpperCase()) || '' : ''), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+    }, Item.itemName ? typeof Item.itemName === 'string' ? Item.itemName.toUpperCase() : ((_Item$itemName12 = Item.itemName) === null || _Item$itemName12 === void 0 || (_Item$itemName12 = _Item$itemName12.itemName) === null || _Item$itemName12 === void 0 ? void 0 : _Item$itemName12.toUpperCase()) || '' : ''), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
       name: "itemDescription",
       id: "itemDescription",
       value: Item.itemDescription,

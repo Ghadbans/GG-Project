@@ -20,54 +20,265 @@ let latestFlyerBuffer = null;
 const FB_PAGE_ID = process.env.FB_PAGE_ID || '200999390054494';
 const FB_PAGE_ACCESS_TOKEN = process.env.FB_PAGE_ACCESS_TOKEN || 'EAAQS2kcRZBkABS3b5Bms9NfCQU4uM3qkyCxn6RMZBZCOCIMqhFzo8HUagkrZAmlsyWDm28b7lYEZCHGXNhzCavZCXH0voFuwWnafqtlzed80lhZCNzu2qXtX5b1WIPw3FwDBEnIpI23DgIcmBjCPIj8NgYZB7WcPp021uIvR0H8VapmiSIdpTn1L9wsLtRsvbHpgbeMC';
 
-function generateSvgFlyerBase64(headline, details, badge = 'SPECIAL OFFER', productImage = null) {
-  const safeBadge = String(badge || 'SPECIAL OFFER').toUpperCase();
-  const safeHeadline = String(headline || 'PROMOTIONAL OFFER').toUpperCase();
-  const safeDetails = String(details || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-  
-  let contentSvg = '';
+
+/**
+ * Strip meta-instructions, internal AI prompts, and conversational filler
+ */
+function sanitizeUserBrief(raw) {
+  let s = String(raw || '').trim();
+  s = s.replace(/make\s+(?:pro\s*fessional|professional|clean|nice|catchy)?\s*(?:flyer|banner|poster|ad|advertisement|design)?/gi, '');
+  s = s.replace(/don'?t\s+use\s+(?:to|too)\s+much\s+text!?/gi, '');
+  s = s.replace(/no\s+too\s+much\s+text!?/gi, '');
+  s = s.replace(/urgent!?|fast\s+please!?|asap!?|please!?/gi, '');
+  s = s.replace(/make\s+it\s+(?:pro|professional|good|clean|luxury)!?/gi, '');
+  s = s.replace(/[\r\n]+/g, ' ');
+  s = s.replace(/\s{2,}/g, ' ');
+  return s.trim();
+}
+
+/**
+ * Intelligent B2B & Retail Marketing Copy Engine
+ */
+function parseMarketingContent(rawBrief) {
+  const clean = sanitizeUserBrief(rawBrief);
+  const lower = clean.toLowerCase();
+
+  const discountMatch = clean.match(/(\d+%\s*(?:off|discount|remise))/i);
+  const priceMatch = clean.match(/(\$\s*\d+(?:\.\d+)?|\d+(?:\.\d+)?\s*(?:\$|usd|fc))/i);
+  let badge = discountMatch ? discountMatch[1].toUpperCase() : (priceMatch ? 'BEST PRICE' : 'SPECIAL OFFER');
+
+  let headline = '';
+  let subtitle = '';
+  let badges = [];
+
+  if (lower.includes('concrete') || lower.includes('block') || lower.includes('brique') || lower.includes('ciment') || lower.includes('chantier')) {
+    badge = 'PREMIUM QUALITY';
+    headline = 'PREMIUM CONCRETE BLOCKS';
+    if (lower.includes('all size') || lower.includes('sizes')) {
+      headline = 'PREMIUM CONCRETE BLOCKS (ALL SIZES)';
+    }
+    subtitle = 'Strength, durability and precision for high-quality construction.';
+    badges = [
+      { icon: 'STRENGTH', title: 'High Strength', sub: 'Certified load-bearing' },
+      { icon: 'DURABILITY', title: 'Long Durability', sub: 'Weather-resistant' },
+      { icon: 'QUALITY', title: 'Consistent Quality', sub: 'Calibrated dimensions' },
+      { icon: 'PROJECTS', title: 'Villas & Heavy Builds', sub: 'Ideal for premium sites' }
+    ];
+  } else if (lower.includes('solar') || lower.includes('inverter') || lower.includes('battery') || lower.includes('panneau')) {
+    badge = 'CLEAN ENERGY';
+    headline = 'SOLAR & POWER SOLUTIONS';
+    subtitle = 'Reliable uninterrupted energy engineered for industrial & residential power.';
+    badges = [
+      { icon: 'POWER', title: 'High Efficiency', sub: 'Maximum output' },
+      { icon: 'BATTERY', title: 'Deep Cycle Storage', sub: 'Long battery life' },
+      { icon: 'CERTIFIED', title: 'Certified Safe', sub: 'Full warranty included' },
+      { icon: 'SUPPORT', title: 'Pro Installation', sub: 'Local technical support' }
+    ];
+  } else if (lower.includes('mining') || lower.includes('heavy') || lower.includes('safety') || lower.includes('ppe')) {
+    badge = 'CERTIFIED B2B';
+    headline = 'MINING & INDUSTRIAL SUPPLIES';
+    subtitle = 'Heavy-duty equipment and consumables built for harsh operating environments.';
+    badges = [
+      { icon: 'HEAVY', title: 'Industrial Grade', sub: 'Engineered for mine sites' },
+      { icon: 'SAFETY', title: 'ISO Compliant', sub: 'Guaranteed protection' },
+      { icon: 'STOCK', title: 'Immediate Stock', sub: 'Direct from Kolwezi' },
+      { icon: 'DELIVERY', title: 'Site Delivery', sub: 'Fast logistics' }
+    ];
+  } else {
+    headline = clean.split(/[.\n|;]/)[0] || 'OFFICIAL PROMOTION';
+    if (headline.length > 40) headline = headline.substring(0, 38) + '...';
+    headline = headline.toUpperCase();
+    subtitle = 'Professional-grade quality and certified turnkey solutions available now.';
+    badges = [
+      { icon: 'QUALITY', title: 'Guaranteed Quality', sub: 'Certified standards' },
+      { icon: 'SUPPORT', title: 'Full Technical Support', sub: 'Dedicated service' },
+      { icon: 'VALUE', title: 'Competitive Pricing', sub: 'Best B2B terms' },
+      { icon: 'LOCAL', title: 'Immediate Availability', sub: 'In stock in Kolwezi' }
+    ];
+  }
+
+  const caption = '🔥 **GLOBAL GATE | EXCLUSIVE PROMOTION** 🔥\n\n' +
+    '⭐ **' + headline + '** 🏷️ **' + badge + '**\n\n' +
+    subtitle + '\n\n' +
+    'Take advantage of our verified solutions for contractors, businesses, and homes across Kolwezi and Lualaba:\n\n' +
+    badges.map(b => '🔹 **' + b.title + '**: ' + b.sub).join('\n') + '\n\n' +
+    '📍 **Showroom:** Global Gate SARL, Kolwezi, Lualaba, DR Congo\n' +
+    '📞 **Call / WhatsApp:** +243 827 722 222\n' +
+    '💬 Contact our team today to place your order or request an official quote!\n\n' +
+    '#GlobalGate #Kolwezi #Lualaba #DRC #QualityFirst #B2B #SpecialOffer';
+
+  return {
+    cleanBrief: clean,
+    badge,
+    headline,
+    subtitle,
+    badges,
+    caption
+  };
+}
+
+/**
+ * Agency-Grade Commercial Advertisement Flyer Generator (1080x1080 SVG)
+ */
+function generateSvgFlyerBase64(copyOrHeadline, details = '', badge = 'SPECIAL OFFER', productImage = null) {
+  let headline, subtitle, badgeText, badges;
+  if (typeof copyOrHeadline === 'object' && copyOrHeadline !== null) {
+    headline = copyOrHeadline.headline || 'PROMOTIONAL OFFER';
+    subtitle = copyOrHeadline.subtitle || copyOrHeadline.details || '';
+    badgeText = copyOrHeadline.badge || 'SPECIAL OFFER';
+    badges = copyOrHeadline.badges || [];
+    productImage = productImage || copyOrHeadline.productImage;
+  } else {
+    const parsed = parseMarketingContent(copyOrHeadline);
+    headline = parsed.headline;
+    subtitle = parsed.subtitle;
+    badgeText = badge || parsed.badge;
+    badges = parsed.badges;
+  }
+
+  const safeBadge = String(badgeText || 'SPECIAL OFFER').toUpperCase();
+  const safeHeadline = String(headline || 'PREMIUM PROMOTION').toUpperCase().replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  const safeSubtitle = String(subtitle || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+  let productSlotSvg = '';
   if (productImage && typeof productImage === 'string' && productImage.startsWith('data:image')) {
-    contentSvg = `
-      <rect x="90" y="320" width="900" height="490" rx="20" fill="#1e293b" stroke="#334155" stroke-width="2"/>
-      <image href="${productImage}" x="110" y="340" width="860" height="270" preserveAspectRatio="xMidYMid meet" />
-      <text x="540" y="650" font-family="Arial, sans-serif" font-weight="900" font-size="32" fill="#f8fafc" text-anchor="middle">${safeHeadline.substring(0, 45)}</text>
-      <foreignObject x="130" y="670" width="820" height="120">
-        <div xmlns="http://www.w3.org/1999/xhtml" style="font-family: Arial, sans-serif; font-size: 20px; color: #cbd5e1; text-align: center; line-height: 1.4;">
-          ${safeDetails.substring(0, 200)}
-        </div>
-      </foreignObject>
+    productSlotSvg = `
+      <!-- Product Card Container -->
+      <rect x="80" y="240" width="920" height="430" rx="20" fill="#131c2e" stroke="#334155" stroke-width="2" filter="url(#dropShadow)"/>
+      
+      <!-- Backlight Radial Glow -->
+      <circle cx="540" cy="455" r="210" fill="url(#productGlow)"/>
+      
+      <!-- High-Res Product Image -->
+      <image href="${productImage}" x="110" y="260" width="860" height="390" preserveAspectRatio="xMidYMid meet" />
     `;
   } else {
-    contentSvg = `
-      <rect x="90" y="340" width="900" height="460" rx="20" fill="#1e293b" stroke="#334155" stroke-width="2"/>
-      <text x="540" y="440" font-family="Arial, sans-serif" font-weight="900" font-size="40" fill="#f8fafc" text-anchor="middle">${safeHeadline.substring(0, 45)}</text>
-      <foreignObject x="130" y="490" width="820" height="280">
-        <div xmlns="http://www.w3.org/1999/xhtml" style="font-family: Arial, sans-serif; font-size: 26px; color: #cbd5e1; text-align: center; line-height: 1.5;">
-          ${safeDetails}
-        </div>
-      </foreignObject>
+    productSlotSvg = `
+      <!-- Graphic Banner Container -->
+      <rect x="80" y="240" width="920" height="430" rx="20" fill="#131c2e" stroke="#334155" stroke-width="2" filter="url(#dropShadow)"/>
+      <circle cx="540" cy="455" r="230" fill="url(#productGlow)"/>
+      <rect x="390" y="320" width="300" height="150" rx="16" fill="#1e293b" stroke="#f59e0b" stroke-width="2"/>
+      <text x="540" y="380" font-family="'Montserrat', Arial, sans-serif" font-weight="900" font-size="28" fill="#f59e0b" text-anchor="middle">CERTIFIED QUALITY</text>
+      <text x="540" y="420" font-family="Arial, sans-serif" font-weight="600" font-size="18" fill="#94a3b8" text-anchor="middle">GLOBAL GATE STANDARDS</text>
+      <text x="540" y="530" font-family="'Montserrat', Arial, sans-serif" font-weight="800" font-size="32" fill="#ffffff" text-anchor="middle">BUILT TO ENDURE</text>
+      <text x="540" y="570" font-family="Arial, sans-serif" font-weight="500" font-size="20" fill="#cbd5e1" text-anchor="middle">Proven Performance in Mining &amp; Construction</text>
     `;
   }
 
+  // 4 Feature Badges
+  const badge1 = badges[0] || { title: 'High Strength', sub: 'Certified load-bearing' };
+  const badge2 = badges[1] || { title: 'Long Durability', sub: 'Weather-resistant' };
+  const badge3 = badges[2] || { title: 'Consistent Quality', sub: 'Calibrated dimensions' };
+  const badge4 = badges[3] || { title: 'Villas & Heavy Builds', sub: 'Ideal for premium sites' };
+
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" viewBox="0 0 1080 1080">
-    <rect width="1080" height="1080" fill="#141a29"/>
-    <rect x="0" y="0" width="1080" height="20" fill="#f59e0b"/>
-    <text x="540" y="140" font-family="Arial, sans-serif" font-weight="900" font-size="64" fill="#ffffff" text-anchor="middle" letter-spacing="6">GLOBAL GATE</text>
-    <text x="540" y="190" font-family="Arial, sans-serif" font-weight="600" font-size="22" fill="#f59e0b" text-anchor="middle" letter-spacing="4">OFFICIAL PROMOTION</text>
-    
-    <rect x="360" y="235" width="360" height="54" rx="27" fill="#ef4444"/>
-    <text x="540" y="272" font-family="Arial, sans-serif" font-weight="800" font-size="26" fill="#ffffff" text-anchor="middle">${safeBadge}</text>
-    
-    ${contentSvg}
-    
-    <rect x="290" y="850" width="500" height="80" rx="40" fill="#10b981"/>
-    <text x="540" y="902" font-family="Arial, sans-serif" font-weight="800" font-size="30" fill="#ffffff" text-anchor="middle">💬 WhatsApp: +243 827 722 222</text>
-    
-    <text x="540" y="990" font-family="Arial, sans-serif" font-weight="500" font-size="20" fill="#64748b" text-anchor="middle">Global Gate SARL • Kolwezi, Lualaba, DR Congo</text>
+    <defs>
+      <linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#0a101d"/>
+        <stop offset="50%" stop-color="#11192b"/>
+        <stop offset="100%" stop-color="#080c15"/>
+      </linearGradient>
+      <linearGradient id="goldGrad" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%" stop-color="#f59e0b"/>
+        <stop offset="100%" stop-color="#fbbf24"/>
+      </linearGradient>
+      <radialGradient id="productGlow" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="rgba(245, 158, 11, 0.22)"/>
+        <stop offset="50%" stop-color="rgba(56, 189, 248, 0.08)"/>
+        <stop offset="100%" stop-color="rgba(19, 28, 46, 0)"/>
+      </radialGradient>
+      <filter id="dropShadow" x="-10%" y="-10%" width="120%" height="120%">
+        <feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#000000" flood-opacity="0.6"/>
+      </filter>
+    </defs>
+
+    <!-- Deep Modern Slate Canvas -->
+    <rect width="1080" height="1080" fill="url(#bgGrad)"/>
+    <rect x="0" y="0" width="1080" height="14" fill="url(#goldGrad)"/>
+
+    <!-- Subtle Background Architecture Geometry -->
+    <circle cx="990" cy="180" r="320" fill="none" stroke="rgba(245, 158, 11, 0.08)" stroke-width="2"/>
+    <circle cx="990" cy="180" r="480" fill="none" stroke="rgba(56, 189, 248, 0.04)" stroke-width="1"/>
+
+    <!-- Top Header: Brand & Badge -->
+    <g transform="translate(80, 50)">
+      <rect x="0" y="0" width="56" height="56" rx="14" fill="#1e293b" stroke="#f59e0b" stroke-width="2"/>
+      <text x="28" y="38" font-family="'Montserrat', 'Arial Black', sans-serif" font-weight="900" font-size="26" fill="#f59e0b" text-anchor="middle">GG</text>
+      <text x="74" y="28" font-family="'Montserrat', Arial, sans-serif" font-weight="900" font-size="28" fill="#ffffff" letter-spacing="3">GLOBAL GATE</text>
+      <text x="74" y="50" font-family="Arial, sans-serif" font-weight="700" font-size="13" fill="#94a3b8" letter-spacing="5">GENERAL SERVICES</text>
+    </g>
+
+    <!-- Badge Pill Top Right -->
+    <g transform="translate(710, 52)">
+      <rect x="0" y="0" width="290" height="50" rx="25" fill="#ef4444" filter="url(#dropShadow)"/>
+      <text x="145" y="32" font-family="'Montserrat', Arial, sans-serif" font-weight="900" font-size="19" fill="#ffffff" text-anchor="middle" letter-spacing="2">${safeBadge}</text>
+    </g>
+
+    <!-- Main Headline with Angled Gold Bar -->
+    <rect x="80" y="145" width="8" height="58" fill="url(#goldGrad)" rx="4"/>
+    <text x="105" y="185" font-family="'Montserrat', 'Arial Black', sans-serif" font-weight="900" font-size="36" fill="#ffffff" letter-spacing="1">${safeHeadline.substring(0, 42)}</text>
+    <text x="105" y="218" font-family="Arial, sans-serif" font-weight="500" font-size="20" fill="#94a3b8">${safeSubtitle.substring(0, 80)}</text>
+
+    <!-- Product Showcase Slot -->
+    ${productSlotSvg}
+
+    <!-- Callout Slogan Banner -->
+    <text x="540" y="705" font-family="'Montserrat', Arial, sans-serif" font-weight="800" font-size="22" fill="#f8fafc" text-anchor="middle">Not all products are created equal. <tspan fill="#f59e0b">Build with confidence.</tspan></text>
+
+    <!-- 4 Value Badges (Agency Grid) -->
+    <g transform="translate(80, 725)">
+      <!-- Badge 1 -->
+      <rect x="0" y="0" width="215" height="110" rx="14" fill="#131c2e" stroke="#25334d" stroke-width="1.5"/>
+      <circle cx="107" cy="34" r="18" fill="#1e293b"/>
+      <text x="107" y="41" font-size="18" text-anchor="middle">💪</text>
+      <text x="107" y="72" font-family="'Montserrat', Arial, sans-serif" font-weight="800" font-size="15" fill="#ffffff" text-anchor="middle">${badge1.title}</text>
+      <text x="107" y="93" font-family="Arial, sans-serif" font-weight="500" font-size="12" fill="#94a3b8" text-anchor="middle">${badge1.sub}</text>
+
+      <!-- Badge 2 -->
+      <rect x="235" y="0" width="215" height="110" rx="14" fill="#131c2e" stroke="#25334d" stroke-width="1.5"/>
+      <circle cx="342" cy="34" r="18" fill="#1e293b"/>
+      <text x="342" y="41" font-size="18" text-anchor="middle">🛡️</text>
+      <text x="342" y="72" font-family="'Montserrat', Arial, sans-serif" font-weight="800" font-size="15" fill="#ffffff" text-anchor="middle">${badge2.title}</text>
+      <text x="342" y="93" font-family="Arial, sans-serif" font-weight="500" font-size="12" fill="#94a3b8" text-anchor="middle">${badge2.sub}</text>
+
+      <!-- Badge 3 -->
+      <rect x="470" y="0" width="215" height="110" rx="14" fill="#131c2e" stroke="#25334d" stroke-width="1.5"/>
+      <circle cx="577" cy="34" r="18" fill="#1e293b"/>
+      <text x="577" y="41" font-size="18" text-anchor="middle">📏</text>
+      <text x="577" y="72" font-family="'Montserrat', Arial, sans-serif" font-weight="800" font-size="15" fill="#ffffff" text-anchor="middle">${badge3.title}</text>
+      <text x="577" y="93" font-family="Arial, sans-serif" font-weight="500" font-size="12" fill="#94a3b8" text-anchor="middle">${badge3.sub}</text>
+
+      <!-- Badge 4 -->
+      <rect x="705" y="0" width="215" height="110" rx="14" fill="#131c2e" stroke="#25334d" stroke-width="1.5"/>
+      <circle cx="812" cy="34" r="18" fill="#1e293b"/>
+      <text x="812" y="41" font-size="18" text-anchor="middle">🏛️</text>
+      <text x="812" y="72" font-family="'Montserrat', Arial, sans-serif" font-weight="800" font-size="15" fill="#ffffff" text-anchor="middle">${badge4.title}</text>
+      <text x="812" y="93" font-family="Arial, sans-serif" font-weight="500" font-size="12" fill="#94a3b8" text-anchor="middle">${badge4.sub}</text>
+    </g>
+
+    <!-- Bottom Commercial Action Bar -->
+    <g transform="translate(80, 875)">
+      <!-- Order Now Button -->
+      <rect x="0" y="0" width="280" height="74" rx="18" fill="url(#goldGrad)" filter="url(#dropShadow)"/>
+      <text x="140" y="46" font-family="'Montserrat', 'Arial Black', sans-serif" font-weight="900" font-size="24" fill="#0f172a" text-anchor="middle" letter-spacing="1">ORDER NOW!</text>
+
+      <!-- WhatsApp Button -->
+      <rect x="305" y="0" width="370" height="74" rx="18" fill="#10b981" filter="url(#dropShadow)"/>
+      <text x="490" y="46" font-family="'Montserrat', Arial, sans-serif" font-weight="800" font-size="22" fill="#ffffff" text-anchor="middle">💬 0827722222</text>
+
+      <!-- Location Badge -->
+      <rect x="700" y="0" width="220" height="74" rx="18" fill="#1e293b" stroke="#334155" stroke-width="2"/>
+      <text x="810" y="34" font-family="Arial, sans-serif" font-weight="700" font-size="14" fill="#f59e0b" text-anchor="middle">📍 LOCATION</text>
+      <text x="810" y="56" font-family="'Montserrat', Arial, sans-serif" font-weight="800" font-size="15" fill="#ffffff" text-anchor="middle">KOLWEZI - DRC</text>
+    </g>
+
+    <!-- Corporate Footer Note -->
+    <text x="540" y="1000" font-family="Arial, sans-serif" font-weight="500" font-size="17" fill="#64748b" text-anchor="middle">Global Gate SARL • Kolwezi, Lualaba Province, DR Congo</text>
   </svg>`;
-  
+
   return `data:image/svg+xml;base64,${Buffer.from(svg).toString('base64')}`;
 }
+
 
 /**
  * Access Control Middleware for Marketing
@@ -244,9 +455,10 @@ router.post('/publish', verifyMarketingAccess, async (req, res) => {
       }
     }
 
+    const cleanBriefForAgent = sanitizeUserBrief(brief) || brief;
     const args = [
       AGENT_SCRIPT,
-      brief,
+      cleanBriefForAgent,
       `--wa=${whatsappNumber || ''}`
     ];
 
@@ -341,16 +553,11 @@ router.post('/publish', verifyMarketingAccess, async (req, res) => {
   }
 
   // Strategy 3: Cloud / Remote fallback (when running on Railway server without local agent directory)
-  console.log('[Marketing] Running in remote environment. Attempting direct Facebook Graph API photo publish...');
+  console.log('[Marketing] Running in remote environment. Generating agency-grade flyer...');
   try {
-    const discountMatch = String(brief).match(/(\d+%\s*(?:off|discount|remise))/i);
-    const priceMatch = String(brief).match(/(\$\s*\d+(?:\.\d+)?|\d+(?:\.\d+)?\s*(?:\$|usd|fc))/i);
-    const badge = discountMatch ? discountMatch[1].toUpperCase() : (priceMatch ? 'BEST PRICE' : 'SPECIAL OFFER');
-    let headline = String(brief).replace(/(offer for this week|offer|special offer|promo|promotion|pour cette semaine)\s*[:-]?\s*/gi, '').trim();
-    if (headline.length > 40) headline = headline.substring(0, 40) + '...';
-
-    const flyerBase64 = generateSvgFlyerBase64(headline, brief, badge, productImage);
-    const caption = `🔥 **GLOBAL GATE - SPECIAL PROMOTION** 🔥\n\n📢 **${headline.toUpperCase()}**\n\n✨ **Details:** ${brief}\n\n📞 **Contact us today:** +243 827 722 222\n#GlobalGate #Promotion #SpecialOffer`;
+    const copyData = parseMarketingContent(brief);
+    const flyerBase64 = generateSvgFlyerBase64(copyData, '', copyData.badge, productImage);
+    const caption = copyData.caption;
 
     const svgBuffer = Buffer.from(flyerBase64.replace(/^data:image\/svg\+xml;base64,/, ''), 'base64');
     latestFlyerBuffer = svgBuffer;
@@ -361,12 +568,12 @@ router.post('/publish', verifyMarketingAccess, async (req, res) => {
         success: true,
         previewOnly: true,
         brief,
-        headline,
+        headline: copyData.headline,
         copy: {
-          badge,
-          headline,
-          details: brief,
-          caption
+          badge: copyData.badge,
+          headline: copyData.headline,
+          details: copyData.subtitle,
+          caption: copyData.caption
         },
         flyerBase64,
         facebook: { success: false, postId: null, postUrl: null, error: null },

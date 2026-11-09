@@ -1363,7 +1363,7 @@ The GLOBAL GATE Team`;
                                       <Draggable key={Item.idRow} draggableId={`droppable${Item.idRow}`} index={i}>
                                         {(provided, snapshot) => (
                                           <tr ref={provided.innerRef} {...provided.draggableProps}>
-                                            {(Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName._id && !Item.itemName.itemName)))) ? (
+                                            {(Item.newDescription !== undefined && (!Item.itemName?._id || Item.itemName?.itemName === 'empty' || !Item.itemName)) ? (
                                               <>
                                                 <td {...provided.dragHandleProps}>
                                                   <DragIndicatorRounded />
@@ -1592,7 +1592,7 @@ The GLOBAL GATE Team`;
                                       <Draggable key={Item.idRow} draggableId={`droppable${Item.idRow}`} index={i}>
                                         {(provided, snapshot) => (
                                           <tr ref={provided.innerRef} {...provided.draggableProps}>
-                                            {(Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName._id && !Item.itemName.itemName)))) ? (
+                                            {(Item.newDescription !== undefined && (!Item.itemName?._id || Item.itemName?.itemName === 'empty' || !Item.itemName)) ? (
                                               <>
                                                 <td {...provided.dragHandleProps}>
                                                   <DragIndicatorRounded />

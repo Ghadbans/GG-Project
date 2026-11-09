@@ -856,7 +856,7 @@ The GLOBAL GATE Team`;
                                               {...provided.draggableProps}
                                             >
                                               {
-                                                (Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName._id && !Item.itemName.itemName)))) ? (
+                                                (Item.newDescription !== undefined && (!Item.itemName?._id || Item.itemName?.itemName === 'empty' || !Item.itemName)) ? (
                                                   <>
                                                     <td {...provided.dragHandleProps} ><DragIndicatorRounded /></td>
                                                     <td colSpan={6}><TextField
@@ -1061,7 +1061,7 @@ The GLOBAL GATE Team`;
                                             {...provided.draggableProps}
                                           >
                                             {
-                                              (Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName._id && !Item.itemName.itemName)))) ? (
+                                              (Item.newDescription !== undefined && (!Item.itemName?._id || Item.itemName?.itemName === 'empty' || !Item.itemName)) ? (
                                                 <>
                                                   <td {...provided.dragHandleProps} ><DragIndicatorRounded /></td>
                                                   <td colSpan={6}><TextField
