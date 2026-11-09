@@ -4648,3 +4648,52 @@ The standardized `renderStatusBadge` helper was seamlessly integrated into all 1
 - **Android APK**: Synchronized Capacitor container and compiled via Gradle to `GlobalGate-v3.6.39.apk` and synchronized to `server/public/downloads/GlobalGate.apk`.
 - **Windows Executable**: Packaged `dist/Global Gate Setup 3.6.39.exe` via `electron-builder` and synchronized to `server/public/downloads/GlobalGate-v3.6.39.exe` and `server/public/downloads/GlobalGateSetup.exe`.
 - **Deployment**: Committed and pushed to GitHub `origin main`.
+
+---
+
+## [2026-11-09] - Release v3.6.40: SENT Invoice WhatsApp PDF Dispatch Engine & Grant Access Permission Governance
+
+### 1. Requirements & User Requests
+1. **Flyer Mode Label Refinement**:
+   - In Marketing module (`MarketingViewAdmin.js`), simplified the toggle label: changed `Ready-Made Flyer Mode (Upload from ChatGPT / Designer)` to cleanly read `Ready-Made Flyer Mode`.
+2. **Invoice Module WhatsApp PDF Dispatch Engine**:
+   - In `INVOICE` module (`InvoiceViewAdmin.js`), added capability to send invoices directly to their clients on WhatsApp.
+   - **Strict Status Condition**: Strictly and ONLY invoices with status `SENT` (case-insensitive) can be shown and dispatched.
+   - **Official Dispatch Line**: Sent strictly from official company WhatsApp line `+243 827 722 222`.
+   - **Customizable Short Message (English)**: The user writes one short message in English (e.g. *"Dear Valued Customer, please find attached your official invoice from Global Gate SARL. Thank you for your business!"*). The user can edit it anytime and click "Save as Default" to persist across future dispatches.
+   - **Multiple Invoices for One Client**: When a client has multiple invoices in `SENT` status, all are sent one by one: the first invoice is delivered with the customizable short message and invoice reference caption, and subsequent invoices for that client are delivered sequentially with invoice reference and amount captions, with anti-spam pauses between them (3-5s).
+   - **Pre-Send Review & Unchecking**: Before sending, the user is presented with a full review dialog listing each invoice with client name, date, invoice number, amount, and an editable phone number input field. The user can uncheck any invoice or client they do not want to send to.
+   - **Grant Access Module Governance**: Controlled by `whatsappInvoice` permission in the Grant Access module (`grantAccessSchema.js`, `GrantAccessFormView.js`, `GrantAccessUpdateView.js`). Only authorized users (and master account `GG` via universal bypass) can perform WhatsApp invoice dispatches.
+
+### 2. Implementation Changes
+1. **Grant Access Schema & Views**:
+   - `server/model/grantAccessSchema.js`: Added `whatsappInvoice: { type: Boolean, default: false }`.
+   - `server/routes/Routes.js`: Updated `/create-grantAccess` and `/update-grantAccess/:id` to handle `whatsappInvoice`.
+   - `src/js/AdminView1/PageView/SettingsView/GrantAccessFormView.js` & `GrantAccessUpdateView.js`: Added state, fetch, and toggle: `Send WhatsApp Invoices: Granted / Denied`.
+2. **Backend Template & Routes (`server/model/invoiceWhatsAppTemplateSchema.js` & `server/routes/invoiceWhatsAppRoutes.js`)**:
+   - Created MongoDB schema `InvoiceWhatsAppTemplate` with default English message:
+     `"Dear Valued Customer, please find attached your official invoice from Global Gate SARL. Thank you for your business!"`
+   - Added `GET /api/invoice-whatsapp/template` and `POST /api/invoice-whatsapp/template`.
+   - Added `POST /api/invoice-whatsapp/send` with strict validation that every invoice has status `SENT`.
+   - Mounted routes on both `/api/invoice-whatsapp` and `/endpoint/invoice-whatsapp` in `server/index.js`.
+3. **Local WhatsApp Agent (`C:\Users\GG\fb-whatsapp-agent\agent.js`)**:
+   - Added `buildInvoiceHtml(inv)`: Produces a clean, vector-ready A4 HTML invoice with Global Gate logo, company header, bill to, items table, financial breakdown (subtotal, TVA, total, paid, balance due), and banking coordinates.
+   - Added `generateInvoicePdf(invoice, outputPath)`: Uses Puppeteer to generate high-resolution A4 PDFs in ~2 seconds.
+   - Added `sendInvoicesBatch({ invoices, templateMessage, phoneOverrides })`: Connects via `whatsapp-web.js` with `.wwebjs_auth` session (`+243 827 722 222`), groups invoices by client, and dispatches one by one with customizable captions and anti-spam delays.
+   - Added CLI flag `--invoice-batch` and HTTP daemon route `POST /send-invoices`.
+4. **Electron Desktop IPC (`main.js` & `preload.js`)**:
+   - Added `ipcMain.handle('send-invoice-whatsapp')` in `main.js`.
+   - Exposed `window.electron.sendInvoiceWhatsApp` in `preload.js`.
+5. **Invoice Admin Frontend (`src/js/AdminView1/InvoiceViewAdmin.js`)**:
+   - Checked permission: `canSendWhatsAppInvoice = user?.data?.userName === 'GG' || grantAccessRecord?.whatsappInvoice === true`.
+   - Added green action button in toolbar: `Send SENT via WhatsApp`.
+   - Added dedicated `whatsapp` action column in DataGrid with WhatsApp icon, enabled for rows where status is `SENT`.
+   - Added full Review & Dispatch Dialog with English short message editor, "Save as Default" button, review table with checkboxes (pre-checked), editable phone number inputs, live progress indicators, and completion report.
+
+### 3. Multi-Platform Verification & Packaging
+- **AST Quality Gate**: Verified `0` syntax or structural errors across all source files (`node scripts/pre-build-check.js`).
+- **Version Bump**: Bumped to `v3.6.40` across `package.json`, `server/package.json`, and `server/routes/downloadRoutes.js`.
+- **Production Bundles**: Compiled desktop and web production bundles via Webpack (`dist_web/`) with zero errors.
+- **Android APK**: Synchronized Capacitor container and compiled via Gradle to `GlobalGate-v3.6.40.apk` and synchronized to `server/public/downloads/GlobalGate.apk`.
+- **Windows Executable**: Packaged `dist/Global Gate Setup 3.6.40.exe` via `electron-builder` and synchronized to `server/public/downloads/GlobalGate-v3.6.40.exe` and `server/public/downloads/GlobalGateSetup.exe`.
+- **Deployment**: Committed and pushed to GitHub `origin main`.

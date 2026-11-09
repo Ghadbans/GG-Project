@@ -467,3 +467,61 @@ ipcMain.handle('run-marketing', async (event, payload) => {
     });
   });
 });
+
+ipcMain.handle('send-invoice-whatsapp', async (event, payload) => {
+  const { invoices = [], templateMessage = '', phoneOverrides = {} } = payload || {};
+  const agentDir = 'C:\\Users\\GG\\fb-whatsapp-agent';
+  const agentScript = path.join(agentDir, 'agent.js');
+
+  if (!fs.existsSync(agentScript)) {
+    return {
+      success: false,
+      error: `WhatsApp agent script not found at ${agentScript}`
+    };
+  }
+
+  const validInvoices = invoices.filter(inv => String(inv.status || '').toUpperCase().trim() === 'SENT');
+  if (validInvoices.length === 0) {
+    return {
+      success: false,
+      error: 'Only invoices with status SENT can be sent via WhatsApp.'
+    };
+  }
+
+  const tempPayloadPath = path.join(agentDir, `invoice_batch_${Date.now()}.json`);
+  fs.writeFileSync(tempPayloadPath, JSON.stringify({
+    invoices: validInvoices,
+    templateMessage: templateMessage || 'Dear Valued Customer, please find attached your official invoice from Global Gate SARL. Thank you for your business!',
+    phoneOverrides
+  }, null, 2), 'utf-8');
+
+  const timeoutMs = 120000 + Math.max(0, validInvoices.length - 1) * 35000;
+
+  return new Promise((resolve) => {
+    execFile('node', [agentScript, '--invoice-batch', `--payload=${tempPayloadPath}`], {
+      cwd: agentDir,
+      timeout: timeoutMs,
+      maxBuffer: 20 * 1024 * 1024
+    }, (error, stdout, stderr) => {
+      try { fs.unlinkSync(tempPayloadPath); } catch (_) {}
+
+      let report = null;
+      const reportMatch = (stdout || '').match(/INVOICE_REPORT_JSON:(\{.*\})/);
+      if (reportMatch) {
+        try { report = JSON.parse(reportMatch[1]); } catch (_) {}
+      }
+
+      const success = !error && Boolean(report?.success !== false);
+      resolve({
+        success,
+        error: error ? (error.message || stderr) : null,
+        report: report || {
+          total: validInvoices.length,
+          sent: (stdout || '').includes('[SUCCESS] Invoice') ? 1 : 0,
+          output: stdout || stderr
+        }
+      });
+    });
+  });
+});
+

@@ -1,0 +1,150 @@
+const express = require('express');
+const router = express.Router();
+const path = require('path');
+const fs = require('fs');
+const { execFile } = require('child_process');
+const axios = require('axios');
+const InvoiceWhatsAppTemplate = require('../model/invoiceWhatsAppTemplateSchema');
+
+const AGENT_DIR = 'C:\\Users\\GG\\fb-whatsapp-agent';
+const AGENT_SCRIPT = path.join(AGENT_DIR, 'agent.js');
+const AGENT_DAEMON_URL = 'http://127.0.0.1:5055';
+
+// 1. Get WhatsApp Invoice Message Template
+router.get('/template', async (req, res) => {
+  try {
+    let doc = await InvoiceWhatsAppTemplate.findOne({ key: 'invoice_whatsapp_message' }).lean();
+    if (!doc) {
+      doc = await InvoiceWhatsAppTemplate.create({
+        key: 'invoice_whatsapp_message',
+        templateMessage: InvoiceWhatsAppTemplate.DEFAULT_INVOICE_WHATSAPP_MESSAGE,
+        updatedBy: 'System'
+      });
+    }
+    return res.json({
+      success: true,
+      templateMessage: doc.templateMessage || InvoiceWhatsAppTemplate.DEFAULT_INVOICE_WHATSAPP_MESSAGE
+    });
+  } catch (err) {
+    console.error('[InvoiceWhatsApp] Error getting template:', err);
+    return res.status(500).json({
+      success: false,
+      error: err.message,
+      templateMessage: InvoiceWhatsAppTemplate.DEFAULT_INVOICE_WHATSAPP_MESSAGE
+    });
+  }
+});
+
+// 2. Save / Update WhatsApp Invoice Message Template
+router.post('/template', async (req, res) => {
+  try {
+    const { templateMessage, updatedBy } = req.body;
+    if (!templateMessage || !templateMessage.trim()) {
+      return res.status(400).json({ success: false, error: 'Template message cannot be empty' });
+    }
+    const doc = await InvoiceWhatsAppTemplate.findOneAndUpdate(
+      { key: 'invoice_whatsapp_message' },
+      {
+        $set: {
+          templateMessage: templateMessage.trim(),
+          updatedBy: updatedBy || 'GG'
+        }
+      },
+      { upsert: true, new: true, setDefaultsOnInsert: true }
+    );
+    return res.json({ success: true, message: 'Template saved successfully', data: doc });
+  } catch (err) {
+    console.error('[InvoiceWhatsApp] Error saving template:', err);
+    return res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+// 3. Dispatch Selected SENT Invoices via WhatsApp
+router.post('/send', async (req, res) => {
+  try {
+    const { invoices, templateMessage, phoneOverrides = {} } = req.body;
+    if (!Array.isArray(invoices) || invoices.length === 0) {
+      return res.status(400).json({ success: false, error: 'No invoices selected for dispatch' });
+    }
+
+    // Safety Filter: Strictly enforce that only invoices in SENT status can be dispatched
+    const validInvoices = invoices.filter(inv => {
+      const st = String(inv.status || '').toUpperCase().trim();
+      return st === 'SENT';
+    });
+
+    if (validInvoices.length === 0) {
+      return res.status(400).json({
+        success: false,
+        error: 'Only invoices with status SENT can be dispatched via WhatsApp.'
+      });
+    }
+
+    const payload = {
+      invoices: validInvoices,
+      templateMessage: (templateMessage || InvoiceWhatsAppTemplate.DEFAULT_INVOICE_WHATSAPP_MESSAGE).trim(),
+      phoneOverrides
+    };
+
+    // Strategy 1: Check if Agent HTTP Daemon is running
+    try {
+      const daemonCheck = await axios.get(`${AGENT_DAEMON_URL}/status`, { timeout: 1500 });
+      if (daemonCheck.status === 200) {
+        console.log('[InvoiceWhatsApp] Forwarding to active HTTP daemon at:', AGENT_DAEMON_URL);
+        const daemonRes = await axios.post(`${AGENT_DAEMON_URL}/send-invoices`, payload, {
+          timeout: 300000 // 5 minute timeout for batch dispatches
+        });
+        return res.json(daemonRes.data);
+      }
+    } catch (_) {
+      // Daemon not active, proceed to child_process execution
+    }
+
+    // Strategy 2: Execute local agent.js script directly via Node
+    if (fs.existsSync(AGENT_SCRIPT)) {
+      const tempPayloadPath = path.join(AGENT_DIR, `invoice_batch_${Date.now()}.json`);
+      fs.writeFileSync(tempPayloadPath, JSON.stringify(payload, null, 2), 'utf-8');
+
+      const timeoutMs = 120000 + Math.max(0, validInvoices.length - 1) * 35000;
+      execFile('node', [AGENT_SCRIPT, '--invoice-batch', `--payload=${tempPayloadPath}`], {
+        cwd: AGENT_DIR,
+        timeout: timeoutMs,
+        maxBuffer: 20 * 1024 * 1024
+      }, (error, stdout, stderr) => {
+        try { fs.unlinkSync(tempPayloadPath); } catch (_) {}
+
+        if (error) {
+          console.error('[InvoiceWhatsApp] Agent execution error:', error, stderr);
+        }
+
+        let report = null;
+        const reportMatch = (stdout || '').match(/INVOICE_REPORT_JSON:(\{.*\})/);
+        if (reportMatch) {
+          try { report = JSON.parse(reportMatch[1]); } catch (_) {}
+        }
+
+        return res.json({
+          success: !error && Boolean(report?.success !== false),
+          report: report || {
+            total: validInvoices.length,
+            sent: stdout.includes('[SUCCESS] Invoice') ? 1 : 0,
+            stdout,
+            stderr
+          }
+        });
+      });
+      return;
+    }
+
+    return res.status(503).json({
+      success: false,
+      error: 'WhatsApp local agent is not running or not installed on this workstation.'
+    });
+
+  } catch (err) {
+    console.error('[InvoiceWhatsApp] Send error:', err);
+    return res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+module.exports = router;

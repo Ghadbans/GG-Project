@@ -20,6 +20,7 @@ const grantAccessSchema = new Schema(
     messageVisibility: { type: Boolean, default: false },
     backupVisibility: { type: Boolean, default: false },
     marketing: { type: Boolean, default: false },
+    whatsappInvoice: { type: Boolean, default: false },
     branchId: { type: String, default: 'HQ' },
   },
   {

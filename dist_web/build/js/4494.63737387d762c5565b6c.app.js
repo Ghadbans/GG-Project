@@ -1,4 +1,4 @@
-(this["webpackChunkgg_management"] = this["webpackChunkgg_management"] || []).push([[9357],{
+(this["webpackChunkgg_management"] = this["webpackChunkgg_management"] || []).push([[4494],{
 
 /***/ 40530
 (__unused_webpack_module, exports, __webpack_require__) {
@@ -550,6 +550,346 @@ var _default = exports.A = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRun
 /* harmony export */   "A", 0, /* export default binding */ __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ ]);
 
+
+/***/ },
+
+/***/ 36632
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+
+// EXPORTS
+__webpack_require__.d(__webpack_exports__, {
+  A: () => (/* binding */ Alert_Alert)
+});
+
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js
+var objectWithoutPropertiesLoose = __webpack_require__(98587);
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/extends.js
+var esm_extends = __webpack_require__(58168);
+// EXTERNAL MODULE: ./node_modules/react/index.js
+var react = __webpack_require__(96540);
+// EXTERNAL MODULE: ./node_modules/clsx/dist/clsx.mjs
+var clsx = __webpack_require__(34164);
+// EXTERNAL MODULE: ./node_modules/@mui/utils/esm/composeClasses/composeClasses.js
+var composeClasses = __webpack_require__(75659);
+// EXTERNAL MODULE: ./node_modules/@mui/system/colorManipulator.js
+var colorManipulator = __webpack_require__(771);
+// EXTERNAL MODULE: ./node_modules/@mui/material/styles/styled.js
+var styled = __webpack_require__(11848);
+// EXTERNAL MODULE: ./node_modules/@mui/material/DefaultPropsProvider/DefaultPropsProvider.js
+var DefaultPropsProvider = __webpack_require__(25669);
+// EXTERNAL MODULE: ./node_modules/@mui/material/utils/useSlot.js
+var useSlot = __webpack_require__(6025);
+// EXTERNAL MODULE: ./node_modules/@mui/material/utils/capitalize.js
+var capitalize = __webpack_require__(28466);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Paper/Paper.js + 2 modules
+var Paper = __webpack_require__(60538);
+// EXTERNAL MODULE: ./node_modules/@mui/utils/esm/generateUtilityClasses/generateUtilityClasses.js
+var generateUtilityClasses = __webpack_require__(38413);
+// EXTERNAL MODULE: ./node_modules/@mui/utils/esm/generateUtilityClass/generateUtilityClass.js
+var generateUtilityClass = __webpack_require__(31609);
+;// ./node_modules/@mui/material/Alert/alertClasses.js
+
+
+function getAlertUtilityClass(slot) {
+  return (0,generateUtilityClass/* default */.Ay)('MuiAlert', slot);
+}
+const alertClasses = (0,generateUtilityClasses/* default */.A)('MuiAlert', ['root', 'action', 'icon', 'message', 'filled', 'colorSuccess', 'colorInfo', 'colorWarning', 'colorError', 'filledSuccess', 'filledInfo', 'filledWarning', 'filledError', 'outlined', 'outlinedSuccess', 'outlinedInfo', 'outlinedWarning', 'outlinedError', 'standard', 'standardSuccess', 'standardInfo', 'standardWarning', 'standardError']);
+/* harmony default export */ const Alert_alertClasses = (alertClasses);
+// EXTERNAL MODULE: ./node_modules/@mui/material/IconButton/IconButton.js + 1 modules
+var IconButton = __webpack_require__(11641);
+// EXTERNAL MODULE: ./node_modules/@mui/material/utils/createSvgIcon.js
+var createSvgIcon = __webpack_require__(20561);
+// EXTERNAL MODULE: ./node_modules/react/jsx-runtime.js
+var jsx_runtime = __webpack_require__(74848);
+;// ./node_modules/@mui/material/internal/svg-icons/SuccessOutlined.js
+'use client';
+
+
+
+
+/**
+ * @ignore - internal component.
+ */
+
+/* harmony default export */ const SuccessOutlined = ((0,createSvgIcon/* default */.A)( /*#__PURE__*/(0,jsx_runtime.jsx)("path", {
+  d: "M20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4C12.76,4 13.5,4.11 14.2, 4.31L15.77,2.74C14.61,2.26 13.34,2 12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0, 0 22,12M7.91,10.08L6.5,11.5L11,16L21,6L19.59,4.58L11,13.17L7.91,10.08Z"
+}), 'SuccessOutlined'));
+;// ./node_modules/@mui/material/internal/svg-icons/ReportProblemOutlined.js
+'use client';
+
+
+
+
+/**
+ * @ignore - internal component.
+ */
+
+/* harmony default export */ const ReportProblemOutlined = ((0,createSvgIcon/* default */.A)( /*#__PURE__*/(0,jsx_runtime.jsx)("path", {
+  d: "M12 5.99L19.53 19H4.47L12 5.99M12 2L1 21h22L12 2zm1 14h-2v2h2v-2zm0-6h-2v4h2v-4z"
+}), 'ReportProblemOutlined'));
+;// ./node_modules/@mui/material/internal/svg-icons/ErrorOutline.js
+'use client';
+
+
+
+
+/**
+ * @ignore - internal component.
+ */
+
+/* harmony default export */ const ErrorOutline = ((0,createSvgIcon/* default */.A)( /*#__PURE__*/(0,jsx_runtime.jsx)("path", {
+  d: "M11 15h2v2h-2zm0-8h2v6h-2zm.99-5C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
+}), 'ErrorOutline'));
+;// ./node_modules/@mui/material/internal/svg-icons/InfoOutlined.js
+'use client';
+
+
+
+
+/**
+ * @ignore - internal component.
+ */
+
+/* harmony default export */ const InfoOutlined = ((0,createSvgIcon/* default */.A)( /*#__PURE__*/(0,jsx_runtime.jsx)("path", {
+  d: "M11,9H13V7H11M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20, 12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10, 10 0 0,0 12,2M11,17H13V11H11V17Z"
+}), 'InfoOutlined'));
+// EXTERNAL MODULE: ./node_modules/@mui/material/internal/svg-icons/Close.js
+var Close = __webpack_require__(49350);
+;// ./node_modules/@mui/material/Alert/Alert.js
+'use client';
+
+
+
+const _excluded = ["action", "children", "className", "closeText", "color", "components", "componentsProps", "icon", "iconMapping", "onClose", "role", "severity", "slotProps", "slots", "variant"];
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const useUtilityClasses = ownerState => {
+  const {
+    variant,
+    color,
+    severity,
+    classes
+  } = ownerState;
+  const slots = {
+    root: ['root', `color${(0,capitalize/* default */.A)(color || severity)}`, `${variant}${(0,capitalize/* default */.A)(color || severity)}`, `${variant}`],
+    icon: ['icon'],
+    message: ['message'],
+    action: ['action']
+  };
+  return (0,composeClasses/* default */.A)(slots, getAlertUtilityClass, classes);
+};
+const AlertRoot = (0,styled/* default */.Ay)(Paper/* default */.A, {
+  name: 'MuiAlert',
+  slot: 'Root',
+  overridesResolver: (props, styles) => {
+    const {
+      ownerState
+    } = props;
+    return [styles.root, styles[ownerState.variant], styles[`${ownerState.variant}${(0,capitalize/* default */.A)(ownerState.color || ownerState.severity)}`]];
+  }
+})(({
+  theme
+}) => {
+  const getColor = theme.palette.mode === 'light' ? colorManipulator/* darken */.e$ : colorManipulator/* lighten */.a;
+  const getBackgroundColor = theme.palette.mode === 'light' ? colorManipulator/* lighten */.a : colorManipulator/* darken */.e$;
+  return (0,esm_extends/* default */.A)({}, theme.typography.body2, {
+    backgroundColor: 'transparent',
+    display: 'flex',
+    padding: '6px 16px',
+    variants: [...Object.entries(theme.palette).filter(([, value]) => value.main && value.light).map(([color]) => ({
+      props: {
+        colorSeverity: color,
+        variant: 'standard'
+      },
+      style: {
+        color: theme.vars ? theme.vars.palette.Alert[`${color}Color`] : getColor(theme.palette[color].light, 0.6),
+        backgroundColor: theme.vars ? theme.vars.palette.Alert[`${color}StandardBg`] : getBackgroundColor(theme.palette[color].light, 0.9),
+        [`& .${Alert_alertClasses.icon}`]: theme.vars ? {
+          color: theme.vars.palette.Alert[`${color}IconColor`]
+        } : {
+          color: theme.palette[color].main
+        }
+      }
+    })), ...Object.entries(theme.palette).filter(([, value]) => value.main && value.light).map(([color]) => ({
+      props: {
+        colorSeverity: color,
+        variant: 'outlined'
+      },
+      style: {
+        color: theme.vars ? theme.vars.palette.Alert[`${color}Color`] : getColor(theme.palette[color].light, 0.6),
+        border: `1px solid ${(theme.vars || theme).palette[color].light}`,
+        [`& .${Alert_alertClasses.icon}`]: theme.vars ? {
+          color: theme.vars.palette.Alert[`${color}IconColor`]
+        } : {
+          color: theme.palette[color].main
+        }
+      }
+    })), ...Object.entries(theme.palette).filter(([, value]) => value.main && value.dark).map(([color]) => ({
+      props: {
+        colorSeverity: color,
+        variant: 'filled'
+      },
+      style: (0,esm_extends/* default */.A)({
+        fontWeight: theme.typography.fontWeightMedium
+      }, theme.vars ? {
+        color: theme.vars.palette.Alert[`${color}FilledColor`],
+        backgroundColor: theme.vars.palette.Alert[`${color}FilledBg`]
+      } : {
+        backgroundColor: theme.palette.mode === 'dark' ? theme.palette[color].dark : theme.palette[color].main,
+        color: theme.palette.getContrastText(theme.palette[color].main)
+      })
+    }))]
+  });
+});
+const AlertIcon = (0,styled/* default */.Ay)('div', {
+  name: 'MuiAlert',
+  slot: 'Icon',
+  overridesResolver: (props, styles) => styles.icon
+})({
+  marginRight: 12,
+  padding: '7px 0',
+  display: 'flex',
+  fontSize: 22,
+  opacity: 0.9
+});
+const AlertMessage = (0,styled/* default */.Ay)('div', {
+  name: 'MuiAlert',
+  slot: 'Message',
+  overridesResolver: (props, styles) => styles.message
+})({
+  padding: '8px 0',
+  minWidth: 0,
+  overflow: 'auto'
+});
+const AlertAction = (0,styled/* default */.Ay)('div', {
+  name: 'MuiAlert',
+  slot: 'Action',
+  overridesResolver: (props, styles) => styles.action
+})({
+  display: 'flex',
+  alignItems: 'flex-start',
+  padding: '4px 0 0 16px',
+  marginLeft: 'auto',
+  marginRight: -8
+});
+const defaultIconMapping = {
+  success: /*#__PURE__*/(0,jsx_runtime.jsx)(SuccessOutlined, {
+    fontSize: "inherit"
+  }),
+  warning: /*#__PURE__*/(0,jsx_runtime.jsx)(ReportProblemOutlined, {
+    fontSize: "inherit"
+  }),
+  error: /*#__PURE__*/(0,jsx_runtime.jsx)(ErrorOutline, {
+    fontSize: "inherit"
+  }),
+  info: /*#__PURE__*/(0,jsx_runtime.jsx)(InfoOutlined, {
+    fontSize: "inherit"
+  })
+};
+const Alert = /*#__PURE__*/react.forwardRef(function Alert(inProps, ref) {
+  const props = (0,DefaultPropsProvider/* useDefaultProps */.b)({
+    props: inProps,
+    name: 'MuiAlert'
+  });
+  const {
+      action,
+      children,
+      className,
+      closeText = 'Close',
+      color,
+      components = {},
+      componentsProps = {},
+      icon,
+      iconMapping = defaultIconMapping,
+      onClose,
+      role = 'alert',
+      severity = 'success',
+      slotProps = {},
+      slots = {},
+      variant = 'standard'
+    } = props,
+    other = (0,objectWithoutPropertiesLoose/* default */.A)(props, _excluded);
+  const ownerState = (0,esm_extends/* default */.A)({}, props, {
+    color,
+    severity,
+    variant,
+    colorSeverity: color || severity
+  });
+  const classes = useUtilityClasses(ownerState);
+  const externalForwardedProps = {
+    slots: (0,esm_extends/* default */.A)({
+      closeButton: components.CloseButton,
+      closeIcon: components.CloseIcon
+    }, slots),
+    slotProps: (0,esm_extends/* default */.A)({}, componentsProps, slotProps)
+  };
+  const [CloseButtonSlot, closeButtonProps] = (0,useSlot/* default */.A)('closeButton', {
+    elementType: IconButton/* default */.A,
+    externalForwardedProps,
+    ownerState
+  });
+  const [CloseIconSlot, closeIconProps] = (0,useSlot/* default */.A)('closeIcon', {
+    elementType: Close/* default */.A,
+    externalForwardedProps,
+    ownerState
+  });
+  return /*#__PURE__*/(0,jsx_runtime.jsxs)(AlertRoot, (0,esm_extends/* default */.A)({
+    role: role,
+    elevation: 0,
+    ownerState: ownerState,
+    className: (0,clsx/* default */.A)(classes.root, className),
+    ref: ref
+  }, other, {
+    children: [icon !== false ? /*#__PURE__*/(0,jsx_runtime.jsx)(AlertIcon, {
+      ownerState: ownerState,
+      className: classes.icon,
+      children: icon || iconMapping[severity] || defaultIconMapping[severity]
+    }) : null, /*#__PURE__*/(0,jsx_runtime.jsx)(AlertMessage, {
+      ownerState: ownerState,
+      className: classes.message,
+      children: children
+    }), action != null ? /*#__PURE__*/(0,jsx_runtime.jsx)(AlertAction, {
+      ownerState: ownerState,
+      className: classes.action,
+      children: action
+    }) : null, action == null && onClose ? /*#__PURE__*/(0,jsx_runtime.jsx)(AlertAction, {
+      ownerState: ownerState,
+      className: classes.action,
+      children: /*#__PURE__*/(0,jsx_runtime.jsx)(CloseButtonSlot, (0,esm_extends/* default */.A)({
+        size: "small",
+        "aria-label": closeText,
+        title: closeText,
+        color: "inherit",
+        onClick: onClose
+      }, closeButtonProps, {
+        children: /*#__PURE__*/(0,jsx_runtime.jsx)(CloseIconSlot, (0,esm_extends/* default */.A)({
+          fontSize: "small"
+        }, closeIconProps))
+      }))
+    }) : null]
+  }));
+});
+ false ? 0 : void 0;
+/* harmony default export */ const Alert_Alert = (Alert);
 
 /***/ },
 
@@ -2119,7 +2459,7 @@ const GridToolbar = /*#__PURE__*/react.forwardRef(function GridToolbar(props, re
 
 /***/ },
 
-/***/ 9357
+/***/ 94494
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2159,6 +2499,8 @@ var IconButton = __webpack_require__(11641);
 var Box = __webpack_require__(69067);
 // EXTERNAL MODULE: ./node_modules/@mui/material/Typography/Typography.js + 1 modules
 var Typography = __webpack_require__(14073);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Button/Button.js + 3 modules
+var Button = __webpack_require__(86990);
 // EXTERNAL MODULE: ./node_modules/@mui/material/Pagination/Pagination.js + 6 modules
 var Pagination = __webpack_require__(69279);
 // EXTERNAL MODULE: ./node_modules/@mui/material/Modal/Modal.js + 3 modules
@@ -2175,6 +2517,36 @@ var InputLabel = __webpack_require__(29571);
 var Select = __webpack_require__(2071);
 // EXTERNAL MODULE: ./node_modules/@mui/material/MenuItem/MenuItem.js + 1 modules
 var MenuItem = __webpack_require__(73896);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Dialog/Dialog.js
+var Dialog = __webpack_require__(77037);
+// EXTERNAL MODULE: ./node_modules/@mui/material/DialogTitle/DialogTitle.js
+var DialogTitle = __webpack_require__(46831);
+// EXTERNAL MODULE: ./node_modules/@mui/material/DialogContent/DialogContent.js + 1 modules
+var DialogContent = __webpack_require__(22477);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Alert/Alert.js + 5 modules
+var Alert = __webpack_require__(36632);
+// EXTERNAL MODULE: ./node_modules/@mui/material/TableContainer/TableContainer.js + 1 modules
+var TableContainer = __webpack_require__(33198);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Paper/Paper.js + 2 modules
+var Paper = __webpack_require__(60538);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Table/Table.js + 1 modules
+var Table = __webpack_require__(64137);
+// EXTERNAL MODULE: ./node_modules/@mui/material/TableHead/TableHead.js + 1 modules
+var TableHead = __webpack_require__(96627);
+// EXTERNAL MODULE: ./node_modules/@mui/material/TableRow/TableRow.js + 1 modules
+var TableRow = __webpack_require__(86798);
+// EXTERNAL MODULE: ./node_modules/@mui/material/TableCell/TableCell.js
+var TableCell = __webpack_require__(70691);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Checkbox/Checkbox.js + 4 modules
+var Checkbox = __webpack_require__(27558);
+// EXTERNAL MODULE: ./node_modules/@mui/material/TableBody/TableBody.js + 1 modules
+var TableBody = __webpack_require__(43884);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Chip/Chip.js + 2 modules
+var Chip = __webpack_require__(82022);
+// EXTERNAL MODULE: ./node_modules/@mui/material/LinearProgress/LinearProgress.js + 1 modules
+var LinearProgress = __webpack_require__(87458);
+// EXTERNAL MODULE: ./node_modules/@mui/material/DialogActions/DialogActions.js + 1 modules
+var DialogActions = __webpack_require__(58763);
 // EXTERNAL MODULE: ./node_modules/@mui/material/Tooltip/Tooltip.js
 var Tooltip = __webpack_require__(56655);
 // EXTERNAL MODULE: ./node_modules/@mui/material/Tooltip/tooltipClasses.js
@@ -2203,16 +2575,25 @@ var axios = __webpack_require__(99380);
 var apiCache = __webpack_require__(46986);
 // EXTERNAL MODULE: ./src/js/apiConfig.js
 var apiConfig = __webpack_require__(71510);
+// EXTERNAL MODULE: ./node_modules/@mui/material/utils/createSvgIcon.js
+var createSvgIcon = __webpack_require__(20561);
+// EXTERNAL MODULE: ./node_modules/react/jsx-runtime.js
+var jsx_runtime = __webpack_require__(74848);
+;// ./node_modules/@mui/icons-material/esm/WhatsApp.js
+'use client';
+
+
+
+
+/* harmony default export */ const WhatsApp = ((0,createSvgIcon/* default */.A)( /*#__PURE__*/(0,jsx_runtime.jsx)("path", {
+  d: "M16.75 13.96c.25.13.41.2.46.3.06.11.04.61-.21 1.18-.2.56-1.24 1.1-1.7 1.12-.46.02-.47.36-2.96-.73-2.49-1.09-3.99-3.75-4.11-3.92-.12-.17-.96-1.38-.92-2.61.05-1.22.69-1.8.95-2.04.24-.26.51-.29.68-.26h.47c.15 0 .36-.06.55.45l.69 1.87c.06.13.1.28.01.44l-.27.41-.39.42c-.12.12-.26.25-.12.5.12.26.62 1.09 1.32 1.78.91.88 1.71 1.17 1.95 1.3.24.14.39.12.54-.04l.81-.94c.19-.25.35-.19.58-.11l1.67.88M12 2a10 10 0 0 1 10 10 10 10 0 0 1-10 10c-1.97 0-3.8-.57-5.35-1.55L2 22l1.55-4.65A9.969 9.969 0 0 1 2 12 10 10 0 0 1 12 2m0 2a8 8 0 0 0-8 8c0 1.72.54 3.31 1.46 4.61L4.5 19.5l2.89-.96A7.95 7.95 0 0 0 12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8z"
+}), 'WhatsApp'));
 // EXTERNAL MODULE: ./node_modules/@mui/icons-material/esm/PersonOffRounded.js
 var PersonOffRounded = __webpack_require__(79030);
 // EXTERNAL MODULE: ./node_modules/@mui/icons-material/esm/Person2Outlined.js
 var Person2Outlined = __webpack_require__(7078);
 // EXTERNAL MODULE: ./node_modules/@mui/icons-material/esm/Assignment.js
 var Assignment = __webpack_require__(17332);
-// EXTERNAL MODULE: ./node_modules/@mui/material/utils/createSvgIcon.js
-var createSvgIcon = __webpack_require__(20561);
-// EXTERNAL MODULE: ./node_modules/react/jsx-runtime.js
-var jsx_runtime = __webpack_require__(74848);
 ;// ./node_modules/@mui/icons-material/esm/Payments.js
 "use client";
 
@@ -2241,6 +2622,14 @@ var Cancel = __webpack_require__(8047);
 var Add = __webpack_require__(99682);
 // EXTERNAL MODULE: ./node_modules/@mui/icons-material/esm/Close.js
 var Close = __webpack_require__(17809);
+;// ./node_modules/@mui/icons-material/esm/Save.js
+"use client";
+
+
+
+/* harmony default export */ const Save = ((0,createSvgIcon/* default */.A)( /*#__PURE__*/(0,jsx_runtime.jsx)("path", {
+  d: "M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3m3-10H5V5h10z"
+}), 'Save'));
 // EXTERNAL MODULE: ./node_modules/dayjs/dayjs.min.js
 var dayjs_min = __webpack_require__(74353);
 var dayjs_min_default = /*#__PURE__*/__webpack_require__.n(dayjs_min);
@@ -2451,6 +2840,7 @@ var InvoiceViewAdmin_Drawer = (0,styled/* default */.Ay)(Drawer/* default */.Ay,
   };
 });
 function InvoiceViewAdmin() {
+  var _user$data, _dispatchResult$repor, _dispatchResult$repor2;
   var navigate = (0,dist/* useNavigate */.Zp)();
   var isMobile = (0,utils_isMobile/* useIsMobile */.al)();
   var dispatch = (0,es/* useDispatch */.wA)();
@@ -2490,13 +2880,21 @@ function InvoiceViewAdmin() {
     _useState2 = _slicedToArray(_useState, 2),
     grantAccess = _useState2[0],
     setGrantAccess = _useState2[1];
+  var _useState3 = (0,react.useState)(null),
+    _useState4 = _slicedToArray(_useState3, 2),
+    grantAccessRecord = _useState4[0],
+    setGrantAccessRecord = _useState4[1];
   (0,react.useEffect)(() => {
     var fetchNumber = /*#__PURE__*/function () {
       var _ref0 = _asyncToGenerator(function* () {
         try {
           var _res$data;
           var res = yield (0,apiCache/* cachedGet */.Fe)("".concat(apiConfig/* ENDPOINT_URL */.m, "/grantAccess"));
-          (_res$data = res.data) === null || _res$data === void 0 || (_res$data = _res$data.data) === null || _res$data === void 0 || _res$data.filter(row => row.userID === user.data.id).map(row => setGrantAccess(row.modules));
+          var userAccess = (_res$data = res.data) === null || _res$data === void 0 || (_res$data = _res$data.data) === null || _res$data === void 0 ? void 0 : _res$data.find(row => row.userID === user.data.id);
+          if (userAccess) {
+            setGrantAccess(userAccess.modules || []);
+            setGrantAccessRecord(userAccess);
+          }
         } catch (error) {
           console.error('Error fetching data:', error);
           react_toastify_esm/* toast */.oR.error('Failed to fetch permissions.');
@@ -2508,6 +2906,7 @@ function InvoiceViewAdmin() {
     }();
     fetchNumber();
   }, [user]);
+  var canSendWhatsAppInvoice = (user === null || user === void 0 || (_user$data = user.data) === null || _user$data === void 0 ? void 0 : _user$data.userName) === 'GG' || (grantAccessRecord === null || grantAccessRecord === void 0 ? void 0 : grantAccessRecord.whatsappInvoice) === true;
 
   // console.log(grantAccess)
 
@@ -2516,39 +2915,39 @@ function InvoiceViewAdmin() {
   var InvoiceInfoU = grantAccess.filter(row => row.moduleName === "Invoice" && row.access.editM === true);
   var InvoiceInfoD = grantAccess.filter(row => row.moduleName === "Invoice" && row.access.deleteM === true);
   {/** Get Invoice */}
-  var _useState3 = (0,react.useState)([]),
-    _useState4 = _slicedToArray(_useState3, 2),
-    invoice = _useState4[0],
-    setInvoice = _useState4[1];
   var _useState5 = (0,react.useState)([]),
     _useState6 = _slicedToArray(_useState5, 2),
-    hiddenRow = _useState6[0],
-    setHiddenRow = _useState6[1];
+    invoice = _useState6[0],
+    setInvoice = _useState6[1];
   var _useState7 = (0,react.useState)([]),
     _useState8 = _slicedToArray(_useState7, 2),
-    hidden = _useState8[0],
-    setHidden = _useState8[1];
+    hiddenRow = _useState8[0],
+    setHiddenRow = _useState8[1];
   var _useState9 = (0,react.useState)([]),
     _useState0 = _slicedToArray(_useState9, 2),
-    selectedRows = _useState0[0],
-    setSelectedRows = _useState0[1];
-  var _useState1 = (0,react.useState)(true),
+    hidden = _useState0[0],
+    setHidden = _useState0[1];
+  var _useState1 = (0,react.useState)([]),
     _useState10 = _slicedToArray(_useState1, 2),
-    loadingData = _useState10[0],
-    setLoadingData = _useState10[1];
-  var _useState11 = (0,react.useState)(""),
+    selectedRows = _useState10[0],
+    setSelectedRows = _useState10[1];
+  var _useState11 = (0,react.useState)(true),
     _useState12 = _slicedToArray(_useState11, 2),
-    reason = _useState12[0],
-    setReason = _useState12[1];
-  var _useState13 = (0,react.useState)([]),
+    loadingData = _useState12[0],
+    setLoadingData = _useState12[1];
+  var _useState13 = (0,react.useState)(""),
     _useState14 = _slicedToArray(_useState13, 2),
-    newPurchase = _useState14[0],
-    setNewPurchase = _useState14[1];
-  var _useState15 = (0,react.useState)('ALL'),
+    reason = _useState14[0],
+    setReason = _useState14[1];
+  var _useState15 = (0,react.useState)([]),
     _useState16 = _slicedToArray(_useState15, 2),
-    statusFilter = _useState16[0],
-    setStatusFilter = _useState16[1];
-  var _useState17 = (0,react.useState)({
+    newPurchase = _useState16[0],
+    setNewPurchase = _useState16[1];
+  var _useState17 = (0,react.useState)('ALL'),
+    _useState18 = _slicedToArray(_useState17, 2),
+    statusFilter = _useState18[0],
+    setStatusFilter = _useState18[1];
+  var _useState19 = (0,react.useState)({
       all: 0,
       draft: 0,
       sent: 0,
@@ -2558,38 +2957,38 @@ function InvoiceViewAdmin() {
       paid: 0,
       partiallyPaid: 0
     }),
-    _useState18 = _slicedToArray(_useState17, 2),
-    statusCounts = _useState18[0],
-    setStatusCounts = _useState18[1];
-  var _useState19 = (0,react.useState)(0),
     _useState20 = _slicedToArray(_useState19, 2),
-    page = _useState20[0],
-    setPage = _useState20[1]; // Initialize page state to 0 (0-based index)
-  var limit = isMobile ? 30 : 100;
-  var _useState21 = (0,react.useState)(''),
+    statusCounts = _useState20[0],
+    setStatusCounts = _useState20[1];
+  var _useState21 = (0,react.useState)(0),
     _useState22 = _slicedToArray(_useState21, 2),
-    searchTerm = _useState22[0],
-    setSearchTerm = _useState22[1]; // Initialize search term state
+    page = _useState22[0],
+    setPage = _useState22[1]; // Initialize page state to 0 (0-based index)
+  var limit = isMobile ? 30 : 100;
   var _useState23 = (0,react.useState)(''),
     _useState24 = _slicedToArray(_useState23, 2),
-    filterField = _useState24[0],
-    setFilterField = _useState24[1]; // Initialize filter field state
+    searchTerm = _useState24[0],
+    setSearchTerm = _useState24[1]; // Initialize search term state
   var _useState25 = (0,react.useState)(''),
     _useState26 = _slicedToArray(_useState25, 2),
-    filterValue = _useState26[0],
-    setFilterValue = _useState26[1]; // Initialize filter value state
-  var _useState27 = (0,react.useState)(0),
+    filterField = _useState26[0],
+    setFilterField = _useState26[1]; // Initialize filter field state
+  var _useState27 = (0,react.useState)(''),
     _useState28 = _slicedToArray(_useState27, 2),
-    totalPage = _useState28[0],
-    SetTotalPage = _useState28[1];
+    filterValue = _useState28[0],
+    setFilterValue = _useState28[1]; // Initialize filter value state
   var _useState29 = (0,react.useState)(0),
     _useState30 = _slicedToArray(_useState29, 2),
-    totalItemCount = _useState30[0],
-    setTotalItemCount = _useState30[1];
-  var _useState31 = (0,react.useState)(searchTerm),
+    totalPage = _useState30[0],
+    SetTotalPage = _useState30[1];
+  var _useState31 = (0,react.useState)(0),
     _useState32 = _slicedToArray(_useState31, 2),
-    debouncedSearchTerm = _useState32[0],
-    setDebouncedSearchTerm = _useState32[1];
+    totalItemCount = _useState32[0],
+    setTotalItemCount = _useState32[1];
+  var _useState33 = (0,react.useState)(searchTerm),
+    _useState34 = _slicedToArray(_useState33, 2),
+    debouncedSearchTerm = _useState34[0],
+    setDebouncedSearchTerm = _useState34[1];
   (0,react.useEffect)(() => {
     var handler = setTimeout(() => {
       setDebouncedSearchTerm(searchTerm);
@@ -2673,22 +3072,273 @@ function InvoiceViewAdmin() {
     setPage(0);
     fetchItems(0, '', filterField, filterValue, statusFilter);
   };
-  var _useState33 = (0,react.useState)(false),
-    _useState34 = _slicedToArray(_useState33, 2),
-    loading = _useState34[0],
-    setLoading = _useState34[1];
-  var _useState35 = (0,react.useState)(false),
+
+  // --- WhatsApp Invoice Dispatch Pipeline ---
+  var DEFAULT_WA_MESSAGE = 'Dear Valued Customer, please find attached your official invoice from Global Gate SARL. Thank you for your business!';
+  var _useState35 = (0,react.useState)({}),
     _useState36 = _slicedToArray(_useState35, 2),
-    ErrorOpenModal = _useState36[0],
-    setErrorOpenModal = _useState36[1];
+    customerPhoneMap = _useState36[0],
+    setCustomerPhoneMap = _useState36[1];
   var _useState37 = (0,react.useState)(false),
     _useState38 = _slicedToArray(_useState37, 2),
-    loadingOpenModal = _useState38[0],
-    setLoadingOpenModal = _useState38[1];
-  var _useState39 = (0,react.useState)(false),
+    openWhatsAppModal = _useState38[0],
+    setOpenWhatsAppModal = _useState38[1];
+  var _useState39 = (0,react.useState)([]),
     _useState40 = _slicedToArray(_useState39, 2),
-    modalDeleteOpenLoading = _useState40[0],
-    setModalDeleteOpenLoading = _useState40[1];
+    whatsAppInvoicesList = _useState40[0],
+    setWhatsAppInvoicesList = _useState40[1];
+  var _useState41 = (0,react.useState)(new Set()),
+    _useState42 = _slicedToArray(_useState41, 2),
+    selectedWhatsAppInvoiceIds = _useState42[0],
+    setSelectedWhatsAppInvoiceIds = _useState42[1];
+  var _useState43 = (0,react.useState)(DEFAULT_WA_MESSAGE),
+    _useState44 = _slicedToArray(_useState43, 2),
+    whatsAppMessage = _useState44[0],
+    setWhatsAppMessage = _useState44[1];
+  var _useState45 = (0,react.useState)(false),
+    _useState46 = _slicedToArray(_useState45, 2),
+    savingTemplate = _useState46[0],
+    setSavingTemplate = _useState46[1];
+  var _useState47 = (0,react.useState)({}),
+    _useState48 = _slicedToArray(_useState47, 2),
+    phoneOverrides = _useState48[0],
+    setPhoneOverrides = _useState48[1];
+  var _useState49 = (0,react.useState)(false),
+    _useState50 = _slicedToArray(_useState49, 2),
+    dispatchingWhatsApp = _useState50[0],
+    setDispatchingWhatsApp = _useState50[1];
+  var _useState51 = (0,react.useState)(null),
+    _useState52 = _slicedToArray(_useState51, 2),
+    dispatchResult = _useState52[0],
+    setDispatchResult = _useState52[1];
+  var _useState53 = (0,react.useState)(false),
+    _useState54 = _slicedToArray(_useState53, 2),
+    loadingSentInvoices = _useState54[0],
+    setLoadingSentInvoices = _useState54[1];
+  (0,react.useEffect)(() => {
+    var fetchCustomers = /*#__PURE__*/function () {
+      var _ref11 = _asyncToGenerator(function* () {
+        try {
+          var _res$data2;
+          var res = yield (0,apiCache/* cachedGet */.Fe)("".concat(apiConfig/* ENDPOINT_URL */.m, "/customer"));
+          if ((_res$data2 = res.data) !== null && _res$data2 !== void 0 && _res$data2.data) {
+            var map = {};
+            res.data.data.forEach(c => {
+              var p = (c.customerCompanyPhone || c.customerPhone || c.phone || c.mobile || '').trim();
+              if (p) {
+                if (c._id) map[c._id] = p;
+                if (c.Customer) map[c.Customer.toUpperCase()] = p;
+                if (c.customerName) map[c.customerName.toUpperCase()] = p;
+                if (c.customerFullName) map[c.customerFullName.toUpperCase()] = p;
+              }
+            });
+            setCustomerPhoneMap(map);
+          }
+        } catch (_) {}
+      });
+      return function fetchCustomers() {
+        return _ref11.apply(this, arguments);
+      };
+    }();
+    fetchCustomers();
+  }, []);
+  (0,react.useEffect)(() => {
+    var fetchTemplate = /*#__PURE__*/function () {
+      var _ref12 = _asyncToGenerator(function* () {
+        try {
+          var _res$data3, _res$data4;
+          var res = yield axios/* default */.A.get("".concat(apiConfig/* ENDPOINT_URL */.m, "/invoice-whatsapp/template"));
+          if ((_res$data3 = res.data) !== null && _res$data3 !== void 0 && _res$data3.success && (_res$data4 = res.data) !== null && _res$data4 !== void 0 && _res$data4.templateMessage) {
+            setWhatsAppMessage(res.data.templateMessage);
+          }
+        } catch (_) {}
+      });
+      return function fetchTemplate() {
+        return _ref12.apply(this, arguments);
+      };
+    }();
+    fetchTemplate();
+  }, []);
+  var getInvoicePhone = function getInvoicePhone(inv) {
+    var phoneMap = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    var cust = (inv === null || inv === void 0 ? void 0 : inv.customerName) || {};
+    if (typeof cust === 'object') {
+      var direct = cust.customerCompanyPhone || cust.customerPhone || cust.phone || cust.mobile;
+      if (direct && String(direct).trim()) return String(direct).trim();
+      if (cust._id && phoneMap[cust._id]) return phoneMap[cust._id];
+      var name = cust.Customer || cust.customerName || cust.customerFullName;
+      if (name && phoneMap[name.toUpperCase()]) return phoneMap[name.toUpperCase()];
+    } else if (typeof cust === 'string' && phoneMap[cust.toUpperCase()]) {
+      return phoneMap[cust.toUpperCase()];
+    }
+    return '';
+  };
+  var handleSaveTemplateAsDefault = /*#__PURE__*/function () {
+    var _ref13 = _asyncToGenerator(function* () {
+      if (!whatsAppMessage.trim()) {
+        react_toastify_esm/* toast */.oR.warn('Message cannot be empty');
+        return;
+      }
+      setSavingTemplate(true);
+      try {
+        var _user$data2, _res$data5;
+        var res = yield axios/* default */.A.post("".concat(apiConfig/* ENDPOINT_URL */.m, "/invoice-whatsapp/template"), {
+          templateMessage: whatsAppMessage.trim(),
+          updatedBy: (user === null || user === void 0 || (_user$data2 = user.data) === null || _user$data2 === void 0 ? void 0 : _user$data2.userName) || 'GG'
+        });
+        if ((_res$data5 = res.data) !== null && _res$data5 !== void 0 && _res$data5.success) {
+          react_toastify_esm/* toast */.oR.success('Default WhatsApp message saved successfully!');
+        }
+      } catch (err) {
+        react_toastify_esm/* toast */.oR.error('Failed to save default message: ' + (err.message || ''));
+      } finally {
+        setSavingTemplate(false);
+      }
+    });
+    return function handleSaveTemplateAsDefault() {
+      return _ref13.apply(this, arguments);
+    };
+  }();
+  var handleOpenWhatsAppBatchModal = /*#__PURE__*/function () {
+    var _ref14 = _asyncToGenerator(function* () {
+      if (!canSendWhatsAppInvoice) {
+        react_toastify_esm/* toast */.oR.error('Permission denied. WhatsApp Invoice Dispatch is restricted in Grant Access.');
+        return;
+      }
+      setDispatchResult(null);
+      setLoadingSentInvoices(true);
+      setOpenWhatsAppModal(true);
+      try {
+        var _res$data6;
+        var res = yield axios/* default */.A.get("".concat(apiConfig/* ENDPOINT_URL */.m, "/invoice-Information?page=1&limit=200&status=SENT"));
+        var sentInvoices = (((_res$data6 = res.data) === null || _res$data6 === void 0 ? void 0 : _res$data6.itemI) || []).map(r => _objectSpread(_objectSpread({}, r), {}, {
+          id: r._id,
+          dateField: r.invoiceDate ? dayjs_min_default()(r.invoiceDate).format('DD/MM/YYYY') : ''
+        }));
+        var finalSent = sentInvoices.length > 0 ? sentInvoices : invoice.filter(inv => String(inv.status || '').toUpperCase().trim() === 'SENT');
+        setWhatsAppInvoicesList(finalSent);
+        setSelectedWhatsAppInvoiceIds(new Set(finalSent.map(inv => inv._id || inv.id)));
+        var initPhones = {};
+        finalSent.forEach(inv => {
+          var id = inv._id || inv.id;
+          initPhones[id] = getInvoicePhone(inv, customerPhoneMap);
+        });
+        setPhoneOverrides(initPhones);
+      } catch (err) {
+        console.error('Error fetching SENT invoices:', err);
+        var localSent = invoice.filter(inv => String(inv.status || '').toUpperCase().trim() === 'SENT');
+        setWhatsAppInvoicesList(localSent);
+        setSelectedWhatsAppInvoiceIds(new Set(localSent.map(inv => inv._id || inv.id)));
+        var _initPhones = {};
+        localSent.forEach(inv => {
+          var id = inv._id || inv.id;
+          _initPhones[id] = getInvoicePhone(inv, customerPhoneMap);
+        });
+        setPhoneOverrides(_initPhones);
+      } finally {
+        setLoadingSentInvoices(false);
+      }
+    });
+    return function handleOpenWhatsAppBatchModal() {
+      return _ref14.apply(this, arguments);
+    };
+  }();
+  var handleOpenWhatsAppSingleModal = row => {
+    if (!canSendWhatsAppInvoice) {
+      react_toastify_esm/* toast */.oR.error('Permission denied. WhatsApp Invoice Dispatch is restricted in Grant Access.');
+      return;
+    }
+    var isSent = String(row.status || '').toUpperCase().trim() === 'SENT';
+    if (!isSent) {
+      react_toastify_esm/* toast */.oR.warn('Only invoices with status SENT can be sent via WhatsApp.');
+      return;
+    }
+    setDispatchResult(null);
+    setWhatsAppInvoicesList([row]);
+    setSelectedWhatsAppInvoiceIds(new Set([row._id || row.id]));
+    var initialPhone = getInvoicePhone(row, customerPhoneMap);
+    setPhoneOverrides({
+      [row._id || row.id]: initialPhone
+    });
+    setOpenWhatsAppModal(true);
+  };
+  var handleToggleWhatsAppInvoice = id => {
+    setSelectedWhatsAppInvoiceIds(prev => {
+      var next = new Set(prev);
+      if (next.has(id)) next.delete(id);else next.add(id);
+      return next;
+    });
+  };
+  var handleToggleSelectAllWhatsApp = () => {
+    if (selectedWhatsAppInvoiceIds.size === whatsAppInvoicesList.length) {
+      setSelectedWhatsAppInvoiceIds(new Set());
+    } else {
+      setSelectedWhatsAppInvoiceIds(new Set(whatsAppInvoicesList.map(inv => inv._id || inv.id)));
+    }
+  };
+  var handleExecuteWhatsAppDispatch = /*#__PURE__*/function () {
+    var _ref15 = _asyncToGenerator(function* () {
+      var selectedInvoices = whatsAppInvoicesList.filter(inv => selectedWhatsAppInvoiceIds.has(inv._id || inv.id));
+      if (selectedInvoices.length === 0) {
+        react_toastify_esm/* toast */.oR.warn('Please select at least one invoice to send.');
+        return;
+      }
+      setDispatchingWhatsApp(true);
+      setDispatchResult(null);
+      var payload = {
+        invoices: selectedInvoices,
+        templateMessage: whatsAppMessage.trim(),
+        phoneOverrides
+      };
+      try {
+        var _result;
+        var result = null;
+        if (window.electron && typeof window.electron.sendInvoiceWhatsApp === 'function') {
+          result = yield window.electron.sendInvoiceWhatsApp(payload);
+        } else {
+          var res = yield axios/* default */.A.post("".concat(apiConfig/* ENDPOINT_URL */.m, "/invoice-whatsapp/send"), payload);
+          result = res.data;
+        }
+        setDispatchResult(result);
+        if ((_result = result) !== null && _result !== void 0 && _result.success) {
+          var _result$report;
+          react_toastify_esm/* toast */.oR.success("WhatsApp dispatch complete: ".concat(((_result$report = result.report) === null || _result$report === void 0 ? void 0 : _result$report.sent) || selectedInvoices.length, " sent!"));
+          fetchItems(page, debouncedSearchTerm, filterField, filterValue, statusFilter);
+        } else {
+          var _result2;
+          react_toastify_esm/* toast */.oR.error(((_result2 = result) === null || _result2 === void 0 ? void 0 : _result2.error) || 'WhatsApp dispatch encountered errors.');
+        }
+      } catch (err) {
+        console.error('WhatsApp dispatch error:', err);
+        setDispatchResult({
+          success: false,
+          error: err.message
+        });
+        react_toastify_esm/* toast */.oR.error('Dispatch failed: ' + err.message);
+      } finally {
+        setDispatchingWhatsApp(false);
+      }
+    });
+    return function handleExecuteWhatsAppDispatch() {
+      return _ref15.apply(this, arguments);
+    };
+  }();
+  var _useState55 = (0,react.useState)(false),
+    _useState56 = _slicedToArray(_useState55, 2),
+    loading = _useState56[0],
+    setLoading = _useState56[1];
+  var _useState57 = (0,react.useState)(false),
+    _useState58 = _slicedToArray(_useState57, 2),
+    ErrorOpenModal = _useState58[0],
+    setErrorOpenModal = _useState58[1];
+  var _useState59 = (0,react.useState)(false),
+    _useState60 = _slicedToArray(_useState59, 2),
+    loadingOpenModal = _useState60[0],
+    setLoadingOpenModal = _useState60[1];
+  var _useState61 = (0,react.useState)(false),
+    _useState62 = _slicedToArray(_useState61, 2),
+    modalDeleteOpenLoading = _useState62[0],
+    setModalDeleteOpenLoading = _useState62[1];
   {/** Loading Update View Start */}
   var handleOpenLoading = () => {
     setLoadingOpenModal(true);
@@ -2734,7 +3384,7 @@ function InvoiceViewAdmin() {
   };
   (0,react.useEffect)(() => {
     var fetchDataHidden = /*#__PURE__*/function () {
-      var _ref11 = _asyncToGenerator(function* () {
+      var _ref16 = _asyncToGenerator(function* () {
         try {
           var res = yield axios/* default */.A.get("".concat(apiConfig/* ENDPOINT_URL */.m, "/hidden"));
           setHiddenRow(res.data.data.map(row => row.idRow));
@@ -2746,15 +3396,15 @@ function InvoiceViewAdmin() {
         }
       });
       return function fetchDataHidden() {
-        return _ref11.apply(this, arguments);
+        return _ref16.apply(this, arguments);
       };
     }();
     fetchDataHidden();
   }, []);
-  var _useState41 = (0,react.useState)(false),
-    _useState42 = _slicedToArray(_useState41, 2),
-    openReasonDelete = _useState42[0],
-    setOpenReasonDelete = _useState42[1];
+  var _useState63 = (0,react.useState)(false),
+    _useState64 = _slicedToArray(_useState63, 2),
+    openReasonDelete = _useState64[0],
+    setOpenReasonDelete = _useState64[1];
   var handleOpenReasonDelete = e => {
     e.preventDefault();
     setOpenReasonDelete(true);
@@ -2763,14 +3413,14 @@ function InvoiceViewAdmin() {
     setOpenReasonDelete(false);
   };
   {/** End Get Invoice */}
-  var _useState43 = (0,react.useState)(false),
-    _useState44 = _slicedToArray(_useState43, 2),
-    open = _useState44[0],
-    setOpen = _useState44[1];
-  var _useState45 = (0,react.useState)(null),
-    _useState46 = _slicedToArray(_useState45, 2),
-    DeleteId = _useState46[0],
-    setDeleteId = _useState46[1];
+  var _useState65 = (0,react.useState)(false),
+    _useState66 = _slicedToArray(_useState65, 2),
+    open = _useState66[0],
+    setOpen = _useState66[1];
+  var _useState67 = (0,react.useState)(null),
+    _useState68 = _slicedToArray(_useState67, 2),
+    DeleteId = _useState68[0],
+    setDeleteId = _useState68[1];
   var handleOpen = id => {
     setOpen(true);
     setDeleteId(id);
@@ -2779,18 +3429,18 @@ function InvoiceViewAdmin() {
     setLoadingOpenModal(false);
     setOpen(false);
   };
-  var _useState47 = (0,react.useState)(false),
-    _useState48 = _slicedToArray(_useState47, 2),
-    open1 = _useState48[0],
-    setOpen1 = _useState48[1];
-  var _useState49 = (0,react.useState)(null),
-    _useState50 = _slicedToArray(_useState49, 2),
-    updateId = _useState50[0],
-    setUpdateId = _useState50[1];
-  var _useState51 = (0,react.useState)(""),
-    _useState52 = _slicedToArray(_useState51, 2),
-    status = _useState52[0],
-    setStatus = _useState52[1];
+  var _useState69 = (0,react.useState)(false),
+    _useState70 = _slicedToArray(_useState69, 2),
+    open1 = _useState70[0],
+    setOpen1 = _useState70[1];
+  var _useState71 = (0,react.useState)(null),
+    _useState72 = _slicedToArray(_useState71, 2),
+    updateId = _useState72[0],
+    setUpdateId = _useState72[1];
+  var _useState73 = (0,react.useState)(""),
+    _useState74 = _slicedToArray(_useState73, 2),
+    status = _useState74[0],
+    setStatus = _useState74[1];
   var handleOpenUpdate = id => {
     setOpen1(true);
     setUpdateId(id);
@@ -2800,20 +3450,20 @@ function InvoiceViewAdmin() {
     setUpdateId(null);
   };
   {/** delete multiple && all modal start */}
-  var _useState53 = (0,react.useState)(false),
-    _useState54 = _slicedToArray(_useState53, 2),
-    openDeleteMultiple = _useState54[0],
-    setOpenDeleteMultiple = _useState54[1];
+  var _useState75 = (0,react.useState)(false),
+    _useState76 = _slicedToArray(_useState75, 2),
+    openDeleteMultiple = _useState76[0],
+    setOpenDeleteMultiple = _useState76[1];
   var handleOpenMultiple = () => {
     setOpenDeleteMultiple(true);
   };
   var handleCloseMultiple = () => {
     setOpenDeleteMultiple(false);
   };
-  var _useState55 = (0,react.useState)(false),
-    _useState56 = _slicedToArray(_useState55, 2),
-    openDeleteAll = _useState56[0],
-    setOpenDeleteAll = _useState56[1];
+  var _useState77 = (0,react.useState)(false),
+    _useState78 = _slicedToArray(_useState77, 2),
+    openDeleteAll = _useState78[0],
+    setOpenDeleteAll = _useState78[1];
   var handleOpenAll = () => {
     setOpenDeleteAll(true);
   };
@@ -2822,7 +3472,7 @@ function InvoiceViewAdmin() {
   };
   {/** Delete Function */}
   var handleDelete = /*#__PURE__*/function () {
-    var _ref12 = _asyncToGenerator(function* () {
+    var _ref17 = _asyncToGenerator(function* () {
       setLoading(true);
       setModalDeleteOpenLoading(true);
       handleClose();
@@ -2851,22 +3501,22 @@ function InvoiceViewAdmin() {
       }
     });
     return function handleDelete() {
-      return _ref12.apply(this, arguments);
+      return _ref17.apply(this, arguments);
     };
   }();
-  var _useState57 = (0,react.useState)([]),
-    _useState58 = _slicedToArray(_useState57, 2),
-    InvoiceDeleted = _useState58[0],
-    setInvoiceDeleted = _useState58[1];
+  var _useState79 = (0,react.useState)([]),
+    _useState80 = _slicedToArray(_useState79, 2),
+    InvoiceDeleted = _useState80[0],
+    setInvoiceDeleted = _useState80[1];
   (0,react.useEffect)(() => {
     var fetchFunction = /*#__PURE__*/function () {
-      var _ref13 = _asyncToGenerator(function* () {
+      var _ref18 = _asyncToGenerator(function* () {
         var deletePromises = selectedRows.map(/*#__PURE__*/function () {
-          var _ref14 = _asyncToGenerator(function* (idToDelete) {
+          var _ref19 = _asyncToGenerator(function* (idToDelete) {
             return axios/* default */.A.get("".concat(apiConfig/* ENDPOINT_URL */.m, "/get-invoice/").concat(idToDelete));
           });
           return function (_x6) {
-            return _ref14.apply(this, arguments);
+            return _ref19.apply(this, arguments);
           };
         }());
         try {
@@ -2877,7 +3527,7 @@ function InvoiceViewAdmin() {
         }
       });
       return function fetchFunction() {
-        return _ref13.apply(this, arguments);
+        return _ref18.apply(this, arguments);
       };
     }();
     fetchFunction();
@@ -2885,7 +3535,7 @@ function InvoiceViewAdmin() {
   var related = InvoiceDeleted.map(row => row);
   var info = related.toString();
   var handleCreateNotification = /*#__PURE__*/function () {
-    var _ref15 = _asyncToGenerator(function* () {
+    var _ref20 = _asyncToGenerator(function* () {
       var data = {
         idInfo: '',
         person: user.data.userName + ' Deleted ' + info,
@@ -2899,11 +3549,11 @@ function InvoiceViewAdmin() {
       }
     });
     return function handleCreateNotification() {
-      return _ref15.apply(this, arguments);
+      return _ref20.apply(this, arguments);
     };
   }();
   var handleDeleteMany = /*#__PURE__*/function () {
-    var _ref16 = _asyncToGenerator(function* (e) {
+    var _ref21 = _asyncToGenerator(function* (e) {
       e.preventDefault();
       setLoading(true);
       setModalDeleteOpenLoading(true);
@@ -2911,7 +3561,7 @@ function InvoiceViewAdmin() {
       handleCloseAll();
       handleCloseReasonDelete();
       var deletePromises = selectedRows.map(/*#__PURE__*/function () {
-        var _ref17 = _asyncToGenerator(function* (idToDelete) {
+        var _ref22 = _asyncToGenerator(function* (idToDelete) {
           var invToDelete = invoice.find(inv => inv._id === idToDelete);
           if (invToDelete && invToDelete.ReferenceName && invToDelete.Position === 'Maintenance') {
             try {
@@ -2927,7 +3577,7 @@ function InvoiceViewAdmin() {
           return axios/* default */.A.delete("".concat(apiConfig/* ENDPOINT_URL */.m, "/delete-invoice/").concat(idToDelete));
         });
         return function (_x8) {
-          return _ref17.apply(this, arguments);
+          return _ref22.apply(this, arguments);
         };
       }());
       try {
@@ -2945,18 +3595,18 @@ function InvoiceViewAdmin() {
       }
     });
     return function handleDeleteMany(_x7) {
-      return _ref16.apply(this, arguments);
+      return _ref21.apply(this, arguments);
     };
   }();
   {/** End Delete Function */}
   {/** Update Invoice Status start */}
-  var _useState59 = (0,react.useState)(0),
-    _useState60 = _slicedToArray(_useState59, 2),
-    invoiceN = _useState60[0],
-    setInvoiceN = _useState60[1];
+  var _useState81 = (0,react.useState)(0),
+    _useState82 = _slicedToArray(_useState81, 2),
+    invoiceN = _useState82[0],
+    setInvoiceN = _useState82[1];
   (0,react.useEffect)(() => {
     var fetchId = /*#__PURE__*/function () {
-      var _ref18 = _asyncToGenerator(function* () {
+      var _ref23 = _asyncToGenerator(function* () {
         if (updateId !== null) {
           try {
             var res = yield axios/* default */.A.get("".concat(apiConfig/* ENDPOINT_URL */.m, "/get-invoice/").concat(updateId));
@@ -2969,13 +3619,13 @@ function InvoiceViewAdmin() {
         }
       });
       return function fetchId() {
-        return _ref18.apply(this, arguments);
+        return _ref23.apply(this, arguments);
       };
     }();
     fetchId();
   }, [updateId]);
   var handleCreateComment = /*#__PURE__*/function () {
-    var _ref19 = _asyncToGenerator(function* () {
+    var _ref24 = _asyncToGenerator(function* () {
       var data = {
         idInfo: updateId,
         person: user.data.userName,
@@ -2989,11 +3639,11 @@ function InvoiceViewAdmin() {
       }
     });
     return function handleCreateComment() {
-      return _ref19.apply(this, arguments);
+      return _ref24.apply(this, arguments);
     };
   }();
   var handleSubmitUpdateStatus = /*#__PURE__*/function () {
-    var _ref20 = _asyncToGenerator(function* (e) {
+    var _ref25 = _asyncToGenerator(function* (e) {
       e.preventDefault();
       var data = {
         status
@@ -3010,12 +3660,12 @@ function InvoiceViewAdmin() {
       }
     });
     return function handleSubmitUpdateStatus(_x9) {
-      return _ref20.apply(this, arguments);
+      return _ref25.apply(this, arguments);
     };
   }();
   {/** Update Invoice Status End */}
   var handleHideRow = /*#__PURE__*/function () {
-    var _ref21 = _asyncToGenerator(function* (id) {
+    var _ref26 = _asyncToGenerator(function* (id) {
       if (user.data.role === 'CEO') {
         try {
           if (hiddenRow.includes(id)) {
@@ -3037,7 +3687,7 @@ function InvoiceViewAdmin() {
       }
     });
     return function handleHideRow(_x0) {
-      return _ref21.apply(this, arguments);
+      return _ref26.apply(this, arguments);
     };
   }();
   var rowRenderer = params => {
@@ -3046,19 +3696,19 @@ function InvoiceViewAdmin() {
     }
     return /*#__PURE__*/react.createElement("div", null, params.row[params.field]);
   };
-  var _useState61 = (0,react.useState)([]),
-    _useState62 = _slicedToArray(_useState61, 2),
-    filteredRows = _useState62[0],
-    setFilteredRows = _useState62[1];
+  var _useState83 = (0,react.useState)([]),
+    _useState84 = _slicedToArray(_useState83, 2),
+    filteredRows = _useState84[0],
+    setFilteredRows = _useState84[1];
   (0,react.useEffect)(() => {
     var Inv = invoice.filter(row => !hiddenRow.includes(row._id));
     setFilteredRows(Inv);
   }, [invoice, hiddenRow]);
   {/** search start */}
-  var _useState63 = (0,react.useState)(""),
-    _useState64 = _slicedToArray(_useState63, 2),
-    searchInvoice = _useState64[0],
-    setSearchInvoice = _useState64[1];
+  var _useState85 = (0,react.useState)(""),
+    _useState86 = _slicedToArray(_useState85, 2),
+    searchInvoice = _useState86[0],
+    setSearchInvoice = _useState86[1];
   (0,react.useEffect)(() => {
     var storedValue = localStorage.getItem('QuickFilterInvoice');
     if (storedValue) {
@@ -3073,10 +3723,10 @@ function InvoiceViewAdmin() {
     _React$useState2 = _slicedToArray(_React$useState, 2),
     filterModel = _React$useState2[0],
     setFilterModel = _React$useState2[1];
-  var _useState65 = (0,react.useState)({}),
-    _useState66 = _slicedToArray(_useState65, 2),
-    columnVisibilityModel = _useState66[0],
-    setColumnVisibilityModel = _useState66[1];
+  var _useState87 = (0,react.useState)({}),
+    _useState88 = _slicedToArray(_useState87, 2),
+    columnVisibilityModel = _useState88[0],
+    setColumnVisibilityModel = _useState88[1];
   var handelHiddenColumn = newHidden => {
     setColumnVisibilityModel(newHidden);
     localStorage.setItem('HiddenColumnsInvoice', JSON.stringify(newHidden));
@@ -3227,6 +3877,47 @@ function InvoiceViewAdmin() {
         color: 'red'
       }
     }))))
+  }, {
+    field: 'whatsapp',
+    headerName: 'WhatsApp',
+    width: 60,
+    sortable: false,
+    renderCell: params => {
+      var isSent = String(params.row.status || '').toUpperCase().trim() === 'SENT';
+      if (!canSendWhatsAppInvoice) return null;
+      if (!isSent) {
+        return /*#__PURE__*/react.createElement(Tooltip/* default */.A, {
+          title: "Only invoices with status SENT can be sent via WhatsApp"
+        }, /*#__PURE__*/react.createElement("span", null, /*#__PURE__*/react.createElement(IconButton/* default */.A, {
+          size: "small",
+          disabled: true,
+          sx: {
+            color: '#cbd5e1'
+          }
+        }, /*#__PURE__*/react.createElement(WhatsApp, {
+          sx: {
+            fontSize: 18
+          }
+        }))));
+      }
+      return /*#__PURE__*/react.createElement(Tooltip/* default */.A, {
+        title: "Send ".concat(params.row.invoiceName || 'invoice', " via WhatsApp")
+      }, /*#__PURE__*/react.createElement("span", null, /*#__PURE__*/react.createElement(IconButton/* default */.A, {
+        size: "small",
+        onClick: () => handleOpenWhatsAppSingleModal(params.row),
+        sx: {
+          color: '#25D366',
+          '&:hover': {
+            color: '#1ebe5d',
+            backgroundColor: '#f0fdf4'
+          }
+        }
+      }, /*#__PURE__*/react.createElement(WhatsApp, {
+        sx: {
+          fontSize: 20
+        }
+      }))));
+    }
   }, {
     field: 'hide',
     headerName: 'Action',
@@ -3590,7 +4281,29 @@ function InvoiceViewAdmin() {
       lineHeight: '32px',
       padding: '0 12px'
     }
-  }, "Refresh Search"))), /*#__PURE__*/react.createElement(Box/* default */.A, {
+  }, "Refresh Search"), canSendWhatsAppInvoice && /*#__PURE__*/react.createElement(Button/* default */.A, {
+    variant: "contained",
+    size: "small",
+    startIcon: /*#__PURE__*/react.createElement(WhatsApp, {
+      sx: {
+        fontSize: 18
+      }
+    }),
+    onClick: handleOpenWhatsAppBatchModal,
+    sx: {
+      backgroundColor: '#25D366',
+      '&:hover': {
+        backgroundColor: '#1ebe5d'
+      },
+      color: '#fff',
+      fontWeight: 700,
+      textTransform: 'none',
+      height: '32px',
+      px: 1.5,
+      borderRadius: '4px',
+      boxShadow: '0 2px 4px rgba(37,211,102,0.25)'
+    }
+  }, "Send SENT via WhatsApp"))), /*#__PURE__*/react.createElement(Box/* default */.A, {
     sx: {
       height: (0,utils_isMobile/* isNativeMobile */.g1)() ? 'auto' : 'calc(100vh - 200px)',
       minHeight: 380,
@@ -3972,7 +4685,335 @@ function InvoiceViewAdmin() {
   }, /*#__PURE__*/react.createElement("button", {
     onClick: () => setErrorOpenModal(false),
     className: "btnCustomer"
-  }, "Close"))))))))));
+  }, "Close"))))), /*#__PURE__*/react.createElement(Dialog/* default */.A, {
+    open: openWhatsAppModal,
+    onClose: () => !dispatchingWhatsApp && setOpenWhatsAppModal(false),
+    maxWidth: "md",
+    fullWidth: true,
+    PaperProps: {
+      sx: {
+        borderRadius: 2,
+        p: 1
+      }
+    }
+  }, /*#__PURE__*/react.createElement(DialogTitle/* default */.A, {
+    sx: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      pb: 1
+    }
+  }, /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: 1.2
+    }
+  }, /*#__PURE__*/react.createElement(WhatsApp, {
+    sx: {
+      color: '#25D366',
+      fontSize: 28
+    }
+  }), /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    variant: "h6",
+    sx: {
+      fontWeight: 800,
+      color: '#0f172a'
+    }
+  }, "Send Invoices via WhatsApp (+243 827 722 222)")), /*#__PURE__*/react.createElement(IconButton/* default */.A, {
+    size: "small",
+    onClick: () => !dispatchingWhatsApp && setOpenWhatsAppModal(false),
+    disabled: dispatchingWhatsApp
+  }, /*#__PURE__*/react.createElement(Close/* default */.A, null))), /*#__PURE__*/react.createElement(DialogContent/* default */.A, {
+    dividers: true,
+    sx: {
+      pt: 1.5,
+      pb: 2
+    }
+  }, /*#__PURE__*/react.createElement(Alert/* default */.A, {
+    severity: "info",
+    sx: {
+      mb: 2,
+      fontSize: '0.85rem'
+    }
+  }, /*#__PURE__*/react.createElement("strong", null, "Status Rule Enforced:"), " Only invoices with status ", /*#__PURE__*/react.createElement("strong", null, "SENT"), " are listed and eligible for WhatsApp dispatch. Invoices are dispatched one by one directly from official company line ", /*#__PURE__*/react.createElement("strong", null, "+243 827 722 222"), "."), /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      mb: 2.5,
+      p: 2,
+      border: '1px solid #e2e8f0',
+      borderRadius: 1.5,
+      backgroundColor: '#f8fafc'
+    }
+  }, /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      mb: 1
+    }
+  }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    variant: "subtitle2",
+    sx: {
+      fontWeight: 700,
+      color: '#1e293b'
+    }
+  }, "Customizable Short Message (English)"), /*#__PURE__*/react.createElement(Button/* default */.A, {
+    size: "small",
+    variant: "outlined",
+    startIcon: /*#__PURE__*/react.createElement(Save, null),
+    onClick: handleSaveTemplateAsDefault,
+    disabled: savingTemplate || dispatchingWhatsApp,
+    sx: {
+      textTransform: 'none',
+      py: 0.25,
+      fontSize: '0.78rem'
+    }
+  }, savingTemplate ? 'Saving...' : 'Save as Default')), /*#__PURE__*/react.createElement(TextField/* default */.A, {
+    fullWidth: true,
+    multiline: true,
+    rows: 3,
+    value: whatsAppMessage,
+    onChange: e => setWhatsAppMessage(e.target.value),
+    placeholder: "Type short message in English...",
+    disabled: dispatchingWhatsApp,
+    sx: {
+      backgroundColor: '#fff'
+    }
+  }), /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    variant: "caption",
+    sx: {
+      color: '#64748b',
+      mt: 0.5,
+      display: 'block'
+    }
+  }, "* When a client has multiple invoices, this short message is attached to the first invoice PDF, followed sequentially by subsequent invoices.")), /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      mb: 1
+    }
+  }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    variant: "subtitle2",
+    sx: {
+      fontWeight: 700,
+      color: '#1e293b'
+    }
+  }, "Review Recipient Invoices (", selectedWhatsAppInvoiceIds.size, " of ", whatsAppInvoicesList.length, " Selected)"), /*#__PURE__*/react.createElement(Button/* default */.A, {
+    size: "small",
+    onClick: handleToggleSelectAllWhatsApp,
+    disabled: dispatchingWhatsApp || whatsAppInvoicesList.length === 0,
+    sx: {
+      textTransform: 'none',
+      fontSize: '0.78rem'
+    }
+  }, selectedWhatsAppInvoiceIds.size === whatsAppInvoicesList.length ? 'Uncheck All' : 'Select All')), loadingSentInvoices ? /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      py: 4,
+      textAlign: 'center'
+    }
+  }, /*#__PURE__*/react.createElement(Loader/* default */.A, null), /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    variant: "caption",
+    sx: {
+      color: '#64748b',
+      mt: 1,
+      display: 'block'
+    }
+  }, "Loading SENT invoices...")) : whatsAppInvoicesList.length === 0 ? /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      py: 4,
+      textAlign: 'center',
+      color: '#64748b'
+    }
+  }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    variant: "body2"
+  }, "No invoices with status \"SENT\" found.")) : /*#__PURE__*/react.createElement(TableContainer/* default */.A, {
+    component: Paper/* default */.A,
+    variant: "outlined",
+    sx: {
+      maxHeight: 320,
+      borderRadius: 1.5
+    }
+  }, /*#__PURE__*/react.createElement(Table/* default */.A, {
+    size: "small",
+    stickyHeader: true
+  }, /*#__PURE__*/react.createElement(TableHead/* default */.A, null, /*#__PURE__*/react.createElement(TableRow/* default */.A, {
+    sx: {
+      '& th': {
+        fontWeight: 700,
+        backgroundColor: '#f1f5f9'
+      }
+    }
+  }, /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+    padding: "checkbox",
+    sx: {
+      width: 40
+    }
+  }, /*#__PURE__*/react.createElement(Checkbox/* default */.A, {
+    size: "small",
+    checked: whatsAppInvoicesList.length > 0 && selectedWhatsAppInvoiceIds.size === whatsAppInvoicesList.length,
+    indeterminate: selectedWhatsAppInvoiceIds.size > 0 && selectedWhatsAppInvoiceIds.size < whatsAppInvoicesList.length,
+    onChange: handleToggleSelectAllWhatsApp,
+    disabled: dispatchingWhatsApp
+  })), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+    sx: {
+      width: 110
+    }
+  }, "Invoice #"), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+    sx: {
+      width: 100
+    }
+  }, "Date"), /*#__PURE__*/react.createElement(TableCell/* default */.A, null, "Customer Name"), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+    sx: {
+      width: 170
+    }
+  }, "WhatsApp Phone (Editable)"), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+    sx: {
+      width: 100,
+      textAlign: 'right'
+    }
+  }, "Amount"), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+    sx: {
+      width: 90,
+      textAlign: 'center'
+    }
+  }, "Status"))), /*#__PURE__*/react.createElement(TableBody/* default */.A, null, whatsAppInvoicesList.map(inv => {
+    var id = inv._id || inv.id;
+    var isChecked = selectedWhatsAppInvoiceIds.has(id);
+    var cust = inv.customerName || {};
+    var clientName = (typeof cust === 'string' ? cust : cust.Customer || cust.customerName || cust.customerFullName || 'Customer').toUpperCase();
+    var phoneVal = phoneOverrides[id] !== undefined ? phoneOverrides[id] : getInvoicePhone(inv, customerPhoneMap);
+    var amount = Number(inv.totalInvoice || inv.total || 0).toFixed(2);
+    return /*#__PURE__*/react.createElement(TableRow/* default */.A, {
+      key: id,
+      hover: true,
+      selected: isChecked,
+      sx: {
+        '&.Mui-selected': {
+          backgroundColor: 'rgba(37,211,102,0.06)'
+        }
+      }
+    }, /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+      padding: "checkbox"
+    }, /*#__PURE__*/react.createElement(Checkbox/* default */.A, {
+      size: "small",
+      checked: isChecked,
+      onChange: () => handleToggleWhatsAppInvoice(id),
+      disabled: dispatchingWhatsApp
+    })), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+      sx: {
+        fontWeight: 700,
+        color: '#0f172a'
+      }
+    }, "INV-", String(inv.invoiceNumber).padStart(6, '0')), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+      sx: {
+        fontSize: '0.8rem',
+        color: '#64748b'
+      }
+    }, inv.dateField || (inv.invoiceDate ? dayjs_min_default()(inv.invoiceDate).format('DD/MM/YYYY') : '')), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+      sx: {
+        fontWeight: 600
+      }
+    }, clientName), /*#__PURE__*/react.createElement(TableCell/* default */.A, null, /*#__PURE__*/react.createElement(TextField/* default */.A, {
+      size: "small",
+      value: phoneVal,
+      onChange: e => setPhoneOverrides(prev => _objectSpread(_objectSpread({}, prev), {}, {
+        [id]: e.target.value
+      })),
+      placeholder: "+243 xxx xxx xxx",
+      disabled: dispatchingWhatsApp,
+      sx: {
+        '& input': {
+          py: 0.5,
+          px: 1,
+          fontSize: '0.8rem'
+        },
+        width: '100%'
+      }
+    })), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+      sx: {
+        textAlign: 'right',
+        fontWeight: 700,
+        color: '#0f172a'
+      }
+    }, "$", amount), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+      sx: {
+        textAlign: 'center'
+      }
+    }, /*#__PURE__*/react.createElement(Chip/* default */.A, {
+      label: "SENT",
+      size: "small",
+      sx: {
+        bgcolor: '#e0f2fe',
+        color: '#0369a1',
+        fontWeight: 700,
+        height: 20,
+        fontSize: '0.7rem'
+      }
+    })));
+  })))), dispatchingWhatsApp && /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      mt: 2
+    }
+  }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    variant: "body2",
+    sx: {
+      fontWeight: 600,
+      color: '#166534',
+      mb: 0.5
+    }
+  }, "\u23F3 Dispatching invoice PDFs via WhatsApp Web client... Please wait (do not close this window)."), /*#__PURE__*/react.createElement(LinearProgress/* default */.A, {
+    color: "success"
+  })), dispatchResult && /*#__PURE__*/react.createElement(Alert/* default */.A, {
+    severity: dispatchResult.success ? 'success' : 'warning',
+    sx: {
+      mt: 2,
+      fontSize: '0.85rem'
+    }
+  }, /*#__PURE__*/react.createElement("strong", null, dispatchResult.success ? '✅ Dispatch Completed:' : '⚠️ Dispatch Result:'), ' ', ((_dispatchResult$repor = dispatchResult.report) === null || _dispatchResult$repor === void 0 ? void 0 : _dispatchResult$repor.sent) !== undefined ? "".concat(dispatchResult.report.sent, " sent, ").concat(dispatchResult.report.failed || 0, " failed.") : dispatchResult.error || 'Finished processing.', Array.isArray((_dispatchResult$repor2 = dispatchResult.report) === null || _dispatchResult$repor2 === void 0 ? void 0 : _dispatchResult$repor2.details) && dispatchResult.report.details.length > 0 && /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      mt: 1,
+      display: 'flex',
+      flexWrap: 'wrap',
+      gap: 0.5
+    }
+  }, dispatchResult.report.details.map((d, i) => /*#__PURE__*/react.createElement(Chip/* default */.A, {
+    key: i,
+    size: "small",
+    label: "#".concat(d.invoiceNumber, ": ").concat(d.status).concat(d.error ? " (".concat(d.error, ")") : ''),
+    color: d.status === 'sent' ? 'success' : 'error',
+    variant: "outlined",
+    sx: {
+      fontSize: '0.72rem'
+    }
+  }))))), /*#__PURE__*/react.createElement(DialogActions/* default */.A, {
+    sx: {
+      px: 2,
+      py: 1.5
+    }
+  }, /*#__PURE__*/react.createElement(Button/* default */.A, {
+    onClick: () => setOpenWhatsAppModal(false),
+    disabled: dispatchingWhatsApp,
+    color: "inherit",
+    sx: {
+      textTransform: 'none'
+    }
+  }, dispatchResult ? 'Close' : 'Cancel'), /*#__PURE__*/react.createElement(Button/* default */.A, {
+    variant: "contained",
+    onClick: handleExecuteWhatsAppDispatch,
+    disabled: dispatchingWhatsApp || selectedWhatsAppInvoiceIds.size === 0,
+    startIcon: /*#__PURE__*/react.createElement(WhatsApp, null),
+    sx: {
+      backgroundColor: '#25D366',
+      '&:hover': {
+        backgroundColor: '#1ebe5d'
+      },
+      color: '#fff',
+      fontWeight: 700,
+      textTransform: 'none',
+      px: 2.5
+    }
+  }, dispatchingWhatsApp ? 'Dispatching...' : "Send ".concat(selectedWhatsAppInvoiceIds.size, " Invoice(s) via WhatsApp")))))))));
 }
 /* harmony default export */ const AdminView1_InvoiceViewAdmin = (InvoiceViewAdmin);
 

@@ -1434,7 +1434,7 @@ function MarketingViewAdmin() {
         fontWeight: 700,
         color: '#0f172a'
       }
-    }, "\uD83C\uDFA8 Ready-Made Flyer Mode (Upload from ChatGPT / Designer)"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+    }, "\uD83C\uDFA8 Ready-Made Flyer Mode"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
       variant: "caption",
       sx: {
         color: '#64748b'
@@ -1530,7 +1530,7 @@ function MarketingViewAdmin() {
       fontWeight: 600,
       color: '#475569'
     }
-  }, isFullFlyer ? 'Ready-Made Flyer Graphic (ChatGPT / Designer Image) *' : 'Product Photo (Embedded on 3D Pedestal in Architectural Scene)'), productImage && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+  }, isFullFlyer ? 'Ready-Made Flyer Graphic *' : 'Product Photo (Embedded on 3D Pedestal in Architectural Scene)'), productImage && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
     size: "small",
     color: "error",
     startIcon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_DeleteOutline__WEBPACK_IMPORTED_MODULE_36__/* ["default"] */ .A, null),

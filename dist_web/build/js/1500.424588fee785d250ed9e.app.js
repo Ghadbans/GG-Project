@@ -1,7 +1,7 @@
 "use strict";
-(this["webpackChunkgg_management"] = this["webpackChunkgg_management"] || []).push([[2495],{
+(this["webpackChunkgg_management"] = this["webpackChunkgg_management"] || []).push([[1500],{
 
-/***/ 92495
+/***/ 61500
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
@@ -14,10 +14,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(71543);
 /* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(8239);
 /* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(60538);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(86531);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(844);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(68864);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(27558);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(844);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(68864);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(27558);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(86531);
 /* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(47419);
 /* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(35406);
 /* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(11848);
@@ -197,7 +197,9 @@ var Drawer = (0,_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .Ay
     })
   };
 });
-function GrantAccessFormView() {
+function GrantAccessUpdateView() {
+  var _useParams = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_16__/* .useParams */ .g)(),
+    id = _useParams.id;
   var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_16__/* .useNavigate */ .Zp)();
   var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_34__/* .useDispatch */ .wA)();
   var user = (0,react_redux__WEBPACK_IMPORTED_MODULE_34__/* .useSelector */ .d4)(_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_35__/* .selectCurrentUser */ .xu);
@@ -240,320 +242,46 @@ function GrantAccessFormView() {
   var toggleDrawer = () => {
     setSideBar(!sideBar);
   };
-  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
     _useState2 = _slicedToArray(_useState, 2),
-    account = _useState2[0],
-    setAccount = _useState2[1];
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+    userName = _useState2[0],
+    setUserName = _useState2[1];
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState4 = _slicedToArray(_useState3, 2),
-    userName = _useState4[0],
-    setUserName = _useState4[1];
-  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+    modules = _useState4[0],
+    setModules = _useState4[1];
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState6 = _slicedToArray(_useState5, 2),
-    userID = _useState6[0],
-    setUserId = _useState6[1];
-  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([{
-      id: 1,
-      moduleName: 'Customer',
-      access: {
-        readM: false,
-        createM: false,
-        viewM: false,
-        editM: false,
-        deleteM: false
-      }
-    }, {
-      id: 2,
-      moduleName: 'Item',
-      access: {
-        readM: false,
-        createM: false,
-        viewM: false,
-        editM: false,
-        deleteM: false
-      }
-    }, {
-      id: 3,
-      moduleName: 'Item-Out',
-      access: {
-        readM: false,
-        createM: false,
-        viewM: false,
-        editM: false,
-        deleteM: false
-      }
-    }, {
-      id: 4,
-      moduleName: 'Item-Return',
-      access: {
-        readM: false,
-        createM: false,
-        viewM: false,
-        editM: false,
-        deleteM: false
-      }
-    }, {
-      id: 5,
-      moduleName: 'Item-Purchase',
-      access: {
-        readM: false,
-        createM: false,
-        viewM: false,
-        editM: false,
-        deleteM: false
-      }
-    }, {
-      id: 6,
-      moduleName: 'Estimate',
-      access: {
-        readM: false,
-        createM: false,
-        viewM: false,
-        editM: false,
-        deleteM: false
-      }
-    }, {
-      id: 7,
-      moduleName: 'Invoice',
-      access: {
-        readM: false,
-        createM: false,
-        viewM: false,
-        editM: false,
-        deleteM: false
-      }
-    }, {
-      id: 8,
-      moduleName: 'Payment',
-      access: {
-        readM: false,
-        createM: false,
-        viewM: false,
-        editM: false,
-        deleteM: false
-      }
-    }, {
-      id: 9,
-      moduleName: 'Project',
-      access: {
-        readM: false,
-        createM: false,
-        viewM: false,
-        editM: false,
-        deleteM: false
-      }
-    }, {
-      id: 10,
-      moduleName: 'Purchase',
-      access: {
-        readM: false,
-        createM: false,
-        viewM: false,
-        editM: false,
-        deleteM: false
-      }
-    }, {
-      id: 11,
-      moduleName: 'Maintenance',
-      access: {
-        readM: false,
-        createM: false,
-        viewM: false,
-        editM: false,
-        deleteM: false
-      }
-    }, {
-      id: 12,
-      moduleName: 'Expenses',
-      access: {
-        readM: false,
-        createM: false,
-        viewM: false,
-        editM: false,
-        deleteM: false
-      }
-    }, {
-      id: 13,
-      moduleName: 'Rate',
-      access: {
-        readM: false,
-        createM: false,
-        viewM: false,
-        editM: false,
-        deleteM: false
-      }
-    }, {
-      id: 14,
-      moduleName: 'Employee',
-      access: {
-        readM: false,
-        createM: false,
-        viewM: false,
-        editM: false,
-        deleteM: false
-      }
-    }, {
-      id: 15,
-      moduleName: 'Pay-Roll',
-      access: {
-        readM: false,
-        createM: false,
-        viewM: false,
-        editM: false,
-        deleteM: false
-      }
-    }, {
-      id: 16,
-      moduleName: 'Grant-Access',
-      access: {
-        readM: false,
-        createM: false,
-        viewM: false,
-        editM: false,
-        deleteM: false
-      }
-    }, {
-      id: 17,
-      moduleName: 'Purchase-Order',
-      access: {
-        readM: false,
-        createM: false,
-        viewM: false,
-        editM: false,
-        deleteM: false
-      }
-    }, {
-      id: 18,
-      moduleName: 'Point-Of-Sell',
-      access: {
-        readM: false,
-        createM: false,
-        viewM: false,
-        editM: false,
-        deleteM: false
-      }
-    }, {
-      id: 19,
-      moduleName: 'Reports',
-      access: {
-        readM: false,
-        createM: false,
-        viewM: false,
-        editM: false,
-        deleteM: false
-      }
-    }, {
-      id: 20,
-      moduleName: 'Block-Factory',
-      access: {
-        readM: false,
-        createM: false,
-        viewM: false,
-        editM: false,
-        deleteM: false
-      }
-    }, {
-      id: 21,
-      moduleName: 'Block-Mixer',
-      access: {
-        readM: false,
-        createM: false,
-        viewM: false,
-        editM: false,
-        deleteM: false
-      }
-    }, {
-      id: 22,
-      moduleName: 'Backup',
-      access: {
-        readM: false,
-        createM: false,
-        viewM: false,
-        editM: false,
-        deleteM: false
-      }
-    }, {
-      id: 23,
-      moduleName: 'Fleet Management',
-      access: {
-        readM: false,
-        createM: false,
-        viewM: false,
-        editM: false,
-        deleteM: false
-      }
-    }, {
-      id: 24,
-      moduleName: 'Layout-Print',
-      access: {
-        readM: false,
-        createM: false,
-        viewM: false,
-        editM: false,
-        deleteM: false
-      }
-    }, {
-      id: 25,
-      moduleName: 'Supplier',
-      access: {
-        readM: false,
-        createM: false,
-        viewM: false,
-        editM: false,
-        deleteM: false
-      }
-    }, {
-      id: 26,
-      moduleName: 'Maintenance-Order',
-      access: {
-        readM: false,
-        createM: false,
-        viewM: false,
-        editM: false,
-        deleteM: false
-      }
-    }, {
-      id: 27,
-      moduleName: 'Marketing',
-      access: {
-        readM: false,
-        createM: false,
-        viewM: false,
-        editM: false,
-        deleteM: false
-      }
-    }]),
+    branches = _useState6[0],
+    setBranches = _useState6[1];
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState8 = _slicedToArray(_useState7, 2),
-    modules = _useState8[0],
-    setModules = _useState8[1];
-  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    costVisibility = _useState8[0],
+    setCostVisibility = _useState8[1];
+  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState0 = _slicedToArray(_useState9, 2),
-    branches = _useState0[0],
-    setBranches = _useState0[1];
+    notificationVisibility = _useState0[0],
+    setNotificationVisibility = _useState0[1];
   var _useState1 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState10 = _slicedToArray(_useState1, 2),
-    costVisibility = _useState10[0],
-    setCostVisibility = _useState10[1];
+    messageVisibility = _useState10[0],
+    setMessageVisibility = _useState10[1];
   var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState12 = _slicedToArray(_useState11, 2),
-    notificationVisibility = _useState12[0],
-    setNotificationVisibility = _useState12[1];
+    backupVisibility = _useState12[0],
+    setBackupVisibility = _useState12[1];
   var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState14 = _slicedToArray(_useState13, 2),
-    messageVisibility = _useState14[0],
-    setMessageVisibility = _useState14[1];
+    marketing = _useState14[0],
+    setMarketing = _useState14[1];
   var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState16 = _slicedToArray(_useState15, 2),
-    backupVisibility = _useState16[0],
-    setBackupVisibility = _useState16[1];
-  var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    whatsappInvoice = _useState16[0],
+    setWhatsappInvoice = _useState16[1];
+  var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState18 = _slicedToArray(_useState17, 2),
-    marketing = _useState18[0],
-    setMarketing = _useState18[1];
-  var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
-    _useState20 = _slicedToArray(_useState19, 2),
-    branchOptions = _useState20[0],
-    setBranchOptions = _useState20[1];
+    branchOptions = _useState18[0],
+    setBranchOptions = _useState18[1];
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     var fetchBranches = /*#__PURE__*/function () {
       var _ref8 = _asyncToGenerator(function* () {
@@ -579,8 +307,157 @@ function GrantAccessFormView() {
     var fetchData = /*#__PURE__*/function () {
       var _ref9 = _asyncToGenerator(function* () {
         try {
-          var res = yield axios__WEBPACK_IMPORTED_MODULE_27__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_28__/* .ENDPOINT_URL */ .m, "/employeeuser"));
-          setAccount(res.data.data.reverse());
+          var res = yield axios__WEBPACK_IMPORTED_MODULE_27__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_28__/* .ENDPOINT_URL */ .m, "/get-grantAccess/").concat(id));
+          setUserName(res.data.data.employeeName);
+          setBranches(res.data.data.branches || []);
+          setCostVisibility(res.data.data.costVisibility || false);
+          setNotificationVisibility(res.data.data.notificationVisibility || false);
+          setMessageVisibility(res.data.data.messageVisibility || false);
+          setBackupVisibility(res.data.data.backupVisibility || false);
+          setMarketing(res.data.data.marketing || false);
+          setWhatsappInvoice(res.data.data.whatsappInvoice || false);
+          var fetchedModules = res.data.data.modules;
+          if (!fetchedModules.find(m => m.moduleName === 'Purchase-Order')) {
+            fetchedModules.push({
+              id: 17,
+              moduleName: 'Purchase-Order',
+              access: {
+                readM: false,
+                createM: false,
+                viewM: false,
+                editM: false,
+                deleteM: false
+              }
+            });
+          }
+          if (!fetchedModules.find(m => m.moduleName === 'Supplier')) {
+            fetchedModules.push({
+              id: 25,
+              moduleName: 'Supplier',
+              access: {
+                readM: false,
+                createM: false,
+                viewM: false,
+                editM: false,
+                deleteM: false
+              }
+            });
+          }
+          if (!fetchedModules.find(m => m.moduleName === 'Point-Of-Sell')) {
+            fetchedModules.push({
+              id: 18,
+              moduleName: 'Point-Of-Sell',
+              access: {
+                readM: false,
+                createM: false,
+                viewM: false,
+                editM: false,
+                deleteM: false
+              }
+            });
+          }
+
+          // Ensure Reports module is present even for old records
+          if (!fetchedModules.find(m => m.moduleName === 'Reports')) {
+            fetchedModules.push({
+              id: 19,
+              moduleName: 'Reports',
+              access: {
+                readM: false,
+                createM: false,
+                viewM: false,
+                editM: false,
+                deleteM: false
+              }
+            });
+          }
+          if (!fetchedModules.find(m => m.moduleName === 'Block-Factory')) {
+            fetchedModules.push({
+              id: 20,
+              moduleName: 'Block-Factory',
+              access: {
+                readM: false,
+                createM: false,
+                viewM: false,
+                editM: false,
+                deleteM: false
+              }
+            });
+          }
+          // Ensure Block-Mixer module is present even for old records
+          if (!fetchedModules.find(m => m.moduleName === 'Block-Mixer')) {
+            fetchedModules.push({
+              id: 21,
+              moduleName: 'Block-Mixer',
+              access: {
+                readM: false,
+                createM: false,
+                viewM: false,
+                editM: false,
+                deleteM: false
+              }
+            });
+          }
+          // Ensure Backup module is present even for old records
+          if (!fetchedModules.find(m => m.moduleName === 'Backup')) {
+            fetchedModules.push({
+              id: 22,
+              moduleName: 'Backup',
+              access: {
+                readM: false,
+                createM: false,
+                viewM: false,
+                editM: false,
+                deleteM: false
+              }
+            });
+          }
+          // Ensure Layout-Print module is present even for old records
+          if (!fetchedModules.find(m => m.moduleName === 'Layout-Print')) {
+            fetchedModules.push({
+              id: 23,
+              moduleName: 'Layout-Print',
+              access: {
+                readM: false,
+                createM: false,
+                viewM: false,
+                editM: false,
+                deleteM: false
+              }
+            });
+          }
+          // Ensure Fleet Management module is present even for old records
+          if (!fetchedModules.find(m => m.moduleName === 'Fleet Management')) {
+            fetchedModules.push({
+              id: 24,
+              moduleName: 'Fleet Management',
+              access: {
+                readM: false,
+                createM: false,
+                viewM: false,
+                editM: false,
+                deleteM: false
+              }
+            });
+          }
+
+          // Apply sequential IDs so unnumbered older records get an ID for rendering
+          if (!fetchedModules.find(m => m.moduleName === 'Maintenance-Order')) {
+            fetchedModules.push({
+              moduleName: 'Maintenance-Order',
+              access: {
+                readM: false,
+                createM: false,
+                viewM: false,
+                editM: false,
+                deleteM: false
+              }
+            });
+          }
+          fetchedModules = fetchedModules.map((m, index) => _objectSpread(_objectSpread({}, m), {}, {
+            id: index + 1
+          }));
+          setModules(fetchedModules);
         } catch (error) {
           console.error('Error fetching data:', error);
         }
@@ -591,28 +468,23 @@ function GrantAccessFormView() {
     }();
     fetchData();
   }, []);
-  var handleChange = newValue => {
-    var selectedOptions = account.find(option => option === newValue);
-    setUserName(selectedOptions === null || selectedOptions === void 0 ? void 0 : selectedOptions.employeeName);
-    setUserId(selectedOptions === null || selectedOptions === void 0 ? void 0 : selectedOptions._id);
-  };
   var handleCheckBox = (i, type) => {
     var updateModule = [...modules];
     updateModule[i].access[type] = !updateModule[i].access[type];
     setModules(updateModule);
   };
+  var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState20 = _slicedToArray(_useState19, 2),
+    loading = _useState20[0],
+    setLoading = _useState20[1];
   var _useState21 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState22 = _slicedToArray(_useState21, 2),
-    loading = _useState22[0],
-    setLoading = _useState22[1];
+    loadingOpenModal = _useState22[0],
+    setLoadingOpenModal = _useState22[1];
   var _useState23 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState24 = _slicedToArray(_useState23, 2),
-    loadingOpenModal = _useState24[0],
-    setLoadingOpenModal = _useState24[1];
-  var _useState25 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState26 = _slicedToArray(_useState25, 2),
-    ErrorOpenModal = _useState26[0],
-    setErrorOpenModal = _useState26[1];
+    ErrorOpenModal = _useState24[0],
+    setErrorOpenModal = _useState24[1];
   var handleOpen = () => {
     setLoadingOpenModal(true);
     setLoading(true);
@@ -642,64 +514,56 @@ function GrantAccessFormView() {
       handleClose();
     }
   };
-  var handleCreateNotification = /*#__PURE__*/function () {
-    var _ref0 = _asyncToGenerator(function* (ReferenceInfo) {
+  var handleCreateComment = /*#__PURE__*/function () {
+    var _ref0 = _asyncToGenerator(function* () {
       var data = {
-        idInfo: ReferenceInfo,
-        person: user.data.userName + ' Created Access For',
-        reason: userName,
+        idInfo: id,
+        person: user.data.userName + ' Modify',
+        reason: 'Access For' + userName,
         dateNotification: new Date()
       };
       try {
-        yield axios__WEBPACK_IMPORTED_MODULE_27__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_28__/* .ENDPOINT_URL */ .m, "/create-notification"), data);
+        yield axios__WEBPACK_IMPORTED_MODULE_27__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_28__/* .ENDPOINT_URL */ .m, "/create-notification/"), data);
       } catch (error) {
         console.log(error);
       }
     });
-    return function handleCreateNotification(_x) {
+    return function handleCreateComment() {
       return _ref0.apply(this, arguments);
     };
   }();
-  var _useState27 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
-    _useState28 = _slicedToArray(_useState27, 2),
-    saving = _useState28[0],
-    setSaving = _useState28[1];
   var handleSubmit = /*#__PURE__*/function () {
     var _ref1 = _asyncToGenerator(function* (e) {
       e.preventDefault();
       if (user.data.userName !== 'GG') {
-        alert('Only GG can grant access.');
+        alert('Only GG can modify access.');
         return;
       }
       var data = {
-        employeeName: userName,
-        userID,
         modules,
         branches,
         costVisibility,
         notificationVisibility,
         messageVisibility,
         backupVisibility,
-        marketing
+        marketing,
+        whatsappInvoice
       };
-      setSaving('true');
       try {
-        var res = yield axios__WEBPACK_IMPORTED_MODULE_27__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_28__/* .ENDPOINT_URL */ .m, "/create-grantAccess"), data);
+        var res = yield axios__WEBPACK_IMPORTED_MODULE_27__/* ["default"] */ .A.put("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_28__/* .ENDPOINT_URL */ .m, "/update-grantAccess/").concat(id), data);
         if (res) {
           (0,_utils_apiCache__WEBPACK_IMPORTED_MODULE_38__/* .invalidateCache */ .gm)('/grantAccess');
           // Open Loading View
-          var ReferenceInfo = res.data.data._id;
-          handleCreateNotification(ReferenceInfo);
+          handleCreateComment();
           handleOpen();
         }
       } catch (error) {
         if (error) {
-          setSaving('');
           handleError();
         }
       }
     });
-    return function handleSubmit(_x2) {
+    return function handleSubmit(_x) {
       return _ref1.apply(this, arguments);
     };
   }();
@@ -804,21 +668,9 @@ function GrantAccessFormView() {
     item: true,
     xs: 6
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
-    disableClearable: true,
-    options: account,
-    getOptionLabel: option => option.employeeName,
-    renderOption: (props, option) => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, props, option.employeeName),
-    renderInput: params => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, _extends({
-      required: true
-    }, params, {
-      label: "User Name"
-    })),
-    onChange: (e, newValue) => handleChange(newValue ? newValue : ''),
-    size: "small",
-    sx: {
-      width: '100%',
-      backgroundColor: 'white'
-    }
+    name: "userName",
+    label: "User Name",
+    value: userName
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .Ay, {
     item: true,
     xs: 12
@@ -837,8 +689,8 @@ function GrantAccessFormView() {
       style: {
         textAlign: 'center'
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
-      control: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+      control: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
         checked: row.access.readM,
         onChange: () => handleCheckBox(i, 'readM')
       }),
@@ -847,8 +699,8 @@ function GrantAccessFormView() {
       style: {
         textAlign: 'center'
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
-      control: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+      control: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
         checked: row.access.createM,
         onChange: () => handleCheckBox(i, 'createM')
       }),
@@ -857,8 +709,8 @@ function GrantAccessFormView() {
       style: {
         textAlign: 'center'
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
-      control: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+      control: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
         checked: row.access.viewM,
         onChange: () => handleCheckBox(i, 'viewM')
       }),
@@ -867,8 +719,8 @@ function GrantAccessFormView() {
       style: {
         textAlign: 'center'
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
-      control: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+      control: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
         checked: row.access.editM,
         onChange: () => handleCheckBox(i, 'editM')
       }),
@@ -877,8 +729,8 @@ function GrantAccessFormView() {
       style: {
         textAlign: 'center'
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
-      control: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+      control: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
         checked: row.access.deleteM,
         onChange: () => handleCheckBox(i, 'deleteM')
       }),
@@ -899,14 +751,14 @@ function GrantAccessFormView() {
     sx: {
       mb: 2
     }
-  }, "Assigned Branches:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
+  }, "Assigned Branches:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
     multiple: true,
     options: branchOptions,
     value: branches,
     onChange: (event, newValue) => {
       setBranches(newValue);
     },
-    renderInput: params => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, _extends({}, params, {
+    renderInput: params => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, _extends({}, params, {
       variant: "outlined",
       label: "Select Branches"
     })),
@@ -930,8 +782,8 @@ function GrantAccessFormView() {
     xs: 12,
     sm: 6,
     md: 3
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
-    control: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+    control: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
       checked: costVisibility,
       onChange: e => setCostVisibility(e.target.checked)
     }),
@@ -941,8 +793,8 @@ function GrantAccessFormView() {
     xs: 12,
     sm: 6,
     md: 3
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
-    control: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+    control: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
       checked: notificationVisibility,
       onChange: e => setNotificationVisibility(e.target.checked)
     }),
@@ -952,8 +804,8 @@ function GrantAccessFormView() {
     xs: 12,
     sm: 6,
     md: 3
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
-    control: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+    control: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
       checked: messageVisibility,
       onChange: e => setMessageVisibility(e.target.checked)
     }),
@@ -963,8 +815,8 @@ function GrantAccessFormView() {
     xs: 12,
     sm: 6,
     md: 3
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
-    control: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+    control: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
       checked: backupVisibility,
       onChange: e => setBackupVisibility(e.target.checked)
     }),
@@ -974,28 +826,33 @@ function GrantAccessFormView() {
     xs: 12,
     sm: 6,
     md: 3
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
-    control: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+    control: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
       checked: marketing,
       onChange: e => setMarketing(e.target.checked)
     }),
     label: "Marketing: ".concat(marketing ? 'Granted' : 'Denied')
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .Ay, {
+    item: true,
+    xs: 12,
+    sm: 6,
+    md: 3
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+    control: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+      checked: whatsappInvoice,
+      onChange: e => setWhatsappInvoice(e.target.checked)
+    }),
+    label: "Send WhatsApp Invoices: ".concat(whatsappInvoice ? 'Granted' : 'Denied')
   }))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .Ay, {
     item: true,
     xs: 12
-  }, saving !== 'true' ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
     type: "submit",
     className: "btnCustomer6",
     style: {
       width: '100%'
     }
-  }, "Save") : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
-    className: "btnCustomer6",
-    style: {
-      width: '100%',
-      textAlign: 'center'
-    }
-  }, "Saving..."))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
+  }, "Save"))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
     open: loadingOpenModal,
     onClose: handleClose,
     closeAfterTransition: true,
@@ -1073,7 +930,7 @@ function GrantAccessFormView() {
     onClick: handleCloseError
   }, "Try Again")))));
 }
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (GrantAccessFormView);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (GrantAccessUpdateView);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, [
 /* harmony export */   "default", 0, /* export default binding */ __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ ]);

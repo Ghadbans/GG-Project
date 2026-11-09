@@ -183,6 +183,7 @@ function GrantAccessFormView() {
   const [messageVisibility, setMessageVisibility] = useState(false);
   const [backupVisibility, setBackupVisibility] = useState(false);
   const [marketing, setMarketing] = useState(false);
+  const [whatsappInvoice, setWhatsappInvoice] = useState(false);
   const [branchOptions, setBranchOptions] = useState([]);
 
   useEffect(() => {
@@ -288,7 +289,8 @@ function GrantAccessFormView() {
       notificationVisibility,
       messageVisibility,
       backupVisibility,
-      marketing
+      marketing,
+      whatsappInvoice
     };
     setSaving('true')
     try {
@@ -548,6 +550,17 @@ function GrantAccessFormView() {
                             />
                           }
                           label={`Marketing: ${marketing ? 'Granted' : 'Denied'}`}
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={6} md={3}>
+                        <FormControlLabel
+                          control={
+                            <Checkbox
+                              checked={whatsappInvoice}
+                              onChange={(e) => setWhatsappInvoice(e.target.checked)}
+                            />
+                          }
+                          label={`Send WhatsApp Invoices: ${whatsappInvoice ? 'Granted' : 'Denied'}`}
                         />
                       </Grid>
                     </Grid>

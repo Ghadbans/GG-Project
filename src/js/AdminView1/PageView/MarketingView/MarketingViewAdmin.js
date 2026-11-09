@@ -703,7 +703,7 @@ function MarketingViewAdmin() {
                         label={
                           <Box>
                             <Typography variant="body2" sx={{ fontWeight: 700, color: '#0f172a' }}>
-                              🎨 Ready-Made Flyer Mode (Upload from ChatGPT / Designer)
+                              🎨 Ready-Made Flyer Mode
                             </Typography>
                             <Typography variant="caption" sx={{ color: '#64748b' }}>
                               When enabled, your uploaded image is published 100% full-bleed directly without re-compositing.
@@ -760,7 +760,7 @@ function MarketingViewAdmin() {
                     <Box sx={{ mb: 2.5 }}>
                       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1 }}>
                         <Typography variant="subtitle2" sx={{ fontWeight: 600, color: '#475569' }}>
-                          {isFullFlyer ? 'Ready-Made Flyer Graphic (ChatGPT / Designer Image) *' : 'Product Photo (Embedded on 3D Pedestal in Architectural Scene)'}
+                          {isFullFlyer ? 'Ready-Made Flyer Graphic *' : 'Product Photo (Embedded on 3D Pedestal in Architectural Scene)'}
                         </Typography>
                         {productImage && (
                           <Button
