@@ -4738,3 +4738,25 @@ The standardized `renderStatusBadge` helper was seamlessly integrated into all 1
 - **Android APK**: Compiled via Gradle to `GlobalGate-v3.6.41.apk` (15.04 MB) and copied to `server/public/downloads/GlobalGate.apk`.
 - **Windows Executable**: Packaged `dist/Global Gate Setup 3.6.41.exe` (96.05 MB) via `electron-builder` and copied to `server/public/downloads/GlobalGate-v3.6.41.exe` and `server/public/downloads/GlobalGateSetup.exe`.
 - **Deployment**: Committed and pushed to GitHub `origin main`.
+
+---
+
+## Progress Update - November 9, 2026 (Version 3.6.42)
+### WhatsApp Invoice Search Bar Function Scope Fix & Multi-Platform Release
+
+### 1. Root Cause Analysis & Fix
+- **Issue**: In `InvoiceViewAdmin.js`, typing inside the WhatsApp review modal search bar triggered an unhandled runtime error: `TypeError: Xn is not a function at InvoiceViewAdmin.js:384:59`.
+- **Root Cause**: `getInvoicePhone` helper was originally declared *below* the `filteredQueueInvoices = useMemo(...)` block. Because `const` function declarations are not hoisted (subject to Temporal Dead Zone / TDZ), typing in the search bar caused the memo filter to execute `getInvoicePhone(inv, customerPhoneMap)` before its declaration, resulting in `undefined is not a function`.
+- **Resolution**:
+  - Moved `getInvoicePhone` above `filteredQueueInvoices` and `sentHistoryMap`.
+  - Added robust null-safety for `inv.customerName` and phone overrides: `String(rawPhone || '').toLowerCase()`.
+  - Removed redundant secondary declaration of `getInvoicePhone`.
+  - Real-time search by customer, invoice #, and phone now operates seamlessly with zero console errors.
+
+### 2. Multi-Platform Verification & Packaging
+- **AST Quality Gate**: Verified with 0 errors across 239 source files (`node scripts/pre-build-check.js`).
+- **Version Bump**: Bumped to `v3.6.42` across `package.json`, `server/package.json`, `server/routes/downloadRoutes.js`, and `server/index.js`.
+- **Production Bundles**: Compiled desktop and web production bundles via Webpack (`dist_web/`).
+- **Android APK**: Compiled via Gradle to `GlobalGate-v3.6.42.apk` (15.04 MB) and copied to `server/public/downloads/GlobalGate.apk`.
+- **Windows Executable**: Packaged `dist/Global Gate Setup 3.6.42.exe` (96.05 MB) via `electron-builder` and copied to `server/public/downloads/GlobalGate-v3.6.42.exe` and `server/public/downloads/GlobalGateSetup.exe`.
+- **Deployment**: Committed and pushed to GitHub `origin main`.

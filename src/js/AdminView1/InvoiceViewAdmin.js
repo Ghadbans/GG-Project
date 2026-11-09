@@ -348,6 +348,21 @@ function InvoiceViewAdmin() {
     return <Chip label={s || 'UNKNOWN'} size="small" sx={{ bgcolor: '#f1f5f9', color: '#475569', fontWeight: 700, height: 20, fontSize: '0.7rem' }} />;
   };
 
+  const getInvoicePhone = (inv, phoneMap = {}) => {
+    if (!inv) return '';
+    const cust = inv.customerName || {};
+    if (typeof cust === 'object' && cust !== null) {
+      const direct = cust.customerCompanyPhone || cust.customerPhone || cust.phone || cust.mobile;
+      if (direct && String(direct).trim()) return String(direct).trim();
+      if (cust._id && phoneMap[cust._id]) return String(phoneMap[cust._id]).trim();
+      const name = cust.Customer || cust.customerName || cust.customerFullName;
+      if (name && phoneMap[String(name).toUpperCase()]) return String(phoneMap[String(name).toUpperCase()]).trim();
+    } else if (typeof cust === 'string' && phoneMap[cust.toUpperCase()]) {
+      return String(phoneMap[cust.toUpperCase()]).trim();
+    }
+    return '';
+  };
+
   const fetchSentHistory = async () => {
     try {
       setLoadingHistory(true);
@@ -380,8 +395,9 @@ function InvoiceViewAdmin() {
       const invNum = String(inv.invoiceNumber || '').toLowerCase();
       const invFormatted = `inv-${String(inv.invoiceNumber || '').padStart(6, '0')}`.toLowerCase();
       const cust = inv.customerName || {};
-      const clientName = (typeof cust === 'string' ? cust : (cust.Customer || cust.customerName || cust.customerFullName || '')).toLowerCase();
-      const phone = (phoneOverrides[inv._id || inv.id] || getInvoicePhone(inv, customerPhoneMap) || '').toLowerCase();
+      const clientName = String(typeof cust === 'string' ? cust : (cust.Customer || cust.customerName || cust.customerFullName || '')).toLowerCase();
+      const rawPhone = phoneOverrides[inv._id || inv.id] !== undefined ? phoneOverrides[inv._id || inv.id] : getInvoicePhone(inv, customerPhoneMap);
+      const phone = String(rawPhone || '').toLowerCase();
       const st = String(inv.status || '').toLowerCase();
       return invNum.includes(q) || invFormatted.includes(q) || clientName.includes(q) || phone.includes(q) || st.includes(q);
     });
@@ -449,20 +465,6 @@ function InvoiceViewAdmin() {
     };
     fetchTemplate();
   }, []);
-
-  const getInvoicePhone = (inv, phoneMap = {}) => {
-    const cust = inv?.customerName || {};
-    if (typeof cust === 'object') {
-      const direct = cust.customerCompanyPhone || cust.customerPhone || cust.phone || cust.mobile;
-      if (direct && String(direct).trim()) return String(direct).trim();
-      if (cust._id && phoneMap[cust._id]) return phoneMap[cust._id];
-      const name = cust.Customer || cust.customerName || cust.customerFullName;
-      if (name && phoneMap[name.toUpperCase()]) return phoneMap[name.toUpperCase()];
-    } else if (typeof cust === 'string' && phoneMap[cust.toUpperCase()]) {
-      return phoneMap[cust.toUpperCase()];
-    }
-    return '';
-  };
 
   const handleSaveTemplateAsDefault = async () => {
     if (!whatsAppMessage.trim()) {

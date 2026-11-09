@@ -3208,6 +3208,21 @@ function InvoiceViewAdmin() {
       }
     });
   };
+  var getInvoicePhone = function getInvoicePhone(inv) {
+    var phoneMap = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    if (!inv) return '';
+    var cust = inv.customerName || {};
+    if (typeof cust === 'object' && cust !== null) {
+      var direct = cust.customerCompanyPhone || cust.customerPhone || cust.phone || cust.mobile;
+      if (direct && String(direct).trim()) return String(direct).trim();
+      if (cust._id && phoneMap[cust._id]) return String(phoneMap[cust._id]).trim();
+      var name = cust.Customer || cust.customerName || cust.customerFullName;
+      if (name && phoneMap[String(name).toUpperCase()]) return String(phoneMap[String(name).toUpperCase()]).trim();
+    } else if (typeof cust === 'string' && phoneMap[cust.toUpperCase()]) {
+      return String(phoneMap[cust.toUpperCase()]).trim();
+    }
+    return '';
+  };
   var fetchSentHistory = /*#__PURE__*/function () {
     var _ref11 = _asyncToGenerator(function* () {
       try {
@@ -3244,8 +3259,9 @@ function InvoiceViewAdmin() {
       var invNum = String(inv.invoiceNumber || '').toLowerCase();
       var invFormatted = "inv-".concat(String(inv.invoiceNumber || '').padStart(6, '0')).toLowerCase();
       var cust = inv.customerName || {};
-      var clientName = (typeof cust === 'string' ? cust : cust.Customer || cust.customerName || cust.customerFullName || '').toLowerCase();
-      var phone = (phoneOverrides[inv._id || inv.id] || getInvoicePhone(inv, customerPhoneMap) || '').toLowerCase();
+      var clientName = String(typeof cust === 'string' ? cust : cust.Customer || cust.customerName || cust.customerFullName || '').toLowerCase();
+      var rawPhone = phoneOverrides[inv._id || inv.id] !== undefined ? phoneOverrides[inv._id || inv.id] : getInvoicePhone(inv, customerPhoneMap);
+      var phone = String(rawPhone || '').toLowerCase();
       var st = String(inv.status || '').toLowerCase();
       return invNum.includes(q) || invFormatted.includes(q) || clientName.includes(q) || phone.includes(q) || st.includes(q);
     });
@@ -3320,20 +3336,6 @@ function InvoiceViewAdmin() {
     }();
     fetchTemplate();
   }, []);
-  var getInvoicePhone = function getInvoicePhone(inv) {
-    var phoneMap = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-    var cust = (inv === null || inv === void 0 ? void 0 : inv.customerName) || {};
-    if (typeof cust === 'object') {
-      var direct = cust.customerCompanyPhone || cust.customerPhone || cust.phone || cust.mobile;
-      if (direct && String(direct).trim()) return String(direct).trim();
-      if (cust._id && phoneMap[cust._id]) return phoneMap[cust._id];
-      var name = cust.Customer || cust.customerName || cust.customerFullName;
-      if (name && phoneMap[name.toUpperCase()]) return phoneMap[name.toUpperCase()];
-    } else if (typeof cust === 'string' && phoneMap[cust.toUpperCase()]) {
-      return phoneMap[cust.toUpperCase()];
-    }
-    return '';
-  };
   var handleSaveTemplateAsDefault = /*#__PURE__*/function () {
     var _ref14 = _asyncToGenerator(function* () {
       if (!whatsAppMessage.trim()) {
