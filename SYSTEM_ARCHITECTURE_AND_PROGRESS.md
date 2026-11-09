@@ -4697,3 +4697,44 @@ The standardized `renderStatusBadge` helper was seamlessly integrated into all 1
 - **Android APK**: Synchronized Capacitor container and compiled via Gradle to `GlobalGate-v3.6.40.apk` and synchronized to `server/public/downloads/GlobalGate.apk`.
 - **Windows Executable**: Packaged `dist/Global Gate Setup 3.6.40.exe` via `electron-builder` and synchronized to `server/public/downloads/GlobalGate-v3.6.40.exe` and `server/public/downloads/GlobalGateSetup.exe`.
 - **Deployment**: Committed and pushed to GitHub `origin main`.
+
+---
+
+## Progress Update - November 9, 2026 (Version 3.6.41)
+### Invoice WhatsApp Dispatch: Search Bar, 3-Month Sent History, Official Theme Match & Expanded Status Support (SENT, PARTIALLY-PAID, FREE OF CHARGE)
+
+### 1. Requirements & Core Enhancements
+1. **Search Bar in Review Modal**:
+   - Integrated a real-time search bar inside the WhatsApp dispatch review modal allowing filtering by Customer Name, Invoice #, or Phone Number.
+   - Added instant batch actions: "Select Filtered" (checks all visible search matches) and "Uncheck Filtered" (unchecks visible search matches) for effortless mass selection.
+2. **Sent Invoices History (3-Month Retention)**:
+   - Added a dedicated "Sent History (Last 3 Months)" tab inside the WhatsApp modal displaying all previously dispatched invoices.
+   - Automatic 90-day (3 months) data retention managed via MongoDB native TTL index (`expires: 7776000` seconds on `sentAt`).
+   - Displays Date & Time Sent (`DD/MM/YYYY HH:mm`), Invoice #, Customer Name, WhatsApp Phone, Amount, Sent By, and Status chip.
+   - In the "Send Queue" tab, any invoice that was previously sent shows a compact green pill badge with the timestamp (e.g. `Sent 09/11 17:12`), preventing duplicate dispatches by mistake.
+3. **Exact Invoice PDF Theme (`TEST INV-002679.pdf`)**:
+   - Redesigned the Puppeteer PDF generation template in `fb-whatsapp-agent/agent.js` to match the exact visual format of the official system invoice:
+     - Global Gate logo top-left with company legal identifiers (RCCM CD/KNG/RCCM/16-B-9562, ID NAT 01-83-N19920A) top-right.
+     - Centered `INVOICE` title (with removal of "STATUS: SENT" pill badge).
+     - Customer "BILL TO" details on left, Invoice # / Date / Due Date / Subject grid on right.
+     - Light blue-gray (`#f1f5f9` / `#e8f7fe`) table headers with Item Qty and Unit (`PCS`, `BAG`, etc.).
+     - Sofibanque SA coordinates, company entitlement, SWIFT code, and standard Terms & Conditions bottom-left.
+     - Financial breakdown bottom-right: Subtotal (Tax Inclusive), Total, Balance Due in bold blue (`#093170`), and Total in Words.
+     - Centered footer with contact email, company phone (`+243 827 722 222`), and website.
+4. **Expanded Status Inclusion**:
+   - Expanded dispatch eligibility beyond only `SENT` to also include:
+     - **`SENT`**
+     - **`PARTIALLY-PAID`**
+     - **`FREE OF CHARGE`**
+   - Validated across the backend API (`invoiceWhatsAppRoutes.js`), Electron IPC (`main.js`), WhatsApp agent script (`agent.js`), and frontend views (`InvoiceViewAdmin.js`).
+   - Distinct color-coded status chips in the table: `SENT` (blue), `PARTIALLY-PAID` (orange), and `FREE OF CHARGE` (purple).
+5. **Marketing Flyer Title Clean-up**:
+   - Cleaned up flyer mode toggle in `MarketingViewAdmin.js` to simply display `🎨 Ready-Made Flyer Mode`.
+
+### 2. Multi-Platform Verification & Packaging
+- **AST Quality Gate**: Verified with 0 errors across 239 source files (`node scripts/pre-build-check.js`).
+- **Version Bump**: Bumped to `v3.6.41` across `package.json`, `server/package.json`, `server/routes/downloadRoutes.js`, and `server/index.js`.
+- **Production Bundles**: Compiled desktop and web production bundles via Webpack (`dist_web/`).
+- **Android APK**: Compiled via Gradle to `GlobalGate-v3.6.41.apk` (15.04 MB) and copied to `server/public/downloads/GlobalGate.apk`.
+- **Windows Executable**: Packaged `dist/Global Gate Setup 3.6.41.exe` (96.05 MB) via `electron-builder` and copied to `server/public/downloads/GlobalGate-v3.6.41.exe` and `server/public/downloads/GlobalGateSetup.exe`.
+- **Deployment**: Committed and pushed to GitHub `origin main`.

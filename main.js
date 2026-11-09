@@ -480,11 +480,14 @@ ipcMain.handle('send-invoice-whatsapp', async (event, payload) => {
     };
   }
 
-  const validInvoices = invoices.filter(inv => String(inv.status || '').toUpperCase().trim() === 'SENT');
+  const validInvoices = invoices.filter(inv => {
+    const st = String(inv.status || '').toUpperCase().trim();
+    return st === 'SENT' || st === 'PARTIALLY-PAID' || st === 'PARTIALLY PAID' || st === 'PARTIALLY_PAID' || st === 'FREE OF CHARGE' || st === 'FREE-OF-CHARGE';
+  });
   if (validInvoices.length === 0) {
     return {
       success: false,
-      error: 'Only invoices with status SENT can be sent via WhatsApp.'
+      error: 'Only invoices with status SENT, PARTIALLY-PAID, or FREE OF CHARGE can be sent via WhatsApp.'
     };
   }
 

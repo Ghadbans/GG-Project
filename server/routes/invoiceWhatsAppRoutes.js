@@ -5,6 +5,7 @@ const fs = require('fs');
 const { execFile } = require('child_process');
 const axios = require('axios');
 const InvoiceWhatsAppTemplate = require('../model/invoiceWhatsAppTemplateSchema');
+const InvoiceWhatsAppHistory = require('../model/invoiceWhatsAppHistorySchema');
 
 const AGENT_DIR = 'C:\\Users\\GG\\fb-whatsapp-agent';
 const AGENT_SCRIPT = path.join(AGENT_DIR, 'agent.js');
@@ -59,6 +60,43 @@ router.post('/template', async (req, res) => {
   }
 });
 
+// 2.5 Get Sent Invoices History (3-Month Rolling Retention via MongoDB TTL)
+router.get('/history', async (req, res) => {
+  try {
+    const history = await InvoiceWhatsAppHistory.find().sort({ sentAt: -1 }).limit(500).lean();
+    return res.json({ success: true, history: history || [] });
+  } catch (err) {
+    console.error('[InvoiceWhatsApp] Error fetching history:', err);
+    return res.status(500).json({ success: false, error: err.message, history: [] });
+  }
+});
+
+// 2.6 Record Sent Invoices History
+router.post('/record-history', async (req, res) => {
+  try {
+    const { records = [], sentBy = 'GG' } = req.body;
+    if (!Array.isArray(records) || records.length === 0) {
+      return res.json({ success: true, count: 0 });
+    }
+    const docs = records.map(r => ({
+      invoiceId: String(r.invoiceId || r._id || ''),
+      invoiceNumber: Number(r.invoiceNumber || 0),
+      customerName: String(r.customerName || ''),
+      phone: String(r.phone || ''),
+      amount: Number(r.amount || 0),
+      caption: String(r.caption || ''),
+      status: String(r.status || 'sent'),
+      sentBy: String(sentBy || 'GG'),
+      sentAt: new Date()
+    }));
+    await InvoiceWhatsAppHistory.insertMany(docs);
+    return res.json({ success: true, count: docs.length });
+  } catch (err) {
+    console.error('[InvoiceWhatsApp] Error recording history:', err);
+    return res.status(500).json({ success: false, error: err.message });
+  }
+});
+
 // 3. Dispatch Selected SENT Invoices via WhatsApp
 router.post('/send', async (req, res) => {
   try {
@@ -67,16 +105,16 @@ router.post('/send', async (req, res) => {
       return res.status(400).json({ success: false, error: 'No invoices selected for dispatch' });
     }
 
-    // Safety Filter: Strictly enforce that only invoices in SENT status can be dispatched
+    // Safety Filter: Strictly enforce that only invoices in SENT, PARTIALLY-PAID, or FREE OF CHARGE status can be dispatched
     const validInvoices = invoices.filter(inv => {
       const st = String(inv.status || '').toUpperCase().trim();
-      return st === 'SENT';
+      return st === 'SENT' || st === 'PARTIALLY-PAID' || st === 'PARTIALLY PAID' || st === 'PARTIALLY_PAID' || st === 'FREE OF CHARGE' || st === 'FREE-OF-CHARGE';
     });
 
     if (validInvoices.length === 0) {
       return res.status(400).json({
         success: false,
-        error: 'Only invoices with status SENT can be dispatched via WhatsApp.'
+        error: 'Only invoices with status SENT, PARTIALLY-PAID, or FREE OF CHARGE can be dispatched via WhatsApp.'
       });
     }
 
@@ -94,6 +132,25 @@ router.post('/send', async (req, res) => {
         const daemonRes = await axios.post(`${AGENT_DAEMON_URL}/send-invoices`, payload, {
           timeout: 300000 // 5 minute timeout for batch dispatches
         });
+        if (daemonRes.data && Array.isArray(daemonRes.data.details)) {
+          const sentEntries = daemonRes.data.details
+            .filter(d => d.status === 'sent')
+            .map(d => ({
+              invoiceId: String(d.invoiceId || ''),
+              invoiceNumber: Number(d.invoiceNumber || 0),
+              customerName: String(d.clientName || ''),
+              phone: String(d.phone || ''),
+              amount: Number(d.amount || 0),
+              sentBy: String(req.body.sentBy || 'GG'),
+              status: 'sent',
+              sentAt: new Date()
+            }));
+          if (sentEntries.length > 0) {
+            InvoiceWhatsAppHistory.insertMany(sentEntries).catch(err => {
+              console.warn('[InvoiceWhatsApp] History logging warning:', err.message);
+            });
+          }
+        }
         return res.json(daemonRes.data);
       }
     } catch (_) {
@@ -121,6 +178,26 @@ router.post('/send', async (req, res) => {
         const reportMatch = (stdout || '').match(/INVOICE_REPORT_JSON:(\{.*\})/);
         if (reportMatch) {
           try { report = JSON.parse(reportMatch[1]); } catch (_) {}
+        }
+
+        if (report && Array.isArray(report.details)) {
+          const sentEntries = report.details
+            .filter(d => d.status === 'sent')
+            .map(d => ({
+              invoiceId: String(d.invoiceId || ''),
+              invoiceNumber: Number(d.invoiceNumber || 0),
+              customerName: String(d.clientName || ''),
+              phone: String(d.phone || ''),
+              amount: Number(d.amount || 0),
+              sentBy: String(req.body.sentBy || 'GG'),
+              status: 'sent',
+              sentAt: new Date()
+            }));
+          if (sentEntries.length > 0) {
+            InvoiceWhatsAppHistory.insertMany(sentEntries).catch(err => {
+              console.warn('[InvoiceWhatsApp] History logging warning:', err.message);
+            });
+          }
         }
 
         return res.json({

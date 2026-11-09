@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useMemo } from 'react'
 import {  toast } from 'react-toastify';
 import './view.css'
 import './PageView/Chartview.css';
@@ -9,7 +9,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { NavLink, useNavigate } from 'react-router-dom';
-import {  Table, IconButton, styled, TableBody, TableCell, TableHead, TableRow, Checkbox, TableContainer, Paper, Typography, Modal, Box, Grid, FormControl, InputLabel, Select, MenuItem, Backdrop, Autocomplete, TextField, Pagination, Button, Dialog, DialogTitle, DialogContent, DialogActions, Chip, LinearProgress, Alert  } from '@mui/material';
+import {  Table, IconButton, styled, TableBody, TableCell, TableHead, TableRow, Checkbox, TableContainer, Paper, Typography, Modal, Box, Grid, FormControl, InputLabel, Select, MenuItem, Backdrop, Autocomplete, TextField, Pagination, Button, Dialog, DialogTitle, DialogContent, DialogActions, Chip, LinearProgress, Alert, Tabs, Tab, InputAdornment  } from '@mui/material';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -26,7 +26,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import axios from 'axios';
 import { cachedGet } from '../utils/apiCache';
 import { ENDPOINT_URL } from '../apiConfig';
-import { Add, Close, MailOutline, Person2Outlined, PersonOffRounded, Assignment as AssignmentIcon, EditNote as EditNoteIcon, Send as SendIcon, HourglassEmpty as HourglassEmptyIcon, Cancel as CancelIcon, CardGiftcard as CardGiftcardIcon, Payments as PaymentsIcon, CheckCircleOutline as CheckCircleOutlineIcon, WhatsApp as WhatsAppIcon, Save as SaveIcon } from '@mui/icons-material';
+import { Add, Close, MailOutline, Person2Outlined, PersonOffRounded, Assignment as AssignmentIcon, EditNote as EditNoteIcon, Send as SendIcon, HourglassEmpty as HourglassEmptyIcon, Cancel as CancelIcon, CardGiftcard as CardGiftcardIcon, Payments as PaymentsIcon, CheckCircleOutline as CheckCircleOutlineIcon, WhatsApp as WhatsAppIcon, Save as SaveIcon, History as HistoryIcon, FilterList as FilterListIcon } from '@mui/icons-material';
 import dayjs from 'dayjs';
 import Loader from '../component/Loader';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -316,6 +316,105 @@ function InvoiceViewAdmin() {
   const [dispatchingWhatsApp, setDispatchingWhatsApp] = useState(false);
   const [dispatchResult, setDispatchResult] = useState(null);
   const [loadingSentInvoices, setLoadingSentInvoices] = useState(false);
+  const [modalTab, setModalTab] = useState(0); // 0: Send Queue, 1: Sent History
+  const [queueSearchTerm, setQueueSearchTerm] = useState('');
+  const [historyList, setHistoryList] = useState([]);
+  const [loadingHistory, setLoadingHistory] = useState(false);
+  const [historySearchTerm, setHistorySearchTerm] = useState('');
+
+  const isEligibleInvoiceStatus = (st) => {
+    const s = String(st || '').toUpperCase().trim();
+    return (
+      s === 'SENT' ||
+      s === 'PARTIALLY-PAID' ||
+      s === 'PARTIALLY PAID' ||
+      s === 'PARTIALLY_PAID' ||
+      s === 'FREE OF CHARGE' ||
+      s === 'FREE-OF-CHARGE'
+    );
+  };
+
+  const renderInvoiceStatusChip = (status) => {
+    const s = String(status || '').toUpperCase().trim();
+    if (s === 'SENT') {
+      return <Chip label="SENT" size="small" sx={{ bgcolor: '#e0f2fe', color: '#0369a1', fontWeight: 700, height: 20, fontSize: '0.7rem' }} />;
+    }
+    if (s === 'PARTIALLY-PAID' || s === 'PARTIALLY PAID' || s === 'PARTIALLY_PAID') {
+      return <Chip label="PARTIALLY-PAID" size="small" sx={{ bgcolor: '#ffedd5', color: '#c2410c', fontWeight: 700, height: 20, fontSize: '0.7rem' }} />;
+    }
+    if (s === 'FREE OF CHARGE' || s === 'FREE-OF-CHARGE') {
+      return <Chip label="FREE OF CHARGE" size="small" sx={{ bgcolor: '#f3e8ff', color: '#7e22ce', fontWeight: 700, height: 20, fontSize: '0.7rem' }} />;
+    }
+    return <Chip label={s || 'UNKNOWN'} size="small" sx={{ bgcolor: '#f1f5f9', color: '#475569', fontWeight: 700, height: 20, fontSize: '0.7rem' }} />;
+  };
+
+  const fetchSentHistory = async () => {
+    try {
+      setLoadingHistory(true);
+      const res = await axios.get(`${ENDPOINT_URL}/invoice-whatsapp/history`);
+      if (res.data?.success && Array.isArray(res.data.history)) {
+        setHistoryList(res.data.history);
+      }
+    } catch (err) {
+      console.warn('Failed to fetch WhatsApp sent history:', err);
+    } finally {
+      setLoadingHistory(false);
+    }
+  };
+
+  const sentHistoryMap = useMemo(() => {
+    const map = {};
+    (historyList || []).forEach(h => {
+      const num = Number(h.invoiceNumber);
+      if (num && !map[num]) {
+        map[num] = h;
+      }
+    });
+    return map;
+  }, [historyList]);
+
+  const filteredQueueInvoices = useMemo(() => {
+    if (!queueSearchTerm.trim()) return whatsAppInvoicesList;
+    const q = queueSearchTerm.toLowerCase().trim();
+    return whatsAppInvoicesList.filter(inv => {
+      const invNum = String(inv.invoiceNumber || '').toLowerCase();
+      const invFormatted = `inv-${String(inv.invoiceNumber || '').padStart(6, '0')}`.toLowerCase();
+      const cust = inv.customerName || {};
+      const clientName = (typeof cust === 'string' ? cust : (cust.Customer || cust.customerName || cust.customerFullName || '')).toLowerCase();
+      const phone = (phoneOverrides[inv._id || inv.id] || getInvoicePhone(inv, customerPhoneMap) || '').toLowerCase();
+      const st = String(inv.status || '').toLowerCase();
+      return invNum.includes(q) || invFormatted.includes(q) || clientName.includes(q) || phone.includes(q) || st.includes(q);
+    });
+  }, [whatsAppInvoicesList, queueSearchTerm, phoneOverrides, customerPhoneMap]);
+
+  const handleSelectFiltered = () => {
+    setSelectedWhatsAppInvoiceIds(prev => {
+      const next = new Set(prev);
+      filteredQueueInvoices.forEach(inv => next.add(inv._id || inv.id));
+      return next;
+    });
+  };
+
+  const handleUncheckFiltered = () => {
+    setSelectedWhatsAppInvoiceIds(prev => {
+      const next = new Set(prev);
+      filteredQueueInvoices.forEach(inv => next.delete(inv._id || inv.id));
+      return next;
+    });
+  };
+
+  const filteredHistoryList = useMemo(() => {
+    if (!historySearchTerm.trim()) return historyList;
+    const q = historySearchTerm.toLowerCase().trim();
+    return historyList.filter(h => {
+      const invNum = String(h.invoiceNumber || '').toLowerCase();
+      const invFormatted = `inv-${String(h.invoiceNumber || '').padStart(6, '0')}`.toLowerCase();
+      const client = String(h.customerName || '').toLowerCase();
+      const phone = String(h.phone || '').toLowerCase();
+      const user = String(h.sentBy || '').toLowerCase();
+      return invNum.includes(q) || invFormatted.includes(q) || client.includes(q) || phone.includes(q) || user.includes(q);
+    });
+  }, [historyList, historySearchTerm]);
 
   useEffect(() => {
     const fetchCustomers = async () => {
@@ -393,36 +492,58 @@ function InvoiceViewAdmin() {
     }
     setDispatchResult(null);
     setLoadingSentInvoices(true);
+    setQueueSearchTerm('');
+    setModalTab(0);
     setOpenWhatsAppModal(true);
 
+    fetchSentHistory();
+
     try {
-      const res = await axios.get(`${ENDPOINT_URL}/invoice-Information?page=1&limit=200&status=SENT`);
-      const sentInvoices = (res.data?.itemI || []).map(r => ({
+      const [resSent, resPartial, resFoc] = await Promise.allSettled([
+        axios.get(`${ENDPOINT_URL}/invoice-Information?page=1&limit=200&status=SENT`),
+        axios.get(`${ENDPOINT_URL}/invoice-Information?page=1&limit=200&status=PARTIALLY-PAID`),
+        axios.get(`${ENDPOINT_URL}/invoice-Information?page=1&limit=200&status=FREE OF CHARGE`)
+      ]);
+
+      const pool = [];
+      [resSent, resPartial, resFoc].forEach(r => {
+        if (r.status === 'fulfilled' && Array.isArray(r.value?.data?.itemI)) {
+          pool.push(...r.value.data.itemI);
+        }
+      });
+
+      const seen = new Set();
+      let combined = pool.filter(r => {
+        const id = r._id || r.id;
+        if (!id || seen.has(id)) return false;
+        seen.add(id);
+        return isEligibleInvoiceStatus(r.status);
+      }).map(r => ({
         ...r,
         id: r._id,
         dateField: r.invoiceDate ? dayjs(r.invoiceDate).format('DD/MM/YYYY') : ''
       }));
 
-      const finalSent = sentInvoices.length > 0 
-        ? sentInvoices 
-        : invoice.filter(inv => String(inv.status || '').toUpperCase().trim() === 'SENT');
+      if (combined.length === 0) {
+        combined = invoice.filter(inv => isEligibleInvoiceStatus(inv.status));
+      }
 
-      setWhatsAppInvoicesList(finalSent);
-      setSelectedWhatsAppInvoiceIds(new Set(finalSent.map(inv => inv._id || inv.id)));
+      setWhatsAppInvoicesList(combined);
+      setSelectedWhatsAppInvoiceIds(new Set(combined.map(inv => inv._id || inv.id)));
 
       const initPhones = {};
-      finalSent.forEach(inv => {
+      combined.forEach(inv => {
         const id = inv._id || inv.id;
         initPhones[id] = getInvoicePhone(inv, customerPhoneMap);
       });
       setPhoneOverrides(initPhones);
     } catch (err) {
-      console.error('Error fetching SENT invoices:', err);
-      const localSent = invoice.filter(inv => String(inv.status || '').toUpperCase().trim() === 'SENT');
-      setWhatsAppInvoicesList(localSent);
-      setSelectedWhatsAppInvoiceIds(new Set(localSent.map(inv => inv._id || inv.id)));
+      console.error('Error fetching eligible invoices:', err);
+      const localEligible = invoice.filter(inv => isEligibleInvoiceStatus(inv.status));
+      setWhatsAppInvoicesList(localEligible);
+      setSelectedWhatsAppInvoiceIds(new Set(localEligible.map(inv => inv._id || inv.id)));
       const initPhones = {};
-      localSent.forEach(inv => {
+      localEligible.forEach(inv => {
         const id = inv._id || inv.id;
         initPhones[id] = getInvoicePhone(inv, customerPhoneMap);
       });
@@ -437,16 +558,18 @@ function InvoiceViewAdmin() {
       toast.error('Permission denied. WhatsApp Invoice Dispatch is restricted in Grant Access.');
       return;
     }
-    const isSent = String(row.status || '').toUpperCase().trim() === 'SENT';
-    if (!isSent) {
-      toast.warn('Only invoices with status SENT can be sent via WhatsApp.');
+    if (!isEligibleInvoiceStatus(row.status)) {
+      toast.warn('Only invoices with status SENT, PARTIALLY-PAID, or FREE OF CHARGE can be sent via WhatsApp.');
       return;
     }
     setDispatchResult(null);
+    setQueueSearchTerm('');
+    setModalTab(0);
     setWhatsAppInvoicesList([row]);
     setSelectedWhatsAppInvoiceIds(new Set([row._id || row.id]));
     const initialPhone = getInvoicePhone(row, customerPhoneMap);
     setPhoneOverrides({ [row._id || row.id]: initialPhone });
+    fetchSentHistory();
     setOpenWhatsAppModal(true);
   };
 
@@ -496,6 +619,24 @@ function InvoiceViewAdmin() {
       if (result?.success) {
         toast.success(`WhatsApp dispatch complete: ${result.report?.sent || selectedInvoices.length} sent!`);
         fetchItems(page, debouncedSearchTerm, filterField, filterValue, statusFilter);
+
+        // Record history logs to MongoDB backend
+        try {
+          await axios.post(`${ENDPOINT_URL}/invoice-whatsapp/record-history`, {
+            records: selectedInvoices.map(inv => ({
+              invoiceId: inv._id || inv.id,
+              invoiceNumber: inv.invoiceNumber,
+              customerName: typeof inv.customerName === 'object' ? (inv.customerName?.Customer || inv.customerName?.customerName || '') : inv.customerName,
+              phone: phoneOverrides[inv._id || inv.id] || getInvoicePhone(inv, customerPhoneMap),
+              amount: inv.totalInvoice || inv.total || 0,
+              caption: whatsAppMessage.trim(),
+              status: 'sent'
+            })),
+            sentBy: user?.data?.userName || 'GG'
+          });
+          fetchSentHistory();
+        } catch (_) {}
+
       } else {
         toast.error(result?.error || 'WhatsApp dispatch encountered errors.');
       }
@@ -913,11 +1054,11 @@ function InvoiceViewAdmin() {
       width: 60,
       sortable: false,
       renderCell: (params) => {
-        const isSent = String(params.row.status || '').toUpperCase().trim() === 'SENT';
+        const isEligible = isEligibleInvoiceStatus(params.row.status);
         if (!canSendWhatsAppInvoice) return null;
-        if (!isSent) {
+        if (!isEligible) {
           return (
-            <Tooltip title="Only invoices with status SENT can be sent via WhatsApp">
+            <Tooltip title="Only invoices with status SENT, PARTIALLY-PAID, or FREE OF CHARGE can be sent via WhatsApp">
               <span>
                 <IconButton size="small" disabled sx={{ color: '#cbd5e1' }}>
                   <WhatsAppIcon sx={{ fontSize: 18 }} />
@@ -1232,7 +1373,7 @@ function InvoiceViewAdmin() {
                               boxShadow: '0 2px 4px rgba(37,211,102,0.25)'
                             }}
                           >
-                            Send SENT via WhatsApp
+                            Send WhatsApp Invoices
                           </Button>
                         )}
                       </Box>
@@ -1553,7 +1694,7 @@ function InvoiceViewAdmin() {
                     </Box>
                   </Modal>
 
-                  {/* WhatsApp SENT Invoices Dispatch Dialog */}
+                  {/* WhatsApp Invoices Dispatch Dialog with Send Queue and 3-Month History */}
                   <Dialog
                     open={openWhatsAppModal}
                     onClose={() => !dispatchingWhatsApp && setOpenWhatsAppModal(false)}
@@ -1563,7 +1704,7 @@ function InvoiceViewAdmin() {
                       sx: { borderRadius: 2, p: 1 }
                     }}
                   >
-                    <DialogTitle sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', pb: 1 }}>
+                    <DialogTitle sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', pb: 0.5 }}>
                       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.2 }}>
                         <WhatsAppIcon sx={{ color: '#25D366', fontSize: 28 }} />
                         <Typography variant="h6" sx={{ fontWeight: 800, color: '#0f172a' }}>
@@ -1579,180 +1720,383 @@ function InvoiceViewAdmin() {
                       </IconButton>
                     </DialogTitle>
 
-                    <DialogContent dividers sx={{ pt: 1.5, pb: 2 }}>
-                      <Alert severity="info" sx={{ mb: 2, fontSize: '0.85rem' }}>
-                        <strong>Status Rule Enforced:</strong> Only invoices with status <strong>SENT</strong> are listed and eligible for WhatsApp dispatch.
-                        Invoices are dispatched one by one directly from official company line <strong>+243 827 722 222</strong>.
-                      </Alert>
-
-                      {/* Customizable Short Message Box */}
-                      <Box sx={{ mb: 2.5, p: 2, border: '1px solid #e2e8f0', borderRadius: 1.5, backgroundColor: '#f8fafc' }}>
-                        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
-                          <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#1e293b' }}>
-                            Customizable Short Message (English)
-                          </Typography>
-                          <Button
-                            size="small"
-                            variant="outlined"
-                            startIcon={<SaveIcon />}
-                            onClick={handleSaveTemplateAsDefault}
-                            disabled={savingTemplate || dispatchingWhatsApp}
-                            sx={{ textTransform: 'none', py: 0.25, fontSize: '0.78rem' }}
-                          >
-                            {savingTemplate ? 'Saving...' : 'Save as Default'}
-                          </Button>
-                        </Box>
-                        <TextField
-                          fullWidth
-                          multiline
-                          rows={3}
-                          value={whatsAppMessage}
-                          onChange={(e) => setWhatsAppMessage(e.target.value)}
-                          placeholder="Type short message in English..."
-                          disabled={dispatchingWhatsApp}
-                          sx={{ backgroundColor: '#fff' }}
+                    {/* Modal Tabs: Queue vs Sent History */}
+                    <Box sx={{ px: 3, pt: 1, borderBottom: 1, borderColor: 'divider' }}>
+                      <Tabs
+                        value={modalTab}
+                        onChange={(e, val) => setModalTab(val)}
+                        textColor="primary"
+                        indicatorColor="primary"
+                      >
+                        <Tab
+                          icon={<WhatsAppIcon sx={{ fontSize: 18 }} />}
+                          iconPosition="start"
+                          label={`Send Queue (${whatsAppInvoicesList.length})`}
+                          sx={{ textTransform: 'none', fontWeight: 700 }}
                         />
-                        <Typography variant="caption" sx={{ color: '#64748b', mt: 0.5, display: 'block' }}>
-                          * When a client has multiple invoices, this short message is attached to the first invoice PDF, followed sequentially by subsequent invoices.
-                        </Typography>
-                      </Box>
+                        <Tab
+                          icon={<HistoryIcon sx={{ fontSize: 18 }} />}
+                          iconPosition="start"
+                          label={`Sent History (${historyList.length})`}
+                          sx={{ textTransform: 'none', fontWeight: 700 }}
+                        />
+                      </Tabs>
+                    </Box>
 
-                      {/* Recipient Invoices Table */}
-                      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
-                        <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#1e293b' }}>
-                          Review Recipient Invoices ({selectedWhatsAppInvoiceIds.size} of {whatsAppInvoicesList.length} Selected)
-                        </Typography>
-                        <Button
-                          size="small"
-                          onClick={handleToggleSelectAllWhatsApp}
-                          disabled={dispatchingWhatsApp || whatsAppInvoicesList.length === 0}
-                          sx={{ textTransform: 'none', fontSize: '0.78rem' }}
-                        >
-                          {selectedWhatsAppInvoiceIds.size === whatsAppInvoicesList.length ? 'Uncheck All' : 'Select All'}
-                        </Button>
-                      </Box>
+                    <DialogContent dividers sx={{ pt: 1.5, pb: 2 }}>
+                      {modalTab === 0 ? (
+                        <>
+                          <Alert severity="info" sx={{ mb: 2, fontSize: '0.85rem' }}>
+                            <strong>Eligible Invoices:</strong> Invoices with status <strong>SENT</strong>, <strong>PARTIALLY-PAID</strong>, or <strong>FREE OF CHARGE</strong> are listed and eligible for WhatsApp dispatch.
+                            Dispatches are sent one-by-one from official company line <strong>+243 827 722 222</strong>.
+                          </Alert>
 
-                      {loadingSentInvoices ? (
-                        <Box sx={{ py: 4, textAlign: 'center' }}>
-                          <Loader />
-                          <Typography variant="caption" sx={{ color: '#64748b', mt: 1, display: 'block' }}>
-                            Loading SENT invoices...
-                          </Typography>
-                        </Box>
-                      ) : whatsAppInvoicesList.length === 0 ? (
-                        <Box sx={{ py: 4, textAlign: 'center', color: '#64748b' }}>
-                          <Typography variant="body2">No invoices with status "SENT" found.</Typography>
-                        </Box>
-                      ) : (
-                        <TableContainer component={Paper} variant="outlined" sx={{ maxHeight: 320, borderRadius: 1.5 }}>
-                          <Table size="small" stickyHeader>
-                            <TableHead>
-                              <TableRow sx={{ '& th': { fontWeight: 700, backgroundColor: '#f1f5f9' } }}>
-                                <TableCell padding="checkbox" sx={{ width: 40 }}>
-                                  <Checkbox
+                          {/* Customizable Short Message Box */}
+                          <Box sx={{ mb: 2, p: 2, border: '1px solid #e2e8f0', borderRadius: 1.5, backgroundColor: '#f8fafc' }}>
+                            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
+                              <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#1e293b' }}>
+                                Customizable Short Message (English)
+                              </Typography>
+                              <Button
+                                size="small"
+                                variant="outlined"
+                                startIcon={<SaveIcon />}
+                                onClick={handleSaveTemplateAsDefault}
+                                disabled={savingTemplate || dispatchingWhatsApp}
+                                sx={{ textTransform: 'none', py: 0.25, fontSize: '0.78rem' }}
+                              >
+                                {savingTemplate ? 'Saving...' : 'Save as Default'}
+                              </Button>
+                            </Box>
+                            <TextField
+                              fullWidth
+                              multiline
+                              rows={2.5}
+                              value={whatsAppMessage}
+                              onChange={(e) => setWhatsAppMessage(e.target.value)}
+                              placeholder="Type short message in English..."
+                              disabled={dispatchingWhatsApp}
+                              sx={{ backgroundColor: '#fff' }}
+                            />
+                            <Typography variant="caption" sx={{ color: '#64748b', mt: 0.5, display: 'block' }}>
+                              * When a client has multiple invoices, this short message is attached to the first invoice PDF, followed sequentially by subsequent invoices.
+                            </Typography>
+                          </Box>
+
+                          {/* Search Bar & Batch Selection Controls */}
+                          <Box sx={{ mb: 1.5, display: 'flex', flexWrap: 'wrap', gap: 1, alignItems: 'center', justifyContent: 'space-between' }}>
+                            <TextField
+                              size="small"
+                              placeholder="Search by customer, invoice #, phone..."
+                              value={queueSearchTerm}
+                              onChange={(e) => setQueueSearchTerm(e.target.value)}
+                              disabled={dispatchingWhatsApp}
+                              InputProps={{
+                                startAdornment: (
+                                  <InputAdornment position="start">
+                                    <SearchIcon sx={{ color: '#94a3b8', fontSize: 20 }} />
+                                  </InputAdornment>
+                                ),
+                                endAdornment: queueSearchTerm ? (
+                                  <InputAdornment position="end">
+                                    <IconButton size="small" onClick={() => setQueueSearchTerm('')}>
+                                      <Close sx={{ fontSize: 16 }} />
+                                    </IconButton>
+                                  </InputAdornment>
+                                ) : null
+                              }}
+                              sx={{ minWidth: 280, flex: 1, backgroundColor: '#fff' }}
+                            />
+
+                            <Box sx={{ display: 'flex', gap: 0.5, alignItems: 'center' }}>
+                              {queueSearchTerm.trim() && (
+                                <>
+                                  <Button
                                     size="small"
-                                    checked={whatsAppInvoicesList.length > 0 && selectedWhatsAppInvoiceIds.size === whatsAppInvoicesList.length}
-                                    indeterminate={selectedWhatsAppInvoiceIds.size > 0 && selectedWhatsAppInvoiceIds.size < whatsAppInvoicesList.length}
-                                    onChange={handleToggleSelectAllWhatsApp}
-                                    disabled={dispatchingWhatsApp}
-                                  />
-                                </TableCell>
-                                <TableCell sx={{ width: 110 }}>Invoice #</TableCell>
-                                <TableCell sx={{ width: 100 }}>Date</TableCell>
-                                <TableCell>Customer Name</TableCell>
-                                <TableCell sx={{ width: 170 }}>WhatsApp Phone (Editable)</TableCell>
-                                <TableCell sx={{ width: 100, textAlign: 'right' }}>Amount</TableCell>
-                                <TableCell sx={{ width: 90, textAlign: 'center' }}>Status</TableCell>
-                              </TableRow>
-                            </TableHead>
-                            <TableBody>
-                              {whatsAppInvoicesList.map((inv) => {
-                                const id = inv._id || inv.id;
-                                const isChecked = selectedWhatsAppInvoiceIds.has(id);
-                                const cust = inv.customerName || {};
-                                const clientName = (typeof cust === 'string' ? cust : (cust.Customer || cust.customerName || cust.customerFullName || 'Customer')).toUpperCase();
-                                const phoneVal = phoneOverrides[id] !== undefined ? phoneOverrides[id] : getInvoicePhone(inv, customerPhoneMap);
-                                const amount = Number(inv.totalInvoice || inv.total || 0).toFixed(2);
+                                    variant="outlined"
+                                    onClick={handleSelectFiltered}
+                                    disabled={dispatchingWhatsApp || filteredQueueInvoices.length === 0}
+                                    sx={{ textTransform: 'none', fontSize: '0.75rem', py: 0.3 }}
+                                  >
+                                    Select Filtered ({filteredQueueInvoices.length})
+                                  </Button>
+                                  <Button
+                                    size="small"
+                                    variant="outlined"
+                                    onClick={handleUncheckFiltered}
+                                    disabled={dispatchingWhatsApp || filteredQueueInvoices.length === 0}
+                                    sx={{ textTransform: 'none', fontSize: '0.75rem', py: 0.3 }}
+                                  >
+                                    Uncheck Filtered
+                                  </Button>
+                                </>
+                              )}
+                              <Button
+                                size="small"
+                                onClick={handleToggleSelectAllWhatsApp}
+                                disabled={dispatchingWhatsApp || whatsAppInvoicesList.length === 0}
+                                sx={{ textTransform: 'none', fontSize: '0.78rem' }}
+                              >
+                                {selectedWhatsAppInvoiceIds.size === whatsAppInvoicesList.length ? 'Uncheck All' : 'Select All'}
+                              </Button>
+                            </Box>
+                          </Box>
 
-                                return (
-                                  <TableRow key={id} hover selected={isChecked} sx={{ '&.Mui-selected': { backgroundColor: 'rgba(37,211,102,0.06)' } }}>
-                                    <TableCell padding="checkbox">
+                          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
+                            <Typography variant="caption" sx={{ fontWeight: 700, color: '#475569' }}>
+                              Showing {filteredQueueInvoices.length} of {whatsAppInvoicesList.length} Invoices ({selectedWhatsAppInvoiceIds.size} Selected to Send)
+                            </Typography>
+                          </Box>
+
+                          {loadingSentInvoices ? (
+                            <Box sx={{ py: 4, textAlign: 'center' }}>
+                              <Loader />
+                              <Typography variant="caption" sx={{ color: '#64748b', mt: 1, display: 'block' }}>
+                                Loading eligible invoices (SENT, PARTIALLY-PAID, FREE OF CHARGE)...
+                              </Typography>
+                            </Box>
+                          ) : whatsAppInvoicesList.length === 0 ? (
+                            <Box sx={{ py: 4, textAlign: 'center', color: '#64748b' }}>
+                              <Typography variant="body2">No invoices with status SENT, PARTIALLY-PAID, or FREE OF CHARGE found.</Typography>
+                            </Box>
+                          ) : filteredQueueInvoices.length === 0 ? (
+                            <Box sx={{ py: 3, textAlign: 'center', color: '#64748b' }}>
+                              <Typography variant="body2">No invoices match your search term "{queueSearchTerm}".</Typography>
+                            </Box>
+                          ) : (
+                            <TableContainer component={Paper} variant="outlined" sx={{ maxHeight: 310, borderRadius: 1.5 }}>
+                              <Table size="small" stickyHeader>
+                                <TableHead>
+                                  <TableRow sx={{ '& th': { fontWeight: 700, backgroundColor: '#f1f5f9' } }}>
+                                    <TableCell padding="checkbox" sx={{ width: 40 }}>
                                       <Checkbox
                                         size="small"
-                                        checked={isChecked}
-                                        onChange={() => handleToggleWhatsAppInvoice(id)}
-                                        disabled={dispatchingWhatsApp}
-                                      />
-                                    </TableCell>
-                                    <TableCell sx={{ fontWeight: 700, color: '#0f172a' }}>
-                                      INV-{String(inv.invoiceNumber).padStart(6, '0')}
-                                    </TableCell>
-                                    <TableCell sx={{ fontSize: '0.8rem', color: '#64748b' }}>
-                                      {inv.dateField || (inv.invoiceDate ? dayjs(inv.invoiceDate).format('DD/MM/YYYY') : '')}
-                                    </TableCell>
-                                    <TableCell sx={{ fontWeight: 600 }}>{clientName}</TableCell>
-                                    <TableCell>
-                                      <TextField
-                                        size="small"
-                                        value={phoneVal}
-                                        onChange={(e) => setPhoneOverrides(prev => ({ ...prev, [id]: e.target.value }))}
-                                        placeholder="+243 xxx xxx xxx"
-                                        disabled={dispatchingWhatsApp}
-                                        sx={{
-                                          '& input': { py: 0.5, px: 1, fontSize: '0.8rem' },
-                                          width: '100%'
+                                        checked={filteredQueueInvoices.length > 0 && filteredQueueInvoices.every(inv => selectedWhatsAppInvoiceIds.has(inv._id || inv.id))}
+                                        indeterminate={filteredQueueInvoices.some(inv => selectedWhatsAppInvoiceIds.has(inv._id || inv.id)) && !filteredQueueInvoices.every(inv => selectedWhatsAppInvoiceIds.has(inv._id || inv.id))}
+                                        onChange={() => {
+                                          const allFilteredSelected = filteredQueueInvoices.every(inv => selectedWhatsAppInvoiceIds.has(inv._id || inv.id));
+                                          if (allFilteredSelected) {
+                                            handleUncheckFiltered();
+                                          } else {
+                                            handleSelectFiltered();
+                                          }
                                         }}
+                                        disabled={dispatchingWhatsApp}
                                       />
                                     </TableCell>
-                                    <TableCell sx={{ textAlign: 'right', fontWeight: 700, color: '#0f172a' }}>
-                                      ${amount}
-                                    </TableCell>
-                                    <TableCell sx={{ textAlign: 'center' }}>
-                                      <Chip label="SENT" size="small" sx={{ bgcolor: '#e0f2fe', color: '#0369a1', fontWeight: 700, height: 20, fontSize: '0.7rem' }} />
-                                    </TableCell>
+                                    <TableCell sx={{ width: 110 }}>Invoice #</TableCell>
+                                    <TableCell sx={{ width: 95 }}>Date</TableCell>
+                                    <TableCell>Customer Name</TableCell>
+                                    <TableCell sx={{ width: 165 }}>WhatsApp Phone (Editable)</TableCell>
+                                    <TableCell sx={{ width: 95, textAlign: 'right' }}>Amount</TableCell>
+                                    <TableCell sx={{ width: 110, textAlign: 'center' }}>Status</TableCell>
+                                    <TableCell sx={{ width: 110, textAlign: 'center' }}>Sent History</TableCell>
                                   </TableRow>
-                                );
-                              })}
-                            </TableBody>
-                          </Table>
-                        </TableContainer>
-                      )}
+                                </TableHead>
+                                <TableBody>
+                                  {filteredQueueInvoices.map((inv) => {
+                                    const id = inv._id || inv.id;
+                                    const isChecked = selectedWhatsAppInvoiceIds.has(id);
+                                    const cust = inv.customerName || {};
+                                    const clientName = (typeof cust === 'string' ? cust : (cust.Customer || cust.customerName || cust.customerFullName || 'Customer')).toUpperCase();
+                                    const phoneVal = phoneOverrides[id] !== undefined ? phoneOverrides[id] : getInvoicePhone(inv, customerPhoneMap);
+                                    const amount = Number(inv.totalInvoice || inv.total || 0).toFixed(2);
+                                    const prevSent = sentHistoryMap[Number(inv.invoiceNumber)];
 
-                      {/* Live Dispatch Progress / Report */}
-                      {dispatchingWhatsApp && (
-                        <Box sx={{ mt: 2 }}>
-                          <Typography variant="body2" sx={{ fontWeight: 600, color: '#166534', mb: 0.5 }}>
-                            ⏳ Dispatching invoice PDFs via WhatsApp Web client... Please wait (do not close this window).
-                          </Typography>
-                          <LinearProgress color="success" />
-                        </Box>
-                      )}
+                                    return (
+                                      <TableRow key={id} hover selected={isChecked} sx={{ '&.Mui-selected': { backgroundColor: 'rgba(37,211,102,0.06)' } }}>
+                                        <TableCell padding="checkbox">
+                                          <Checkbox
+                                            size="small"
+                                            checked={isChecked}
+                                            onChange={() => handleToggleWhatsAppInvoice(id)}
+                                            disabled={dispatchingWhatsApp}
+                                          />
+                                        </TableCell>
+                                        <TableCell sx={{ fontWeight: 700, color: '#0f172a' }}>
+                                          INV-{String(inv.invoiceNumber).padStart(6, '0')}
+                                        </TableCell>
+                                        <TableCell sx={{ fontSize: '0.8rem', color: '#64748b' }}>
+                                          {inv.dateField || (inv.invoiceDate ? dayjs(inv.invoiceDate).format('DD/MM/YYYY') : '')}
+                                        </TableCell>
+                                        <TableCell sx={{ fontWeight: 600 }}>{clientName}</TableCell>
+                                        <TableCell>
+                                          <TextField
+                                            size="small"
+                                            value={phoneVal}
+                                            onChange={(e) => setPhoneOverrides(prev => ({ ...prev, [id]: e.target.value }))}
+                                            placeholder="+243 xxx xxx xxx"
+                                            disabled={dispatchingWhatsApp}
+                                            sx={{
+                                              '& input': { py: 0.5, px: 1, fontSize: '0.8rem' },
+                                              width: '100%'
+                                            }}
+                                          />
+                                        </TableCell>
+                                        <TableCell sx={{ textAlign: 'right', fontWeight: 700, color: '#0f172a' }}>
+                                          ${amount}
+                                        </TableCell>
+                                        <TableCell sx={{ textAlign: 'center' }}>
+                                          {renderInvoiceStatusChip(inv.status)}
+                                        </TableCell>
+                                        <TableCell sx={{ textAlign: 'center' }}>
+                                          {prevSent ? (
+                                            <Tooltip title={`Previously sent on ${dayjs(prevSent.sentAt).format('DD/MM/YYYY HH:mm')} by ${prevSent.sentBy || 'GG'}`}>
+                                              <Chip
+                                                size="small"
+                                                icon={<HistoryIcon sx={{ fontSize: '12px !important' }} />}
+                                                label={`Sent ${dayjs(prevSent.sentAt).format('DD/MM HH:mm')}`}
+                                                sx={{ bgcolor: '#ecfdf5', color: '#047857', fontWeight: 600, fontSize: '0.68rem', height: 20 }}
+                                              />
+                                            </Tooltip>
+                                          ) : (
+                                            <Typography variant="caption" sx={{ color: '#94a3b8' }}>-</Typography>
+                                          )}
+                                        </TableCell>
+                                      </TableRow>
+                                    );
+                                  })}
+                                </TableBody>
+                              </Table>
+                            </TableContainer>
+                          )}
 
-                      {dispatchResult && (
-                        <Alert
-                          severity={dispatchResult.success ? 'success' : 'warning'}
-                          sx={{ mt: 2, fontSize: '0.85rem' }}
-                        >
-                          <strong>{dispatchResult.success ? '✅ Dispatch Completed:' : '⚠️ Dispatch Result:'}</strong>
-                          {' '}
-                          {dispatchResult.report?.sent !== undefined 
-                            ? `${dispatchResult.report.sent} sent, ${dispatchResult.report.failed || 0} failed.`
-                            : (dispatchResult.error || 'Finished processing.')}
-                          {Array.isArray(dispatchResult.report?.details) && dispatchResult.report.details.length > 0 && (
-                            <Box sx={{ mt: 1, display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                              {dispatchResult.report.details.map((d, i) => (
-                                <Chip
-                                  key={i}
-                                  size="small"
-                                  label={`#${d.invoiceNumber}: ${d.status}${d.error ? ` (${d.error})` : ''}`}
-                                  color={d.status === 'sent' ? 'success' : 'error'}
-                                  variant="outlined"
-                                  sx={{ fontSize: '0.72rem' }}
-                                />
-                              ))}
+                          {/* Live Dispatch Progress / Report */}
+                          {dispatchingWhatsApp && (
+                            <Box sx={{ mt: 2 }}>
+                              <Typography variant="body2" sx={{ fontWeight: 600, color: '#166534', mb: 0.5 }}>
+                                ⏳ Dispatching invoice PDFs via WhatsApp Web client... Please wait (do not close this window).
+                              </Typography>
+                              <LinearProgress color="success" />
                             </Box>
                           )}
-                        </Alert>
+
+                          {dispatchResult && (
+                            <Alert
+                              severity={dispatchResult.success ? 'success' : 'warning'}
+                              sx={{ mt: 2, fontSize: '0.85rem' }}
+                            >
+                              <strong>{dispatchResult.success ? '✅ Dispatch Completed:' : '⚠️ Dispatch Result:'}</strong>
+                              {' '}
+                              {dispatchResult.report?.sent !== undefined 
+                                ? `${dispatchResult.report.sent} sent, ${dispatchResult.report.failed || 0} failed.`
+                                : (dispatchResult.error || 'Finished processing.')}
+                              {Array.isArray(dispatchResult.report?.details) && dispatchResult.report.details.length > 0 && (
+                                <Box sx={{ mt: 1, display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                                  {dispatchResult.report.details.map((d, i) => (
+                                    <Chip
+                                      key={i}
+                                      size="small"
+                                      label={`#${d.invoiceNumber}: ${d.status}${d.error ? ` (${d.error})` : ''}`}
+                                      color={d.status === 'sent' ? 'success' : 'error'}
+                                      variant="outlined"
+                                      sx={{ fontSize: '0.72rem' }}
+                                    />
+                                  ))}
+                                </Box>
+                              )}
+                            </Alert>
+                          )}
+                        </>
+                      ) : (
+                        /* Modal Tab 1: Sent History (3-Month Retention) */
+                        <>
+                          <Alert severity="success" sx={{ mb: 2, fontSize: '0.85rem' }}>
+                            <strong>3-Month Auto-Retention:</strong> Dispatched invoices are tracked here with the exact date and time sent. Records are automatically purged after 3 months (90 days) via MongoDB TTL.
+                          </Alert>
+
+                          <Box sx={{ mb: 1.5, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                            <TextField
+                              size="small"
+                              placeholder="Search history by invoice #, customer name, phone, sent by..."
+                              value={historySearchTerm}
+                              onChange={(e) => setHistorySearchTerm(e.target.value)}
+                              InputProps={{
+                                startAdornment: (
+                                  <InputAdornment position="start">
+                                    <SearchIcon sx={{ color: '#94a3b8', fontSize: 20 }} />
+                                  </InputAdornment>
+                                ),
+                                endAdornment: historySearchTerm ? (
+                                  <InputAdornment position="end">
+                                    <IconButton size="small" onClick={() => setHistorySearchTerm('')}>
+                                      <Close sx={{ fontSize: 16 }} />
+                                    </IconButton>
+                                  </InputAdornment>
+                                ) : null
+                              }}
+                              sx={{ minWidth: 320, flex: 1, backgroundColor: '#fff' }}
+                            />
+                            <Button
+                              size="small"
+                              onClick={fetchSentHistory}
+                              disabled={loadingHistory}
+                              sx={{ textTransform: 'none', ml: 1.5 }}
+                            >
+                              Refresh History
+                            </Button>
+                          </Box>
+
+                          {loadingHistory ? (
+                            <Box sx={{ py: 4, textAlign: 'center' }}>
+                              <Loader />
+                              <Typography variant="caption" sx={{ color: '#64748b', mt: 1, display: 'block' }}>
+                                Loading dispatched history...
+                              </Typography>
+                            </Box>
+                          ) : historyList.length === 0 ? (
+                            <Box sx={{ py: 4, textAlign: 'center', color: '#64748b' }}>
+                              <Typography variant="body2">No WhatsApp invoices have been dispatched in the last 3 months.</Typography>
+                            </Box>
+                          ) : filteredHistoryList.length === 0 ? (
+                            <Box sx={{ py: 3, textAlign: 'center', color: '#64748b' }}>
+                              <Typography variant="body2">No sent records match your search term "{historySearchTerm}".</Typography>
+                            </Box>
+                          ) : (
+                            <TableContainer component={Paper} variant="outlined" sx={{ maxHeight: 360, borderRadius: 1.5 }}>
+                              <Table size="small" stickyHeader>
+                                <TableHead>
+                                  <TableRow sx={{ '& th': { fontWeight: 700, backgroundColor: '#f1f5f9' } }}>
+                                    <TableCell sx={{ width: 140 }}>Date & Time Sent</TableCell>
+                                    <TableCell sx={{ width: 110 }}>Invoice #</TableCell>
+                                    <TableCell>Customer Name</TableCell>
+                                    <TableCell sx={{ width: 150 }}>WhatsApp Phone</TableCell>
+                                    <TableCell sx={{ width: 100, textAlign: 'right' }}>Amount</TableCell>
+                                    <TableCell sx={{ width: 100, textAlign: 'center' }}>Sent By</TableCell>
+                                    <TableCell sx={{ width: 80, textAlign: 'center' }}>Status</TableCell>
+                                  </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                  {filteredHistoryList.map((h, idx) => (
+                                    <TableRow key={h._id || idx} hover>
+                                      <TableCell sx={{ fontSize: '0.8rem', color: '#334155', fontWeight: 600 }}>
+                                        {dayjs(h.sentAt).format('DD/MM/YYYY HH:mm')}
+                                      </TableCell>
+                                      <TableCell sx={{ fontWeight: 700, color: '#0f172a' }}>
+                                        INV-{String(h.invoiceNumber).padStart(6, '0')}
+                                      </TableCell>
+                                      <TableCell sx={{ fontWeight: 600, color: '#1e293b' }}>
+                                        {h.customerName}
+                                      </TableCell>
+                                      <TableCell sx={{ fontSize: '0.82rem', color: '#475569' }}>
+                                        {h.phone}
+                                      </TableCell>
+                                      <TableCell sx={{ textAlign: 'right', fontWeight: 700, color: '#0f172a' }}>
+                                        ${Number(h.amount || 0).toFixed(2)}
+                                      </TableCell>
+                                      <TableCell sx={{ textAlign: 'center', fontSize: '0.8rem', color: '#64748b' }}>
+                                        {h.sentBy || 'GG'}
+                                      </TableCell>
+                                      <TableCell sx={{ textAlign: 'center' }}>
+                                        <Chip label="SENT" size="small" sx={{ bgcolor: '#ecfdf5', color: '#047857', fontWeight: 700, height: 20, fontSize: '0.7rem' }} />
+                                      </TableCell>
+                                    </TableRow>
+                                  ))}
+                                </TableBody>
+                              </Table>
+                            </TableContainer>
+                          )}
+                        </>
                       )}
                     </DialogContent>
 
@@ -1763,24 +2107,26 @@ function InvoiceViewAdmin() {
                         color="inherit"
                         sx={{ textTransform: 'none' }}
                       >
-                        {dispatchResult ? 'Close' : 'Cancel'}
+                        {dispatchResult || modalTab === 1 ? 'Close' : 'Cancel'}
                       </Button>
-                      <Button
-                        variant="contained"
-                        onClick={handleExecuteWhatsAppDispatch}
-                        disabled={dispatchingWhatsApp || selectedWhatsAppInvoiceIds.size === 0}
-                        startIcon={<WhatsAppIcon />}
-                        sx={{
-                          backgroundColor: '#25D366',
-                          '&:hover': { backgroundColor: '#1ebe5d' },
-                          color: '#fff',
-                          fontWeight: 700,
-                          textTransform: 'none',
-                          px: 2.5
-                        }}
-                      >
-                        {dispatchingWhatsApp ? 'Dispatching...' : `Send ${selectedWhatsAppInvoiceIds.size} Invoice(s) via WhatsApp`}
-                      </Button>
+                      {modalTab === 0 && (
+                        <Button
+                          variant="contained"
+                          onClick={handleExecuteWhatsAppDispatch}
+                          disabled={dispatchingWhatsApp || selectedWhatsAppInvoiceIds.size === 0}
+                          startIcon={<WhatsAppIcon />}
+                          sx={{
+                            backgroundColor: '#25D366',
+                            '&:hover': { backgroundColor: '#1ebe5d' },
+                            color: '#fff',
+                            fontWeight: 700,
+                            textTransform: 'none',
+                            px: 2.5
+                          }}
+                        >
+                          {dispatchingWhatsApp ? 'Dispatching...' : `Send ${selectedWhatsAppInvoiceIds.size} Invoice(s) via WhatsApp`}
+                        </Button>
+                      )}
                     </DialogActions>
                   </Dialog>
                 </div>)

@@ -1,4 +1,4 @@
-(this["webpackChunkgg_management"] = this["webpackChunkgg_management"] || []).push([[4494],{
+(this["webpackChunkgg_management"] = this["webpackChunkgg_management"] || []).push([[9419],{
 
 /***/ 40530
 (__unused_webpack_module, exports, __webpack_require__) {
@@ -2459,7 +2459,7 @@ const GridToolbar = /*#__PURE__*/react.forwardRef(function GridToolbar(props, re
 
 /***/ },
 
-/***/ 94494
+/***/ 69419
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2481,6 +2481,8 @@ var view = __webpack_require__(68525);
 var Chartview = __webpack_require__(55746);
 // EXTERNAL MODULE: ./src/js/component/SidebarDash.js
 var SidebarDash = __webpack_require__(4640);
+// EXTERNAL MODULE: ./node_modules/@mui/icons-material/Search.js
+var Search = __webpack_require__(64745);
 // EXTERNAL MODULE: ./node_modules/@mui/icons-material/Visibility.js
 var Visibility = __webpack_require__(5673);
 // EXTERNAL MODULE: ./node_modules/@mui/icons-material/Edit.js
@@ -2493,6 +2495,8 @@ var dist = __webpack_require__(47767);
 var react_router_dom_dist = __webpack_require__(84976);
 // EXTERNAL MODULE: ./node_modules/@mui/material/styles/styled.js
 var styled = __webpack_require__(11848);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Chip/Chip.js + 2 modules
+var Chip = __webpack_require__(82022);
 // EXTERNAL MODULE: ./node_modules/@mui/material/IconButton/IconButton.js + 1 modules
 var IconButton = __webpack_require__(11641);
 // EXTERNAL MODULE: ./node_modules/@mui/material/Box/Box.js + 2 modules
@@ -2521,10 +2525,16 @@ var MenuItem = __webpack_require__(73896);
 var Dialog = __webpack_require__(77037);
 // EXTERNAL MODULE: ./node_modules/@mui/material/DialogTitle/DialogTitle.js
 var DialogTitle = __webpack_require__(46831);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Tabs/Tabs.js + 6 modules
+var Tabs = __webpack_require__(17532);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Tab/Tab.js + 1 modules
+var Tab = __webpack_require__(10423);
 // EXTERNAL MODULE: ./node_modules/@mui/material/DialogContent/DialogContent.js + 1 modules
 var DialogContent = __webpack_require__(22477);
 // EXTERNAL MODULE: ./node_modules/@mui/material/Alert/Alert.js + 5 modules
 var Alert = __webpack_require__(36632);
+// EXTERNAL MODULE: ./node_modules/@mui/material/InputAdornment/InputAdornment.js + 1 modules
+var InputAdornment = __webpack_require__(25239);
 // EXTERNAL MODULE: ./node_modules/@mui/material/TableContainer/TableContainer.js + 1 modules
 var TableContainer = __webpack_require__(33198);
 // EXTERNAL MODULE: ./node_modules/@mui/material/Paper/Paper.js + 2 modules
@@ -2541,8 +2551,6 @@ var TableCell = __webpack_require__(70691);
 var Checkbox = __webpack_require__(27558);
 // EXTERNAL MODULE: ./node_modules/@mui/material/TableBody/TableBody.js + 1 modules
 var TableBody = __webpack_require__(43884);
-// EXTERNAL MODULE: ./node_modules/@mui/material/Chip/Chip.js + 2 modules
-var Chip = __webpack_require__(82022);
 // EXTERNAL MODULE: ./node_modules/@mui/material/LinearProgress/LinearProgress.js + 1 modules
 var LinearProgress = __webpack_require__(87458);
 // EXTERNAL MODULE: ./node_modules/@mui/material/DialogActions/DialogActions.js + 1 modules
@@ -2622,6 +2630,14 @@ var Cancel = __webpack_require__(8047);
 var Add = __webpack_require__(99682);
 // EXTERNAL MODULE: ./node_modules/@mui/icons-material/esm/Close.js
 var Close = __webpack_require__(17809);
+;// ./node_modules/@mui/icons-material/esm/History.js
+"use client";
+
+
+
+/* harmony default export */ const History = ((0,createSvgIcon/* default */.A)( /*#__PURE__*/(0,jsx_runtime.jsx)("path", {
+  d: "M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9m-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8z"
+}), 'History'));
 ;// ./node_modules/@mui/icons-material/esm/Save.js
 "use client";
 
@@ -3115,13 +3131,158 @@ function InvoiceViewAdmin() {
     _useState54 = _slicedToArray(_useState53, 2),
     loadingSentInvoices = _useState54[0],
     setLoadingSentInvoices = _useState54[1];
+  var _useState55 = (0,react.useState)(0),
+    _useState56 = _slicedToArray(_useState55, 2),
+    modalTab = _useState56[0],
+    setModalTab = _useState56[1]; // 0: Send Queue, 1: Sent History
+  var _useState57 = (0,react.useState)(''),
+    _useState58 = _slicedToArray(_useState57, 2),
+    queueSearchTerm = _useState58[0],
+    setQueueSearchTerm = _useState58[1];
+  var _useState59 = (0,react.useState)([]),
+    _useState60 = _slicedToArray(_useState59, 2),
+    historyList = _useState60[0],
+    setHistoryList = _useState60[1];
+  var _useState61 = (0,react.useState)(false),
+    _useState62 = _slicedToArray(_useState61, 2),
+    loadingHistory = _useState62[0],
+    setLoadingHistory = _useState62[1];
+  var _useState63 = (0,react.useState)(''),
+    _useState64 = _slicedToArray(_useState63, 2),
+    historySearchTerm = _useState64[0],
+    setHistorySearchTerm = _useState64[1];
+  var isEligibleInvoiceStatus = st => {
+    var s = String(st || '').toUpperCase().trim();
+    return s === 'SENT' || s === 'PARTIALLY-PAID' || s === 'PARTIALLY PAID' || s === 'PARTIALLY_PAID' || s === 'FREE OF CHARGE' || s === 'FREE-OF-CHARGE';
+  };
+  var renderInvoiceStatusChip = status => {
+    var s = String(status || '').toUpperCase().trim();
+    if (s === 'SENT') {
+      return /*#__PURE__*/react.createElement(Chip/* default */.A, {
+        label: "SENT",
+        size: "small",
+        sx: {
+          bgcolor: '#e0f2fe',
+          color: '#0369a1',
+          fontWeight: 700,
+          height: 20,
+          fontSize: '0.7rem'
+        }
+      });
+    }
+    if (s === 'PARTIALLY-PAID' || s === 'PARTIALLY PAID' || s === 'PARTIALLY_PAID') {
+      return /*#__PURE__*/react.createElement(Chip/* default */.A, {
+        label: "PARTIALLY-PAID",
+        size: "small",
+        sx: {
+          bgcolor: '#ffedd5',
+          color: '#c2410c',
+          fontWeight: 700,
+          height: 20,
+          fontSize: '0.7rem'
+        }
+      });
+    }
+    if (s === 'FREE OF CHARGE' || s === 'FREE-OF-CHARGE') {
+      return /*#__PURE__*/react.createElement(Chip/* default */.A, {
+        label: "FREE OF CHARGE",
+        size: "small",
+        sx: {
+          bgcolor: '#f3e8ff',
+          color: '#7e22ce',
+          fontWeight: 700,
+          height: 20,
+          fontSize: '0.7rem'
+        }
+      });
+    }
+    return /*#__PURE__*/react.createElement(Chip/* default */.A, {
+      label: s || 'UNKNOWN',
+      size: "small",
+      sx: {
+        bgcolor: '#f1f5f9',
+        color: '#475569',
+        fontWeight: 700,
+        height: 20,
+        fontSize: '0.7rem'
+      }
+    });
+  };
+  var fetchSentHistory = /*#__PURE__*/function () {
+    var _ref11 = _asyncToGenerator(function* () {
+      try {
+        var _res$data2;
+        setLoadingHistory(true);
+        var res = yield axios/* default */.A.get("".concat(apiConfig/* ENDPOINT_URL */.m, "/invoice-whatsapp/history"));
+        if ((_res$data2 = res.data) !== null && _res$data2 !== void 0 && _res$data2.success && Array.isArray(res.data.history)) {
+          setHistoryList(res.data.history);
+        }
+      } catch (err) {
+        console.warn('Failed to fetch WhatsApp sent history:', err);
+      } finally {
+        setLoadingHistory(false);
+      }
+    });
+    return function fetchSentHistory() {
+      return _ref11.apply(this, arguments);
+    };
+  }();
+  var sentHistoryMap = (0,react.useMemo)(() => {
+    var map = {};
+    (historyList || []).forEach(h => {
+      var num = Number(h.invoiceNumber);
+      if (num && !map[num]) {
+        map[num] = h;
+      }
+    });
+    return map;
+  }, [historyList]);
+  var filteredQueueInvoices = (0,react.useMemo)(() => {
+    if (!queueSearchTerm.trim()) return whatsAppInvoicesList;
+    var q = queueSearchTerm.toLowerCase().trim();
+    return whatsAppInvoicesList.filter(inv => {
+      var invNum = String(inv.invoiceNumber || '').toLowerCase();
+      var invFormatted = "inv-".concat(String(inv.invoiceNumber || '').padStart(6, '0')).toLowerCase();
+      var cust = inv.customerName || {};
+      var clientName = (typeof cust === 'string' ? cust : cust.Customer || cust.customerName || cust.customerFullName || '').toLowerCase();
+      var phone = (phoneOverrides[inv._id || inv.id] || getInvoicePhone(inv, customerPhoneMap) || '').toLowerCase();
+      var st = String(inv.status || '').toLowerCase();
+      return invNum.includes(q) || invFormatted.includes(q) || clientName.includes(q) || phone.includes(q) || st.includes(q);
+    });
+  }, [whatsAppInvoicesList, queueSearchTerm, phoneOverrides, customerPhoneMap]);
+  var handleSelectFiltered = () => {
+    setSelectedWhatsAppInvoiceIds(prev => {
+      var next = new Set(prev);
+      filteredQueueInvoices.forEach(inv => next.add(inv._id || inv.id));
+      return next;
+    });
+  };
+  var handleUncheckFiltered = () => {
+    setSelectedWhatsAppInvoiceIds(prev => {
+      var next = new Set(prev);
+      filteredQueueInvoices.forEach(inv => next.delete(inv._id || inv.id));
+      return next;
+    });
+  };
+  var filteredHistoryList = (0,react.useMemo)(() => {
+    if (!historySearchTerm.trim()) return historyList;
+    var q = historySearchTerm.toLowerCase().trim();
+    return historyList.filter(h => {
+      var invNum = String(h.invoiceNumber || '').toLowerCase();
+      var invFormatted = "inv-".concat(String(h.invoiceNumber || '').padStart(6, '0')).toLowerCase();
+      var client = String(h.customerName || '').toLowerCase();
+      var phone = String(h.phone || '').toLowerCase();
+      var user = String(h.sentBy || '').toLowerCase();
+      return invNum.includes(q) || invFormatted.includes(q) || client.includes(q) || phone.includes(q) || user.includes(q);
+    });
+  }, [historyList, historySearchTerm]);
   (0,react.useEffect)(() => {
     var fetchCustomers = /*#__PURE__*/function () {
-      var _ref11 = _asyncToGenerator(function* () {
+      var _ref12 = _asyncToGenerator(function* () {
         try {
-          var _res$data2;
+          var _res$data3;
           var res = yield (0,apiCache/* cachedGet */.Fe)("".concat(apiConfig/* ENDPOINT_URL */.m, "/customer"));
-          if ((_res$data2 = res.data) !== null && _res$data2 !== void 0 && _res$data2.data) {
+          if ((_res$data3 = res.data) !== null && _res$data3 !== void 0 && _res$data3.data) {
             var map = {};
             res.data.data.forEach(c => {
               var p = (c.customerCompanyPhone || c.customerPhone || c.phone || c.mobile || '').trim();
@@ -3137,24 +3298,24 @@ function InvoiceViewAdmin() {
         } catch (_) {}
       });
       return function fetchCustomers() {
-        return _ref11.apply(this, arguments);
+        return _ref12.apply(this, arguments);
       };
     }();
     fetchCustomers();
   }, []);
   (0,react.useEffect)(() => {
     var fetchTemplate = /*#__PURE__*/function () {
-      var _ref12 = _asyncToGenerator(function* () {
+      var _ref13 = _asyncToGenerator(function* () {
         try {
-          var _res$data3, _res$data4;
+          var _res$data4, _res$data5;
           var res = yield axios/* default */.A.get("".concat(apiConfig/* ENDPOINT_URL */.m, "/invoice-whatsapp/template"));
-          if ((_res$data3 = res.data) !== null && _res$data3 !== void 0 && _res$data3.success && (_res$data4 = res.data) !== null && _res$data4 !== void 0 && _res$data4.templateMessage) {
+          if ((_res$data4 = res.data) !== null && _res$data4 !== void 0 && _res$data4.success && (_res$data5 = res.data) !== null && _res$data5 !== void 0 && _res$data5.templateMessage) {
             setWhatsAppMessage(res.data.templateMessage);
           }
         } catch (_) {}
       });
       return function fetchTemplate() {
-        return _ref12.apply(this, arguments);
+        return _ref13.apply(this, arguments);
       };
     }();
     fetchTemplate();
@@ -3174,19 +3335,19 @@ function InvoiceViewAdmin() {
     return '';
   };
   var handleSaveTemplateAsDefault = /*#__PURE__*/function () {
-    var _ref13 = _asyncToGenerator(function* () {
+    var _ref14 = _asyncToGenerator(function* () {
       if (!whatsAppMessage.trim()) {
         react_toastify_esm/* toast */.oR.warn('Message cannot be empty');
         return;
       }
       setSavingTemplate(true);
       try {
-        var _user$data2, _res$data5;
+        var _user$data2, _res$data6;
         var res = yield axios/* default */.A.post("".concat(apiConfig/* ENDPOINT_URL */.m, "/invoice-whatsapp/template"), {
           templateMessage: whatsAppMessage.trim(),
           updatedBy: (user === null || user === void 0 || (_user$data2 = user.data) === null || _user$data2 === void 0 ? void 0 : _user$data2.userName) || 'GG'
         });
-        if ((_res$data5 = res.data) !== null && _res$data5 !== void 0 && _res$data5.success) {
+        if ((_res$data6 = res.data) !== null && _res$data6 !== void 0 && _res$data6.success) {
           react_toastify_esm/* toast */.oR.success('Default WhatsApp message saved successfully!');
         }
       } catch (err) {
@@ -3196,41 +3357,62 @@ function InvoiceViewAdmin() {
       }
     });
     return function handleSaveTemplateAsDefault() {
-      return _ref13.apply(this, arguments);
+      return _ref14.apply(this, arguments);
     };
   }();
   var handleOpenWhatsAppBatchModal = /*#__PURE__*/function () {
-    var _ref14 = _asyncToGenerator(function* () {
+    var _ref15 = _asyncToGenerator(function* () {
       if (!canSendWhatsAppInvoice) {
         react_toastify_esm/* toast */.oR.error('Permission denied. WhatsApp Invoice Dispatch is restricted in Grant Access.');
         return;
       }
       setDispatchResult(null);
       setLoadingSentInvoices(true);
+      setQueueSearchTerm('');
+      setModalTab(0);
       setOpenWhatsAppModal(true);
+      fetchSentHistory();
       try {
-        var _res$data6;
-        var res = yield axios/* default */.A.get("".concat(apiConfig/* ENDPOINT_URL */.m, "/invoice-Information?page=1&limit=200&status=SENT"));
-        var sentInvoices = (((_res$data6 = res.data) === null || _res$data6 === void 0 ? void 0 : _res$data6.itemI) || []).map(r => _objectSpread(_objectSpread({}, r), {}, {
+        var _yield$Promise$allSet = yield Promise.allSettled([axios/* default */.A.get("".concat(apiConfig/* ENDPOINT_URL */.m, "/invoice-Information?page=1&limit=200&status=SENT")), axios/* default */.A.get("".concat(apiConfig/* ENDPOINT_URL */.m, "/invoice-Information?page=1&limit=200&status=PARTIALLY-PAID")), axios/* default */.A.get("".concat(apiConfig/* ENDPOINT_URL */.m, "/invoice-Information?page=1&limit=200&status=FREE OF CHARGE"))]),
+          _yield$Promise$allSet2 = _slicedToArray(_yield$Promise$allSet, 3),
+          resSent = _yield$Promise$allSet2[0],
+          resPartial = _yield$Promise$allSet2[1],
+          resFoc = _yield$Promise$allSet2[2];
+        var pool = [];
+        [resSent, resPartial, resFoc].forEach(r => {
+          var _r$value;
+          if (r.status === 'fulfilled' && Array.isArray((_r$value = r.value) === null || _r$value === void 0 || (_r$value = _r$value.data) === null || _r$value === void 0 ? void 0 : _r$value.itemI)) {
+            pool.push(...r.value.data.itemI);
+          }
+        });
+        var seen = new Set();
+        var combined = pool.filter(r => {
+          var id = r._id || r.id;
+          if (!id || seen.has(id)) return false;
+          seen.add(id);
+          return isEligibleInvoiceStatus(r.status);
+        }).map(r => _objectSpread(_objectSpread({}, r), {}, {
           id: r._id,
           dateField: r.invoiceDate ? dayjs_min_default()(r.invoiceDate).format('DD/MM/YYYY') : ''
         }));
-        var finalSent = sentInvoices.length > 0 ? sentInvoices : invoice.filter(inv => String(inv.status || '').toUpperCase().trim() === 'SENT');
-        setWhatsAppInvoicesList(finalSent);
-        setSelectedWhatsAppInvoiceIds(new Set(finalSent.map(inv => inv._id || inv.id)));
+        if (combined.length === 0) {
+          combined = invoice.filter(inv => isEligibleInvoiceStatus(inv.status));
+        }
+        setWhatsAppInvoicesList(combined);
+        setSelectedWhatsAppInvoiceIds(new Set(combined.map(inv => inv._id || inv.id)));
         var initPhones = {};
-        finalSent.forEach(inv => {
+        combined.forEach(inv => {
           var id = inv._id || inv.id;
           initPhones[id] = getInvoicePhone(inv, customerPhoneMap);
         });
         setPhoneOverrides(initPhones);
       } catch (err) {
-        console.error('Error fetching SENT invoices:', err);
-        var localSent = invoice.filter(inv => String(inv.status || '').toUpperCase().trim() === 'SENT');
-        setWhatsAppInvoicesList(localSent);
-        setSelectedWhatsAppInvoiceIds(new Set(localSent.map(inv => inv._id || inv.id)));
+        console.error('Error fetching eligible invoices:', err);
+        var localEligible = invoice.filter(inv => isEligibleInvoiceStatus(inv.status));
+        setWhatsAppInvoicesList(localEligible);
+        setSelectedWhatsAppInvoiceIds(new Set(localEligible.map(inv => inv._id || inv.id)));
         var _initPhones = {};
-        localSent.forEach(inv => {
+        localEligible.forEach(inv => {
           var id = inv._id || inv.id;
           _initPhones[id] = getInvoicePhone(inv, customerPhoneMap);
         });
@@ -3240,7 +3422,7 @@ function InvoiceViewAdmin() {
       }
     });
     return function handleOpenWhatsAppBatchModal() {
-      return _ref14.apply(this, arguments);
+      return _ref15.apply(this, arguments);
     };
   }();
   var handleOpenWhatsAppSingleModal = row => {
@@ -3248,18 +3430,20 @@ function InvoiceViewAdmin() {
       react_toastify_esm/* toast */.oR.error('Permission denied. WhatsApp Invoice Dispatch is restricted in Grant Access.');
       return;
     }
-    var isSent = String(row.status || '').toUpperCase().trim() === 'SENT';
-    if (!isSent) {
-      react_toastify_esm/* toast */.oR.warn('Only invoices with status SENT can be sent via WhatsApp.');
+    if (!isEligibleInvoiceStatus(row.status)) {
+      react_toastify_esm/* toast */.oR.warn('Only invoices with status SENT, PARTIALLY-PAID, or FREE OF CHARGE can be sent via WhatsApp.');
       return;
     }
     setDispatchResult(null);
+    setQueueSearchTerm('');
+    setModalTab(0);
     setWhatsAppInvoicesList([row]);
     setSelectedWhatsAppInvoiceIds(new Set([row._id || row.id]));
     var initialPhone = getInvoicePhone(row, customerPhoneMap);
     setPhoneOverrides({
       [row._id || row.id]: initialPhone
     });
+    fetchSentHistory();
     setOpenWhatsAppModal(true);
   };
   var handleToggleWhatsAppInvoice = id => {
@@ -3277,7 +3461,7 @@ function InvoiceViewAdmin() {
     }
   };
   var handleExecuteWhatsAppDispatch = /*#__PURE__*/function () {
-    var _ref15 = _asyncToGenerator(function* () {
+    var _ref16 = _asyncToGenerator(function* () {
       var selectedInvoices = whatsAppInvoicesList.filter(inv => selectedWhatsAppInvoiceIds.has(inv._id || inv.id));
       if (selectedInvoices.length === 0) {
         react_toastify_esm/* toast */.oR.warn('Please select at least one invoice to send.');
@@ -3304,6 +3488,27 @@ function InvoiceViewAdmin() {
           var _result$report;
           react_toastify_esm/* toast */.oR.success("WhatsApp dispatch complete: ".concat(((_result$report = result.report) === null || _result$report === void 0 ? void 0 : _result$report.sent) || selectedInvoices.length, " sent!"));
           fetchItems(page, debouncedSearchTerm, filterField, filterValue, statusFilter);
+
+          // Record history logs to MongoDB backend
+          try {
+            var _user$data3;
+            yield axios/* default */.A.post("".concat(apiConfig/* ENDPOINT_URL */.m, "/invoice-whatsapp/record-history"), {
+              records: selectedInvoices.map(inv => {
+                var _inv$customerName, _inv$customerName2;
+                return {
+                  invoiceId: inv._id || inv.id,
+                  invoiceNumber: inv.invoiceNumber,
+                  customerName: typeof inv.customerName === 'object' ? ((_inv$customerName = inv.customerName) === null || _inv$customerName === void 0 ? void 0 : _inv$customerName.Customer) || ((_inv$customerName2 = inv.customerName) === null || _inv$customerName2 === void 0 ? void 0 : _inv$customerName2.customerName) || '' : inv.customerName,
+                  phone: phoneOverrides[inv._id || inv.id] || getInvoicePhone(inv, customerPhoneMap),
+                  amount: inv.totalInvoice || inv.total || 0,
+                  caption: whatsAppMessage.trim(),
+                  status: 'sent'
+                };
+              }),
+              sentBy: (user === null || user === void 0 || (_user$data3 = user.data) === null || _user$data3 === void 0 ? void 0 : _user$data3.userName) || 'GG'
+            });
+            fetchSentHistory();
+          } catch (_) {}
         } else {
           var _result2;
           react_toastify_esm/* toast */.oR.error(((_result2 = result) === null || _result2 === void 0 ? void 0 : _result2.error) || 'WhatsApp dispatch encountered errors.');
@@ -3320,25 +3525,25 @@ function InvoiceViewAdmin() {
       }
     });
     return function handleExecuteWhatsAppDispatch() {
-      return _ref15.apply(this, arguments);
+      return _ref16.apply(this, arguments);
     };
   }();
-  var _useState55 = (0,react.useState)(false),
-    _useState56 = _slicedToArray(_useState55, 2),
-    loading = _useState56[0],
-    setLoading = _useState56[1];
-  var _useState57 = (0,react.useState)(false),
-    _useState58 = _slicedToArray(_useState57, 2),
-    ErrorOpenModal = _useState58[0],
-    setErrorOpenModal = _useState58[1];
-  var _useState59 = (0,react.useState)(false),
-    _useState60 = _slicedToArray(_useState59, 2),
-    loadingOpenModal = _useState60[0],
-    setLoadingOpenModal = _useState60[1];
-  var _useState61 = (0,react.useState)(false),
-    _useState62 = _slicedToArray(_useState61, 2),
-    modalDeleteOpenLoading = _useState62[0],
-    setModalDeleteOpenLoading = _useState62[1];
+  var _useState65 = (0,react.useState)(false),
+    _useState66 = _slicedToArray(_useState65, 2),
+    loading = _useState66[0],
+    setLoading = _useState66[1];
+  var _useState67 = (0,react.useState)(false),
+    _useState68 = _slicedToArray(_useState67, 2),
+    ErrorOpenModal = _useState68[0],
+    setErrorOpenModal = _useState68[1];
+  var _useState69 = (0,react.useState)(false),
+    _useState70 = _slicedToArray(_useState69, 2),
+    loadingOpenModal = _useState70[0],
+    setLoadingOpenModal = _useState70[1];
+  var _useState71 = (0,react.useState)(false),
+    _useState72 = _slicedToArray(_useState71, 2),
+    modalDeleteOpenLoading = _useState72[0],
+    setModalDeleteOpenLoading = _useState72[1];
   {/** Loading Update View Start */}
   var handleOpenLoading = () => {
     setLoadingOpenModal(true);
@@ -3384,7 +3589,7 @@ function InvoiceViewAdmin() {
   };
   (0,react.useEffect)(() => {
     var fetchDataHidden = /*#__PURE__*/function () {
-      var _ref16 = _asyncToGenerator(function* () {
+      var _ref17 = _asyncToGenerator(function* () {
         try {
           var res = yield axios/* default */.A.get("".concat(apiConfig/* ENDPOINT_URL */.m, "/hidden"));
           setHiddenRow(res.data.data.map(row => row.idRow));
@@ -3396,15 +3601,15 @@ function InvoiceViewAdmin() {
         }
       });
       return function fetchDataHidden() {
-        return _ref16.apply(this, arguments);
+        return _ref17.apply(this, arguments);
       };
     }();
     fetchDataHidden();
   }, []);
-  var _useState63 = (0,react.useState)(false),
-    _useState64 = _slicedToArray(_useState63, 2),
-    openReasonDelete = _useState64[0],
-    setOpenReasonDelete = _useState64[1];
+  var _useState73 = (0,react.useState)(false),
+    _useState74 = _slicedToArray(_useState73, 2),
+    openReasonDelete = _useState74[0],
+    setOpenReasonDelete = _useState74[1];
   var handleOpenReasonDelete = e => {
     e.preventDefault();
     setOpenReasonDelete(true);
@@ -3413,14 +3618,14 @@ function InvoiceViewAdmin() {
     setOpenReasonDelete(false);
   };
   {/** End Get Invoice */}
-  var _useState65 = (0,react.useState)(false),
-    _useState66 = _slicedToArray(_useState65, 2),
-    open = _useState66[0],
-    setOpen = _useState66[1];
-  var _useState67 = (0,react.useState)(null),
-    _useState68 = _slicedToArray(_useState67, 2),
-    DeleteId = _useState68[0],
-    setDeleteId = _useState68[1];
+  var _useState75 = (0,react.useState)(false),
+    _useState76 = _slicedToArray(_useState75, 2),
+    open = _useState76[0],
+    setOpen = _useState76[1];
+  var _useState77 = (0,react.useState)(null),
+    _useState78 = _slicedToArray(_useState77, 2),
+    DeleteId = _useState78[0],
+    setDeleteId = _useState78[1];
   var handleOpen = id => {
     setOpen(true);
     setDeleteId(id);
@@ -3429,18 +3634,18 @@ function InvoiceViewAdmin() {
     setLoadingOpenModal(false);
     setOpen(false);
   };
-  var _useState69 = (0,react.useState)(false),
-    _useState70 = _slicedToArray(_useState69, 2),
-    open1 = _useState70[0],
-    setOpen1 = _useState70[1];
-  var _useState71 = (0,react.useState)(null),
-    _useState72 = _slicedToArray(_useState71, 2),
-    updateId = _useState72[0],
-    setUpdateId = _useState72[1];
-  var _useState73 = (0,react.useState)(""),
-    _useState74 = _slicedToArray(_useState73, 2),
-    status = _useState74[0],
-    setStatus = _useState74[1];
+  var _useState79 = (0,react.useState)(false),
+    _useState80 = _slicedToArray(_useState79, 2),
+    open1 = _useState80[0],
+    setOpen1 = _useState80[1];
+  var _useState81 = (0,react.useState)(null),
+    _useState82 = _slicedToArray(_useState81, 2),
+    updateId = _useState82[0],
+    setUpdateId = _useState82[1];
+  var _useState83 = (0,react.useState)(""),
+    _useState84 = _slicedToArray(_useState83, 2),
+    status = _useState84[0],
+    setStatus = _useState84[1];
   var handleOpenUpdate = id => {
     setOpen1(true);
     setUpdateId(id);
@@ -3450,20 +3655,20 @@ function InvoiceViewAdmin() {
     setUpdateId(null);
   };
   {/** delete multiple && all modal start */}
-  var _useState75 = (0,react.useState)(false),
-    _useState76 = _slicedToArray(_useState75, 2),
-    openDeleteMultiple = _useState76[0],
-    setOpenDeleteMultiple = _useState76[1];
+  var _useState85 = (0,react.useState)(false),
+    _useState86 = _slicedToArray(_useState85, 2),
+    openDeleteMultiple = _useState86[0],
+    setOpenDeleteMultiple = _useState86[1];
   var handleOpenMultiple = () => {
     setOpenDeleteMultiple(true);
   };
   var handleCloseMultiple = () => {
     setOpenDeleteMultiple(false);
   };
-  var _useState77 = (0,react.useState)(false),
-    _useState78 = _slicedToArray(_useState77, 2),
-    openDeleteAll = _useState78[0],
-    setOpenDeleteAll = _useState78[1];
+  var _useState87 = (0,react.useState)(false),
+    _useState88 = _slicedToArray(_useState87, 2),
+    openDeleteAll = _useState88[0],
+    setOpenDeleteAll = _useState88[1];
   var handleOpenAll = () => {
     setOpenDeleteAll(true);
   };
@@ -3472,7 +3677,7 @@ function InvoiceViewAdmin() {
   };
   {/** Delete Function */}
   var handleDelete = /*#__PURE__*/function () {
-    var _ref17 = _asyncToGenerator(function* () {
+    var _ref18 = _asyncToGenerator(function* () {
       setLoading(true);
       setModalDeleteOpenLoading(true);
       handleClose();
@@ -3501,22 +3706,22 @@ function InvoiceViewAdmin() {
       }
     });
     return function handleDelete() {
-      return _ref17.apply(this, arguments);
+      return _ref18.apply(this, arguments);
     };
   }();
-  var _useState79 = (0,react.useState)([]),
-    _useState80 = _slicedToArray(_useState79, 2),
-    InvoiceDeleted = _useState80[0],
-    setInvoiceDeleted = _useState80[1];
+  var _useState89 = (0,react.useState)([]),
+    _useState90 = _slicedToArray(_useState89, 2),
+    InvoiceDeleted = _useState90[0],
+    setInvoiceDeleted = _useState90[1];
   (0,react.useEffect)(() => {
     var fetchFunction = /*#__PURE__*/function () {
-      var _ref18 = _asyncToGenerator(function* () {
+      var _ref19 = _asyncToGenerator(function* () {
         var deletePromises = selectedRows.map(/*#__PURE__*/function () {
-          var _ref19 = _asyncToGenerator(function* (idToDelete) {
+          var _ref20 = _asyncToGenerator(function* (idToDelete) {
             return axios/* default */.A.get("".concat(apiConfig/* ENDPOINT_URL */.m, "/get-invoice/").concat(idToDelete));
           });
           return function (_x6) {
-            return _ref19.apply(this, arguments);
+            return _ref20.apply(this, arguments);
           };
         }());
         try {
@@ -3527,7 +3732,7 @@ function InvoiceViewAdmin() {
         }
       });
       return function fetchFunction() {
-        return _ref18.apply(this, arguments);
+        return _ref19.apply(this, arguments);
       };
     }();
     fetchFunction();
@@ -3535,7 +3740,7 @@ function InvoiceViewAdmin() {
   var related = InvoiceDeleted.map(row => row);
   var info = related.toString();
   var handleCreateNotification = /*#__PURE__*/function () {
-    var _ref20 = _asyncToGenerator(function* () {
+    var _ref21 = _asyncToGenerator(function* () {
       var data = {
         idInfo: '',
         person: user.data.userName + ' Deleted ' + info,
@@ -3549,11 +3754,11 @@ function InvoiceViewAdmin() {
       }
     });
     return function handleCreateNotification() {
-      return _ref20.apply(this, arguments);
+      return _ref21.apply(this, arguments);
     };
   }();
   var handleDeleteMany = /*#__PURE__*/function () {
-    var _ref21 = _asyncToGenerator(function* (e) {
+    var _ref22 = _asyncToGenerator(function* (e) {
       e.preventDefault();
       setLoading(true);
       setModalDeleteOpenLoading(true);
@@ -3561,7 +3766,7 @@ function InvoiceViewAdmin() {
       handleCloseAll();
       handleCloseReasonDelete();
       var deletePromises = selectedRows.map(/*#__PURE__*/function () {
-        var _ref22 = _asyncToGenerator(function* (idToDelete) {
+        var _ref23 = _asyncToGenerator(function* (idToDelete) {
           var invToDelete = invoice.find(inv => inv._id === idToDelete);
           if (invToDelete && invToDelete.ReferenceName && invToDelete.Position === 'Maintenance') {
             try {
@@ -3577,7 +3782,7 @@ function InvoiceViewAdmin() {
           return axios/* default */.A.delete("".concat(apiConfig/* ENDPOINT_URL */.m, "/delete-invoice/").concat(idToDelete));
         });
         return function (_x8) {
-          return _ref22.apply(this, arguments);
+          return _ref23.apply(this, arguments);
         };
       }());
       try {
@@ -3595,18 +3800,18 @@ function InvoiceViewAdmin() {
       }
     });
     return function handleDeleteMany(_x7) {
-      return _ref21.apply(this, arguments);
+      return _ref22.apply(this, arguments);
     };
   }();
   {/** End Delete Function */}
   {/** Update Invoice Status start */}
-  var _useState81 = (0,react.useState)(0),
-    _useState82 = _slicedToArray(_useState81, 2),
-    invoiceN = _useState82[0],
-    setInvoiceN = _useState82[1];
+  var _useState91 = (0,react.useState)(0),
+    _useState92 = _slicedToArray(_useState91, 2),
+    invoiceN = _useState92[0],
+    setInvoiceN = _useState92[1];
   (0,react.useEffect)(() => {
     var fetchId = /*#__PURE__*/function () {
-      var _ref23 = _asyncToGenerator(function* () {
+      var _ref24 = _asyncToGenerator(function* () {
         if (updateId !== null) {
           try {
             var res = yield axios/* default */.A.get("".concat(apiConfig/* ENDPOINT_URL */.m, "/get-invoice/").concat(updateId));
@@ -3619,13 +3824,13 @@ function InvoiceViewAdmin() {
         }
       });
       return function fetchId() {
-        return _ref23.apply(this, arguments);
+        return _ref24.apply(this, arguments);
       };
     }();
     fetchId();
   }, [updateId]);
   var handleCreateComment = /*#__PURE__*/function () {
-    var _ref24 = _asyncToGenerator(function* () {
+    var _ref25 = _asyncToGenerator(function* () {
       var data = {
         idInfo: updateId,
         person: user.data.userName,
@@ -3639,11 +3844,11 @@ function InvoiceViewAdmin() {
       }
     });
     return function handleCreateComment() {
-      return _ref24.apply(this, arguments);
+      return _ref25.apply(this, arguments);
     };
   }();
   var handleSubmitUpdateStatus = /*#__PURE__*/function () {
-    var _ref25 = _asyncToGenerator(function* (e) {
+    var _ref26 = _asyncToGenerator(function* (e) {
       e.preventDefault();
       var data = {
         status
@@ -3660,12 +3865,12 @@ function InvoiceViewAdmin() {
       }
     });
     return function handleSubmitUpdateStatus(_x9) {
-      return _ref25.apply(this, arguments);
+      return _ref26.apply(this, arguments);
     };
   }();
   {/** Update Invoice Status End */}
   var handleHideRow = /*#__PURE__*/function () {
-    var _ref26 = _asyncToGenerator(function* (id) {
+    var _ref27 = _asyncToGenerator(function* (id) {
       if (user.data.role === 'CEO') {
         try {
           if (hiddenRow.includes(id)) {
@@ -3687,7 +3892,7 @@ function InvoiceViewAdmin() {
       }
     });
     return function handleHideRow(_x0) {
-      return _ref26.apply(this, arguments);
+      return _ref27.apply(this, arguments);
     };
   }();
   var rowRenderer = params => {
@@ -3696,19 +3901,19 @@ function InvoiceViewAdmin() {
     }
     return /*#__PURE__*/react.createElement("div", null, params.row[params.field]);
   };
-  var _useState83 = (0,react.useState)([]),
-    _useState84 = _slicedToArray(_useState83, 2),
-    filteredRows = _useState84[0],
-    setFilteredRows = _useState84[1];
+  var _useState93 = (0,react.useState)([]),
+    _useState94 = _slicedToArray(_useState93, 2),
+    filteredRows = _useState94[0],
+    setFilteredRows = _useState94[1];
   (0,react.useEffect)(() => {
     var Inv = invoice.filter(row => !hiddenRow.includes(row._id));
     setFilteredRows(Inv);
   }, [invoice, hiddenRow]);
   {/** search start */}
-  var _useState85 = (0,react.useState)(""),
-    _useState86 = _slicedToArray(_useState85, 2),
-    searchInvoice = _useState86[0],
-    setSearchInvoice = _useState86[1];
+  var _useState95 = (0,react.useState)(""),
+    _useState96 = _slicedToArray(_useState95, 2),
+    searchInvoice = _useState96[0],
+    setSearchInvoice = _useState96[1];
   (0,react.useEffect)(() => {
     var storedValue = localStorage.getItem('QuickFilterInvoice');
     if (storedValue) {
@@ -3723,10 +3928,10 @@ function InvoiceViewAdmin() {
     _React$useState2 = _slicedToArray(_React$useState, 2),
     filterModel = _React$useState2[0],
     setFilterModel = _React$useState2[1];
-  var _useState87 = (0,react.useState)({}),
-    _useState88 = _slicedToArray(_useState87, 2),
-    columnVisibilityModel = _useState88[0],
-    setColumnVisibilityModel = _useState88[1];
+  var _useState97 = (0,react.useState)({}),
+    _useState98 = _slicedToArray(_useState97, 2),
+    columnVisibilityModel = _useState98[0],
+    setColumnVisibilityModel = _useState98[1];
   var handelHiddenColumn = newHidden => {
     setColumnVisibilityModel(newHidden);
     localStorage.setItem('HiddenColumnsInvoice', JSON.stringify(newHidden));
@@ -3883,11 +4088,11 @@ function InvoiceViewAdmin() {
     width: 60,
     sortable: false,
     renderCell: params => {
-      var isSent = String(params.row.status || '').toUpperCase().trim() === 'SENT';
+      var isEligible = isEligibleInvoiceStatus(params.row.status);
       if (!canSendWhatsAppInvoice) return null;
-      if (!isSent) {
+      if (!isEligible) {
         return /*#__PURE__*/react.createElement(Tooltip/* default */.A, {
-          title: "Only invoices with status SENT can be sent via WhatsApp"
+          title: "Only invoices with status SENT, PARTIALLY-PAID, or FREE OF CHARGE can be sent via WhatsApp"
         }, /*#__PURE__*/react.createElement("span", null, /*#__PURE__*/react.createElement(IconButton/* default */.A, {
           size: "small",
           disabled: true,
@@ -4303,7 +4508,7 @@ function InvoiceViewAdmin() {
       borderRadius: '4px',
       boxShadow: '0 2px 4px rgba(37,211,102,0.25)'
     }
-  }, "Send SENT via WhatsApp"))), /*#__PURE__*/react.createElement(Box/* default */.A, {
+  }, "Send WhatsApp Invoices"))), /*#__PURE__*/react.createElement(Box/* default */.A, {
     sx: {
       height: (0,utils_isMobile/* isNativeMobile */.g1)() ? 'auto' : 'calc(100vh - 200px)',
       minHeight: 380,
@@ -4701,7 +4906,7 @@ function InvoiceViewAdmin() {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'space-between',
-      pb: 1
+      pb: 0.5
     }
   }, /*#__PURE__*/react.createElement(Box/* default */.A, {
     sx: {
@@ -4724,21 +4929,57 @@ function InvoiceViewAdmin() {
     size: "small",
     onClick: () => !dispatchingWhatsApp && setOpenWhatsAppModal(false),
     disabled: dispatchingWhatsApp
-  }, /*#__PURE__*/react.createElement(Close/* default */.A, null))), /*#__PURE__*/react.createElement(DialogContent/* default */.A, {
+  }, /*#__PURE__*/react.createElement(Close/* default */.A, null))), /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      px: 3,
+      pt: 1,
+      borderBottom: 1,
+      borderColor: 'divider'
+    }
+  }, /*#__PURE__*/react.createElement(Tabs/* default */.A, {
+    value: modalTab,
+    onChange: (e, val) => setModalTab(val),
+    textColor: "primary",
+    indicatorColor: "primary"
+  }, /*#__PURE__*/react.createElement(Tab/* default */.A, {
+    icon: /*#__PURE__*/react.createElement(WhatsApp, {
+      sx: {
+        fontSize: 18
+      }
+    }),
+    iconPosition: "start",
+    label: "Send Queue (".concat(whatsAppInvoicesList.length, ")"),
+    sx: {
+      textTransform: 'none',
+      fontWeight: 700
+    }
+  }), /*#__PURE__*/react.createElement(Tab/* default */.A, {
+    icon: /*#__PURE__*/react.createElement(History, {
+      sx: {
+        fontSize: 18
+      }
+    }),
+    iconPosition: "start",
+    label: "Sent History (".concat(historyList.length, ")"),
+    sx: {
+      textTransform: 'none',
+      fontWeight: 700
+    }
+  }))), /*#__PURE__*/react.createElement(DialogContent/* default */.A, {
     dividers: true,
     sx: {
       pt: 1.5,
       pb: 2
     }
-  }, /*#__PURE__*/react.createElement(Alert/* default */.A, {
+  }, modalTab === 0 ? /*#__PURE__*/react.createElement(react.Fragment, null, /*#__PURE__*/react.createElement(Alert/* default */.A, {
     severity: "info",
     sx: {
       mb: 2,
       fontSize: '0.85rem'
     }
-  }, /*#__PURE__*/react.createElement("strong", null, "Status Rule Enforced:"), " Only invoices with status ", /*#__PURE__*/react.createElement("strong", null, "SENT"), " are listed and eligible for WhatsApp dispatch. Invoices are dispatched one by one directly from official company line ", /*#__PURE__*/react.createElement("strong", null, "+243 827 722 222"), "."), /*#__PURE__*/react.createElement(Box/* default */.A, {
+  }, /*#__PURE__*/react.createElement("strong", null, "Eligible Invoices:"), " Invoices with status ", /*#__PURE__*/react.createElement("strong", null, "SENT"), ", ", /*#__PURE__*/react.createElement("strong", null, "PARTIALLY-PAID"), ", or ", /*#__PURE__*/react.createElement("strong", null, "FREE OF CHARGE"), " are listed and eligible for WhatsApp dispatch. Dispatches are sent one-by-one from official company line ", /*#__PURE__*/react.createElement("strong", null, "+243 827 722 222"), "."), /*#__PURE__*/react.createElement(Box/* default */.A, {
     sx: {
-      mb: 2.5,
+      mb: 2,
       p: 2,
       border: '1px solid #e2e8f0',
       borderRadius: 1.5,
@@ -4771,7 +5012,7 @@ function InvoiceViewAdmin() {
   }, savingTemplate ? 'Saving...' : 'Save as Default')), /*#__PURE__*/react.createElement(TextField/* default */.A, {
     fullWidth: true,
     multiline: true,
-    rows: 3,
+    rows: 2.5,
     value: whatsAppMessage,
     onChange: e => setWhatsAppMessage(e.target.value),
     placeholder: "Type short message in English...",
@@ -4788,18 +5029,71 @@ function InvoiceViewAdmin() {
     }
   }, "* When a client has multiple invoices, this short message is attached to the first invoice PDF, followed sequentially by subsequent invoices.")), /*#__PURE__*/react.createElement(Box/* default */.A, {
     sx: {
+      mb: 1.5,
       display: 'flex',
-      justifyContent: 'space-between',
+      flexWrap: 'wrap',
+      gap: 1,
       alignItems: 'center',
-      mb: 1
+      justifyContent: 'space-between'
     }
-  }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
-    variant: "subtitle2",
+  }, /*#__PURE__*/react.createElement(TextField/* default */.A, {
+    size: "small",
+    placeholder: "Search by customer, invoice #, phone...",
+    value: queueSearchTerm,
+    onChange: e => setQueueSearchTerm(e.target.value),
+    disabled: dispatchingWhatsApp,
+    InputProps: {
+      startAdornment: /*#__PURE__*/react.createElement(InputAdornment/* default */.A, {
+        position: "start"
+      }, /*#__PURE__*/react.createElement(Search/* default */.A, {
+        sx: {
+          color: '#94a3b8',
+          fontSize: 20
+        }
+      })),
+      endAdornment: queueSearchTerm ? /*#__PURE__*/react.createElement(InputAdornment/* default */.A, {
+        position: "end"
+      }, /*#__PURE__*/react.createElement(IconButton/* default */.A, {
+        size: "small",
+        onClick: () => setQueueSearchTerm('')
+      }, /*#__PURE__*/react.createElement(Close/* default */.A, {
+        sx: {
+          fontSize: 16
+        }
+      }))) : null
+    },
     sx: {
-      fontWeight: 700,
-      color: '#1e293b'
+      minWidth: 280,
+      flex: 1,
+      backgroundColor: '#fff'
     }
-  }, "Review Recipient Invoices (", selectedWhatsAppInvoiceIds.size, " of ", whatsAppInvoicesList.length, " Selected)"), /*#__PURE__*/react.createElement(Button/* default */.A, {
+  }), /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      display: 'flex',
+      gap: 0.5,
+      alignItems: 'center'
+    }
+  }, queueSearchTerm.trim() && /*#__PURE__*/react.createElement(react.Fragment, null, /*#__PURE__*/react.createElement(Button/* default */.A, {
+    size: "small",
+    variant: "outlined",
+    onClick: handleSelectFiltered,
+    disabled: dispatchingWhatsApp || filteredQueueInvoices.length === 0,
+    sx: {
+      textTransform: 'none',
+      fontSize: '0.75rem',
+      py: 0.3
+    }
+  }, "Select Filtered (", filteredQueueInvoices.length, ")"), /*#__PURE__*/react.createElement(Button/* default */.A, {
+    size: "small",
+    variant: "outlined",
+    onClick: handleUncheckFiltered,
+    disabled: dispatchingWhatsApp || filteredQueueInvoices.length === 0,
+    sx: {
+      textTransform: 'none',
+      fontSize: '0.75rem',
+      py: 0.3
+    }
+  }, "Uncheck Filtered")), /*#__PURE__*/react.createElement(Button/* default */.A, {
     size: "small",
     onClick: handleToggleSelectAllWhatsApp,
     disabled: dispatchingWhatsApp || whatsAppInvoicesList.length === 0,
@@ -4807,7 +5101,20 @@ function InvoiceViewAdmin() {
       textTransform: 'none',
       fontSize: '0.78rem'
     }
-  }, selectedWhatsAppInvoiceIds.size === whatsAppInvoicesList.length ? 'Uncheck All' : 'Select All')), loadingSentInvoices ? /*#__PURE__*/react.createElement(Box/* default */.A, {
+  }, selectedWhatsAppInvoiceIds.size === whatsAppInvoicesList.length ? 'Uncheck All' : 'Select All'))), /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      mb: 1
+    }
+  }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    variant: "caption",
+    sx: {
+      fontWeight: 700,
+      color: '#475569'
+    }
+  }, "Showing ", filteredQueueInvoices.length, " of ", whatsAppInvoicesList.length, " Invoices (", selectedWhatsAppInvoiceIds.size, " Selected to Send)")), loadingSentInvoices ? /*#__PURE__*/react.createElement(Box/* default */.A, {
     sx: {
       py: 4,
       textAlign: 'center'
@@ -4819,7 +5126,7 @@ function InvoiceViewAdmin() {
       mt: 1,
       display: 'block'
     }
-  }, "Loading SENT invoices...")) : whatsAppInvoicesList.length === 0 ? /*#__PURE__*/react.createElement(Box/* default */.A, {
+  }, "Loading eligible invoices (SENT, PARTIALLY-PAID, FREE OF CHARGE)...")) : whatsAppInvoicesList.length === 0 ? /*#__PURE__*/react.createElement(Box/* default */.A, {
     sx: {
       py: 4,
       textAlign: 'center',
@@ -4827,11 +5134,19 @@ function InvoiceViewAdmin() {
     }
   }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
     variant: "body2"
-  }, "No invoices with status \"SENT\" found.")) : /*#__PURE__*/react.createElement(TableContainer/* default */.A, {
+  }, "No invoices with status SENT, PARTIALLY-PAID, or FREE OF CHARGE found.")) : filteredQueueInvoices.length === 0 ? /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      py: 3,
+      textAlign: 'center',
+      color: '#64748b'
+    }
+  }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    variant: "body2"
+  }, "No invoices match your search term \"", queueSearchTerm, "\".")) : /*#__PURE__*/react.createElement(TableContainer/* default */.A, {
     component: Paper/* default */.A,
     variant: "outlined",
     sx: {
-      maxHeight: 320,
+      maxHeight: 310,
       borderRadius: 1.5
     }
   }, /*#__PURE__*/react.createElement(Table/* default */.A, {
@@ -4851,9 +5166,16 @@ function InvoiceViewAdmin() {
     }
   }, /*#__PURE__*/react.createElement(Checkbox/* default */.A, {
     size: "small",
-    checked: whatsAppInvoicesList.length > 0 && selectedWhatsAppInvoiceIds.size === whatsAppInvoicesList.length,
-    indeterminate: selectedWhatsAppInvoiceIds.size > 0 && selectedWhatsAppInvoiceIds.size < whatsAppInvoicesList.length,
-    onChange: handleToggleSelectAllWhatsApp,
+    checked: filteredQueueInvoices.length > 0 && filteredQueueInvoices.every(inv => selectedWhatsAppInvoiceIds.has(inv._id || inv.id)),
+    indeterminate: filteredQueueInvoices.some(inv => selectedWhatsAppInvoiceIds.has(inv._id || inv.id)) && !filteredQueueInvoices.every(inv => selectedWhatsAppInvoiceIds.has(inv._id || inv.id)),
+    onChange: () => {
+      var allFilteredSelected = filteredQueueInvoices.every(inv => selectedWhatsAppInvoiceIds.has(inv._id || inv.id));
+      if (allFilteredSelected) {
+        handleUncheckFiltered();
+      } else {
+        handleSelectFiltered();
+      }
+    },
     disabled: dispatchingWhatsApp
   })), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
     sx: {
@@ -4861,29 +5183,35 @@ function InvoiceViewAdmin() {
     }
   }, "Invoice #"), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
     sx: {
-      width: 100
+      width: 95
     }
   }, "Date"), /*#__PURE__*/react.createElement(TableCell/* default */.A, null, "Customer Name"), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
     sx: {
-      width: 170
+      width: 165
     }
   }, "WhatsApp Phone (Editable)"), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
     sx: {
-      width: 100,
+      width: 95,
       textAlign: 'right'
     }
   }, "Amount"), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
     sx: {
-      width: 90,
+      width: 110,
       textAlign: 'center'
     }
-  }, "Status"))), /*#__PURE__*/react.createElement(TableBody/* default */.A, null, whatsAppInvoicesList.map(inv => {
+  }, "Status"), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+    sx: {
+      width: 110,
+      textAlign: 'center'
+    }
+  }, "Sent History"))), /*#__PURE__*/react.createElement(TableBody/* default */.A, null, filteredQueueInvoices.map(inv => {
     var id = inv._id || inv.id;
     var isChecked = selectedWhatsAppInvoiceIds.has(id);
     var cust = inv.customerName || {};
     var clientName = (typeof cust === 'string' ? cust : cust.Customer || cust.customerName || cust.customerFullName || 'Customer').toUpperCase();
     var phoneVal = phoneOverrides[id] !== undefined ? phoneOverrides[id] : getInvoicePhone(inv, customerPhoneMap);
     var amount = Number(inv.totalInvoice || inv.total || 0).toFixed(2);
+    var prevSent = sentHistoryMap[Number(inv.invoiceNumber)];
     return /*#__PURE__*/react.createElement(TableRow/* default */.A, {
       key: id,
       hover: true,
@@ -4940,17 +5268,33 @@ function InvoiceViewAdmin() {
       sx: {
         textAlign: 'center'
       }
-    }, /*#__PURE__*/react.createElement(Chip/* default */.A, {
-      label: "SENT",
-      size: "small",
+    }, renderInvoiceStatusChip(inv.status)), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
       sx: {
-        bgcolor: '#e0f2fe',
-        color: '#0369a1',
-        fontWeight: 700,
-        height: 20,
-        fontSize: '0.7rem'
+        textAlign: 'center'
       }
-    })));
+    }, prevSent ? /*#__PURE__*/react.createElement(Tooltip/* default */.A, {
+      title: "Previously sent on ".concat(dayjs_min_default()(prevSent.sentAt).format('DD/MM/YYYY HH:mm'), " by ").concat(prevSent.sentBy || 'GG')
+    }, /*#__PURE__*/react.createElement(Chip/* default */.A, {
+      size: "small",
+      icon: /*#__PURE__*/react.createElement(History, {
+        sx: {
+          fontSize: '12px !important'
+        }
+      }),
+      label: "Sent ".concat(dayjs_min_default()(prevSent.sentAt).format('DD/MM HH:mm')),
+      sx: {
+        bgcolor: '#ecfdf5',
+        color: '#047857',
+        fontWeight: 600,
+        fontSize: '0.68rem',
+        height: 20
+      }
+    })) : /*#__PURE__*/react.createElement(Typography/* default */.A, {
+      variant: "caption",
+      sx: {
+        color: '#94a3b8'
+      }
+    }, "-")));
   })))), dispatchingWhatsApp && /*#__PURE__*/react.createElement(Box/* default */.A, {
     sx: {
       mt: 2
@@ -4986,7 +5330,183 @@ function InvoiceViewAdmin() {
     sx: {
       fontSize: '0.72rem'
     }
-  }))))), /*#__PURE__*/react.createElement(DialogActions/* default */.A, {
+  }))))) :
+  /*#__PURE__*/
+  /* Modal Tab 1: Sent History (3-Month Retention) */
+  react.createElement(react.Fragment, null, /*#__PURE__*/react.createElement(Alert/* default */.A, {
+    severity: "success",
+    sx: {
+      mb: 2,
+      fontSize: '0.85rem'
+    }
+  }, /*#__PURE__*/react.createElement("strong", null, "3-Month Auto-Retention:"), " Dispatched invoices are tracked here with the exact date and time sent. Records are automatically purged after 3 months (90 days) via MongoDB TTL."), /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      mb: 1.5,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between'
+    }
+  }, /*#__PURE__*/react.createElement(TextField/* default */.A, {
+    size: "small",
+    placeholder: "Search history by invoice #, customer name, phone, sent by...",
+    value: historySearchTerm,
+    onChange: e => setHistorySearchTerm(e.target.value),
+    InputProps: {
+      startAdornment: /*#__PURE__*/react.createElement(InputAdornment/* default */.A, {
+        position: "start"
+      }, /*#__PURE__*/react.createElement(Search/* default */.A, {
+        sx: {
+          color: '#94a3b8',
+          fontSize: 20
+        }
+      })),
+      endAdornment: historySearchTerm ? /*#__PURE__*/react.createElement(InputAdornment/* default */.A, {
+        position: "end"
+      }, /*#__PURE__*/react.createElement(IconButton/* default */.A, {
+        size: "small",
+        onClick: () => setHistorySearchTerm('')
+      }, /*#__PURE__*/react.createElement(Close/* default */.A, {
+        sx: {
+          fontSize: 16
+        }
+      }))) : null
+    },
+    sx: {
+      minWidth: 320,
+      flex: 1,
+      backgroundColor: '#fff'
+    }
+  }), /*#__PURE__*/react.createElement(Button/* default */.A, {
+    size: "small",
+    onClick: fetchSentHistory,
+    disabled: loadingHistory,
+    sx: {
+      textTransform: 'none',
+      ml: 1.5
+    }
+  }, "Refresh History")), loadingHistory ? /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      py: 4,
+      textAlign: 'center'
+    }
+  }, /*#__PURE__*/react.createElement(Loader/* default */.A, null), /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    variant: "caption",
+    sx: {
+      color: '#64748b',
+      mt: 1,
+      display: 'block'
+    }
+  }, "Loading dispatched history...")) : historyList.length === 0 ? /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      py: 4,
+      textAlign: 'center',
+      color: '#64748b'
+    }
+  }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    variant: "body2"
+  }, "No WhatsApp invoices have been dispatched in the last 3 months.")) : filteredHistoryList.length === 0 ? /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      py: 3,
+      textAlign: 'center',
+      color: '#64748b'
+    }
+  }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    variant: "body2"
+  }, "No sent records match your search term \"", historySearchTerm, "\".")) : /*#__PURE__*/react.createElement(TableContainer/* default */.A, {
+    component: Paper/* default */.A,
+    variant: "outlined",
+    sx: {
+      maxHeight: 360,
+      borderRadius: 1.5
+    }
+  }, /*#__PURE__*/react.createElement(Table/* default */.A, {
+    size: "small",
+    stickyHeader: true
+  }, /*#__PURE__*/react.createElement(TableHead/* default */.A, null, /*#__PURE__*/react.createElement(TableRow/* default */.A, {
+    sx: {
+      '& th': {
+        fontWeight: 700,
+        backgroundColor: '#f1f5f9'
+      }
+    }
+  }, /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+    sx: {
+      width: 140
+    }
+  }, "Date & Time Sent"), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+    sx: {
+      width: 110
+    }
+  }, "Invoice #"), /*#__PURE__*/react.createElement(TableCell/* default */.A, null, "Customer Name"), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+    sx: {
+      width: 150
+    }
+  }, "WhatsApp Phone"), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+    sx: {
+      width: 100,
+      textAlign: 'right'
+    }
+  }, "Amount"), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+    sx: {
+      width: 100,
+      textAlign: 'center'
+    }
+  }, "Sent By"), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+    sx: {
+      width: 80,
+      textAlign: 'center'
+    }
+  }, "Status"))), /*#__PURE__*/react.createElement(TableBody/* default */.A, null, filteredHistoryList.map((h, idx) => /*#__PURE__*/react.createElement(TableRow/* default */.A, {
+    key: h._id || idx,
+    hover: true
+  }, /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+    sx: {
+      fontSize: '0.8rem',
+      color: '#334155',
+      fontWeight: 600
+    }
+  }, dayjs_min_default()(h.sentAt).format('DD/MM/YYYY HH:mm')), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+    sx: {
+      fontWeight: 700,
+      color: '#0f172a'
+    }
+  }, "INV-", String(h.invoiceNumber).padStart(6, '0')), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+    sx: {
+      fontWeight: 600,
+      color: '#1e293b'
+    }
+  }, h.customerName), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+    sx: {
+      fontSize: '0.82rem',
+      color: '#475569'
+    }
+  }, h.phone), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+    sx: {
+      textAlign: 'right',
+      fontWeight: 700,
+      color: '#0f172a'
+    }
+  }, "$", Number(h.amount || 0).toFixed(2)), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+    sx: {
+      textAlign: 'center',
+      fontSize: '0.8rem',
+      color: '#64748b'
+    }
+  }, h.sentBy || 'GG'), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+    sx: {
+      textAlign: 'center'
+    }
+  }, /*#__PURE__*/react.createElement(Chip/* default */.A, {
+    label: "SENT",
+    size: "small",
+    sx: {
+      bgcolor: '#ecfdf5',
+      color: '#047857',
+      fontWeight: 700,
+      height: 20,
+      fontSize: '0.7rem'
+    }
+  }))))))))), /*#__PURE__*/react.createElement(DialogActions/* default */.A, {
     sx: {
       px: 2,
       py: 1.5
@@ -4998,7 +5518,7 @@ function InvoiceViewAdmin() {
     sx: {
       textTransform: 'none'
     }
-  }, dispatchResult ? 'Close' : 'Cancel'), /*#__PURE__*/react.createElement(Button/* default */.A, {
+  }, dispatchResult || modalTab === 1 ? 'Close' : 'Cancel'), modalTab === 0 && /*#__PURE__*/react.createElement(Button/* default */.A, {
     variant: "contained",
     onClick: handleExecuteWhatsAppDispatch,
     disabled: dispatchingWhatsApp || selectedWhatsAppInvoiceIds.size === 0,
