@@ -569,7 +569,24 @@ function PurchaseOrderInfoView() {
                                   <section>
                                     <Typography sx={{ fontWeight: 'bold', fontSize: '20px', width: '100%' }}>PO-{String(row.outNumber).padStart(6, '0')} {row.IpRelated && (<span> Reference: IP-{String(row.IpRelated.number).padStart(6, '0')}</span>)}</Typography>
                                   </section>
-                                  <section>
+                                  <section style={{ display: 'flex', alignItems: 'center' }}>
+                                    <Button
+                                      variant="contained"
+                                      disableElevation
+                                      onClick={handleOpenPrint2}
+                                      startIcon={<LocalPrintshopIcon />}
+                                      sx={{
+                                        bgcolor: '#30368a',
+                                        fontWeight: 'bold',
+                                        textTransform: 'none',
+                                        mr: 1,
+                                        '&:hover': {
+                                          bgcolor: '#1e2460',
+                                        }
+                                      }}
+                                    >
+                                      Print
+                                    </Button>
                                     <Button
                                       aria-controls={open ? 'demo-customized-menu' : undefined}
                                       aria-haspopup="true"
@@ -606,11 +623,11 @@ function PurchaseOrderInfoView() {
                                       </MenuItem>
                                       <MenuItem onClick={handleOpenPrint} sx={{ display: 'flex', gap: '20px', color: 'gray' }}>
                                         <LocalPrintshopIcon />
-                                        <span>Print Without All</span>
+                                        <span>Print Supplier Order (Qty Only / No Prices)</span>
                                       </MenuItem>
                                       <MenuItem onClick={handleOpenPrint2} sx={{ display: 'flex', gap: '20px', color: 'gray' }}>
                                         <LocalPrintshopIcon />
-                                        <span>Print With All</span>
+                                        <span>Print Full Order (With Prices & Totals)</span>
                                       </MenuItem>
                                       <Divider />
                                       <MenuItem onClick={() => handleShow1(2)}> <span style={{ color: 'gray' }}>Comments</span> </MenuItem>
@@ -665,72 +682,117 @@ function PurchaseOrderInfoView() {
                                                   </p>
                                                 </address>
 
-                                                <table className="firstTable" style={{ position: 'relative', fontSize: '70%', left: '83px', marginBottom: '10px', pageBreakInside: 'auto' }}>
-
+                                                <table style={{ minWidth: "220px", width: "38%", fontSize: "11px", borderCollapse: "collapse", marginLeft: "auto", marginBottom: "10px" }}>
                                                   <tbody>
                                                     <tr>
-                                                      <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Order #</span></td>
-                                                      <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'right' }}><span >PO-{String(row.outNumber).padStart(6, '0')}</span></td>
+                                                      <td style={{ backgroundColor: "white", border: "none", textAlign: "left", fontWeight: "bold", padding: "2px 4px", color: "#334155", width: "45%" }}>Order #</td>
+                                                      <td style={{ backgroundColor: "white", border: "none", textAlign: "right", fontWeight: "bold", padding: "2px 4px", width: "55%" }}>PO-{String(row.outNumber).padStart(6, "0")}</td>
                                                     </tr>
                                                     <tr>
-                                                      <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Date</span></td>
-                                                      <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'right' }}><span >{dayjs(row.itemOutDate).format('DD/MM/YYYY')}</span></td>
+                                                      <td style={{ backgroundColor: "white", border: "none", textAlign: "left", fontWeight: "bold", padding: "2px 4px", color: "#334155" }}>Date</td>
+                                                      <td style={{ backgroundColor: "white", border: "none", textAlign: "right", padding: "2px 4px" }}>{dayjs(row.itemOutDate).format("DD/MM/YYYY")}</td>
                                                     </tr>
-                                                    <tr>
-                                                      <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Manufacturer</span></td>
-                                                      <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'right' }}><span >{row.manufacturer}</span></td>
-                                                    </tr>
-                                                    <tr>
-                                                      <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Reference</span></td>
-                                                      <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'right' }}><span >{row.manufacturerNumber}</span></td>
-                                                    </tr>
-                                                    <tr>
-                                                      <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Subject</span></td>
-                                                      <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'right' }}><span >{row.reason}</span></td>
-                                                    </tr>
+                                                    {row.manufacturer ? (
+                                                      <tr>
+                                                        <td style={{ backgroundColor: "white", border: "none", textAlign: "left", fontWeight: "bold", padding: "2px 4px", color: "#334155" }}>Manufacturer</td>
+                                                        <td style={{ backgroundColor: "white", border: "none", textAlign: "right", padding: "2px 4px" }}>{row.manufacturer}</td>
+                                                      </tr>
+                                                    ) : null}
+                                                    {row.manufacturerNumber ? (
+                                                      <tr>
+                                                        <td style={{ backgroundColor: "white", border: "none", textAlign: "left", fontWeight: "bold", padding: "2px 4px", color: "#334155" }}>Reference</td>
+                                                        <td style={{ backgroundColor: "white", border: "none", textAlign: "right", padding: "2px 4px" }}>{row.manufacturerNumber}</td>
+                                                      </tr>
+                                                    ) : null}
+                                                    {row.reason ? (
+                                                      <tr>
+                                                        <td style={{ backgroundColor: "white", border: "none", textAlign: "left", fontWeight: "bold", padding: "2px 4px", color: "#334155" }}>Subject</td>
+                                                        <td style={{ backgroundColor: "white", border: "none", textAlign: "right", padding: "2px 4px" }}>{row.reason}</td>
+                                                      </tr>
+                                                    ) : null}
                                                   </tbody>
                                                 </table>
                                               </section>
                                               <section style={{}}>
-                                                <table className="secondTable" style={{ fontSize: '70%', border: '1px solid #DDD' }}>
+                                                <table className="secondTable" style={{ width: "100%", fontSize: "10px", border: "1px solid #cbd5e1", borderCollapse: "collapse" }}>
                                                   <thead>
-                                                    <tr>
-                                                      <th style={{ width: '100px', borderBottom: '1px solid #DDD', backgroundColor: '#e8f7fe' }}>#</th>
-                                                      <th style={{ width: '150px', borderBottom: '1px solid #DDD', backgroundColor: '#e8f7fe' }} align="left">Item</th>
-                                                      <th style={{ width: '400px', borderBottom: '1px solid #DDD', backgroundColor: '#e8f7fe' }} align="left">Description</th>
-                                                      <th style={{ width: '100px', borderBottom: '1px solid #DDD', backgroundColor: '#e8f7fe' }} align="left">Qty Need</th>
-                                                      <th style={{ width: '100px', borderBottom: '1px solid #DDD', backgroundColor: '#e8f7fe' }} align="left">Qty Buy</th>
+                                                    <tr style={{ backgroundColor: "#f1f5f9" }}>
+                                                      <th style={{ width: "4%", border: "1px solid #cbd5e1", padding: "5px 4px", textAlign: "center" }}>#</th>
+                                                      <th style={{ width: "28%", border: "1px solid #cbd5e1", padding: "5px 4px", textAlign: "left" }}>Item</th>
+                                                      <th style={{ width: "8%", border: "1px solid #cbd5e1", padding: "5px 4px", textAlign: "right" }}>Qty Need</th>
+                                                      <th style={{ width: "8%", border: "1px solid #cbd5e1", padding: "5px 4px", textAlign: "right" }}>Qty Buy</th>
+                                                      <th style={{ width: "10%", border: "1px solid #cbd5e1", padding: "5px 4px", textAlign: "right" }}>Price($)</th>
+                                                      <th style={{ width: "13%", border: "1px solid #cbd5e1", padding: "5px 4px", textAlign: "right" }}>Amount Paid(FC)</th>
+                                                      <th style={{ width: "8%", border: "1px solid #cbd5e1", padding: "5px 4px", textAlign: "right" }}>Rate</th>
+                                                      <th style={{ width: "10%", border: "1px solid #cbd5e1", padding: "5px 4px", textAlign: "right" }}>Amount Paid($)</th>
+                                                      <th style={{ width: "11%", border: "1px solid #cbd5e1", padding: "5px 4px", textAlign: "right" }}>Total($)</th>
                                                     </tr>
                                                   </thead>
                                                   <tbody>
                                                     {newArray2?.map((Item, i) => {
-                                                      const relatedUnit = item.find((Item1) => Item1._id === Item.itemName?._id)
+                                                      const relatedUnit = item.find((Item1) => Item1._id === Item.itemName?._id);
+                                                      const isBlankRow = Boolean(Item.newDescription && String(Item.newDescription).trim() !== "" && (!Item.itemName?._id || Item.itemName?.itemName === "empty" || !Item.itemName || (typeof Item.itemName === "string" ? Item.itemName.trim() === "" : !Item.itemName.itemName)));
+                                                      if (isBlankRow) {
+                                                        return (
+                                                          <tr key={Item.idRow || i}>
+                                                            <td style={{ textAlign: "center", border: "1px solid #cbd5e1", padding: "5px 4px" }}>{i + 1}</td>
+                                                            <td colSpan={8} style={{ textAlign: "center", fontWeight: "bold", border: "1px solid #cbd5e1", backgroundColor: "#f8f9fa", padding: "5px 4px" }}>{Item.newDescription}</td>
+                                                          </tr>
+                                                        );
+                                                      }
                                                       return (
-                                                        <tr key={Item.idRow}>
-                                                          {
-
-                                                            (Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName._id && !Item.itemName.itemName)))) ?
-                                                              <>
-                                                                <td style={{ textAlign: 'center' }}><span>{i + 1}</span></td>
-                                                                <td colSpan={6} style={{ textAlign: 'center', border: '1px solid #DDD' }} align='center'>{Item.newDescription}</td>
-                                                              </>
-
-                                                              :
-                                                              <>
-                                                                <td style={{ textAlign: 'center', width: '30px' }}>{i + 1}</td>
-                                                                <td style={{ width: '200px', borderLeft: '1px solid #DDD' }}>{typeof Item.itemName === 'object' ? (Item.itemName?.itemName !== 'empty' ? Item.itemName?.itemName : '') : (Item.itemName || '')}</td>
-                                                                <td style={{ textAlign: 'left', width: '250px', borderLeft: '1px solid #DDD', textTransform: 'uppercase' }}>{Item.itemDescription ? String(Item.itemDescription).toUpperCase() : ''}</td>
-                                                                <td style={{ textAlign: 'right', width: '30px', borderLeft: '1px solid #DDD' }}>{Item.itemQty} {relatedUnit?.unit ? String(relatedUnit.unit).toUpperCase() : ''}</td>
-                                                                <td style={{ textAlign: 'right', width: '30px', borderLeft: '1px solid #DDD' }}>{Item.qtyBuy}</td>
-                                                              </>
-                                                          }
-
+                                                        <tr key={Item.idRow || i}>
+                                                          <td style={{ textAlign: "center", border: "1px solid #cbd5e1", padding: "5px 4px" }}>{i + 1}</td>
+                                                          <td style={{ textAlign: "left", border: "1px solid #cbd5e1", padding: "5px 4px" }}>
+                                                            <span style={{ fontWeight: "600" }}>
+                                                              {Item.itemName ? (typeof Item.itemName === "object" ? (Item.itemName.itemName && Item.itemName.itemName !== "empty" ? Item.itemName.itemName.toUpperCase() : "") : String(Item.itemName).toUpperCase()) : ""}
+                                                            </span>
+                                                            {Item.itemDescription ? (
+                                                              <div style={{ fontSize: "9px", color: "#475569", textTransform: "uppercase" }}>
+                                                                {Item.itemDescription.toUpperCase()} {relatedUnit?.itemBrand ? `(${relatedUnit.itemBrand.toUpperCase()})` : ""}
+                                                              </div>
+                                                            ) : null}
+                                                          </td>
+                                                          <td style={{ textAlign: "right", border: "1px solid #cbd5e1", padding: "5px 4px" }}>
+                                                            {Item.itemQty} {relatedUnit?.unit ? String(relatedUnit.unit).toUpperCase() : ""}
+                                                          </td>
+                                                          <td style={{ textAlign: "right", border: "1px solid #cbd5e1", padding: "5px 4px", fontWeight: "bold" }}>
+                                                            {Item.qtyBuy} {relatedUnit?.unit ? String(relatedUnit.unit).toUpperCase() : ""}
+                                                          </td>
+                                                          <td style={{ textAlign: "right", border: "1px solid #cbd5e1", padding: "5px 4px" }}>
+                                                            ${Item.itemRate !== undefined ? parseFloat(Item.itemRate).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 }) : "0"}
+                                                          </td>
+                                                          <td style={{ textAlign: "right", border: "1px solid #cbd5e1", padding: "5px 4px" }}>
+                                                            FC{Item.totalAmountFC !== undefined ? parseFloat(Item.totalAmountFC).toLocaleString() : "0"}
+                                                          </td>
+                                                          <td style={{ textAlign: "right", border: "1px solid #cbd5e1", padding: "5px 4px" }}>
+                                                            {Item.Taux !== undefined ? parseFloat(Item.Taux).toLocaleString() : "0"}
+                                                          </td>
+                                                          <td style={{ textAlign: "right", border: "1px solid #cbd5e1", padding: "5px 4px", fontWeight: "600" }}>
+                                                            ${Item.totalAmount !== undefined ? parseFloat(Item.totalAmount).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 }) : "0"}
+                                                          </td>
+                                                          <td style={{ textAlign: "right", border: "1px solid #cbd5e1", padding: "5px 4px", fontWeight: "bold" }}>
+                                                            ${Item.fcConvertToUsdTotal !== undefined ? parseFloat(Item.fcConvertToUsdTotal).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 }) : "0"}
+                                                          </td>
                                                         </tr>
-                                                      )
+                                                      );
                                                     })}
                                                   </tbody>
-                                                  <tbody>
-                                                  </tbody>
+                                                  <tfoot>
+                                                    <tr style={{ backgroundColor: "#f8fafc", fontWeight: "bold" }}>
+                                                      <td colSpan={5} style={{ border: "1px solid #cbd5e1", padding: "6px 8px", textAlign: "right" }}>Total</td>
+                                                      <td style={{ border: "1px solid #cbd5e1", padding: "6px 8px", textAlign: "right" }}>
+                                                        FC{row.totalFC !== undefined ? parseFloat(row.totalFC).toLocaleString() : "0"}
+                                                      </td>
+                                                      <td style={{ border: "1px solid #cbd5e1", padding: "6px 8px", textAlign: "center" }}>-</td>
+                                                      <td style={{ border: "1px solid #cbd5e1", padding: "6px 8px", textAlign: "right" }}>
+                                                        ${row.total !== undefined ? parseFloat(row.total).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 }) : "0"}
+                                                      </td>
+                                                      <td style={{ border: "1px solid #cbd5e1", padding: "6px 8px", textAlign: "right" }}>
+                                                        ${row.totalUSD !== undefined ? parseFloat(row.totalUSD).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 }) : "0"}
+                                                      </td>
+                                                    </tr>
+                                                  </tfoot>
                                                 </table>
                                               </section>
                                             </div>
@@ -788,29 +850,34 @@ function PurchaseOrderInfoView() {
                                                   </p>
                                                 </address>
 
-                                                <table className="firstTable" style={{ position: 'relative', fontSize: '70%', left: '83px', marginBottom: '10px', pageBreakInside: 'auto' }}>
-
+                                                <table style={{ minWidth: "220px", width: "38%", fontSize: "11px", borderCollapse: "collapse", marginLeft: "auto", marginBottom: "10px" }}>
                                                   <tbody>
                                                     <tr>
-                                                      <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Order #</span></td>
-                                                      <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'right' }}><span >PO-{String(row.outNumber).padStart(6, '0')}</span></td>
+                                                      <td style={{ backgroundColor: "white", border: "none", textAlign: "left", fontWeight: "bold", padding: "2px 4px", color: "#334155", width: "45%" }}>Order #</td>
+                                                      <td style={{ backgroundColor: "white", border: "none", textAlign: "right", fontWeight: "bold", padding: "2px 4px", width: "55%" }}>PO-{String(row.outNumber).padStart(6, "0")}</td>
                                                     </tr>
                                                     <tr>
-                                                      <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Date</span></td>
-                                                      <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'right' }}><span >{dayjs(row.itemOutDate).format('DD/MM/YYYY')}</span></td>
+                                                      <td style={{ backgroundColor: "white", border: "none", textAlign: "left", fontWeight: "bold", padding: "2px 4px", color: "#334155" }}>Date</td>
+                                                      <td style={{ backgroundColor: "white", border: "none", textAlign: "right", padding: "2px 4px" }}>{dayjs(row.itemOutDate).format("DD/MM/YYYY")}</td>
                                                     </tr>
-                                                    <tr>
-                                                      <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Manufacturer</span></td>
-                                                      <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'right' }}><span >{row.manufacturer}</span></td>
-                                                    </tr>
-                                                    <tr>
-                                                      <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Reference</span></td>
-                                                      <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'right' }}><span >{row.manufacturerNumber}</span></td>
-                                                    </tr>
-                                                    <tr>
-                                                      <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Subject</span></td>
-                                                      <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'right' }}><span >{row.reason}</span></td>
-                                                    </tr>
+                                                    {row.manufacturer ? (
+                                                      <tr>
+                                                        <td style={{ backgroundColor: "white", border: "none", textAlign: "left", fontWeight: "bold", padding: "2px 4px", color: "#334155" }}>Manufacturer</td>
+                                                        <td style={{ backgroundColor: "white", border: "none", textAlign: "right", padding: "2px 4px" }}>{row.manufacturer}</td>
+                                                      </tr>
+                                                    ) : null}
+                                                    {row.manufacturerNumber ? (
+                                                      <tr>
+                                                        <td style={{ backgroundColor: "white", border: "none", textAlign: "left", fontWeight: "bold", padding: "2px 4px", color: "#334155" }}>Reference</td>
+                                                        <td style={{ backgroundColor: "white", border: "none", textAlign: "right", padding: "2px 4px" }}>{row.manufacturerNumber}</td>
+                                                      </tr>
+                                                    ) : null}
+                                                    {row.reason ? (
+                                                      <tr>
+                                                        <td style={{ backgroundColor: "white", border: "none", textAlign: "left", fontWeight: "bold", padding: "2px 4px", color: "#334155" }}>Subject</td>
+                                                        <td style={{ backgroundColor: "white", border: "none", textAlign: "right", padding: "2px 4px" }}>{row.reason}</td>
+                                                      </tr>
+                                                    ) : null}
                                                   </tbody>
                                                 </table>
                                               </section>
@@ -911,31 +978,36 @@ function PurchaseOrderInfoView() {
                                           </p>
                                         </address>
 
-                                        <table className="firstTable" style={{ position: 'relative', fontSize: '70%', left: '83px', marginBottom: '10px', pageBreakInside: 'auto' }}>
-
-                                          <tbody>
-                                            <tr>
-                                              <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Order #</span></td>
-                                              <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'right' }}><span >PO-{String(row.outNumber).padStart(6, '0')}</span></td>
-                                            </tr>
-                                            <tr>
-                                              <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Date</span></td>
-                                              <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'right' }}><span >{dayjs(row.itemOutDate).format('DD/MM/YYYY')}</span></td>
-                                            </tr>
-                                            <tr>
-                                              <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Manufacturer</span></td>
-                                              <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'right' }}><span >{row.manufacturer}</span></td>
-                                            </tr>
-                                            <tr>
-                                              <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Reference</span></td>
-                                              <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'right' }}><span >{row.manufacturerNumber}</span></td>
-                                            </tr>
-                                            <tr>
-                                              <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Subject</span></td>
-                                              <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'right' }}><span >{row.reason}</span></td>
-                                            </tr>
-                                          </tbody>
-                                        </table>
+                                                <table style={{ minWidth: "220px", width: "38%", fontSize: "11px", borderCollapse: "collapse", marginLeft: "auto", marginBottom: "10px" }}>
+                                                  <tbody>
+                                                    <tr>
+                                                      <td style={{ backgroundColor: "white", border: "none", textAlign: "left", fontWeight: "bold", padding: "2px 4px", color: "#334155", width: "45%" }}>Order #</td>
+                                                      <td style={{ backgroundColor: "white", border: "none", textAlign: "right", fontWeight: "bold", padding: "2px 4px", width: "55%" }}>PO-{String(row.outNumber).padStart(6, "0")}</td>
+                                                    </tr>
+                                                    <tr>
+                                                      <td style={{ backgroundColor: "white", border: "none", textAlign: "left", fontWeight: "bold", padding: "2px 4px", color: "#334155" }}>Date</td>
+                                                      <td style={{ backgroundColor: "white", border: "none", textAlign: "right", padding: "2px 4px" }}>{dayjs(row.itemOutDate).format("DD/MM/YYYY")}</td>
+                                                    </tr>
+                                                    {row.manufacturer ? (
+                                                      <tr>
+                                                        <td style={{ backgroundColor: "white", border: "none", textAlign: "left", fontWeight: "bold", padding: "2px 4px", color: "#334155" }}>Manufacturer</td>
+                                                        <td style={{ backgroundColor: "white", border: "none", textAlign: "right", padding: "2px 4px" }}>{row.manufacturer}</td>
+                                                      </tr>
+                                                    ) : null}
+                                                    {row.manufacturerNumber ? (
+                                                      <tr>
+                                                        <td style={{ backgroundColor: "white", border: "none", textAlign: "left", fontWeight: "bold", padding: "2px 4px", color: "#334155" }}>Reference</td>
+                                                        <td style={{ backgroundColor: "white", border: "none", textAlign: "right", padding: "2px 4px" }}>{row.manufacturerNumber}</td>
+                                                      </tr>
+                                                    ) : null}
+                                                    {row.reason ? (
+                                                      <tr>
+                                                        <td style={{ backgroundColor: "white", border: "none", textAlign: "left", fontWeight: "bold", padding: "2px 4px", color: "#334155" }}>Subject</td>
+                                                        <td style={{ backgroundColor: "white", border: "none", textAlign: "right", padding: "2px 4px" }}>{row.reason}</td>
+                                                      </tr>
+                                                    ) : null}
+                                                  </tbody>
+                                                </table>
                                       </section>
                                       <section style={{ position: 'relative', float: 'right', padding: '10px', marginTop: '-60px' }}>
                                         <TextField

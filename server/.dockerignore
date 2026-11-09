@@ -1,0 +1,8 @@
+node_modules
+.git
+.github
+public/downloads/*
+!public/downloads/GlobalGate.apk
+!public/downloads/GlobalGateSetup.exe
+!public/downloads/GlobalGate-v*.apk
+!public/downloads/GlobalGate-v*.exe

@@ -1,0 +1,14 @@
+node_modules
+.git
+.github
+dist
+android
+ios
+backup_atlas_prod
+backup_extracts
+server/node_modules
+server/public/downloads/*
+!server/public/downloads/GlobalGate.apk
+!server/public/downloads/GlobalGateSetup.exe
+!server/public/downloads/GlobalGate-v*.apk
+!server/public/downloads/GlobalGate-v*.exe

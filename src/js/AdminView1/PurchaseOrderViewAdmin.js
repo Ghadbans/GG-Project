@@ -713,21 +713,22 @@ function PurchaseOrderViewAdmin() {
                                   </p>
                                 </address>
 
-                                <table className="firstTable" style={{ position: 'relative', fontSize: '70%', left: '83px', marginBottom: '10px', pageBreakInside: 'auto' }}>
-
+                                <table style={{ minWidth: '220px', width: '38%', fontSize: '11px', borderCollapse: 'collapse', marginLeft: 'auto', marginBottom: '10px' }}>
                                   <tbody>
                                     <tr>
-                                      <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Order #</span></td>
-                                      <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'right' }}><span >PO-0{itemPurchaseView.outNumber}</span></td>
+                                      <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'left', fontWeight: 'bold', padding: '2px 4px', color: '#334155', width: '45%' }}>Order #</td>
+                                      <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'right', fontWeight: 'bold', padding: '2px 4px', width: '55%' }}>PO-{String(itemPurchaseView.outNumber).padStart(6, '0')}</td>
                                     </tr>
                                     <tr>
-                                      <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Date</span></td>
-                                      <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'right' }}><span >{dayjs(itemPurchaseView.itemOutDate).format('DD/MM/YYYY')}</span></td>
+                                      <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'left', fontWeight: 'bold', padding: '2px 4px', color: '#334155' }}>Date</td>
+                                      <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'right', padding: '2px 4px' }}>{dayjs(itemPurchaseView.itemOutDate).format('DD/MM/YYYY')}</td>
                                     </tr>
-                                    <tr>
-                                      <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Subject</span></td>
-                                      <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'right' }}><span >{itemPurchaseView.reason}</span></td>
-                                    </tr>
+                                    {itemPurchaseView.reason ? (
+                                      <tr>
+                                        <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'left', fontWeight: 'bold', padding: '2px 4px', color: '#334155' }}>Subject</td>
+                                        <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'right', padding: '2px 4px' }}>{itemPurchaseView.reason}</td>
+                                      </tr>
+                                    ) : null}
                                   </tbody>
                                 </table>
                               </section>

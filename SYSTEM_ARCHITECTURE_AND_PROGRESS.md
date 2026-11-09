@@ -4564,3 +4564,45 @@ The standardized `renderStatusBadge` helper was seamlessly integrated into all 1
 - **Android APK**: Synchronized Capacitor container and compiled via Gradle to `GlobalGate-v3.6.37.apk` (15.02 MB) and synchronized to `server/public/downloads/GlobalGate.apk`.
 - **Windows Executable**: Packaged `dist/Global Gate Setup 3.6.37.exe` (95.80 MB) via `electron-builder` and synchronized to `server/public/downloads/GlobalGate-v3.6.37.exe` and `server/public/downloads/GlobalGateSetup.exe`.
 - **Deployment**: Committed and pushed to GitHub `origin main`.
+
+---
+
+## [2026-11-09] - Release v3.6.38: Purchase Order Full Details Print Engine & Railway Build Context Optimization
+
+### 1. Requirements & User Requests
+1. **Purchase Order Missing Print Details**:
+   - The user reported: *"in PURCHASE ORDER is not printing all the deatils !"*
+   - In Screenshot 1 (`[PO-000751_3.pdf]`), the user showed a printed voucher where the right-side header values (`ORDER #`, `DATE`, `MANUFACTURER`, `REFERENCE`, `SUBJECT`) were completely missing, and only basic columns (`#`, `Item`, `Description`, `Qty Need`, `Qty Buy`) appeared without prices, rates, FC/USD amounts, or summary totals.
+   - In Screenshot 2, the user showed the screen view of `PO-000751` displaying all columns: `N`, `Item & Brand (HIKVISION)`, `Qty Need`, `Qty Buy`, `Price($)`, `Amount Paid(FC)`, `Rate`, `Amount Paid($)`, `Total($)`, and the `TOTAL` summary row (`FC0`, `$230`, `$230`).
+2. **Railway Deployment Build Failure (`ResourceExhausted`)**:
+   - The user shared Railway deployment screenshots showing: `exporting to docker image format failed to copy to tar: rpc error: code = ResourceExhausted desc = write /var/lib/builder/build-sessions/...`.
+   - Root Cause: `server/public/downloads` held 43 historical `.exe` binaries dating back to v3.6.20 totaling **4.27 GB**. When Railway cloned and built the Docker container, tarring 4.5 GB of binary assets exhausted the builder container's temporary disk quota.
+
+### 2. Implementation Changes
+1. **Purchase Order Print Engine & Header Realignment (`PurchaseOrderInfoView.js` & `PurchaseOrderViewAdmin.js`)**:
+   - **Eliminated Overflow Clipping**: Removed `left: '83px'` and unconstrained widths on the header metadata table that were previously shifting the right-hand cell (`PO-000751`, `09/11/2026`, etc.) completely past the printable A4 page margin.
+   - **Right-Aligned Header Metadata**: Implemented a responsive `width: '38%'`, `marginLeft: 'auto'` header table ensuring `Order #`, `Date`, `Manufacturer`, `Reference`, and `Subject` render with bold, crisp right-alignment strictly within printable margins.
+   - **Full Financial Order Print (`Print Full Order`)**:
+     - Standardized columns to 100% proportional table widths: `#` (4%), `Item & Brand` (28%), `Qty Need` (8%), `Qty Buy` (8%), `Price($)` (10%), `Amount Paid(FC)` (13%), `Rate` (8%), `Amount Paid($)` (10%), `Total($)` (11%).
+     - Rendered item brand badge `( HIKVISION )` directly under item name.
+     - Included full `TOTAL` summary footer row spanning FC and USD amounts.
+     - Fortified blank description row support with `colSpan={9}` and bold banner styling.
+   - **Supplier Order Print (`Print Supplier Order`)**:
+     - Clean 5-column layout: `#` (5%), `Item & Brand` (38%), `Description` (37%), `Qty Need` (10%), `Qty Buy` (10%).
+     - Fortified blank description row support with `colSpan={4}`.
+   - **Header Actions & Menu Clarity**:
+     - Added a dedicated 1-click **Print** (<LocalPrintshopIcon />) button in the header right next to `Options`, defaulting to the complete financial print.
+     - Renamed menu options to **Print Full Order (With Prices & Totals)** and **Print Supplier Order (Qty Only / No Prices)**.
+   - Synchronized header table formatting in `PurchaseOrderViewAdmin.js`.
+2. **Railway Docker Build Context Optimization**:
+   - Created root `.dockerignore` and `server/.dockerignore` to exclude `node_modules`, `.git`, `.github`, `dist/`, `android/`, `ios/`, and backup dumps from docker build contexts.
+   - Cleaned historical `.exe` and `.apk` installers from `server/public/downloads/`, keeping only the current active release files and generic `GlobalGateSetup.exe` / `GlobalGate.apk`.
+   - Reduced `server/public/downloads` from **4,277 MB down to ~110 MB** (97% payload reduction), permanently resolving the Docker build `ResourceExhausted` disk error on Railway.
+
+### 3. Multi-Platform Verification & Packaging
+- **AST Quality Gate**: Verified `0` syntax or structural errors across all 239 source files (`node scripts/pre-build-check.js`).
+- **Version Bump**: Bumped to `v3.6.38` across `package.json`, `server/package.json`, and `server/routes/downloadRoutes.js`.
+- **Production Bundles**: Compiled desktop and web production bundles via Webpack (`dist_web/`) with zero errors.
+- **Android APK**: Synchronized Capacitor container and compiled via Gradle to `GlobalGate-v3.6.38.apk` (15.02 MB) and synchronized to `server/public/downloads/GlobalGate.apk`.
+- **Windows Executable**: Packaged `dist/Global Gate Setup 3.6.38.exe` via `electron-builder` and synchronized to `server/public/downloads/GlobalGate-v3.6.38.exe` and `server/public/downloads/GlobalGateSetup.exe`.
+- **Deployment**: Committed and pushed to GitHub `origin main`.
