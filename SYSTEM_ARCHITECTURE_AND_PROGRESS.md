@@ -4421,3 +4421,28 @@ The standardized `renderStatusBadge` helper was seamlessly integrated into all 1
 - **Windows Executable**: Packaged `dist/Global Gate Setup 3.6.34.exe` (95.80 MB) and synchronized to `server/public/downloads/Global Gate Setup 3.6.34.exe`, `GlobalGate-v3.6.34.exe`, and `GlobalGateSetup.exe`.
 - **Android APK**: Compiled via Gradle to `android/app/build/outputs/apk/debug/app-debug.apk` (15.02 MB) and synchronized to `server/public/downloads/GlobalGate-v3.6.34.apk` and `server/public/downloads/GlobalGate.apk`.
 - **Deployment**: Committed and pushed to GitHub `origin main`.
+
+
+---
+
+## [2026-11-09] - Release v3.6.35: Clean Daily Expenses Table Layout (Removed Direct Table Print Column)
+
+### 1. Requirements & User Request
+- The user instructed: *"Good Moring, I saw the printing in Daily Expenses. Direct Table Print Button: Added a Print action column in the master table next to View, enabling 1-click printing directly from the list without opening the modal first. no need for it remove it .. keep In-Modal Print Button: Added a dedicated Print () icon button directly in the modal header right next to the Close (X) button in the expense details view."*
+- Objective: Streamline the Daily Expenses master DataGrid table by removing the direct `Print` action column while maintaining the full, branded in-modal voucher printing capability.
+
+### 2. Implementation Changes
+1. **`DailyExpenses.js` Table Action Columns**:
+   - Removed the `{ field: 'print', headerName: 'Print', ... }` column from the DataGrid `columns` array.
+   - Cleaned up the table layout back to standard action columns: `View` (eye icon), `Edit` (pencil icon), and `Delete` (trash icon).
+   - Preserved the dedicated **Print** (<LocalPrintshop />) button in the Expense Details modal header next to the Close (`X`) button.
+   - Streamlined `handleOpenView` and removed unused `autoPrintAfterLoad` state.
+   - Preserved all A4 portrait voucher styling (`@page`, `PrintHeader`, `PrintFooter`, 3-column authorization signatures, and unrolled table print layout).
+
+### 3. Multi-Platform Verification & Packaging
+- **AST Quality Gate**: Verified `0` syntax or structural errors across all 239 source files (`node scripts/pre-build-check.js`).
+- **Version Bump**: Bumped to `v3.6.35` across `package.json`, `server/package.json`, and `server/routes/downloadRoutes.js`.
+- **Production Bundles**: Compiled desktop and web production bundles via Webpack.
+- **Windows Executable**: Packaged `dist/Global Gate Setup 3.6.35.exe` (95.80 MB) and synchronized to `server/public/downloads/Global Gate Setup 3.6.35.exe`, `GlobalGate-v3.6.35.exe`, and `GlobalGateSetup.exe`.
+- **Android APK**: Compiled via Gradle to `android/app/build/outputs/apk/debug/app-debug.apk` (15.02 MB) and synchronized to `server/public/downloads/GlobalGate-v3.6.35.apk` and `server/public/downloads/GlobalGate.apk`.
+- **Deployment**: Committed and pushed to GitHub `origin main`.

@@ -2930,19 +2930,13 @@ function DailyExpenses() {
     _useState72 = _slicedToArray(_useState71, 2),
     expensesView = _useState72[0],
     setExpensesView = _useState72[1];
-  var _useState73 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState74 = _slicedToArray(_useState73, 2),
-    autoPrintAfterLoad = _useState74[0],
-    setAutoPrintAfterLoad = _useState74[1];
   var printExpenseRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
   var handlePrintExpense = (0,react_to_print__WEBPACK_IMPORTED_MODULE_61__.useReactToPrint)({
     content: () => printExpenseRef.current,
     documentTitle: "Expense_D-".concat(String((expensesView === null || expensesView === void 0 ? void 0 : expensesView.expenseNumber) || 0).padStart(6, '0')),
     pageStyle: "@page { size: A4 portrait; margin: 8mm 10mm 10mm 10mm; } @media print { body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } .no-print { display: none !important; } }"
   });
-  var handleOpenView = function handleOpenView(id) {
-    var shouldAutoPrint = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-    setAutoPrintAfterLoad(Boolean(shouldAutoPrint));
+  var handleOpenView = id => {
     setOpenView(true);
     setIdView(id);
   };
@@ -2950,7 +2944,6 @@ function DailyExpenses() {
     setOpenView(false);
     setIdView(null);
     setExpensesView(null);
-    setAutoPrintAfterLoad(false);
     setSelectedRows([]);
   };
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
@@ -2962,17 +2955,8 @@ function DailyExpenses() {
             var res = yield axios__WEBPACK_IMPORTED_MODULE_36__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_38__/* .ENDPOINT_URL */ .m, "/get-expense/").concat(idView));
             if (!isMounted) return;
             setExpensesView(res.data.data);
-            if (autoPrintAfterLoad) {
-              setTimeout(() => {
-                if (handlePrintExpense) {
-                  handlePrintExpense();
-                }
-                if (isMounted) setAutoPrintAfterLoad(false);
-              }, 500);
-            }
           } catch (error) {
             console.error('Fetch detail error:', error);
-            if (isMounted) setAutoPrintAfterLoad(false);
           }
         }
       });
@@ -2984,7 +2968,7 @@ function DailyExpenses() {
     return () => {
       isMounted = false;
     };
-  }, [idView, autoPrintAfterLoad, handlePrintExpense]);
+  }, [idView]);
   var columns = [{
     field: 'expenseNumber',
     headerName: 'E-Number',
@@ -3030,20 +3014,6 @@ function DailyExpenses() {
       disabled: DailyEInfoV.length === 0,
       onClick: () => handleOpenView(params.row._id)
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Visibility__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
-      style: {
-        color: '#202a5a'
-      }
-    }))))
-  }, {
-    field: 'print',
-    headerName: 'Print',
-    width: 50,
-    renderCell: params => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(ViewTooltip, {
-      title: "Print"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
-      disabled: DailyEInfoV.length === 0,
-      onClick: () => handleOpenView(params.row._id, true)
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_LocalPrintshop__WEBPACK_IMPORTED_MODULE_64__/* ["default"] */ .A, {
       style: {
         color: '#202a5a'
       }

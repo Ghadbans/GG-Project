@@ -602,7 +602,6 @@ function DailyExpenses() {
   const [openView, setOpenView] = useState(false);
   const [idView, setIdView] = useState(null);
   const [expensesView, setExpensesView] = useState(null);
-  const [autoPrintAfterLoad, setAutoPrintAfterLoad] = useState(false);
   const printExpenseRef = useRef(null);
 
   const handlePrintExpense = useReactToPrint({
@@ -611,8 +610,7 @@ function DailyExpenses() {
     pageStyle: `@page { size: A4 portrait; margin: 8mm 10mm 10mm 10mm; } @media print { body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } .no-print { display: none !important; } }`,
   });
 
-  const handleOpenView = (id, shouldAutoPrint = false) => {
-    setAutoPrintAfterLoad(Boolean(shouldAutoPrint));
+  const handleOpenView = (id) => {
     setOpenView(true);
     setIdView(id);
   };
@@ -620,7 +618,6 @@ function DailyExpenses() {
     setOpenView(false);
     setIdView(null);
     setExpensesView(null);
-    setAutoPrintAfterLoad(false);
     setSelectedRows([]);
   };
   useEffect(() => {
@@ -631,23 +628,14 @@ function DailyExpenses() {
           const res = await axios.get(`${ENDPOINT_URL}/get-expense/${idView}`);
           if (!isMounted) return;
           setExpensesView(res.data.data);
-          if (autoPrintAfterLoad) {
-            setTimeout(() => {
-              if (handlePrintExpense) {
-                handlePrintExpense();
-              }
-              if (isMounted) setAutoPrintAfterLoad(false);
-            }, 500);
-          }
         } catch (error) {
           console.error('Fetch detail error:', error);
-          if (isMounted) setAutoPrintAfterLoad(false);
         }
       }
     };
     fetchData2();
     return () => { isMounted = false; };
-  }, [idView, autoPrintAfterLoad, handlePrintExpense]);
+  }, [idView]);
   const columns = [
     { field: 'expenseNumber', headerName: 'E-Number', width: 140, renderCell: (params) => ' D-' + String(params.row.expenseNumber).padStart(6, '0') },
     { field: 'dataField', headerName: 'Date', width: 80 },
@@ -663,17 +651,6 @@ function DailyExpenses() {
           <span>
             <IconButton disabled={DailyEInfoV.length === 0} onClick={() => handleOpenView(params.row._id)}>
               <VisibilityIcon style={{ color: '#202a5a' }} />
-            </IconButton>
-          </span>
-        </ViewTooltip>
-      )
-    },
-    {
-      field: 'print', headerName: 'Print', width: 50, renderCell: (params) => (
-        <ViewTooltip title="Print">
-          <span>
-            <IconButton disabled={DailyEInfoV.length === 0} onClick={() => handleOpenView(params.row._id, true)}>
-              <LocalPrintshop style={{ color: '#202a5a' }} />
             </IconButton>
           </span>
         </ViewTooltip>
