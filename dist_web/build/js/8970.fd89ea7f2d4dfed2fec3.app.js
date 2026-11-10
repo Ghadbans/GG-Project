@@ -1,26 +1,5 @@
 (this["webpackChunkgg_management"] = this["webpackChunkgg_management"] || []).push([[8970],{
 
-/***/ 9483
-(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-var __webpack_unused_export__;
-
-"use client";
-
-var _interopRequireDefault = __webpack_require__(24994);
-__webpack_unused_export__ = ({
-  value: true
-});
-exports.A = void 0;
-var _createSvgIcon = _interopRequireDefault(__webpack_require__(42032));
-var _jsxRuntime = __webpack_require__(74848);
-var _default = exports.A = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRuntime.jsx)("path", {
-  d: "M7.41 8.59 12 13.17l4.59-4.58L18 10l-6 6-6-6z"
-}), 'KeyboardArrowDown');
-
-/***/ },
-
 /***/ 39118
 (__unused_webpack_module, exports, __webpack_require__) {
 

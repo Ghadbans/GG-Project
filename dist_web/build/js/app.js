@@ -3307,6 +3307,27 @@ var _default = exports.A = (0, _createSvgIcon.default)([/*#__PURE__*/(0, _jsxRun
 
 /***/ },
 
+/***/ 94017
+(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+var __webpack_unused_export__;
+
+"use client";
+
+var _interopRequireDefault = __webpack_require__(24994);
+__webpack_unused_export__ = ({
+  value: true
+});
+exports.A = void 0;
+var _createSvgIcon = _interopRequireDefault(__webpack_require__(42032));
+var _jsxRuntime = __webpack_require__(74848);
+var _default = exports.A = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRuntime.jsx)("path", {
+  d: "M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"
+}), 'Check');
+
+/***/ },
+
 /***/ 20889
 (__unused_webpack_module, exports, __webpack_require__) {
 
@@ -3789,6 +3810,27 @@ var _jsxRuntime = __webpack_require__(74848);
 var _default = exports.A = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRuntime.jsx)("path", {
   d: "M20 2H4c-1 0-2 .9-2 2v3.01c0 .72.43 1.34 1 1.69V20c0 1.1 1.1 2 2 2h14c.9 0 2-.9 2-2V8.7c.57-.35 1-.97 1-1.69V4c0-1.1-1-2-2-2m-5 12H9v-2h6zm5-7H4V4l16-.02z"
 }), 'Inventory');
+
+/***/ },
+
+/***/ 9483
+(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+var __webpack_unused_export__;
+
+"use client";
+
+var _interopRequireDefault = __webpack_require__(24994);
+__webpack_unused_export__ = ({
+  value: true
+});
+exports.A = void 0;
+var _createSvgIcon = _interopRequireDefault(__webpack_require__(42032));
+var _jsxRuntime = __webpack_require__(74848);
+var _default = exports.A = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRuntime.jsx)("path", {
+  d: "M7.41 8.59 12 13.17l4.59-4.58L18 10l-6 6-6-6z"
+}), 'KeyboardArrowDown');
 
 /***/ },
 
@@ -92033,6 +92075,213 @@ function BranchSwitcher() {
 
 /***/ },
 
+/***/ 9893
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   A: () => (/* binding */ LanguageSelector)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(96540);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(69067);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(56655);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(86990);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(14073);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(94405);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(73896);
+/* harmony import */ var _mui_icons_material_KeyboardArrowDown__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(9483);
+/* harmony import */ var _mui_icons_material_Check__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(94017);
+/* harmony import */ var _context_LanguageContext__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(81611);
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == typeof i ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+;
+
+
+
+
+
+function LanguageSelector(_ref) {
+  var _currentLangInfo$code;
+  var _ref$variant = _ref.variant,
+    variant = _ref$variant === void 0 ? 'header' : _ref$variant,
+    _ref$sx = _ref.sx,
+    sx = _ref$sx === void 0 ? {} : _ref$sx;
+  var _useTranslation = (0,_context_LanguageContext__WEBPACK_IMPORTED_MODULE_9__/* .useTranslation */ .Bd)(),
+    lang = _useTranslation.lang,
+    setLanguage = _useTranslation.setLanguage,
+    supportedLanguages = _useTranslation.supportedLanguages,
+    currentLangInfo = _useTranslation.currentLangInfo;
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    _useState2 = _slicedToArray(_useState, 2),
+    anchorEl = _useState2[0],
+    setAnchorEl = _useState2[1];
+  var open = Boolean(anchorEl);
+  var handleClick = event => {
+    setAnchorEl(event.currentTarget);
+  };
+  var handleClose = () => {
+    setAnchorEl(null);
+  };
+  var handleSelect = code => {
+    setLanguage(code);
+    handleClose();
+  };
+  var isSidebar = variant === 'sidebar';
+  var isMobile = variant === 'mobile';
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A, {
+    sx: _objectSpread({
+      display: 'inline-flex',
+      alignItems: 'center'
+    }, sx)
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, {
+    title: "Change Language / Changer de langue / \u062A\u063A\u064A\u064A\u0631 \u0627\u0644\u0644\u063A\u0629"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, {
+    onClick: handleClick,
+    size: "small",
+    "aria-controls": open ? 'language-menu' : undefined,
+    "aria-haspopup": "true",
+    "aria-expanded": open ? 'true' : undefined,
+    sx: {
+      minWidth: isSidebar ? '100%' : 'auto',
+      justifyContent: isSidebar ? 'flex-start' : 'center',
+      px: isSidebar ? 2 : 1.2,
+      py: 0.5,
+      borderRadius: 2,
+      textTransform: 'none',
+      color: isSidebar ? '#e0e0e0' : 'inherit',
+      border: isSidebar ? '1px solid rgba(255,255,255,0.15)' : '1px solid rgba(255,255,255,0.3)',
+      backgroundColor: isSidebar ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.08)',
+      backdropFilter: 'blur(4px)',
+      '&:hover': {
+        backgroundColor: isSidebar ? 'rgba(255,255,255,0.15)' : 'rgba(255,255,255,0.2)',
+        borderColor: 'rgba(255,255,255,0.5)'
+      },
+      fontWeight: 600,
+      fontSize: isMobile ? '0.78rem' : '0.82rem',
+      lineHeight: 1.4
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A, {
+    component: "span",
+    sx: {
+      fontSize: '1.15rem',
+      mr: 0.7,
+      lineHeight: 1
+    }
+  }, (currentLangInfo === null || currentLangInfo === void 0 ? void 0 : currentLangInfo.flag) || '🌐'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
+    variant: "body2",
+    component: "span",
+    sx: {
+      fontWeight: 700,
+      fontSize: '0.8rem',
+      letterSpacing: '0.5px',
+      color: 'inherit'
+    }
+  }, (currentLangInfo === null || currentLangInfo === void 0 || (_currentLangInfo$code = currentLangInfo.code) === null || _currentLangInfo$code === void 0 ? void 0 : _currentLangInfo$code.toUpperCase()) || 'EN'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_KeyboardArrowDown__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+    sx: {
+      fontSize: '1rem',
+      ml: 0.3,
+      opacity: 0.8
+    }
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+    id: "language-menu",
+    anchorEl: anchorEl,
+    open: open,
+    onClose: handleClose,
+    anchorOrigin: {
+      vertical: 'bottom',
+      horizontal: 'right'
+    },
+    transformOrigin: {
+      vertical: 'top',
+      horizontal: 'right'
+    },
+    PaperProps: {
+      elevation: 6,
+      sx: {
+        minWidth: 200,
+        borderRadius: 2.5,
+        mt: 0.8,
+        boxShadow: '0 8px 30px rgba(0,0,0,0.18)',
+        border: '1px solid rgba(0,0,0,0.08)',
+        py: 0.5
+      }
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A, {
+    sx: {
+      px: 2,
+      py: 0.8,
+      borderBottom: '1px solid rgba(0,0,0,0.06)'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
+    variant: "caption",
+    sx: {
+      fontWeight: 700,
+      color: '#666',
+      textTransform: 'uppercase',
+      letterSpacing: '0.5px'
+    }
+  }, "Select Language")), supportedLanguages.map(item => {
+    var isSelected = item.code === lang;
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+      key: item.code,
+      onClick: () => handleSelect(item.code),
+      selected: isSelected,
+      sx: {
+        py: 1,
+        px: 2,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        backgroundColor: isSelected ? 'rgba(25, 118, 210, 0.08)' : 'transparent',
+        '&:hover': {
+          backgroundColor: isSelected ? 'rgba(25, 118, 210, 0.14)' : 'rgba(0,0,0,0.04)'
+        }
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A, {
+      sx: {
+        display: 'flex',
+        alignItems: 'center'
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A, {
+      component: "span",
+      sx: {
+        fontSize: '1.25rem',
+        mr: 1.5,
+        lineHeight: 1
+      }
+    }, item.flag), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
+      variant: "body2",
+      sx: {
+        fontWeight: isSelected ? 700 : 500,
+        lineHeight: 1.2
+      }
+    }, item.nativeName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
+      variant: "caption",
+      sx: {
+        color: '#888',
+        fontSize: '0.72rem'
+      }
+    }, item.name))), isSelected && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Check__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
+      sx: {
+        fontSize: '1.1rem',
+        color: '#1976d2',
+        ml: 1
+      }
+    }));
+  })));
+}
+
+/***/ },
+
 /***/ 65821
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
@@ -93522,9 +93771,11 @@ function SideShop(_ref) {
 /* harmony import */ var _utils_apiCache__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(46986);
 /* harmony import */ var _apiConfig__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(71510);
 /* harmony import */ var _package_json__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(8330);
-/* harmony import */ var _SideShop__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(70632);
-/* harmony import */ var _SideBlockFactory__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(34620);
-/* harmony import */ var _mui_icons_material_Category__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(64569);
+/* harmony import */ var _context_LanguageContext__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(81611);
+/* harmony import */ var _LanguageSelector__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(9893);
+/* harmony import */ var _SideShop__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(70632);
+/* harmony import */ var _SideBlockFactory__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(34620);
+/* harmony import */ var _mui_icons_material_Category__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(64569);
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
 function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
@@ -93570,6 +93821,8 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 
+
+
 var isInstalledApp = typeof window !== 'undefined' && Boolean(window.electron || typeof navigator !== 'undefined' && /electron/i.test(navigator.userAgent) || window.Capacitor && typeof window.Capacitor.isNativePlatform === 'function' && window.Capacitor.isNativePlatform() || window.matchMedia && window.matchMedia('(display-mode: standalone)').matches);
 function SidebarDash(_ref) {
   var _user$data, _user$data2, _user$data3, _user$data4, _user$data5, _user$data6, _user$data7, _user$data8, _user$data9, _user$data0, _user$data1, _user$data10, _user$data11, _user$data12;
@@ -93579,6 +93832,8 @@ function SidebarDash(_ref) {
     onView5 = _ref.onView5,
     onView6 = _ref.onView6,
     isSubmenu = _ref.isSubmenu;
+  var _useTranslation = (0,_context_LanguageContext__WEBPACK_IMPORTED_MODULE_33__/* .useTranslation */ .Bd)(),
+    t = _useTranslation.t;
   var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_4__/* .useNavigate */ .Zp)();
   var location = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_4__/* .useLocation */ .zy)();
   var isActive = path => {
@@ -93719,7 +93974,7 @@ function SidebarDash(_ref) {
       color: 'white'
     } : null
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Dashboard__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
-    primary: "Dashboard"
+    primary: t('sidebar.dashboard', 'Dashboard')
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
     disabled: loadingAccess || ((_user$data = user.data) === null || _user$data === void 0 ? void 0 : _user$data.userName) !== 'GG' && customerInfo.length === 0,
     sx: {
@@ -93741,7 +93996,7 @@ function SidebarDash(_ref) {
       color: 'white'
     } : null
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_PermIdentity__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
-    primary: "Customer"
+    primary: t('sidebar.customers', 'Customer')
   })), isNestedSubmenu || parseInt(onView3) === 2 || parseInt(onView3) === 3 ? null : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
     disabled: loadingAccess || ((_user$data2 = user.data) === null || _user$data2 === void 0 ? void 0 : _user$data2.userName) !== 'GG' && StoreInfo.length === 0,
     sx: {
@@ -93753,7 +94008,7 @@ function SidebarDash(_ref) {
       color: 'gray'
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_ListAlt__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
-    primary: "Store"
+    primary: t('sidebar.store', 'Store')
   })), isNestedSubmenu || parseInt(onView4) === 2 || parseInt(onView4) === 4 ? null : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
     disabled: loadingAccess || ((_user$data3 = user.data) === null || _user$data3 === void 0 ? void 0 : _user$data3.userName) !== 'GG' && POSInfo.length === 0,
     sx: {
@@ -93765,7 +94020,7 @@ function SidebarDash(_ref) {
       color: 'gray'
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
-    primary: "POS"
+    primary: t('sidebar.pos', 'POS')
   })), isNestedSubmenu ? null : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
     disabled: loadingAccess || ((_user$data4 = user.data) === null || _user$data4 === void 0 ? void 0 : _user$data4.userName) !== 'GG' && BlockFactoryInfo.length === 0,
     sx: {
@@ -93776,8 +94031,8 @@ function SidebarDash(_ref) {
     sx: {
       color: 'gray'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Category__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
-    primary: "Block Factory"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Category__WEBPACK_IMPORTED_MODULE_37__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
+    primary: t('sidebar.blockFactory', 'Block Factory')
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
     disabled: loadingAccess || ((_user$data5 = user.data) === null || _user$data5 === void 0 ? void 0 : _user$data5.userName) !== 'GG' && estimationInfo.length === 0,
     sx: {
@@ -93799,7 +94054,7 @@ function SidebarDash(_ref) {
       color: 'white'
     } : null
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_RequestQuote__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
-    primary: "Quotation"
+    primary: t('sidebar.quotation', 'Quotation')
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
     disabled: loadingAccess || ((_user$data6 = user.data) === null || _user$data6 === void 0 ? void 0 : _user$data6.userName) !== 'GG' && InvoiceInfo.length === 0,
     sx: {
@@ -93821,7 +94076,7 @@ function SidebarDash(_ref) {
       color: 'white'
     } : null
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Description__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
-    primary: "Invoice"
+    primary: t('sidebar.invoice', 'Invoice')
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
     disabled: loadingAccess || ((_user$data7 = user.data) === null || _user$data7 === void 0 ? void 0 : _user$data7.userName) !== 'GG' && PaymentInfo.length === 0,
     sx: {
@@ -93843,7 +94098,7 @@ function SidebarDash(_ref) {
       color: 'white'
     } : null
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_MonetizationOn__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
-    primary: "Payment"
+    primary: t('sidebar.payment', 'Payment')
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
     disabled: loadingAccess || ((_user$data8 = user.data) === null || _user$data8 === void 0 ? void 0 : _user$data8.userName) !== 'GG' && DailyEInfo.length === 0,
     sx: {
@@ -93865,7 +94120,7 @@ function SidebarDash(_ref) {
       color: 'white'
     } : null
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
-    primary: "Daily Expenses"
+    primary: t('sidebar.dailyExpenses', 'Daily Expenses')
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
     disabled: loadingAccess || ((_user$data9 = user.data) === null || _user$data9 === void 0 ? void 0 : _user$data9.userName) !== 'GG' && ProjectInfo.length === 0,
     sx: {
@@ -93887,7 +94142,7 @@ function SidebarDash(_ref) {
       color: 'white'
     } : null
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_RoomPreferences__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
-    primary: "Project"
+    primary: t('sidebar.project', 'Project')
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
     disabled: loadingAccess || ((_user$data0 = user.data) === null || _user$data0 === void 0 ? void 0 : _user$data0.userName) !== 'GG' && PurchaseInfo.length === 0,
     sx: {
@@ -93909,7 +94164,7 @@ function SidebarDash(_ref) {
       color: 'white'
     } : null
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Receipt__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
-    primary: "Purchases Request"
+    primary: t('sidebar.purchases', 'Purchases Request')
   })), isNestedSubmenu || parseInt(onView6) === 6 ? null : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
     disabled: loadingAccess || ((_user$data1 = user.data) === null || _user$data1 === void 0 ? void 0 : _user$data1.userName) !== 'GG' && MaintenanceInfo.length === 0 && MaintenanceOrderInfo.length === 0,
     sx: {
@@ -93921,7 +94176,7 @@ function SidebarDash(_ref) {
       color: 'gray'
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Engineering__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
-    primary: "Maintenance"
+    primary: t('sidebar.maintenance', 'Maintenance')
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
     disabled: loadingAccess || ((_user$data10 = user.data) === null || _user$data10 === void 0 ? void 0 : _user$data10.userName) !== 'GG' && ReportsInfo.length === 0,
     sx: {
@@ -93943,7 +94198,7 @@ function SidebarDash(_ref) {
       color: 'white'
     } : null
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Moving__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
-    primary: "Reports"
+    primary: t('sidebar.reports', 'Reports')
   })), isNestedSubmenu || parseInt(onView2) === 2 ? null : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
     disabled: loadingAccess || ((_user$data11 = user.data) === null || _user$data11 === void 0 ? void 0 : _user$data11.userName) !== 'GG' && ((_user$data12 = user.data) === null || _user$data12 === void 0 ? void 0 : _user$data12.role) !== 'CEO' && MoreInfo.length === 0,
     sx: {
@@ -93955,17 +94210,29 @@ function SidebarDash(_ref) {
       color: 'gray'
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_MoreVert__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
-    primary: "More"
+    primary: t('sidebar.more', 'More')
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     style: {
       position: 'absolute',
       bottom: 8,
       left: 10,
+      right: 10,
       fontSize: '0.7rem',
       color: 'lightgray',
       display: 'flex',
       flexDirection: 'column',
-      gap: '2px'
+      gap: '6px'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_LanguageSelector__WEBPACK_IMPORTED_MODULE_34__/* ["default"] */ .A, {
+    variant: "sidebar",
+    sx: {
+      width: '100%'
+    }
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    style: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center'
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, "Version: ", _package_json__WEBPACK_IMPORTED_MODULE_32__/* .version */ .rE), !isInstalledApp && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
     href: "https://api.globalgate.sarl/download",
@@ -93978,7 +94245,7 @@ function SidebarDash(_ref) {
       fontWeight: 'bold'
     },
     title: "Download Mobile & Desktop Apps"
-  }, "\uD83D\uDCF2 Mobile & PC Apps"))) : null, show1 === 2 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
+  }, "\uD83D\uDCF2 ", t('sidebar.mobileApps', 'Apps'))))) : null, show1 === 2 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
     sx: {
       color: 'gray'
     },
@@ -93988,7 +94255,7 @@ function SidebarDash(_ref) {
       color: 'gray'
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Close__WEBPACK_IMPORTED_MODULE_24__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
-    primary: "Close"
+    primary: t('sidebar.close', 'Close')
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
     component: "div",
     inset: true
@@ -94005,7 +94272,7 @@ function SidebarDash(_ref) {
       color: 'gray'
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Close__WEBPACK_IMPORTED_MODULE_24__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
-    primary: "Close"
+    primary: t('sidebar.close', 'Close')
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
     component: "div",
     inset: true
@@ -94022,11 +94289,11 @@ function SidebarDash(_ref) {
       color: 'gray'
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Close__WEBPACK_IMPORTED_MODULE_24__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
-    primary: "Close"
+    primary: t('sidebar.close', 'Close')
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
     component: "div",
     inset: true
-  }, "POS Menu"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_SideShop__WEBPACK_IMPORTED_MODULE_33__/* ["default"] */ .A, {
+  }, "POS Menu"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_SideShop__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A, {
     onView: 4,
     isSubmenu: true
   })) : null, show1 === 5 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
@@ -94039,11 +94306,11 @@ function SidebarDash(_ref) {
       color: 'gray'
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Close__WEBPACK_IMPORTED_MODULE_24__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
-    primary: "Close"
+    primary: t('sidebar.close', 'Close')
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
     component: "div",
     inset: true
-  }, "Block Factory Menu"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_SideBlockFactory__WEBPACK_IMPORTED_MODULE_34__/* ["default"] */ .A, {
+  }, "Block Factory Menu"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_SideBlockFactory__WEBPACK_IMPORTED_MODULE_36__/* ["default"] */ .A, {
     grantAccess: grantAccess,
     user: user
   })) : null, show1 === 6 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
@@ -94056,7 +94323,7 @@ function SidebarDash(_ref) {
       color: 'gray'
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Close__WEBPACK_IMPORTED_MODULE_24__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
-    primary: "Close"
+    primary: t('sidebar.close', 'Close')
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
     component: "div",
     inset: true
@@ -94492,6 +94759,916 @@ function SidebarDashE2(_ref) {
   }, "Block Factory Menu"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_SideBlockFactory__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, null)) : null);
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (SidebarDashE2);
+
+/***/ },
+
+/***/ 81611
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+
+// EXPORTS
+__webpack_require__.d(__webpack_exports__, {
+  Is: () => (/* binding */ LanguageProvider),
+  Bd: () => (/* binding */ useTranslation)
+});
+
+// UNUSED EXPORTS: default
+
+// EXTERNAL MODULE: ./node_modules/react/index.js
+var react = __webpack_require__(96540);
+// EXTERNAL MODULE: ./node_modules/axios/lib/axios.js + 48 modules
+var axios = __webpack_require__(99380);
+;// ./src/js/locales/en.js
+// Master English Dictionary
+var en = {
+  common: {
+    save: 'Save',
+    saveAsDefault: 'Save as Default',
+    saving: 'Saving...',
+    cancel: 'Cancel',
+    delete: 'Delete',
+    edit: 'Edit',
+    search: 'Search...',
+    refreshSearch: 'Refresh Search',
+    export: 'Export',
+    close: 'Close',
+    status: 'Status',
+    actions: 'Actions',
+    date: 'Date',
+    amount: 'Amount',
+    total: 'Total',
+    balanceDue: 'Balance Due',
+    paid: 'Paid',
+    unpaid: 'Unpaid',
+    phone: 'Phone',
+    loading: 'Loading...',
+    noData: 'No data available',
+    selectAll: 'Select All',
+    uncheckAll: 'Uncheck All',
+    selectFiltered: 'Select Filtered',
+    uncheckFiltered: 'Uncheck Filtered',
+    language: 'Language',
+    logout: 'Logout',
+    all: 'All',
+    view: 'View',
+    yes: 'Yes',
+    no: 'No',
+    confirm: 'Confirm',
+    back: 'Back'
+  },
+  sidebar: {
+    store: "Store",
+    quotation: "Quotation",
+    invoice: "Invoice",
+    payment: "Payment",
+    project: "Project",
+    pos: "POS",
+    more: "More",
+    close: "Close",
+    mobileApps: "Mobile & PC Apps",
+    dashboard: 'Dashboard',
+    customers: 'Customer',
+    suppliers: 'Supplier',
+    storeItems: 'Store / Items',
+    itemOut: 'Item Out',
+    itemReturn: 'Item Return',
+    purchaseOrders: 'Purchase Order',
+    purchases: 'Purchases',
+    quotations: 'Quotation',
+    invoices: 'Invoice',
+    payments: 'Payment',
+    dailyExpenses: 'Daily Expenses',
+    projects: 'Project',
+    maintenance: 'Maintenance',
+    maintenanceOrder: 'Maintenance Order',
+    pos: 'Point of Sale',
+    payroll: 'Payroll',
+    fleet: 'Fleet Management',
+    reports: 'Reports',
+    settings: 'Settings',
+    grantAccess: 'Grant Access',
+    marketing: 'Marketing Flyers',
+    blockFactory: 'Block Factory'
+  },
+  invoices: {
+    title: 'Invoice',
+    invoiceNumber: 'Invoice #',
+    customerName: 'Customer Name',
+    invoiceDate: 'Date',
+    dueDate: 'Due Date',
+    subject: 'Subject',
+    subtotal: 'Sub Total',
+    subtotalTaxInclusive: 'Sub Total (Tax Inclusive)',
+    balanceDue: 'Balance Due',
+    totalInWords: 'Total in Words',
+    sendWhatsApp: 'Send WhatsApp Invoices',
+    sendQueue: 'Send Queue',
+    sentHistory: 'Sent History',
+    threeMonthRetention: 'Showing dispatched invoices from the last 3 months (90-day retention). Older records are automatically purged.',
+    customMessage: 'Customizable Short Message (English)',
+    customMessagePlaceholder: 'Type short message...',
+    multipleInvoicesNote: '* When a client has multiple invoices, this short message is attached to the first invoice PDF, followed sequentially by subsequent invoices.',
+    reviewRecipients: 'Review Recipient Invoices',
+    filterPlaceholder: 'Search by customer, invoice #, phone...',
+    historySearchPlaceholder: 'Search history by invoice #, customer name, phone, sent by...',
+    noEligibleFound: 'No invoices with status SENT, PARTIALLY-PAID, or FREE OF CHARGE found.',
+    noMatches: 'No invoices match your search term',
+    noHistory: 'No WhatsApp invoices have been dispatched in the last 3 months.',
+    dispatching: '⏳ Dispatching invoice PDFs via WhatsApp Web client... Please wait (do not close this window).',
+    dispatchComplete: 'WhatsApp dispatch complete'
+  },
+  statuses: {
+    draft: 'DRAFT',
+    sent: 'SENT',
+    paid: 'PAID',
+    partiallyPaid: 'PARTIALLY-PAID',
+    pending: 'PENDING',
+    decline: 'DECLINE',
+    freeOfCharge: 'FREE OF CHARGE',
+    open: 'OPEN',
+    close: 'CLOSE',
+    completed: 'COMPLETED',
+    onGoing: 'ON-GOING',
+    stopped: 'STOPPED'
+  }
+};
+/* harmony default export */ const locales_en = (en);
+;// ./src/js/locales/fr.js
+// French Dictionary (Français)
+var fr = {
+  common: {
+    save: 'Enregistrer',
+    saveAsDefault: 'Enregistrer par Défaut',
+    saving: 'Enregistrement...',
+    cancel: 'Annuler',
+    delete: 'Supprimer',
+    edit: 'Modifier',
+    search: 'Rechercher...',
+    refreshSearch: 'Actualiser la Recherche',
+    export: 'Exporter',
+    close: 'Fermer',
+    status: 'Statut',
+    actions: 'Actions',
+    date: 'Date',
+    amount: 'Montant',
+    total: 'Total',
+    balanceDue: 'Solde Dû',
+    paid: 'Payé',
+    unpaid: 'Non Payé',
+    phone: 'Téléphone',
+    loading: 'Chargement...',
+    noData: 'Aucune donnée disponible',
+    selectAll: 'Tout Sélectionner',
+    uncheckAll: 'Tout Désélectionner',
+    selectFiltered: 'Sélectionner Filtrés',
+    uncheckFiltered: 'Désélectionner Filtrés',
+    language: 'Langue',
+    logout: 'Déconnexion',
+    all: 'Tous',
+    view: 'Voir',
+    yes: 'Oui',
+    no: 'Non',
+    confirm: 'Confirmer',
+    back: 'Retour'
+  },
+  sidebar: {
+    store: "Magasin",
+    quotation: "Devis",
+    invoice: "Facture",
+    payment: "Paiement",
+    project: "Projet",
+    pos: "Point de Vente",
+    more: "Plus",
+    close: "Fermer",
+    mobileApps: "Applis Mobile & PC",
+    dashboard: 'Tableau de Bord',
+    customers: 'Clients',
+    suppliers: 'Fournisseurs',
+    storeItems: 'Magasin / Articles',
+    itemOut: 'Sortie d’Article',
+    itemReturn: 'Retour d’Article',
+    purchaseOrders: 'Bons de Commande',
+    purchases: 'Achats',
+    quotations: 'Devis / Proforma',
+    invoices: 'Factures',
+    payments: 'Paiements',
+    dailyExpenses: 'Dépenses Quotidiennes',
+    projects: 'Projets',
+    maintenance: 'Maintenance',
+    maintenanceOrder: 'Ordre de Maintenance',
+    pos: 'Point de Vente (POS)',
+    payroll: 'Paie / Salaires',
+    fleet: 'Gestion de Flotte',
+    reports: 'Rapports',
+    settings: 'Paramètres',
+    grantAccess: 'Accès & Permissions',
+    marketing: 'Flyers Marketing',
+    blockFactory: 'Usine de Blocs'
+  },
+  invoices: {
+    title: 'Facture',
+    invoiceNumber: 'Facture N°',
+    customerName: 'Nom du Client',
+    invoiceDate: 'Date',
+    dueDate: 'Date d’Échéance',
+    subject: 'Objet',
+    subtotal: 'Sous-Total',
+    subtotalTaxInclusive: 'Sous-Total (TVA Incluse)',
+    balanceDue: 'Solde Dû',
+    totalInWords: 'Arrêté en Lettres',
+    sendWhatsApp: 'Envoyer Factures via WhatsApp',
+    sendQueue: 'File d’Envoi',
+    sentHistory: 'Historique des Envois',
+    threeMonthRetention: 'Affichage des factures envoyées des 3 derniers mois (rétention 90 jours). Les plus anciennes sont automatiquement supprimées.',
+    customMessage: 'Message Court Personnalisable',
+    customMessagePlaceholder: 'Tapez votre court message...',
+    multipleInvoicesNote: '* Lorsqu’un client a plusieurs factures, ce message court est joint au premier PDF, suivi séquentiellement des autres factures.',
+    reviewRecipients: 'Vérifier les Factures Destinataires',
+    filterPlaceholder: 'Rechercher par client, n° facture, téléphone...',
+    historySearchPlaceholder: 'Rechercher dans l’historique par n° facture, client, téléphone, envoyé par...',
+    noEligibleFound: 'Aucune facture avec le statut ENVOYÉ, PARTIELLEMENT PAYÉ ou GRATUIT trouvée.',
+    noMatches: 'Aucune facture ne correspond à votre recherche',
+    noHistory: 'Aucune facture WhatsApp n’a été envoyée au cours des 3 derniers mois.',
+    dispatching: '⏳ Envoi des PDF des factures via le client WhatsApp Web... Veuillez patienter.',
+    dispatchComplete: 'Envoi WhatsApp terminé avec succès'
+  },
+  statuses: {
+    draft: 'BROUILLON',
+    sent: 'ENVOYÉ',
+    paid: 'PAYÉ',
+    partiallyPaid: 'PARTIELLEMENT PAYÉ',
+    pending: 'EN ATTENTE',
+    decline: 'REFUSÉ',
+    freeOfCharge: 'GRATUIT',
+    open: 'OUVERT',
+    close: 'FERMÉ',
+    completed: 'TERMINÉ',
+    onGoing: 'EN COURS',
+    stopped: 'ARRÊTÉ'
+  }
+};
+/* harmony default export */ const locales_fr = (fr);
+;// ./src/js/locales/ar.js
+// Arabic Dictionary (العربية)
+var ar = {
+  common: {
+    save: 'حفظ',
+    saveAsDefault: 'حفظ كافتراضي',
+    saving: 'جاري الحفظ...',
+    cancel: 'إلغاء',
+    delete: 'حذف',
+    edit: 'تعديل',
+    search: 'بحث...',
+    refreshSearch: 'تحديث البحث',
+    export: 'تصدير',
+    close: 'إغلاق',
+    status: 'الحالة',
+    actions: 'الإجراءات',
+    date: 'التاريخ',
+    amount: 'المبلغ',
+    total: 'الإجمالي',
+    balanceDue: 'الرصيد المتبقي',
+    paid: 'مدفوع',
+    unpaid: 'غير مدفوع',
+    phone: 'الهاتف',
+    loading: 'جاري التحميل...',
+    noData: 'لا توجد بيانات متاحة',
+    selectAll: 'تحديد الكل',
+    uncheckAll: 'إلغاء تحديد الكل',
+    selectFiltered: 'تحديد نتائج البحث',
+    uncheckFiltered: 'إلغاء تحديد نتائج البحث',
+    language: 'اللغة',
+    logout: 'تسجيل الخروج',
+    all: 'الكل',
+    view: 'عرض',
+    yes: 'نعم',
+    no: 'لا',
+    confirm: 'تأكيد',
+    back: 'رجوع'
+  },
+  sidebar: {
+    store: "المستودع",
+    quotation: "عرض أسعار",
+    invoice: "الفاتورة",
+    payment: "المدفوعات",
+    project: "المشاريع",
+    pos: "نقطة بيع",
+    more: "المزيد",
+    close: "إغلاق",
+    mobileApps: "تطبيقات الهاتف والكمبيوتر",
+    dashboard: 'لوحة التحكم',
+    customers: 'العملاء',
+    suppliers: 'الموردون',
+    storeItems: 'المستودع / المواد',
+    itemOut: 'صرف مواد',
+    itemReturn: 'إرجاع مواد',
+    purchaseOrders: 'أوامر الشراء',
+    purchases: 'المشتريات',
+    quotations: 'عروض الأسعار',
+    invoices: 'الفواتير',
+    payments: 'المدفوعات',
+    dailyExpenses: 'المصروفات اليومية',
+    projects: 'المشاريع',
+    maintenance: 'الصيانة',
+    maintenanceOrder: 'أمر صيانة',
+    pos: 'نقطة البيع (POS)',
+    payroll: 'الرواتب والأجور',
+    fleet: 'إدارة أسطول المركبات',
+    reports: 'التقارير',
+    settings: 'الإعدادات',
+    grantAccess: 'الصلاحيات والوصول',
+    marketing: 'منشورات تسويقية',
+    blockFactory: 'مصنع البلوك'
+  },
+  invoices: {
+    title: 'فاتورة',
+    invoiceNumber: 'رقم الفاتورة',
+    customerName: 'اسم العميل',
+    invoiceDate: 'التاريخ',
+    dueDate: 'تاريخ الاستحقاق',
+    subject: 'الموضوع',
+    subtotal: 'المجموع الفرعي',
+    subtotalTaxInclusive: 'المجموع الفرعي (شامل الضريبة)',
+    balanceDue: 'الرصيد المستحق',
+    totalInWords: 'المبلغ كتابة',
+    sendWhatsApp: 'إرسال الفواتير عبر واتساب',
+    sendQueue: 'قائمة الإرسال',
+    sentHistory: 'سجل الفواتير المرسلة',
+    threeMonthRetention: 'عرض الفواتير المرسلة لآخر 3 أشهر (فترة احتفاظ 90 يوماً). يتم تنظيف السجلات الأقدم تلقائياً.',
+    customMessage: 'رسالة قصيرة قابلة للتعديل',
+    customMessagePlaceholder: 'اكتب رسالتك القصيرة...',
+    multipleInvoicesNote: '* عند وجود عدة فواتير لنفس العميل، يتم إرفاق هذه الرسالة مع الفاتورة الأولى ويليها باقي الفواتير تباعاً.',
+    reviewRecipients: 'مراجعة فواتير المستلمين',
+    filterPlaceholder: 'بحث باسم العميل، رقم الفاتورة، الهاتف...',
+    historySearchPlaceholder: 'بحث في السجل برقم الفاتورة، اسم العميل، الهاتف، المرسل...',
+    noEligibleFound: 'لم يتم العثور على فواتير بحالة مرسلة أو مدفوعة جزئياً أو مجانية.',
+    noMatches: 'لا توجد فواتير مطابقة لبحثك',
+    noHistory: 'لم يتم إرسال أي فواتير عبر واتساب في آخر 3 أشهر.',
+    dispatching: '⏳ جاري إرسال ملفات الفواتير عبر واتساب... يرجى الانتظار.',
+    dispatchComplete: 'تم إرسال الفواتير عبر واتساب بنجاح'
+  },
+  statuses: {
+    draft: 'مسودة',
+    sent: 'تم الإرسال',
+    paid: 'مدفوع',
+    partiallyPaid: 'مدفوع جزئياً',
+    pending: 'قيد الانتظار',
+    decline: 'مرفوض',
+    freeOfCharge: 'مجاني',
+    open: 'مفتوح',
+    close: 'مغلق',
+    completed: 'مكتمل',
+    onGoing: 'قيد التنفيذ',
+    stopped: 'متوقف'
+  }
+};
+/* harmony default export */ const locales_ar = (ar);
+;// ./src/js/locales/es.js
+// Spanish Dictionary (Español)
+var es = {
+  common: {
+    save: 'Guardar',
+    saveAsDefault: 'Guardar como Predeterminado',
+    saving: 'Guardando...',
+    cancel: 'Cancelar',
+    delete: 'Eliminar',
+    edit: 'Editar',
+    search: 'Buscar...',
+    refreshSearch: 'Actualizar Búsqueda',
+    export: 'Exportar',
+    close: 'Cerrar',
+    status: 'Estado',
+    actions: 'Acciones',
+    date: 'Fecha',
+    amount: 'Importe',
+    total: 'Total',
+    balanceDue: 'Saldo Pendiente',
+    paid: 'Pagado',
+    unpaid: 'No Pagado',
+    phone: 'Teléfono',
+    loading: 'Cargando...',
+    noData: 'No hay datos disponibles',
+    selectAll: 'Seleccionar Todo',
+    uncheckAll: 'Deseleccionar Todo',
+    selectFiltered: 'Seleccionar Filtrados',
+    uncheckFiltered: 'Deseleccionar Filtrados',
+    language: 'Idioma',
+    logout: 'Cerrar Sesión',
+    all: 'Todo',
+    view: 'Ver',
+    yes: 'Sí',
+    no: 'No',
+    confirm: 'Confirmar',
+    back: 'Atrás'
+  },
+  sidebar: {
+    store: "Almacén",
+    quotation: "Cotización",
+    invoice: "Factura",
+    payment: "Pago",
+    project: "Proyecto",
+    pos: "Punto de Venta",
+    more: "Más",
+    close: "Cerrar",
+    mobileApps: "Aplicaciones Móvil y PC",
+    dashboard: 'Panel de Control',
+    customers: 'Clientes',
+    suppliers: 'Proveedores',
+    storeItems: 'Almacén / Artículos',
+    itemOut: 'Salida de Artículos',
+    itemReturn: 'Devolución de Artículos',
+    purchaseOrders: 'Órdenes de Compra',
+    purchases: 'Compras',
+    quotations: 'Cotizaciones',
+    invoices: 'Facturas',
+    payments: 'Pagos',
+    dailyExpenses: 'Gastos Diarios',
+    projects: 'Proyectos',
+    maintenance: 'Mantenimiento',
+    maintenanceOrder: 'Orden de Mantenimiento',
+    pos: 'Punto de Venta (POS)',
+    payroll: 'Nómina',
+    fleet: 'Gestión de Flota',
+    reports: 'Informes',
+    settings: 'Configuración',
+    grantAccess: 'Permisos de Acceso',
+    marketing: 'Folletos de Marketing',
+    blockFactory: 'Fábrica de Bloques'
+  },
+  invoices: {
+    title: 'Factura',
+    invoiceNumber: 'Factura N°',
+    customerName: 'Nombre del Cliente',
+    invoiceDate: 'Fecha',
+    dueDate: 'Fecha de Vencimiento',
+    subject: 'Asunto',
+    subtotal: 'Subtotal',
+    subtotalTaxInclusive: 'Subtotal (IVA Incluido)',
+    balanceDue: 'Saldo Pendiente',
+    totalInWords: 'Total en Letras',
+    sendWhatsApp: 'Enviar Facturas por WhatsApp',
+    sendQueue: 'Cola de Envío',
+    sentHistory: 'Historial de Envíos',
+    threeMonthRetention: 'Mostrando facturas enviadas en los últimos 3 meses (retención de 90 días). Los registros más antiguos se eliminan automáticamente.',
+    customMessage: 'Mensaje Corto Personalizable',
+    customMessagePlaceholder: 'Escriba su mensaje corto...',
+    multipleInvoicesNote: '* Cuando un cliente tiene múltiples facturas, este mensaje se adjunta al primer PDF, seguido secuencialmente por las demás facturas.',
+    reviewRecipients: 'Revisar Facturas de Destinatarios',
+    filterPlaceholder: 'Buscar por cliente, n° de factura, teléfono...',
+    historySearchPlaceholder: 'Buscar en historial por n° de factura, cliente, teléfono, enviado por...',
+    noEligibleFound: 'No se encontraron facturas con estado ENVIADO, PARCIALMENTE PAGADO o GRATIS.',
+    noMatches: 'Ninguna factura coincide con su búsqueda',
+    noHistory: 'No se han enviado facturas por WhatsApp en los últimos 3 meses.',
+    dispatching: '⏳ Enviando archivos PDF de facturas por WhatsApp Web... Espere por favor.',
+    dispatchComplete: 'Envío por WhatsApp completado con éxito'
+  },
+  statuses: {
+    draft: 'BORRADOR',
+    sent: 'ENVIADO',
+    paid: 'PAGADO',
+    partiallyPaid: 'PARCIALMENTE PAGADO',
+    pending: 'PENDIENTE',
+    decline: 'RECHAZADO',
+    freeOfCharge: 'GRATIS',
+    open: 'ABIERTO',
+    close: 'CERRADO',
+    completed: 'COMPLETADO',
+    onGoing: 'EN CURSO',
+    stopped: 'DETENIDO'
+  }
+};
+/* harmony default export */ const locales_es = (es);
+;// ./src/js/locales/zh.js
+// Chinese Dictionary (简体中文)
+var zh = {
+  common: {
+    save: '保存',
+    saveAsDefault: '设为默认',
+    saving: '保存中...',
+    cancel: '取消',
+    delete: '删除',
+    edit: '编辑',
+    search: '搜索...',
+    refreshSearch: '刷新搜索',
+    export: '导出',
+    close: '关闭',
+    status: '状态',
+    actions: '操作',
+    date: '日期',
+    amount: '金额',
+    total: '总计',
+    balanceDue: '待付余额',
+    paid: '已支付',
+    unpaid: '未支付',
+    phone: '电话',
+    loading: '加载中...',
+    noData: '暂无数据',
+    selectAll: '全选',
+    uncheckAll: '取消全选',
+    selectFiltered: '选择筛选结果',
+    uncheckFiltered: '取消筛选选择',
+    language: '语言',
+    logout: '退出登录',
+    all: '全部',
+    view: '查看',
+    yes: '是',
+    no: '否',
+    confirm: '确认',
+    back: '返回'
+  },
+  sidebar: {
+    store: "仓库",
+    quotation: "报价单",
+    invoice: "发票",
+    payment: "付款",
+    project: "项目",
+    pos: "POS销售点",
+    more: "更多",
+    close: "关闭",
+    mobileApps: "手机与电脑应用",
+    dashboard: '仪表盘',
+    customers: '客户管理',
+    suppliers: '供应商管理',
+    storeItems: '仓库 / 商品',
+    itemOut: '物品出库',
+    itemReturn: '物品退货',
+    purchaseOrders: '采购订单',
+    purchases: '采购管理',
+    quotations: '报价单',
+    invoices: '发票管理',
+    payments: '付款记录',
+    dailyExpenses: '日常费用',
+    projects: '工程项目',
+    maintenance: '维保服务',
+    maintenanceOrder: '维保工单',
+    pos: '收银系统 (POS)',
+    payroll: '薪酬管理',
+    fleet: '车队管理',
+    reports: '统计报表',
+    settings: '系统设置',
+    grantAccess: '权限管理',
+    marketing: '宣传海报',
+    blockFactory: '砖厂生产'
+  },
+  invoices: {
+    title: '发票',
+    invoiceNumber: '发票编号',
+    customerName: '客户名称',
+    invoiceDate: '开票日期',
+    dueDate: '到期日期',
+    subject: '项目主题',
+    subtotal: '小计',
+    subtotalTaxInclusive: '含税小计',
+    balanceDue: '待付余额',
+    totalInWords: '大写金额',
+    sendWhatsApp: '通过 WhatsApp 发送发票',
+    sendQueue: '发送队列',
+    sentHistory: '发送历史记录',
+    threeMonthRetention: '显示最近3个月的发票发送记录（保留90天），过期记录将自动清理。',
+    customMessage: '自定义短消息',
+    customMessagePlaceholder: '请输入短消息内容...',
+    multipleInvoicesNote: '* 当同一客户有多张发票时，该短消息将附加在第一张发票PDF后，后续发票将依次连续发送。',
+    reviewRecipients: '核对接收发票名单',
+    filterPlaceholder: '按客户、发票号或电话搜索...',
+    historySearchPlaceholder: '按发票号、客户、电话或发送人搜索历史...',
+    noEligibleFound: '未找到状态为 已发送、部分支付 或 免费 的发票。',
+    noMatches: '没有匹配搜索条件的发票',
+    noHistory: '最近 3 个月内没有 WhatsApp 发送记录。',
+    dispatching: '⏳ 正在通过 WhatsApp Web 客户端发送发票 PDF... 请稍候。',
+    dispatchComplete: 'WhatsApp 发送已完成'
+  },
+  statuses: {
+    draft: '草稿',
+    sent: '已发送',
+    paid: '已支付',
+    partiallyPaid: '部分支付',
+    pending: '待处理',
+    decline: '已拒绝',
+    freeOfCharge: '免费',
+    open: '开启',
+    close: '已关闭',
+    completed: '已完成',
+    onGoing: '进行中',
+    stopped: '已停止'
+  }
+};
+/* harmony default export */ const locales_zh = (zh);
+;// ./src/js/locales/hi.js
+// Hindi Dictionary (हिन्दी)
+var hi = {
+  common: {
+    save: 'सहेजें',
+    saveAsDefault: 'डिफ़ॉल्ट के रूप में सहेजें',
+    saving: 'सहेजा जा रहा है...',
+    cancel: 'रद्द करें',
+    delete: 'हटाएं',
+    edit: 'संपादित करें',
+    search: 'खोजें...',
+    refreshSearch: 'खोज ताज़ा करें',
+    export: 'निर्यात करें',
+    close: 'बंद करें',
+    status: 'स्थिति',
+    actions: 'क्रियाएँ',
+    date: 'दिनांक',
+    amount: 'राशि',
+    total: 'कुल',
+    balanceDue: 'बकाया राशि',
+    paid: 'भुगतान किया गया',
+    unpaid: 'अदत्त',
+    phone: 'फ़ोन',
+    loading: 'लोड हो रहा है...',
+    noData: 'कोई डेटा उपलब्ध नहीं है',
+    selectAll: 'सभी चुनें',
+    uncheckAll: 'सभी अचयनित करें',
+    selectFiltered: 'फ़िल्टर किए गए चुनें',
+    uncheckFiltered: 'फ़िल्टर किए गए अचयनित करें',
+    language: 'भाषा',
+    logout: 'लॉग आउट',
+    all: 'सभी',
+    view: 'देखें',
+    yes: 'हाँ',
+    no: 'नहीं',
+    confirm: 'पुष्टि करें',
+    back: 'वापस'
+  },
+  sidebar: {
+    store: "दुकान/स्टोर",
+    quotation: "कोटेशन",
+    invoice: "चालान/बिल",
+    payment: "भुगतान",
+    project: "परियोजना",
+    pos: "बिक्री केंद्र",
+    more: "अधिक",
+    close: "बंद करें",
+    mobileApps: "मोबाइल और पीसी ऐप",
+    dashboard: 'डैशबोर्ड',
+    customers: 'ग्राहक',
+    suppliers: 'आपूर्तिकर्ता',
+    storeItems: 'स्टोर / सामग्री',
+    itemOut: 'सामग्री निर्गम',
+    itemReturn: 'सामग्री वापसी',
+    purchaseOrders: 'खरीद आदेश (PO)',
+    purchases: 'खरीददारी',
+    quotations: 'कोटेशन / अनुमान',
+    invoices: 'चालान (Invoices)',
+    payments: 'भुगतान',
+    dailyExpenses: 'दैनिक खर्च',
+    projects: 'परियोजनाएं',
+    maintenance: 'रखरखाव (Maintenance)',
+    maintenanceOrder: 'रखरखाव आदेश',
+    pos: 'बिक्री केंद्र (POS)',
+    payroll: 'वेतन (Payroll)',
+    fleet: 'वाहन बेड़ा प्रबंधन',
+    reports: 'रिपोर्ट',
+    settings: 'सेटिंग्स',
+    grantAccess: 'पहुंच और अनुमतियां',
+    marketing: 'विपणन फ़्लायर्स',
+    blockFactory: 'ब्लॉक फैक्ट्री'
+  },
+  invoices: {
+    title: 'चालान (Invoice)',
+    invoiceNumber: 'चालान सं.',
+    customerName: 'ग्राहक का नाम',
+    invoiceDate: 'दिनांक',
+    dueDate: 'नियत तिथि',
+    subject: 'विषय',
+    subtotal: 'उप-योग',
+    subtotalTaxInclusive: 'उप-योग (कर सहित)',
+    balanceDue: 'बकाया राशि',
+    totalInWords: 'शब्दों में कुल राशि',
+    sendWhatsApp: 'व्हाट्सएप द्वारा चालान भेजें',
+    sendQueue: 'भेजने की कतार',
+    sentHistory: 'भेजे गए चालान का इतिहास',
+    threeMonthRetention: 'पिछले 3 महीनों के भेजे गए चालान प्रदर्शित (90-दिन प्रतिधारण)। पुराने रिकॉर्ड स्वतः साफ़ हो जाते हैं।',
+    customMessage: 'अनुकूलन योग्य संक्षिप्त संदेश',
+    customMessagePlaceholder: 'संक्षिप्त संदेश लिखें...',
+    multipleInvoicesNote: '* यदि किसी ग्राहक के कई चालान हैं, तो यह संक्षिप्त संदेश पहली चालान पीडीएफ के साथ भेजा जाएगा, उसके बाद शेष चालान क्रमानुसार भेजे जाएंगे।',
+    reviewRecipients: 'प्राप्तकर्ता चालानों की समीक्षा करें',
+    filterPlaceholder: 'ग्राहक, चालान सं. या फ़ोन द्वारा खोजें...',
+    historySearchPlaceholder: 'इतिहास खोजें (चालान सं., ग्राहक, फ़ोन, प्रेषक)...',
+    noEligibleFound: 'भेजे गए, आंशिक भुगतान या निःशुल्क स्थिति वाले कोई चालान नहीं मिले।',
+    noMatches: 'आपकी खोज से मेल खाने वाला कोई चालान नहीं है',
+    noHistory: 'पिछले 3 महीनों में व्हाट्सएप द्वारा कोई चालान नहीं भेजा गया है।',
+    dispatching: '⏳ व्हाट्सएप वेब के माध्यम से चालान पीडीएफ भेजे जा रहे हैं... कृपया प्रतीक्षा करें।',
+    dispatchComplete: 'व्हाट्सएप प्रेषण सफलतापूर्वक पूर्ण हुआ'
+  },
+  statuses: {
+    draft: 'प्रारूप (DRAFT)',
+    sent: 'भेजा गया (SENT)',
+    paid: 'भुगतान किया गया (PAID)',
+    partiallyPaid: 'आंशिक भुगतान',
+    pending: 'लंबित (PENDING)',
+    decline: 'अस्वीकृत',
+    freeOfCharge: 'निःशुल्क',
+    open: 'सक्रिय (OPEN)',
+    close: 'बंद (CLOSED)',
+    completed: 'पूर्ण (COMPLETED)',
+    onGoing: 'जारी है',
+    stopped: 'रोक दिया गया'
+  }
+};
+/* harmony default export */ const locales_hi = (hi);
+;// ./src/js/locales/index.js
+
+
+
+
+
+
+var SUPPORTED_LANGUAGES = [{
+  code: 'en',
+  name: 'English',
+  nativeName: 'English',
+  flag: '🇬🇧'
+}, {
+  code: 'fr',
+  name: 'French',
+  nativeName: 'Français',
+  flag: '🇫🇷'
+}, {
+  code: 'ar',
+  name: 'Arabic',
+  nativeName: 'العربية',
+  flag: '🇸🇦',
+  dir: 'rtl'
+}, {
+  code: 'es',
+  name: 'Spanish',
+  nativeName: 'Español',
+  flag: '🇪🇸'
+}, {
+  code: 'zh',
+  name: 'Chinese',
+  nativeName: '简体中文',
+  flag: '🇨🇳'
+}, {
+  code: 'hi',
+  name: 'Hindi',
+  nativeName: 'हिन्दी',
+  flag: '🇮🇳'
+}];
+var translations = {
+  en: locales_en,
+  fr: locales_fr,
+  ar: locales_ar,
+  es: locales_es,
+  zh: locales_zh,
+  hi: locales_hi
+};
+/* harmony default export */ const locales = ((/* unused pure expression or super */ null && (translations)));
+// EXTERNAL MODULE: ./src/js/apiConfig.js
+var apiConfig = __webpack_require__(71510);
+;// ./src/js/context/LanguageContext.js
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+;
+
+
+
+var LanguageContext = /*#__PURE__*/(0,react.createContext)(null);
+var LanguageProvider = _ref => {
+  var children = _ref.children;
+  var _useState = (0,react.useState)(() => {
+      try {
+        var saved = localStorage.getItem('gg_language');
+        if (saved && translations[saved]) {
+          return saved;
+        }
+      } catch (e) {
+        // localStorage may fail in restricted iframes
+      }
+      return 'en';
+    }),
+    _useState2 = _slicedToArray(_useState, 2),
+    lang = _useState2[0],
+    setLangState = _useState2[1];
+
+  // Apply text direction for RTL languages like Arabic if needed
+  (0,react.useEffect)(() => {
+    try {
+      var langConfig = SUPPORTED_LANGUAGES.find(l => l.code === lang);
+      var isRTL = (langConfig === null || langConfig === void 0 ? void 0 : langConfig.dir) === 'rtl';
+      document.documentElement.dir = isRTL ? 'rtl' : 'ltr';
+      document.documentElement.lang = lang;
+    } catch (e) {
+      console.warn('Failed to set document direction:', e);
+    }
+  }, [lang]);
+  var setLanguage = (0,react.useCallback)(/*#__PURE__*/function () {
+    var _ref2 = _asyncToGenerator(function* (newLang) {
+      if (!translations[newLang]) {
+        console.warn("Unsupported language requested: ".concat(newLang));
+        return;
+      }
+      setLangState(newLang);
+      try {
+        localStorage.setItem('gg_language', newLang);
+      } catch (e) {}
+
+      // Persist to user profile in backend if logged in
+      try {
+        var userId = localStorage.getItem('user');
+        var employeeName = localStorage.getItem('currentUserName');
+        if (userId || employeeName) {
+          yield axios/* default */.A.put("".concat(apiConfig/* ENDPOINT_URL */.m, "/update-user-language"), {
+            userId: userId || undefined,
+            employeeName: employeeName || undefined,
+            language: newLang
+          });
+        }
+      } catch (err) {
+        // Non-blocking: language preference is already persisted in localStorage
+        console.warn('Failed to sync language to backend user profile:', err === null || err === void 0 ? void 0 : err.message);
+      }
+    });
+    return function (_x) {
+      return _ref2.apply(this, arguments);
+    };
+  }(), []);
+
+  /**
+   * Translate a dotted key path.
+   * e.g. t('common.save', 'Save')
+   * If translation not found, falls back to English, then to provided fallback string, then key itself.
+   */
+  var t = (0,react.useCallback)(function (path) {
+    var fallback = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
+    var params = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+    if (!path) return fallback || '';
+    var getNested = (obj, keyPath) => {
+      if (!obj || typeof obj !== 'object') return null;
+      var keys = keyPath.split('.');
+      var current = obj;
+      for (var k of keys) {
+        if (current && typeof current === 'object' && k in current) {
+          current = current[k];
+        } else {
+          return null;
+        }
+      }
+      return typeof current === 'string' ? current : null;
+    };
+
+    // 1. Look up in active language
+    var text = getNested(translations[lang], path);
+
+    // 2. Fall back to English
+    if (!text && lang !== 'en') {
+      text = getNested(translations['en'], path);
+    }
+
+    // 3. Fall back to provided fallback or path
+    if (!text) {
+      text = fallback || path;
+    }
+
+    // Replace params if supplied (e.g. {count: 5} replaces "{count}")
+    if (params && typeof params === 'object') {
+      Object.keys(params).forEach(paramKey => {
+        text = text.replace(new RegExp("\\{".concat(paramKey, "\\}"), 'g'), params[paramKey]);
+      });
+    }
+    return text;
+  }, [lang]);
+  var currentLangInfo = (0,react.useMemo)(() => {
+    return SUPPORTED_LANGUAGES.find(l => l.code === lang) || SUPPORTED_LANGUAGES[0];
+  }, [lang]);
+  var contextValue = (0,react.useMemo)(() => ({
+    lang,
+    setLanguage,
+    t,
+    currentLangInfo,
+    supportedLanguages: SUPPORTED_LANGUAGES
+  }), [lang, setLanguage, t, currentLangInfo]);
+  return /*#__PURE__*/react.createElement(LanguageContext.Provider, {
+    value: contextValue
+  }, children);
+};
+var useTranslation = () => {
+  var context = (0,react.useContext)(LanguageContext);
+  if (!context) {
+    // Fail-safe fallback if hook is called outside provider
+    return {
+      lang: 'en',
+      setLanguage: () => {},
+      t: function t(path) {
+        var fallback = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
+        return fallback || path;
+      },
+      currentLangInfo: SUPPORTED_LANGUAGES[0],
+      supportedLanguages: SUPPORTED_LANGUAGES
+    };
+  }
+  return context;
+};
+/* harmony default export */ const context_LanguageContext = ((/* unused pure expression or super */ null && (LanguageContext)));
 
 /***/ },
 
@@ -123322,7 +124499,7 @@ Object.assign(esm_lookup, {
 (module) {
 
 "use strict";
-module.exports = {"rE":"3.6.43"};
+module.exports = {"rE":"3.7.0"};
 
 /***/ },
 
@@ -123454,7 +124631,7 @@ module.exports = /*#__PURE__*/JSON.parse('{"--header-logo-width":"240px","--glob
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames based on template
-/******/ 			return "" + chunkId + "." + {"100":"d23238aee0088fe6311f","116":"47fa8762f753762d291d","118":"67282ee0f46830583293","223":"11c50fcf642acaf01578","296":"f29e824f38522a627939","327":"c88df084641bfac45cdc","441":"eed095cb83f23a29c4fe","457":"85646d09370c555800aa","483":"6fdf7d28f4a344461077","590":"28953f61605420ae99a4","614":"aa1a4baa485591a45a5d","712":"417291dbaa6deef5a723","742":"3c7280819fde965ae055","778":"f8950b7fd584414ccde4","806":"86246369ff26210375d6","808":"6a9dd78c13f012762b06","864":"ac9193b4bf40eb4964a0","885":"cc8a4df32b65323e1a80","956":"1824448f5e358187a171","1019":"1d406482e04e60bb652f","1096":"61c93941ef0e30fbb8e1","1168":"b2f690e1d5399977dcaf","1223":"570fd2f2c05d37fbd713","1251":"9da50dc8470bc764d3b6","1364":"fdfc76afc243ce14e56a","1390":"a28f1a9c7193c75a2232","1500":"424588fee785d250ed9e","1624":"1e1d88c032094f247d47","1645":"b14873a5301226b82397","1679":"237c30835c9d2b067961","1722":"3dba996689e15edc6600","1853":"b813dc09b9019a831f54","1861":"b7634fa92c4aa00d7ec7","1919":"f13f0a75923071521492","1985":"c372e67729f897b94140","2120":"260136f37f71dde36ba1","2122":"89773bbe7a6bb157934a","2153":"dfaa809d81b011fe402a","2410":"60faf2efc5e6b7a19278","2495":"76a26795d4033aa439a4","2517":"956f7558989fb2a45d33","2529":"4184ea0b2e089c7b1cb8","2533":"6d9dacf83ca9e24d3416","2605":"e812d939125d0bcdc11d","2608":"a86e0ce81d9f46c9b9e6","2611":"f7d9b0f51ca0ac53ae4e","2756":"2e4d9a6b9a21c6a4e68d","2757":"68776b517befffb1bc05","2778":"86cf15816d239663d75a","2821":"d40aee3e8cd86fb5bbff","2835":"24f1fea917776ffa479d","2982":"32976a391cfa548b7e95","2992":"d13e1ff4f68bd5acb24c","3009":"567b00944880ad958271","3058":"a3f771cb9bd985ced3bd","3094":"9608277b9f1b21b145b5","3229":"9a18814208e0e3a62450","3426":"19faa75605f4883ef0ac","3502":"c31003c93cbba1941304","3547":"1e2de2721983f1041975","3697":"fe70271d21f44d2acfd2","3741":"37d03a8a510f8bda1f4a","3808":"276d5de181e1a69559a2","3976":"c6c4d900d8043e884ea2","4001":"26db32d1d91c8fa20b73","4006":"976dfcc548c2dce63220","4107":"78bb8e93491e33a3e285","4184":"7b249b747702470ec69b","4237":"ae9e77c6d4f5a70c297a","4270":"63ee28f1f9f6ac12996c","4444":"e525fac9566cbdbfd3a9","4783":"0c9add13bef8b515dc5a","5059":"628654fd8f024ff22adb","5117":"4730c959e6d88f46a5a4","5151":"5d5200acc3cd06da0954","5194":"a8c14a0906a2f52920b3","5391":"742aef8311aa7c4a23cc","5394":"5bb56ffb12838ef17ca7","5646":"e60fac6efda1f9f7e548","5669":"7dd77c65e44c3dc05cd9","5754":"8e63db711cee747f1391","5824":"00be3ef2515b3d5a318a","5881":"1b229fbf1b0bff87b387","5910":"0aa1b84089d2b2145046","5919":"2ebbeceef8b03aefddce","6155":"25803bf72f57df4b3658","6226":"c39d996a6080b7b3f327","6619":"aeb7408667c311426693","6671":"ce0a7da7b2eb95699d4a","6685":"abb0ae76ab012c7aded2","6725":"58fda4a7318f066900c8","6744":"c01d52eb99441e4e3afa","7120":"fbec0e4401c2f3946a30","7171":"918e19a0ed17fcdfa115","7189":"01acc90deff5544573ed","7269":"6a558698609e86a84e69","7270":"aef71d036742a212ea6b","7384":"78a1f59ffc7924fc8f70","7405":"53dd5e5077e4f953ad70","7444":"b53c12d6ba889fd7ff49","7445":"e606d29cef935c51d77e","7539":"c61bccf991e8c58027ec","7592":"98e106d7b646ee14a0ce","7612":"b933ea2e0528b238c576","7645":"8d59712268ea3994cd6e","7757":"651cf111063b959926f9","7801":"c3e87aed74f7875fc59f","7897":"df7b310b199ac4baecd9","7941":"cdea1aeb2dd42cec3104","7997":"2e21126ab3301ab4a2fa","8011":"6fdc018b000254031056","8017":"d9c4389aa832817ffddf","8027":"7b9afb4f343537fcf757","8060":"ba0cc5c0a1ee61f986b1","8117":"25756ad53d0d4449d1f8","8282":"32736830a9f4d1ff68b6","8354":"176023e85ee8d67dc8c1","8442":"4dc34606f2dc199c6158","8520":"bd678456cc879023807e","8646":"0293232243b034c83636","8685":"2e4858ba3af14fde840a","8838":"13b51a33beb2023361a2","8849":"99a0e337bf4c06eb79d5","8970":"110c16bdc91946671e41","9127":"09e89f7f015fd77f84f4","9220":"861c86c07129ab78a89d","9246":"a5bb21ccda4d5e9f6ee1","9250":"739e41027b099328904d","9260":"ebf3b7b938e195a708ee","9419":"5e902a4aad391f3991ae","9528":"4dd9c43eb666c40b578c","9564":"746623511c55650ec60b","9573":"b6adaade2262a0898f8e","9575":"e9bf1fcbb360227bdd13","9670":"012e43f63f6fefe161c8","9762":"9f8b0218749225626c45","9773":"d19caa4fc2af229a4bae","9846":"51bc1d1ec09fccb6843d","9971":"b8cd2845d2a3543a5e11"}[chunkId] + ".app.js";
+/******/ 			return "" + chunkId + "." + {"100":"d23238aee0088fe6311f","116":"47fa8762f753762d291d","118":"b135002ce49baf235c48","223":"11c50fcf642acaf01578","296":"f29e824f38522a627939","327":"c88df084641bfac45cdc","441":"eed095cb83f23a29c4fe","457":"85646d09370c555800aa","483":"6fdf7d28f4a344461077","590":"28953f61605420ae99a4","614":"aa1a4baa485591a45a5d","712":"417291dbaa6deef5a723","742":"3c7280819fde965ae055","778":"f8950b7fd584414ccde4","806":"86246369ff26210375d6","808":"6a9dd78c13f012762b06","864":"ac9193b4bf40eb4964a0","885":"cc8a4df32b65323e1a80","956":"1824448f5e358187a171","1019":"1d406482e04e60bb652f","1096":"61c93941ef0e30fbb8e1","1168":"b2f690e1d5399977dcaf","1223":"570fd2f2c05d37fbd713","1251":"9da50dc8470bc764d3b6","1364":"f613f38173c335fc289a","1390":"a28f1a9c7193c75a2232","1500":"424588fee785d250ed9e","1624":"1e1d88c032094f247d47","1645":"b14873a5301226b82397","1679":"237c30835c9d2b067961","1722":"3dba996689e15edc6600","1853":"b813dc09b9019a831f54","1861":"50f3dd401e2e1e25670b","1919":"f13f0a75923071521492","1985":"c372e67729f897b94140","2120":"260136f37f71dde36ba1","2122":"89773bbe7a6bb157934a","2153":"dfaa809d81b011fe402a","2410":"16dc9cb31b16bfe0a957","2495":"76a26795d4033aa439a4","2517":"956f7558989fb2a45d33","2529":"4184ea0b2e089c7b1cb8","2533":"6d9dacf83ca9e24d3416","2605":"489eb0b962011b13b0e0","2608":"a86e0ce81d9f46c9b9e6","2611":"f7d9b0f51ca0ac53ae4e","2756":"2e4d9a6b9a21c6a4e68d","2757":"68776b517befffb1bc05","2778":"86cf15816d239663d75a","2821":"ffb233bce454ab169cf1","2835":"24f1fea917776ffa479d","2982":"32976a391cfa548b7e95","2992":"d13e1ff4f68bd5acb24c","3009":"567b00944880ad958271","3058":"a3f771cb9bd985ced3bd","3094":"9608277b9f1b21b145b5","3229":"9a18814208e0e3a62450","3426":"0143bf26ce94011c10dc","3502":"c31003c93cbba1941304","3547":"1e2de2721983f1041975","3697":"fe70271d21f44d2acfd2","3741":"37d03a8a510f8bda1f4a","3808":"276d5de181e1a69559a2","3976":"c6c4d900d8043e884ea2","4001":"26db32d1d91c8fa20b73","4006":"976dfcc548c2dce63220","4107":"78bb8e93491e33a3e285","4184":"7b249b747702470ec69b","4237":"ae9e77c6d4f5a70c297a","4270":"63ee28f1f9f6ac12996c","4444":"e525fac9566cbdbfd3a9","4783":"0c9add13bef8b515dc5a","5059":"628654fd8f024ff22adb","5117":"4730c959e6d88f46a5a4","5151":"5d5200acc3cd06da0954","5194":"a8c14a0906a2f52920b3","5391":"742aef8311aa7c4a23cc","5394":"076f668e583f0c247125","5646":"e60fac6efda1f9f7e548","5669":"7dd77c65e44c3dc05cd9","5754":"8e63db711cee747f1391","5824":"00be3ef2515b3d5a318a","5881":"1b229fbf1b0bff87b387","5910":"0aa1b84089d2b2145046","5919":"2ebbeceef8b03aefddce","6155":"25803bf72f57df4b3658","6226":"c39d996a6080b7b3f327","6619":"aeb7408667c311426693","6671":"578ed36e16c4deaca0e8","6685":"abb0ae76ab012c7aded2","6725":"58fda4a7318f066900c8","6744":"c01d52eb99441e4e3afa","7120":"fbec0e4401c2f3946a30","7171":"918e19a0ed17fcdfa115","7189":"01acc90deff5544573ed","7269":"6a558698609e86a84e69","7270":"6cdec514c7093d20b577","7384":"7a2ea4e7a5fcda58c976","7405":"d41e0095b43e306930b1","7444":"b53c12d6ba889fd7ff49","7445":"e606d29cef935c51d77e","7539":"c61bccf991e8c58027ec","7592":"98e106d7b646ee14a0ce","7612":"ed1e6ee8ec4bf410703a","7645":"8d59712268ea3994cd6e","7757":"651cf111063b959926f9","7801":"c3e87aed74f7875fc59f","7897":"df7b310b199ac4baecd9","7941":"cdea1aeb2dd42cec3104","7997":"2e21126ab3301ab4a2fa","8011":"6fdc018b000254031056","8017":"d9c4389aa832817ffddf","8027":"7b9afb4f343537fcf757","8060":"3861d701b2d983914b4b","8117":"25756ad53d0d4449d1f8","8282":"32736830a9f4d1ff68b6","8354":"176023e85ee8d67dc8c1","8442":"4dc34606f2dc199c6158","8520":"bd678456cc879023807e","8646":"0293232243b034c83636","8685":"2e4858ba3af14fde840a","8838":"13b51a33beb2023361a2","8849":"99a0e337bf4c06eb79d5","8970":"fd89ea7f2d4dfed2fec3","9127":"09e89f7f015fd77f84f4","9220":"861c86c07129ab78a89d","9246":"a5bb21ccda4d5e9f6ee1","9250":"739e41027b099328904d","9260":"ebf3b7b938e195a708ee","9419":"76fce89e8654ca441788","9528":"4dd9c43eb666c40b578c","9564":"746623511c55650ec60b","9573":"b6adaade2262a0898f8e","9575":"e9bf1fcbb360227bdd13","9670":"012e43f63f6fefe161c8","9762":"9f8b0218749225626c45","9773":"88d5081cd9841241bcb7","9846":"51bc1d1ec09fccb6843d","9971":"b8cd2845d2a3543a5e11"}[chunkId] + ".app.js";
 /******/ 		};
 /******/ 	})();
 /******/ 	
@@ -129620,6 +130797,10 @@ var Close = __webpack_require__(17809);
 var MessageAdminView = __webpack_require__(83818);
 // EXTERNAL MODULE: ./src/js/AdminView1/NotificationVIewInfo.js
 var NotificationVIewInfo = __webpack_require__(95236);
+// EXTERNAL MODULE: ./src/js/context/LanguageContext.js + 7 modules
+var LanguageContext = __webpack_require__(81611);
+// EXTERNAL MODULE: ./src/js/component/LanguageSelector.js
+var LanguageSelector = __webpack_require__(9893);
 // EXTERNAL MODULE: ./node_modules/@mui/x-date-pickers/LocalizationProvider/LocalizationProvider.js
 var LocalizationProvider = __webpack_require__(75737);
 // EXTERNAL MODULE: ./node_modules/@mui/x-date-pickers/DatePicker/DatePicker.js + 61 modules
@@ -133842,6 +135023,8 @@ function AdminHome_objectWithoutPropertiesLoose(r, e) { if (null == r) return {}
 
 
 
+
+
 var ViewTooltip = (0,styled/* default */.Ay)(_ref => {
   var className = _ref.className,
     props = AdminHome_objectWithoutProperties(_ref, AdminHome_excluded);
@@ -133930,6 +135113,8 @@ var pData = (/* unused pure expression or super */ null && ([2400, 1398, 9800, 3
 var xLabels = (/* unused pure expression or super */ null && (['Page A', 'Page B', 'Page C', 'Page D', 'Page E', 'Page F', 'Page G']));
 function AdminHome() {
   var _user$data3, _ref23;
+  var _useTranslation = (0,LanguageContext/* useTranslation */.Bd)(),
+    t = _useTranslation.t;
   var navigate = (0,react_router_dist/* useNavigate */.Zp)();
   var isMobile = (0,utils_isMobile/* useIsMobile */.al)();
   var dispatch = (0,react_redux_es/* useDispatch */.wA)();
@@ -135425,7 +136610,11 @@ function AdminHome() {
     sx: {
       flexGrow: 1
     }
-  }, "Dashboard"), /*#__PURE__*/react.createElement(NotificationVIewInfo/* default */.A, null), /*#__PURE__*/react.createElement(MessageAdminView/* default */.A, {
+  }, "Dashboard"), /*#__PURE__*/react.createElement(LanguageSelector/* default */.A, {
+    sx: {
+      mr: 1.5
+    }
+  }), /*#__PURE__*/react.createElement(NotificationVIewInfo/* default */.A, null), /*#__PURE__*/react.createElement(MessageAdminView/* default */.A, {
     name: user.data.userName,
     role: user.data.role
   }), /*#__PURE__*/react.createElement(IconButton/* default */.A, {
@@ -138589,6 +139778,8 @@ function MobileLayout_arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 
+
+
 function getTitleFromPath(pathname) {
   if (pathname.includes('Customer')) return 'Customers';
   if (pathname.includes('Invoice')) return 'Invoices';
@@ -138615,6 +139806,8 @@ function isMainListRoute(pathname) {
 function MobileLayout(_ref) {
   var _user$data3, _user$data4, _user$data5, _user$data6;
   var children = _ref.children;
+  var _useTranslation = (0,LanguageContext/* useTranslation */.Bd)(),
+    t = _useTranslation.t;
   var location = (0,react_router_dist/* useLocation */.zy)();
   var navigate = (0,react_router_dist/* useNavigate */.Zp)();
   var dispatch = (0,react_redux_es/* useDispatch */.wA)();
@@ -138721,7 +139914,7 @@ function MobileLayout(_ref) {
   }
   var pageTitle = getTitleFromPath(pathname);
   var candidateTabs = [{
-    label: 'Dashboard',
+    label: t('sidebar.dashboard', 'Dashboard'),
     path: '/AdminHome',
     icon: /*#__PURE__*/react.createElement(icons_material_Dashboard/* default */.A, {
       fontSize: "small"
@@ -138729,35 +139922,35 @@ function MobileLayout(_ref) {
     module: 'Dashboard',
     always: true
   }, {
-    label: 'Invoices',
+    label: t('sidebar.invoices', 'Invoices'),
     path: '/InvoiceViewAdmin',
     icon: /*#__PURE__*/react.createElement(Receipt/* default */.A, {
       fontSize: "small"
     }),
     module: 'Invoice'
   }, {
-    label: 'Customers',
+    label: t('sidebar.customers', 'Customers'),
     path: '/CustomerViewAdmin',
     icon: /*#__PURE__*/react.createElement(People/* default */.A, {
       fontSize: "small"
     }),
     module: 'Customer'
   }, {
-    label: 'Maintenance',
+    label: t('sidebar.maintenance', 'Maintenance'),
     path: '/MaintenanceViewAdmin',
     icon: /*#__PURE__*/react.createElement(Build/* default */.A, {
       fontSize: "small"
     }),
     module: 'Maintenance'
   }, {
-    label: 'Store',
+    label: t('sidebar.store', 'Store'),
     path: '/ItemViewAdmin',
     icon: /*#__PURE__*/react.createElement(Inventory/* default */.A, {
       fontSize: "small"
     }),
     module: 'Item'
   }, {
-    label: 'Expenses',
+    label: t('sidebar.dailyExpenses', 'Expenses'),
     path: '/DailyExpenses',
     icon: /*#__PURE__*/react.createElement(MonetizationOn/* default */.A, {
       fontSize: "small"
@@ -138849,7 +140042,9 @@ function MobileLayout(_ref) {
       gap: 0.25,
       flexShrink: 0
     }
-  }, /*#__PURE__*/react.createElement(NotificationVIewInfo/* default */.A, null), /*#__PURE__*/react.createElement(MessageAdminView/* default */.A, {
+  }, /*#__PURE__*/react.createElement(LanguageSelector/* default */.A, {
+    variant: "mobile"
+  }), /*#__PURE__*/react.createElement(NotificationVIewInfo/* default */.A, null), /*#__PURE__*/react.createElement(MessageAdminView/* default */.A, {
     name: (user === null || user === void 0 || (_user$data5 = user.data) === null || _user$data5 === void 0 ? void 0 : _user$data5.userName) || '',
     role: (user === null || user === void 0 || (_user$data6 = user.data) === null || _user$data6 === void 0 ? void 0 : _user$data6.role) || ''
   }), /*#__PURE__*/react.createElement(IconButton/* default */.A, {
@@ -139310,6 +140505,7 @@ function NativeBackHandler() {
 
 
 
+
 var globalMuiTheme = (0,createTheme/* default */.A)({
   components: {
     MuiInputBase: {
@@ -139561,7 +140757,7 @@ function App_App() {
       window.removeEventListener('unhandledrejection', handleGlobalRejection);
     };
   }, []);
-  return /*#__PURE__*/react.createElement(styles_ThemeProvider_ThemeProvider, {
+  return /*#__PURE__*/react.createElement(LanguageContext/* LanguageProvider */.Is, null, /*#__PURE__*/react.createElement(styles_ThemeProvider_ThemeProvider, {
     theme: globalMuiTheme
   }, /*#__PURE__*/react.createElement(dist/* HashRouter */.I9, null, /*#__PURE__*/react.createElement(AppLayoutWrapper, null, /*#__PURE__*/react.createElement(react.Suspense, {
     fallback: /*#__PURE__*/react.createElement(Loader/* default */.A, null)
@@ -140006,7 +141202,7 @@ function App_App() {
     draggable: true,
     pauseOnHover: true,
     theme: "light"
-  }));
+  })));
 }
 /* harmony default export */ const js_App = (App_App);
 ;// ./src/js/app/store.js

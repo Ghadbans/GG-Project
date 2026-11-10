@@ -17,6 +17,7 @@ import MobileLayout from './component/MobileLayout';
 import NativeBackHandler from './component/NativeBackHandler';
 
 import { isNativeMobile, useIsMobile } from './utils/isMobile';
+import { LanguageProvider } from './context/LanguageContext';
 
 const globalMuiTheme = createTheme({
   components: {
@@ -282,7 +283,8 @@ function App() {
   }, []);
 
   return (
-    <ThemeProvider theme={globalMuiTheme}>
+    <LanguageProvider>
+      <ThemeProvider theme={globalMuiTheme}>
       <Router>
         <AppLayoutWrapper>
           <Suspense fallback={<Loader />}>
@@ -494,6 +496,7 @@ function App() {
         theme="light"
       />
     </ThemeProvider>
+    </LanguageProvider>
   )
 }
 

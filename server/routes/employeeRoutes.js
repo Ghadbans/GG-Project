@@ -337,6 +337,25 @@ Route.route("/update-employeeuser/:id").put(async (req, res, next) => {
     });
 });
 
+Route.route("/update-user-language").put(async (req, res, next) => {
+  try {
+    const { userId, employeeName, language } = req.body;
+    const allowed = ['en', 'fr', 'ar', 'es', 'zh', 'hi'];
+    if (!language || !allowed.includes(language)) {
+      return res.status(400).json({ success: false, error: 'Invalid language code' });
+    }
+    const filter = userId ? { _id: userId } : { employeeName };
+    const updated = await employeeUserSchema.findOneAndUpdate(
+      filter,
+      { $set: { language } },
+      { new: true }
+    );
+    return res.json({ success: true, language: updated?.language || language });
+  } catch (err) {
+    return next(err);
+  }
+});
+
 Route.route("/delete-employeeuser/:id").delete(async (req, res) => {
   await employeeUserSchema
     .findByIdAndRemove(req.params.id)

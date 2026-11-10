@@ -2669,6 +2669,10 @@ var GridToolbar = __webpack_require__(53071);
 var MessageAdminView = __webpack_require__(83818);
 // EXTERNAL MODULE: ./src/js/AdminView1/NotificationVIewInfo.js
 var NotificationVIewInfo = __webpack_require__(95236);
+// EXTERNAL MODULE: ./src/js/context/LanguageContext.js + 7 modules
+var LanguageContext = __webpack_require__(81611);
+// EXTERNAL MODULE: ./src/js/component/LanguageSelector.js
+var LanguageSelector = __webpack_require__(9893);
 // EXTERNAL MODULE: ./src/js/utils/isMobile.js
 var utils_isMobile = __webpack_require__(2650);
 // EXTERNAL MODULE: ./src/js/component/MobileCardList.js + 2 modules
@@ -2696,6 +2700,8 @@ function _extends() { return _extends = Object.assign ? Object.assign.bind() : f
 function _objectWithoutProperties(e, t) { if (null == e) return {}; var o, r, i = _objectWithoutPropertiesLoose(e, t); if (Object.getOwnPropertySymbols) { var n = Object.getOwnPropertySymbols(e); for (r = 0; r < n.length; r++) o = n[r], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]); } return i; }
 function _objectWithoutPropertiesLoose(r, e) { if (null == r) return {}; var t = {}; for (var n in r) if ({}.hasOwnProperty.call(r, n)) { if (-1 !== e.indexOf(n)) continue; t[n] = r[n]; } return t; }
 ;
+
+
 
 
 
@@ -2857,6 +2863,8 @@ var InvoiceViewAdmin_Drawer = (0,styled/* default */.Ay)(Drawer/* default */.Ay,
 });
 function InvoiceViewAdmin() {
   var _user$data, _dispatchResult$repor, _dispatchResult$repor2;
+  var _useTranslation = (0,LanguageContext/* useTranslation */.Bd)(),
+    t = _useTranslation.t;
   var navigate = (0,dist/* useNavigate */.Zp)();
   var isMobile = (0,utils_isMobile/* useIsMobile */.al)();
   var dispatch = (0,es/* useDispatch */.wA)();
@@ -4214,7 +4222,11 @@ function InvoiceViewAdmin() {
     sx: {
       flexGrow: 1
     }
-  }, "Invoice"), /*#__PURE__*/react.createElement(NotificationVIewInfo/* default */.A, null), /*#__PURE__*/react.createElement(MessageAdminView/* default */.A, {
+  }, t('invoices.title', 'Invoice')), /*#__PURE__*/react.createElement(LanguageSelector/* default */.A, {
+    sx: {
+      mr: 1.5
+    }
+  }), /*#__PURE__*/react.createElement(NotificationVIewInfo/* default */.A, null), /*#__PURE__*/react.createElement(MessageAdminView/* default */.A, {
     name: user.data.userName,
     role: user.data.role
   }), /*#__PURE__*/react.createElement(IconButton/* default */.A, {
@@ -4510,7 +4522,7 @@ function InvoiceViewAdmin() {
       borderRadius: '4px',
       boxShadow: '0 2px 4px rgba(37,211,102,0.25)'
     }
-  }, "Send WhatsApp Invoices"))), /*#__PURE__*/react.createElement(Box/* default */.A, {
+  }, t('invoices.sendWhatsApp', 'Send WhatsApp Invoices')))), /*#__PURE__*/react.createElement(Box/* default */.A, {
     sx: {
       height: (0,utils_isMobile/* isNativeMobile */.g1)() ? 'auto' : 'calc(100vh - 200px)',
       minHeight: 380,
@@ -4952,7 +4964,7 @@ function InvoiceViewAdmin() {
       }
     }),
     iconPosition: "start",
-    label: "Send Queue (".concat(whatsAppInvoicesList.length, ")"),
+    label: "".concat(t('invoices.sendQueue', 'Send Queue'), " (").concat(whatsAppInvoicesList.length, ")"),
     sx: {
       textTransform: 'none',
       fontWeight: 700
@@ -4964,7 +4976,7 @@ function InvoiceViewAdmin() {
       }
     }),
     iconPosition: "start",
-    label: "Sent History (".concat(historyList.length, ")"),
+    label: "".concat(t('invoices.sentHistory', 'Sent History'), " (").concat(historyList.length, ")"),
     sx: {
       textTransform: 'none',
       fontWeight: 700
@@ -5013,7 +5025,7 @@ function InvoiceViewAdmin() {
       py: 0.25,
       fontSize: '0.78rem'
     }
-  }, savingTemplate ? 'Saving...' : 'Save as Default')), /*#__PURE__*/react.createElement(TextField/* default */.A, {
+  }, savingTemplate ? t('common.saving', 'Saving...') : t('common.saveAsDefault', 'Save as Default'))), /*#__PURE__*/react.createElement(TextField/* default */.A, {
     fullWidth: true,
     multiline: true,
     rows: 4.5,
