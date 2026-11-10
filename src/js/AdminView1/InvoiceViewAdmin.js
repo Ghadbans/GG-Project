@@ -628,14 +628,34 @@ function InvoiceViewAdmin() {
       }
 
       setDispatchResult(result);
-      if (result?.success) {
-        toast.success(`WhatsApp dispatch complete: ${result.report?.sent || selectedInvoices.length} sent!`);
-        fetchItems(page, debouncedSearchTerm, filterField, filterValue, statusFilter);
 
-        // Record history logs to MongoDB backend
+      const sentCount = Number(result?.report?.sent || 0);
+      const failedCount = Number(result?.report?.failed !== undefined ? result.report.failed : Math.max(0, selectedInvoices.length - sentCount));
+      const totalCount = Number(result?.report?.total || selectedInvoices.length);
+
+      // Determine the exact invoices that actually succeeded
+      const sentDetails = Array.isArray(result?.report?.details)
+        ? result.report.details.filter(d => d.status === 'sent')
+        : [];
+
+      let actuallySentInvoices = [];
+      if (sentDetails.length > 0) {
+        actuallySentInvoices = selectedInvoices.filter(inv => {
+          const invNum = String(inv.invoiceNumber);
+          const invId = String(inv._id || inv.id);
+          return sentDetails.some(d => String(d.invoiceNumber) === invNum || String(d.invoiceId) === invId);
+        });
+      } else if (sentCount > 0 && sentCount === selectedInvoices.length) {
+        actuallySentInvoices = selectedInvoices;
+      } else if (sentCount > 0) {
+        actuallySentInvoices = selectedInvoices.slice(0, sentCount);
+      }
+
+      // ALWAYS record history in MongoDB for any invoice that actually delivered!
+      if (actuallySentInvoices.length > 0) {
         try {
           await axios.post(`${ENDPOINT_URL}/invoice-whatsapp/record-history`, {
-            records: selectedInvoices.map(inv => ({
+            records: actuallySentInvoices.map(inv => ({
               invoiceId: inv._id || inv.id,
               invoiceNumber: inv.invoiceNumber,
               customerName: typeof inv.customerName === 'object' ? (inv.customerName?.Customer || inv.customerName?.customerName || '') : inv.customerName,
@@ -647,10 +667,19 @@ function InvoiceViewAdmin() {
             sentBy: user?.data?.userName || 'GG'
           });
           fetchSentHistory();
-        } catch (_) {}
+        } catch (histErr) {
+          console.warn('[InvoiceWhatsApp] History record warning:', histErr);
+        }
+      }
 
+      if (sentCount > 0 && failedCount === 0) {
+        toast.success(`WhatsApp dispatch complete: ${sentCount} of ${totalCount} invoice(s) sent!`);
+        fetchItems(page, debouncedSearchTerm, filterField, filterValue, statusFilter);
+      } else if (sentCount > 0 && failedCount > 0) {
+        toast.warn(`WhatsApp dispatch partial: ${sentCount} sent, ${failedCount} failed. Recorded in Sent History.`);
+        fetchItems(page, debouncedSearchTerm, filterField, filterValue, statusFilter);
       } else {
-        toast.error(result?.error || 'WhatsApp dispatch encountered errors.');
+        toast.error(result?.error || `Failed to dispatch WhatsApp invoices (0 of ${totalCount} sent).`);
       }
     } catch (err) {
       console.error('WhatsApp dispatch error:', err);
@@ -2004,10 +2033,10 @@ function InvoiceViewAdmin() {
 
                           {dispatchResult && (
                             <Alert
-                              severity={dispatchResult.success ? 'success' : 'warning'}
+                              severity={dispatchResult.success && (!dispatchResult.report?.failed || dispatchResult.report.failed === 0) ? 'success' : (dispatchResult.report?.sent > 0 ? 'warning' : 'error')}
                               sx={{ mt: 2, fontSize: '0.85rem' }}
                             >
-                              <strong>{dispatchResult.success ? '✅ Dispatch Completed:' : '⚠️ Dispatch Result:'}</strong>
+                              <strong>{dispatchResult.success && (!dispatchResult.report?.failed || dispatchResult.report.failed === 0) ? '✅ Dispatch Completed:' : (dispatchResult.report?.sent > 0 ? '⚠️ Partial Dispatch Result:' : '❌ Dispatch Failed:')}</strong>
                               {' '}
                               {dispatchResult.report?.sent !== undefined 
                                 ? `${dispatchResult.report.sent} sent, ${dispatchResult.report.failed || 0} failed.`

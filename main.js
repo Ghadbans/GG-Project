@@ -498,7 +498,7 @@ ipcMain.handle('send-invoice-whatsapp', async (event, payload) => {
     phoneOverrides
   }, null, 2), 'utf-8');
 
-  const timeoutMs = 120000 + Math.max(0, validInvoices.length - 1) * 35000;
+  const timeoutMs = 150000 + Math.max(0, validInvoices.length - 1) * 45000;
 
   return new Promise((resolve) => {
     execFile('node', [agentScript, '--invoice-batch', `--payload=${tempPayloadPath}`], {
@@ -514,14 +514,51 @@ ipcMain.handle('send-invoice-whatsapp', async (event, payload) => {
         try { report = JSON.parse(reportMatch[1]); } catch (_) {}
       }
 
-      const success = !error && Boolean(report?.success !== false);
-      resolve({
-        success,
-        error: error ? (error.message || stderr) : null,
-        report: report || {
+      // If report was not emitted cleanly, reconstruct it from per-invoice progress and success logs
+      if (!report) {
+        const progressLines = (stdout || '').match(/INVOICE_PROGRESS_JSON:(\{.*\})/g) || [];
+        const details = [];
+        progressLines.forEach(line => {
+          try {
+            const parsed = JSON.parse(line.replace('INVOICE_PROGRESS_JSON:', ''));
+            details.push(parsed);
+          } catch (_) {}
+        });
+
+        const successMatches = (stdout || '').match(/\[SUCCESS\] Invoice (INV-\d+) delivered to (\S+)/g) || [];
+        const sentCount = details.filter(d => d.status === 'sent').length || successMatches.length;
+
+        report = {
           total: validInvoices.length,
-          sent: (stdout || '').includes('[SUCCESS] Invoice') ? 1 : 0,
+          sent: sentCount,
+          failed: Math.max(0, validInvoices.length - sentCount),
+          details: details.length > 0 ? details : successMatches.map(m => {
+            const parts = m.match(/\[SUCCESS\] Invoice (INV-\d+) delivered to (\S+)/);
+            return {
+              invoiceNumber: parts ? parts[1].replace('INV-', '') : '',
+              phone: parts ? parts[2] : '',
+              status: 'sent'
+            };
+          }),
           output: stdout || stderr
+        };
+      }
+
+      const sentCount = Number(report?.sent || 0);
+      const failedCount = Number(report?.failed !== undefined ? report.failed : Math.max(0, validInvoices.length - sentCount));
+      const hasSentAny = sentCount > 0;
+      const isFullSuccess = !error && sentCount === validInvoices.length;
+
+      resolve({
+        success: isFullSuccess || hasSentAny,
+        partial: hasSentAny && failedCount > 0,
+        error: error && !hasSentAny ? (error.message || stderr) : null,
+        report: {
+          ...report,
+          total: validInvoices.length,
+          sent: sentCount,
+          failed: failedCount,
+          details: Array.isArray(report?.details) ? report.details : []
         }
       });
     });

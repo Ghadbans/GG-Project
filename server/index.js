@@ -440,8 +440,8 @@ app.use('/endpoint/invoice-whatsapp', invoiceWhatsAppRoutes);
 const fleetRoute = require('./routes/fleet');
 app.use("/endpoint/fleet", fleetRoute);
 
-app.get('/test', (req, res) => res.send('Backend is LIVE and UPDATED! [v3.6.44-invoice-whatsapp]'));
-app.get('/status', (req, res) => res.json({ status: 'ok', version: '3.6.44', attachments: true, uptime: process.uptime() })); // health check
+app.get('/test', (req, res) => res.send('Backend is LIVE and UPDATED! [v3.6.45-whatsapp-engine]'));
+app.get('/status', (req, res) => res.json({ status: 'ok', version: '3.6.45', attachments: true, uptime: process.uptime() })); // health check
 
 // SECURITY GUARD FOR INTERNAL INIT & DEBUG ROUTES
 const verifyInternalSetupKey = (req, res, next) => {

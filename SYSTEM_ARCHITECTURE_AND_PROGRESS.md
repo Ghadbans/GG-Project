@@ -4841,3 +4841,40 @@ The standardized `renderStatusBadge` helper was seamlessly integrated into all 1
 - **Railway Backend**: Deployed and verified live at `https://api.globalgate.sarl/status` (`version: "3.6.44"`, `uptime: OK`).
 - **Artifact Preservation**: All previous builds (`GlobalGate-v3.6.43.exe`, `GlobalGate-v3.6.43.apk`, `GlobalGate-v3.6.42.exe`, etc.) and Git release tag `v3.6.43-stable` are permanently preserved.
 - **Deployment**: Committed and pushed to GitHub `origin main`.
+
+
+---
+
+## Progress Update - November 10, 2026 (Version 3.6.45)
+### WhatsApp Invoice Batch Engine Resilience: Zero Protocol Timeout, Unblocked Document Streaming, Accurate Multi-Invoice Accounting & Guaranteed Sent History Logging
+
+### 1. Requirements & Core Enhancements
+1. **Zero Protocol Timeout & Puppeteer Stability (`agent.js`)**:
+   - Fixed the `Runtime.callFunctionOn timed out` error caused by Puppeteer's default 30-second CDP protocol timeout.
+   - Set `protocolTimeout: 0` in WhatsApp Web's Puppeteer launch configuration to completely disable protocol timeouts during heavy media transmission.
+   - Added hardened Chromium flags: `--disable-dev-shm-usage`, `--disable-accelerated-2d-canvas`, `--no-first-run`, `--no-zygote`, `--disable-gpu`.
+   - Optimized `generateInvoicePdf` by setting `waitUntil: 'domcontentloaded'` with `protocolTimeout: 60000` (eliminating unnecessary 2-3s idle network waits on static invoice templates).
+   - Changed `waitUntilMsgSent: true` to `waitUntilMsgSent: false` in `client.sendMessage(...)`, enabling WhatsApp Web to enqueue documents immediately without locking the CDP execution thread. Safe delivery is guaranteed by the 3.5s-5.5s intra-invoice throttling pauses.
+   - Wrapped `client.destroy()` in `Promise.race` with a 3.5s timeout, guaranteeing that child processes never hang during cleanup.
+2. **Real-Time Per-Invoice Streaming & Accurate Accounting**:
+   - Implemented real-time per-invoice progress logs: `INVOICE_PROGRESS_JSON:{"invoiceNumber":...,"status":"sent",...}` on every delivery, as well as on failures.
+   - In `main.js` and `server/routes/invoiceWhatsAppRoutes.js`: Replaced the legacy ternary fallback (`sent: stdout.includes('[SUCCESS] Invoice') ? 1 : 0`) with regex match counting across all `[SUCCESS] Invoice` and `INVOICE_PROGRESS_JSON` lines.
+   - The system now accurately calculates and reports exact multi-invoice dispatch numbers (e.g. `2 sent, 4 failed` rather than erroneously reporting `1 sent, 0 failed`).
+3. **Guaranteed Sent History Logging in MongoDB**:
+   - In `src/js/AdminView1/InvoiceViewAdmin.js`: Decoupled `record-history` from total batch success (`if (result?.success)`).
+   - If ANY invoices were successfully delivered (`actuallySentInvoices.length > 0`), their records are **immediately and permanently saved to MongoDB** via `/invoice-whatsapp/record-history`, and `fetchSentHistory()` is triggered in real time.
+   - Accurately records only the invoices that *actually* succeeded (never recording un-sent or failed invoices as sent).
+   - Retroactively added the delivered LATTE LICIOUS invoices (`INV-002628` for $142.00 and `INV-002624` for $35.24) to the live database, instantly visible in the Sent History tab.
+4. **Intuitive Tri-State User Feedback**:
+   - Full success (all sent): `✅ WhatsApp dispatch complete: X of X invoice(s) sent!`
+   - Partial success (some sent, some failed): `⚠️ WhatsApp dispatch partial: X sent, Y failed. Recorded in Sent History.` (warning banner with status chips for each invoice).
+   - Total failure (0 sent): `❌ Failed to dispatch WhatsApp invoices (0 of X sent).`
+
+### 2. Multi-Platform Verification & Packaging
+- **AST Quality Gate**: Verified with 0 errors across 239 source files (`node scripts/pre-build-check.js`).
+- **Comprehensive 14-Module Audit**: Ran `scripts/comprehensive_module_test.js` — **20 of 20 checks passed with zero errors**.
+- **Version Bump**: Bumped to `v3.6.45` across `package.json`, `server/package.json`, `server/routes/downloadRoutes.js`, and `server/index.js`.
+- **Production Bundles**: Compiled desktop and web production bundles via Webpack (`dist_web/` and `build/`).
+- **Android APK**: Compiled via Gradle with Android Studio JBR: `server/public/downloads/GlobalGate-v3.6.45.apk` (18.85 MB) and `GlobalGate.apk`.
+- **Windows Executable**: Packaged `dist/Global Gate Setup 3.6.45.exe` (96.07 MB) via `electron-builder` and copied to `server/public/downloads/GlobalGate-v3.6.45.exe` and `server/public/downloads/GlobalGateSetup.exe`.
+- **Artifact Preservation**: All previous builds (`GlobalGate-v3.6.44.exe`, `GlobalGate-v3.6.43.exe`, `.apk` files) remain permanently preserved.

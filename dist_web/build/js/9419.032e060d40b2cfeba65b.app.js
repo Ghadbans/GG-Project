@@ -2856,7 +2856,7 @@ var InvoiceViewAdmin_Drawer = (0,styled/* default */.Ay)(Drawer/* default */.Ay,
   };
 });
 function InvoiceViewAdmin() {
-  var _user$data, _dispatchResult$repor, _dispatchResult$repor2;
+  var _user$data, _dispatchResult$repor, _dispatchResult$repor2, _dispatchResult$repor3, _dispatchResult$repor4, _dispatchResult$repor5, _dispatchResult$repor6;
   var navigate = (0,dist/* useNavigate */.Zp)();
   var isMobile = (0,utils_isMobile/* useIsMobile */.al)();
   var dispatch = (0,es/* useDispatch */.wA)();
@@ -3485,7 +3485,7 @@ function InvoiceViewAdmin() {
         phoneOverrides
       };
       try {
-        var _result;
+        var _result, _result2, _result3, _result4;
         var result = null;
         if (window.electron && typeof window.electron.sendInvoiceWhatsApp === 'function') {
           result = yield window.electron.sendInvoiceWhatsApp(payload);
@@ -3494,16 +3494,31 @@ function InvoiceViewAdmin() {
           result = res.data;
         }
         setDispatchResult(result);
-        if ((_result = result) !== null && _result !== void 0 && _result.success) {
-          var _result$report;
-          react_toastify_esm/* toast */.oR.success("WhatsApp dispatch complete: ".concat(((_result$report = result.report) === null || _result$report === void 0 ? void 0 : _result$report.sent) || selectedInvoices.length, " sent!"));
-          fetchItems(page, debouncedSearchTerm, filterField, filterValue, statusFilter);
+        var sentCount = Number(((_result = result) === null || _result === void 0 || (_result = _result.report) === null || _result === void 0 ? void 0 : _result.sent) || 0);
+        var failedCount = Number(((_result2 = result) === null || _result2 === void 0 || (_result2 = _result2.report) === null || _result2 === void 0 ? void 0 : _result2.failed) !== undefined ? result.report.failed : Math.max(0, selectedInvoices.length - sentCount));
+        var totalCount = Number(((_result3 = result) === null || _result3 === void 0 || (_result3 = _result3.report) === null || _result3 === void 0 ? void 0 : _result3.total) || selectedInvoices.length);
 
-          // Record history logs to MongoDB backend
+        // Determine the exact invoices that actually succeeded
+        var sentDetails = Array.isArray((_result4 = result) === null || _result4 === void 0 || (_result4 = _result4.report) === null || _result4 === void 0 ? void 0 : _result4.details) ? result.report.details.filter(d => d.status === 'sent') : [];
+        var actuallySentInvoices = [];
+        if (sentDetails.length > 0) {
+          actuallySentInvoices = selectedInvoices.filter(inv => {
+            var invNum = String(inv.invoiceNumber);
+            var invId = String(inv._id || inv.id);
+            return sentDetails.some(d => String(d.invoiceNumber) === invNum || String(d.invoiceId) === invId);
+          });
+        } else if (sentCount > 0 && sentCount === selectedInvoices.length) {
+          actuallySentInvoices = selectedInvoices;
+        } else if (sentCount > 0) {
+          actuallySentInvoices = selectedInvoices.slice(0, sentCount);
+        }
+
+        // ALWAYS record history in MongoDB for any invoice that actually delivered!
+        if (actuallySentInvoices.length > 0) {
           try {
             var _user$data3;
             yield axios/* default */.A.post("".concat(apiConfig/* ENDPOINT_URL */.m, "/invoice-whatsapp/record-history"), {
-              records: selectedInvoices.map(inv => {
+              records: actuallySentInvoices.map(inv => {
                 var _inv$customerName, _inv$customerName2;
                 return {
                   invoiceId: inv._id || inv.id,
@@ -3518,10 +3533,19 @@ function InvoiceViewAdmin() {
               sentBy: (user === null || user === void 0 || (_user$data3 = user.data) === null || _user$data3 === void 0 ? void 0 : _user$data3.userName) || 'GG'
             });
             fetchSentHistory();
-          } catch (_) {}
+          } catch (histErr) {
+            console.warn('[InvoiceWhatsApp] History record warning:', histErr);
+          }
+        }
+        if (sentCount > 0 && failedCount === 0) {
+          react_toastify_esm/* toast */.oR.success("WhatsApp dispatch complete: ".concat(sentCount, " of ").concat(totalCount, " invoice(s) sent!"));
+          fetchItems(page, debouncedSearchTerm, filterField, filterValue, statusFilter);
+        } else if (sentCount > 0 && failedCount > 0) {
+          react_toastify_esm/* toast */.oR.warn("WhatsApp dispatch partial: ".concat(sentCount, " sent, ").concat(failedCount, " failed. Recorded in Sent History."));
+          fetchItems(page, debouncedSearchTerm, filterField, filterValue, statusFilter);
         } else {
-          var _result2;
-          react_toastify_esm/* toast */.oR.error(((_result2 = result) === null || _result2 === void 0 ? void 0 : _result2.error) || 'WhatsApp dispatch encountered errors.');
+          var _result5;
+          react_toastify_esm/* toast */.oR.error(((_result5 = result) === null || _result5 === void 0 ? void 0 : _result5.error) || "Failed to dispatch WhatsApp invoices (0 of ".concat(totalCount, " sent)."));
         }
       } catch (err) {
         console.error('WhatsApp dispatch error:', err);
@@ -5342,12 +5366,12 @@ function InvoiceViewAdmin() {
   }, "\u23F3 Dispatching invoice PDFs via WhatsApp Web client... Please wait (do not close this window)."), /*#__PURE__*/react.createElement(LinearProgress/* default */.A, {
     color: "success"
   })), dispatchResult && /*#__PURE__*/react.createElement(Alert/* default */.A, {
-    severity: dispatchResult.success ? 'success' : 'warning',
+    severity: dispatchResult.success && (!((_dispatchResult$repor = dispatchResult.report) !== null && _dispatchResult$repor !== void 0 && _dispatchResult$repor.failed) || dispatchResult.report.failed === 0) ? 'success' : ((_dispatchResult$repor2 = dispatchResult.report) === null || _dispatchResult$repor2 === void 0 ? void 0 : _dispatchResult$repor2.sent) > 0 ? 'warning' : 'error',
     sx: {
       mt: 2,
       fontSize: '0.85rem'
     }
-  }, /*#__PURE__*/react.createElement("strong", null, dispatchResult.success ? '✅ Dispatch Completed:' : '⚠️ Dispatch Result:'), ' ', ((_dispatchResult$repor = dispatchResult.report) === null || _dispatchResult$repor === void 0 ? void 0 : _dispatchResult$repor.sent) !== undefined ? "".concat(dispatchResult.report.sent, " sent, ").concat(dispatchResult.report.failed || 0, " failed.") : dispatchResult.error || 'Finished processing.', Array.isArray((_dispatchResult$repor2 = dispatchResult.report) === null || _dispatchResult$repor2 === void 0 ? void 0 : _dispatchResult$repor2.details) && dispatchResult.report.details.length > 0 && /*#__PURE__*/react.createElement(Box/* default */.A, {
+  }, /*#__PURE__*/react.createElement("strong", null, dispatchResult.success && (!((_dispatchResult$repor3 = dispatchResult.report) !== null && _dispatchResult$repor3 !== void 0 && _dispatchResult$repor3.failed) || dispatchResult.report.failed === 0) ? '✅ Dispatch Completed:' : ((_dispatchResult$repor4 = dispatchResult.report) === null || _dispatchResult$repor4 === void 0 ? void 0 : _dispatchResult$repor4.sent) > 0 ? '⚠️ Partial Dispatch Result:' : '❌ Dispatch Failed:'), ' ', ((_dispatchResult$repor5 = dispatchResult.report) === null || _dispatchResult$repor5 === void 0 ? void 0 : _dispatchResult$repor5.sent) !== undefined ? "".concat(dispatchResult.report.sent, " sent, ").concat(dispatchResult.report.failed || 0, " failed.") : dispatchResult.error || 'Finished processing.', Array.isArray((_dispatchResult$repor6 = dispatchResult.report) === null || _dispatchResult$repor6 === void 0 ? void 0 : _dispatchResult$repor6.details) && dispatchResult.report.details.length > 0 && /*#__PURE__*/react.createElement(Box/* default */.A, {
     sx: {
       mt: 1,
       display: 'flex',

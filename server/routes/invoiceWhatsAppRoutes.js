@@ -162,7 +162,7 @@ router.post('/send', async (req, res) => {
       const tempPayloadPath = path.join(AGENT_DIR, `invoice_batch_${Date.now()}.json`);
       fs.writeFileSync(tempPayloadPath, JSON.stringify(payload, null, 2), 'utf-8');
 
-      const timeoutMs = 120000 + Math.max(0, validInvoices.length - 1) * 35000;
+      const timeoutMs = 150000 + Math.max(0, validInvoices.length - 1) * 45000;
       execFile('node', [AGENT_SCRIPT, '--invoice-batch', `--payload=${tempPayloadPath}`], {
         cwd: AGENT_DIR,
         timeout: timeoutMs,
@@ -178,6 +178,37 @@ router.post('/send', async (req, res) => {
         const reportMatch = (stdout || '').match(/INVOICE_REPORT_JSON:(\{.*\})/);
         if (reportMatch) {
           try { report = JSON.parse(reportMatch[1]); } catch (_) {}
+        }
+
+        // Fallback reconstruction if report wasn't emitted cleanly
+        if (!report) {
+          const progressLines = (stdout || '').match(/INVOICE_PROGRESS_JSON:(\{.*\})/g) || [];
+          const details = [];
+          progressLines.forEach(line => {
+            try {
+              const parsed = JSON.parse(line.replace('INVOICE_PROGRESS_JSON:', ''));
+              details.push(parsed);
+            } catch (_) {}
+          });
+
+          const successMatches = (stdout || '').match(/\[SUCCESS\] Invoice (INV-\d+) delivered to (\S+)/g) || [];
+          const sentCount = details.filter(d => d.status === 'sent').length || successMatches.length;
+
+          report = {
+            total: validInvoices.length,
+            sent: sentCount,
+            failed: Math.max(0, validInvoices.length - sentCount),
+            details: details.length > 0 ? details : successMatches.map(m => {
+              const parts = m.match(/\[SUCCESS\] Invoice (INV-\d+) delivered to (\S+)/);
+              return {
+                invoiceNumber: parts ? parts[1].replace('INV-', '') : '',
+                phone: parts ? parts[2] : '',
+                status: 'sent'
+              };
+            }),
+            stdout,
+            stderr
+          };
         }
 
         if (report && Array.isArray(report.details)) {
@@ -200,13 +231,21 @@ router.post('/send', async (req, res) => {
           }
         }
 
+        const sentCount = Number(report?.sent || 0);
+        const failedCount = Number(report?.failed !== undefined ? report.failed : Math.max(0, validInvoices.length - sentCount));
+        const hasSentAny = sentCount > 0;
+        const isFullSuccess = !error && sentCount === validInvoices.length;
+
         return res.json({
-          success: !error && Boolean(report?.success !== false),
-          report: report || {
+          success: isFullSuccess || hasSentAny,
+          partial: hasSentAny && failedCount > 0,
+          error: error && !hasSentAny ? (error.message || stderr) : null,
+          report: {
+            ...report,
             total: validInvoices.length,
-            sent: stdout.includes('[SUCCESS] Invoice') ? 1 : 0,
-            stdout,
-            stderr
+            sent: sentCount,
+            failed: failedCount,
+            details: Array.isArray(report?.details) ? report.details : []
           }
         });
       });
