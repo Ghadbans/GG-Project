@@ -140034,7 +140034,7 @@ axios/* default */.A.interceptors.request.use(config => {
   var selectedBranch = localStorage.getItem('selectedBranch') || 'ALL';
   var url = config.url || '';
   if (selectedBranch && selectedBranch !== 'ALL') {
-    var bypassEndpoints = ['/create-notification', '/login', '/grantAccess', '/companyProfile', '/employeeuser', '/rename-branch', '/transfer-item', '/expensesCategory', '/itemTransferHistory'];
+    var bypassEndpoints = ['/create-notification', '/login', '/grantAccess', '/companyProfile', '/employeeuser', '/rename-branch', '/transfer-item', '/expensesCategory', '/itemTransferHistory', '127.0.0.1', ':5055', '/status'];
     var shouldBypass = bypassEndpoints.some(endpoint => url.includes(endpoint));
     if (!shouldBypass) {
       if (['post', 'put', 'patch'].includes(config.method) && config.data && typeof config.data === 'object' && !(config.data instanceof FormData)) {

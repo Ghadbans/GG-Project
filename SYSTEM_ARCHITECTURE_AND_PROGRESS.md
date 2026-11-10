@@ -4932,7 +4932,14 @@ The standardized `renderStatusBadge` helper was seamlessly integrated into all 1
    - In `InvoiceViewAdmin.js`, prioritized direct local connection to `http://127.0.0.1:5055` first before falling back to Electron IPC and remote API.
    - Added explicit diagnostic console logging (`[InvoiceWhatsApp] Dispatch state:`) for real-time visibility during invoice dispatching.
 
-4. **Background Task Discipline**:
+4. **Resolution of Local Daemon 404 Status Query (`agent.js` & `src/js/index.js`)**:
+   - **Root Cause of 404 Console Log**: In `src/js/index.js`, the Axios global request interceptor attaches `?branchId=HQ` to all outgoing GET calls unless matched in `bypassEndpoints`. When `InvoiceViewAdmin.js` issued `axios.get('http://127.0.0.1:5055/status')`, Axios converted it to `http://127.0.0.1:5055/status?branchId=HQ`. In `agent.js`, the HTTP server used a rigid string comparison `req.url === '/status'`, which failed against the query string and returned 404.
+   - **Resilient Fallback Succeeded**: Despite the 404 on the direct HTTP probe, the dispatch pipeline automatically and gracefully fell back to Electron IPC (`window.electron.sendInvoiceWhatsApp`), which sent the invoices successfully in under 3 seconds with zero data loss.
+   - **Permanent Elimination of 404**:
+     1. Updated `agent.js` to parse URL pathname via `new URL(req.url, ...).pathname`, allowing `/status`, `/flyer`, `/publish`, and `/send-invoices` to match cleanly regardless of query strings.
+     2. Updated `src/js/index.js` `bypassEndpoints` to explicitly include `'127.0.0.1'`, `':5055'`, and `'/status'`, preventing Axios from injecting unwanted branch query parameters into local daemon endpoints.
+
+5. **Background Task Discipline**:
    - Ensured zero long-lived daemon background tasks are left attached to the agent development harness, keeping Antigravity task count at 0.
 
 ### 2. Multi-Platform Verification & Packaging

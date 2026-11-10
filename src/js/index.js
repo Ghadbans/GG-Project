@@ -11,7 +11,7 @@ axios.interceptors.request.use((config) => {
   const url = config.url || '';
   
   if (selectedBranch && selectedBranch !== 'ALL') {
-    const bypassEndpoints = ['/create-notification', '/login', '/grantAccess', '/companyProfile', '/employeeuser', '/rename-branch', '/transfer-item', '/expensesCategory', '/itemTransferHistory'];
+    const bypassEndpoints = ['/create-notification', '/login', '/grantAccess', '/companyProfile', '/employeeuser', '/rename-branch', '/transfer-item', '/expensesCategory', '/itemTransferHistory', '127.0.0.1', ':5055', '/status'];
     const shouldBypass = bypassEndpoints.some(endpoint => url.includes(endpoint));
 
     if (!shouldBypass) {
