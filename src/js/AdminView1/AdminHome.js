@@ -27,8 +27,6 @@ import Logout from '../component/NetworkLogoutIcon';
 import { AccountBalance, AddCard, BackHandOutlined, Close, GroupAdd, GroupOutlined, GroupRemove, MailOutline, NotificationAdd, Person2Sharp, PersonAddDisabled, PriceChange, Receipt, Sell, ShoppingBagOutlined, ShoppingCart, Square, Storefront } from '@mui/icons-material';
 import MessageAdminView from './MessageAdminView';
 import NotificationVIewInfo from './NotificationVIewInfo';
-import { useTranslation } from '../context/LanguageContext';
-import LanguageSelector from '../component/LanguageSelector';
 
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -152,7 +150,6 @@ const xLabels = [
   'Page G',
 ];
 function AdminHome() {
-  const { t } = useTranslation();
   const navigate = useNavigate();
   const isMobile = useIsMobile();
 
@@ -1164,7 +1161,6 @@ function AdminHome() {
                 >
                   Dashboard
                 </Typography>
-                <LanguageSelector sx={{ mr: 1.5 }} />
                 <NotificationVIewInfo />
                 <MessageAdminView name={user.data.userName} role={user.data.role} />
                 <IconButton color="inherit" onClick={handleLogout} title="Logout">

@@ -37,8 +37,6 @@ import NotificationVIewInfo from '../AdminView1/NotificationVIewInfo';
 import MessageAdminView from '../AdminView1/MessageAdminView';
 import SidebarDash from './SidebarDash';
 import MobileDrawer from './MobileDrawer';
-import { useTranslation } from '../context/LanguageContext';
-import LanguageSelector from './LanguageSelector';
 
 function getTitleFromPath(pathname) {
   if (pathname.includes('Customer')) return 'Customers';
@@ -82,7 +80,6 @@ function isMainListRoute(pathname) {
 }
 
 function MobileLayout({ children }) {
-  const { t } = useTranslation();
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -181,12 +178,12 @@ function MobileLayout({ children }) {
   const pageTitle = getTitleFromPath(pathname);
 
   const candidateTabs = [
-    { label: t('sidebar.dashboard', 'Dashboard'), path: '/AdminHome', icon: <DashboardIcon fontSize="small" />, module: 'Dashboard', always: true },
-    { label: t('sidebar.invoices', 'Invoices'), path: '/InvoiceViewAdmin', icon: <ReceiptIcon fontSize="small" />, module: 'Invoice' },
-    { label: t('sidebar.customers', 'Customers'), path: '/CustomerViewAdmin', icon: <PeopleIcon fontSize="small" />, module: 'Customer' },
-    { label: t('sidebar.maintenance', 'Maintenance'), path: '/MaintenanceViewAdmin', icon: <BuildIcon fontSize="small" />, module: 'Maintenance' },
-    { label: t('sidebar.store', 'Store'), path: '/ItemViewAdmin', icon: <InventoryIcon fontSize="small" />, module: 'Item' },
-    { label: t('sidebar.dailyExpenses', 'Expenses'), path: '/DailyExpenses', icon: <MonetizationOnIcon fontSize="small" />, module: 'Expenses' },
+    { label: 'Dashboard', path: '/AdminHome', icon: <DashboardIcon fontSize="small" />, module: 'Dashboard', always: true },
+    { label: 'Invoices', path: '/InvoiceViewAdmin', icon: <ReceiptIcon fontSize="small" />, module: 'Invoice' },
+    { label: 'Customers', path: '/CustomerViewAdmin', icon: <PeopleIcon fontSize="small" />, module: 'Customer' },
+    { label: 'Maintenance', path: '/MaintenanceViewAdmin', icon: <BuildIcon fontSize="small" />, module: 'Maintenance' },
+    { label: 'Store', path: '/ItemViewAdmin', icon: <InventoryIcon fontSize="small" />, module: 'Item' },
+    { label: 'Expenses', path: '/DailyExpenses', icon: <MonetizationOnIcon fontSize="small" />, module: 'Expenses' },
   ];
 
   const isSuperOrCEO = userRole === 'CEO' || userName === 'GG';
@@ -251,7 +248,6 @@ function MobileLayout({ children }) {
 
           {/* Right: Notifications, Mail, Logout */}
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.25, flexShrink: 0 }}>
-            <LanguageSelector variant="mobile" />
             <NotificationVIewInfo />
             <MessageAdminView name={user?.data?.userName || ''} role={user?.data?.role || ''} />
             <IconButton color="inherit" size="small" onClick={handleLogout} title="Logout" sx={{ p: 0.5 }}>

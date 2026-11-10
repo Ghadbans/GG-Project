@@ -35,7 +35,6 @@ const employeeUserSchema = new Schema(
 
 
     branchId: { type: String, default: 'HQ' },
-    language: { type: String, default: 'en', enum: ['en', 'fr', 'ar', 'es', 'zh', 'hi'] },
 },
   { timestamps: true },
   

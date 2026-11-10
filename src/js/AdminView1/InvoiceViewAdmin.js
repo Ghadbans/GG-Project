@@ -37,8 +37,6 @@ import Image from '../img/no-data.png';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import MessageAdminView from './MessageAdminView';
 import NotificationVIewInfo from './NotificationVIewInfo';
-import { useTranslation } from '../context/LanguageContext';
-import LanguageSelector from '../component/LanguageSelector';
 import { isNativeMobile, useIsMobile } from '../utils/isMobile';
 import MobileCardList from '../component/MobileCardList';
 import { renderStatusBadge } from '../utils/formatUtils';
@@ -131,7 +129,6 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 function InvoiceViewAdmin() {
-  const { t } = useTranslation();
   const navigate = useNavigate();
   const isMobile = useIsMobile();
   const dispatch = useDispatch();
@@ -1175,8 +1172,15 @@ function InvoiceViewAdmin() {
             >
               <MenuIcon />
             </IconButton>
-            <Typography component="h1" variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>{t('invoices.title', 'Invoice')}</Typography>
-            <LanguageSelector sx={{ mr: 1.5 }} />
+            <Typography
+              component="h1"
+              variant="h6"
+              color="inherit"
+              noWrap
+              sx={{ flexGrow: 1 }}
+            >
+              Invoice
+            </Typography>
             <NotificationVIewInfo />
             <MessageAdminView name={user.data.userName} role={user.data.role} />
             <IconButton color="inherit" onClick={handleLogout}>
@@ -1371,7 +1375,7 @@ function InvoiceViewAdmin() {
                               boxShadow: '0 2px 4px rgba(37,211,102,0.25)'
                             }}
                           >
-                            {t('invoices.sendWhatsApp', 'Send WhatsApp Invoices')}
+                            Send WhatsApp Invoices
                           </Button>
                         )}
                       </Box>
@@ -1729,13 +1733,13 @@ function InvoiceViewAdmin() {
                         <Tab
                           icon={<WhatsAppIcon sx={{ fontSize: 18 }} />}
                           iconPosition="start"
-                          label={`${t('invoices.sendQueue', 'Send Queue')} (${whatsAppInvoicesList.length})`}
+                          label={`Send Queue (${whatsAppInvoicesList.length})`}
                           sx={{ textTransform: 'none', fontWeight: 700 }}
                         />
                         <Tab
                           icon={<HistoryIcon sx={{ fontSize: 18 }} />}
                           iconPosition="start"
-                          label={`${t('invoices.sentHistory', 'Sent History')} (${historyList.length})`}
+                          label={`Sent History (${historyList.length})`}
                           sx={{ textTransform: 'none', fontWeight: 700 }}
                         />
                       </Tabs>
@@ -1763,7 +1767,7 @@ function InvoiceViewAdmin() {
                                 disabled={savingTemplate || dispatchingWhatsApp}
                                 sx={{ textTransform: 'none', py: 0.25, fontSize: '0.78rem' }}
                               >
-                                {savingTemplate ? t('common.saving', 'Saving...') : t('common.saveAsDefault', 'Save as Default')}
+                                {savingTemplate ? 'Saving...' : 'Save as Default'}
                               </Button>
                             </Box>
                             <TextField

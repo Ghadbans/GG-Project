@@ -90,7 +90,7 @@ const register = async (req, res, next) => {
         console.error("Error saving login notification:", notifErr);
       }
 
-      res.json({ token, language: user.language || 'en' });
+      res.json({ token });
     } catch (error) {
       // If an error occurs during the login process, pass the error to the error-handling middleware
       next(error);

@@ -32,8 +32,6 @@ import axios from 'axios';
 import { cachedGet } from '../utils/apiCache';
 import { ENDPOINT_URL } from '../apiConfig';
 import pkg from '../../../package.json';
-import { useTranslation } from '../context/LanguageContext';
-import LanguageSelector from './LanguageSelector';
 
 import SideShop from './SideShop';
 import SideBlockFactory from './SideBlockFactory';
@@ -47,7 +45,6 @@ const isInstalledApp = typeof window !== 'undefined' && Boolean(
 );
 
 function SidebarDash({ onView2, onView3, onView4, onView5, onView6, isSubmenu }) {
-  const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
   const isActive = (path) => {
@@ -166,13 +163,13 @@ function SidebarDash({ onView2, onView3, onView4, onView5, onView6, isSubmenu })
             <ListItemIcon sx={{ color: 'gray' }} style={isActive('/AdminHome') ? { backgroundColor: '#30368a', color: 'white' } : null}>
               <DashboardIcon />
             </ListItemIcon>
-            <ListItemText primary={t('sidebar.dashboard', 'Dashboard')} />
+            <ListItemText primary="Dashboard" />
           </ListItemButton>
           <ListItemButton disabled={loadingAccess || (user.data?.userName !== 'GG' && customerInfo.length === 0)} sx={{ color: 'gray' }} component={NavLink} to="/CustomerViewAdmin" onClick={handleNavClick} style={isActive('/CustomerViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
             <ListItemIcon sx={{ color: 'gray' }} style={isActive('/CustomerViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
               <PermIdentityIcon />
             </ListItemIcon>
-            <ListItemText primary={t('sidebar.customers', 'Customer')} />
+            <ListItemText primary="Customer" />
           </ListItemButton>
           {
             (isNestedSubmenu || parseInt(onView3) === 2 || parseInt(onView3) === 3) ? null : (
@@ -180,7 +177,7 @@ function SidebarDash({ onView2, onView3, onView4, onView5, onView6, isSubmenu })
                 <ListItemIcon sx={{ color: 'gray' }} >
                   <ListAltIcon />
                 </ListItemIcon>
-                <ListItemText primary={t('sidebar.store', 'Store')} />
+                <ListItemText primary="Store" />
               </ListItemButton>
             )}
           {
@@ -189,7 +186,7 @@ function SidebarDash({ onView2, onView3, onView4, onView5, onView6, isSubmenu })
                 <ListItemIcon sx={{ color: 'gray' }} >
                   <Storefront />
                 </ListItemIcon>
-                <ListItemText primary={t('sidebar.pos', 'POS')} />
+                <ListItemText primary="POS" />
               </ListItemButton>
             )}
           {
@@ -198,7 +195,7 @@ function SidebarDash({ onView2, onView3, onView4, onView5, onView6, isSubmenu })
                 <ListItemIcon sx={{ color: 'gray' }}>
                   <CategoryIcon />
                 </ListItemIcon>
-                <ListItemText primary={t('sidebar.blockFactory', 'Block Factory')} />
+                <ListItemText primary="Block Factory" />
               </ListItemButton>
             )
           }
@@ -206,37 +203,37 @@ function SidebarDash({ onView2, onView3, onView4, onView5, onView6, isSubmenu })
             <ListItemIcon sx={{ color: 'gray' }} style={isActive('/EstimateViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
               <RequestQuoteIcon />
             </ListItemIcon>
-            <ListItemText primary={t('sidebar.quotation', 'Quotation')} />
+            <ListItemText primary="Quotation" />
           </ListItemButton>
           <ListItemButton disabled={loadingAccess || (user.data?.userName !== 'GG' && InvoiceInfo.length === 0)} sx={{ color: 'gray' }} component={NavLink} to="/InvoiceViewAdmin" onClick={handleNavClick} style={isActive('/InvoiceViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
             <ListItemIcon sx={{ color: 'gray' }} style={isActive('/InvoiceViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
               <DescriptionIcon />
             </ListItemIcon>
-            <ListItemText primary={t('sidebar.invoice', 'Invoice')} />
+            <ListItemText primary="Invoice" />
           </ListItemButton>
           <ListItemButton disabled={loadingAccess || (user.data?.userName !== 'GG' && PaymentInfo.length === 0)} sx={{ color: 'gray' }} component={NavLink} to="/PaymentView" onClick={handleNavClick} style={isActive('/PaymentView') ? { backgroundColor: '#30368a', color: 'white' } : null}>
             <ListItemIcon sx={{ color: 'gray' }} style={isActive('/PaymentView') ? { backgroundColor: '#30368a', color: 'white' } : null}>
               <MonetizationOnIcon />
             </ListItemIcon>
-            <ListItemText primary={t('sidebar.payment', 'Payment')} />
+            <ListItemText primary="Payment" />
           </ListItemButton>
           <ListItemButton disabled={loadingAccess || (user.data?.userName !== 'GG' && DailyEInfo.length === 0)} sx={{ color: 'gray' }} component={NavLink} to="/DailyExpenses" onClick={handleNavClick} style={isActive('/DailyExpenses') ? { backgroundColor: '#30368a', color: 'white' } : null}>
             <ListItemIcon sx={{ color: 'gray' }} style={isActive('/DailyExpenses') ? { backgroundColor: '#30368a', color: 'white' } : null}>
               <ShoppingBagOutlined />
             </ListItemIcon>
-            <ListItemText primary={t('sidebar.dailyExpenses', 'Daily Expenses')} />
+            <ListItemText primary="Daily Expenses" />
           </ListItemButton>
           <ListItemButton disabled={loadingAccess || (user.data?.userName !== 'GG' && ProjectInfo.length === 0)} sx={{ color: 'gray' }} component={NavLink} to="/ProjectViewAdmin" onClick={handleNavClick} style={isActive('/ProjectViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
             <ListItemIcon sx={{ color: 'gray' }} style={isActive('/ProjectViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
               <RoomPreferencesIcon />
             </ListItemIcon>
-            <ListItemText primary={t('sidebar.project', 'Project')} />
+            <ListItemText primary="Project" />
           </ListItemButton>
           <ListItemButton disabled={loadingAccess || (user.data?.userName !== 'GG' && PurchaseInfo.length === 0)} sx={{ color: 'gray' }} component={NavLink} to="/PurchasesViewAdmin" onClick={handleNavClick} style={isActive('/PurchasesViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
             <ListItemIcon sx={{ color: 'gray' }} style={isActive('/PurchasesViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
               <ReceiptIcon />
             </ListItemIcon>
-            <ListItemText primary={t('sidebar.purchases', 'Purchases Request')} />
+            <ListItemText primary="Purchases Request" />
           </ListItemButton>
           {
             (isNestedSubmenu || parseInt(onView6) === 6) ? null : (
@@ -244,7 +241,7 @@ function SidebarDash({ onView2, onView3, onView4, onView5, onView6, isSubmenu })
                 <ListItemIcon sx={{ color: 'gray' }} >
                   <EngineeringIcon />
                 </ListItemIcon>
-                <ListItemText primary={t('sidebar.maintenance', 'Maintenance')} />
+                <ListItemText primary="Maintenance" />
               </ListItemButton>
             )
           }
@@ -255,7 +252,7 @@ function SidebarDash({ onView2, onView3, onView4, onView5, onView6, isSubmenu })
             <ListItemIcon sx={{ color: 'gray' }} style={isActive('/ReportsViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
               <MovingIcon />
             </ListItemIcon>
-            <ListItemText primary={t('sidebar.reports', 'Reports')} />
+            <ListItemText primary="Reports" />
           </ListItemButton>
 
 
@@ -266,25 +263,22 @@ function SidebarDash({ onView2, onView3, onView4, onView5, onView6, isSubmenu })
                 <ListItemIcon sx={{ color: 'gray' }} >
                   <MoreVertIcon />
                 </ListItemIcon>
-                <ListItemText primary={t('sidebar.more', 'More')} />
+                <ListItemText primary="More" />
               </ListItemButton>)
           }
-          <div style={{ position: 'absolute', bottom: 8, left: 10, right: 10, fontSize: '0.7rem', color: 'lightgray', display: 'flex', flexDirection: 'column', gap: '6px' }}>
-            <LanguageSelector variant="sidebar" sx={{ width: '100%' }} />
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <span>Version: {pkg.version}</span>
-              {!isInstalledApp && (
-              <a 
-                href="https://api.globalgate.sarl/download" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                style={{ color: '#90caf9', textDecoration: 'none', fontSize: '0.68rem', fontWeight: 'bold' }}
-                title="Download Mobile & Desktop Apps"
-              >
-                📲 {t('sidebar.mobileApps', 'Apps')}
-              </a>
-              )}
-            </div>
+          <div style={{ position: 'absolute', bottom: 8, left: 10, fontSize: '0.7rem', color: 'lightgray', display: 'flex', flexDirection: 'column', gap: '2px' }}>
+            <span>Version: {pkg.version}</span>
+            {!isInstalledApp && (
+            <a 
+              href="https://api.globalgate.sarl/download" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              style={{ color: '#90caf9', textDecoration: 'none', fontSize: '0.68rem', fontWeight: 'bold' }}
+              title="Download Mobile & Desktop Apps"
+            >
+              📲 Mobile & PC Apps
+            </a>
+            )}
           </div>
         </div >
         : null
@@ -296,7 +290,7 @@ function SidebarDash({ onView2, onView3, onView4, onView5, onView6, isSubmenu })
               <ListItemIcon sx={{ color: 'gray' }} >
                 <Close />
               </ListItemIcon>
-              <ListItemText primary={t('sidebar.close', 'Close')} />
+              <ListItemText primary="Close" />
             </ListItemButton>
             <Divider />
             <ListSubheader component="div" inset>
@@ -313,7 +307,7 @@ function SidebarDash({ onView2, onView3, onView4, onView5, onView6, isSubmenu })
               <ListItemIcon sx={{ color: 'gray' }} >
                 <Close />
               </ListItemIcon>
-              <ListItemText primary={t('sidebar.close', 'Close')} />
+              <ListItemText primary="Close" />
             </ListItemButton>
             <Divider />
             <ListSubheader component="div" inset>
@@ -330,7 +324,7 @@ function SidebarDash({ onView2, onView3, onView4, onView5, onView6, isSubmenu })
               <ListItemIcon sx={{ color: 'gray' }} >
                 <Close />
               </ListItemIcon>
-              <ListItemText primary={t('sidebar.close', 'Close')} />
+              <ListItemText primary="Close" />
             </ListItemButton>
             <Divider />
             <ListSubheader component="div" inset>
@@ -347,7 +341,7 @@ function SidebarDash({ onView2, onView3, onView4, onView5, onView6, isSubmenu })
               <ListItemIcon sx={{ color: 'gray' }} >
                 <Close />
               </ListItemIcon>
-              <ListItemText primary={t('sidebar.close', 'Close')} />
+              <ListItemText primary="Close" />
             </ListItemButton>
             <Divider />
             <ListSubheader component="div" inset>
@@ -365,7 +359,7 @@ function SidebarDash({ onView2, onView3, onView4, onView5, onView6, isSubmenu })
               <ListItemIcon sx={{ color: 'gray' }} >
                 <Close />
               </ListItemIcon>
-              <ListItemText primary={t('sidebar.close', 'Close')} />
+              <ListItemText primary="Close" />
             </ListItemButton>
             <Divider />
             <ListSubheader component="div" inset>
