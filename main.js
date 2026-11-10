@@ -312,7 +312,8 @@ function clearAppCache(win) {
 }
 
 const fs = require('fs');
-const { execFile } = require('child_process');
+const http = require('http');
+const { execFile, spawn } = require('child_process');
 
 ipcMain.handle('run-marketing', async (event, payload) => {
   const { brief, whatsappNumber, platforms = {}, productImage = null, previewOnly = false, theme = 'villa', isFullFlyer = false } = payload || {};
@@ -491,12 +492,93 @@ ipcMain.handle('send-invoice-whatsapp', async (event, payload) => {
     };
   }
 
-  const tempPayloadPath = path.join(agentDir, `invoice_batch_${Date.now()}.json`);
-  fs.writeFileSync(tempPayloadPath, JSON.stringify({
+  const batchPayload = {
     invoices: validInvoices,
     templateMessage: templateMessage || 'Dear Valued Customer, please find attached your official invoice from Global Gate SARL. Thank you for your business!',
     phoneOverrides
-  }, null, 2), 'utf-8');
+  };
+
+  // 1. Try sending directly to active persistent background daemon on port 5055 (instant 2-3s dispatch!)
+  try {
+    const isDaemonAlive = await new Promise((resolve) => {
+      const ping = http.get('http://127.0.0.1:5055/status', { timeout: 1500 }, (res) => {
+        resolve(res.statusCode === 200);
+      });
+      ping.on('error', () => resolve(false));
+      ping.on('timeout', () => { ping.destroy(); resolve(false); });
+    });
+
+    if (isDaemonAlive) {
+      console.log('⚡ Main IPC dispatching directly to persistent WhatsApp daemon on port 5055...');
+      const daemonReport = await new Promise((resolve, reject) => {
+        const bodyStr = JSON.stringify(batchPayload);
+        const req = http.request({
+          hostname: '127.0.0.1',
+          port: 5055,
+          path: '/send-invoices',
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Content-Length': Buffer.byteLength(bodyStr)
+          },
+          timeout: 180000 + (validInvoices.length * 15000)
+        }, (res) => {
+          let resData = '';
+          res.on('data', chunk => { resData += chunk; });
+          res.on('end', () => {
+            try {
+              resolve(JSON.parse(resData || '{}'));
+            } catch (e) {
+              reject(e);
+            }
+          });
+        });
+        req.on('error', reject);
+        req.on('timeout', () => {
+          req.destroy();
+          reject(new Error('Persistent WhatsApp daemon dispatch timed out'));
+        });
+        req.write(bodyStr);
+        req.end();
+      });
+
+      const sentCount = Number(daemonReport?.sent || 0);
+      const failedCount = Number(daemonReport?.failed !== undefined ? daemonReport.failed : Math.max(0, validInvoices.length - sentCount));
+      const hasSentAny = sentCount > 0;
+      const isFullSuccess = Boolean(daemonReport?.success) || (sentCount === validInvoices.length && failedCount === 0);
+
+      return {
+        success: isFullSuccess || hasSentAny,
+        partial: hasSentAny && failedCount > 0,
+        error: daemonReport?.error || (!hasSentAny && failedCount > 0 ? (daemonReport?.details?.[0]?.error || 'Failed to dispatch invoices') : null),
+        report: {
+          ...daemonReport,
+          total: validInvoices.length,
+          sent: sentCount,
+          failed: failedCount,
+          details: Array.isArray(daemonReport?.details) ? daemonReport.details : []
+        }
+      };
+    } else {
+      // Daemon not running: spawn it in the background for future dispatches!
+      try {
+        const daemonProc = spawn('node', [agentScript, '--server'], {
+          cwd: agentDir,
+          detached: true,
+          stdio: 'ignore'
+        });
+        daemonProc.unref();
+      } catch (errSpawn) {
+        console.warn('Could not launch background daemon:', errSpawn.message);
+      }
+    }
+  } catch (daemonErr) {
+    console.warn('Direct daemon call failed, falling back to CLI batch runner:', daemonErr.message);
+  }
+
+  // 2. Fallback: Standalone batch CLI execution
+  const tempPayloadPath = path.join(agentDir, `invoice_batch_${Date.now()}.json`);
+  fs.writeFileSync(tempPayloadPath, JSON.stringify(batchPayload, null, 2), 'utf-8');
 
   const timeoutMs = 150000 + Math.max(0, validInvoices.length - 1) * 45000;
 

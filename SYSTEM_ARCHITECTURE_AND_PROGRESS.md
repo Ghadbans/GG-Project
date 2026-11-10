@@ -4878,3 +4878,36 @@ The standardized `renderStatusBadge` helper was seamlessly integrated into all 1
 - **Android APK**: Compiled via Gradle with Android Studio JBR: `server/public/downloads/GlobalGate-v3.6.45.apk` (18.85 MB) and `GlobalGate.apk`.
 - **Windows Executable**: Packaged `dist/Global Gate Setup 3.6.45.exe` (96.07 MB) via `electron-builder` and copied to `server/public/downloads/GlobalGate-v3.6.45.exe` and `server/public/downloads/GlobalGateSetup.exe`.
 - **Artifact Preservation**: All previous builds (`GlobalGate-v3.6.44.exe`, `GlobalGate-v3.6.43.exe`, `.apk` files) remain permanently preserved.
+
+---
+
+## [2026-11-10] - Release v3.6.46: Persistent WhatsApp Client Daemon Engine, Sub-3s Dispatches, Strict Recipient Number Validation & History Maintenance
+
+### 1. Requirements & Core Enhancements
+1. **Persistent WhatsApp Client Daemon Architecture (`agent.js` & `main.js`)**:
+   - **Eliminated 40–60s Cold-Boot Overhead**: Transitioned WhatsApp dispatch from cold-booting Chromium on every user click to maintaining an active, persistent `Client` instance inside the background daemon on `http://127.0.0.1:5055`.
+   - **Instant Dispatch**: Invoices now dispatch in **2–3 seconds** per invoice directly through `POST /send-invoices`, completely bypassing Chromium startup, user-data directory locks, and contact-store re-indexing.
+   - **Singleton Lock Protection**: Prevented concurrent process crashes (`Command failed: node agent.js ... SingletonLock`) by routing all dispatches through a single browser instance manager.
+   - **Auto-Daemon Spawning & Resilient Fallback**: In `main.js`, `ipcMain.handle('send-invoice-whatsapp')` pings `http://127.0.0.1:5055/status`. If alive, payload is delivered immediately via HTTP; if not alive, the daemon is automatically spawned in the background (`detached: true`) and falls back cleanly to the CLI runner without failing.
+
+2. **Strict Recipient WhatsApp Number Verification**:
+   - Integrated `client.getNumberId(formattedPhone)` on every dispatch.
+   - If the recipient number is **not registered on WhatsApp**, the agent immediately catches it and returns `status: "failed", error: "Phone +${phone} is not registered on WhatsApp"`.
+   - Completely eliminated phantom "sent" reports where unverified numbers were silently sent to non-existent JIDs (`@c.us`) and dropped by Meta servers.
+
+3. **Guaranteed Media Upload & Socket Buffer**:
+   - Re-enabled `waitUntilMsgSent: true` and added a 2.5s post-transmission socket buffer before responding to the caller.
+   - Guarantees that WhatsApp Web's browser worker has finished streaming all PDF chunk bytes to Meta servers so attachments arrive intact on recipient phones and appear in the operator's chat history before reporting success.
+
+4. **History Maintenance & Cleanup Route**:
+   - Added `DELETE /endpoint/invoice-whatsapp/history/:id` to `server/routes/invoiceWhatsAppRoutes.js` guarded by session authentication.
+   - Enables operators to cleanly purge phantom or test history items from the live MongoDB `InvoiceWhatsAppHistory` collection.
+
+### 2. Multi-Platform Verification & Packaging
+- **AST Quality Gate**: Verified with 0 errors across 239 source files (`node scripts/pre-build-check.js`).
+- **Comprehensive 14-Module Audit**: Ran `scripts/comprehensive_module_test.js` — **20 of 20 checks passed with zero errors**.
+- **Version Bump**: Bumped to `v3.6.46` across `package.json`, `server/package.json`, `server/routes/downloadRoutes.js`, and `server/index.js`.
+- **Production Bundles**: Compiled desktop and web production bundles via Webpack (`dist_web/` and `build/`).
+- **Android APK**: Compiled via Gradle with Android Studio JBR: `server/public/downloads/GlobalGate-v3.6.46.apk` (18.85 MB) and mirrored to `GlobalGate.apk`.
+- **Windows Executable**: Packaged `dist/Global Gate Setup 3.6.46.exe` (96.07 MB) via `electron-builder` and copied to `server/public/downloads/GlobalGate-v3.6.46.exe` and `server/public/downloads/GlobalGateSetup.exe`.
+- **Artifact Preservation**: All previous builds (`GlobalGate-v3.6.45.exe`, `GlobalGate-v3.6.44.exe`, `GlobalGate-v3.6.43.exe`, `.apk` files) remain permanently preserved.

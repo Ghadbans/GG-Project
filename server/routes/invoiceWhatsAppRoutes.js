@@ -97,6 +97,17 @@ router.post('/record-history', async (req, res) => {
   }
 });
 
+// 2.7 Delete Invoices History Item
+router.delete('/history/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    await InvoiceWhatsAppHistory.findByIdAndDelete(id);
+    return res.json({ success: true, id });
+  } catch (err) {
+    return res.status(500).json({ success: false, error: err.message });
+  }
+});
+
 // 3. Dispatch Selected SENT Invoices via WhatsApp
 router.post('/send', async (req, res) => {
   try {
