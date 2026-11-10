@@ -3487,28 +3487,32 @@ function InvoiceViewAdmin() {
       try {
         var _result, _result2, _result3, _result4;
         var result = null;
-        if (window.electron && typeof window.electron.sendInvoiceWhatsApp === 'function') {
-          result = yield window.electron.sendInvoiceWhatsApp(payload);
-        } else {
-          // Direct local daemon check: allows Web Portal or any client on this PC to dispatch directly
-          var localSuccess = false;
-          try {
-            var localCheck = yield axios/* default */.A.get('http://127.0.0.1:5055/status', {
-              timeout: 1500
+
+        // 1. First priority: Direct local daemon dispatch (instant 2-3s in desktop app & web portal on this PC)
+        var localSuccess = false;
+        try {
+          var localCheck = yield axios/* default */.A.get('http://127.0.0.1:5055/status', {
+            timeout: 1500
+          });
+          if (localCheck.status === 200) {
+            var localRes = yield axios/* default */.A.post('http://127.0.0.1:5055/send-invoices', payload, {
+              timeout: 180000
             });
-            if (localCheck.status === 200) {
-              var localRes = yield axios/* default */.A.post('http://127.0.0.1:5055/send-invoices', payload, {
-                timeout: 180000
-              });
-              if (localRes !== null && localRes !== void 0 && localRes.data) {
-                result = localRes.data;
-                localSuccess = true;
-              }
+            if (localRes !== null && localRes !== void 0 && localRes.data) {
+              result = localRes.data;
+              localSuccess = true;
             }
-          } catch (_) {
-            localSuccess = false;
           }
-          if (!localSuccess) {
+        } catch (_) {
+          localSuccess = false;
+        }
+
+        // 2. Second priority: Desktop Electron IPC (spawns background daemon or runs batch)
+        if (!localSuccess) {
+          if (window.electron && typeof window.electron.sendInvoiceWhatsApp === 'function') {
+            result = yield window.electron.sendInvoiceWhatsApp(payload);
+          } else {
+            // 3. Third priority: Cloud API endpoint
             var res = yield axios/* default */.A.post("".concat(apiConfig/* ENDPOINT_URL */.m, "/invoice-whatsapp/send"), payload);
             result = res.data;
           }

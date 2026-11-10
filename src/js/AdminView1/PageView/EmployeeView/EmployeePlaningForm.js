@@ -465,8 +465,15 @@ function EmployeePlaningForm() {
                     reason === "Project" && (
                       <Autocomplete
                         options={projects}
-                        getOptionLabel={(option) => 'P-' + String(option.projectNumber || '').padStart(6, '0') + ' | ' + option.projectName}
-                        renderOption={(props, option) => (<Box {...props}> {'P-' + String(option.projectNumber || '').padStart(6, '0')} | {option.customerName.customerName} | {option.projectName} | {option.description}</Box>)}
+                        getOptionLabel={(option) => 'P-' + String(option?.projectNumber || '').padStart(6, '0') + ' | ' + (option?.projectName || '')}
+                        renderOption={(props, option) => {
+                          const cust = typeof option?.customerName === 'object' ? (option?.customerName?.customerName || option?.customerName?.Customer || '') : (option?.customerName || '');
+                          return (
+                            <Box {...props}>
+                              {'P-' + String(option?.projectNumber || '').padStart(6, '0')} | {cust} | {option?.projectName || ''} | {option?.description || ''}
+                            </Box>
+                          );
+                        }}
                         renderInput={(params) => <TextField {...params} label="Project Name" />}
                         onChange={(e, newValue) => handleChangeProject(newValue ? newValue : 0)}
                         inputValue={inputValueProject}
@@ -474,13 +481,15 @@ function EmployeePlaningForm() {
                           setInputValueProject(newInputValue);
                         }}
                         filterOptions={(options, { inputValue }) => {
-                          return options.filter(
-                            (option) =>
-                              String(option.projectNumber || '').includes(inputValue) ||
-                              option.customerName.customerName.toLowerCase().includes(inputValue.toLowerCase()) ||
-                              option.projectName.toLowerCase().includes(inputValue.toLowerCase()) ||
-                              option.description.toLowerCase().includes(inputValue.toLowerCase())
-                          )
+                          const q = (inputValue || '').toLowerCase().trim();
+                          if (!q) return options;
+                          return options.filter((option) => {
+                            const num = String(option?.projectNumber || '').toLowerCase();
+                            const cust = (typeof option?.customerName === 'object' ? (option?.customerName?.customerName || option?.customerName?.Customer || '') : String(option?.customerName || '')).toLowerCase();
+                            const name = String(option?.projectName || '').toLowerCase();
+                            const desc = String(option?.description || '').toLowerCase();
+                            return num.includes(q) || cust.includes(q) || name.includes(q) || desc.includes(q);
+                          });
                         }}
                         sx={{ width: '100%', backgroundColor: 'white' }}
                       />
@@ -490,8 +499,11 @@ function EmployeePlaningForm() {
                     reason === "Maintenance" && (
                       <Autocomplete
                         options={maintenance}
-                        getOptionLabel={(option) => option.serviceName}
-                        renderOption={(props, option) => (<Box {...props}> {option.customerName.customerName} | {option.serviceName}</Box>)}
+                        getOptionLabel={(option) => option?.serviceName || ''}
+                        renderOption={(props, option) => {
+                          const cust = typeof option?.customerName === 'object' ? (option?.customerName?.customerName || option?.customerName?.Customer || '') : (option?.customerName || '');
+                          return (<Box {...props}> {cust} | {option?.serviceName || ''}</Box>);
+                        }}
                         renderInput={(params) => <TextField {...params} label="Maintenance Number" />}
                         onChange={(e, newValue) => handleChangeService(newValue ? newValue : '')}
                         inputValue={inputValue2}
@@ -499,11 +511,13 @@ function EmployeePlaningForm() {
                           setInputValue2(newInputValue);
                         }}
                         filterOptions={(options, { inputValue }) => {
-                          return options.filter(
-                            (option) =>
-                              option.customerName.customerName.toLowerCase().includes(inputValue.toLowerCase()) ||
-                              option.serviceName.toLowerCase().includes(inputValue.toLowerCase())
-                          )
+                          const q = (inputValue || '').toLowerCase().trim();
+                          if (!q) return options;
+                          return options.filter((option) => {
+                            const cust = (typeof option?.customerName === 'object' ? (option?.customerName?.customerName || option?.customerName?.Customer || '') : String(option?.customerName || '')).toLowerCase();
+                            const sName = String(option?.serviceName || '').toLowerCase();
+                            return cust.includes(q) || sName.includes(q);
+                          });
                         }}
                         sx={{ width: '100%', backgroundColor: 'white' }}
                       />

@@ -679,8 +679,12 @@ function EmployeePlaningForm() {
     xs: 6
   }, reason === "Project" && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, {
     options: projects,
-    getOptionLabel: option => 'P-' + String(option.projectNumber || '').padStart(6, '0') + ' | ' + option.projectName,
-    renderOption: (props, option) => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, props, " ", 'P-' + String(option.projectNumber || '').padStart(6, '0'), " | ", option.customerName.customerName, " | ", option.projectName, " | ", option.description),
+    getOptionLabel: option => 'P-' + String((option === null || option === void 0 ? void 0 : option.projectNumber) || '').padStart(6, '0') + ' | ' + ((option === null || option === void 0 ? void 0 : option.projectName) || ''),
+    renderOption: (props, option) => {
+      var _option$customerName, _option$customerName2;
+      var cust = typeof (option === null || option === void 0 ? void 0 : option.customerName) === 'object' ? (option === null || option === void 0 || (_option$customerName = option.customerName) === null || _option$customerName === void 0 ? void 0 : _option$customerName.customerName) || (option === null || option === void 0 || (_option$customerName2 = option.customerName) === null || _option$customerName2 === void 0 ? void 0 : _option$customerName2.Customer) || '' : (option === null || option === void 0 ? void 0 : option.customerName) || '';
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, props, 'P-' + String((option === null || option === void 0 ? void 0 : option.projectNumber) || '').padStart(6, '0'), " | ", cust, " | ", (option === null || option === void 0 ? void 0 : option.projectName) || '', " | ", (option === null || option === void 0 ? void 0 : option.description) || '');
+    },
     renderInput: params => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, _extends({}, params, {
       label: "Project Name"
     })),
@@ -691,7 +695,16 @@ function EmployeePlaningForm() {
     },
     filterOptions: (options, _ref10) => {
       var inputValue = _ref10.inputValue;
-      return options.filter(option => String(option.projectNumber || '').includes(inputValue) || option.customerName.customerName.toLowerCase().includes(inputValue.toLowerCase()) || option.projectName.toLowerCase().includes(inputValue.toLowerCase()) || option.description.toLowerCase().includes(inputValue.toLowerCase()));
+      var q = (inputValue || '').toLowerCase().trim();
+      if (!q) return options;
+      return options.filter(option => {
+        var _option$customerName3, _option$customerName4;
+        var num = String((option === null || option === void 0 ? void 0 : option.projectNumber) || '').toLowerCase();
+        var cust = (typeof (option === null || option === void 0 ? void 0 : option.customerName) === 'object' ? (option === null || option === void 0 || (_option$customerName3 = option.customerName) === null || _option$customerName3 === void 0 ? void 0 : _option$customerName3.customerName) || (option === null || option === void 0 || (_option$customerName4 = option.customerName) === null || _option$customerName4 === void 0 ? void 0 : _option$customerName4.Customer) || '' : String((option === null || option === void 0 ? void 0 : option.customerName) || '')).toLowerCase();
+        var name = String((option === null || option === void 0 ? void 0 : option.projectName) || '').toLowerCase();
+        var desc = String((option === null || option === void 0 ? void 0 : option.description) || '').toLowerCase();
+        return num.includes(q) || cust.includes(q) || name.includes(q) || desc.includes(q);
+      });
     },
     sx: {
       width: '100%',
@@ -699,8 +712,12 @@ function EmployeePlaningForm() {
     }
   }), reason === "Maintenance" && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, {
     options: maintenance,
-    getOptionLabel: option => option.serviceName,
-    renderOption: (props, option) => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, props, " ", option.customerName.customerName, " | ", option.serviceName),
+    getOptionLabel: option => (option === null || option === void 0 ? void 0 : option.serviceName) || '',
+    renderOption: (props, option) => {
+      var _option$customerName5, _option$customerName6;
+      var cust = typeof (option === null || option === void 0 ? void 0 : option.customerName) === 'object' ? (option === null || option === void 0 || (_option$customerName5 = option.customerName) === null || _option$customerName5 === void 0 ? void 0 : _option$customerName5.customerName) || (option === null || option === void 0 || (_option$customerName6 = option.customerName) === null || _option$customerName6 === void 0 ? void 0 : _option$customerName6.Customer) || '' : (option === null || option === void 0 ? void 0 : option.customerName) || '';
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, props, " ", cust, " | ", (option === null || option === void 0 ? void 0 : option.serviceName) || '');
+    },
     renderInput: params => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, _extends({}, params, {
       label: "Maintenance Number"
     })),
@@ -711,7 +728,14 @@ function EmployeePlaningForm() {
     },
     filterOptions: (options, _ref11) => {
       var inputValue = _ref11.inputValue;
-      return options.filter(option => option.customerName.customerName.toLowerCase().includes(inputValue.toLowerCase()) || option.serviceName.toLowerCase().includes(inputValue.toLowerCase()));
+      var q = (inputValue || '').toLowerCase().trim();
+      if (!q) return options;
+      return options.filter(option => {
+        var _option$customerName7, _option$customerName8;
+        var cust = (typeof (option === null || option === void 0 ? void 0 : option.customerName) === 'object' ? (option === null || option === void 0 || (_option$customerName7 = option.customerName) === null || _option$customerName7 === void 0 ? void 0 : _option$customerName7.customerName) || (option === null || option === void 0 || (_option$customerName8 = option.customerName) === null || _option$customerName8 === void 0 ? void 0 : _option$customerName8.Customer) || '' : String((option === null || option === void 0 ? void 0 : option.customerName) || '')).toLowerCase();
+        var sName = String((option === null || option === void 0 ? void 0 : option.serviceName) || '').toLowerCase();
+        return cust.includes(q) || sName.includes(q);
+      });
     },
     sx: {
       width: '100%',

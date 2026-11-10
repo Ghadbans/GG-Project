@@ -620,25 +620,28 @@ function InvoiceViewAdmin() {
 
     try {
       let result = null;
-      if (window.electron && typeof window.electron.sendInvoiceWhatsApp === 'function') {
-        result = await window.electron.sendInvoiceWhatsApp(payload);
-      } else {
-        // Direct local daemon check: allows Web Portal or any client on this PC to dispatch directly
-        let localSuccess = false;
-        try {
-          const localCheck = await axios.get('http://127.0.0.1:5055/status', { timeout: 1500 });
-          if (localCheck.status === 200) {
-            const localRes = await axios.post('http://127.0.0.1:5055/send-invoices', payload, { timeout: 180000 });
-            if (localRes?.data) {
-              result = localRes.data;
-              localSuccess = true;
-            }
-          }
-        } catch (_) {
-          localSuccess = false;
-        }
 
-        if (!localSuccess) {
+      // 1. First priority: Direct local daemon dispatch (instant 2-3s in desktop app & web portal on this PC)
+      let localSuccess = false;
+      try {
+        const localCheck = await axios.get('http://127.0.0.1:5055/status', { timeout: 1500 });
+        if (localCheck.status === 200) {
+          const localRes = await axios.post('http://127.0.0.1:5055/send-invoices', payload, { timeout: 180000 });
+          if (localRes?.data) {
+            result = localRes.data;
+            localSuccess = true;
+          }
+        }
+      } catch (_) {
+        localSuccess = false;
+      }
+
+      // 2. Second priority: Desktop Electron IPC (spawns background daemon or runs batch)
+      if (!localSuccess) {
+        if (window.electron && typeof window.electron.sendInvoiceWhatsApp === 'function') {
+          result = await window.electron.sendInvoiceWhatsApp(payload);
+        } else {
+          // 3. Third priority: Cloud API endpoint
           const res = await axios.post(`${ENDPOINT_URL}/invoice-whatsapp/send`, payload);
           result = res.data;
         }
