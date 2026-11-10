@@ -3401,7 +3401,8 @@ function InvoiceViewAdmin() {
           combined = invoice.filter(inv => isEligibleInvoiceStatus(inv.status));
         }
         setWhatsAppInvoicesList(combined);
-        setSelectedWhatsAppInvoiceIds(new Set(combined.map(inv => inv._id || inv.id)));
+        setSelectedWhatsAppInvoiceIds(new Set()); // Default to 0 checked on open
+
         var initPhones = {};
         combined.forEach(inv => {
           var id = inv._id || inv.id;
@@ -3412,7 +3413,7 @@ function InvoiceViewAdmin() {
         console.error('Error fetching eligible invoices:', err);
         var localEligible = invoice.filter(inv => isEligibleInvoiceStatus(inv.status));
         setWhatsAppInvoicesList(localEligible);
-        setSelectedWhatsAppInvoiceIds(new Set(localEligible.map(inv => inv._id || inv.id)));
+        setSelectedWhatsAppInvoiceIds(new Set()); // Default to 0 checked on open
         var _initPhones = {};
         localEligible.forEach(inv => {
           var id = inv._id || inv.id;
@@ -3464,7 +3465,14 @@ function InvoiceViewAdmin() {
   };
   var handleExecuteWhatsAppDispatch = /*#__PURE__*/function () {
     var _ref16 = _asyncToGenerator(function* () {
-      var selectedInvoices = whatsAppInvoicesList.filter(inv => selectedWhatsAppInvoiceIds.has(inv._id || inv.id));
+      var selectedInvoices = whatsAppInvoicesList.filter(inv => selectedWhatsAppInvoiceIds.has(inv._id || inv.id)).map(inv => {
+        var totalAmount = Number(inv.totalInvoice || inv.total || 0).toFixed(2);
+        var hasValidBalance = inv.balanceDue !== undefined && inv.balanceDue !== null && !isNaN(parseFloat(inv.balanceDue));
+        var balanceDueAmount = hasValidBalance ? parseFloat(inv.balanceDue).toFixed(2) : totalAmount;
+        return _objectSpread(_objectSpread({}, inv), {}, {
+          balanceDue: balanceDueAmount
+        });
+      });
       if (selectedInvoices.length === 0) {
         react_toastify_esm/* toast */.oR.warn('Please select at least one invoice to send.');
         return;
@@ -3502,7 +3510,7 @@ function InvoiceViewAdmin() {
                   invoiceNumber: inv.invoiceNumber,
                   customerName: typeof inv.customerName === 'object' ? ((_inv$customerName = inv.customerName) === null || _inv$customerName === void 0 ? void 0 : _inv$customerName.Customer) || ((_inv$customerName2 = inv.customerName) === null || _inv$customerName2 === void 0 ? void 0 : _inv$customerName2.customerName) || '' : inv.customerName,
                   phone: phoneOverrides[inv._id || inv.id] || getInvoicePhone(inv, customerPhoneMap),
-                  amount: inv.totalInvoice || inv.total || 0,
+                  amount: Number(inv.balanceDue !== undefined ? inv.balanceDue : inv.totalInvoice || inv.total || 0),
                   caption: whatsAppMessage.trim(),
                   status: 'sent'
                 };
@@ -5200,10 +5208,10 @@ function InvoiceViewAdmin() {
     }
   }, "WhatsApp Phone (Editable)"), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
     sx: {
-      width: 95,
+      width: 125,
       textAlign: 'right'
     }
-  }, "Amount"), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+  }, "Balance Due"), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
     sx: {
       width: 110,
       textAlign: 'center'
@@ -5219,7 +5227,12 @@ function InvoiceViewAdmin() {
     var cust = inv.customerName || {};
     var clientName = (typeof cust === 'string' ? cust : cust.Customer || cust.customerName || cust.customerFullName || 'Customer').toUpperCase();
     var phoneVal = phoneOverrides[id] !== undefined ? phoneOverrides[id] : getInvoicePhone(inv, customerPhoneMap);
-    var amount = Number(inv.totalInvoice || inv.total || 0).toFixed(2);
+    var totalAmount = Number(inv.totalInvoice || inv.total || 0).toFixed(2);
+    var hasValidBalance = inv.balanceDue !== undefined && inv.balanceDue !== null && !isNaN(parseFloat(inv.balanceDue));
+    var balanceDueAmount = hasValidBalance ? parseFloat(inv.balanceDue).toFixed(2) : totalAmount;
+    var isPartial = String(inv.status || '').toUpperCase().includes('PARTIAL');
+    var isFree = String(inv.status || '').toUpperCase().includes('FREE');
+    var amount = isFree ? '0.00' : balanceDueAmount;
     var prevSent = sentHistoryMap[Number(inv.invoiceNumber)];
     return /*#__PURE__*/react.createElement(TableRow/* default */.A, {
       key: id,
@@ -5269,11 +5282,22 @@ function InvoiceViewAdmin() {
       }
     })), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
       sx: {
-        textAlign: 'right',
-        fontWeight: 700,
-        color: '#0f172a'
+        textAlign: 'right'
       }
-    }, "$", amount), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+    }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
+      variant: "body2",
+      sx: {
+        fontWeight: 700,
+        color: isPartial ? '#b45309' : isFree ? '#15803d' : '#0f172a'
+      }
+    }, "$", amount), isPartial && Number(totalAmount) > Number(balanceDueAmount) && /*#__PURE__*/react.createElement(Typography/* default */.A, {
+      variant: "caption",
+      sx: {
+        color: '#64748b',
+        fontSize: '0.72rem',
+        display: 'block'
+      }
+    }, "Total: $", totalAmount)), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
       sx: {
         textAlign: 'center'
       }

@@ -531,7 +531,7 @@ function InvoiceViewAdmin() {
       }
 
       setWhatsAppInvoicesList(combined);
-      setSelectedWhatsAppInvoiceIds(new Set(combined.map(inv => inv._id || inv.id)));
+      setSelectedWhatsAppInvoiceIds(new Set()); // Default to 0 checked on open
 
       const initPhones = {};
       combined.forEach(inv => {
@@ -543,7 +543,7 @@ function InvoiceViewAdmin() {
       console.error('Error fetching eligible invoices:', err);
       const localEligible = invoice.filter(inv => isEligibleInvoiceStatus(inv.status));
       setWhatsAppInvoicesList(localEligible);
-      setSelectedWhatsAppInvoiceIds(new Set(localEligible.map(inv => inv._id || inv.id)));
+      setSelectedWhatsAppInvoiceIds(new Set()); // Default to 0 checked on open
       const initPhones = {};
       localEligible.forEach(inv => {
         const id = inv._id || inv.id;
@@ -593,7 +593,17 @@ function InvoiceViewAdmin() {
   };
 
   const handleExecuteWhatsAppDispatch = async () => {
-    const selectedInvoices = whatsAppInvoicesList.filter(inv => selectedWhatsAppInvoiceIds.has(inv._id || inv.id));
+    const selectedInvoices = whatsAppInvoicesList
+      .filter(inv => selectedWhatsAppInvoiceIds.has(inv._id || inv.id))
+      .map(inv => {
+        const totalAmount = Number(inv.totalInvoice || inv.total || 0).toFixed(2);
+        const hasValidBalance = inv.balanceDue !== undefined && inv.balanceDue !== null && !isNaN(parseFloat(inv.balanceDue));
+        const balanceDueAmount = hasValidBalance ? parseFloat(inv.balanceDue).toFixed(2) : totalAmount;
+        return {
+          ...inv,
+          balanceDue: balanceDueAmount
+        };
+      });
     if (selectedInvoices.length === 0) {
       toast.warn('Please select at least one invoice to send.');
       return;
@@ -630,7 +640,7 @@ function InvoiceViewAdmin() {
               invoiceNumber: inv.invoiceNumber,
               customerName: typeof inv.customerName === 'object' ? (inv.customerName?.Customer || inv.customerName?.customerName || '') : inv.customerName,
               phone: phoneOverrides[inv._id || inv.id] || getInvoicePhone(inv, customerPhoneMap),
-              amount: inv.totalInvoice || inv.total || 0,
+              amount: Number(inv.balanceDue !== undefined ? inv.balanceDue : (inv.totalInvoice || inv.total || 0)),
               caption: whatsAppMessage.trim(),
               status: 'sent'
             })),
@@ -1897,7 +1907,7 @@ function InvoiceViewAdmin() {
                                     <TableCell sx={{ width: 95 }}>Date</TableCell>
                                     <TableCell>Customer Name</TableCell>
                                     <TableCell sx={{ width: 165 }}>WhatsApp Phone (Editable)</TableCell>
-                                    <TableCell sx={{ width: 95, textAlign: 'right' }}>Amount</TableCell>
+                                    <TableCell sx={{ width: 125, textAlign: 'right' }}>Balance Due</TableCell>
                                     <TableCell sx={{ width: 110, textAlign: 'center' }}>Status</TableCell>
                                     <TableCell sx={{ width: 110, textAlign: 'center' }}>Sent History</TableCell>
                                   </TableRow>
@@ -1909,7 +1919,12 @@ function InvoiceViewAdmin() {
                                     const cust = inv.customerName || {};
                                     const clientName = (typeof cust === 'string' ? cust : (cust.Customer || cust.customerName || cust.customerFullName || 'Customer')).toUpperCase();
                                     const phoneVal = phoneOverrides[id] !== undefined ? phoneOverrides[id] : getInvoicePhone(inv, customerPhoneMap);
-                                    const amount = Number(inv.totalInvoice || inv.total || 0).toFixed(2);
+                                    const totalAmount = Number(inv.totalInvoice || inv.total || 0).toFixed(2);
+                                    const hasValidBalance = inv.balanceDue !== undefined && inv.balanceDue !== null && !isNaN(parseFloat(inv.balanceDue));
+                                    const balanceDueAmount = hasValidBalance ? parseFloat(inv.balanceDue).toFixed(2) : totalAmount;
+                                    const isPartial = String(inv.status || '').toUpperCase().includes('PARTIAL');
+                                    const isFree = String(inv.status || '').toUpperCase().includes('FREE');
+                                    const amount = isFree ? '0.00' : balanceDueAmount;
                                     const prevSent = sentHistoryMap[Number(inv.invoiceNumber)];
 
                                     return (
@@ -1942,8 +1957,15 @@ function InvoiceViewAdmin() {
                                             }}
                                           />
                                         </TableCell>
-                                        <TableCell sx={{ textAlign: 'right', fontWeight: 700, color: '#0f172a' }}>
-                                          ${amount}
+                                        <TableCell sx={{ textAlign: 'right' }}>
+                                          <Typography variant="body2" sx={{ fontWeight: 700, color: isPartial ? '#b45309' : (isFree ? '#15803d' : '#0f172a') }}>
+                                            ${amount}
+                                          </Typography>
+                                          {isPartial && Number(totalAmount) > Number(balanceDueAmount) && (
+                                            <Typography variant="caption" sx={{ color: '#64748b', fontSize: '0.72rem', display: 'block' }}>
+                                              Total: ${totalAmount}
+                                            </Typography>
+                                          )}
                                         </TableCell>
                                         <TableCell sx={{ textAlign: 'center' }}>
                                           {renderInvoiceStatusChip(inv.status)}
