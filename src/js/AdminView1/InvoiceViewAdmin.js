@@ -623,8 +623,25 @@ function InvoiceViewAdmin() {
       if (window.electron && typeof window.electron.sendInvoiceWhatsApp === 'function') {
         result = await window.electron.sendInvoiceWhatsApp(payload);
       } else {
-        const res = await axios.post(`${ENDPOINT_URL}/invoice-whatsapp/send`, payload);
-        result = res.data;
+        // Direct local daemon check: allows Web Portal or any client on this PC to dispatch directly
+        let localSuccess = false;
+        try {
+          const localCheck = await axios.get('http://127.0.0.1:5055/status', { timeout: 1500 });
+          if (localCheck.status === 200) {
+            const localRes = await axios.post('http://127.0.0.1:5055/send-invoices', payload, { timeout: 180000 });
+            if (localRes?.data) {
+              result = localRes.data;
+              localSuccess = true;
+            }
+          }
+        } catch (_) {
+          localSuccess = false;
+        }
+
+        if (!localSuccess) {
+          const res = await axios.post(`${ENDPOINT_URL}/invoice-whatsapp/send`, payload);
+          result = res.data;
+        }
       }
 
       setDispatchResult(result);
@@ -683,8 +700,12 @@ function InvoiceViewAdmin() {
       }
     } catch (err) {
       console.error('WhatsApp dispatch error:', err);
-      setDispatchResult({ success: false, error: err.message });
-      toast.error('Dispatch failed: ' + err.message);
+      const is503 = err?.response?.status === 503;
+      const friendlyMsg = is503
+        ? 'WhatsApp desktop agent is not running on this PC. Please install and launch Global Gate v3.6.46.'
+        : err.message;
+      setDispatchResult({ success: false, error: friendlyMsg });
+      toast.error('Dispatch failed: ' + friendlyMsg);
     } finally {
       setDispatchingWhatsApp(false);
     }

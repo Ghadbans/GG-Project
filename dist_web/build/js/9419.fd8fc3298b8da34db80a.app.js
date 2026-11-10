@@ -3490,8 +3490,28 @@ function InvoiceViewAdmin() {
         if (window.electron && typeof window.electron.sendInvoiceWhatsApp === 'function') {
           result = yield window.electron.sendInvoiceWhatsApp(payload);
         } else {
-          var res = yield axios/* default */.A.post("".concat(apiConfig/* ENDPOINT_URL */.m, "/invoice-whatsapp/send"), payload);
-          result = res.data;
+          // Direct local daemon check: allows Web Portal or any client on this PC to dispatch directly
+          var localSuccess = false;
+          try {
+            var localCheck = yield axios/* default */.A.get('http://127.0.0.1:5055/status', {
+              timeout: 1500
+            });
+            if (localCheck.status === 200) {
+              var localRes = yield axios/* default */.A.post('http://127.0.0.1:5055/send-invoices', payload, {
+                timeout: 180000
+              });
+              if (localRes !== null && localRes !== void 0 && localRes.data) {
+                result = localRes.data;
+                localSuccess = true;
+              }
+            }
+          } catch (_) {
+            localSuccess = false;
+          }
+          if (!localSuccess) {
+            var res = yield axios/* default */.A.post("".concat(apiConfig/* ENDPOINT_URL */.m, "/invoice-whatsapp/send"), payload);
+            result = res.data;
+          }
         }
         setDispatchResult(result);
         var sentCount = Number(((_result = result) === null || _result === void 0 || (_result = _result.report) === null || _result === void 0 ? void 0 : _result.sent) || 0);
@@ -3548,12 +3568,15 @@ function InvoiceViewAdmin() {
           react_toastify_esm/* toast */.oR.error(((_result5 = result) === null || _result5 === void 0 ? void 0 : _result5.error) || "Failed to dispatch WhatsApp invoices (0 of ".concat(totalCount, " sent)."));
         }
       } catch (err) {
+        var _err$response;
         console.error('WhatsApp dispatch error:', err);
+        var is503 = (err === null || err === void 0 || (_err$response = err.response) === null || _err$response === void 0 ? void 0 : _err$response.status) === 503;
+        var friendlyMsg = is503 ? 'WhatsApp desktop agent is not running on this PC. Please install and launch Global Gate v3.6.46.' : err.message;
         setDispatchResult({
           success: false,
-          error: err.message
+          error: friendlyMsg
         });
-        react_toastify_esm/* toast */.oR.error('Dispatch failed: ' + err.message);
+        react_toastify_esm/* toast */.oR.error('Dispatch failed: ' + friendlyMsg);
       } finally {
         setDispatchingWhatsApp(false);
       }
