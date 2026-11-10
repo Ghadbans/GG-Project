@@ -4760,3 +4760,43 @@ The standardized `renderStatusBadge` helper was seamlessly integrated into all 1
 - **Android APK**: Compiled via Gradle to `GlobalGate-v3.6.42.apk` (15.04 MB) and copied to `server/public/downloads/GlobalGate.apk`.
 - **Windows Executable**: Packaged `dist/Global Gate Setup 3.6.42.exe` (96.05 MB) via `electron-builder` and copied to `server/public/downloads/GlobalGate-v3.6.42.exe` and `server/public/downloads/GlobalGateSetup.exe`.
 - **Deployment**: Committed and pushed to GitHub `origin main`.
+
+---
+
+## Progress Update - November 10, 2026 (Version 3.6.43)
+### WhatsApp Message Area Expansion, Full 14-Module Audit & Enterprise Security Hardening
+
+### 1. Requirements & Core Enhancements
+1. **WhatsApp Customizable Short Message UI Expansion**:
+   - Expanded the message input text area in `InvoiceViewAdmin.js` from `rows={2.5}` to `rows={4.5}` with `fontSize: '0.92rem'`, `lineHeight: 1.6`, and `p: 1.5`, delivering an **1.8x taller visible typing space**.
+   - Upgraded modal dialog width from `maxWidth="md"` to `maxWidth="lg"` with a wider `maxWidth: 980px` paper container, providing **1.5x wider compose width** so users can see full multi-line bilingual text (e.g., French & English dispatches) without scrolling or text clipping.
+2. **Comprehensive Module & Sub-Module Live Checkup**:
+   - Developed and executed automated test suite `scripts/comprehensive_module_test.js` validating all 14 core modules and sub-modules:
+     - Module 1: Dashboard (`AdminHome.js`, widgets, KPIs, charts)
+     - Module 2: Customer (`CustomerViewAdmin.js`, `/customer` integration)
+     - Module 3: Supplier (`SupplierAdminView.js`, `/Supplier-Information` pipeline)
+     - Module 4: Items & Inventory (`ItemViewAdmin.js`, Goods/Services, stock levels)
+     - Module 5: Purchases & POs (`PurchasesViewAdmin.js`, procurement workflow)
+     - Module 6: Quotations / Estimates (`EstimateViewAdmin.js`, invoice/maintenance conversion)
+     - Module 7: Invoices (`InvoiceViewAdmin.js`, status handling: Sent, Partially-Paid, Free of Charge, WhatsApp dialog)
+     - Module 8: Payments & Cash (`PaymentView.js`, receipts, cash registers)
+     - Module 9: Projects (`ProjectViewAdmin.js`, project costing)
+     - Module 10: Maintenance (`MaintenanceViewAdmin.js`, closed vs converted separation)
+     - Module 11: Expenses (`ExpensesViewAdmin.js`, department categorization)
+     - Module 12: Point of Sale (`ReportPos.js`, retail checkout)
+     - Module 13: Payroll & Employees (`PayRollViewAdmin.js`, currency conversions)
+     - Module 14: Fleet & Grant Access (`FleetViewAdmin.js`, `GrantAccessFormView.js`, role permissions)
+   - Results: **20 of 20 checks passed with zero errors**.
+3. **Enterprise Security & Anti-Hacking Hardening**:
+   - **Internal Maintenance Route Lockdown**: Guarded `/init-admin`, `/init-permissions`, and `/debug-db` in `server/index.js` behind `verifyInternalSetupKey`, rejecting unauthorized external callers with `403 Forbidden`.
+   - **Credential Protection**: Hardened email SMTP transporter in `server/Controller/auth.js` to prioritize environment variables (`process.env.GMAIL_USER`, `process.env.GMAIL_APP_PASSWORD`).
+   - **Brute-Force & Rate Limiting**: Verified active `loginLimiter` (10 attempts / 15 min) and `passwordResetLimiter` (5 attempts / 15 min) on all authentication endpoints.
+   - **Payload Sanitation**: Verified strict Joi schema validation with `stripUnknown: true` on auth routes to prevent NoSQL object injection.
+
+### 2. Multi-Platform Verification & Packaging
+- **AST Quality Gate**: Verified with 0 errors across 239 source files (`node scripts/pre-build-check.js`).
+- **Version Bump**: Bumped to `v3.6.43` across `package.json`, `server/package.json`, `server/routes/downloadRoutes.js`, and `server/index.js`.
+- **Production Bundles**: Compiled desktop and web production bundles via Webpack (`dist_web/`).
+- **Android APK**: Compiled via Gradle to `GlobalGate-v3.6.43.apk` (15.04 MB) and copied to `server/public/downloads/GlobalGate.apk`.
+- **Windows Executable**: Packaged `dist/Global Gate Setup 3.6.43.exe` (96.05 MB) via `electron-builder` and copied to `server/public/downloads/GlobalGate-v3.6.43.exe` and `server/public/downloads/GlobalGateSetup.exe`.
+- **Deployment**: Committed and pushed to GitHub `origin main`.

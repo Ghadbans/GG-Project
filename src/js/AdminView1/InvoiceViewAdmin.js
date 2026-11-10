@@ -1700,10 +1700,10 @@ function InvoiceViewAdmin() {
                   <Dialog
                     open={openWhatsAppModal}
                     onClose={() => !dispatchingWhatsApp && setOpenWhatsAppModal(false)}
-                    maxWidth="md"
+                    maxWidth="lg"
                     fullWidth
                     PaperProps={{
-                      sx: { borderRadius: 2, p: 1 }
+                      sx: { borderRadius: 2, p: 1, maxWidth: 980, width: '100%' }
                     }}
                   >
                     <DialogTitle sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', pb: 0.5 }}>
@@ -1773,12 +1773,19 @@ function InvoiceViewAdmin() {
                             <TextField
                               fullWidth
                               multiline
-                              rows={2.5}
+                              rows={4.5}
                               value={whatsAppMessage}
                               onChange={(e) => setWhatsAppMessage(e.target.value)}
                               placeholder="Type short message in English..."
                               disabled={dispatchingWhatsApp}
-                              sx={{ backgroundColor: '#fff' }}
+                              sx={{
+                                backgroundColor: '#fff',
+                                '& .MuiInputBase-root': {
+                                  fontSize: '0.92rem',
+                                  lineHeight: 1.6,
+                                  p: 1.5
+                                }
+                              }}
                             />
                             <Typography variant="caption" sx={{ color: '#64748b', mt: 0.5, display: 'block' }}>
                               * When a client has multiple invoices, this short message is attached to the first invoice PDF, followed sequentially by subsequent invoices.

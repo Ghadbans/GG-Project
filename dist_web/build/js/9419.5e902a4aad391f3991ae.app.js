@@ -4895,12 +4895,14 @@ function InvoiceViewAdmin() {
   }, "Close"))))), /*#__PURE__*/react.createElement(Dialog/* default */.A, {
     open: openWhatsAppModal,
     onClose: () => !dispatchingWhatsApp && setOpenWhatsAppModal(false),
-    maxWidth: "md",
+    maxWidth: "lg",
     fullWidth: true,
     PaperProps: {
       sx: {
         borderRadius: 2,
-        p: 1
+        p: 1,
+        maxWidth: 980,
+        width: '100%'
       }
     }
   }, /*#__PURE__*/react.createElement(DialogTitle/* default */.A, {
@@ -5014,13 +5016,18 @@ function InvoiceViewAdmin() {
   }, savingTemplate ? 'Saving...' : 'Save as Default')), /*#__PURE__*/react.createElement(TextField/* default */.A, {
     fullWidth: true,
     multiline: true,
-    rows: 2.5,
+    rows: 4.5,
     value: whatsAppMessage,
     onChange: e => setWhatsAppMessage(e.target.value),
     placeholder: "Type short message in English...",
     disabled: dispatchingWhatsApp,
     sx: {
-      backgroundColor: '#fff'
+      backgroundColor: '#fff',
+      '& .MuiInputBase-root': {
+        fontSize: '0.92rem',
+        lineHeight: 1.6,
+        p: 1.5
+      }
     }
   }), /*#__PURE__*/react.createElement(Typography/* default */.A, {
     variant: "caption",

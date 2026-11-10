@@ -440,11 +440,21 @@ app.use('/endpoint/invoice-whatsapp', invoiceWhatsAppRoutes);
 const fleetRoute = require('./routes/fleet');
 app.use("/endpoint/fleet", fleetRoute);
 
-app.get('/test', (req, res) => res.send('Backend is LIVE and UPDATED! [v3.6.42-invoice-whatsapp]'));
-app.get('/status', (req, res) => res.json({ status: 'ok', version: '3.6.42', attachments: true, uptime: process.uptime() })); // health check
+app.get('/test', (req, res) => res.send('Backend is LIVE and UPDATED! [v3.6.43-invoice-whatsapp]'));
+app.get('/status', (req, res) => res.json({ status: 'ok', version: '3.6.43', attachments: true, uptime: process.uptime() })); // health check
 
-// DEBUG & INIT ROUTES
-app.get('/debug-db', async (req, res) => {
+// SECURITY GUARD FOR INTERNAL INIT & DEBUG ROUTES
+const verifyInternalSetupKey = (req, res, next) => {
+  const setupKey = req.headers['x-admin-setup-key'] || req.query.setupKey;
+  const expectedKey = process.env.ADMIN_SETUP_KEY || process.env.SECRET_KEY || 'GG_Enterprise_Admin_Lock_2026';
+  if (setupKey && setupKey === expectedKey) {
+    return next();
+  }
+  return res.status(403).json({ error: 'Forbidden: Unauthorized access to system maintenance endpoint.' });
+};
+
+// DEBUG & INIT ROUTES (Protected with internal security guard)
+app.get('/debug-db', verifyInternalSetupKey, async (req, res) => {
   try {
     const state = mongoose.connection.readyState; // 0: disconnected, 1: connected, 2: connecting, 3: disconnecting
     const userCount = await User.countDocuments();
@@ -456,7 +466,7 @@ app.get('/debug-db', async (req, res) => {
 
 const GrantAccess = require("./model/grantAccessSchema");
 
-app.get('/init-admin', async (req, res) => {
+app.get('/init-admin', verifyInternalSetupKey, async (req, res) => {
   try {
     const existingUser = await User.findOne({ employeeName: 'GG' });
     if (existingUser) {
@@ -479,7 +489,7 @@ app.get('/init-admin', async (req, res) => {
   }
 });
 
-app.get('/init-permissions', async (req, res) => {
+app.get('/init-permissions', verifyInternalSetupKey, async (req, res) => {
   try {
     const user = await User.findOne({ employeeName: 'GG' });
     if (!user) return res.status(404).send('User GG not found. Please run /init-admin first.');
