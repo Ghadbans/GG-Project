@@ -636,9 +636,15 @@ function InvoiceViewAdmin() {
         localSuccess = false;
       }
 
+      console.log('[InvoiceWhatsApp] Dispatch state:', {
+        localDaemonSuccess: localSuccess,
+        hasElectron: typeof window !== 'undefined' && Boolean(window.electron),
+        hasIpcMethod: typeof window !== 'undefined' && typeof window.electron?.sendInvoiceWhatsApp === 'function'
+      });
+
       // 2. Second priority: Desktop Electron IPC (spawns background daemon or runs batch)
       if (!localSuccess) {
-        if (window.electron && typeof window.electron.sendInvoiceWhatsApp === 'function') {
+        if (typeof window !== 'undefined' && window.electron && typeof window.electron.sendInvoiceWhatsApp === 'function') {
           result = await window.electron.sendInvoiceWhatsApp(payload);
         } else {
           // 3. Third priority: Cloud API endpoint

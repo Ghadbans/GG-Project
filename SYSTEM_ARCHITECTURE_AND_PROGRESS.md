@@ -4911,3 +4911,35 @@ The standardized `renderStatusBadge` helper was seamlessly integrated into all 1
 - **Android APK**: Compiled via Gradle with Android Studio JBR: `server/public/downloads/GlobalGate-v3.6.46.apk` (18.85 MB) and mirrored to `GlobalGate.apk`.
 - **Windows Executable**: Packaged `dist/Global Gate Setup 3.6.46.exe` (96.07 MB) via `electron-builder` and copied to `server/public/downloads/GlobalGate-v3.6.46.exe` and `server/public/downloads/GlobalGateSetup.exe`.
 - **Artifact Preservation**: All previous builds (`GlobalGate-v3.6.45.exe`, `GlobalGate-v3.6.44.exe`, `GlobalGate-v3.6.43.exe`, `.apk` files) remain permanently preserved.
+
+---
+
+## [2026-11-10] - Release v3.6.47: Employee Planning Filter Crash Fix, Hardened Desktop WhatsApp Daemon Auto-Start & Direct Port 5055 Routing
+
+### 1. Requirements & Core Enhancements
+1. **Employee Planning Autocomplete Null-Safety Fix (`EmployeePlaningForm.js`)**:
+   - Resolved unhandled `TypeError: Cannot read properties of undefined (reading 'toLowerCase') at EmployeePlaningForm.js:482:50` when users typed into the Project Name or Maintenance task autocompletes.
+   - Added robust optional chaining and fallback empty strings for all searchable fields: `option?.projectNumber`, `option?.projectName`, `option?.description`, `option?.customerName?.customerName`, and `option?.serviceName`.
+   - Prevented React component tree crashes and blank error boundaries during daily schedule entry.
+
+2. **Guaranteed Local WhatsApp Daemon Auto-Start on Desktop App Launch (`main.js`)**:
+   - Added `ensureWhatsAppDaemonRunning()` executing immediately inside Electron's `app.on('ready')` lifecycle.
+   - Verifies whether `http://127.0.0.1:5055/status` is responding; if not, automatically launches `node agent.js --server` in detached mode from `C:\Users\GG\fb-whatsapp-agent` with stdout/stderr piped to a persistent log file.
+   - Cleans up deprecated `worldsafeExecuteJavaScript: true` configuration in Electron BrowserWindow instantiations to prevent Chromium context bridge initialization warnings.
+
+3. **Hardened Context Bridge Preload & Direct Port 5055 Routing (`preload.js` & `InvoiceViewAdmin.js`)**:
+   - In `preload.js`, guaranteed `window.electron` exposure through both `contextBridge.exposeInMainWorld` and direct window fallback.
+   - In `InvoiceViewAdmin.js`, prioritized direct local connection to `http://127.0.0.1:5055` first before falling back to Electron IPC and remote API.
+   - Added explicit diagnostic console logging (`[InvoiceWhatsApp] Dispatch state:`) for real-time visibility during invoice dispatching.
+
+4. **Background Task Discipline**:
+   - Ensured zero long-lived daemon background tasks are left attached to the agent development harness, keeping Antigravity task count at 0.
+
+### 2. Multi-Platform Verification & Packaging
+- **AST Quality Gate**: Verified with 0 errors across 239 source files (`node scripts/pre-build-check.js`).
+- **Comprehensive 14-Module Audit**: Ran `scripts/comprehensive_module_test.js` — **20 of 20 checks passed with zero errors**.
+- **Version Bump**: Bumped to `v3.6.47` across `package.json`, `server/package.json`, `server/routes/downloadRoutes.js`, and `server/index.js`.
+- **Production Bundles**: Compiled desktop and web production bundles via Webpack (`dist_web/` and `build/`).
+- **Android APK**: Compiled via Gradle with Android Studio JBR: `server/public/downloads/GlobalGate-v3.6.47.apk` (18.85 MB) and mirrored to `GlobalGate.apk`.
+- **Windows Executable**: Packaged `dist/Global Gate Setup 3.6.47.exe` (96.07 MB) via `electron-builder` and copied to `server/public/downloads/GlobalGate-v3.6.47.exe` and `server/public/downloads/GlobalGateSetup.exe`.
+- **Artifact Preservation**: All previous builds (`GlobalGate-v3.6.46.exe`, `GlobalGate-v3.6.45.exe`, `GlobalGate-v3.6.44.exe`, `.apk` files) remain permanently preserved.

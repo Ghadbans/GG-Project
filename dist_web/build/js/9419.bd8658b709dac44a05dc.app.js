@@ -3485,7 +3485,7 @@ function InvoiceViewAdmin() {
         phoneOverrides
       };
       try {
-        var _result, _result2, _result3, _result4;
+        var _window$electron, _result, _result2, _result3, _result4;
         var result = null;
 
         // 1. First priority: Direct local daemon dispatch (instant 2-3s in desktop app & web portal on this PC)
@@ -3506,10 +3506,15 @@ function InvoiceViewAdmin() {
         } catch (_) {
           localSuccess = false;
         }
+        console.log('[InvoiceWhatsApp] Dispatch state:', {
+          localDaemonSuccess: localSuccess,
+          hasElectron: typeof window !== 'undefined' && Boolean(window.electron),
+          hasIpcMethod: typeof window !== 'undefined' && typeof ((_window$electron = window.electron) === null || _window$electron === void 0 ? void 0 : _window$electron.sendInvoiceWhatsApp) === 'function'
+        });
 
         // 2. Second priority: Desktop Electron IPC (spawns background daemon or runs batch)
         if (!localSuccess) {
-          if (window.electron && typeof window.electron.sendInvoiceWhatsApp === 'function') {
+          if (typeof window !== 'undefined' && window.electron && typeof window.electron.sendInvoiceWhatsApp === 'function') {
             result = yield window.electron.sendInvoiceWhatsApp(payload);
           } else {
             // 3. Third priority: Cloud API endpoint

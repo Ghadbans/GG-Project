@@ -147,7 +147,6 @@ function createWindow() {
     webPreferences: {
       devTools: true,
       nodeIntegration: false,
-      worldsafeExecuteJavaScript: true,
       contextIsolation: true,
       preload: path.join(__dirname, 'preload.js'),
       webSecurity: true,
@@ -240,7 +239,6 @@ function createNewWindow() {
     webPreferences: {
       devTools: false,
       nodeIntegration: false,
-      worldsafeExecuteJavaScript: true,
       contextIsolation: true,
       preload: path.join(__dirname, 'preload.js'),
       webSecurity: true,
@@ -270,7 +268,35 @@ function createNewWindow() {
   });
   windows.push(newWin)
 }
+
+function ensureWhatsAppDaemonRunning() {
+  const agentDir = 'C:\\Users\\GG\\fb-whatsapp-agent';
+  const agentScript = path.join(agentDir, 'agent.js');
+  if (!fs.existsSync(agentScript)) return;
+
+  const req = http.get('http://127.0.0.1:5055/status', { timeout: 1500 }, (res) => {
+    if (res.statusCode === 200) {
+      console.log('[WhatsAppDaemon] Already active and listening on port 5055');
+    }
+  });
+  req.on('error', () => {
+    console.log('[WhatsAppDaemon] Launching persistent background daemon on port 5055...');
+    try {
+      const daemonProc = spawn('node', [agentScript, '--server'], {
+        cwd: agentDir,
+        detached: true,
+        stdio: 'ignore'
+      });
+      daemonProc.unref();
+    } catch (e) {
+      console.warn('[WhatsAppDaemon] Spawn error:', e.message);
+    }
+  });
+  req.on('timeout', () => { req.destroy(); });
+}
+
 app.on('ready', () => {
+  ensureWhatsAppDaemonRunning();
   createWindow();
 })
 ipcMain.on('notify', (event, message) => {
