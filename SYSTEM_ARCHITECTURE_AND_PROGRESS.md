@@ -385,6 +385,28 @@
       2. If no raster image is available or if photo upload fails, gracefully publish directly to `POST /{page-id}/feed` with the formatted message copy and contact details.
     - **Non-Crashing Fault Isolation**: Social media publishing failures on Facebook or Instagram MUST be caught internally in dedicated try/catch blocks and returned as `{ success: false, error: ... }` within the JSON response. Under no circumstances should an external API error throw an unhandled 500 error that crashes the entire endpoint.
 
+67. **24/7 Central Cloud WhatsApp Master Architecture & Multi-Device Freedom (Ver 3.6.48)**:
+    - **Cloud-Native Singleton Engine (`api.globalgate.sarl`)**:
+      - Invoices are dispatched via WhatsApp directly from the Railway cloud backend service (`server/services/cloudWhatsAppService.js`) powered by `@whiskeysockets/baileys`.
+      - Eliminates all operational dependency on CEO GG's physical laptop or local machine daemons.
+    - **One-Time Central QR Code Pairing vs All Users**:
+      - The QR code pairing is executed **ONCE AND ONCE ONLY** by scanning the official company WhatsApp business number (`+243 827 722 222`) from the device that holds that number.
+      - Baileys credentials, tokens, and multi-device encryption keys are serialized via `BufferJSON` and stored persistently in the `whatsappCloudSession` MongoDB collection (`mongoAuthState.js`), surviving all Railway restarts and deployments.
+      - **Zero QR Scanning for Other Users**: Other laptops, desktop PCs, tablets, and phones across all company branches **NEVER scan any QR code**. As long as an account has `whatsappInvoice` permission granted in the **Grant Access** module, they simply select invoices and click "Send". The cloud master delivers the message immediately.
+    - **Pure Node.js Vector PDF Generation (`invoicePdfGenerator.js`)**:
+      - Invoices are rendered directly in Node.js memory using `PDFKit` vector graphics and standard Helvetica fonts (~35MB RAM footprint).
+      - Completely avoids launching Chromium/Puppeteer processes (~800MB RAM), preventing out-of-memory (OOM) container crashes on Railway.
+    - **Tri-Tier Dispatch Resiliency Pipeline**:
+      - Priority 1: Central Cloud Master (`${ENDPOINT_URL}/invoice-whatsapp/send`).
+      - Priority 2: Local HTTP Daemon fallback (`http://127.0.0.1:5055/send-invoices`).
+      - Priority 3: Desktop Electron IPC fallback (`window.electron.sendInvoiceWhatsApp`).
+    - **Response Schema Normalization**:
+      - Response parsers in `InvoiceViewAdmin.js` and the backend must always support both top-level (`result.sent`, `result.failed`) and nested (`result.report.sent`, `result.report.failed`) keys: `const sentCount = Number(result?.sent ?? result?.report?.sent ?? 0)`.
+      - Eliminates false "Failed to dispatch (0 of 1 sent)" alerts when messages successfully deliver to the WhatsApp network.
+    - **Step-by-Step Mobile Back Navigation Stack (`modalBackManager.js`)**:
+      - Modal dialogs, bottom sheets (`MobileDetailSheet`), and navigation drawers (`MobileLayout`) must register their close handlers on mount with `registerModalDismiss(closeHandler)` and unregister on unmount.
+      - `NativeBackHandler.js` pops the topmost active sheet/drawer first on hardware back or swipe-back before allowing the router to navigate away, preventing premature exits back to the Dashboard.
+
 ## Current Progress Log
 - **Universal Item Row Clearing & Free-Text Write-In Toggle Fortification across 27 Modules & Submodules (Ver 3.6.14)**:
   - **Problem Reported:**
@@ -5003,3 +5025,9 @@ The standardized `renderStatusBadge` helper was seamlessly integrated into all 1
 - **Android APK**: Compiled via Gradle with Android Studio JBR: `server/public/downloads/GlobalGate-v3.6.48.apk` (18.85 MB) and mirrored to `GlobalGate.apk`.
 - **Windows Executable**: Packaged `dist/Global Gate Setup 3.6.48.exe` (96.27 MB) via `electron-builder` and copied to `server/public/downloads/GlobalGate-v3.6.48.exe` and `server/public/downloads/GlobalGateSetup.exe`.
 - **Artifact Preservation**: All previous builds (`GlobalGate-v3.6.47.exe`, `GlobalGate-v3.6.46.exe`, `GlobalGate-v3.6.45.exe`, etc.) remain permanently preserved.
+
+### 3. User Acceptance & In-Production Verification
+- **One-Time Pairing Rule Confirmed**: Clarified and confirmed that the QR code is scanned **one time centrally** for the official company line (`+243 827 722 222`). Individual employees on other laptops/phones NEVER scan any QR code.
+- **Grant Access Enforcement**: Any employee account granted `whatsappInvoice` permission in the **Grant Access** module can dispatch official WhatsApp invoices independently 24/7 without needing CEO GG's laptop awake or connected.
+- **Production Status**: User tested Release v3.6.48 and confirmed successful delivery: *"testing it working fine will test it more"*.
+- **Background Task Discipline**: 0 background processes left running in Antigravity.
