@@ -440,6 +440,12 @@ app.use('/endpoint/invoice-whatsapp', invoiceWhatsAppRoutes);
 const fleetRoute = require('./routes/fleet');
 app.use("/endpoint/fleet", fleetRoute);
 
+app.get('/', (req, res) => res.json({ name: 'Global Gate API', version: '3.6.47', status: 'online', uptime: process.uptime() }));
+app.get('/robots.txt', (req, res) => {
+  res.type('text/plain');
+  res.send("User-agent: *\nDisallow: /\n");
+});
+app.get('/favicon.ico', (req, res) => res.status(204).end());
 app.get('/test', (req, res) => res.send('Backend is LIVE and UPDATED! [v3.6.47-persistent-whatsapp-daemon]'));
 app.get('/status', (req, res) => res.json({ status: 'ok', version: '3.6.47', attachments: true, uptime: process.uptime() })); // health check
 

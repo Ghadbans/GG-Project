@@ -4939,7 +4939,11 @@ The standardized `renderStatusBadge` helper was seamlessly integrated into all 1
      1. Updated `agent.js` to parse URL pathname via `new URL(req.url, ...).pathname`, allowing `/status`, `/flyer`, `/publish`, and `/send-invoices` to match cleanly regardless of query strings.
      2. Updated `src/js/index.js` `bypassEndpoints` to explicitly include `'127.0.0.1'`, `':5055'`, and `'/status'`, preventing Axios from injecting unwanted branch query parameters into local daemon endpoints.
 
-5. **Background Task Discipline**:
+5. **Root & Web Crawler Endpoints (`server/index.js`)**:
+   - Added explicit handlers for `GET /` (returns API identity and health JSON), `GET /robots.txt` (`Disallow: /` to prevent public search engine indexing of backend API routes), and `GET /favicon.ico` (returns 204 No Content).
+   - Completely eliminates benign `[404] GET / — Not Found` and `[404] GET /robots.txt — Not Found` entries from Railway deployment logs when browsers or automated crawlers probe `https://api.globalgate.sarl`.
+
+6. **Background Task Discipline**:
    - Ensured zero long-lived daemon background tasks are left attached to the agent development harness, keeping Antigravity task count at 0.
 
 ### 2. Multi-Platform Verification & Packaging
