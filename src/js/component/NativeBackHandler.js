@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { App as CapApp } from '@capacitor/app';
+import { popAndDismiss } from '../utils/modalBackManager';
 import {
   Dialog,
   DialogTitle,
@@ -51,6 +52,11 @@ function NativeBackHandler() {
     const setupListener = async () => {
       try {
         backListener = await CapApp.addListener('backButton', ({ canGoBack }) => {
+          // 1. If any registered modal, sheet, or drawer is active, dismiss it first!
+          if (popAndDismiss()) {
+            return;
+          }
+
           if (exitDialogOpen || discardDialogOpen) {
             setExitDialogOpen(false);
             setDiscardDialogOpen(false);

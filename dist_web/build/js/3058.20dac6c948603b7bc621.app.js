@@ -3929,6 +3929,8 @@ var Inventory2Outlined = __webpack_require__(53225);
 var axios = __webpack_require__(99380);
 // EXTERNAL MODULE: ./node_modules/react-toastify/dist/react-toastify.esm.mjs
 var react_toastify_esm = __webpack_require__(99571);
+// EXTERNAL MODULE: ./src/js/utils/modalBackManager.js
+var modalBackManager = __webpack_require__(3625);
 // EXTERNAL MODULE: ./node_modules/@mui/material/Button/Button.js + 3 modules
 var Button = __webpack_require__(86990);
 // EXTERNAL MODULE: ./node_modules/@mui/material/Drawer/Drawer.js + 1 modules
@@ -4942,6 +4944,7 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 
+
 function MobileDetailSheet_safeText(val) {
   var fallback = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
   if (val === null || val === undefined) return fallback;
@@ -5335,6 +5338,11 @@ function MobileDetailSheet(_ref) {
       }
     }, att.fileName));
   })));
+  (0,react.useEffect)(() => {
+    if (open && typeof onClose === 'function') {
+      return (0,modalBackManager/* registerModalDismiss */.Ti)(onClose);
+    }
+  }, [open, onClose]);
   (0,react.useEffect)(() => {
     var fetchAccess = /*#__PURE__*/function () {
       var _ref4 = _asyncToGenerator(function* () {

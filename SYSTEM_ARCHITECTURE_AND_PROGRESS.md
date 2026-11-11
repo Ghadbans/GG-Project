@@ -4954,3 +4954,52 @@ The standardized `renderStatusBadge` helper was seamlessly integrated into all 1
 - **Android APK**: Compiled via Gradle with Android Studio JBR: `server/public/downloads/GlobalGate-v3.6.47.apk` (18.85 MB) and mirrored to `GlobalGate.apk`.
 - **Windows Executable**: Packaged `dist/Global Gate Setup 3.6.47.exe` (96.07 MB) via `electron-builder` and copied to `server/public/downloads/GlobalGate-v3.6.47.exe` and `server/public/downloads/GlobalGateSetup.exe`.
 - **Artifact Preservation**: All previous builds (`GlobalGate-v3.6.46.exe`, `GlobalGate-v3.6.45.exe`, `GlobalGate-v3.6.44.exe`, `.apk` files) remain permanently preserved.
+
+---
+
+## [2026-11-11] - Release v3.6.48: Cloud WhatsApp Master Engine, Multi-Device Freedom, False-Failure UI Fix & Step-by-Step Mobile Back Navigation
+
+### 1. Requirements & Core Enhancements
+1. **24/7 Cloud WhatsApp Master on Railway (`api.globalgate.sarl`)**:
+   - **User Mandate**: Eliminates the limitation of WhatsApp dispatches depending on CEO GG's physical laptop being turned on and running a local background daemon.
+   - **Central Master Architecture**: Integrated `@whiskeysockets/baileys` directly into the Railway backend (`server/services/cloudWhatsAppService.js`).
+   - **MongoDB Persistent Auth Storage (`mongoAuthState.js`)**: Baileys multi-device authentication credentials and encryption keys are stored directly in the `whatsappCloudSession` MongoDB collection, ensuring session persistence across Railway redeployments and restarts.
+   - **Pure Node.js PDF Invoice Engine (`invoicePdfGenerator.js`)**: High-resolution, professional PDF invoices are rendered directly in Node.js via `PDFKit` using vector drawing and Helvetica fonts, consuming only ~35MB RAM (versus ~800MB for headless Chrome/Puppeteer), completely immune to OOM kills.
+   - **Multi-Workstation Freedom**: Any authorized laptop, desktop PC, tablet, or mobile phone across any company branch can now dispatch invoices via WhatsApp 24/7 from the official company number (`+243 827 722 222`), regardless of whether GG's personal laptop is awake, sleeping, or off.
+
+2. **Resolution of False "Failed (0 of 1 sent)" UI Alert (`InvoiceViewAdmin.js`)**:
+   - **Root Cause**: On GG's laptop, invoices were successfully dispatched to the WhatsApp network, but the UI displayed a red toast: `Failed to dispatch WhatsApp invoices (0 of 1 sent)`. The response parser read `sentCount` strictly from `result?.report?.sent`. Because direct daemon responses return a top-level `{ sent: 1, failed: 0 }` structure without a nested `report` object, `sentCount` evaluated to `0`, triggering an erroneous error toast.
+   - **Fix**: Normalized response parsing to support both flat and nested schemas:
+     ```javascript
+     const sentCount = Number(result?.sent ?? result?.report?.sent ?? 0);
+     const failedCount = Number(result?.failed ?? result?.report?.failed ?? Math.max(0, selectedInvoices.length - sentCount));
+     const totalCount = Number(result?.total ?? result?.report?.total ?? selectedInvoices.length);
+     ```
+   - Successful dispatches now reliably trigger green success notifications matching real delivery status.
+
+3. **In-App Cloud WhatsApp Status & QR Pairing Dialog (`InvoiceViewAdmin.js`)**:
+   - Added live Cloud WhatsApp status pill in the modal header:
+     - `● Cloud Master: Connected` (Green)
+     - `● Cloud Master: Scan QR to Link` (Amber)
+     - `● Cloud Master: Connecting...` (Orange)
+     - `● Cloud Master: Offline (Click to Link)` (Red)
+   - Built QR Pairing Dialog showing live base64 QR code for linking the official business line (`+243 827 722 222`), with a one-click "Refresh QR / Reconnect" button.
+
+4. **Step-by-Step Mobile Back Navigation (`modalBackManager.js` & `NativeBackHandler.js`)**:
+   - **Issue Resolved**: When browsing items or transactions in the mobile layout, viewing an item detail sheet and tapping the hardware back button or swipe-back gesture jumped directly back to the Dashboard (`/AdminHome`).
+   - **LIFO Dismiss Stack**: Created `src/js/utils/modalBackManager.js` maintaining an active stack of open drawers, modal dialogs, and detail sheets (`registerModalDismiss`).
+   - **Hierarchical Interception**: Hooked `NativeBackHandler.js` to intercept back button events. When `MobileDetailSheet` is open, the first back press dismisses the sheet and returns the user to the item list view; a subsequent back press returns to the Dashboard.
+
+5. **iPhone / iPad (iOS) Safari PWA Native Mode (`isMobile.js` & `index.html`)**:
+   - Added Apple PWA meta tags (`apple-mobile-web-app-capable`, `apple-mobile-web-app-status-bar-style`) and touch icons to `index.html`.
+   - Updated `src/js/utils/isMobile.js` to recognize Safari standalone mode (`navigator.standalone === true`) and iOS mobile user-agents, rendering the responsive `MobileLayout` while preserving desktop layouts for PC and Mac browser windows.
+   - Updated download portal with direct link `https://portal.globalgate.sarl/?mobile=true`.
+
+### 2. Multi-Platform Verification & Packaging
+- **AST Quality Gate**: Verified with 0 errors across 240 source files (`node scripts/pre-build-check.js`).
+- **Comprehensive 14-Module Audit**: Ran `scripts/comprehensive_module_test.js` — **20 of 20 checks passed with zero errors**.
+- **Version Bump**: Bumped to `v3.6.48` across `package.json`, `server/package.json`, `server/routes/downloadRoutes.js`, and `server/index.js`.
+- **Production Bundles**: Compiled desktop and web production bundles via Webpack (`dist_web/` and `build/`).
+- **Android APK**: Compiled via Gradle with Android Studio JBR: `server/public/downloads/GlobalGate-v3.6.48.apk` (18.85 MB) and mirrored to `GlobalGate.apk`.
+- **Windows Executable**: Packaged `dist/Global Gate Setup 3.6.48.exe` (96.27 MB) via `electron-builder` and copied to `server/public/downloads/GlobalGate-v3.6.48.exe` and `server/public/downloads/GlobalGateSetup.exe`.
+- **Artifact Preservation**: All previous builds (`GlobalGate-v3.6.47.exe`, `GlobalGate-v3.6.46.exe`, `GlobalGate-v3.6.45.exe`, etc.) remain permanently preserved.

@@ -308,6 +308,52 @@ function InvoiceViewAdmin() {
   const DEFAULT_WA_MESSAGE = 'Dear Valued Customer, please find attached your official invoice from Global Gate SARL. Thank you for your business!';
   const [customerPhoneMap, setCustomerPhoneMap] = useState({});
   const [openWhatsAppModal, setOpenWhatsAppModal] = useState(false);
+  const [cloudWaStatus, setCloudWaStatus] = useState({
+    status: 'DISCONNECTED',
+    phone: '+243 827 722 222',
+    name: 'Global Gate S.A.R.L',
+    qrCode: null,
+    isReady: false
+  });
+  const [openQrDialog, setOpenQrDialog] = useState(false);
+  const [refreshingQr, setRefreshingQr] = useState(false);
+
+  const fetchCloudStatus = async () => {
+    try {
+      const res = await axios.get(`${ENDPOINT_URL}/invoice-whatsapp/cloud-status`);
+      if (res?.data?.success) {
+        setCloudWaStatus(res.data);
+      }
+    } catch (err) {
+      console.warn('[InvoiceWhatsApp] Status fetch warning:', err);
+    }
+  };
+
+  const handleReconnectCloud = async () => {
+    setRefreshingQr(true);
+    try {
+      const res = await axios.post(`${ENDPOINT_URL}/invoice-whatsapp/cloud-reconnect`);
+      if (res?.data?.success) {
+        setCloudWaStatus(res.data);
+        toast.info('Cloud WhatsApp reconnect requested. If QR code appears, scan it with your phone.');
+      }
+    } catch (err) {
+      toast.error('Failed to reconnect Cloud WhatsApp: ' + err.message);
+    } finally {
+      setRefreshingQr(false);
+    }
+  };
+
+  useEffect(() => {
+    let interval = null;
+    if (openWhatsAppModal) {
+      fetchCloudStatus();
+      interval = setInterval(fetchCloudStatus, 5000);
+    }
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, [openWhatsAppModal]);
   const [whatsAppInvoicesList, setWhatsAppInvoicesList] = useState([]);
   const [selectedWhatsAppInvoiceIds, setSelectedWhatsAppInvoiceIds] = useState(new Set());
   const [whatsAppMessage, setWhatsAppMessage] = useState(DEFAULT_WA_MESSAGE);
@@ -621,48 +667,62 @@ function InvoiceViewAdmin() {
     try {
       let result = null;
 
-      // 1. First priority: Direct local daemon dispatch (instant 2-3s in desktop app & web portal on this PC)
-      let localSuccess = false;
+      // 1. Primary Master: Railway 24/7 Cloud WhatsApp Engine
+      let cloudSuccess = false;
       try {
-        const localCheck = await axios.get('http://127.0.0.1:5055/status', { timeout: 1500 });
-        if (localCheck.status === 200) {
-          const localRes = await axios.post('http://127.0.0.1:5055/send-invoices', payload, { timeout: 180000 });
-          if (localRes?.data) {
-            result = localRes.data;
-            localSuccess = true;
-          }
+        const res = await axios.post(`${ENDPOINT_URL}/invoice-whatsapp/send`, payload);
+        if (res?.data) {
+          result = res.data;
+          cloudSuccess = true;
         }
-      } catch (_) {
-        localSuccess = false;
+      } catch (cloudErr) {
+        console.warn('[InvoiceWhatsApp] Cloud dispatch attempt note:', cloudErr?.response?.data || cloudErr.message);
+        if (cloudErr?.response?.data?.cloudStatus) {
+          setCloudWaStatus(prev => ({
+            ...prev,
+            status: cloudErr.response.data.cloudStatus,
+            qrCode: cloudErr.response.data.qrCode || prev.qrCode
+          }));
+        }
       }
 
-      console.log('[InvoiceWhatsApp] Dispatch state:', {
-        localDaemonSuccess: localSuccess,
-        hasElectron: typeof window !== 'undefined' && Boolean(window.electron),
-        hasIpcMethod: typeof window !== 'undefined' && typeof window.electron?.sendInvoiceWhatsApp === 'function'
-      });
+      // 2. Secondary Fallback: Local HTTP daemon if active on this PC
+      if (!cloudSuccess) {
+        try {
+          const localCheck = await axios.get('http://127.0.0.1:5055/status', { timeout: 1500 });
+          if (localCheck.status === 200) {
+            const localRes = await axios.post('http://127.0.0.1:5055/send-invoices', payload, { timeout: 180000 });
+            if (localRes?.data) {
+              result = localRes.data;
+            }
+          }
+        } catch (_) {}
+      }
 
-      // 2. Second priority: Desktop Electron IPC (spawns background daemon or runs batch)
-      if (!localSuccess) {
+      // 3. Tertiary Fallback: Desktop Electron IPC
+      if (!result) {
         if (typeof window !== 'undefined' && window.electron && typeof window.electron.sendInvoiceWhatsApp === 'function') {
           result = await window.electron.sendInvoiceWhatsApp(payload);
-        } else {
-          // 3. Third priority: Cloud API endpoint
-          const res = await axios.post(`${ENDPOINT_URL}/invoice-whatsapp/send`, payload);
-          result = res.data;
         }
+      }
+
+      if (!result) {
+        throw new Error('Cloud WhatsApp Master is not connected. Please click the status badge to link the company phone via QR code.');
       }
 
       setDispatchResult(result);
 
-      const sentCount = Number(result?.report?.sent || 0);
-      const failedCount = Number(result?.report?.failed !== undefined ? result.report.failed : Math.max(0, selectedInvoices.length - sentCount));
-      const totalCount = Number(result?.report?.total || selectedInvoices.length);
+      // Support BOTH top-level format and nested report format
+      const sentCount = Number(result?.sent ?? result?.report?.sent ?? 0);
+      const failedCount = Number(result?.failed ?? result?.report?.failed ?? Math.max(0, selectedInvoices.length - sentCount));
+      const totalCount = Number(result?.total ?? result?.report?.total ?? selectedInvoices.length);
 
       // Determine the exact invoices that actually succeeded
-      const sentDetails = Array.isArray(result?.report?.details)
-        ? result.report.details.filter(d => d.status === 'sent')
-        : [];
+      const detailsList = Array.isArray(result?.details)
+        ? result.details
+        : (Array.isArray(result?.report?.details) ? result.report.details : []);
+
+      const sentDetails = detailsList.filter(d => d.status === 'sent');
 
       let actuallySentInvoices = [];
       if (sentDetails.length > 0) {
@@ -709,12 +769,9 @@ function InvoiceViewAdmin() {
       }
     } catch (err) {
       console.error('WhatsApp dispatch error:', err);
-      const is503 = err?.response?.status === 503;
-      const friendlyMsg = is503
-        ? 'WhatsApp desktop agent is not running on this PC. Please install and launch Global Gate v3.6.46.'
-        : err.message;
-      setDispatchResult({ success: false, error: friendlyMsg });
-      toast.error('Dispatch failed: ' + friendlyMsg);
+      const errMsg = err?.response?.data?.error || err.message;
+      setDispatchResult({ success: false, error: errMsg });
+      toast.error('Dispatch failed: ' + errMsg);
     } finally {
       setDispatchingWhatsApp(false);
     }
@@ -1775,12 +1832,36 @@ function InvoiceViewAdmin() {
                       sx: { borderRadius: 2, p: 1, maxWidth: 980, width: '100%' }
                     }}
                   >
-                    <DialogTitle sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', pb: 0.5 }}>
-                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.2 }}>
+                    <DialogTitle sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', pb: 0.5, flexWrap: 'wrap', gap: 1 }}>
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.2, flexWrap: 'wrap' }}>
                         <WhatsAppIcon sx={{ color: '#25D366', fontSize: 28 }} />
                         <Typography variant="h6" sx={{ fontWeight: 800, color: '#0f172a' }}>
                           Send Invoices via WhatsApp (+243 827 722 222)
                         </Typography>
+                        {/* Cloud WhatsApp Status Pill */}
+                        <Chip
+                          size="small"
+                          clickable
+                          onClick={() => setOpenQrDialog(true)}
+                          label={
+                            cloudWaStatus.isReady
+                              ? `● Cloud Master: Connected`
+                              : cloudWaStatus.status === 'QR_READY'
+                              ? `● Cloud Master: Scan QR to Link`
+                              : cloudWaStatus.status === 'CONNECTING'
+                              ? `● Cloud Master: Connecting...`
+                              : `● Cloud Master: Offline (Click to Link)`
+                          }
+                          sx={{
+                            fontWeight: 700,
+                            fontSize: '0.72rem',
+                            cursor: 'pointer',
+                            bgcolor: cloudWaStatus.isReady ? '#dcfce7' : (cloudWaStatus.status === 'QR_READY' ? '#fef3c7' : '#fee2e2'),
+                            color: cloudWaStatus.isReady ? '#15803d' : (cloudWaStatus.status === 'QR_READY' ? '#b45309' : '#b91c1c'),
+                            border: '1px solid',
+                            borderColor: cloudWaStatus.isReady ? '#86efac' : (cloudWaStatus.status === 'QR_READY' ? '#fcd34d' : '#fca5a5')
+                          }}
+                        />
                       </Box>
                       <IconButton
                         size="small"
@@ -2217,6 +2298,66 @@ function InvoiceViewAdmin() {
                           {dispatchingWhatsApp ? 'Dispatching...' : `Send ${selectedWhatsAppInvoiceIds.size} Invoice(s) via WhatsApp`}
                         </Button>
                       )}
+                    </DialogActions>
+                  </Dialog>
+
+                  {/* Cloud WhatsApp QR Pairing Dialog */}
+                  <Dialog
+                    open={openQrDialog}
+                    onClose={() => setOpenQrDialog(false)}
+                    maxWidth="xs"
+                    fullWidth
+                    PaperProps={{ sx: { borderRadius: 2, p: 2, textAlign: 'center' } }}
+                  >
+                    <DialogTitle sx={{ fontWeight: 800, pb: 1 }}>
+                      WhatsApp Cloud Master Pairing
+                    </DialogTitle>
+                    <DialogContent sx={{ pt: 1 }}>
+                      <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+                        Official Company WhatsApp Line: <strong>+243 827 722 222</strong>
+                      </Typography>
+                      {cloudWaStatus.isReady ? (
+                        <Box sx={{ p: 2, bgcolor: '#f0fdf4', borderRadius: 2, border: '1px solid #86efac', mb: 2 }}>
+                          <Typography variant="subtitle1" sx={{ color: '#16a34a', fontWeight: 800 }}>
+                            ✅ Cloud Master is Online & Connected!
+                          </Typography>
+                          <Typography variant="caption" sx={{ color: '#15803d' }}>
+                            Linked Device: {cloudWaStatus.name || 'Global Gate SARL'} ({cloudWaStatus.phone})
+                          </Typography>
+                        </Box>
+                      ) : cloudWaStatus.qrCode ? (
+                        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 2 }}>
+                          <img
+                            src={cloudWaStatus.qrCode}
+                            alt="WhatsApp QR Code"
+                            style={{ width: 240, height: 240, borderRadius: 8, border: '1px solid #cbd5e1' }}
+                          />
+                          <Typography variant="caption" sx={{ mt: 1.5, color: '#475569', fontWeight: 600 }}>
+                            1. Open WhatsApp on +243 827 722 222<br />
+                            2. Tap <strong>Linked Devices</strong> &gt; <strong>Link a Device</strong><br />
+                            3. Point your camera at this QR code
+                          </Typography>
+                        </Box>
+                      ) : (
+                        <Box sx={{ p: 3, bgcolor: '#f8fafc', borderRadius: 2, mb: 2 }}>
+                          <Typography variant="body2" color="text.secondary">
+                            {cloudWaStatus.status === 'CONNECTING' ? 'Connecting to WhatsApp Cloud Master...' : 'Ready to link device.'}
+                          </Typography>
+                        </Box>
+                      )}
+                    </DialogContent>
+                    <DialogActions sx={{ justifyContent: 'space-between', px: 2 }}>
+                      <Button
+                        size="small"
+                        variant="outlined"
+                        onClick={handleReconnectCloud}
+                        disabled={refreshingQr}
+                      >
+                        {refreshingQr ? 'Refreshing...' : 'Refresh QR / Reconnect'}
+                      </Button>
+                      <Button size="small" variant="contained" onClick={() => setOpenQrDialog(false)}>
+                        Close
+                      </Button>
                     </DialogActions>
                   </Dialog>
                 </div>)

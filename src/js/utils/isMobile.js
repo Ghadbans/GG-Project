@@ -39,8 +39,25 @@ export const isNativeMobile = () => {
     }
   }
 
-  // All web browsers (Mobile Chrome, Safari on iPhone, Android browser, PC, laptop, tablets)
-  // MUST ALWAYS render the standard, complete Desktop theme and layout.
+  // 4. Standalone PWA Mode (e.g. Apple Safari "Add to Home Screen" or Android PWA)
+  if (
+    (typeof navigator !== 'undefined' && navigator.standalone === true) ||
+    (typeof window.matchMedia === 'function' && window.matchMedia('(display-mode: standalone)').matches)
+  ) {
+    return true;
+  }
+
+  // 5. Real Mobile Handheld Devices (iPhone, iPad, Android Phones/Tablets)
+  if (typeof navigator !== 'undefined' && navigator.userAgent) {
+    const ua = navigator.userAgent;
+    const isMobileDevice = /iphone|ipad|ipod|android.*mobile|mobile.*android/i.test(ua);
+    if (isMobileDevice) {
+      return true;
+    }
+  }
+
+  // All desktop PC/Mac browsers (Windows PC, Mac, Laptop) MUST ALWAYS render
+  // the standard, complete Desktop theme and layout (no window width fallback).
   return false;
 };
 

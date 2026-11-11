@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { selectCurrentUser, logOut } from '../features/auth/authSlice';
 import { handleUserLogout } from '../utils/authUtils';
 import { canAccessModule } from '../utils/permissionUtils';
+import { registerModalDismiss } from '../utils/modalBackManager';
 import { cachedGet } from '../utils/apiCache';
 import { ENDPOINT_URL } from '../apiConfig';
 import {
@@ -85,6 +86,12 @@ function MobileLayout({ children }) {
   const dispatch = useDispatch();
   const user = useSelector(selectCurrentUser);
   const [drawerOpen, setDrawerOpen] = useState(false);
+
+  useEffect(() => {
+    if (drawerOpen) {
+      return registerModalDismiss(() => setDrawerOpen(false));
+    }
+  }, [drawerOpen]);
   const [grantAccess, setGrantAccess] = useState([]);
 
   useEffect(() => {

@@ -3,7 +3,7 @@ const router = express.Router();
 const path = require('path');
 const fs = require('fs');
 
-const APP_VERSION = '3.6.47';
+const APP_VERSION = '3.6.48';
 
 // Potential paths for APK file
 function getAndroidApkPath() {
@@ -106,7 +106,7 @@ router.get('/version', (req, res) => {
       sizeMB: exePath ? (fs.statSync(exePath).size / 1024 / 1024).toFixed(2) : null
     },
     iosWeb: {
-      url: 'https://portal.globalgate.sarl',
+      url: 'https://portal.globalgate.sarl/?mobile=true',
       instructions: 'Open in Safari and tap Share -> Add to Home Screen'
     }
   });
@@ -361,7 +361,7 @@ router.get('/', (req, res) => {
     <div class="logo-badge">🏛️</div>
     <h1>Global Gate Management</h1>
     <p class="subtitle">Direct downloads for your phone, tablet, and computer. Instant setup without app store waiting.</p>
-    <div class="version-tag">SYSTEM VERSION v${APP_VERSION} (CAPITAL LETTERS EDITION)</div>
+    <div class="version-tag">SYSTEM VERSION v${APP_VERSION} (CLOUD WHATSAPP & MULTI-DEVICE EDITION)</div>
   </div>
 
   <div class="container">
@@ -410,7 +410,7 @@ router.get('/', (req, res) => {
       </div>
 
       <div>
-        <a href="https://portal.globalgate.sarl" target="_blank" class="btn btn-ios">
+        <a href="https://portal.globalgate.sarl/?mobile=true" target="_blank" class="btn btn-ios">
           <span>🚀</span> Open on iPhone / iPad
         </a>
         <div class="meta-info">Safari PWA • Instant Cloud Connection</div>

@@ -8,6 +8,7 @@ import { cachedGet } from '../utils/apiCache';
 import { canAccessModule } from '../utils/permissionUtils';
 import { ENDPOINT_URL } from '../apiConfig';
 import { normalizeImageDataUrl } from '../utils/formatUtils';
+import { registerModalDismiss } from '../utils/modalBackManager';
 import {
   Drawer,
   Box,
@@ -395,6 +396,12 @@ function MobileDetailSheet({ open, onClose, record, type }) {
       )}
     </Card>
   );
+
+  useEffect(() => {
+    if (open && typeof onClose === 'function') {
+      return registerModalDismiss(onClose);
+    }
+  }, [open, onClose]);
 
   useEffect(() => {
     const fetchAccess = async () => {

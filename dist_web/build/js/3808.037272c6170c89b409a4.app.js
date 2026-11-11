@@ -1,4 +1,4 @@
-(this["webpackChunkgg_management"] = this["webpackChunkgg_management"] || []).push([[9419],{
+(this["webpackChunkgg_management"] = this["webpackChunkgg_management"] || []).push([[3808],{
 
 /***/ 40530
 (__unused_webpack_module, exports, __webpack_require__) {
@@ -413,7 +413,7 @@ var _default = exports.A = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRun
 
 /***/ },
 
-/***/ 17332
+/***/ 33541
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -424,472 +424,12 @@ var _default = exports.A = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRun
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("path", {
-  d: "M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2m-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1m2 14H7v-2h7zm3-4H7v-2h10zm0-4H7V7h10z"
-}), 'Assignment'));
+  d: "M11 18c0 1.1-.9 2-2 2s-2-.9-2-2 .9-2 2-2 2 .9 2 2m-2-8c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m0-6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m6 4c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2m0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"
+}), 'DragIndicatorRounded'));
 /* harmony export */ __webpack_require__.d(__webpack_exports__, [
 /* harmony export */   "A", 0, /* export default binding */ __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ ]);
 
-
-/***/ },
-
-/***/ 8047
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var _utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(20561);
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(74848);
-"use client";
-
-
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("path", {
-  d: "M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2m5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12z"
-}), 'Cancel'));
-/* harmony export */ __webpack_require__.d(__webpack_exports__, [
-/* harmony export */   "A", 0, /* export default binding */ __WEBPACK_DEFAULT_EXPORT__
-/* harmony export */ ]);
-
-
-/***/ },
-
-/***/ 81757
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var _utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(20561);
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(74848);
-"use client";
-
-
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("path", {
-  d: "M3 10h11v2H3zm0-2h11V6H3zm0 8h7v-2H3zm15.01-3.13.71-.71c.39-.39 1.02-.39 1.41 0l.71.71c.39.39.39 1.02 0 1.41l-.71.71zm-.71.71-5.3 5.3V21h2.12l5.3-5.3z"
-}), 'EditNote'));
-/* harmony export */ __webpack_require__.d(__webpack_exports__, [
-/* harmony export */   "A", 0, /* export default binding */ __WEBPACK_DEFAULT_EXPORT__
-/* harmony export */ ]);
-
-
-/***/ },
-
-/***/ 62430
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var _utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(20561);
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(74848);
-"use client";
-
-
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("path", {
-  d: "M6 2v6h.01L6 8.01 10 12l-4 4 .01.01H6V22h12v-5.99h-.01L18 16l-4-4 4-3.99-.01-.01H18V2zm10 14.5V20H8v-3.5l4-4zm-4-5-4-4V4h8v3.5z"
-}), 'HourglassEmpty'));
-/* harmony export */ __webpack_require__.d(__webpack_exports__, [
-/* harmony export */   "A", 0, /* export default binding */ __WEBPACK_DEFAULT_EXPORT__
-/* harmony export */ ]);
-
-
-/***/ },
-
-/***/ 7078
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var _utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(20561);
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(74848);
-"use client";
-
-
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("path", {
-  d: "M18.39 14.56C16.71 13.7 14.53 13 12 13s-4.71.7-6.39 1.56C4.61 15.07 4 16.1 4 17.22V20h16v-2.78c0-1.12-.61-2.15-1.61-2.66M18 18H6v-.78c0-.38.2-.72.52-.88C7.71 15.73 9.63 15 12 15c2.37 0 4.29.73 5.48 1.34.32.16.52.5.52.88zm-8.22-6h4.44c1.21 0 2.14-1.06 1.98-2.26l-.32-2.45C15.57 5.39 13.92 4 12 4S8.43 5.39 8.12 7.29L7.8 9.74c-.16 1.2.77 2.26 1.98 2.26m.32-4.41C10.26 6.67 11.06 6 12 6s1.74.67 1.9 1.59l.32 2.41H9.78z"
-}), 'Person2Outlined'));
-/* harmony export */ __webpack_require__.d(__webpack_exports__, [
-/* harmony export */   "A", 0, /* export default binding */ __WEBPACK_DEFAULT_EXPORT__
-/* harmony export */ ]);
-
-
-/***/ },
-
-/***/ 79030
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var _utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(20561);
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(74848);
-"use client";
-
-
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("path", {
-  d: "M8.65 5.82C9.36 4.72 10.6 4 12 4c2.21 0 4 1.79 4 4 0 1.4-.72 2.64-1.82 3.35zM20 17.17c-.02-1.1-.63-2.11-1.61-2.62-.54-.28-1.13-.54-1.77-.76zm.49 3.32L3.51 3.51a.9959.9959 0 0 0-1.41 0c-.39.39-.39 1.02 0 1.41l8.18 8.18c-1.82.23-3.41.8-4.7 1.46C4.6 15.08 4 16.11 4 17.22V20h13.17l1.9 1.9c.39.39 1.02.39 1.41 0 .4-.39.4-1.02.01-1.41"
-}), 'PersonOffRounded'));
-/* harmony export */ __webpack_require__.d(__webpack_exports__, [
-/* harmony export */   "A", 0, /* export default binding */ __WEBPACK_DEFAULT_EXPORT__
-/* harmony export */ ]);
-
-
-/***/ },
-
-/***/ 52751
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var _utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(20561);
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(74848);
-"use client";
-
-
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("path", {
-  d: "M2.01 21 23 12 2.01 3 2 10l15 2-15 2z"
-}), 'Send'));
-/* harmony export */ __webpack_require__.d(__webpack_exports__, [
-/* harmony export */   "A", 0, /* export default binding */ __WEBPACK_DEFAULT_EXPORT__
-/* harmony export */ ]);
-
-
-/***/ },
-
-/***/ 36632
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-
-// EXPORTS
-__webpack_require__.d(__webpack_exports__, {
-  A: () => (/* binding */ Alert_Alert)
-});
-
-// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js
-var objectWithoutPropertiesLoose = __webpack_require__(98587);
-// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/extends.js
-var esm_extends = __webpack_require__(58168);
-// EXTERNAL MODULE: ./node_modules/react/index.js
-var react = __webpack_require__(96540);
-// EXTERNAL MODULE: ./node_modules/clsx/dist/clsx.mjs
-var clsx = __webpack_require__(34164);
-// EXTERNAL MODULE: ./node_modules/@mui/utils/esm/composeClasses/composeClasses.js
-var composeClasses = __webpack_require__(75659);
-// EXTERNAL MODULE: ./node_modules/@mui/system/colorManipulator.js
-var colorManipulator = __webpack_require__(771);
-// EXTERNAL MODULE: ./node_modules/@mui/material/styles/styled.js
-var styled = __webpack_require__(11848);
-// EXTERNAL MODULE: ./node_modules/@mui/material/DefaultPropsProvider/DefaultPropsProvider.js
-var DefaultPropsProvider = __webpack_require__(25669);
-// EXTERNAL MODULE: ./node_modules/@mui/material/utils/useSlot.js
-var useSlot = __webpack_require__(6025);
-// EXTERNAL MODULE: ./node_modules/@mui/material/utils/capitalize.js
-var capitalize = __webpack_require__(28466);
-// EXTERNAL MODULE: ./node_modules/@mui/material/Paper/Paper.js + 2 modules
-var Paper = __webpack_require__(60538);
-// EXTERNAL MODULE: ./node_modules/@mui/utils/esm/generateUtilityClasses/generateUtilityClasses.js
-var generateUtilityClasses = __webpack_require__(38413);
-// EXTERNAL MODULE: ./node_modules/@mui/utils/esm/generateUtilityClass/generateUtilityClass.js
-var generateUtilityClass = __webpack_require__(31609);
-;// ./node_modules/@mui/material/Alert/alertClasses.js
-
-
-function getAlertUtilityClass(slot) {
-  return (0,generateUtilityClass/* default */.Ay)('MuiAlert', slot);
-}
-const alertClasses = (0,generateUtilityClasses/* default */.A)('MuiAlert', ['root', 'action', 'icon', 'message', 'filled', 'colorSuccess', 'colorInfo', 'colorWarning', 'colorError', 'filledSuccess', 'filledInfo', 'filledWarning', 'filledError', 'outlined', 'outlinedSuccess', 'outlinedInfo', 'outlinedWarning', 'outlinedError', 'standard', 'standardSuccess', 'standardInfo', 'standardWarning', 'standardError']);
-/* harmony default export */ const Alert_alertClasses = (alertClasses);
-// EXTERNAL MODULE: ./node_modules/@mui/material/IconButton/IconButton.js + 1 modules
-var IconButton = __webpack_require__(11641);
-// EXTERNAL MODULE: ./node_modules/@mui/material/utils/createSvgIcon.js
-var createSvgIcon = __webpack_require__(20561);
-// EXTERNAL MODULE: ./node_modules/react/jsx-runtime.js
-var jsx_runtime = __webpack_require__(74848);
-;// ./node_modules/@mui/material/internal/svg-icons/SuccessOutlined.js
-'use client';
-
-
-
-
-/**
- * @ignore - internal component.
- */
-
-/* harmony default export */ const SuccessOutlined = ((0,createSvgIcon/* default */.A)( /*#__PURE__*/(0,jsx_runtime.jsx)("path", {
-  d: "M20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4C12.76,4 13.5,4.11 14.2, 4.31L15.77,2.74C14.61,2.26 13.34,2 12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0, 0 22,12M7.91,10.08L6.5,11.5L11,16L21,6L19.59,4.58L11,13.17L7.91,10.08Z"
-}), 'SuccessOutlined'));
-;// ./node_modules/@mui/material/internal/svg-icons/ReportProblemOutlined.js
-'use client';
-
-
-
-
-/**
- * @ignore - internal component.
- */
-
-/* harmony default export */ const ReportProblemOutlined = ((0,createSvgIcon/* default */.A)( /*#__PURE__*/(0,jsx_runtime.jsx)("path", {
-  d: "M12 5.99L19.53 19H4.47L12 5.99M12 2L1 21h22L12 2zm1 14h-2v2h2v-2zm0-6h-2v4h2v-4z"
-}), 'ReportProblemOutlined'));
-;// ./node_modules/@mui/material/internal/svg-icons/ErrorOutline.js
-'use client';
-
-
-
-
-/**
- * @ignore - internal component.
- */
-
-/* harmony default export */ const ErrorOutline = ((0,createSvgIcon/* default */.A)( /*#__PURE__*/(0,jsx_runtime.jsx)("path", {
-  d: "M11 15h2v2h-2zm0-8h2v6h-2zm.99-5C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
-}), 'ErrorOutline'));
-;// ./node_modules/@mui/material/internal/svg-icons/InfoOutlined.js
-'use client';
-
-
-
-
-/**
- * @ignore - internal component.
- */
-
-/* harmony default export */ const InfoOutlined = ((0,createSvgIcon/* default */.A)( /*#__PURE__*/(0,jsx_runtime.jsx)("path", {
-  d: "M11,9H13V7H11M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20, 12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10, 10 0 0,0 12,2M11,17H13V11H11V17Z"
-}), 'InfoOutlined'));
-// EXTERNAL MODULE: ./node_modules/@mui/material/internal/svg-icons/Close.js
-var Close = __webpack_require__(49350);
-;// ./node_modules/@mui/material/Alert/Alert.js
-'use client';
-
-
-
-const _excluded = ["action", "children", "className", "closeText", "color", "components", "componentsProps", "icon", "iconMapping", "onClose", "role", "severity", "slotProps", "slots", "variant"];
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-const useUtilityClasses = ownerState => {
-  const {
-    variant,
-    color,
-    severity,
-    classes
-  } = ownerState;
-  const slots = {
-    root: ['root', `color${(0,capitalize/* default */.A)(color || severity)}`, `${variant}${(0,capitalize/* default */.A)(color || severity)}`, `${variant}`],
-    icon: ['icon'],
-    message: ['message'],
-    action: ['action']
-  };
-  return (0,composeClasses/* default */.A)(slots, getAlertUtilityClass, classes);
-};
-const AlertRoot = (0,styled/* default */.Ay)(Paper/* default */.A, {
-  name: 'MuiAlert',
-  slot: 'Root',
-  overridesResolver: (props, styles) => {
-    const {
-      ownerState
-    } = props;
-    return [styles.root, styles[ownerState.variant], styles[`${ownerState.variant}${(0,capitalize/* default */.A)(ownerState.color || ownerState.severity)}`]];
-  }
-})(({
-  theme
-}) => {
-  const getColor = theme.palette.mode === 'light' ? colorManipulator/* darken */.e$ : colorManipulator/* lighten */.a;
-  const getBackgroundColor = theme.palette.mode === 'light' ? colorManipulator/* lighten */.a : colorManipulator/* darken */.e$;
-  return (0,esm_extends/* default */.A)({}, theme.typography.body2, {
-    backgroundColor: 'transparent',
-    display: 'flex',
-    padding: '6px 16px',
-    variants: [...Object.entries(theme.palette).filter(([, value]) => value.main && value.light).map(([color]) => ({
-      props: {
-        colorSeverity: color,
-        variant: 'standard'
-      },
-      style: {
-        color: theme.vars ? theme.vars.palette.Alert[`${color}Color`] : getColor(theme.palette[color].light, 0.6),
-        backgroundColor: theme.vars ? theme.vars.palette.Alert[`${color}StandardBg`] : getBackgroundColor(theme.palette[color].light, 0.9),
-        [`& .${Alert_alertClasses.icon}`]: theme.vars ? {
-          color: theme.vars.palette.Alert[`${color}IconColor`]
-        } : {
-          color: theme.palette[color].main
-        }
-      }
-    })), ...Object.entries(theme.palette).filter(([, value]) => value.main && value.light).map(([color]) => ({
-      props: {
-        colorSeverity: color,
-        variant: 'outlined'
-      },
-      style: {
-        color: theme.vars ? theme.vars.palette.Alert[`${color}Color`] : getColor(theme.palette[color].light, 0.6),
-        border: `1px solid ${(theme.vars || theme).palette[color].light}`,
-        [`& .${Alert_alertClasses.icon}`]: theme.vars ? {
-          color: theme.vars.palette.Alert[`${color}IconColor`]
-        } : {
-          color: theme.palette[color].main
-        }
-      }
-    })), ...Object.entries(theme.palette).filter(([, value]) => value.main && value.dark).map(([color]) => ({
-      props: {
-        colorSeverity: color,
-        variant: 'filled'
-      },
-      style: (0,esm_extends/* default */.A)({
-        fontWeight: theme.typography.fontWeightMedium
-      }, theme.vars ? {
-        color: theme.vars.palette.Alert[`${color}FilledColor`],
-        backgroundColor: theme.vars.palette.Alert[`${color}FilledBg`]
-      } : {
-        backgroundColor: theme.palette.mode === 'dark' ? theme.palette[color].dark : theme.palette[color].main,
-        color: theme.palette.getContrastText(theme.palette[color].main)
-      })
-    }))]
-  });
-});
-const AlertIcon = (0,styled/* default */.Ay)('div', {
-  name: 'MuiAlert',
-  slot: 'Icon',
-  overridesResolver: (props, styles) => styles.icon
-})({
-  marginRight: 12,
-  padding: '7px 0',
-  display: 'flex',
-  fontSize: 22,
-  opacity: 0.9
-});
-const AlertMessage = (0,styled/* default */.Ay)('div', {
-  name: 'MuiAlert',
-  slot: 'Message',
-  overridesResolver: (props, styles) => styles.message
-})({
-  padding: '8px 0',
-  minWidth: 0,
-  overflow: 'auto'
-});
-const AlertAction = (0,styled/* default */.Ay)('div', {
-  name: 'MuiAlert',
-  slot: 'Action',
-  overridesResolver: (props, styles) => styles.action
-})({
-  display: 'flex',
-  alignItems: 'flex-start',
-  padding: '4px 0 0 16px',
-  marginLeft: 'auto',
-  marginRight: -8
-});
-const defaultIconMapping = {
-  success: /*#__PURE__*/(0,jsx_runtime.jsx)(SuccessOutlined, {
-    fontSize: "inherit"
-  }),
-  warning: /*#__PURE__*/(0,jsx_runtime.jsx)(ReportProblemOutlined, {
-    fontSize: "inherit"
-  }),
-  error: /*#__PURE__*/(0,jsx_runtime.jsx)(ErrorOutline, {
-    fontSize: "inherit"
-  }),
-  info: /*#__PURE__*/(0,jsx_runtime.jsx)(InfoOutlined, {
-    fontSize: "inherit"
-  })
-};
-const Alert = /*#__PURE__*/react.forwardRef(function Alert(inProps, ref) {
-  const props = (0,DefaultPropsProvider/* useDefaultProps */.b)({
-    props: inProps,
-    name: 'MuiAlert'
-  });
-  const {
-      action,
-      children,
-      className,
-      closeText = 'Close',
-      color,
-      components = {},
-      componentsProps = {},
-      icon,
-      iconMapping = defaultIconMapping,
-      onClose,
-      role = 'alert',
-      severity = 'success',
-      slotProps = {},
-      slots = {},
-      variant = 'standard'
-    } = props,
-    other = (0,objectWithoutPropertiesLoose/* default */.A)(props, _excluded);
-  const ownerState = (0,esm_extends/* default */.A)({}, props, {
-    color,
-    severity,
-    variant,
-    colorSeverity: color || severity
-  });
-  const classes = useUtilityClasses(ownerState);
-  const externalForwardedProps = {
-    slots: (0,esm_extends/* default */.A)({
-      closeButton: components.CloseButton,
-      closeIcon: components.CloseIcon
-    }, slots),
-    slotProps: (0,esm_extends/* default */.A)({}, componentsProps, slotProps)
-  };
-  const [CloseButtonSlot, closeButtonProps] = (0,useSlot/* default */.A)('closeButton', {
-    elementType: IconButton/* default */.A,
-    externalForwardedProps,
-    ownerState
-  });
-  const [CloseIconSlot, closeIconProps] = (0,useSlot/* default */.A)('closeIcon', {
-    elementType: Close/* default */.A,
-    externalForwardedProps,
-    ownerState
-  });
-  return /*#__PURE__*/(0,jsx_runtime.jsxs)(AlertRoot, (0,esm_extends/* default */.A)({
-    role: role,
-    elevation: 0,
-    ownerState: ownerState,
-    className: (0,clsx/* default */.A)(classes.root, className),
-    ref: ref
-  }, other, {
-    children: [icon !== false ? /*#__PURE__*/(0,jsx_runtime.jsx)(AlertIcon, {
-      ownerState: ownerState,
-      className: classes.icon,
-      children: icon || iconMapping[severity] || defaultIconMapping[severity]
-    }) : null, /*#__PURE__*/(0,jsx_runtime.jsx)(AlertMessage, {
-      ownerState: ownerState,
-      className: classes.message,
-      children: children
-    }), action != null ? /*#__PURE__*/(0,jsx_runtime.jsx)(AlertAction, {
-      ownerState: ownerState,
-      className: classes.action,
-      children: action
-    }) : null, action == null && onClose ? /*#__PURE__*/(0,jsx_runtime.jsx)(AlertAction, {
-      ownerState: ownerState,
-      className: classes.action,
-      children: /*#__PURE__*/(0,jsx_runtime.jsx)(CloseButtonSlot, (0,esm_extends/* default */.A)({
-        size: "small",
-        "aria-label": closeText,
-        title: closeText,
-        color: "inherit",
-        onClick: onClose
-      }, closeButtonProps, {
-        children: /*#__PURE__*/(0,jsx_runtime.jsx)(CloseIconSlot, (0,esm_extends/* default */.A)({
-          fontSize: "small"
-        }, closeIconProps))
-      }))
-    }) : null]
-  }));
-});
- false ? 0 : void 0;
-/* harmony default export */ const Alert_Alert = (Alert);
 
 /***/ },
 
@@ -2459,226 +1999,83 @@ const GridToolbar = /*#__PURE__*/react.forwardRef(function GridToolbar(props, re
 
 /***/ },
 
-/***/ 69419
+/***/ 63808
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-// ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
-
-// EXPORTS
-__webpack_require__.d(__webpack_exports__, {
-  "default": () => (/* binding */ AdminView1_InvoiceViewAdmin)
-});
-
-// EXTERNAL MODULE: ./node_modules/react/index.js
-var react = __webpack_require__(96540);
-// EXTERNAL MODULE: ./node_modules/react-toastify/dist/react-toastify.esm.mjs
-var react_toastify_esm = __webpack_require__(99571);
-// EXTERNAL MODULE: ./src/js/AdminView1/view.css
-var view = __webpack_require__(68525);
-// EXTERNAL MODULE: ./src/js/AdminView1/PageView/Chartview.css
-var Chartview = __webpack_require__(55746);
-// EXTERNAL MODULE: ./src/js/component/SidebarDash.js
-var SidebarDash = __webpack_require__(4640);
-// EXTERNAL MODULE: ./node_modules/@mui/icons-material/Search.js
-var Search = __webpack_require__(64745);
-// EXTERNAL MODULE: ./node_modules/@mui/icons-material/Visibility.js
-var Visibility = __webpack_require__(5673);
-// EXTERNAL MODULE: ./node_modules/@mui/icons-material/Edit.js
-var Edit = __webpack_require__(28597);
-// EXTERNAL MODULE: ./node_modules/@mui/icons-material/Delete.js
-var Delete = __webpack_require__(67034);
-// EXTERNAL MODULE: ./node_modules/react-router/dist/index.js
-var dist = __webpack_require__(47767);
-// EXTERNAL MODULE: ./node_modules/react-router-dom/dist/index.js
-var react_router_dom_dist = __webpack_require__(84976);
-// EXTERNAL MODULE: ./node_modules/@mui/material/styles/styled.js
-var styled = __webpack_require__(11848);
-// EXTERNAL MODULE: ./node_modules/@mui/material/Chip/Chip.js + 2 modules
-var Chip = __webpack_require__(82022);
-// EXTERNAL MODULE: ./node_modules/@mui/material/IconButton/IconButton.js + 1 modules
-var IconButton = __webpack_require__(11641);
-// EXTERNAL MODULE: ./node_modules/@mui/material/Box/Box.js + 2 modules
-var Box = __webpack_require__(69067);
-// EXTERNAL MODULE: ./node_modules/@mui/material/Typography/Typography.js + 1 modules
-var Typography = __webpack_require__(14073);
-// EXTERNAL MODULE: ./node_modules/@mui/material/Button/Button.js + 3 modules
-var Button = __webpack_require__(86990);
-// EXTERNAL MODULE: ./node_modules/@mui/material/Pagination/Pagination.js + 6 modules
-var Pagination = __webpack_require__(69279);
-// EXTERNAL MODULE: ./node_modules/@mui/material/Modal/Modal.js + 3 modules
-var Modal = __webpack_require__(35406);
-// EXTERNAL MODULE: ./node_modules/@mui/material/Grid/Grid.js + 2 modules
-var Grid = __webpack_require__(8239);
-// EXTERNAL MODULE: ./node_modules/@mui/material/TextField/TextField.js + 2 modules
-var TextField = __webpack_require__(844);
-// EXTERNAL MODULE: ./node_modules/@mui/material/FormControl/FormControl.js + 1 modules
-var FormControl = __webpack_require__(50779);
-// EXTERNAL MODULE: ./node_modules/@mui/material/InputLabel/InputLabel.js + 1 modules
-var InputLabel = __webpack_require__(29571);
-// EXTERNAL MODULE: ./node_modules/@mui/material/Select/Select.js + 4 modules
-var Select = __webpack_require__(2071);
-// EXTERNAL MODULE: ./node_modules/@mui/material/MenuItem/MenuItem.js + 1 modules
-var MenuItem = __webpack_require__(73896);
-// EXTERNAL MODULE: ./node_modules/@mui/material/Dialog/Dialog.js
-var Dialog = __webpack_require__(77037);
-// EXTERNAL MODULE: ./node_modules/@mui/material/DialogTitle/DialogTitle.js
-var DialogTitle = __webpack_require__(46831);
-// EXTERNAL MODULE: ./node_modules/@mui/material/Tabs/Tabs.js + 6 modules
-var Tabs = __webpack_require__(17532);
-// EXTERNAL MODULE: ./node_modules/@mui/material/Tab/Tab.js + 1 modules
-var Tab = __webpack_require__(10423);
-// EXTERNAL MODULE: ./node_modules/@mui/material/DialogContent/DialogContent.js + 1 modules
-var DialogContent = __webpack_require__(22477);
-// EXTERNAL MODULE: ./node_modules/@mui/material/Alert/Alert.js + 5 modules
-var Alert = __webpack_require__(36632);
-// EXTERNAL MODULE: ./node_modules/@mui/material/InputAdornment/InputAdornment.js + 1 modules
-var InputAdornment = __webpack_require__(25239);
-// EXTERNAL MODULE: ./node_modules/@mui/material/TableContainer/TableContainer.js + 1 modules
-var TableContainer = __webpack_require__(33198);
-// EXTERNAL MODULE: ./node_modules/@mui/material/Paper/Paper.js + 2 modules
-var Paper = __webpack_require__(60538);
-// EXTERNAL MODULE: ./node_modules/@mui/material/Table/Table.js + 1 modules
-var Table = __webpack_require__(64137);
-// EXTERNAL MODULE: ./node_modules/@mui/material/TableHead/TableHead.js + 1 modules
-var TableHead = __webpack_require__(96627);
-// EXTERNAL MODULE: ./node_modules/@mui/material/TableRow/TableRow.js + 1 modules
-var TableRow = __webpack_require__(86798);
-// EXTERNAL MODULE: ./node_modules/@mui/material/TableCell/TableCell.js
-var TableCell = __webpack_require__(70691);
-// EXTERNAL MODULE: ./node_modules/@mui/material/Checkbox/Checkbox.js + 4 modules
-var Checkbox = __webpack_require__(27558);
-// EXTERNAL MODULE: ./node_modules/@mui/material/TableBody/TableBody.js + 1 modules
-var TableBody = __webpack_require__(43884);
-// EXTERNAL MODULE: ./node_modules/@mui/material/LinearProgress/LinearProgress.js + 1 modules
-var LinearProgress = __webpack_require__(87458);
-// EXTERNAL MODULE: ./node_modules/@mui/material/DialogActions/DialogActions.js + 1 modules
-var DialogActions = __webpack_require__(58763);
-// EXTERNAL MODULE: ./node_modules/@mui/material/Tooltip/Tooltip.js
-var Tooltip = __webpack_require__(56655);
-// EXTERNAL MODULE: ./node_modules/@mui/material/Tooltip/tooltipClasses.js
-var tooltipClasses = __webpack_require__(58331);
-// EXTERNAL MODULE: ./node_modules/@mui/material/AppBar/AppBar.js + 1 modules
-var AppBar = __webpack_require__(89828);
-// EXTERNAL MODULE: ./node_modules/@mui/material/Toolbar/Toolbar.js + 1 modules
-var Toolbar = __webpack_require__(8532);
-// EXTERNAL MODULE: ./node_modules/@mui/material/CssBaseline/CssBaseline.js
-var CssBaseline = __webpack_require__(14519);
-// EXTERNAL MODULE: ./node_modules/@mui/material/Drawer/Drawer.js + 1 modules
-var Drawer = __webpack_require__(88248);
-// EXTERNAL MODULE: ./node_modules/@mui/material/List/List.js + 1 modules
-var List = __webpack_require__(49799);
-// EXTERNAL MODULE: ./node_modules/@mui/material/Divider/Divider.js
-var Divider = __webpack_require__(71543);
-// EXTERNAL MODULE: ./node_modules/@mui/material/Container/Container.js + 1 modules
-var Container = __webpack_require__(97834);
-// EXTERNAL MODULE: ./node_modules/@mui/icons-material/Menu.js
-var Menu = __webpack_require__(62274);
-// EXTERNAL MODULE: ./node_modules/@mui/icons-material/ChevronLeft.js
-var ChevronLeft = __webpack_require__(8451);
-// EXTERNAL MODULE: ./node_modules/axios/lib/axios.js + 48 modules
-var axios = __webpack_require__(99380);
-// EXTERNAL MODULE: ./src/js/utils/apiCache.js
-var apiCache = __webpack_require__(46986);
-// EXTERNAL MODULE: ./src/js/apiConfig.js
-var apiConfig = __webpack_require__(71510);
-// EXTERNAL MODULE: ./node_modules/@mui/material/utils/createSvgIcon.js
-var createSvgIcon = __webpack_require__(20561);
-// EXTERNAL MODULE: ./node_modules/react/jsx-runtime.js
-var jsx_runtime = __webpack_require__(74848);
-;// ./node_modules/@mui/icons-material/esm/WhatsApp.js
-'use client';
-
-
-
-
-/* harmony default export */ const WhatsApp = ((0,createSvgIcon/* default */.A)( /*#__PURE__*/(0,jsx_runtime.jsx)("path", {
-  d: "M16.75 13.96c.25.13.41.2.46.3.06.11.04.61-.21 1.18-.2.56-1.24 1.1-1.7 1.12-.46.02-.47.36-2.96-.73-2.49-1.09-3.99-3.75-4.11-3.92-.12-.17-.96-1.38-.92-2.61.05-1.22.69-1.8.95-2.04.24-.26.51-.29.68-.26h.47c.15 0 .36-.06.55.45l.69 1.87c.06.13.1.28.01.44l-.27.41-.39.42c-.12.12-.26.25-.12.5.12.26.62 1.09 1.32 1.78.91.88 1.71 1.17 1.95 1.3.24.14.39.12.54-.04l.81-.94c.19-.25.35-.19.58-.11l1.67.88M12 2a10 10 0 0 1 10 10 10 10 0 0 1-10 10c-1.97 0-3.8-.57-5.35-1.55L2 22l1.55-4.65A9.969 9.969 0 0 1 2 12 10 10 0 0 1 12 2m0 2a8 8 0 0 0-8 8c0 1.72.54 3.31 1.46 4.61L4.5 19.5l2.89-.96A7.95 7.95 0 0 0 12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8z"
-}), 'WhatsApp'));
-// EXTERNAL MODULE: ./node_modules/@mui/icons-material/esm/PersonOffRounded.js
-var PersonOffRounded = __webpack_require__(79030);
-// EXTERNAL MODULE: ./node_modules/@mui/icons-material/esm/Person2Outlined.js
-var Person2Outlined = __webpack_require__(7078);
-// EXTERNAL MODULE: ./node_modules/@mui/icons-material/esm/Assignment.js
-var Assignment = __webpack_require__(17332);
-;// ./node_modules/@mui/icons-material/esm/Payments.js
-"use client";
-
-
-
-/* harmony default export */ const Payments = ((0,createSvgIcon/* default */.A)( /*#__PURE__*/(0,jsx_runtime.jsx)("path", {
-  d: "M19 14V6c0-1.1-.9-2-2-2H3c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2m-9-1c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3m13-6v11c0 1.1-.9 2-2 2H4v-2h17V7z"
-}), 'Payments'));
-// EXTERNAL MODULE: ./node_modules/@mui/icons-material/esm/EditNote.js
-var EditNote = __webpack_require__(81757);
-// EXTERNAL MODULE: ./node_modules/@mui/icons-material/esm/Send.js
-var Send = __webpack_require__(52751);
-// EXTERNAL MODULE: ./node_modules/@mui/icons-material/esm/HourglassEmpty.js
-var HourglassEmpty = __webpack_require__(62430);
-// EXTERNAL MODULE: ./node_modules/@mui/icons-material/esm/Cancel.js
-var Cancel = __webpack_require__(8047);
-;// ./node_modules/@mui/icons-material/esm/CardGiftcard.js
-"use client";
-
-
-
-/* harmony default export */ const CardGiftcard = ((0,createSvgIcon/* default */.A)( /*#__PURE__*/(0,jsx_runtime.jsx)("path", {
-  d: "M20 6h-2.18c.11-.31.18-.65.18-1 0-1.66-1.34-3-3-3-1.05 0-1.96.54-2.5 1.35l-.5.67-.5-.68C10.96 2.54 10.05 2 9 2 7.34 2 6 3.34 6 5c0 .35.07.69.18 1H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2m-5-2c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1M9 4c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1m11 15H4v-2h16zm0-5H4V8h5.08L7 10.83 8.62 12 11 8.76l1-1.36 1 1.36L15.38 12 17 10.83 14.92 8H20z"
-}), 'CardGiftcard'));
-// EXTERNAL MODULE: ./node_modules/@mui/icons-material/esm/Add.js
-var Add = __webpack_require__(99682);
-// EXTERNAL MODULE: ./node_modules/@mui/icons-material/esm/Close.js
-var Close = __webpack_require__(17809);
-;// ./node_modules/@mui/icons-material/esm/History.js
-"use client";
-
-
-
-/* harmony default export */ const History = ((0,createSvgIcon/* default */.A)( /*#__PURE__*/(0,jsx_runtime.jsx)("path", {
-  d: "M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9m-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8z"
-}), 'History'));
-;// ./node_modules/@mui/icons-material/esm/Save.js
-"use client";
-
-
-
-/* harmony default export */ const Save = ((0,createSvgIcon/* default */.A)( /*#__PURE__*/(0,jsx_runtime.jsx)("path", {
-  d: "M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3m3-10H5V5h10z"
-}), 'Save'));
-// EXTERNAL MODULE: ./node_modules/dayjs/dayjs.min.js
-var dayjs_min = __webpack_require__(74353);
-var dayjs_min_default = /*#__PURE__*/__webpack_require__.n(dayjs_min);
-// EXTERNAL MODULE: ./src/js/component/Loader.js + 1 modules
-var Loader = __webpack_require__(65821);
-// EXTERNAL MODULE: ./node_modules/@mui/icons-material/CheckCircle.js
-var CheckCircle = __webpack_require__(20889);
-// EXTERNAL MODULE: ./node_modules/react-redux/es/index.js + 14 modules
-var es = __webpack_require__(13561);
-// EXTERNAL MODULE: ./src/js/features/auth/authSlice.js
-var authSlice = __webpack_require__(32005);
-// EXTERNAL MODULE: ./src/js/component/NetworkLogoutIcon.js
-var NetworkLogoutIcon = __webpack_require__(40301);
-// EXTERNAL MODULE: ./src/js/img/no-data.png
-var no_data = __webpack_require__(20453);
-// EXTERNAL MODULE: ./node_modules/@mui/x-data-grid/DataGrid/DataGrid.js + 185 modules
-var DataGrid = __webpack_require__(1835);
-// EXTERNAL MODULE: ./node_modules/@mui/x-data-grid/components/toolbar/GridToolbar.js + 5 modules
-var GridToolbar = __webpack_require__(53071);
-// EXTERNAL MODULE: ./src/js/AdminView1/MessageAdminView.js + 2 modules
-var MessageAdminView = __webpack_require__(83818);
-// EXTERNAL MODULE: ./src/js/AdminView1/NotificationVIewInfo.js
-var NotificationVIewInfo = __webpack_require__(95236);
-// EXTERNAL MODULE: ./src/js/utils/isMobile.js
-var utils_isMobile = __webpack_require__(2650);
-// EXTERNAL MODULE: ./src/js/component/MobileCardList.js + 2 modules
-var MobileCardList = __webpack_require__(353);
-// EXTERNAL MODULE: ./src/js/utils/formatUtils.js
-var formatUtils = __webpack_require__(37402);
-;// ./src/js/AdminView1/InvoiceViewAdmin.js
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(96540);
+/* harmony import */ var react_toastify__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(99571);
+/* harmony import */ var _view_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(68525);
+/* harmony import */ var _component_SidebarDash__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(4640);
+/* harmony import */ var _PageView_Chartview_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(55746);
+/* harmony import */ var _mui_icons_material_Visibility__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(5673);
+/* harmony import */ var _mui_icons_material_Edit__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(28597);
+/* harmony import */ var _mui_icons_material_Delete__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(67034);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(84976);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(47767);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(11641);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(69067);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(14073);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(69279);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(47419);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(8239);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(844);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(64137);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(43884);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(86798);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(70691);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(33198);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(96627);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(35406);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(11848);
+/* harmony import */ var _mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(56655);
+/* harmony import */ var _mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(58331);
+/* harmony import */ var _mui_material_AppBar__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(89828);
+/* harmony import */ var _mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(8532);
+/* harmony import */ var _mui_material_CssBaseline__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(14519);
+/* harmony import */ var _mui_material_Drawer__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(88248);
+/* harmony import */ var _mui_material_List__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(49799);
+/* harmony import */ var _mui_material_Divider__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(71543);
+/* harmony import */ var _mui_material_Container__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(97834);
+/* harmony import */ var _mui_icons_material_Menu__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(62274);
+/* harmony import */ var _mui_icons_material_ChevronLeft__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(8451);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(99380);
+/* harmony import */ var _utils_apiCache__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(46986);
+/* harmony import */ var _apiConfig__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(71510);
+/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(99682);
+/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(17809);
+/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(33541);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(13561);
+/* harmony import */ var _features_auth_authSlice__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(32005);
+/* harmony import */ var _component_Loader__WEBPACK_IMPORTED_MODULE_44__ = __webpack_require__(65821);
+/* harmony import */ var _mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_45__ = __webpack_require__(20889);
+/* harmony import */ var _component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_46__ = __webpack_require__(40301);
+/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_47__ = __webpack_require__(74353);
+/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_47___default = /*#__PURE__*/__webpack_require__.n(dayjs__WEBPACK_IMPORTED_MODULE_47__);
+/* harmony import */ var _img_no_data_png__WEBPACK_IMPORTED_MODULE_48__ = __webpack_require__(20453);
+/* harmony import */ var _img_no_data_png__WEBPACK_IMPORTED_MODULE_48___default = /*#__PURE__*/__webpack_require__.n(_img_no_data_png__WEBPACK_IMPORTED_MODULE_48__);
+/* harmony import */ var _mui_x_data_grid__WEBPACK_IMPORTED_MODULE_49__ = __webpack_require__(1835);
+/* harmony import */ var _mui_x_data_grid__WEBPACK_IMPORTED_MODULE_50__ = __webpack_require__(53071);
+/* harmony import */ var _mui_x_date_pickers__WEBPACK_IMPORTED_MODULE_51__ = __webpack_require__(75737);
+/* harmony import */ var _mui_x_date_pickers__WEBPACK_IMPORTED_MODULE_52__ = __webpack_require__(48484);
+/* harmony import */ var _mui_x_date_pickers_internals_demo__WEBPACK_IMPORTED_MODULE_53__ = __webpack_require__(61087);
+/* harmony import */ var _mui_x_date_pickers_AdapterDayjs__WEBPACK_IMPORTED_MODULE_54__ = __webpack_require__(601);
+/* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_55__ = __webpack_require__(33829);
+/* harmony import */ var _mui_icons_material_Cancel__WEBPACK_IMPORTED_MODULE_56__ = __webpack_require__(82299);
+/* harmony import */ var _MessageAdminView__WEBPACK_IMPORTED_MODULE_57__ = __webpack_require__(83818);
+/* harmony import */ var _NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_58__ = __webpack_require__(95236);
+/* harmony import */ var _utils_isMobile__WEBPACK_IMPORTED_MODULE_59__ = __webpack_require__(2650);
+/* harmony import */ var _component_MobileCardList__WEBPACK_IMPORTED_MODULE_60__ = __webpack_require__(353);
+/* harmony import */ var react_to_print__WEBPACK_IMPORTED_MODULE_61__ = __webpack_require__(57240);
+/* harmony import */ var react_to_print__WEBPACK_IMPORTED_MODULE_61___default = /*#__PURE__*/__webpack_require__.n(react_to_print__WEBPACK_IMPORTED_MODULE_61__);
+/* harmony import */ var _component_PrintHeader__WEBPACK_IMPORTED_MODULE_62__ = __webpack_require__(77438);
+/* harmony import */ var _component_PrintFooter__WEBPACK_IMPORTED_MODULE_63__ = __webpack_require__(61296);
+/* harmony import */ var _mui_icons_material_LocalPrintshop__WEBPACK_IMPORTED_MODULE_64__ = __webpack_require__(8659);
 var _excluded = ["className"],
   _excluded2 = ["className"],
-  _excluded3 = ["className"];
+  _excluded3 = ["className"],
+  _excluded4 = ["className"];
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
@@ -2737,10 +2134,18 @@ function _objectWithoutPropertiesLoose(r, e) { if (null == r) return {}; var t =
 
 
 
-var DeleteTooltip = (0,styled/* default */.Ay)(_ref => {
+
+
+
+
+
+
+
+
+var DeleteTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_24__/* ["default"] */ .Ay)(_ref => {
   var className = _ref.className,
     props = _objectWithoutProperties(_ref, _excluded);
-  return /*#__PURE__*/react.createElement(Tooltip/* default */.A, _extends({}, props, {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_25__/* ["default"] */ .A, _extends({}, props, {
     classes: {
       popper: className
     }
@@ -2748,7 +2153,7 @@ var DeleteTooltip = (0,styled/* default */.Ay)(_ref => {
 })(_ref2 => {
   var theme = _ref2.theme;
   return {
-    ["& .".concat(tooltipClasses/* default */.A.tooltip)]: {
+    ["& .".concat(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_26__/* ["default"] */ .A.tooltip)]: {
       backgroundColor: 'red',
       color: 'white',
       boxShadow: theme.shadows[1],
@@ -2756,10 +2161,10 @@ var DeleteTooltip = (0,styled/* default */.Ay)(_ref => {
     }
   };
 });
-var EditTooltip = (0,styled/* default */.Ay)(_ref3 => {
+var EditTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_24__/* ["default"] */ .Ay)(_ref3 => {
   var className = _ref3.className,
     props = _objectWithoutProperties(_ref3, _excluded2);
-  return /*#__PURE__*/react.createElement(Tooltip/* default */.A, _extends({}, props, {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_25__/* ["default"] */ .A, _extends({}, props, {
     classes: {
       popper: className
     }
@@ -2767,7 +2172,7 @@ var EditTooltip = (0,styled/* default */.Ay)(_ref3 => {
 })(_ref4 => {
   var theme = _ref4.theme;
   return {
-    ["& .".concat(tooltipClasses/* default */.A.tooltip)]: {
+    ["& .".concat(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_26__/* ["default"] */ .A.tooltip)]: {
       backgroundColor: 'gray',
       color: 'white',
       boxShadow: theme.shadows[1],
@@ -2775,10 +2180,10 @@ var EditTooltip = (0,styled/* default */.Ay)(_ref3 => {
     }
   };
 });
-var ViewTooltip = (0,styled/* default */.Ay)(_ref5 => {
+var LightTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_24__/* ["default"] */ .Ay)(_ref5 => {
   var className = _ref5.className,
     props = _objectWithoutProperties(_ref5, _excluded3);
-  return /*#__PURE__*/react.createElement(Tooltip/* default */.A, _extends({}, props, {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_25__/* ["default"] */ .A, _extends({}, props, {
     classes: {
       popper: className
     }
@@ -2786,7 +2191,26 @@ var ViewTooltip = (0,styled/* default */.Ay)(_ref5 => {
 })(_ref6 => {
   var theme = _ref6.theme;
   return {
-    ["& .".concat(tooltipClasses/* default */.A.tooltip)]: {
+    ["& .".concat(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_26__/* ["default"] */ .A.tooltip)]: {
+      backgroundColor: 'red',
+      color: 'white',
+      boxShadow: theme.shadows[1],
+      fontSize: 11
+    }
+  };
+});
+var ViewTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_24__/* ["default"] */ .Ay)(_ref7 => {
+  var className = _ref7.className,
+    props = _objectWithoutProperties(_ref7, _excluded4);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_25__/* ["default"] */ .A, _extends({}, props, {
+    classes: {
+      popper: className
+    }
+  }));
+})(_ref8 => {
+  var theme = _ref8.theme;
+  return {
+    ["& .".concat(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_26__/* ["default"] */ .A.tooltip)]: {
       backgroundColor: '#202a5a',
       color: 'white',
       boxShadow: theme.shadows[1],
@@ -2807,11 +2231,11 @@ var style = {
   pb: 3
 };
 var drawerWidth = 240;
-var InvoiceViewAdmin_AppBar = (0,styled/* default */.Ay)(AppBar/* default */.A, {
+var AppBar = (0,_mui_material__WEBPACK_IMPORTED_MODULE_24__/* ["default"] */ .Ay)(_mui_material_AppBar__WEBPACK_IMPORTED_MODULE_27__/* ["default"] */ .A, {
   shouldForwardProp: prop => prop !== 'open'
-})(_ref7 => {
-  var theme = _ref7.theme,
-    open = _ref7.open;
+})(_ref9 => {
+  var theme = _ref9.theme,
+    open = _ref9.open;
   return _objectSpread({
     zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(['width', 'margin'], {
@@ -2827,11 +2251,11 @@ var InvoiceViewAdmin_AppBar = (0,styled/* default */.Ay)(AppBar/* default */.A, 
     })
   });
 });
-var InvoiceViewAdmin_Drawer = (0,styled/* default */.Ay)(Drawer/* default */.Ay, {
+var Drawer = (0,_mui_material__WEBPACK_IMPORTED_MODULE_24__/* ["default"] */ .Ay)(_mui_material_Drawer__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .Ay, {
   shouldForwardProp: prop => prop !== 'open'
-})(_ref8 => {
-  var theme = _ref8.theme,
-    open = _ref8.open;
+})(_ref0 => {
+  var theme = _ref0.theme,
+    open = _ref0.open;
   return {
     '& .MuiDrawer-paper': _objectSpread({
       position: 'relative',
@@ -2855,793 +2279,372 @@ var InvoiceViewAdmin_Drawer = (0,styled/* default */.Ay)(Drawer/* default */.Ay,
     })
   };
 });
-function InvoiceViewAdmin() {
-  var _user$data, _dispatchResult$repor, _dispatchResult$repor2, _dispatchResult$repor3, _dispatchResult$repor4, _dispatchResult$repor5, _dispatchResult$repor6;
-  var navigate = (0,dist/* useNavigate */.Zp)();
-  var isMobile = (0,utils_isMobile/* useIsMobile */.al)();
-  var dispatch = (0,es/* useDispatch */.wA)();
-  var user = (0,es/* useSelector */.d4)(authSlice/* selectCurrentUser */.xu);
-  (0,react.useEffect)(() => {
+function DailyExpenses() {
+  var _expensesView$Create, _expensesView$account, _expensesView$expense, _expensesView$expense2, _expensesView$expense3, _expensesView$expense4, _expensesView$expense5, _expensesView$expense6, _expensesView$account2, _expensesView$Create2;
+  var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_9__/* .useNavigate */ .Zp)();
+  var isMobile = (0,_utils_isMobile__WEBPACK_IMPORTED_MODULE_59__/* .useIsMobile */ .al)();
+  var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_42__/* .useDispatch */ .wA)();
+  var user = (0,react_redux__WEBPACK_IMPORTED_MODULE_42__/* .useSelector */ .d4)(_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_43__/* .selectCurrentUser */ .xu);
+  var hasTvaValue = item => {
+    return !!(item.CheckTvA || item.checkTvA || item.CheckTva || item.hasTVA || item.tva || item.TVA);
+  };
+  var getTaxValue = item => {
+    var tax = item.tax || item.taxAmount || item.vatAmount || item.TvaAmount || item.taxUSD || 0;
+    if (tax > 0) return tax;
+    if (hasTvaValue(item)) {
+      return Number(item.total || item.amount || 0) * 0.16;
+    }
+    return 0;
+  };
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     var storesUserId = localStorage.getItem('user');
     var fetchUser = /*#__PURE__*/function () {
-      var _ref9 = _asyncToGenerator(function* () {
-        if (storesUserId && storesUserId !== 'null') {
+      var _ref1 = _asyncToGenerator(function* () {
+        if (storesUserId) {
           try {
-            var res = yield axios/* default */.A.get("".concat(apiConfig/* ENDPOINT_URL */.m, "/get-employeeuser/").concat(storesUserId));
+            var res = yield axios__WEBPACK_IMPORTED_MODULE_36__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_38__/* .ENDPOINT_URL */ .m, "/get-employeeuser/").concat(storesUserId));
             var Name = res.data.data.employeeName;
             var Role = res.data.data.role;
-            dispatch((0,authSlice/* setUser */.gV)({
+            dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_43__/* .setUser */ .gV)({
               userName: Name,
               role: Role,
               id: res.data.data._id
             }));
           } catch (error) {
             console.error('Error fetching data:', error);
-            react_toastify_esm/* toast */.oR.error('Failed to fetch user data.');
+            react_toastify__WEBPACK_IMPORTED_MODULE_1__/* .toast */ .oR.error('Failed to fetch user data.');
           }
+        } else {
+          navigate('/');
         }
       });
       return function fetchUser() {
-        return _ref9.apply(this, arguments);
+        return _ref1.apply(this, arguments);
       };
     }();
     fetchUser();
   }, [dispatch]);
   var handleLogout = () => {
     localStorage.removeItem('user');
-    dispatch((0,authSlice/* logOut */.je)());
+    dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_43__/* .logOut */ .je)());
     navigate('/');
   };
-  var _useState = (0,react.useState)([]),
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState2 = _slicedToArray(_useState, 2),
     grantAccess = _useState2[0],
     setGrantAccess = _useState2[1];
-  var _useState3 = (0,react.useState)(null),
-    _useState4 = _slicedToArray(_useState3, 2),
-    grantAccessRecord = _useState4[0],
-    setGrantAccessRecord = _useState4[1];
-  (0,react.useEffect)(() => {
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     var fetchNumber = /*#__PURE__*/function () {
-      var _ref0 = _asyncToGenerator(function* () {
+      var _ref10 = _asyncToGenerator(function* () {
         try {
           var _res$data;
-          var res = yield (0,apiCache/* cachedGet */.Fe)("".concat(apiConfig/* ENDPOINT_URL */.m, "/grantAccess"));
-          var userAccess = (_res$data = res.data) === null || _res$data === void 0 || (_res$data = _res$data.data) === null || _res$data === void 0 ? void 0 : _res$data.find(row => row.userID === user.data.id);
-          if (userAccess) {
-            setGrantAccess(userAccess.modules || []);
-            setGrantAccessRecord(userAccess);
-          }
+          var res = yield (0,_utils_apiCache__WEBPACK_IMPORTED_MODULE_37__/* .cachedGet */ .Fe)(_apiConfig__WEBPACK_IMPORTED_MODULE_38__/* .ENDPOINT_URL */ .m + '/grantAccess');
+          (_res$data = res.data) === null || _res$data === void 0 || (_res$data = _res$data.data) === null || _res$data === void 0 || _res$data.filter(row => row.userID === user.data.id).map(row => setGrantAccess(row.modules));
         } catch (error) {
           console.error('Error fetching data:', error);
-          react_toastify_esm/* toast */.oR.error('Failed to fetch permissions.');
         }
       });
       return function fetchNumber() {
-        return _ref0.apply(this, arguments);
+        return _ref10.apply(this, arguments);
       };
     }();
     fetchNumber();
   }, [user]);
-  var canSendWhatsAppInvoice = (user === null || user === void 0 || (_user$data = user.data) === null || _user$data === void 0 ? void 0 : _user$data.userName) === 'GG' || (grantAccessRecord === null || grantAccessRecord === void 0 ? void 0 : grantAccessRecord.whatsappInvoice) === true;
-
-  // console.log(grantAccess)
-
-  var InvoiceInfoC = grantAccess.filter(row => row.moduleName === "Invoice" && row.access.createM === true);
-  var InvoiceInfoV = grantAccess.filter(row => row.moduleName === "Invoice" && row.access.viewM === true);
-  var InvoiceInfoU = grantAccess.filter(row => row.moduleName === "Invoice" && row.access.editM === true);
-  var InvoiceInfoD = grantAccess.filter(row => row.moduleName === "Invoice" && row.access.deleteM === true);
-  {/** Get Invoice */}
-  var _useState5 = (0,react.useState)([]),
+  var DailyEInfoC = grantAccess.filter(row => row.moduleName === "Expenses" && row.access.createM === true);
+  var DailyEInfoV = grantAccess.filter(row => row.moduleName === "Expenses" && row.access.viewM === true);
+  var DailyEInfoU = grantAccess.filter(row => row.moduleName === "Expenses" && row.access.editM === true);
+  var DailyEInfoD = grantAccess.filter(row => row.moduleName === "Expenses" && row.access.deleteM === true);
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    _useState4 = _slicedToArray(_useState3, 2),
+    expenses = _useState4[0],
+    setExpenses = _useState4[1];
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
     _useState6 = _slicedToArray(_useState5, 2),
-    invoice = _useState6[0],
-    setInvoice = _useState6[1];
-  var _useState7 = (0,react.useState)([]),
+    loadingData = _useState6[0],
+    setLoadingData = _useState6[1];
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState8 = _slicedToArray(_useState7, 2),
-    hiddenRow = _useState8[0],
-    setHiddenRow = _useState8[1];
-  var _useState9 = (0,react.useState)([]),
+    selectedRows = _useState8[0],
+    setSelectedRows = _useState8[1];
+  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState0 = _slicedToArray(_useState9, 2),
-    hidden = _useState0[0],
-    setHidden = _useState0[1];
-  var _useState1 = (0,react.useState)([]),
+    loading = _useState0[0],
+    setLoading = _useState0[1];
+  var _useState1 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState10 = _slicedToArray(_useState1, 2),
-    selectedRows = _useState10[0],
-    setSelectedRows = _useState10[1];
-  var _useState11 = (0,react.useState)(true),
+    loadingOpenModal = _useState10[0],
+    setLoadingOpenModal = _useState10[1];
+  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState12 = _slicedToArray(_useState11, 2),
-    loadingData = _useState12[0],
-    setLoadingData = _useState12[1];
-  var _useState13 = (0,react.useState)(""),
+    open1 = _useState12[0],
+    setOpen1 = _useState12[1];
+  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState14 = _slicedToArray(_useState13, 2),
-    reason = _useState14[0],
-    setReason = _useState14[1];
-  var _useState15 = (0,react.useState)([]),
+    open2 = _useState14[0],
+    setOpen2 = _useState14[1];
+  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
     _useState16 = _slicedToArray(_useState15, 2),
-    newPurchase = _useState16[0],
-    setNewPurchase = _useState16[1];
-  var _useState17 = (0,react.useState)('ALL'),
-    _useState18 = _slicedToArray(_useState17, 2),
-    statusFilter = _useState18[0],
-    setStatusFilter = _useState18[1];
-  var _useState19 = (0,react.useState)({
-      all: 0,
-      draft: 0,
-      sent: 0,
-      pending: 0,
-      decline: 0,
-      freeOfCharge: 0,
-      paid: 0,
-      partiallyPaid: 0
+    expensesCategory = _useState16[0],
+    setExpensesCategory = _useState16[1];
+  var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(() => {
+      var date = new Date();
+      return date;
     }),
+    _useState18 = _slicedToArray(_useState17, 2),
+    cashDate = _useState18[0],
+    setCashDate = _useState18[1];
+  var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
     _useState20 = _slicedToArray(_useState19, 2),
-    statusCounts = _useState20[0],
-    setStatusCounts = _useState20[1];
-  var _useState21 = (0,react.useState)(0),
+    relatedDate = _useState20[0],
+    setRelatedDate = _useState20[1];
+  var _useState21 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
     _useState22 = _slicedToArray(_useState21, 2),
-    page = _useState22[0],
-    setPage = _useState22[1]; // Initialize page state to 0 (0-based index)
-  var limit = isMobile ? 30 : 100;
-  var _useState23 = (0,react.useState)(''),
+    cashNumber = _useState22[0],
+    setCashNumber = _useState22[1];
+  var _useState23 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
     _useState24 = _slicedToArray(_useState23, 2),
-    searchTerm = _useState24[0],
-    setSearchTerm = _useState24[1]; // Initialize search term state
-  var _useState25 = (0,react.useState)(''),
+    rate = _useState24[0],
+    setRate = _useState24[1];
+  var _useState25 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
     _useState26 = _slicedToArray(_useState25, 2),
-    filterField = _useState26[0],
-    setFilterField = _useState26[1]; // Initialize filter field state
-  var _useState27 = (0,react.useState)(''),
+    totalCash = _useState26[0],
+    setTotalCash = _useState26[1];
+  var _useState27 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState28 = _slicedToArray(_useState27, 2),
-    filterValue = _useState28[0],
-    setFilterValue = _useState28[1]; // Initialize filter value state
-  var _useState29 = (0,react.useState)(0),
+    amount = _useState28[0],
+    setAmount = _useState28[1];
+  var _useState29 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
     _useState30 = _slicedToArray(_useState29, 2),
-    totalPage = _useState30[0],
-    SetTotalPage = _useState30[1];
-  var _useState31 = (0,react.useState)(0),
+    reason = _useState30[0],
+    setReason = _useState30[1];
+  var _useState31 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState32 = _slicedToArray(_useState31, 2),
-    totalItemCount = _useState32[0],
-    setTotalItemCount = _useState32[1];
-  var _useState33 = (0,react.useState)(searchTerm),
-    _useState34 = _slicedToArray(_useState33, 2),
-    debouncedSearchTerm = _useState34[0],
-    setDebouncedSearchTerm = _useState34[1];
-  (0,react.useEffect)(() => {
-    var handler = setTimeout(() => {
-      setDebouncedSearchTerm(searchTerm);
-    }, 250); // 250ms debounce delay
-
-    return () => {
-      clearTimeout(handler);
-    };
-  }, [searchTerm]);
-  var fetchItems = /*#__PURE__*/function () {
-    var _ref1 = _asyncToGenerator(function* (page, searchTerm, filterField, filterValue, statusFilter) {
-      try {
-        var statusParam = statusFilter && statusFilter !== 'ALL' ? "&status=".concat(encodeURIComponent(statusFilter)) : '';
-        var res = yield axios/* default */.A.get("".concat(apiConfig/* ENDPOINT_URL */.m, "/invoice-Information?page=").concat(page + 1, "&limit=").concat(limit, "&search=").concat(encodeURIComponent((searchTerm || '').trim()), "&filterField=").concat(encodeURIComponent((filterField || '').trim()), "&filterValue=").concat(encodeURIComponent((filterValue || '').trim())).concat(statusParam));
-        var formatDate = res.data.itemI.map(row => _objectSpread(_objectSpread({}, row), {}, {
-          id: row._id,
-          invoiceNumber: row.invoiceNumber,
-          dateField: row.invoiceDate !== null ? dayjs_min_default()(row.invoiceDate).format('DD/MM/YYYY') : '',
-          dueDateField: dayjs_min_default()(row.invoiceDueDate).format('DD/MM/YYYY')
-        }));
-        var invoices = formatDate;
-        SetTotalPage(res.data.totalPages); // Ensure totalPage is correctly calculated
-        setTotalItemCount(res.data.totalItem);
-        if (res.data.statusCounts) {
-          setStatusCounts(res.data.statusCounts);
-        }
-        setInvoice(invoices);
-        setLoadingData(false);
-
-        // Auto-repair status mismatch for zero-balance invoices
-        var mismatchedInvoices = invoices.filter(inv => (inv.status === 'Partially-Paid' || inv.status === 'Sent' || inv.status === 'Draft' || inv.status === 'Pending') && parseFloat(inv.balanceDue) <= 0 && parseFloat(inv.totalInvoice) > 0);
-        if (mismatchedInvoices.length > 0) {
-          console.log("Repairing status for ".concat(mismatchedInvoices.length, " invoices sequentially..."));
-          _asyncToGenerator(function* () {
-            for (var inv of mismatchedInvoices) {
-              try {
-                yield axios/* default */.A.put("".concat(apiConfig/* ENDPOINT_URL */.m, "/update-invoice/").concat(inv._id), {
-                  status: 'Paid'
-                });
-                // Small delay to prevent rate limiting
-                yield new Promise(resolve => setTimeout(resolve, 100));
-              } catch (err) {
-                console.error("Failed to repair invoice ".concat(inv.invoiceNumber, ":"), err);
-              }
-            }
-          })();
-        }
-      } catch (error) {
-        console.error('Error fetching data:', error);
-        react_toastify_esm/* toast */.oR.error('Failed to fetch invoices.');
-        setLoadingData(false);
-      }
-    });
-    return function fetchItems(_x, _x2, _x3, _x4, _x5) {
-      return _ref1.apply(this, arguments);
-    };
-  }();
-  var FilterInvoiceWith = invoice.filter(row => Array.isArray(row.items) && row.items.every(item => parseFloat(item.itemOut) === parseFloat(item.itemQty)));
-  (0,react.useEffect)(() => {
-    fetchItems(page, debouncedSearchTerm, filterField, filterValue, statusFilter);
-  }, [page, debouncedSearchTerm, filterField, filterValue, statusFilter]);
-  var handleStatusClick = statusKey => {
-    if (statusFilter.toLowerCase() === statusKey.toLowerCase() && statusKey !== 'ALL') {
-      setStatusFilter('ALL');
-    } else {
-      setStatusFilter(statusKey);
-    }
-    setPage(0);
-  };
-  var handlePageChange = newPage => {
-    setPage(newPage); // Update page state (convert to 0-based index)
-  };
-  var handleRefreshSearch = () => {
-    setSearchTerm('');
-    setDebouncedSearchTerm('');
-    setFilterModel({
-      items: [],
-      quickFilterExcludeHiddenColumns: true,
-      quickFilterValues: []
-    });
-    setPage(0);
-    fetchItems(0, '', filterField, filterValue, statusFilter);
-  };
-
-  // --- WhatsApp Invoice Dispatch Pipeline ---
-  var DEFAULT_WA_MESSAGE = 'Dear Valued Customer, please find attached your official invoice from Global Gate SARL. Thank you for your business!';
-  var _useState35 = (0,react.useState)({}),
-    _useState36 = _slicedToArray(_useState35, 2),
-    customerPhoneMap = _useState36[0],
-    setCustomerPhoneMap = _useState36[1];
-  var _useState37 = (0,react.useState)(false),
-    _useState38 = _slicedToArray(_useState37, 2),
-    openWhatsAppModal = _useState38[0],
-    setOpenWhatsAppModal = _useState38[1];
-  var _useState39 = (0,react.useState)([]),
-    _useState40 = _slicedToArray(_useState39, 2),
-    whatsAppInvoicesList = _useState40[0],
-    setWhatsAppInvoicesList = _useState40[1];
-  var _useState41 = (0,react.useState)(new Set()),
-    _useState42 = _slicedToArray(_useState41, 2),
-    selectedWhatsAppInvoiceIds = _useState42[0],
-    setSelectedWhatsAppInvoiceIds = _useState42[1];
-  var _useState43 = (0,react.useState)(DEFAULT_WA_MESSAGE),
-    _useState44 = _slicedToArray(_useState43, 2),
-    whatsAppMessage = _useState44[0],
-    setWhatsAppMessage = _useState44[1];
-  var _useState45 = (0,react.useState)(false),
-    _useState46 = _slicedToArray(_useState45, 2),
-    savingTemplate = _useState46[0],
-    setSavingTemplate = _useState46[1];
-  var _useState47 = (0,react.useState)({}),
-    _useState48 = _slicedToArray(_useState47, 2),
-    phoneOverrides = _useState48[0],
-    setPhoneOverrides = _useState48[1];
-  var _useState49 = (0,react.useState)(false),
-    _useState50 = _slicedToArray(_useState49, 2),
-    dispatchingWhatsApp = _useState50[0],
-    setDispatchingWhatsApp = _useState50[1];
-  var _useState51 = (0,react.useState)(null),
-    _useState52 = _slicedToArray(_useState51, 2),
-    dispatchResult = _useState52[0],
-    setDispatchResult = _useState52[1];
-  var _useState53 = (0,react.useState)(false),
-    _useState54 = _slicedToArray(_useState53, 2),
-    loadingSentInvoices = _useState54[0],
-    setLoadingSentInvoices = _useState54[1];
-  var _useState55 = (0,react.useState)(0),
-    _useState56 = _slicedToArray(_useState55, 2),
-    modalTab = _useState56[0],
-    setModalTab = _useState56[1]; // 0: Send Queue, 1: Sent History
-  var _useState57 = (0,react.useState)(''),
-    _useState58 = _slicedToArray(_useState57, 2),
-    queueSearchTerm = _useState58[0],
-    setQueueSearchTerm = _useState58[1];
-  var _useState59 = (0,react.useState)([]),
-    _useState60 = _slicedToArray(_useState59, 2),
-    historyList = _useState60[0],
-    setHistoryList = _useState60[1];
-  var _useState61 = (0,react.useState)(false),
-    _useState62 = _slicedToArray(_useState61, 2),
-    loadingHistory = _useState62[0],
-    setLoadingHistory = _useState62[1];
-  var _useState63 = (0,react.useState)(''),
-    _useState64 = _slicedToArray(_useState63, 2),
-    historySearchTerm = _useState64[0],
-    setHistorySearchTerm = _useState64[1];
-  var isEligibleInvoiceStatus = st => {
-    var s = String(st || '').toUpperCase().trim();
-    return s === 'SENT' || s === 'PARTIALLY-PAID' || s === 'PARTIALLY PAID' || s === 'PARTIALLY_PAID' || s === 'FREE OF CHARGE' || s === 'FREE-OF-CHARGE';
-  };
-  var renderInvoiceStatusChip = status => {
-    var s = String(status || '').toUpperCase().trim();
-    if (s === 'SENT') {
-      return /*#__PURE__*/react.createElement(Chip/* default */.A, {
-        label: "SENT",
-        size: "small",
-        sx: {
-          bgcolor: '#e0f2fe',
-          color: '#0369a1',
-          fontWeight: 700,
-          height: 20,
-          fontSize: '0.7rem'
-        }
-      });
-    }
-    if (s === 'PARTIALLY-PAID' || s === 'PARTIALLY PAID' || s === 'PARTIALLY_PAID') {
-      return /*#__PURE__*/react.createElement(Chip/* default */.A, {
-        label: "PARTIALLY-PAID",
-        size: "small",
-        sx: {
-          bgcolor: '#ffedd5',
-          color: '#c2410c',
-          fontWeight: 700,
-          height: 20,
-          fontSize: '0.7rem'
-        }
-      });
-    }
-    if (s === 'FREE OF CHARGE' || s === 'FREE-OF-CHARGE') {
-      return /*#__PURE__*/react.createElement(Chip/* default */.A, {
-        label: "FREE OF CHARGE",
-        size: "small",
-        sx: {
-          bgcolor: '#f3e8ff',
-          color: '#7e22ce',
-          fontWeight: 700,
-          height: 20,
-          fontSize: '0.7rem'
-        }
-      });
-    }
-    return /*#__PURE__*/react.createElement(Chip/* default */.A, {
-      label: s || 'UNKNOWN',
-      size: "small",
-      sx: {
-        bgcolor: '#f1f5f9',
-        color: '#475569',
-        fontWeight: 700,
-        height: 20,
-        fontSize: '0.7rem'
-      }
-    });
-  };
-  var getInvoicePhone = function getInvoicePhone(inv) {
-    var phoneMap = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-    if (!inv) return '';
-    var cust = inv.customerName || {};
-    if (typeof cust === 'object' && cust !== null) {
-      var direct = cust.customerCompanyPhone || cust.customerPhone || cust.phone || cust.mobile;
-      if (direct && String(direct).trim()) return String(direct).trim();
-      if (cust._id && phoneMap[cust._id]) return String(phoneMap[cust._id]).trim();
-      var name = cust.Customer || cust.customerName || cust.customerFullName;
-      if (name && phoneMap[String(name).toUpperCase()]) return String(phoneMap[String(name).toUpperCase()]).trim();
-    } else if (typeof cust === 'string' && phoneMap[cust.toUpperCase()]) {
-      return String(phoneMap[cust.toUpperCase()]).trim();
-    }
-    return '';
-  };
-  var fetchSentHistory = /*#__PURE__*/function () {
-    var _ref11 = _asyncToGenerator(function* () {
-      try {
-        var _res$data2;
-        setLoadingHistory(true);
-        var res = yield axios/* default */.A.get("".concat(apiConfig/* ENDPOINT_URL */.m, "/invoice-whatsapp/history"));
-        if ((_res$data2 = res.data) !== null && _res$data2 !== void 0 && _res$data2.success && Array.isArray(res.data.history)) {
-          setHistoryList(res.data.history);
-        }
-      } catch (err) {
-        console.warn('Failed to fetch WhatsApp sent history:', err);
-      } finally {
-        setLoadingHistory(false);
-      }
-    });
-    return function fetchSentHistory() {
-      return _ref11.apply(this, arguments);
-    };
-  }();
-  var sentHistoryMap = (0,react.useMemo)(() => {
-    var map = {};
-    (historyList || []).forEach(h => {
-      var num = Number(h.invoiceNumber);
-      if (num && !map[num]) {
-        map[num] = h;
-      }
-    });
-    return map;
-  }, [historyList]);
-  var filteredQueueInvoices = (0,react.useMemo)(() => {
-    if (!queueSearchTerm.trim()) return whatsAppInvoicesList;
-    var q = queueSearchTerm.toLowerCase().trim();
-    return whatsAppInvoicesList.filter(inv => {
-      var invNum = String(inv.invoiceNumber || '').toLowerCase();
-      var invFormatted = "inv-".concat(String(inv.invoiceNumber || '').padStart(6, '0')).toLowerCase();
-      var cust = inv.customerName || {};
-      var clientName = String(typeof cust === 'string' ? cust : cust.Customer || cust.customerName || cust.customerFullName || '').toLowerCase();
-      var rawPhone = phoneOverrides[inv._id || inv.id] !== undefined ? phoneOverrides[inv._id || inv.id] : getInvoicePhone(inv, customerPhoneMap);
-      var phone = String(rawPhone || '').toLowerCase();
-      var st = String(inv.status || '').toLowerCase();
-      return invNum.includes(q) || invFormatted.includes(q) || clientName.includes(q) || phone.includes(q) || st.includes(q);
-    });
-  }, [whatsAppInvoicesList, queueSearchTerm, phoneOverrides, customerPhoneMap]);
-  var handleSelectFiltered = () => {
-    setSelectedWhatsAppInvoiceIds(prev => {
-      var next = new Set(prev);
-      filteredQueueInvoices.forEach(inv => next.add(inv._id || inv.id));
-      return next;
-    });
-  };
-  var handleUncheckFiltered = () => {
-    setSelectedWhatsAppInvoiceIds(prev => {
-      var next = new Set(prev);
-      filteredQueueInvoices.forEach(inv => next.delete(inv._id || inv.id));
-      return next;
-    });
-  };
-  var filteredHistoryList = (0,react.useMemo)(() => {
-    if (!historySearchTerm.trim()) return historyList;
-    var q = historySearchTerm.toLowerCase().trim();
-    return historyList.filter(h => {
-      var invNum = String(h.invoiceNumber || '').toLowerCase();
-      var invFormatted = "inv-".concat(String(h.invoiceNumber || '').padStart(6, '0')).toLowerCase();
-      var client = String(h.customerName || '').toLowerCase();
-      var phone = String(h.phone || '').toLowerCase();
-      var user = String(h.sentBy || '').toLowerCase();
-      return invNum.includes(q) || invFormatted.includes(q) || client.includes(q) || phone.includes(q) || user.includes(q);
-    });
-  }, [historyList, historySearchTerm]);
-  (0,react.useEffect)(() => {
-    var fetchCustomers = /*#__PURE__*/function () {
-      var _ref12 = _asyncToGenerator(function* () {
-        try {
-          var _res$data3;
-          var res = yield (0,apiCache/* cachedGet */.Fe)("".concat(apiConfig/* ENDPOINT_URL */.m, "/customer"));
-          if ((_res$data3 = res.data) !== null && _res$data3 !== void 0 && _res$data3.data) {
-            var map = {};
-            res.data.data.forEach(c => {
-              var p = (c.customerCompanyPhone || c.customerPhone || c.phone || c.mobile || '').trim();
-              if (p) {
-                if (c._id) map[c._id] = p;
-                if (c.Customer) map[c.Customer.toUpperCase()] = p;
-                if (c.customerName) map[c.customerName.toUpperCase()] = p;
-                if (c.customerFullName) map[c.customerFullName.toUpperCase()] = p;
-              }
-            });
-            setCustomerPhoneMap(map);
-          }
-        } catch (_) {}
-      });
-      return function fetchCustomers() {
-        return _ref12.apply(this, arguments);
-      };
-    }();
-    fetchCustomers();
-  }, []);
-  (0,react.useEffect)(() => {
-    var fetchTemplate = /*#__PURE__*/function () {
-      var _ref13 = _asyncToGenerator(function* () {
-        try {
-          var _res$data4, _res$data5;
-          var res = yield axios/* default */.A.get("".concat(apiConfig/* ENDPOINT_URL */.m, "/invoice-whatsapp/template"));
-          if ((_res$data4 = res.data) !== null && _res$data4 !== void 0 && _res$data4.success && (_res$data5 = res.data) !== null && _res$data5 !== void 0 && _res$data5.templateMessage) {
-            setWhatsAppMessage(res.data.templateMessage);
-          }
-        } catch (_) {}
-      });
-      return function fetchTemplate() {
-        return _ref13.apply(this, arguments);
-      };
-    }();
-    fetchTemplate();
-  }, []);
-  var handleSaveTemplateAsDefault = /*#__PURE__*/function () {
-    var _ref14 = _asyncToGenerator(function* () {
-      if (!whatsAppMessage.trim()) {
-        react_toastify_esm/* toast */.oR.warn('Message cannot be empty');
-        return;
-      }
-      setSavingTemplate(true);
-      try {
-        var _user$data2, _res$data6;
-        var res = yield axios/* default */.A.post("".concat(apiConfig/* ENDPOINT_URL */.m, "/invoice-whatsapp/template"), {
-          templateMessage: whatsAppMessage.trim(),
-          updatedBy: (user === null || user === void 0 || (_user$data2 = user.data) === null || _user$data2 === void 0 ? void 0 : _user$data2.userName) || 'GG'
-        });
-        if ((_res$data6 = res.data) !== null && _res$data6 !== void 0 && _res$data6.success) {
-          react_toastify_esm/* toast */.oR.success('Default WhatsApp message saved successfully!');
-        }
-      } catch (err) {
-        react_toastify_esm/* toast */.oR.error('Failed to save default message: ' + (err.message || ''));
-      } finally {
-        setSavingTemplate(false);
-      }
-    });
-    return function handleSaveTemplateAsDefault() {
-      return _ref14.apply(this, arguments);
-    };
-  }();
-  var handleOpenWhatsAppBatchModal = /*#__PURE__*/function () {
-    var _ref15 = _asyncToGenerator(function* () {
-      if (!canSendWhatsAppInvoice) {
-        react_toastify_esm/* toast */.oR.error('Permission denied. WhatsApp Invoice Dispatch is restricted in Grant Access.');
-        return;
-      }
-      setDispatchResult(null);
-      setLoadingSentInvoices(true);
-      setQueueSearchTerm('');
-      setModalTab(0);
-      setOpenWhatsAppModal(true);
-      fetchSentHistory();
-      try {
-        var _yield$Promise$allSet = yield Promise.allSettled([axios/* default */.A.get("".concat(apiConfig/* ENDPOINT_URL */.m, "/invoice-Information?page=1&limit=200&status=SENT")), axios/* default */.A.get("".concat(apiConfig/* ENDPOINT_URL */.m, "/invoice-Information?page=1&limit=200&status=PARTIALLY-PAID")), axios/* default */.A.get("".concat(apiConfig/* ENDPOINT_URL */.m, "/invoice-Information?page=1&limit=200&status=FREE OF CHARGE"))]),
-          _yield$Promise$allSet2 = _slicedToArray(_yield$Promise$allSet, 3),
-          resSent = _yield$Promise$allSet2[0],
-          resPartial = _yield$Promise$allSet2[1],
-          resFoc = _yield$Promise$allSet2[2];
-        var pool = [];
-        [resSent, resPartial, resFoc].forEach(r => {
-          var _r$value;
-          if (r.status === 'fulfilled' && Array.isArray((_r$value = r.value) === null || _r$value === void 0 || (_r$value = _r$value.data) === null || _r$value === void 0 ? void 0 : _r$value.itemI)) {
-            pool.push(...r.value.data.itemI);
-          }
-        });
-        var seen = new Set();
-        var combined = pool.filter(r => {
-          var id = r._id || r.id;
-          if (!id || seen.has(id)) return false;
-          seen.add(id);
-          return isEligibleInvoiceStatus(r.status);
-        }).map(r => _objectSpread(_objectSpread({}, r), {}, {
-          id: r._id,
-          dateField: r.invoiceDate ? dayjs_min_default()(r.invoiceDate).format('DD/MM/YYYY') : ''
-        }));
-        if (combined.length === 0) {
-          combined = invoice.filter(inv => isEligibleInvoiceStatus(inv.status));
-        }
-        setWhatsAppInvoicesList(combined);
-        setSelectedWhatsAppInvoiceIds(new Set()); // Default to 0 checked on open
-
-        var initPhones = {};
-        combined.forEach(inv => {
-          var id = inv._id || inv.id;
-          initPhones[id] = getInvoicePhone(inv, customerPhoneMap);
-        });
-        setPhoneOverrides(initPhones);
-      } catch (err) {
-        console.error('Error fetching eligible invoices:', err);
-        var localEligible = invoice.filter(inv => isEligibleInvoiceStatus(inv.status));
-        setWhatsAppInvoicesList(localEligible);
-        setSelectedWhatsAppInvoiceIds(new Set()); // Default to 0 checked on open
-        var _initPhones = {};
-        localEligible.forEach(inv => {
-          var id = inv._id || inv.id;
-          _initPhones[id] = getInvoicePhone(inv, customerPhoneMap);
-        });
-        setPhoneOverrides(_initPhones);
-      } finally {
-        setLoadingSentInvoices(false);
-      }
-    });
-    return function handleOpenWhatsAppBatchModal() {
-      return _ref15.apply(this, arguments);
-    };
-  }();
-  var handleOpenWhatsAppSingleModal = row => {
-    if (!canSendWhatsAppInvoice) {
-      react_toastify_esm/* toast */.oR.error('Permission denied. WhatsApp Invoice Dispatch is restricted in Grant Access.');
-      return;
-    }
-    if (!isEligibleInvoiceStatus(row.status)) {
-      react_toastify_esm/* toast */.oR.warn('Only invoices with status SENT, PARTIALLY-PAID, or FREE OF CHARGE can be sent via WhatsApp.');
-      return;
-    }
-    setDispatchResult(null);
-    setQueueSearchTerm('');
-    setModalTab(0);
-    setWhatsAppInvoicesList([row]);
-    setSelectedWhatsAppInvoiceIds(new Set([row._id || row.id]));
-    var initialPhone = getInvoicePhone(row, customerPhoneMap);
-    setPhoneOverrides({
-      [row._id || row.id]: initialPhone
-    });
-    fetchSentHistory();
-    setOpenWhatsAppModal(true);
-  };
-  var handleToggleWhatsAppInvoice = id => {
-    setSelectedWhatsAppInvoiceIds(prev => {
-      var next = new Set(prev);
-      if (next.has(id)) next.delete(id);else next.add(id);
-      return next;
-    });
-  };
-  var handleToggleSelectAllWhatsApp = () => {
-    if (selectedWhatsAppInvoiceIds.size === whatsAppInvoicesList.length) {
-      setSelectedWhatsAppInvoiceIds(new Set());
-    } else {
-      setSelectedWhatsAppInvoiceIds(new Set(whatsAppInvoicesList.map(inv => inv._id || inv.id)));
-    }
-  };
-  var handleExecuteWhatsAppDispatch = /*#__PURE__*/function () {
-    var _ref16 = _asyncToGenerator(function* () {
-      var selectedInvoices = whatsAppInvoicesList.filter(inv => selectedWhatsAppInvoiceIds.has(inv._id || inv.id)).map(inv => {
-        var totalAmount = Number(inv.totalInvoice || inv.total || 0).toFixed(2);
-        var hasValidBalance = inv.balanceDue !== undefined && inv.balanceDue !== null && !isNaN(parseFloat(inv.balanceDue));
-        var balanceDueAmount = hasValidBalance ? parseFloat(inv.balanceDue).toFixed(2) : totalAmount;
-        return _objectSpread(_objectSpread({}, inv), {}, {
-          balanceDue: balanceDueAmount
-        });
-      });
-      if (selectedInvoices.length === 0) {
-        react_toastify_esm/* toast */.oR.warn('Please select at least one invoice to send.');
-        return;
-      }
-      setDispatchingWhatsApp(true);
-      setDispatchResult(null);
-      var payload = {
-        invoices: selectedInvoices,
-        templateMessage: whatsAppMessage.trim(),
-        phoneOverrides
-      };
-      try {
-        var _window$electron, _result, _result2, _result3, _result4;
-        var result = null;
-
-        // 1. First priority: Direct local daemon dispatch (instant 2-3s in desktop app & web portal on this PC)
-        var localSuccess = false;
-        try {
-          var localCheck = yield axios/* default */.A.get('http://127.0.0.1:5055/status', {
-            timeout: 1500
-          });
-          if (localCheck.status === 200) {
-            var localRes = yield axios/* default */.A.post('http://127.0.0.1:5055/send-invoices', payload, {
-              timeout: 180000
-            });
-            if (localRes !== null && localRes !== void 0 && localRes.data) {
-              result = localRes.data;
-              localSuccess = true;
-            }
-          }
-        } catch (_) {
-          localSuccess = false;
-        }
-        console.log('[InvoiceWhatsApp] Dispatch state:', {
-          localDaemonSuccess: localSuccess,
-          hasElectron: typeof window !== 'undefined' && Boolean(window.electron),
-          hasIpcMethod: typeof window !== 'undefined' && typeof ((_window$electron = window.electron) === null || _window$electron === void 0 ? void 0 : _window$electron.sendInvoiceWhatsApp) === 'function'
-        });
-
-        // 2. Second priority: Desktop Electron IPC (spawns background daemon or runs batch)
-        if (!localSuccess) {
-          if (typeof window !== 'undefined' && window.electron && typeof window.electron.sendInvoiceWhatsApp === 'function') {
-            result = yield window.electron.sendInvoiceWhatsApp(payload);
-          } else {
-            // 3. Third priority: Cloud API endpoint
-            var res = yield axios/* default */.A.post("".concat(apiConfig/* ENDPOINT_URL */.m, "/invoice-whatsapp/send"), payload);
-            result = res.data;
-          }
-        }
-        setDispatchResult(result);
-        var sentCount = Number(((_result = result) === null || _result === void 0 || (_result = _result.report) === null || _result === void 0 ? void 0 : _result.sent) || 0);
-        var failedCount = Number(((_result2 = result) === null || _result2 === void 0 || (_result2 = _result2.report) === null || _result2 === void 0 ? void 0 : _result2.failed) !== undefined ? result.report.failed : Math.max(0, selectedInvoices.length - sentCount));
-        var totalCount = Number(((_result3 = result) === null || _result3 === void 0 || (_result3 = _result3.report) === null || _result3 === void 0 ? void 0 : _result3.total) || selectedInvoices.length);
-
-        // Determine the exact invoices that actually succeeded
-        var sentDetails = Array.isArray((_result4 = result) === null || _result4 === void 0 || (_result4 = _result4.report) === null || _result4 === void 0 ? void 0 : _result4.details) ? result.report.details.filter(d => d.status === 'sent') : [];
-        var actuallySentInvoices = [];
-        if (sentDetails.length > 0) {
-          actuallySentInvoices = selectedInvoices.filter(inv => {
-            var invNum = String(inv.invoiceNumber);
-            var invId = String(inv._id || inv.id);
-            return sentDetails.some(d => String(d.invoiceNumber) === invNum || String(d.invoiceId) === invId);
-          });
-        } else if (sentCount > 0 && sentCount === selectedInvoices.length) {
-          actuallySentInvoices = selectedInvoices;
-        } else if (sentCount > 0) {
-          actuallySentInvoices = selectedInvoices.slice(0, sentCount);
-        }
-
-        // ALWAYS record history in MongoDB for any invoice that actually delivered!
-        if (actuallySentInvoices.length > 0) {
-          try {
-            var _user$data3;
-            yield axios/* default */.A.post("".concat(apiConfig/* ENDPOINT_URL */.m, "/invoice-whatsapp/record-history"), {
-              records: actuallySentInvoices.map(inv => {
-                var _inv$customerName, _inv$customerName2;
-                return {
-                  invoiceId: inv._id || inv.id,
-                  invoiceNumber: inv.invoiceNumber,
-                  customerName: typeof inv.customerName === 'object' ? ((_inv$customerName = inv.customerName) === null || _inv$customerName === void 0 ? void 0 : _inv$customerName.Customer) || ((_inv$customerName2 = inv.customerName) === null || _inv$customerName2 === void 0 ? void 0 : _inv$customerName2.customerName) || '' : inv.customerName,
-                  phone: phoneOverrides[inv._id || inv.id] || getInvoicePhone(inv, customerPhoneMap),
-                  amount: Number(inv.balanceDue !== undefined ? inv.balanceDue : inv.totalInvoice || inv.total || 0),
-                  caption: whatsAppMessage.trim(),
-                  status: 'sent'
-                };
-              }),
-              sentBy: (user === null || user === void 0 || (_user$data3 = user.data) === null || _user$data3 === void 0 ? void 0 : _user$data3.userName) || 'GG'
-            });
-            fetchSentHistory();
-          } catch (histErr) {
-            console.warn('[InvoiceWhatsApp] History record warning:', histErr);
-          }
-        }
-        if (sentCount > 0 && failedCount === 0) {
-          react_toastify_esm/* toast */.oR.success("WhatsApp dispatch complete: ".concat(sentCount, " of ").concat(totalCount, " invoice(s) sent!"));
-          fetchItems(page, debouncedSearchTerm, filterField, filterValue, statusFilter);
-        } else if (sentCount > 0 && failedCount > 0) {
-          react_toastify_esm/* toast */.oR.warn("WhatsApp dispatch partial: ".concat(sentCount, " sent, ").concat(failedCount, " failed. Recorded in Sent History."));
-          fetchItems(page, debouncedSearchTerm, filterField, filterValue, statusFilter);
-        } else {
-          var _result5;
-          react_toastify_esm/* toast */.oR.error(((_result5 = result) === null || _result5 === void 0 ? void 0 : _result5.error) || "Failed to dispatch WhatsApp invoices (0 of ".concat(totalCount, " sent)."));
-        }
-      } catch (err) {
-        var _err$response;
-        console.error('WhatsApp dispatch error:', err);
-        var is503 = (err === null || err === void 0 || (_err$response = err.response) === null || _err$response === void 0 ? void 0 : _err$response.status) === 503;
-        var friendlyMsg = is503 ? 'WhatsApp desktop agent is not running on this PC. Please install and launch Global Gate v3.6.46.' : err.message;
-        setDispatchResult({
-          success: false,
-          error: friendlyMsg
-        });
-        react_toastify_esm/* toast */.oR.error('Dispatch failed: ' + friendlyMsg);
-      } finally {
-        setDispatchingWhatsApp(false);
-      }
-    });
-    return function handleExecuteWhatsAppDispatch() {
-      return _ref16.apply(this, arguments);
-    };
-  }();
-  var _useState65 = (0,react.useState)(false),
-    _useState66 = _slicedToArray(_useState65, 2),
-    loading = _useState66[0],
-    setLoading = _useState66[1];
-  var _useState67 = (0,react.useState)(false),
-    _useState68 = _slicedToArray(_useState67, 2),
-    ErrorOpenModal = _useState68[0],
-    setErrorOpenModal = _useState68[1];
-  var _useState69 = (0,react.useState)(false),
-    _useState70 = _slicedToArray(_useState69, 2),
-    loadingOpenModal = _useState70[0],
-    setLoadingOpenModal = _useState70[1];
-  var _useState71 = (0,react.useState)(false),
-    _useState72 = _slicedToArray(_useState71, 2),
-    modalDeleteOpenLoading = _useState72[0],
-    setModalDeleteOpenLoading = _useState72[1];
-  {/** Loading Update View Start */}
-  var handleOpenLoading = () => {
-    setLoadingOpenModal(true);
-    setLoading(true);
-    handleCloseUpdate();
-    setTimeout(() => {
-      setLoading(false);
-    }, 500);
-  };
-  var handleCloseLoading = () => {
-    setLoadingOpenModal(false);
-    setLoading(false);
-    fetchItems(page, searchTerm, filterField, filterValue);
-  };
-  {/** Loading Update View End */}
-  {/** Loading Delete View Start */}
-  var handleDeleteOpenLoading = () => {
-    setModalDeleteOpenLoading(true);
-    setLoading(true);
-    handleClose();
-    setTimeout(() => {
-      setLoading(false);
-    }, 500);
-  };
-  var handleDeleteCloseLoading = () => {
-    setModalDeleteOpenLoading(false);
-    setLoading(false);
-    fetchItems(page, searchTerm, filterField, filterValue);
-  };
+    newPurchase = _useState32[0],
+    setNewPurchase = _useState32[1];
   var handleOpenOffline = () => {
     setLoadingOpenModal(true);
     setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 500);
+  };
+  var _useState33 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
+    _useState34 = _slicedToArray(_useState33, 2),
+    page = _useState34[0],
+    setPage = _useState34[1]; // Initialize page state to 0 (0-based index)
+  var limit = 100;
+  var _useState35 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+    _useState36 = _slicedToArray(_useState35, 2),
+    searchTerm = _useState36[0],
+    setSearchTerm = _useState36[1]; // Initialize search term state
+  var _useState37 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+    _useState38 = _slicedToArray(_useState37, 2),
+    filterField = _useState38[0],
+    setFilterField = _useState38[1]; // Initialize filter field state
+  var _useState39 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+    _useState40 = _slicedToArray(_useState39, 2),
+    filterValue = _useState40[0],
+    setFilterValue = _useState40[1]; // Initialize filter value state
+  var _useState41 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
+    _useState42 = _slicedToArray(_useState41, 2),
+    totalPage = _useState42[0],
+    SetTotalPage = _useState42[1];
+  var _useState43 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
+    _useState44 = _slicedToArray(_useState43, 2),
+    totalItemCount = _useState44[0],
+    setTotalItemCount = _useState44[1];
+  var fetchItems = /*#__PURE__*/function () {
+    var _ref11 = _asyncToGenerator(function* (page, searchTerm, filterField, filterValue) {
+      try {
+        var res = yield axios__WEBPACK_IMPORTED_MODULE_36__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_38__/* .ENDPOINT_URL */ .m, "/expense-Information?page=").concat(page + 1, "&limit=").concat(limit, "&search=").concat(encodeURIComponent(searchTerm.trim()), "&filterField=").concat(encodeURIComponent(filterField.trim()), "&filterValue=").concat(encodeURIComponent(filterValue.trim())));
+        var formatDate = res.data.itemI.map(item => {
+          var _item$expenseCategory, _item$accountNameInfo, _item$accountNameInfo2;
+          return _objectSpread(_objectSpread({}, item), {}, {
+            id: item._id,
+            dataField: dayjs__WEBPACK_IMPORTED_MODULE_47___default()(item.expenseDate).format('DD/MM/YYYY'),
+            category: ((_item$expenseCategory = item.expenseCategory) === null || _item$expenseCategory === void 0 ? void 0 : _item$expenseCategory.expensesCategory) || item.expenseCategory || '',
+            name: ((_item$accountNameInfo = item.accountNameInfo) === null || _item$accountNameInfo === void 0 ? void 0 : _item$accountNameInfo.name) || '',
+            employee: Array.isArray(item.employeeName) && item.employeeName.length > 0 ? item.employeeName.map(row => row.employee || row.name || (typeof row === 'string' ? row : '')).filter(Boolean).join(', ') : typeof item.employee === 'string' ? item.employee : ((_item$accountNameInfo2 = item.accountNameInfo) === null || _item$accountNameInfo2 === void 0 ? void 0 : _item$accountNameInfo2.name) || ''
+          });
+        });
+        SetTotalPage(Math.ceil(res.data.totalItem / limit));
+        setTotalItemCount(res.data.totalItem); // Ensure totalPage is correctly calculated
+        setExpenses(formatDate);
+        setLoadingData(false);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        react_toastify__WEBPACK_IMPORTED_MODULE_1__/* .toast */ .oR.error('Failed to fetch expenses.');
+        setLoadingData(false);
+      }
+    });
+    return function fetchItems(_x, _x2, _x3, _x4) {
+      return _ref11.apply(this, arguments);
+    };
+  }();
+  var handleRefreshSearch = () => {
+    fetchItems(page, searchTerm, filterField, filterValue);
+  };
+  var fetchAndSaveData = /*#__PURE__*/function () {
+    var _ref12 = _asyncToGenerator(function* () {
+      try {
+        var resRate = yield axios__WEBPACK_IMPORTED_MODULE_36__/* ["default"] */ .A.get(_apiConfig__WEBPACK_IMPORTED_MODULE_38__/* .ENDPOINT_URL */ .m + '/rate');
+        resRate.data.data.map(row => setRate(row.rate));
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        react_toastify__WEBPACK_IMPORTED_MODULE_1__/* .toast */ .oR.error('Failed to fetch daily rate.');
+      }
+    });
+    return function fetchAndSaveData() {
+      return _ref12.apply(this, arguments);
+    };
+  }();
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    fetchItems(page, searchTerm, filterField, filterValue);
+    fetchAndSaveData();
+  }, [page, searchTerm, filterField, filterValue]);
+  var handlePageChange = newPage => {
+    setPage(newPage); // Update page state (convert to 0-based index)
+  };
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    var fetchCash = /*#__PURE__*/function () {
+      var _ref13 = _asyncToGenerator(function* () {
+        try {
+          var _resCash$data;
+          var resCash = yield axios__WEBPACK_IMPORTED_MODULE_36__/* ["default"] */ .A.get(_apiConfig__WEBPACK_IMPORTED_MODULE_38__/* .ENDPOINT_URL */ .m + '/cash');
+          (_resCash$data = resCash.data) === null || _resCash$data === void 0 || (_resCash$data = _resCash$data.data) === null || _resCash$data === void 0 || _resCash$data.filter(row => dayjs__WEBPACK_IMPORTED_MODULE_47___default()(row.cashDate).format('DD/MM/YYYY') === dayjs__WEBPACK_IMPORTED_MODULE_47___default()(cashDate).format('DD/MM/YYYY')).map(row => setRelatedDate(row.cashDate));
+        } catch (error) {
+          console.error('Connection error:', error);
+        }
+      });
+      return function fetchCash() {
+        return _ref13.apply(this, arguments);
+      };
+    }();
+    fetchCash();
+  }, [cashDate]);
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    var fetchNumber = /*#__PURE__*/function () {
+      var _ref14 = _asyncToGenerator(function* () {
+        try {
+          var _res$data2, _res$data3;
+          var res = yield axios__WEBPACK_IMPORTED_MODULE_36__/* ["default"] */ .A.get(_apiConfig__WEBPACK_IMPORTED_MODULE_38__/* .ENDPOINT_URL */ .m + '/get-last-saved-cash');
+          var num = res.data && res.data.cashNumber ? parseInt(((_res$data2 = res.data) === null || _res$data2 === void 0 || (_res$data2 = _res$data2.data) === null || _res$data2 === void 0 ? void 0 : _res$data2.cashNumber) || ((_res$data3 = res.data) === null || _res$data3 === void 0 ? void 0 : _res$data3.cashNumber) || 0) : 0;
+          setCashNumber(num + 1);
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        }
+      });
+      return function fetchNumber() {
+        return _ref14.apply(this, arguments);
+      };
+    }();
+    fetchNumber();
+  }, [cashDate]);
+  var Create = {
+    person: user.data.userName,
+    cashNumber: "C-00" + cashNumber,
+    dateComment: dayjs__WEBPACK_IMPORTED_MODULE_47___default()(cashDate).format('DD/MM/YYYY')
+  };
+  {/** Cash start */}
+  var addItem = () => {
+    setAmount([...amount, {
+      idRow: (0,uuid__WEBPACK_IMPORTED_MODULE_55__/* ["default"] */ .A)(),
+      amountFC: 0,
+      amountUsd: 0,
+      rate: 0,
+      total: 0,
+      note: ''
+    }]);
+  };
+  var deleteItem = idRow => {
+    setAmount(amount => amount.filter(Item => Item.idRow !== idRow));
+  };
+  var handleChangeAmount = (e, i) => {
+    var _e$target = e.target,
+      name = _e$target.name,
+      value = _e$target.value;
+    var list = [...amount];
+    list[i][name] = name === 'amountFC' || name === 'amountUsd' || name === 'rate' ? value.replace(/,/g, '') : name === 'note' ? (value || '').toUpperCase() : value;
+    list[i]['rate'] = rate;
+    list[i]['total'] = Math.round((parseFloat(list[i]['amountFC'] || 0) / (parseFloat(list[i]['rate']) || 1) + parseFloat(list[i]['amountUsd'] || 0)) * 100) / 100;
+    setAmount(list);
+  };
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    var sum = 0;
+    amount.forEach(item => {
+      sum += parseFloat(item.total) || 0;
+    });
+    setTotalCash(Math.round(sum * 100) / 100);
+  }, [amount]);
+  {/** Cash end */}
+  var handleOpenUpdate = () => {
+    setOpen1(true);
+  };
+  var handleCloseUpdate = () => {
+    setOpen1(false);
+  };
+  var handleOpenCash = () => {
+    setOpen2(true);
+  };
+  var handleCloseCash = () => {
+    setOpen2(false);
+  };
+  var _useState45 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState46 = _slicedToArray(_useState45, 2),
+    openDeleteMultiple = _useState46[0],
+    setOpenDeleteMultiple = _useState46[1];
+  var handleOpenMultiple = () => {
+    setOpenDeleteMultiple(true);
+  };
+  var handleCloseMultiple = () => {
+    setOpenDeleteMultiple(false);
+  };
+  var _useState47 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState48 = _slicedToArray(_useState47, 2),
+    openDeleteAll = _useState48[0],
+    setOpenDeleteAll = _useState48[1];
+  var handleOpenAll = () => {
+    setOpenDeleteAll(true);
+  };
+  var handleCloseAll = () => {
+    setOpenDeleteAll(false);
+    setSelectedRows([]);
+  };
+  var _useState49 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState50 = _slicedToArray(_useState49, 2),
+    openReasonDelete = _useState50[0],
+    setOpenReasonDelete = _useState50[1];
+  var handleOpenReasonDelete = e => {
+    e.preventDefault();
+    setOpenReasonDelete(true);
+  };
+  var handleCloseReasonDelete = () => {
+    setOpenReasonDelete(false);
+  };
+  var _useState51 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState52 = _slicedToArray(_useState51, 2),
+    open = _useState52[0],
+    setOpen = _useState52[1];
+  var _useState53 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    _useState54 = _slicedToArray(_useState53, 2),
+    DeleteId = _useState54[0],
+    setDeleteId = _useState54[1];
+  var _useState55 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState56 = _slicedToArray(_useState55, 2),
+    modalOpenLoading = _useState56[0],
+    setModalOpenLoading = _useState56[1];
+  var _useState57 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState58 = _slicedToArray(_useState57, 2),
+    ErrorOpenModal = _useState58[0],
+    setErrorOpenModal = _useState58[1];
+  var handleOpen = id => {
+    setOpen(true);
+    setDeleteId(id);
+  };
+  var handleOpenModal = () => {
+    setModalOpenLoading(true);
+    setLoading(true);
+    handleCloseReasonDelete();
     setTimeout(() => {
       setLoading(false);
     }, 500);
@@ -3653,340 +2656,225 @@ function InvoiceViewAdmin() {
       setLoading(false);
     }, 500);
   };
-  (0,react.useEffect)(() => {
-    var fetchDataHidden = /*#__PURE__*/function () {
-      var _ref17 = _asyncToGenerator(function* () {
-        try {
-          var res = yield axios/* default */.A.get("".concat(apiConfig/* ENDPOINT_URL */.m, "/hidden"));
-          setHiddenRow(res.data.data.map(row => row.idRow));
-          setHidden(res.data.data);
-          localStorage.removeItem('Hidden');
-        } catch (error) {
-          console.error('Error fetching data:', error);
-          react_toastify_esm/* toast */.oR.error('Failed to fetch hidden rows.');
-        }
-      });
-      return function fetchDataHidden() {
-        return _ref17.apply(this, arguments);
-      };
-    }();
-    fetchDataHidden();
-  }, []);
-  var _useState73 = (0,react.useState)(false),
-    _useState74 = _slicedToArray(_useState73, 2),
-    openReasonDelete = _useState74[0],
-    setOpenReasonDelete = _useState74[1];
-  var handleOpenReasonDelete = e => {
-    e.preventDefault();
-    setOpenReasonDelete(true);
-  };
-  var handleCloseReasonDelete = () => {
-    setOpenReasonDelete(false);
-  };
-  {/** End Get Invoice */}
-  var _useState75 = (0,react.useState)(false),
-    _useState76 = _slicedToArray(_useState75, 2),
-    open = _useState76[0],
-    setOpen = _useState76[1];
-  var _useState77 = (0,react.useState)(null),
-    _useState78 = _slicedToArray(_useState77, 2),
-    DeleteId = _useState78[0],
-    setDeleteId = _useState78[1];
-  var handleOpen = id => {
-    setOpen(true);
-    setDeleteId(id);
+  var handleCloseError = () => {
+    setErrorOpenModal(false);
   };
   var handleClose = () => {
     setLoadingOpenModal(false);
     setOpen(false);
   };
-  var _useState79 = (0,react.useState)(false),
-    _useState80 = _slicedToArray(_useState79, 2),
-    open1 = _useState80[0],
-    setOpen1 = _useState80[1];
-  var _useState81 = (0,react.useState)(null),
-    _useState82 = _slicedToArray(_useState81, 2),
-    updateId = _useState82[0],
-    setUpdateId = _useState82[1];
-  var _useState83 = (0,react.useState)(""),
-    _useState84 = _slicedToArray(_useState83, 2),
-    status = _useState84[0],
-    setStatus = _useState84[1];
-  var handleOpenUpdate = id => {
-    setOpen1(true);
-    setUpdateId(id);
-  };
-  var handleCloseUpdate = () => {
+  var handleCloseModal = () => {
+    window.location.reload();
+    setModalOpenLoading(false);
+    // Assuming setLoadingOpenModal is a state setter for a loading modal
+    // If it doesn't exist, this line will cause an error.
+    // I'm adding it based on the provided snippet, assuming it's defined elsewhere.
+    // If not, it should be removed.
+    // setLoadingOpenModal(false);
     setOpen1(false);
-    setUpdateId(null);
+    setOpen2(false);
+    setOpen(false);
+    fetchItems(page, searchTerm, filterField, filterValue);
+    fetchAndSaveData();
   };
-  {/** delete multiple && all modal start */}
-  var _useState85 = (0,react.useState)(false),
-    _useState86 = _slicedToArray(_useState85, 2),
-    openDeleteMultiple = _useState86[0],
-    setOpenDeleteMultiple = _useState86[1];
-  var handleOpenMultiple = () => {
-    setOpenDeleteMultiple(true);
-  };
-  var handleCloseMultiple = () => {
-    setOpenDeleteMultiple(false);
-  };
-  var _useState87 = (0,react.useState)(false),
-    _useState88 = _slicedToArray(_useState87, 2),
-    openDeleteAll = _useState88[0],
-    setOpenDeleteAll = _useState88[1];
-  var handleOpenAll = () => {
-    setOpenDeleteAll(true);
-  };
-  var handleCloseAll = () => {
-    setOpenDeleteAll(false);
-  };
-  {/** Delete Function */}
-  var handleDelete = /*#__PURE__*/function () {
-    var _ref18 = _asyncToGenerator(function* () {
-      setLoading(true);
-      setModalDeleteOpenLoading(true);
-      handleClose();
+  var _useState59 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+    _useState60 = _slicedToArray(_useState59, 2),
+    saving = _useState60[0],
+    setSaving = _useState60[1];
+  var handleSubmitCategory = /*#__PURE__*/function () {
+    var _ref15 = _asyncToGenerator(function* (e) {
+      e.preventDefault();
+      setSaving('true');
+      var data = {
+        expensesCategory
+      };
       try {
-        var invToDelete = invoice.find(inv => inv._id === DeleteId);
-        if (invToDelete && invToDelete.ReferenceName && invToDelete.Position === 'Maintenance') {
-          try {
-            yield axios/* default */.A.put("".concat(apiConfig/* ENDPOINT_URL */.m, "/update-maintenance/").concat(invToDelete.ReferenceName), {
-              Converted: false,
-              ReferenceName: '',
-              status: 'Close'
-            });
-          } catch (e) {
-            console.error('Failed to update maintenance order', e);
-          }
-        }
-        var res = yield axios/* default */.A.delete("".concat(apiConfig/* ENDPOINT_URL */.m, "/delete-invoice/").concat(DeleteId));
+        var res = yield axios__WEBPACK_IMPORTED_MODULE_36__/* ["default"] */ .A.post(_apiConfig__WEBPACK_IMPORTED_MODULE_38__/* .ENDPOINT_URL */ .m + '/create-expensesCategory', data);
         if (res) {
-          setLoading(false);
+          handleOpenModal();
         }
       } catch (error) {
-        console.error(error);
-        setLoading(false);
-        react_toastify_esm/* toast */.oR.error('Failed to delete invoice.');
-        handleError();
+        if (error) {
+          setSaving('');
+          handleError();
+        }
       }
     });
-    return function handleDelete() {
-      return _ref18.apply(this, arguments);
+    return function handleSubmitCategory(_x5) {
+      return _ref15.apply(this, arguments);
     };
   }();
-  var _useState89 = (0,react.useState)([]),
-    _useState90 = _slicedToArray(_useState89, 2),
-    InvoiceDeleted = _useState90[0],
-    setInvoiceDeleted = _useState90[1];
-  (0,react.useEffect)(() => {
+  var handleCreateNotification1 = /*#__PURE__*/function () {
+    var _ref16 = _asyncToGenerator(function* (ReferenceInfo, ReferenceInfoNumber) {
+      var data = {
+        idInfo: ReferenceInfo,
+        person: user.data.userName + ' Created ',
+        reason: 'Todays Cash' + ' / Cash-' + ReferenceInfoNumber,
+        dateNotification: new Date()
+      };
+      try {
+        yield axios__WEBPACK_IMPORTED_MODULE_36__/* ["default"] */ .A.post(_apiConfig__WEBPACK_IMPORTED_MODULE_38__/* .ENDPOINT_URL */ .m + '/create-notification', data);
+      } catch (error) {
+        console.error('Notification error:', error);
+      }
+    });
+    return function handleCreateNotification1(_x6, _x7) {
+      return _ref16.apply(this, arguments);
+    };
+  }();
+  var handleSubmitCash = /*#__PURE__*/function () {
+    var _ref17 = _asyncToGenerator(function* (e) {
+      e.preventDefault();
+      setSaving('true');
+      var data = {
+        cashDate,
+        cashNumber,
+        rate,
+        totalCash,
+        amount: (amount || []).map(a => _objectSpread(_objectSpread({}, a), {}, {
+          note: a.note !== undefined ? String(a.note).toUpperCase() : ''
+        })),
+        Create,
+        synced: false
+      };
+      try {
+        var res = yield axios__WEBPACK_IMPORTED_MODULE_36__/* ["default"] */ .A.post(_apiConfig__WEBPACK_IMPORTED_MODULE_38__/* .ENDPOINT_URL */ .m + '/create-cash', data);
+        if (res) {
+          var ReferenceInfo = res.data.data._id;
+          var ReferenceInfoNumber = res.data.data.cashNumber;
+          handleCreateNotification1(ReferenceInfo, ReferenceInfoNumber);
+          handleOpenModal();
+        }
+      } catch (error) {
+        if (error) {
+          setSaving('');
+          handleError();
+        }
+      }
+    });
+    return function handleSubmitCash(_x8) {
+      return _ref17.apply(this, arguments);
+    };
+  }();
+  var _useState61 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    _useState62 = _slicedToArray(_useState61, 2),
+    PurchaseDeleted = _useState62[0],
+    setPurchaseDeleted = _useState62[1];
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     var fetchFunction = /*#__PURE__*/function () {
-      var _ref19 = _asyncToGenerator(function* () {
+      var _ref18 = _asyncToGenerator(function* () {
         var deletePromises = selectedRows.map(/*#__PURE__*/function () {
-          var _ref20 = _asyncToGenerator(function* (idToDelete) {
-            return axios/* default */.A.get("".concat(apiConfig/* ENDPOINT_URL */.m, "/get-invoice/").concat(idToDelete));
+          var _ref19 = _asyncToGenerator(function* (idToDelete) {
+            return axios__WEBPACK_IMPORTED_MODULE_36__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_38__/* .ENDPOINT_URL */ .m, "/get-expense/").concat(idToDelete));
           });
-          return function (_x6) {
-            return _ref20.apply(this, arguments);
+          return function (_x9) {
+            return _ref19.apply(this, arguments);
           };
         }());
         try {
           var res = yield Promise.all(deletePromises);
-          setInvoiceDeleted(res.map(row => 'INV-' + String(row.data.data.invoiceNumber).padStart(6, '0')));
+          setPurchaseDeleted(res.map(row => 'D-' + row.data.data.expenseNumber));
         } catch (error) {
           console.error('Fetch error:', error);
         }
       });
       return function fetchFunction() {
-        return _ref19.apply(this, arguments);
+        return _ref18.apply(this, arguments);
       };
     }();
-    fetchFunction();
+    if (selectedRows && selectedRows.length > 0) {
+      fetchFunction();
+    } else {
+      setPurchaseDeleted([]);
+    }
   }, [selectedRows]);
-  var related = InvoiceDeleted.map(row => row);
-  var info = related.toString();
+  var infoFromState = (selectedRows || []).map(id => {
+    var found = (expenses || []).find(e => e._id === id || e.id === id);
+    return found !== null && found !== void 0 && found.expenseNumber ? "D-".concat(found.expenseNumber) : '';
+  }).filter(Boolean);
+  var info = infoFromState.length > 0 ? infoFromState.join(', ') : PurchaseDeleted.length > 0 ? PurchaseDeleted.join(', ') : selectedRows.length > 0 ? "".concat(selectedRows.length, " expense(s)") : '';
   var handleCreateNotification = /*#__PURE__*/function () {
-    var _ref21 = _asyncToGenerator(function* () {
+    var _ref20 = _asyncToGenerator(function* () {
       var data = {
         idInfo: '',
-        person: user.data.userName + ' Deleted ' + info,
+        person: user.data.userName + ' Deleted ' + (info || 'Expense(s)'),
         reason,
         dateNotification: new Date()
       };
       try {
-        yield axios/* default */.A.post("".concat(apiConfig/* ENDPOINT_URL */.m, "/create-notification"), data);
+        yield axios__WEBPACK_IMPORTED_MODULE_36__/* ["default"] */ .A.post(_apiConfig__WEBPACK_IMPORTED_MODULE_38__/* .ENDPOINT_URL */ .m + '/create-notification', data);
       } catch (error) {
         console.error('Notification error:', error);
       }
     });
     return function handleCreateNotification() {
+      return _ref20.apply(this, arguments);
+    };
+  }();
+  var handleDelete = /*#__PURE__*/function () {
+    var _ref21 = _asyncToGenerator(function* () {
+      try {
+        var res = yield axios__WEBPACK_IMPORTED_MODULE_36__/* ["default"] */ .A.delete("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_38__/* .ENDPOINT_URL */ .m, "/delete-expense/").concat(DeleteId));
+        if (res) {
+          // Optimistic UI: Remove from local state immediately
+          setExpenses(prev => prev.filter(item => item._id !== DeleteId));
+          setOpen(false);
+          handleCloseReasonDelete();
+          handleOpenModal();
+        }
+      } catch (error) {
+        react_toastify__WEBPACK_IMPORTED_MODULE_1__/* .toast */ .oR.error('Delete failed. Please try again.');
+      }
+    });
+    return function handleDelete() {
       return _ref21.apply(this, arguments);
     };
   }();
   var handleDeleteMany = /*#__PURE__*/function () {
     var _ref22 = _asyncToGenerator(function* (e) {
-      e.preventDefault();
-      setLoading(true);
-      setModalDeleteOpenLoading(true);
-      handleCloseMultiple();
-      handleCloseAll();
-      handleCloseReasonDelete();
+      if (e && e.preventDefault) e.preventDefault();
       var deletePromises = selectedRows.map(/*#__PURE__*/function () {
         var _ref23 = _asyncToGenerator(function* (idToDelete) {
-          var invToDelete = invoice.find(inv => inv._id === idToDelete);
-          if (invToDelete && invToDelete.ReferenceName && invToDelete.Position === 'Maintenance') {
-            try {
-              yield axios/* default */.A.put("".concat(apiConfig/* ENDPOINT_URL */.m, "/update-maintenance/").concat(invToDelete.ReferenceName), {
-                Converted: false,
-                ReferenceName: '',
-                status: 'Close'
-              });
-            } catch (e) {
-              console.error('Failed to update maintenance order', e);
-            }
-          }
-          return axios/* default */.A.delete("".concat(apiConfig/* ENDPOINT_URL */.m, "/delete-invoice/").concat(idToDelete));
+          return axios__WEBPACK_IMPORTED_MODULE_36__/* ["default"] */ .A.delete("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_38__/* .ENDPOINT_URL */ .m, "/delete-expense/").concat(idToDelete));
         });
-        return function (_x8) {
+        return function (_x1) {
           return _ref23.apply(this, arguments);
         };
       }());
       try {
         var res = yield Promise.all(deletePromises);
         if (res) {
+          // Optimistic UI: Remove all selected rows from state
+          setExpenses(prev => prev.filter(item => !selectedRows.includes(item._id)));
           handleCreateNotification();
-          setLoading(false);
+          handleCloseReasonDelete();
+          handleCloseAll();
+          handleCloseMultiple();
           setSelectedRows([]);
+          setReason('');
+          handleOpenModal();
         }
       } catch (error) {
         console.error('Delete Many error:', error);
-        setLoading(false);
-        react_toastify_esm/* toast */.oR.error('Failed to delete multiple invoices.');
-        handleError();
+        react_toastify__WEBPACK_IMPORTED_MODULE_1__/* .toast */ .oR.error('Delete failed.');
       }
     });
-    return function handleDeleteMany(_x7) {
+    return function handleDeleteMany(_x0) {
       return _ref22.apply(this, arguments);
     };
   }();
-  {/** End Delete Function */}
-  {/** Update Invoice Status start */}
-  var _useState91 = (0,react.useState)(0),
-    _useState92 = _slicedToArray(_useState91, 2),
-    invoiceN = _useState92[0],
-    setInvoiceN = _useState92[1];
-  (0,react.useEffect)(() => {
-    var fetchId = /*#__PURE__*/function () {
-      var _ref24 = _asyncToGenerator(function* () {
-        if (updateId !== null) {
-          try {
-            var res = yield axios/* default */.A.get("".concat(apiConfig/* ENDPOINT_URL */.m, "/get-invoice/").concat(updateId));
-            setStatus(res.data.data.status);
-            setInvoiceN(res.data.data.invoiceNumber);
-          } catch (error) {
-            console.error('Error fetching data:', error);
-            react_toastify_esm/* toast */.oR.error('Failed to fetch invoice detail.');
-          }
-        }
-      });
-      return function fetchId() {
-        return _ref24.apply(this, arguments);
-      };
-    }();
-    fetchId();
-  }, [updateId]);
-  var handleCreateComment = /*#__PURE__*/function () {
-    var _ref25 = _asyncToGenerator(function* () {
-      var data = {
-        idInfo: updateId,
-        person: user.data.userName,
-        reason: status + ' INV-' + String(invoiceN).padStart(6, '0'),
-        dateNotification: new Date()
-      };
-      try {
-        yield axios/* default */.A.post("".concat(apiConfig/* ENDPOINT_URL */.m, "/create-notification/"), data);
-      } catch (error) {
-        console.error('Notification error:', error);
-      }
-    });
-    return function handleCreateComment() {
-      return _ref25.apply(this, arguments);
-    };
-  }();
-  var handleSubmitUpdateStatus = /*#__PURE__*/function () {
-    var _ref26 = _asyncToGenerator(function* (e) {
-      e.preventDefault();
-      var data = {
-        status
-      };
-      try {
-        var res = yield axios/* default */.A.put("".concat(apiConfig/* ENDPOINT_URL */.m, "/update-invoice/").concat(updateId), data);
-        if (res) {
-          handleCreateComment();
-          handleOpenLoading();
-        }
-      } catch (error) {
-        console.error('Error making PUT request:', error);
-        react_toastify_esm/* toast */.oR.error('Failed to update invoice status.');
-      }
-    });
-    return function handleSubmitUpdateStatus(_x9) {
-      return _ref26.apply(this, arguments);
-    };
-  }();
-  {/** Update Invoice Status End */}
-  var handleHideRow = /*#__PURE__*/function () {
-    var _ref27 = _asyncToGenerator(function* (id) {
-      if (user.data.role === 'CEO') {
-        try {
-          if (hiddenRow.includes(id)) {
-            setHiddenRow(hiddenRow.filter(row => row !== id));
-            var result = hidden.filter(row => row.idRow === id).map(row => row._id);
-            var hiddenId = result.toString();
-            yield axios/* default */.A.delete("".concat(apiConfig/* ENDPOINT_URL */.m, "/delete-hidden/").concat(hiddenId));
-          } else {
-            setHiddenRow([...hiddenRow, id]);
-            yield axios/* default */.A.post("".concat(apiConfig/* ENDPOINT_URL */.m, "/create-hidden"), {
-              idRow: id,
-              hiddenByCEO: true
-            });
-          }
-        } catch (error) {
-          console.error('Hide error:', error);
-          react_toastify_esm/* toast */.oR.error('Failed to update row visibility.');
-        }
-      }
-    });
-    return function handleHideRow(_x0) {
-      return _ref27.apply(this, arguments);
-    };
-  }();
-  var rowRenderer = params => {
-    if (hiddenRow.includes(params.row._id)) {
-      return null;
-    }
-    return /*#__PURE__*/react.createElement("div", null, params.row[params.field]);
-  };
-  var _useState93 = (0,react.useState)([]),
-    _useState94 = _slicedToArray(_useState93, 2),
-    filteredRows = _useState94[0],
-    setFilteredRows = _useState94[1];
-  (0,react.useEffect)(() => {
-    var Inv = invoice.filter(row => !hiddenRow.includes(row._id));
-    setFilteredRows(Inv);
-  }, [invoice, hiddenRow]);
   {/** search start */}
-  var _useState95 = (0,react.useState)(""),
-    _useState96 = _slicedToArray(_useState95, 2),
-    searchInvoice = _useState96[0],
-    setSearchInvoice = _useState96[1];
-  (0,react.useEffect)(() => {
-    var storedValue = localStorage.getItem('QuickFilterInvoice');
+  var _useState63 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
+    _useState64 = _slicedToArray(_useState63, 2),
+    searchDailyExpenses = _useState64[0],
+    setSearchDailyExpenses = _useState64[1];
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(() => {
+    var storedValue = localStorage.getItem('QuickFilterDailyExpenses');
     if (storedValue) {
-      setSearchInvoice(storedValue);
+      setSearchDailyExpenses(storedValue);
     }
-  }, []);
-  var _React$useState = react.useState({
+  });
+  var _React$useState = react__WEBPACK_IMPORTED_MODULE_0__.useState({
       items: [],
       quickFilterExcludeHiddenColumns: true,
       quickFilterValues: []
@@ -3994,273 +2882,214 @@ function InvoiceViewAdmin() {
     _React$useState2 = _slicedToArray(_React$useState, 2),
     filterModel = _React$useState2[0],
     setFilterModel = _React$useState2[1];
-  var _useState97 = (0,react.useState)({}),
-    _useState98 = _slicedToArray(_useState97, 2),
-    columnVisibilityModel = _useState98[0],
-    setColumnVisibilityModel = _useState98[1];
+  var _useState65 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({}),
+    _useState66 = _slicedToArray(_useState65, 2),
+    columnVisibilityModel = _useState66[0],
+    setColumnVisibilityModel = _useState66[1];
   var handelHiddenColumn = newHidden => {
     setColumnVisibilityModel(newHidden);
-    localStorage.setItem('HiddenColumnsInvoice', JSON.stringify(newHidden));
+    localStorage.setItem('HiddenColumnsDailyExpenses', JSON.stringify(newHidden));
   };
   var handleFilter = newModel => {
     var _newModel$quickFilter;
     var searchTerm = ((_newModel$quickFilter = newModel.quickFilterValues) === null || _newModel$quickFilter === void 0 ? void 0 : _newModel$quickFilter.join(' ')) || '';
     setSearchTerm(searchTerm);
-    setFilterModel(newModel);
     setPage(0);
+    setFilterModel(newModel);
   };
-  (0,react.useEffect)(() => {
-    var storedQuick = JSON.parse(localStorage.getItem('QuickFilterInvoiceTst'));
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    var storedQuick = JSON.parse(localStorage.getItem('QuickFilterDailyExpensesTst'));
     if (storedQuick) {
       var _storedQuick$quickFil;
       var _searchTerm = ((_storedQuick$quickFil = storedQuick.quickFilterValues) === null || _storedQuick$quickFil === void 0 ? void 0 : _storedQuick$quickFil.join(' ')) || '';
       setSearchTerm(_searchTerm);
       setFilterModel(storedQuick);
     }
-    var storedColumns = JSON.parse(localStorage.getItem('HiddenColumnsInvoice'));
+    var storedColumns = JSON.parse(localStorage.getItem('HiddenColumnsDailyExpenses'));
     if (storedColumns) {
       setColumnVisibilityModel(storedColumns);
     }
-  }, [searchInvoice]);
-  var _React$useState3 = react.useState(true),
+  }, [searchDailyExpenses]);
+  {/** search end */}
+  var _React$useState3 = react__WEBPACK_IMPORTED_MODULE_0__.useState(true),
     _React$useState4 = _slicedToArray(_React$useState3, 2),
     sideBar = _React$useState4[0],
     setSideBar = _React$useState4[1];
   var toggleDrawer = () => {
     setSideBar(!sideBar);
   };
-  {/** search end */}
+  var _useState67 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState68 = _slicedToArray(_useState67, 2),
+    openView = _useState68[0],
+    setOpenView = _useState68[1];
+  var _useState69 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    _useState70 = _slicedToArray(_useState69, 2),
+    idView = _useState70[0],
+    setIdView = _useState70[1];
+  var _useState71 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    _useState72 = _slicedToArray(_useState71, 2),
+    expensesView = _useState72[0],
+    setExpensesView = _useState72[1];
+  var printExpenseRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
+  var handlePrintExpense = (0,react_to_print__WEBPACK_IMPORTED_MODULE_61__.useReactToPrint)({
+    content: () => printExpenseRef.current,
+    documentTitle: "Expense_D-".concat(String((expensesView === null || expensesView === void 0 ? void 0 : expensesView.expenseNumber) || 0).padStart(6, '0')),
+    pageStyle: "@page { size: A4 portrait; margin: 8mm 10mm 10mm 10mm; } @media print { body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } .no-print { display: none !important; } }"
+  });
+  var handleOpenView = id => {
+    setOpenView(true);
+    setIdView(id);
+  };
+  var handleCloseView = () => {
+    setOpenView(false);
+    setIdView(null);
+    setExpensesView(null);
+    setSelectedRows([]);
+  };
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    var isMounted = true;
+    var fetchData2 = /*#__PURE__*/function () {
+      var _ref24 = _asyncToGenerator(function* () {
+        if (idView !== null) {
+          try {
+            var res = yield axios__WEBPACK_IMPORTED_MODULE_36__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_38__/* .ENDPOINT_URL */ .m, "/get-expense/").concat(idView));
+            if (!isMounted) return;
+            setExpensesView(res.data.data);
+          } catch (error) {
+            console.error('Fetch detail error:', error);
+          }
+        }
+      });
+      return function fetchData2() {
+        return _ref24.apply(this, arguments);
+      };
+    }();
+    fetchData2();
+    return () => {
+      isMounted = false;
+    };
+  }, [idView]);
   var columns = [{
-    field: 'invoiceNumber',
-    headerName: 'Invoice#',
-    minWidth: 100,
-    flex: 1,
-    renderCell: params => /*#__PURE__*/react.createElement("div", null, " ", /*#__PURE__*/react.createElement("span", null, "INV-", String(params.row.invoiceNumber).padStart(6, '0')), " ")
+    field: 'expenseNumber',
+    headerName: 'E-Number',
+    width: 140,
+    renderCell: params => ' D-' + String(params.row.expenseNumber).padStart(6, '0')
   }, {
-    field: 'customer',
-    headerName: 'Customer Name',
-    minWidth: 200,
-    flex: 2,
-    valueGetter: params => {
-      var _params$row, _params$row2, _params$row3;
-      var raw = ((_params$row = params.row) === null || _params$row === void 0 ? void 0 : _params$row.customerName) || ((_params$row2 = params.row) === null || _params$row2 === void 0 ? void 0 : _params$row2.Customer) || ((_params$row3 = params.row) === null || _params$row3 === void 0 ? void 0 : _params$row3.customer);
-      if (!raw) return '';
-      if (typeof raw === 'string') return raw.toUpperCase();
-      var fullName = [raw.customerFirstName, raw.customerLastName].filter(Boolean).join(' ');
-      var name = raw.Customer || raw.customerName || raw.customerFullName || raw.companyName || fullName || raw.name || raw.clientName || '';
-      return String(name).toUpperCase();
-    }
-  }, {
-    field: 'status',
-    headerName: 'Status',
-    minWidth: 100,
-    flex: 1,
-    renderCell: params => {
-      var isActuallyPaid = parseFloat(params.row.balanceDue) <= 0 && parseFloat(params.row.totalInvoice) > 0;
-      var fallbackStatus = parseFloat(params.row.total) > 0 && parseFloat(params.row.balanceDue) > 0 ? 'Partially-Paid' : 'Sent';
-      var displayStatus = isActuallyPaid ? "Paid" : params.row.status || fallbackStatus;
-      return (0,formatUtils/* renderStatusBadge */.UM)(displayStatus);
-    }
-  }, {
-    field: 'invoiceSubject',
-    headerName: 'Subject',
-    minWidth: 150,
-    flex: 1,
-    valueGetter: params => {
-      var _params$row4, _params$row5;
-      return ((_params$row4 = params.row) === null || _params$row4 === void 0 ? void 0 : _params$row4.invoiceSubject) || (((_params$row5 = params.row) === null || _params$row5 === void 0 ? void 0 : _params$row5.invoiceNumber) === 2673 ? 'CCTV & POS INSTALLATION' : '');
-    }
-  }, {
-    field: 'dateField',
+    field: 'dataField',
     headerName: 'Date',
-    minWidth: 100,
-    flex: 1
+    width: 80
   }, {
-    field: 'totalInvoice',
-    headerName: 'I-Amount',
-    minWidth: 100,
-    flex: 1,
-    renderCell: params => {
-      var _params$row$totalInvo;
-      return "$".concat((_params$row$totalInvo = params.row.totalInvoice) === null || _params$row$totalInvo === void 0 ? void 0 : _params$row$totalInvo.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
-    }
+    field: 'category',
+    headerName: 'Category',
+    width: 60
+  }, {
+    field: 'description',
+    headerName: 'Description',
+    width: sideBar ? 120 : 150
+  }, {
+    field: 'name',
+    headerName: 'Project Name',
+    width: sideBar ? 230 : 300
+  }, {
+    field: 'employee',
+    headerName: 'Employee Name',
+    width: sideBar ? 200 : 250
+  }, {
+    field: 'amount',
+    headerName: 'TotalFC',
+    width: 100,
+    renderCell: params => "FC".concat((params.row.amount || 0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','))
   }, {
     field: 'total',
-    headerName: 'A-Paid',
-    minWidth: 100,
-    flex: 1,
-    renderCell: params => {
-      var _params$row$total;
-      return "$".concat((_params$row$total = params.row.total) === null || _params$row$total === void 0 ? void 0 : _params$row$total.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
-    }
-  }, {
-    field: 'balanceDue',
-    headerName: 'B-Due',
-    minWidth: 100,
-    flex: 1,
-    renderCell: params => {
-      var _params$row$balanceDu;
-      return "$".concat((_params$row$balanceDu = params.row.balanceDue) === null || _params$row$balanceDu === void 0 ? void 0 : _params$row$balanceDu.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
-    }
+    headerName: 'Total$',
+    width: 100,
+    renderCell: params => "$".concat((params.row.total || 0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','))
   }, {
     field: 'view',
     headerName: 'View',
-    width: 60,
-    minWidth: 60,
-    renderCell: params => /*#__PURE__*/react.createElement(ViewTooltip, {
+    width: 50,
+    renderCell: params => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(ViewTooltip, {
       title: "View"
-    }, /*#__PURE__*/react.createElement("span", null, /*#__PURE__*/react.createElement(IconButton/* default */.A, {
-      disabled: InvoiceInfoV.length === 0
-    }, /*#__PURE__*/react.createElement(react_router_dom_dist/* NavLink */.k2, {
-      to: "/InvoiceViewAdminAll/".concat(params.row._id),
-      className: "LinkName"
-    }, /*#__PURE__*/react.createElement(Visibility/* default */.A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+      disabled: DailyEInfoV.length === 0,
+      onClick: () => handleOpenView(params.row._id)
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Visibility__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
       style: {
         color: '#202a5a'
       }
-    })))))
+    }))))
   }, {
     field: 'edit',
     headerName: 'Edit',
     width: 50,
-    renderCell: params => /*#__PURE__*/react.createElement(EditTooltip, {
+    renderCell: params => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(EditTooltip, {
       title: "Edit"
-    }, /*#__PURE__*/react.createElement("span", null, /*#__PURE__*/react.createElement(IconButton/* default */.A, {
-      onClick: () => handleOpenUpdate(params.row._id),
-      disabled: params.row.status !== 'Draft' && InvoiceInfoU.length === 0
-    }, /*#__PURE__*/react.createElement(Edit/* default */.A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_8__/* .NavLink */ .k2, {
+      to: "/DailyExpenseUpdate/".concat(params.row._id),
+      className: "LinkName",
+      disabled: DailyEInfoU.length === 0
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Edit__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
       style: {
         color: 'gray'
       }
-    }))))
+    })))))
   }, {
     field: 'Delete',
     headerName: 'Delete',
     width: 50,
-    renderCell: params => /*#__PURE__*/react.createElement(DeleteTooltip, {
+    renderCell: params => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(DeleteTooltip, {
       title: "Delete"
-    }, /*#__PURE__*/react.createElement("span", null, "                                ", /*#__PURE__*/react.createElement(IconButton/* default */.A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, "                  ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
       onClick: () => handleOpen(params.row._id),
-      disabled: InvoiceInfoD.length === 0
-    }, /*#__PURE__*/react.createElement(Delete/* default */.A, {
+      disabled: DailyEInfoD.length === 0
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Delete__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       style: {
         cursor: 'pointer',
         color: 'red'
       }
     }))))
-  }, {
-    field: 'whatsapp',
-    headerName: 'WhatsApp',
-    width: 60,
-    sortable: false,
-    renderCell: params => {
-      var isEligible = isEligibleInvoiceStatus(params.row.status);
-      if (!canSendWhatsAppInvoice) return null;
-      if (!isEligible) {
-        return /*#__PURE__*/react.createElement(Tooltip/* default */.A, {
-          title: "Only invoices with status SENT, PARTIALLY-PAID, or FREE OF CHARGE can be sent via WhatsApp"
-        }, /*#__PURE__*/react.createElement("span", null, /*#__PURE__*/react.createElement(IconButton/* default */.A, {
-          size: "small",
-          disabled: true,
-          sx: {
-            color: '#cbd5e1'
-          }
-        }, /*#__PURE__*/react.createElement(WhatsApp, {
-          sx: {
-            fontSize: 18
-          }
-        }))));
-      }
-      return /*#__PURE__*/react.createElement(Tooltip/* default */.A, {
-        title: "Send ".concat(params.row.invoiceName || 'invoice', " via WhatsApp")
-      }, /*#__PURE__*/react.createElement("span", null, /*#__PURE__*/react.createElement(IconButton/* default */.A, {
-        size: "small",
-        onClick: () => handleOpenWhatsAppSingleModal(params.row),
-        sx: {
-          color: '#25D366',
-          '&:hover': {
-            color: '#1ebe5d',
-            backgroundColor: '#f0fdf4'
-          }
-        }
-      }, /*#__PURE__*/react.createElement(WhatsApp, {
-        sx: {
-          fontSize: 20
-        }
-      }))));
-    }
-  }, {
-    field: 'hide',
-    headerName: 'Action',
-    sortable: false,
-    width: 40,
-    renderCell: params => {
-      if (user.data.role === 'CEO') {
-        return /*#__PURE__*/react.createElement("div", null, hiddenRow.includes(params.row._id) ? /*#__PURE__*/react.createElement(ViewTooltip, {
-          title: "UnHide"
-        }, /*#__PURE__*/react.createElement("span", null, /*#__PURE__*/react.createElement(IconButton/* default */.A, {
-          onClick: () => handleHideRow(params.row._id)
-        }, /*#__PURE__*/react.createElement(PersonOffRounded/* default */.A, {
-          style: {
-            color: '#202a5a'
-          }
-        })))) : /*#__PURE__*/react.createElement(ViewTooltip, {
-          title: "Hide"
-        }, /*#__PURE__*/react.createElement("span", null, /*#__PURE__*/react.createElement(IconButton/* default */.A, {
-          onClick: () => handleHideRow(params.row._id)
-        }, /*#__PURE__*/react.createElement(Person2Outlined/* default */.A, {
-          style: {
-            color: '#202a5a'
-          }
-        })))));
-      }
-    }
   }];
-  {/** Search View End */}
   if (isMobile) {
-    return loadingData ? /*#__PURE__*/react.createElement("div", {
+    return loadingData ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
       style: {
         position: 'relative',
         top: '120px',
         textAlign: 'center'
       }
-    }, /*#__PURE__*/react.createElement(Loader/* default */.A, null)) : /*#__PURE__*/react.createElement(Box/* default */.A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_44__/* ["default"] */ .A, null)) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
       sx: {
         width: '100%',
         py: 1
       }
-    }, /*#__PURE__*/react.createElement(MobileCardList/* default */.A, {
-      type: "invoices",
-      data: invoice,
-      searchPlaceholder: "Search invoices, clients, items, amounts...",
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_MobileCardList__WEBPACK_IMPORTED_MODULE_60__/* ["default"] */ .A, {
+      type: "expenses",
+      data: expenses,
+      searchPlaceholder: "Search expenses by category, note, amount...",
       searchValue: searchTerm,
       onSearchChange: setSearchTerm,
       page: page,
       totalCount: totalItemCount,
       onPageChange: setPage,
-      loading: loadingData,
-      statusFilter: statusFilter,
-      onStatusFilterChange: handleStatusClick,
-      statusCounts: statusCounts
+      loading: loadingData
     }));
   }
-  return /*#__PURE__*/react.createElement("div", {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "Homeemployee"
-  }, /*#__PURE__*/react.createElement(Box/* default */.A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
     sx: {
       display: 'flex'
     }
-  }, /*#__PURE__*/react.createElement(CssBaseline/* default */.Ay, null), /*#__PURE__*/react.createElement(InvoiceViewAdmin_AppBar, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_CssBaseline__WEBPACK_IMPORTED_MODULE_29__/* ["default"] */ .Ay, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(AppBar, {
     position: "absolute",
     open: sideBar,
     sx: {
       backgroundColor: '#30368a'
     }
-  }, /*#__PURE__*/react.createElement(Toolbar/* default */.A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_28__/* ["default"] */ .A, {
     sx: {
       pr: '24px' // keep right padding when drawer closed
     }
-  }, /*#__PURE__*/react.createElement(IconButton/* default */.A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
     edge: "start",
     color: "inherit",
     "aria-label": "open drawer",
@@ -4270,7 +3099,7 @@ function InvoiceViewAdmin() {
     }, sideBar && {
       display: 'none'
     })
-  }, /*#__PURE__*/react.createElement(Menu/* default */.A, null)), /*#__PURE__*/react.createElement(Typography/* default */.A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Menu__WEBPACK_IMPORTED_MODULE_34__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
     component: "h1",
     variant: "h6",
     color: "inherit",
@@ -4278,35 +3107,35 @@ function InvoiceViewAdmin() {
     sx: {
       flexGrow: 1
     }
-  }, "Invoice"), /*#__PURE__*/react.createElement(NotificationVIewInfo/* default */.A, null), /*#__PURE__*/react.createElement(MessageAdminView/* default */.A, {
+  }, "Daily Expenses"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_58__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_MessageAdminView__WEBPACK_IMPORTED_MODULE_57__/* ["default"] */ .A, {
     name: user.data.userName,
     role: user.data.role
-  }), /*#__PURE__*/react.createElement(IconButton/* default */.A, {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
     color: "inherit",
     onClick: handleLogout
-  }, /*#__PURE__*/react.createElement(NetworkLogoutIcon/* default */.A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_46__/* ["default"] */ .A, {
     style: {
       color: 'white'
     }
-  })))), /*#__PURE__*/react.createElement(InvoiceViewAdmin_Drawer, {
+  })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(Drawer, {
     variant: "permanent",
     open: sideBar,
     onMouseEnter: () => setSideBar(true),
     onMouseLeave: () => setSideBar(false)
-  }, /*#__PURE__*/react.createElement(Toolbar/* default */.A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_28__/* ["default"] */ .A, {
     sx: {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'flex-end',
       px: [1]
     }
-  }, /*#__PURE__*/react.createElement(IconButton/* default */.A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
     onClick: toggleDrawer
-  }, /*#__PURE__*/react.createElement(ChevronLeft/* default */.A, null))), /*#__PURE__*/react.createElement(Divider/* default */.A, null), /*#__PURE__*/react.createElement(List/* default */.A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_ChevronLeft__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A, null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Divider__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_List__WEBPACK_IMPORTED_MODULE_31__/* ["default"] */ .A, {
     sx: {
       height: '700px'
     }
-  }, /*#__PURE__*/react.createElement(SidebarDash/* default */.A, null))), /*#__PURE__*/react.createElement(Box/* default */.A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_SidebarDash__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
     component: "main",
     sx: {
       backgroundColor: theme => theme.palette.mode === 'light' ? theme.palette.grey[100] : theme.palette.grey[900],
@@ -4315,298 +3144,107 @@ function InvoiceViewAdmin() {
       height: '100vh',
       overflow: 'auto'
     }
-  }, /*#__PURE__*/react.createElement(Toolbar/* default */.A, null), /*#__PURE__*/react.createElement(Container/* default */.A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_28__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Container__WEBPACK_IMPORTED_MODULE_33__/* ["default"] */ .A, {
     maxWidth: "none",
     sx: {
-      mt: 0.5,
-      px: {
-        xs: 1,
-        sm: 2
-      }
+      mt: 1
     }
-  }, /*#__PURE__*/react.createElement(Box/* default */.A, {
-    sx: {
-      display: 'grid',
-      gridTemplateColumns: {
-        xs: 'repeat(2, 1fr)',
-        sm: 'repeat(4, 1fr)',
-        md: 'repeat(8, 1fr)'
-      },
-      gap: 1,
-      mb: 0.75,
-      mt: 0.25
-    }
-  }, [{
-    key: 'ALL',
-    label: 'ALL ORDERS',
-    count: statusCounts.all,
-    color: '#30368a',
-    bgLight: '#eef2ff',
-    icon: /*#__PURE__*/react.createElement(Assignment/* default */.A, {
-      sx: {
-        fontSize: 15,
-        color: '#30368a'
-      }
-    })
-  }, {
-    key: 'Paid',
-    label: 'PAID',
-    count: statusCounts.paid,
-    color: '#16a34a',
-    bgLight: '#dcfce7',
-    icon: /*#__PURE__*/react.createElement(CheckCircle/* default */.A, {
-      sx: {
-        fontSize: 15,
-        color: '#16a34a'
-      }
-    })
-  }, {
-    key: 'Partially-Paid',
-    label: 'PARTIALLY-PAID',
-    count: statusCounts.partiallyPaid,
-    color: '#d97706',
-    bgLight: '#fef3c7',
-    icon: /*#__PURE__*/react.createElement(Payments, {
-      sx: {
-        fontSize: 15,
-        color: '#d97706'
-      }
-    })
-  }, {
-    key: 'Draft',
-    label: 'DRAFT',
-    count: statusCounts.draft,
-    color: '#78909c',
-    bgLight: '#eceff1',
-    icon: /*#__PURE__*/react.createElement(EditNote/* default */.A, {
-      sx: {
-        fontSize: 15,
-        color: '#78909c'
-      }
-    })
-  }, {
-    key: 'Sent',
-    label: 'SENT',
-    count: statusCounts.sent,
-    color: '#1976d2',
-    bgLight: '#e3f2fd',
-    icon: /*#__PURE__*/react.createElement(Send/* default */.A, {
-      sx: {
-        fontSize: 15,
-        color: '#1976d2'
-      }
-    })
-  }, {
-    key: 'Pending',
-    label: 'PENDING',
-    count: statusCounts.pending,
-    color: '#801313',
-    bgLight: '#fbe9e7',
-    icon: /*#__PURE__*/react.createElement(HourglassEmpty/* default */.A, {
-      sx: {
-        fontSize: 15,
-        color: '#801313'
-      }
-    })
-  }, {
-    key: 'Decline',
-    label: 'DECLINE',
-    count: statusCounts.decline,
-    color: '#d32f2f',
-    bgLight: '#ffebee',
-    icon: /*#__PURE__*/react.createElement(Cancel/* default */.A, {
-      sx: {
-        fontSize: 15,
-        color: '#d32f2f'
-      }
-    })
-  }, {
-    key: 'Free of Charge',
-    label: 'FREE OF CHARGE',
-    count: statusCounts.freeOfCharge,
-    color: '#9c27b0',
-    bgLight: '#f3e5f5',
-    icon: /*#__PURE__*/react.createElement(CardGiftcard, {
-      sx: {
-        fontSize: 15,
-        color: '#9c27b0'
-      }
-    })
-  }].map(card => {
-    var isSelected = statusFilter.toLowerCase() === card.key.toLowerCase();
-    return /*#__PURE__*/react.createElement(Box/* default */.A, {
-      key: card.key,
-      onClick: () => handleStatusClick(card.key),
-      sx: {
-        backgroundColor: '#ffffff',
-        borderRadius: '8px',
-        p: '6px 10px',
-        cursor: 'pointer',
-        position: 'relative',
-        overflow: 'hidden',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'space-between',
-        border: isSelected ? "2px solid ".concat(card.color) : '1px solid #e2e8f0',
-        boxShadow: isSelected ? "0 4px 12px -2px ".concat(card.color, "33, 0 2px 4px -1px rgba(0, 0, 0, 0.06)") : '0 1px 2px 0 rgba(0, 0, 0, 0.04)',
-        transform: isSelected ? 'translateY(-1px)' : 'none',
-        transition: 'all 0.15s ease-in-out',
-        '&:hover': {
-          boxShadow: "0 4px 10px -2px ".concat(card.color, "25, 0 2px 4px -1px rgba(0, 0, 0, 0.06)"),
-          transform: 'translateY(-1px)',
-          borderColor: card.color
-        }
-      }
-    }, isSelected && /*#__PURE__*/react.createElement(Box/* default */.A, {
-      sx: {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-        height: '3px',
-        backgroundColor: card.color
-      }
-    }), /*#__PURE__*/react.createElement(Box/* default */.A, {
-      sx: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        mb: 0.25
-      }
-    }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
-      sx: {
-        fontSize: '9.5px',
-        fontWeight: 700,
-        letterSpacing: '0.4px',
-        color: isSelected ? card.color : '#64748b',
-        textTransform: 'uppercase'
-      }
-    }, card.label), /*#__PURE__*/react.createElement(Box/* default */.A, {
-      sx: {
-        width: 22,
-        height: 22,
-        borderRadius: '50%',
-        backgroundColor: card.bgLight,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center'
-      }
-    }, card.icon)), /*#__PURE__*/react.createElement(Box/* default */.A, {
-      sx: {
-        display: 'flex',
-        alignItems: 'baseline',
-        gap: 1
-      }
-    }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
-      sx: {
-        fontSize: '16px',
-        fontWeight: 800,
-        color: isSelected ? card.color : '#1e293b',
-        lineHeight: 1.1
-      }
-    }, (card.count || 0).toLocaleString())));
-  })), loadingData ? /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement("div", {
+  }, loadingData ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     style: {
       position: 'relative',
       top: '120px'
     }
-  }, /*#__PURE__*/react.createElement(Loader/* default */.A, null))) : /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement(Box/* default */.A, {
-    sx: {
-      display: 'flex',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      mb: 0.5,
-      mt: 0.25
-    }
-  }, /*#__PURE__*/react.createElement(Box/* default */.A, null, invoice.length > 0 && selectedRows.length > 1 && selectedRows.length < invoice.length && /*#__PURE__*/react.createElement("button", {
-    disabled: user.data.role !== 'CEO',
-    onClick: handleOpenAll,
-    className: "btnCustomer2"
-  }, "Delete multiple"), invoice.length > 0 && selectedRows.length === invoice.length && /*#__PURE__*/react.createElement("button", {
-    onClick: handleOpenAll,
-    disabled: user.data.role !== 'CEO',
-    className: "btnCustomer2"
-  }, "Delete all")), !(0,utils_isMobile/* isNativeMobile */.g1)() && /*#__PURE__*/react.createElement(Box/* default */.A, {
-    sx: {
-      display: 'flex',
-      alignItems: 'center',
-      gap: 1
-    }
-  }, /*#__PURE__*/react.createElement(ViewTooltip, null, /*#__PURE__*/react.createElement("span", null, /*#__PURE__*/react.createElement(IconButton/* default */.A, {
-    disabled: InvoiceInfoC.length === 0,
-    size: "small"
-  }, /*#__PURE__*/react.createElement(react_router_dom_dist/* NavLink */.k2, {
-    to: '/InvoiceForm',
-    className: "LinkName"
-  }, /*#__PURE__*/react.createElement("span", {
-    className: "btnCustomerAdding"
-  }, /*#__PURE__*/react.createElement(Add/* default */.A, {
-    sx: {
-      fontSize: 18
-    }
-  })))))), /*#__PURE__*/react.createElement("button", {
-    onClick: handleRefreshSearch,
-    className: "btnCustomer2",
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_44__/* ["default"] */ .A, null))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("section", {
     style: {
-      height: '32px',
-      lineHeight: '32px',
-      padding: '0 12px'
+      position: 'absolute',
+      right: '10px',
+      display: 'flex',
+      alignItems: 'center',
+      top: '60px'
     }
-  }, "Refresh Search"), canSendWhatsAppInvoice && /*#__PURE__*/react.createElement(Button/* default */.A, {
-    variant: "contained",
-    size: "small",
-    startIcon: /*#__PURE__*/react.createElement(WhatsApp, {
-      sx: {
-        fontSize: 18
-      }
-    }),
-    onClick: handleOpenWhatsAppBatchModal,
-    sx: {
-      backgroundColor: '#25D366',
-      '&:hover': {
-        backgroundColor: '#1ebe5d'
-      },
-      color: '#fff',
-      fontWeight: 700,
-      textTransform: 'none',
-      height: '32px',
-      px: 1.5,
-      borderRadius: '4px',
-      boxShadow: '0 2px 4px rgba(37,211,102,0.25)'
+  }, expenses.length > 0 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("section", {
+    style: {
+      position: 'relative',
+      float: 'left',
+      margin: '10px'
     }
-  }, "Send WhatsApp Invoices"))), /*#__PURE__*/react.createElement(Box/* default */.A, {
+  }, selectedRows.length > 1 && selectedRows.length < expenses.length && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+    disabled: user.data.role !== 'CEO',
+    onClick: handleOpenAll,
+    className: "btnCustomer2"
+  }, "Delete multiple"), selectedRows.length === expenses.length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+    onClick: handleOpenAll,
+    disabled: user.data.role !== 'CEO',
+    className: "btnCustomer2"
+  }, "Delete all") : '') : '', /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("section", {
+    style: {
+      position: 'relative',
+      float: 'right',
+      margin: '10px'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(ViewTooltip, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+    disabled: DailyEInfoC.length === 0
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_8__/* .NavLink */ .k2, {
+    to: '/DailyExpenseForm',
+    className: "LinkName"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
+    className: "btnCustomerAdding"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_39__/* ["default"] */ .A, null)))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+    onClick: handleRefreshSearch,
+    className: "btnCustomer2"
+  }, "Refresh Search"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    style: {
+      display: 'flex',
+      gap: '5px'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_8__/* .NavLink */ .k2, {
+    to: '/DailyExpenseAdminView',
+    className: "LinkName"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+    className: "btnCustomer",
+    disabled: user.data.role !== 'CEO'
+  }, "Monthly Expenses")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+    className: "btnCustomer",
+    onClick: handleOpenUpdate,
+    disabled: user.data.role !== 'CEO'
+  }, "Add Category"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+    className: "btnCustomer",
+    onClick: handleOpenCash,
+    disabled: user.data.role !== 'CEO'
+  }, "Daily Cash"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_8__/* .NavLink */ .k2, {
+    to: '/CategoryViewDailyExpenses',
+    className: "LinkName"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+    className: "btnCustomer"
+  }, " View by Category"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
     sx: {
-      height: (0,utils_isMobile/* isNativeMobile */.g1)() ? 'auto' : 'calc(100vh - 200px)',
-      minHeight: 380,
+      height: (0,_utils_isMobile__WEBPACK_IMPORTED_MODULE_59__/* .isNativeMobile */ .g1)() ? 'auto' : 600,
       width: '100%'
     }
-  }, (0,utils_isMobile/* isNativeMobile */.g1)() ? /*#__PURE__*/react.createElement(MobileCardList/* default */.A, {
-    type: "invoices",
-    data: invoice,
-    searchPlaceholder: "Search invoices, clients, items, amounts...",
+  }, (0,_utils_isMobile__WEBPACK_IMPORTED_MODULE_59__/* .isNativeMobile */ .g1)() ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_MobileCardList__WEBPACK_IMPORTED_MODULE_60__/* ["default"] */ .A, {
+    type: "expenses",
+    data: expenses,
+    searchPlaceholder: "Search expenses by category, note, amount...",
     searchValue: searchTerm,
     onSearchChange: setSearchTerm,
     page: page,
     totalCount: totalItemCount,
     onPageChange: setPage,
-    loading: loadingData,
-    statusFilter: statusFilter,
-    onStatusFilterChange: handleStatusClick,
-    statusCounts: statusCounts
-  }) : user.data.role === 'CEO' ? /*#__PURE__*/react.createElement(react.Fragment, null, /*#__PURE__*/react.createElement(DataGrid/* DataGrid */.zh, {
+    loading: loadingData
+  }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_x_data_grid__WEBPACK_IMPORTED_MODULE_49__/* .DataGrid */ .zh, {
     paginationMode: "server",
-    filterMode: "server",
     rowCount: totalItemCount,
     paginationModel: {
       page: page,
       pageSize: limit
     },
     onPaginationModelChange: newModel => handlePageChange(newModel.page),
-    rows: invoice,
+    rows: expenses,
     columns: columns,
     slots: {
-      toolbar: GridToolbar/* GridToolbar */.O
+      toolbar: _mui_x_data_grid__WEBPACK_IMPORTED_MODULE_50__/* .GridToolbar */ .O
     },
+    onRowSelectionModelChange: newSelection => setSelectedRows(newSelection),
     slotProps: {
       toolbar: {
         showQuickFilter: true,
@@ -4618,83 +3256,23 @@ function InvoiceViewAdmin() {
         }
       }
     },
-    getRowClassName: params => FilterInvoiceWith.some(filteredRow => filteredRow.id === params.row.id) ? 'new-Purchase' : '',
-    onRowSelectionModelChange: newSelection => setSelectedRows(newSelection),
-    rowRenderer: rowRenderer,
+    getRowClassName: params => {
+      return newPurchase.includes(params.row._id) ? 'new-Purchase' : '';
+    },
     checkboxSelection: true,
-    disableColumnFilter: true,
     disableDensitySelector: true,
-    rowSelectionModel: selectedRows,
-    filterModel: filterModel,
-    onFilterModelChange: newModel => handleFilter(newModel),
-    columnVisibilityModel: columnVisibilityModel,
-    onColumnVisibilityModelChange: handelHiddenColumn,
-    sx: {
-      width: '100%',
-      backgroundColor: 'white',
-      padding: '10px',
-      '& .new-Purchase': {
-        backgroundColor: '#e3f2fd'
-      }
-    }
-  }), /*#__PURE__*/react.createElement(Pagination/* default */.A, {
-    count: totalPage,
-    page: page + 1,
-    onChange: (e, value) => setPage(value - 1),
-    color: "primary",
-    sx: {
-      position: 'relative',
-      top: '-52px',
-      zIndex: 1000,
-      display: 'flex',
-      justifyContent: 'center',
-      width: 'fit-content',
-      margin: '0 auto'
-    }
-  })) : /*#__PURE__*/react.createElement(react.Fragment, null, /*#__PURE__*/react.createElement(DataGrid/* DataGrid */.zh, {
-    paginationMode: "server",
     filterMode: "server",
-    rowCount: totalItemCount,
-    paginationModel: {
-      page: page,
-      pageSize: limit
-    },
-    onPaginationModelChange: newModel => handlePageChange(newModel.page),
-    rows: filteredRows,
-    columns: columns,
-    slots: {
-      toolbar: GridToolbar/* GridToolbar */.O
-    },
-    slotProps: {
-      toolbar: {
-        showQuickFilter: true,
-        quickFilterProps: {
-          debounceMs: 500
-        },
-        printOptions: {
-          disableToolbarButton: true
-        }
-      }
-    },
-    getRowClassName: params => FilterInvoiceWith.some(filteredRow => filteredRow.id === params.row.id) ? 'new-Purchase' : '',
-    onRowSelectionModelChange: newSelection => setSelectedRows(newSelection),
-    checkboxSelection: true,
-    disableColumnFilter: true,
-    disableDensitySelector: true,
-    rowSelectionModel: selectedRows,
     filterModel: filterModel,
+    rowSelectionModel: selectedRows,
     onFilterModelChange: newModel => handleFilter(newModel),
     columnVisibilityModel: columnVisibilityModel,
     onColumnVisibilityModelChange: handelHiddenColumn,
     sx: {
       width: '100%',
       backgroundColor: 'white',
-      padding: '10px',
-      '& .new-Purchase': {
-        backgroundColor: '#e3f2fd'
-      }
+      padding: '10px'
     }
-  }), /*#__PURE__*/react.createElement(Pagination/* default */.A, {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
     count: totalPage,
     page: page + 1,
     onChange: (e, value) => setPage(value - 1),
@@ -4702,147 +3280,899 @@ function InvoiceViewAdmin() {
     sx: {
       position: 'relative',
       top: '-52px',
-      zIndex: 1000,
       display: 'flex',
       justifyContent: 'center',
       width: 'fit-content',
       margin: '0 auto'
     }
-  }))), /*#__PURE__*/react.createElement(Modal/* default */.A, {
+  }))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .A, {
     open: open,
     onClose: handleClose,
     "aria-labelledby": "modal-modal-title",
     "aria-describedby": "modal-modal-description"
-  }, /*#__PURE__*/react.createElement(Box/* default */.A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
     sx: _objectSpread(_objectSpread({}, style), {}, {
       width: 500
     })
-  }, /*#__PURE__*/react.createElement("div", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     style: {
       justifyContent: 'center',
       textAlign: 'center'
     }
-  }, /*#__PURE__*/react.createElement("h2", null, "Do you want to Delete ?"), /*#__PURE__*/react.createElement("div", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", null, "Do you want to Delete ?"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     style: {
       display: 'flex',
       gap: '60px',
       justifyContent: 'center'
     }
-  }, /*#__PURE__*/react.createElement("button", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
     className: "btnCustomer2",
     onClick: handleDelete
-  }, "Delete"), /*#__PURE__*/react.createElement("button", {
+  }, "Delete"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
     className: "btnCustomer",
     onClick: handleClose
-  }, "Cancel"))))), /*#__PURE__*/react.createElement(Modal/* default */.A, {
-    open: modalDeleteOpenLoading,
-    onClose: handleDeleteCloseLoading,
+  }, "Cancel"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .A, {
+    open: openDeleteMultiple,
+    onClose: handleCloseMultiple,
     "aria-labelledby": "modal-modal-title",
     "aria-describedby": "modal-modal-description"
-  }, /*#__PURE__*/react.createElement(Box/* default */.A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
     sx: _objectSpread(_objectSpread({}, style), {}, {
       width: 500
     })
-  }, /*#__PURE__*/react.createElement("div", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     style: {
       justifyContent: 'center',
       textAlign: 'center'
     }
-  }, loading ? /*#__PURE__*/react.createElement(Loader/* default */.A, null) : /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement("p", null, /*#__PURE__*/react.createElement(CheckCircle/* default */.A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", null, "Do you want to Delete ?"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
+    className: "txt2",
+    style: {
+      color: 'red'
+    }
+  }, "Note:"), " All selected rows will be deleted"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    style: {
+      display: 'flex',
+      gap: '60px',
+      justifyContent: 'center'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+    className: "btnCustomer2",
+    onClick: handleDeleteMany
+  }, "Delete"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+    className: "btnCustomer",
+    onClick: handleCloseMultiple
+  }, "Cancel"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .A, {
+    open: openDeleteAll,
+    onClose: handleCloseAll,
+    "aria-labelledby": "modal-modal-title",
+    "aria-describedby": "modal-modal-description"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+    sx: _objectSpread(_objectSpread({}, style), {}, {
+      width: 500
+    })
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    style: {
+      justifyContent: 'center',
+      textAlign: 'center'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", null, "Do you want to Delete ?"), selectedRows.length === 1 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
+    className: "txt2",
+    style: {
+      color: 'red'
+    }
+  }, "Note:"), " Selected rows will be deleted"), selectedRows.length > 1 && selectedRows.length < expenses.length && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
+    className: "txt2",
+    style: {
+      color: 'red'
+    }
+  }, "Note:"), " All selected rows will be deleted"), selectedRows.length === expenses.length && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
+    className: "txt2",
+    style: {
+      color: 'red'
+    }
+  }, "Note:"), " All rows will be deleted"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    style: {
+      display: 'flex',
+      gap: '60px',
+      justifyContent: 'center'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+    className: "btnCustomer2",
+    onClick: handleOpenReasonDelete
+  }, "Delete"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+    className: "btnCustomer",
+    onClick: handleCloseAll
+  }, "Cancel"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .A, {
+    open: modalOpenLoading,
+    onClose: handleCloseModal,
+    BackdropComponent: _mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A,
+    BackdropProps: {
+      timeout: 500
+    },
+    "aria-labelledby": "modal-modal-title",
+    "aria-describedby": "modal-modal-description"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+    sx: _objectSpread(_objectSpread({}, style), {}, {
+      width: 500
+    })
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_44__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    style: {
+      justifyContent: 'center',
+      textAlign: 'center'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_45__/* ["default"] */ .A, {
     style: {
       color: 'green',
       height: '40px',
       width: '40px'
     }
-  })), /*#__PURE__*/react.createElement("h2", null, " Done Successfully"), /*#__PURE__*/react.createElement("div", {
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", null, " Operation completed successfully"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     style: {
       display: 'flex',
       gap: '60px',
       justifyContent: 'center'
     }
-  }, /*#__PURE__*/react.createElement("button", {
-    onClick: handleDeleteCloseLoading,
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+    onClick: handleCloseModal,
     className: "btnCustomer"
-  }, "Close")))))), /*#__PURE__*/react.createElement(Modal/* default */.A, {
-    open: openDeleteAll,
-    onClose: handleCloseAll,
+  }, "Close")))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .A, {
+    open: open1,
+    onClose: handleCloseUpdate,
     "aria-labelledby": "modal-modal-title",
     "aria-describedby": "modal-modal-description"
-  }, /*#__PURE__*/react.createElement(Box/* default */.A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
     sx: _objectSpread(_objectSpread({}, style), {}, {
       width: 500
     })
-  }, /*#__PURE__*/react.createElement("div", {
-    style: {
-      justifyContent: 'center',
-      textAlign: 'center'
-    }
-  }, /*#__PURE__*/react.createElement("h2", null, "Do you want to Delete ?"), selectedRows.length === 1 && /*#__PURE__*/react.createElement("p", null, /*#__PURE__*/react.createElement("span", {
-    className: "txt2",
-    style: {
-      color: 'red'
-    }
-  }, "Note:"), " Selected rows will be deleted"), selectedRows.length > 1 && selectedRows.length < invoice.length && /*#__PURE__*/react.createElement("p", null, /*#__PURE__*/react.createElement("span", {
-    className: "txt2",
-    style: {
-      color: 'red'
-    }
-  }, "Note:"), " All selected rows will be deleted"), selectedRows.length === invoice.length && /*#__PURE__*/react.createElement("p", null, /*#__PURE__*/react.createElement("span", {
-    className: "txt2",
-    style: {
-      color: 'red'
-    }
-  }, "Note:"), " All rows will be deleted"), /*#__PURE__*/react.createElement("div", {
-    style: {
-      display: 'flex',
-      gap: '60px',
-      justifyContent: 'center'
-    }
-  }, /*#__PURE__*/react.createElement("button", {
-    className: "btnCustomer2",
-    onClick: handleOpenReasonDelete
-  }, "Delete"), /*#__PURE__*/react.createElement("button", {
-    className: "btnCustomer",
-    onClick: handleCloseAll
-  }, "Cancel"))))), /*#__PURE__*/react.createElement(Modal/* default */.A, {
-    open: openReasonDelete,
-    onClose: handleCloseReasonDelete,
-    "aria-labelledby": "modal-modal-title",
-    "aria-describedby": "modal-modal-description"
-  }, /*#__PURE__*/react.createElement(Box/* default */.A, {
-    sx: _objectSpread(_objectSpread({}, style), {}, {
-      width: 500
-    })
-  }, /*#__PURE__*/react.createElement(ViewTooltip, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(ViewTooltip, {
     title: "Close",
     placement: "left"
-  }, /*#__PURE__*/react.createElement(IconButton/* default */.A, {
-    onClick: handleCloseReasonDelete,
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+    onClick: handleCloseUpdate,
     style: {
       position: 'relative',
       float: 'right'
     }
-  }, /*#__PURE__*/react.createElement(Close/* default */.A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_40__/* ["default"] */ .A, {
     style: {
       color: '#202a5a'
     }
-  }))), /*#__PURE__*/react.createElement(Typography/* default */.A, {
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
     id: "modal-modal-title",
     variant: "h6",
     component: "h2"
-  }, "Why do you want to delete: ", info, "?"), /*#__PURE__*/react.createElement("form", {
-    onSubmit: handleDeleteMany
-  }, /*#__PURE__*/react.createElement(Grid/* default */.Ay, {
+  }, "Create Expenses Category"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("form", {
+    onSubmit: handleSubmitCategory
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .Ay, {
     container: true,
     style: {
       alignItems: 'center',
       padding: '15px'
     },
     spacing: 2
-  }, /*#__PURE__*/react.createElement(Grid/* default */.Ay, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .Ay, {
     item: true,
     xs: 12
-  }, /*#__PURE__*/react.createElement(TextField/* default */.A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, {
+    id: "expensesCategory",
+    name: "expensesCategory",
+    value: expensesCategory,
+    label: "Expenses Category",
+    onChange: e => setExpensesCategory(e.target.value),
+    sx: {
+      width: '100%',
+      backgroundColor: 'white'
+    }
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .Ay, {
+    item: true,
+    xs: 12
+  }, saving !== 'true' ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+    type: "submit",
+    className: "btnCustomer6",
+    style: {
+      width: '100%'
+    }
+  }, "Save") : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
+    className: "btnCustomer6",
+    style: {
+      width: '100%',
+      textAlign: 'center'
+    }
+  }, "Saving...")))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .A, {
+    open: openView,
+    onClose: handleCloseView,
+    "aria-labelledby": "modal-modal-title",
+    "aria-describedby": "modal-modal-description"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+    sx: _objectSpread(_objectSpread({}, style), {}, {
+      width: {
+        xs: '95%',
+        sm: 800,
+        md: 850
+      },
+      maxHeight: '90vh',
+      overflowY: 'auto',
+      '@media print': {
+        position: 'static',
+        top: 'auto',
+        left: 'auto',
+        transform: 'none',
+        width: '100%',
+        maxHeight: 'none',
+        overflow: 'visible',
+        boxShadow: 'none',
+        border: 'none',
+        p: 0,
+        m: 0,
+        backgroundColor: '#fff'
+      }
+    })
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+    sx: {
+      display: 'flex',
+      justifyContent: 'flex-end',
+      width: '100%',
+      gap: 1,
+      mb: 1,
+      position: 'relative',
+      zIndex: 1000,
+      '@media print': {
+        display: 'none'
+      }
+    },
+    className: "no-print"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(ViewTooltip, {
+    title: "Print Expense Voucher",
+    placement: "bottom"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+    onClick: handlePrintExpense,
+    style: {
+      zIndex: 1000
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_LocalPrintshop__WEBPACK_IMPORTED_MODULE_64__/* ["default"] */ .A, {
+    style: {
+      color: '#202a5a'
+    }
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(ViewTooltip, {
+    title: "Close",
+    placement: "bottom"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+    onClick: handleCloseView,
+    style: {
+      zIndex: 1000
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_40__/* ["default"] */ .A, {
+    style: {
+      color: '#202a5a'
+    }
+  })))), expensesView !== null ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    ref: printExpenseRef,
+    style: {
+      padding: '0px 20px 0px 20px'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+    sx: {
+      display: 'none',
+      '@media print': {
+        display: 'block',
+        marginBottom: '20px'
+      }
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_PrintHeader__WEBPACK_IMPORTED_MODULE_62__/* ["default"] */ .A, {
+    branchId: expensesView.branchId || ""
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+    sx: {
+      borderBottom: '2px solid #202a5a',
+      pb: 1,
+      mb: 2
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+    id: "modal-modal-title",
+    variant: "h6",
+    component: "h2",
+    sx: {
+      fontWeight: 'bold',
+      color: '#202a5a'
+    }
+  }, "EXPENSE VOUCHER: D-", String(expensesView.expenseNumber || 0).padStart(6, '0')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+    variant: "body2",
+    sx: {
+      color: 'text.secondary',
+      mt: 0.5
+    }
+  }, "Created by ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("strong", null, expensesView.Create !== undefined ? expensesView.Create.person : ''), " on ", ((_expensesView$Create = expensesView.Create) === null || _expensesView$Create === void 0 ? void 0 : _expensesView$Create.dateComment) || '')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .Ay, {
+    container: true,
+    style: {
+      alignItems: 'center',
+      padding: '0px'
+    },
+    spacing: 2
+  }, String(expensesView.accountName || '').toLowerCase() === 'employee' || Array.isArray(expensesView.employeeName) && expensesView.employeeName.length > 0 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .Ay, {
+    container: true,
+    style: {
+      alignItems: 'center',
+      padding: '0px'
+    },
+    spacing: 2
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .Ay, {
+    item: true,
+    xs: 12
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+    sx: {
+      width: '100%',
+      '@media print': {
+        height: 'auto',
+        overflow: 'visible'
+      }
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
+    style: {
+      marginBottom: '5px'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+    sx: {
+      textAlign: 'center',
+      fontWeight: 'bold',
+      backgroundColor: '#f0f4f8'
+    },
+    colSpan: 4
+  }, expensesView.reason === 'Project' ? ((_expensesView$account = expensesView.accountNameInfo) === null || _expensesView$account === void 0 ? void 0 : _expensesView$account.name) || (typeof expensesView.accountNameInfo === 'string' ? expensesView.accountNameInfo : '') || '' : 'EMPLOYEE EXPENSE INFORMATION')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+    sx: {
+      fontWeight: 'bold',
+      width: '25%'
+    }
+  }, "Category"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+    colSpan: 3
+  }, typeof expensesView.expenseCategory === 'object' ? ((_expensesView$expense = expensesView.expenseCategory) === null || _expensesView$expense === void 0 ? void 0 : _expensesView$expense.expensesCategory) || ((_expensesView$expense2 = expensesView.expenseCategory) === null || _expensesView$expense2 === void 0 ? void 0 : _expensesView$expense2.name) || '' : expensesView.expenseCategory || '')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+    sx: {
+      fontWeight: 'bold'
+    }
+  }, "Expense Date"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+    colSpan: 3
+  }, dayjs__WEBPACK_IMPORTED_MODULE_47___default()(expensesView.expenseDate).format('DD/MM/YYYY'))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+    sx: {
+      fontWeight: 'bold'
+    }
+  }, "Description"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+    colSpan: 3
+  }, expensesView.description)))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
+    sx: {
+      maxHeight: 400,
+      '@media print': {
+        maxHeight: 'none',
+        overflow: 'visible'
+      }
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
+    "aria-label": "collapsible table",
+    stickyHeader: true,
+    size: "small"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
+    sx: {
+      backgroundColor: '#f5f5f5'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+    sx: {
+      fontWeight: 'bold'
+    }
+  }, "Employee"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+    sx: {
+      fontWeight: 'bold'
+    }
+  }, "Amount (FC)"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+    sx: {
+      fontWeight: 'bold'
+    }
+  }, "Rate"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+    sx: {
+      fontWeight: 'bold'
+    }
+  }, "Amount ($)"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, null, (Array.isArray(expensesView.employeeName) ? expensesView.employeeName : []).map(row => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
+    key: row.idInfo
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, null, row.employee), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, null, "FC", (row.amount || 0).toLocaleString()), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, null, row.rate), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, null, "$", (row.total || 0).toLocaleString()))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+    sx: {
+      fontWeight: 'bold'
+    }
+  }, "TVA (16%)"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, null, hasTvaValue(expensesView) ? 'Yes' : 'No'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+    sx: {
+      fontWeight: 'bold'
+    }
+  }, "Tax"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, null, "$", getTaxValue(expensesView).toLocaleString(undefined, {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
+    sx: {
+      backgroundColor: '#f0f4f8'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+    sx: {
+      fontWeight: 'bold'
+    }
+  }, "Total"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+    sx: {
+      fontWeight: 'bold'
+    }
+  }, "FC", (expensesView.amount || 0).toLocaleString()), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+    sx: {
+      fontWeight: 'bold'
+    }
+  }, "-"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+    sx: {
+      fontWeight: 'bold',
+      color: '#202a5a'
+    }
+  }, "$", (expensesView.total || 0).toLocaleString())))))))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .Ay, {
+    container: true,
+    style: {
+      alignItems: 'center',
+      padding: '0px'
+    },
+    spacing: 2
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .Ay, {
+    item: true,
+    xs: 12
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+    sx: {
+      width: '100%',
+      '@media print': {
+        height: 'auto',
+        overflow: 'visible'
+      }
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
+    style: {
+      marginBottom: '5px'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+    sx: {
+      fontWeight: 'bold',
+      width: '25%'
+    }
+  }, "Expense Date"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+    colSpan: 3
+  }, dayjs__WEBPACK_IMPORTED_MODULE_47___default()(expensesView.expenseDate).format('DD/MM/YYYY')))), expensesView.accountName === 'Office' || expensesView.accountName === 'Home' ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+    sx: {
+      fontWeight: 'bold'
+    }
+  }, "Category"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+    colSpan: 3
+  }, typeof expensesView.expenseCategory === 'object' ? ((_expensesView$expense3 = expensesView.expenseCategory) === null || _expensesView$expense3 === void 0 ? void 0 : _expensesView$expense3.expensesCategory) || ((_expensesView$expense4 = expensesView.expenseCategory) === null || _expensesView$expense4 === void 0 ? void 0 : _expensesView$expense4.name) || '' : expensesView.expenseCategory || '')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+    sx: {
+      fontWeight: 'bold'
+    }
+  }, "Account"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+    colSpan: 3
+  }, expensesView.accountName)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+    sx: {
+      fontWeight: 'bold'
+    }
+  }, "Description"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+    colSpan: 3
+  }, expensesView.description)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+    sx: {
+      fontWeight: 'bold'
+    }
+  }, "TVA (16%)"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, null, hasTvaValue(expensesView) ? 'Yes' : 'No'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+    sx: {
+      fontWeight: 'bold'
+    }
+  }, "Tax"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, null, "$", getTaxValue(expensesView).toLocaleString(undefined, {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
+    sx: {
+      backgroundColor: '#f0f4f8'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+    sx: {
+      fontWeight: 'bold'
+    }
+  }, "Amount"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+    sx: {
+      fontWeight: 'bold'
+    }
+  }, "FC", (expensesView.amount || 0).toLocaleString()), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+    sx: {
+      fontWeight: 'bold'
+    }
+  }, "Rate: ", expensesView.rate), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+    sx: {
+      fontWeight: 'bold',
+      color: '#202a5a'
+    }
+  }, "$", (expensesView.total || 0).toLocaleString()))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+    sx: {
+      fontWeight: 'bold'
+    }
+  }, "Category"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+    colSpan: 3
+  }, typeof expensesView.expenseCategory === 'object' ? ((_expensesView$expense5 = expensesView.expenseCategory) === null || _expensesView$expense5 === void 0 ? void 0 : _expensesView$expense5.expensesCategory) || ((_expensesView$expense6 = expensesView.expenseCategory) === null || _expensesView$expense6 === void 0 ? void 0 : _expensesView$expense6.name) || '' : expensesView.expenseCategory || '')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+    sx: {
+      fontWeight: 'bold'
+    }
+  }, "Account"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+    colSpan: 3
+  }, expensesView.accountName)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+    sx: {
+      fontWeight: 'bold'
+    }
+  }, "Description"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+    colSpan: 3
+  }, expensesView.description)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+    sx: {
+      fontWeight: 'bold'
+    }
+  }, "Project / Maintenance"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+    colSpan: 3
+  }, ((_expensesView$account2 = expensesView.accountNameInfo) === null || _expensesView$account2 === void 0 ? void 0 : _expensesView$account2.name) || (typeof expensesView.accountNameInfo === 'string' ? expensesView.accountNameInfo : '') || '')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+    sx: {
+      fontWeight: 'bold'
+    }
+  }, "TVA (16%)"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, null, hasTvaValue(expensesView) ? 'Yes' : 'No'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+    sx: {
+      fontWeight: 'bold'
+    }
+  }, "Tax"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, null, "$", getTaxValue(expensesView).toLocaleString(undefined, {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
+    sx: {
+      backgroundColor: '#f0f4f8'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+    sx: {
+      fontWeight: 'bold'
+    }
+  }, "Amount"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+    sx: {
+      fontWeight: 'bold'
+    }
+  }, "FC", (expensesView.amount || 0).toLocaleString()), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+    sx: {
+      fontWeight: 'bold'
+    }
+  }, "Rate: ", expensesView.rate), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+    sx: {
+      fontWeight: 'bold',
+      color: '#202a5a'
+    }
+  }, "$", (expensesView.total || 0).toLocaleString())))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+    sx: {
+      display: 'none',
+      '@media print': {
+        display: 'block',
+        mt: 4
+      }
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .Ay, {
+    container: true,
+    spacing: 3,
+    sx: {
+      textAlign: 'center',
+      pt: 3
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .Ay, {
+    item: true,
+    xs: 4
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+    sx: {
+      borderTop: '1px solid #333',
+      pt: 1
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+    variant: "caption",
+    sx: {
+      fontWeight: 'bold',
+      textTransform: 'uppercase',
+      display: 'block'
+    }
+  }, "Prepared By"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+    variant: "body2"
+  }, ((_expensesView$Create2 = expensesView.Create) === null || _expensesView$Create2 === void 0 ? void 0 : _expensesView$Create2.person) || ''))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .Ay, {
+    item: true,
+    xs: 4
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+    sx: {
+      borderTop: '1px solid #333',
+      pt: 1
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+    variant: "caption",
+    sx: {
+      fontWeight: 'bold',
+      textTransform: 'uppercase',
+      display: 'block'
+    }
+  }, "Verified By"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .Ay, {
+    item: true,
+    xs: 4
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+    sx: {
+      borderTop: '1px solid #333',
+      pt: 1
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+    variant: "caption",
+    sx: {
+      fontWeight: 'bold',
+      textTransform: 'uppercase',
+      display: 'block'
+    }
+  }, "Approved By / Cashier"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+    sx: {
+      display: 'none',
+      '@media print': {
+        display: 'block',
+        marginTop: '20px'
+      }
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_PrintFooter__WEBPACK_IMPORTED_MODULE_63__/* ["default"] */ .A, {
+    branchId: expensesView.branchId || ""
+  }))) : null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .A, {
+    open: ErrorOpenModal,
+    onClose: handleCloseError,
+    closeAfterTransition: true,
+    BackdropComponent: _mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A,
+    BackdropProps: {
+      timeout: 500
+    },
+    "aria-labelledby": "modal-modal-title",
+    "aria-describedby": "modal-modal-description"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+    sx: _objectSpread(_objectSpread({}, style), {}, {
+      width: 500
+    })
+  }, loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_44__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    style: {
+      justifyContent: 'center',
+      textAlign: 'center'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Cancel__WEBPACK_IMPORTED_MODULE_56__/* ["default"] */ .A, {
+    style: {
+      color: 'red',
+      height: '40px',
+      width: '40px'
+    }
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", {
+    style: {
+      color: 'red'
+    }
+  }, "Saving Failed"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
+    className: "txt1",
+    style: {
+      color: 'red'
+    }
+  }, "Note:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
+    className: "txt2"
+  }, "Today's cash already being given")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+    className: "btnCustomer",
+    onClick: handleCloseError
+  }, "Try Again")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .A, {
+    open: open2,
+    onClose: handleCloseCash,
+    "aria-labelledby": "modal-modal-title",
+    "aria-describedby": "modal-modal-description"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+    sx: _objectSpread(_objectSpread({}, style), {}, {
+      width: 1000
+    })
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(ViewTooltip, {
+    title: "Close",
+    placement: "left"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+    onClick: handleCloseCash,
+    style: {
+      position: 'relative',
+      float: 'right'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_40__/* ["default"] */ .A, {
+    style: {
+      color: '#202a5a'
+    }
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+    id: "modal-modal-title",
+    variant: "h6",
+    component: "h2"
+  }, "Today's Cash"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("form", {
+    onSubmit: handleSubmitCash
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .Ay, {
+    container: true,
+    style: {
+      alignItems: 'center',
+      padding: '15px'
+    },
+    spacing: 2
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .Ay, {
+    item: true,
+    xs: 12
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_x_date_pickers__WEBPACK_IMPORTED_MODULE_51__/* .LocalizationProvider */ .$, {
+    dateAdapter: _mui_x_date_pickers_AdapterDayjs__WEBPACK_IMPORTED_MODULE_54__/* .AdapterDayjs */ .R
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_x_date_pickers_internals_demo__WEBPACK_IMPORTED_MODULE_53__/* .DemoContainer */ .j, {
+    components: ['DatePicker']
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_x_date_pickers__WEBPACK_IMPORTED_MODULE_52__/* .DatePicker */ .l, {
+    name: "cashDate",
+    label: "Date",
+    value: dayjs__WEBPACK_IMPORTED_MODULE_47___default()(cashDate),
+    onChange: date => setCashDate(date),
+    format: "DD/MM/YYYY",
+    sx: {
+      width: '100%',
+      backgroundColor: 'white'
+    }
+  })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .Ay, {
+    item: true,
+    xs: 11
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
+    sx: {
+      height: 200,
+      width: '100%',
+      padding: '10px',
+      overflowX: 'hidden'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("table", {
+    className: "tableInfo10"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("th", null, "#"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("th", null, "Amount FC"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("th", null, "Rate"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("th", null, "Total $"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("th", null, "Note"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("th", null, "Action"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("tbody", null, amount ? amount.map((row, i) => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("tr", {
+    key: row.idRow
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_41__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, {
+    required: true,
+    name: "amountFC",
+    id: "amountFC",
+    onChange: e => handleChangeAmount(e, i),
+    size: "small",
+    sx: {
+      width: '130px',
+      backgroundColor: 'white'
+    }
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, {
+    disabled: true,
+    name: "rate",
+    id: "rate",
+    value: row.rate,
+    onChange: e => handleChangeAmount(e, i),
+    size: "small",
+    sx: {
+      width: '100px',
+      backgroundColor: 'white'
+    }
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, {
+    required: true,
+    name: "amountUsd",
+    id: "amountUsd",
+    value: row.amountUsd,
+    onChange: e => handleChangeAmount(e, i),
+    size: "small",
+    sx: {
+      width: '100px',
+      backgroundColor: 'white'
+    }
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
+    hidden: true,
+    id: "amountTotalInvoice"
+  }, row.total), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, {
+    name: "note",
+    id: "note",
+    value: row.note,
+    required: true,
+    onChange: e => handleChangeAmount(e, i),
+    size: "small",
+    placeholder: "Please write \"\"POS\"\" for all cash in related to POS ",
+    sx: {
+      width: '300px',
+      backgroundColor: 'white'
+    }
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(LightTooltip, {
+    title: "Delete"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+    onClick: () => deleteItem(row.idRow)
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Delete__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+    style: {
+      cursor: 'pointer',
+      color: 'red'
+    }
+  })))))) : '', /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
+    colSpan: 3
+  }, "Total"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, "$"), totalCash)))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .Ay, {
+    item: true,
+    xs: 1
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(ViewTooltip, {
+    title: "Add",
+    placement: "bottom"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+    onClick: addItem
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_39__/* ["default"] */ .A, {
+    className: "btn1",
+    style: {
+      fontSize: '40px'
+    }
+  })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("br", null), dayjs__WEBPACK_IMPORTED_MODULE_47___default()(relatedDate).format('DD/MM/YYYY') === dayjs__WEBPACK_IMPORTED_MODULE_47___default()(cashDate).format('DD/MM/YYYY') ? '' : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .Ay, {
+    item: true,
+    xs: 12
+  }, saving !== 'true' ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+    type: "submit",
+    className: "btnCustomer6",
+    style: {
+      width: '100%'
+    }
+  }, "Save") : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
+    className: "btnCustomer6",
+    style: {
+      width: '100%',
+      textAlign: 'center'
+    }
+  }, "Saving...")))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .A, {
+    open: loadingOpenModal,
+    onClose: handleCloseModal,
+    closeAfterTransition: true,
+    BackdropComponent: _mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A,
+    BackdropProps: {
+      timeout: 500
+    },
+    "aria-labelledby": "modal-modal-title",
+    "aria-describedby": "modal-modal-description"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+    sx: _objectSpread(_objectSpread({}, style), {}, {
+      width: 500
+    })
+  }, loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_44__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    style: {
+      justifyContent: 'center',
+      textAlign: 'center'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_45__/* ["default"] */ .A, {
+    style: {
+      color: 'green',
+      height: '40px',
+      width: '40px'
+    }
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", null, " Data Saved successfully"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    style: {
+      display: 'flex',
+      gap: '60px',
+      justifyContent: 'center'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+    onClick: handleCloseModal,
+    className: "btnCustomer"
+  }, "Close"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .A, {
+    open: openReasonDelete,
+    onClose: handleCloseReasonDelete,
+    "aria-labelledby": "modal-modal-title",
+    "aria-describedby": "modal-modal-description"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+    sx: _objectSpread(_objectSpread({}, style), {}, {
+      width: 500
+    })
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(ViewTooltip, {
+    title: "Close",
+    placement: "left"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+    onClick: handleCloseReasonDelete,
+    style: {
+      position: 'relative',
+      float: 'right'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_40__/* ["default"] */ .A, {
+    style: {
+      color: '#202a5a'
+    }
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+    id: "modal-modal-title",
+    variant: "h6",
+    component: "h2"
+  }, "Why do you want to delete: ", info || (selectedRows.length > 1 ? "".concat(selectedRows.length, " selected expenses") : 'this expense'), "?"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("form", {
+    onSubmit: handleDeleteMany
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .Ay, {
+    container: true,
+    style: {
+      alignItems: 'center',
+      padding: '15px'
+    },
+    spacing: 2
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .Ay, {
+    item: true,
+    xs: 12
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, {
     required: true,
     id: "reason",
     name: "reason",
@@ -4856,775 +4186,22 @@ function InvoiceViewAdmin() {
       width: '100%',
       backgroundColor: 'white'
     }
-  })), /*#__PURE__*/react.createElement("br", null), /*#__PURE__*/react.createElement(Grid/* default */.Ay, {
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .Ay, {
     item: true,
     xs: 12
-  }, /*#__PURE__*/react.createElement("button", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
     type: "submit",
     className: "btnCustomer",
     style: {
       width: '100%'
     }
-  }, "Save")))))), /*#__PURE__*/react.createElement(Modal/* default */.A, {
-    open: open1,
-    onClose: handleCloseUpdate,
-    "aria-labelledby": "modal-modal-title",
-    "aria-describedby": "modal-modal-description"
-  }, /*#__PURE__*/react.createElement(Box/* default */.A, {
-    sx: style
-  }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
-    id: "modal-modal-title",
-    variant: "h6",
-    component: "h2"
-  }, "Update Invoice Status"), /*#__PURE__*/react.createElement("br", null), /*#__PURE__*/react.createElement("form", {
-    onSubmit: handleSubmitUpdateStatus
-  }, /*#__PURE__*/react.createElement(FormControl/* default */.A, {
-    fullWidth: true
-  }, /*#__PURE__*/react.createElement(InputLabel/* default */.A, {
-    id: "demo-simple-select-label"
-  }, "Status"), /*#__PURE__*/react.createElement(Select/* default */.A, {
-    labelId: "demo-simple-select-label",
-    id: "demo-simple-select",
-    value: status,
-    label: "Status",
-    onChange: e => setStatus(e.target.value)
-  }, /*#__PURE__*/react.createElement(MenuItem/* default */.A, {
-    value: 'Draft'
-  }, "Draft"), /*#__PURE__*/react.createElement(MenuItem/* default */.A, {
-    value: 'Sent'
-  }, "Sent"), /*#__PURE__*/react.createElement(MenuItem/* default */.A, {
-    value: 'Pending'
-  }, "Pending"), /*#__PURE__*/react.createElement(MenuItem/* default */.A, {
-    value: 'Decline'
-  }, "Decline"), /*#__PURE__*/react.createElement(MenuItem/* default */.A, {
-    value: 'Free of Charge'
-  }, "Free of Charge"))), /*#__PURE__*/react.createElement("br", null), /*#__PURE__*/react.createElement("br", null), /*#__PURE__*/react.createElement("button", {
-    type: "submit",
-    className: "btnCustomer6",
-    style: {
-      width: '100%'
-    }
-  }, "Update")))), /*#__PURE__*/react.createElement(Modal/* default */.A, {
-    open: loadingOpenModal,
-    onClose: handleCloseLoading,
-    "aria-labelledby": "modal-modal-title",
-    "aria-describedby": "modal-modal-description"
-  }, /*#__PURE__*/react.createElement(Box/* default */.A, {
-    sx: _objectSpread(_objectSpread({}, style), {}, {
-      width: 500
-    })
-  }, /*#__PURE__*/react.createElement("div", {
-    style: {
-      justifyContent: 'center',
-      textAlign: 'center'
-    }
-  }, loading ? /*#__PURE__*/react.createElement(Loader/* default */.A, null) : /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement("p", null, /*#__PURE__*/react.createElement(CheckCircle/* default */.A, {
-    style: {
-      color: 'green',
-      height: '40px',
-      width: '40px'
-    }
-  })), /*#__PURE__*/react.createElement("h2", null, " Done Successfully"), /*#__PURE__*/react.createElement("div", {
-    style: {
-      display: 'flex',
-      gap: '60px',
-      justifyContent: 'center'
-    }
-  }, /*#__PURE__*/react.createElement("button", {
-    onClick: handleCloseLoading,
-    className: "btnCustomer"
-  }, "Close")))))), /*#__PURE__*/react.createElement(Modal/* default */.A, {
-    open: ErrorOpenModal,
-    onClose: () => setErrorOpenModal(false),
-    "aria-labelledby": "modal-modal-title",
-    "aria-describedby": "modal-modal-description"
-  }, /*#__PURE__*/react.createElement(Box/* default */.A, {
-    sx: _objectSpread(_objectSpread({}, style), {}, {
-      width: 500
-    })
-  }, /*#__PURE__*/react.createElement("div", {
-    style: {
-      justifyContent: 'center',
-      textAlign: 'center'
-    }
-  }, /*#__PURE__*/react.createElement("h2", null, " Error Occured"), /*#__PURE__*/react.createElement("p", null, "Please try again later"), /*#__PURE__*/react.createElement("div", {
-    style: {
-      display: 'flex',
-      gap: '60px',
-      justifyContent: 'center'
-    }
-  }, /*#__PURE__*/react.createElement("button", {
-    onClick: () => setErrorOpenModal(false),
-    className: "btnCustomer"
-  }, "Close"))))), /*#__PURE__*/react.createElement(Dialog/* default */.A, {
-    open: openWhatsAppModal,
-    onClose: () => !dispatchingWhatsApp && setOpenWhatsAppModal(false),
-    maxWidth: "lg",
-    fullWidth: true,
-    PaperProps: {
-      sx: {
-        borderRadius: 2,
-        p: 1,
-        maxWidth: 980,
-        width: '100%'
-      }
-    }
-  }, /*#__PURE__*/react.createElement(DialogTitle/* default */.A, {
-    sx: {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      pb: 0.5
-    }
-  }, /*#__PURE__*/react.createElement(Box/* default */.A, {
-    sx: {
-      display: 'flex',
-      alignItems: 'center',
-      gap: 1.2
-    }
-  }, /*#__PURE__*/react.createElement(WhatsApp, {
-    sx: {
-      color: '#25D366',
-      fontSize: 28
-    }
-  }), /*#__PURE__*/react.createElement(Typography/* default */.A, {
-    variant: "h6",
-    sx: {
-      fontWeight: 800,
-      color: '#0f172a'
-    }
-  }, "Send Invoices via WhatsApp (+243 827 722 222)")), /*#__PURE__*/react.createElement(IconButton/* default */.A, {
-    size: "small",
-    onClick: () => !dispatchingWhatsApp && setOpenWhatsAppModal(false),
-    disabled: dispatchingWhatsApp
-  }, /*#__PURE__*/react.createElement(Close/* default */.A, null))), /*#__PURE__*/react.createElement(Box/* default */.A, {
-    sx: {
-      px: 3,
-      pt: 1,
-      borderBottom: 1,
-      borderColor: 'divider'
-    }
-  }, /*#__PURE__*/react.createElement(Tabs/* default */.A, {
-    value: modalTab,
-    onChange: (e, val) => setModalTab(val),
-    textColor: "primary",
-    indicatorColor: "primary"
-  }, /*#__PURE__*/react.createElement(Tab/* default */.A, {
-    icon: /*#__PURE__*/react.createElement(WhatsApp, {
-      sx: {
-        fontSize: 18
-      }
-    }),
-    iconPosition: "start",
-    label: "Send Queue (".concat(whatsAppInvoicesList.length, ")"),
-    sx: {
-      textTransform: 'none',
-      fontWeight: 700
-    }
-  }), /*#__PURE__*/react.createElement(Tab/* default */.A, {
-    icon: /*#__PURE__*/react.createElement(History, {
-      sx: {
-        fontSize: 18
-      }
-    }),
-    iconPosition: "start",
-    label: "Sent History (".concat(historyList.length, ")"),
-    sx: {
-      textTransform: 'none',
-      fontWeight: 700
-    }
-  }))), /*#__PURE__*/react.createElement(DialogContent/* default */.A, {
-    dividers: true,
-    sx: {
-      pt: 1.5,
-      pb: 2
-    }
-  }, modalTab === 0 ? /*#__PURE__*/react.createElement(react.Fragment, null, /*#__PURE__*/react.createElement(Alert/* default */.A, {
-    severity: "info",
-    sx: {
-      mb: 2,
-      fontSize: '0.85rem'
-    }
-  }, /*#__PURE__*/react.createElement("strong", null, "Eligible Invoices:"), " Invoices with status ", /*#__PURE__*/react.createElement("strong", null, "SENT"), ", ", /*#__PURE__*/react.createElement("strong", null, "PARTIALLY-PAID"), ", or ", /*#__PURE__*/react.createElement("strong", null, "FREE OF CHARGE"), " are listed and eligible for WhatsApp dispatch. Dispatches are sent one-by-one from official company line ", /*#__PURE__*/react.createElement("strong", null, "+243 827 722 222"), "."), /*#__PURE__*/react.createElement(Box/* default */.A, {
-    sx: {
-      mb: 2,
-      p: 2,
-      border: '1px solid #e2e8f0',
-      borderRadius: 1.5,
-      backgroundColor: '#f8fafc'
-    }
-  }, /*#__PURE__*/react.createElement(Box/* default */.A, {
-    sx: {
-      display: 'flex',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      mb: 1
-    }
-  }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
-    variant: "subtitle2",
-    sx: {
-      fontWeight: 700,
-      color: '#1e293b'
-    }
-  }, "Customizable Short Message (English)"), /*#__PURE__*/react.createElement(Button/* default */.A, {
-    size: "small",
-    variant: "outlined",
-    startIcon: /*#__PURE__*/react.createElement(Save, null),
-    onClick: handleSaveTemplateAsDefault,
-    disabled: savingTemplate || dispatchingWhatsApp,
-    sx: {
-      textTransform: 'none',
-      py: 0.25,
-      fontSize: '0.78rem'
-    }
-  }, savingTemplate ? 'Saving...' : 'Save as Default')), /*#__PURE__*/react.createElement(TextField/* default */.A, {
-    fullWidth: true,
-    multiline: true,
-    rows: 4.5,
-    value: whatsAppMessage,
-    onChange: e => setWhatsAppMessage(e.target.value),
-    placeholder: "Type short message in English...",
-    disabled: dispatchingWhatsApp,
-    sx: {
-      backgroundColor: '#fff',
-      '& .MuiInputBase-root': {
-        fontSize: '0.92rem',
-        lineHeight: 1.6,
-        p: 1.5
-      }
-    }
-  }), /*#__PURE__*/react.createElement(Typography/* default */.A, {
-    variant: "caption",
-    sx: {
-      color: '#64748b',
-      mt: 0.5,
-      display: 'block'
-    }
-  }, "* When a client has multiple invoices, this short message is attached to the first invoice PDF, followed sequentially by subsequent invoices.")), /*#__PURE__*/react.createElement(Box/* default */.A, {
-    sx: {
-      mb: 1.5,
-      display: 'flex',
-      flexWrap: 'wrap',
-      gap: 1,
-      alignItems: 'center',
-      justifyContent: 'space-between'
-    }
-  }, /*#__PURE__*/react.createElement(TextField/* default */.A, {
-    size: "small",
-    placeholder: "Search by customer, invoice #, phone...",
-    value: queueSearchTerm,
-    onChange: e => setQueueSearchTerm(e.target.value),
-    disabled: dispatchingWhatsApp,
-    InputProps: {
-      startAdornment: /*#__PURE__*/react.createElement(InputAdornment/* default */.A, {
-        position: "start"
-      }, /*#__PURE__*/react.createElement(Search/* default */.A, {
-        sx: {
-          color: '#94a3b8',
-          fontSize: 20
-        }
-      })),
-      endAdornment: queueSearchTerm ? /*#__PURE__*/react.createElement(InputAdornment/* default */.A, {
-        position: "end"
-      }, /*#__PURE__*/react.createElement(IconButton/* default */.A, {
-        size: "small",
-        onClick: () => setQueueSearchTerm('')
-      }, /*#__PURE__*/react.createElement(Close/* default */.A, {
-        sx: {
-          fontSize: 16
-        }
-      }))) : null
-    },
-    sx: {
-      minWidth: 280,
-      flex: 1,
-      backgroundColor: '#fff'
-    }
-  }), /*#__PURE__*/react.createElement(Box/* default */.A, {
-    sx: {
-      display: 'flex',
-      gap: 0.5,
-      alignItems: 'center'
-    }
-  }, queueSearchTerm.trim() && /*#__PURE__*/react.createElement(react.Fragment, null, /*#__PURE__*/react.createElement(Button/* default */.A, {
-    size: "small",
-    variant: "outlined",
-    onClick: handleSelectFiltered,
-    disabled: dispatchingWhatsApp || filteredQueueInvoices.length === 0,
-    sx: {
-      textTransform: 'none',
-      fontSize: '0.75rem',
-      py: 0.3
-    }
-  }, "Select Filtered (", filteredQueueInvoices.length, ")"), /*#__PURE__*/react.createElement(Button/* default */.A, {
-    size: "small",
-    variant: "outlined",
-    onClick: handleUncheckFiltered,
-    disabled: dispatchingWhatsApp || filteredQueueInvoices.length === 0,
-    sx: {
-      textTransform: 'none',
-      fontSize: '0.75rem',
-      py: 0.3
-    }
-  }, "Uncheck Filtered")), /*#__PURE__*/react.createElement(Button/* default */.A, {
-    size: "small",
-    onClick: handleToggleSelectAllWhatsApp,
-    disabled: dispatchingWhatsApp || whatsAppInvoicesList.length === 0,
-    sx: {
-      textTransform: 'none',
-      fontSize: '0.78rem'
-    }
-  }, selectedWhatsAppInvoiceIds.size === whatsAppInvoicesList.length ? 'Uncheck All' : 'Select All'))), /*#__PURE__*/react.createElement(Box/* default */.A, {
-    sx: {
-      display: 'flex',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      mb: 1
-    }
-  }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
-    variant: "caption",
-    sx: {
-      fontWeight: 700,
-      color: '#475569'
-    }
-  }, "Showing ", filteredQueueInvoices.length, " of ", whatsAppInvoicesList.length, " Invoices (", selectedWhatsAppInvoiceIds.size, " Selected to Send)")), loadingSentInvoices ? /*#__PURE__*/react.createElement(Box/* default */.A, {
-    sx: {
-      py: 4,
-      textAlign: 'center'
-    }
-  }, /*#__PURE__*/react.createElement(Loader/* default */.A, null), /*#__PURE__*/react.createElement(Typography/* default */.A, {
-    variant: "caption",
-    sx: {
-      color: '#64748b',
-      mt: 1,
-      display: 'block'
-    }
-  }, "Loading eligible invoices (SENT, PARTIALLY-PAID, FREE OF CHARGE)...")) : whatsAppInvoicesList.length === 0 ? /*#__PURE__*/react.createElement(Box/* default */.A, {
-    sx: {
-      py: 4,
-      textAlign: 'center',
-      color: '#64748b'
-    }
-  }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
-    variant: "body2"
-  }, "No invoices with status SENT, PARTIALLY-PAID, or FREE OF CHARGE found.")) : filteredQueueInvoices.length === 0 ? /*#__PURE__*/react.createElement(Box/* default */.A, {
-    sx: {
-      py: 3,
-      textAlign: 'center',
-      color: '#64748b'
-    }
-  }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
-    variant: "body2"
-  }, "No invoices match your search term \"", queueSearchTerm, "\".")) : /*#__PURE__*/react.createElement(TableContainer/* default */.A, {
-    component: Paper/* default */.A,
-    variant: "outlined",
-    sx: {
-      maxHeight: 310,
-      borderRadius: 1.5
-    }
-  }, /*#__PURE__*/react.createElement(Table/* default */.A, {
-    size: "small",
-    stickyHeader: true
-  }, /*#__PURE__*/react.createElement(TableHead/* default */.A, null, /*#__PURE__*/react.createElement(TableRow/* default */.A, {
-    sx: {
-      '& th': {
-        fontWeight: 700,
-        backgroundColor: '#f1f5f9'
-      }
-    }
-  }, /*#__PURE__*/react.createElement(TableCell/* default */.A, {
-    padding: "checkbox",
-    sx: {
-      width: 40
-    }
-  }, /*#__PURE__*/react.createElement(Checkbox/* default */.A, {
-    size: "small",
-    checked: filteredQueueInvoices.length > 0 && filteredQueueInvoices.every(inv => selectedWhatsAppInvoiceIds.has(inv._id || inv.id)),
-    indeterminate: filteredQueueInvoices.some(inv => selectedWhatsAppInvoiceIds.has(inv._id || inv.id)) && !filteredQueueInvoices.every(inv => selectedWhatsAppInvoiceIds.has(inv._id || inv.id)),
-    onChange: () => {
-      var allFilteredSelected = filteredQueueInvoices.every(inv => selectedWhatsAppInvoiceIds.has(inv._id || inv.id));
-      if (allFilteredSelected) {
-        handleUncheckFiltered();
-      } else {
-        handleSelectFiltered();
-      }
-    },
-    disabled: dispatchingWhatsApp
-  })), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
-    sx: {
-      width: 110
-    }
-  }, "Invoice #"), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
-    sx: {
-      width: 95
-    }
-  }, "Date"), /*#__PURE__*/react.createElement(TableCell/* default */.A, null, "Customer Name"), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
-    sx: {
-      width: 165
-    }
-  }, "WhatsApp Phone (Editable)"), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
-    sx: {
-      width: 125,
-      textAlign: 'right'
-    }
-  }, "Balance Due"), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
-    sx: {
-      width: 110,
-      textAlign: 'center'
-    }
-  }, "Status"), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
-    sx: {
-      width: 110,
-      textAlign: 'center'
-    }
-  }, "Sent History"))), /*#__PURE__*/react.createElement(TableBody/* default */.A, null, filteredQueueInvoices.map(inv => {
-    var id = inv._id || inv.id;
-    var isChecked = selectedWhatsAppInvoiceIds.has(id);
-    var cust = inv.customerName || {};
-    var clientName = (typeof cust === 'string' ? cust : cust.Customer || cust.customerName || cust.customerFullName || 'Customer').toUpperCase();
-    var phoneVal = phoneOverrides[id] !== undefined ? phoneOverrides[id] : getInvoicePhone(inv, customerPhoneMap);
-    var totalAmount = Number(inv.totalInvoice || inv.total || 0).toFixed(2);
-    var hasValidBalance = inv.balanceDue !== undefined && inv.balanceDue !== null && !isNaN(parseFloat(inv.balanceDue));
-    var balanceDueAmount = hasValidBalance ? parseFloat(inv.balanceDue).toFixed(2) : totalAmount;
-    var isPartial = String(inv.status || '').toUpperCase().includes('PARTIAL');
-    var isFree = String(inv.status || '').toUpperCase().includes('FREE');
-    var amount = isFree ? '0.00' : balanceDueAmount;
-    var prevSent = sentHistoryMap[Number(inv.invoiceNumber)];
-    return /*#__PURE__*/react.createElement(TableRow/* default */.A, {
-      key: id,
-      hover: true,
-      selected: isChecked,
-      sx: {
-        '&.Mui-selected': {
-          backgroundColor: 'rgba(37,211,102,0.06)'
-        }
-      }
-    }, /*#__PURE__*/react.createElement(TableCell/* default */.A, {
-      padding: "checkbox"
-    }, /*#__PURE__*/react.createElement(Checkbox/* default */.A, {
-      size: "small",
-      checked: isChecked,
-      onChange: () => handleToggleWhatsAppInvoice(id),
-      disabled: dispatchingWhatsApp
-    })), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
-      sx: {
-        fontWeight: 700,
-        color: '#0f172a'
-      }
-    }, "INV-", String(inv.invoiceNumber).padStart(6, '0')), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
-      sx: {
-        fontSize: '0.8rem',
-        color: '#64748b'
-      }
-    }, inv.dateField || (inv.invoiceDate ? dayjs_min_default()(inv.invoiceDate).format('DD/MM/YYYY') : '')), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
-      sx: {
-        fontWeight: 600
-      }
-    }, clientName), /*#__PURE__*/react.createElement(TableCell/* default */.A, null, /*#__PURE__*/react.createElement(TextField/* default */.A, {
-      size: "small",
-      value: phoneVal,
-      onChange: e => setPhoneOverrides(prev => _objectSpread(_objectSpread({}, prev), {}, {
-        [id]: e.target.value
-      })),
-      placeholder: "+243 xxx xxx xxx",
-      disabled: dispatchingWhatsApp,
-      sx: {
-        '& input': {
-          py: 0.5,
-          px: 1,
-          fontSize: '0.8rem'
-        },
-        width: '100%'
-      }
-    })), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
-      sx: {
-        textAlign: 'right'
-      }
-    }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
-      variant: "body2",
-      sx: {
-        fontWeight: 700,
-        color: isPartial ? '#b45309' : isFree ? '#15803d' : '#0f172a'
-      }
-    }, "$", amount), isPartial && Number(totalAmount) > Number(balanceDueAmount) && /*#__PURE__*/react.createElement(Typography/* default */.A, {
-      variant: "caption",
-      sx: {
-        color: '#64748b',
-        fontSize: '0.72rem',
-        display: 'block'
-      }
-    }, "Total: $", totalAmount)), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
-      sx: {
-        textAlign: 'center'
-      }
-    }, renderInvoiceStatusChip(inv.status)), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
-      sx: {
-        textAlign: 'center'
-      }
-    }, prevSent ? /*#__PURE__*/react.createElement(Tooltip/* default */.A, {
-      title: "Previously sent on ".concat(dayjs_min_default()(prevSent.sentAt).format('DD/MM/YYYY HH:mm'), " by ").concat(prevSent.sentBy || 'GG')
-    }, /*#__PURE__*/react.createElement(Chip/* default */.A, {
-      size: "small",
-      icon: /*#__PURE__*/react.createElement(History, {
-        sx: {
-          fontSize: '12px !important'
-        }
-      }),
-      label: "Sent ".concat(dayjs_min_default()(prevSent.sentAt).format('DD/MM HH:mm')),
-      sx: {
-        bgcolor: '#ecfdf5',
-        color: '#047857',
-        fontWeight: 600,
-        fontSize: '0.68rem',
-        height: 20
-      }
-    })) : /*#__PURE__*/react.createElement(Typography/* default */.A, {
-      variant: "caption",
-      sx: {
-        color: '#94a3b8'
-      }
-    }, "-")));
-  })))), dispatchingWhatsApp && /*#__PURE__*/react.createElement(Box/* default */.A, {
-    sx: {
-      mt: 2
-    }
-  }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
-    variant: "body2",
-    sx: {
-      fontWeight: 600,
-      color: '#166534',
-      mb: 0.5
-    }
-  }, "\u23F3 Dispatching invoice PDFs via WhatsApp Web client... Please wait (do not close this window)."), /*#__PURE__*/react.createElement(LinearProgress/* default */.A, {
-    color: "success"
-  })), dispatchResult && /*#__PURE__*/react.createElement(Alert/* default */.A, {
-    severity: dispatchResult.success && (!((_dispatchResult$repor = dispatchResult.report) !== null && _dispatchResult$repor !== void 0 && _dispatchResult$repor.failed) || dispatchResult.report.failed === 0) ? 'success' : ((_dispatchResult$repor2 = dispatchResult.report) === null || _dispatchResult$repor2 === void 0 ? void 0 : _dispatchResult$repor2.sent) > 0 ? 'warning' : 'error',
-    sx: {
-      mt: 2,
-      fontSize: '0.85rem'
-    }
-  }, /*#__PURE__*/react.createElement("strong", null, dispatchResult.success && (!((_dispatchResult$repor3 = dispatchResult.report) !== null && _dispatchResult$repor3 !== void 0 && _dispatchResult$repor3.failed) || dispatchResult.report.failed === 0) ? '✅ Dispatch Completed:' : ((_dispatchResult$repor4 = dispatchResult.report) === null || _dispatchResult$repor4 === void 0 ? void 0 : _dispatchResult$repor4.sent) > 0 ? '⚠️ Partial Dispatch Result:' : '❌ Dispatch Failed:'), ' ', ((_dispatchResult$repor5 = dispatchResult.report) === null || _dispatchResult$repor5 === void 0 ? void 0 : _dispatchResult$repor5.sent) !== undefined ? "".concat(dispatchResult.report.sent, " sent, ").concat(dispatchResult.report.failed || 0, " failed.") : dispatchResult.error || 'Finished processing.', Array.isArray((_dispatchResult$repor6 = dispatchResult.report) === null || _dispatchResult$repor6 === void 0 ? void 0 : _dispatchResult$repor6.details) && dispatchResult.report.details.length > 0 && /*#__PURE__*/react.createElement(Box/* default */.A, {
-    sx: {
-      mt: 1,
-      display: 'flex',
-      flexWrap: 'wrap',
-      gap: 0.5
-    }
-  }, dispatchResult.report.details.map((d, i) => /*#__PURE__*/react.createElement(Chip/* default */.A, {
-    key: i,
-    size: "small",
-    label: "#".concat(d.invoiceNumber, ": ").concat(d.status).concat(d.error ? " (".concat(d.error, ")") : ''),
-    color: d.status === 'sent' ? 'success' : 'error',
-    variant: "outlined",
-    sx: {
-      fontSize: '0.72rem'
-    }
-  }))))) :
-  /*#__PURE__*/
-  /* Modal Tab 1: Sent History (3-Month Retention) */
-  react.createElement(react.Fragment, null, /*#__PURE__*/react.createElement(Alert/* default */.A, {
-    severity: "success",
-    sx: {
-      mb: 2,
-      fontSize: '0.85rem'
-    }
-  }, /*#__PURE__*/react.createElement("strong", null, "3-Month Auto-Retention:"), " Dispatched invoices are tracked here with the exact date and time sent. Records are automatically purged after 3 months (90 days) via MongoDB TTL."), /*#__PURE__*/react.createElement(Box/* default */.A, {
-    sx: {
-      mb: 1.5,
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'space-between'
-    }
-  }, /*#__PURE__*/react.createElement(TextField/* default */.A, {
-    size: "small",
-    placeholder: "Search history by invoice #, customer name, phone, sent by...",
-    value: historySearchTerm,
-    onChange: e => setHistorySearchTerm(e.target.value),
-    InputProps: {
-      startAdornment: /*#__PURE__*/react.createElement(InputAdornment/* default */.A, {
-        position: "start"
-      }, /*#__PURE__*/react.createElement(Search/* default */.A, {
-        sx: {
-          color: '#94a3b8',
-          fontSize: 20
-        }
-      })),
-      endAdornment: historySearchTerm ? /*#__PURE__*/react.createElement(InputAdornment/* default */.A, {
-        position: "end"
-      }, /*#__PURE__*/react.createElement(IconButton/* default */.A, {
-        size: "small",
-        onClick: () => setHistorySearchTerm('')
-      }, /*#__PURE__*/react.createElement(Close/* default */.A, {
-        sx: {
-          fontSize: 16
-        }
-      }))) : null
-    },
-    sx: {
-      minWidth: 320,
-      flex: 1,
-      backgroundColor: '#fff'
-    }
-  }), /*#__PURE__*/react.createElement(Button/* default */.A, {
-    size: "small",
-    onClick: fetchSentHistory,
-    disabled: loadingHistory,
-    sx: {
-      textTransform: 'none',
-      ml: 1.5
-    }
-  }, "Refresh History")), loadingHistory ? /*#__PURE__*/react.createElement(Box/* default */.A, {
-    sx: {
-      py: 4,
-      textAlign: 'center'
-    }
-  }, /*#__PURE__*/react.createElement(Loader/* default */.A, null), /*#__PURE__*/react.createElement(Typography/* default */.A, {
-    variant: "caption",
-    sx: {
-      color: '#64748b',
-      mt: 1,
-      display: 'block'
-    }
-  }, "Loading dispatched history...")) : historyList.length === 0 ? /*#__PURE__*/react.createElement(Box/* default */.A, {
-    sx: {
-      py: 4,
-      textAlign: 'center',
-      color: '#64748b'
-    }
-  }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
-    variant: "body2"
-  }, "No WhatsApp invoices have been dispatched in the last 3 months.")) : filteredHistoryList.length === 0 ? /*#__PURE__*/react.createElement(Box/* default */.A, {
-    sx: {
-      py: 3,
-      textAlign: 'center',
-      color: '#64748b'
-    }
-  }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
-    variant: "body2"
-  }, "No sent records match your search term \"", historySearchTerm, "\".")) : /*#__PURE__*/react.createElement(TableContainer/* default */.A, {
-    component: Paper/* default */.A,
-    variant: "outlined",
-    sx: {
-      maxHeight: 360,
-      borderRadius: 1.5
-    }
-  }, /*#__PURE__*/react.createElement(Table/* default */.A, {
-    size: "small",
-    stickyHeader: true
-  }, /*#__PURE__*/react.createElement(TableHead/* default */.A, null, /*#__PURE__*/react.createElement(TableRow/* default */.A, {
-    sx: {
-      '& th': {
-        fontWeight: 700,
-        backgroundColor: '#f1f5f9'
-      }
-    }
-  }, /*#__PURE__*/react.createElement(TableCell/* default */.A, {
-    sx: {
-      width: 140
-    }
-  }, "Date & Time Sent"), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
-    sx: {
-      width: 110
-    }
-  }, "Invoice #"), /*#__PURE__*/react.createElement(TableCell/* default */.A, null, "Customer Name"), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
-    sx: {
-      width: 150
-    }
-  }, "WhatsApp Phone"), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
-    sx: {
-      width: 100,
-      textAlign: 'right'
-    }
-  }, "Amount"), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
-    sx: {
-      width: 100,
-      textAlign: 'center'
-    }
-  }, "Sent By"), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
-    sx: {
-      width: 80,
-      textAlign: 'center'
-    }
-  }, "Status"))), /*#__PURE__*/react.createElement(TableBody/* default */.A, null, filteredHistoryList.map((h, idx) => /*#__PURE__*/react.createElement(TableRow/* default */.A, {
-    key: h._id || idx,
-    hover: true
-  }, /*#__PURE__*/react.createElement(TableCell/* default */.A, {
-    sx: {
-      fontSize: '0.8rem',
-      color: '#334155',
-      fontWeight: 600
-    }
-  }, dayjs_min_default()(h.sentAt).format('DD/MM/YYYY HH:mm')), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
-    sx: {
-      fontWeight: 700,
-      color: '#0f172a'
-    }
-  }, "INV-", String(h.invoiceNumber).padStart(6, '0')), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
-    sx: {
-      fontWeight: 600,
-      color: '#1e293b'
-    }
-  }, h.customerName), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
-    sx: {
-      fontSize: '0.82rem',
-      color: '#475569'
-    }
-  }, h.phone), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
-    sx: {
-      textAlign: 'right',
-      fontWeight: 700,
-      color: '#0f172a'
-    }
-  }, "$", Number(h.amount || 0).toFixed(2)), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
-    sx: {
-      textAlign: 'center',
-      fontSize: '0.8rem',
-      color: '#64748b'
-    }
-  }, h.sentBy || 'GG'), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
-    sx: {
-      textAlign: 'center'
-    }
-  }, /*#__PURE__*/react.createElement(Chip/* default */.A, {
-    label: "SENT",
-    size: "small",
-    sx: {
-      bgcolor: '#ecfdf5',
-      color: '#047857',
-      fontWeight: 700,
-      height: 20,
-      fontSize: '0.7rem'
-    }
-  }))))))))), /*#__PURE__*/react.createElement(DialogActions/* default */.A, {
-    sx: {
-      px: 2,
-      py: 1.5
-    }
-  }, /*#__PURE__*/react.createElement(Button/* default */.A, {
-    onClick: () => setOpenWhatsAppModal(false),
-    disabled: dispatchingWhatsApp,
-    color: "inherit",
-    sx: {
-      textTransform: 'none'
-    }
-  }, dispatchResult || modalTab === 1 ? 'Close' : 'Cancel'), modalTab === 0 && /*#__PURE__*/react.createElement(Button/* default */.A, {
-    variant: "contained",
-    onClick: handleExecuteWhatsAppDispatch,
-    disabled: dispatchingWhatsApp || selectedWhatsAppInvoiceIds.size === 0,
-    startIcon: /*#__PURE__*/react.createElement(WhatsApp, null),
-    sx: {
-      backgroundColor: '#25D366',
-      '&:hover': {
-        backgroundColor: '#1ebe5d'
-      },
-      color: '#fff',
-      fontWeight: 700,
-      textTransform: 'none',
-      px: 2.5
-    }
-  }, dispatchingWhatsApp ? 'Dispatching...' : "Send ".concat(selectedWhatsAppInvoiceIds.size, " Invoice(s) via WhatsApp")))))))));
+  }, "Save")))))));
 }
-/* harmony default export */ const AdminView1_InvoiceViewAdmin = (InvoiceViewAdmin);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (DailyExpenses);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, [
+/* harmony export */   "default", 0, /* export default binding */ __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ ]);
+
 
 /***/ },
 
@@ -6779,6 +5356,8 @@ var Inventory2Outlined = __webpack_require__(53225);
 var axios = __webpack_require__(99380);
 // EXTERNAL MODULE: ./node_modules/react-toastify/dist/react-toastify.esm.mjs
 var react_toastify_esm = __webpack_require__(99571);
+// EXTERNAL MODULE: ./src/js/utils/modalBackManager.js
+var modalBackManager = __webpack_require__(3625);
 // EXTERNAL MODULE: ./node_modules/@mui/material/Button/Button.js + 3 modules
 var Button = __webpack_require__(86990);
 // EXTERNAL MODULE: ./node_modules/@mui/material/Drawer/Drawer.js + 1 modules
@@ -7792,6 +6371,7 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 
+
 function MobileDetailSheet_safeText(val) {
   var fallback = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
   if (val === null || val === undefined) return fallback;
@@ -8185,6 +6765,11 @@ function MobileDetailSheet(_ref) {
       }
     }, att.fileName));
   })));
+  (0,react.useEffect)(() => {
+    if (open && typeof onClose === 'function') {
+      return (0,modalBackManager/* registerModalDismiss */.Ti)(onClose);
+    }
+  }, [open, onClose]);
   (0,react.useEffect)(() => {
     var fetchAccess = /*#__PURE__*/function () {
       var _ref4 = _asyncToGenerator(function* () {
@@ -11480,6 +10065,108 @@ var renderStatusBadge = (status, customLabel) => {
 (module) {
 
 module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAyAAAAJYCAIAAAAVFBUnAAB1tklEQVR42u3d6VcbZ4Lv8ZKEFkAgVrHL7BiwsbFjG++JEztLp7d0T889M/Nq/o7+W+ace86990Xf6U7PdNJJHHecYDvGeMHG7BYGS6xiEYsA7bovnptKWQIhiQIEfD8nJ4cqSqWnHpWon5/nqac0GxsbEgAAANSjpQoAAADURcACAABQGQELAABAZQQsAAAAlRGwAAAAVEbAAgAAUBkBCwAAQGUELAAAAJURsAAAAFRGwAIAAFAZAQsAAEBlBCwAAACVEbAAAABURsACAABQGQELAABAZQQsAAAAlRGwAAAAVEbAAgAAUBkBCwAAQGUELAAAAJURsAAAAFRGwAIAAFAZAQsAAEBlBCwAAACVEbAAAABURsACAABQGQELAABAZQQsAAAAlRGwAAAAVEbAAgAAUBkBCwAAQGUELAAAAJURsAAAAFRGwAIAAFAZAQsAAEBlBCwAAACVEbAAAABURsACAABQGQELAABAZQQsAAAAlRGwAAAAVEbAAgAAUBkBCwAAQGUELAAAAJURsAAAAFRGwAIAAFAZAQsAAEBlBCwAAACVEbAAAABURsACAABQGQELAABAZQQsAAAAlRGwAAAAVEbAAgAAUBkBCwAAQGUELAAAAJURsAAAAFRGwAIAAFAZAQsAAEBlBCwAAACVEbAAAABURsACAABQGQELAABAZQQsAAAAlRGwAAAAVEbAAgAAUBkBCwAAQGUELAAAAJURsAAAAFRGwAIAAFAZAQsAAEBlBCwAAACVEbAAAABURsACAABQGQELAABAZQQsAAAAlRGwAAAAVJZBFQDYL4FAYHV11ePxeL1er9fr8/l8Pp/X6/X7/aFQKBQKSZLk9/vl7fV6vUaj0Wq1GRkZGRkZRqPRZDKZTCaj0Wg0Gs1mc05OjslkomIB7DsCFoC9EA6Hl5eXFxcX3W738vKyx+PxeDw+n0/1N9LpdDk5OWazOTc3N/8ner2ejwDAXtJsbGxQCwBUF4lEFhcXXS6Xy+VaXFxcXl4Oh8P7VRiz2VxQUFBcXGy1WouLizMy+LclgN1FwAKgmnA4PDs7Oz09LXJVMBhMw0JqNJrCwkKr1VpaWlpeXm4wGPjgAKiOgAVgp1ZXVycnJycmJqanpwOBQMr70el0YkyVwWAQnXp6vV6r1Wo0Go1GEw6HI5GI3++XJE0wGPD5/T6fz7vhDQZTf0eNRmO1WisqKiorKwsLCzUaDZ8mAFUQsACkyO12j42NjY2NLS8vJ/XCnJyc3NxcMVJKZjQadTpdCsUIhkLr6xtr6+srKytrHs/a2tr62trammdlZSWpTkmTyVRdXV1dXV1WVkbSArBDBCwAyVleXn79+vXr168TzFUZGRnFxcUFBQX5+fkFBQV5eXm7NwQqFAoHQ6FgKByJRCKRyOrqyvLS0tLS0vLy0uLCgtfrTWQnImnV1NSUlpaStACkhoAFICGBQGBsbGxkZMTlcm27sdlstlqtJSUlVqu1oKBg72NKOBwOBP9/0pJXrnk88/Pz8/Nz8/Nzy0tLiRxFY2NjQ0NDdnY2JwCApBCwAGxjbm5ueHh4bGws/viqjIyMsrIyMZ4pNzc3TQofCoUDoVAwGIpa7/P5ZmdmZqanZmam47dsaTSaioqKxsZGm82m1TI5M4CEELAAbC4cDr9586avr29ubi7OZllZWdXV1TabraSkJLVBVHsgEokEgqFgMBRWNGjJ3G739NSk0+FYXl6KsxOz2dzc3NzU1MSNhwC2RcACEC0QCAwPDw8MDHg8nq22EbmqpqbGarUeoIFKwVA4EAiGthj8vrqy4nQ64ictvV7f2NjY2tpqNps5VQBshYAF4Gd+v7+/v7+/v1/5gBolrVZrs9mamprKy8sP7gDwUDgcCASDoS3vMVxeWnr9evTN+NhW9aDRaOrr60+dOpU+naEA0goBC4AkSVIgEOjv7+/r69sqUuTl5TU2NtbX1x+ah/2FwxF/IBgMhbbeIDzhdL5+bXfNzm66ATELwFYIWMBRFwqFBgYGent7t3oyYGVl5YkTJ8rLyw/n4YfDfv+WnYbC6urKyPDQ+NhYaLM0ptVqGxsbT58+nZWVxekEQCBgAUfa2NjY48ePNx1rpdPp6urqTpw4kZeXd+jrIRQK+wKBcDgSZxufzzdqf2V/NbLpXYcZGRmnTp06ceJE2o70B7CXCFjAETU/P//o0aPZzTq/dDpdc3NzW1vboekNTJA/EAwEg5F4KUsKh8Njr0cH+vs3NtZjf5udnX3u3Lna2lpOMOCII2ABR47P53v8+PHIyEjsr3Q63fHjx0+ePHlke7sikYgvEIydNytKKBQatb8aGhzYtDXLarVevnw5Pz+fkw04sghYwNHy+vXrrq6u2Fig0WiOHz9+6tQpBhJJkhQMhX3+QCR+W9ZPMau/vy8Qc2eAVqtta2s7deoUPYbA0UTAAo4Kj8fz4MGDycnJ2F9VVFScP3+eFhelSETyBwKB7ZqyJDG3RV+v/dWr2EBmsVguXbpUVlZGfQJHDQELOBKGhoa6u7uDwWDUeovFcuHChcrKSqpoU6FQ2JtAU5YkSSsrKy+eP5uemor9VXNz87lz53bvEdcA0hABCzjkvF7vvXv3nE5n1HqdTtfe3n7ixAmerxdfJBLx+gOhUDiRjacmJ549fbK+Hj3+3WKxvPvuu4WFhdQncEQQsIDDzOl03rt3L3bEVXl5+eXLl3NycqiiBPkDQX8gmMiWwWDgZe+L2B5DrVbb3t7e1tZ2cGfAB5A4AhZwOIXD4e7u7oGBgaj1RqPxwoUL9fX1VFGyQuGw15dQd6EkSYsLC48fP1peWopaX1pa+t5772VmZlKfwOFGwAIOofX19e+++87lckWtr6ysvHLlCvcJpiwSiWz4AuFwQt2F4XC472Xv0GB0xs3MzLxx40ZJSQn1CRxiBCzgsJmenr57925Ut6BOpzt37lxLSwv1s3NefyCYwN2Fgss12931MGpUllarPXfuXGtrK5UJHFYELOBQefny5ZMnT6K6sQoLC69fv34UnnizZxIfkiVJUsDvf/r0sePNm6j1NTU1V69e5e5C4FAiYAGHRDgc/vHHH2PnZ29sbLx48SLTXaouEAz5/IHEtx+1v+p59jSqe7GoqOjmzZsMyQIOHwIWcBj4/f7vvvtu6u1JmHQ63aVLlxoaGqifXRIKhb0+fyTh7RcXFn58cH99fU250mw237x5k1legUOGgAUceKurq7dv315eXlauzMnJuXHjBhMv7bZQOOz1+SMJhyy/z9f18MeZmWnlSr1ef+PGjYqKCuoTODQIWMDB5na7v/7666gvcklJyQcffGA0GqmfPZDU9A2SJEUikec9z16NDCtXajSaa9eu1dXVUZ/A4UDAAg6wubm527dv+3w+5cq6urqrV68yP/teCocjGz5/4hlLkiT7q5GeZ0+jXnLp0qXjx49Tn8AhQMACDqrp6ek7d+4EAm+Nsz5z5szp06epnL2XQsaanpp6+OP9qAdEvvPOO21tbdQncNARsIADyeFw3L17NxT6eTYmjUZz9epVpmjfR8mOx5Ikacnt7vwhetKytra2d955h/oEDjQCFnDwTE5Ofvvtt8ob/rVa7Y0bN2w2G5Wzv0Kh8IbPn9RLPJ7V77/7R9RMpKdOnTp79iz1CRxcjNIADhjRM6hMVzqd7sMPPyRdpQOdTmsyGpJ6idmc8/4Ht8xvP3j7xYsXvb291CdwcBGwgIPE5XLdvn1b2TOo1+s/+eSTsrIyKidNZOi0RoM+qZdkZmW9/8Ety9tT7T958qSvr4/6BA4oAhZwYMzPz3/zzTdR6eqjjz4qLi6mctKKPkOnz0hu6nyj0fjue+9bLHnKld3d3cPDw9QncBARsICDwePxfPvtt8p7BkXPIOkqPRkN+gxdcn9gjUbjuzfez8nNVa788ccfHQ4H9QkcOAQs4ADw+XzffPON8pYUnU5369Ytq9VK5aQto8Gg1WqSe4nR+O67N8xms7wmEoncvXt3bm6O+gQOFgIWkO5CodCdO3eUT8LRarXvv/8+467SnEYjmQwGTZKvyszKeu/GB5lZWcoT4Ntvv11dXaVKgQOEgAWku87OztnZWeWay5cvV1ZWUjPpT6vVGI36ZF+VmZV17fp7ev3PL/R6vbFT9gNI668/VQCksxcvXoyNjSnXnDlzpqGhgZo5KDJ0On1GRrKvslgsl69cUz7vaHl5+YcffkhqpngA+4iABaSvycnJZ8+eKdc0NDTwJJwDx2jISOHRkNaSknPnO5RrJiYmos4HAGmLgAWkqdXV1e+//17ZYlFeXn758mVq5iAyGfQpvOpYdfWJk289l/DFixfj4+PUJ5D+CFhAOgoGg3fu3FGOuTGbze+9914KDSFIB1qtxphSxmppPVHx9ni7e/fuLS0tUaVAun/rqQIgDT169MjtdsuLOp3ugw8+MBqN1MzBpc/Q6XSp/Mm90HExVzE5ViAQiHrON4A0RMAC0s74+HjU/N1XrlwpKCigZg46k0Gv0ST9qowM/eWr15U3Fbrd7u7ubuoTSGcELCC9rK2tPXjwQLmmtbW1rq6OmjkENBqNQZ9KR2FOTs75jovKNYODg8zwDqQzAhaQRiKRyA8//KAcelVQUPDOO+9QM4eGPkOnS2kgXUVFZX1Do3LNvXv31tfXqVIgPRGwgDTS19c3MzMjL2ZkZLz33ns6ne4IV8khlNpod0mSTp1ut+TlyYs+n+/+/fvUJ5CeCFhAulhZWYma5ejChQsWi4WaOWS0Wo1en5HCC3U6XcfFy8rAPTEx8erVK6oUSMdvOlUApIn79+8rbw2rrq5uamqiWg4lQ0aGJoXh7pJksVhOnW5Xrunu7lY+BRxAmiBgAWlhaGhI2TloNBovXbpEtRxWGo1kSKkRS5Kk+oZGq7VEXvT5fA8fPqRKgXRDwAL239ra2uPHj5VrOjo6TCYTNXOI6TN0Wq0mtde+c/68sqNwfHz8zZs3VCmQVghYwP7r7u4OBALyYmVlJfMyHAVGfYqj3c3mnKhH6Dx69IipR4G0QsAC9tnMzMzY2Ji8qNfr6Rw8InQ6rS7VZx81Nh0vKCiUFz0eT29vL1UKpA8CFrCfIpFIV1eXcs2ZM2fMZjM1c0QYDCmOxNJoNGfPnVeu6e3t9Xg8VCmQJghYwH4aHh5eXFyUFy0WS3NzM9VydOi02tQeUChJUn5+fm1dvbwYCoWiRvIB2EcELGDfBAKBqImvOjo6tFq+lUdLyrcTSpJ0su2U3mCQF8fGxmZnZ6lSIB3wpxzYN319fV6vV1602WwVFRVUy1Gj06Y+EstoNJ44cVK55unTp1QpkA4IWMD+8Pl8/f39P38VtdoLFy5QLUeTXp/605DqGxpzcnPlxZmZmcnJSaoU2HcELGB/vHz50u/3y4uNjY05OTlUy9GUoUt9TiyNRhM1ZUNUvzOAfUHAAvbB+vq6svlKp9OdPn2aajnK9Bmpj8SqqrLl5efLi3Nzc8w7Cuw7AhawD/r6+pTTQh4/fjwrK4tqOcoydDrNDl5+8uQp5eLz58+pUmB/EbCAveb3+4eHh+XFjIyMU6dOUS1HnEYjZWSkPhKrrLy8sLBIXlxYWJiamqJWgX1EwAL22tDQkPLBOM3NzTx2ENLOegklSWp9+3bCly9fUqXAPiJgAXsqHA4PDAz8/A3UaltbW6kWSJKk1Wp0O5gFrbSszJKXJy9OTk4q57AFsNffaKoA2Et2u319fV1erKurY/QVZDvpJZQk6fjxFuUijVjAPiJgAXtK2XwlSdKJEyeoE8gydDv6m1xlsynz+tjY2MbGBrUK7AsCFrB35ubmlL02VVVV+Yq76wGNRrOTjKXVahsam+TFcDg8MjJCrQL7goAF7B3lzYOSJPFcZ8TaYS9hbW2dTvfzHkZGRiKRCLUK7D0CFrBHAoHA69ev5UWz2cyTBxFLGY9SoDcYqmzH5MXV1VXmawD2BQEL2CN2uz0YDMqLjY2NGo3mCNcHNqfZ8Uis2rp65WJUuymAvUHAAvaI3W6Xf9ZoNI2NjdQJNrXDRqyioiKLJU9edDgcPp+PWgX2GAEL2Aurq6tzc3PyYlVVFbMzYCs7bMGS3m7ECofDPJoQ2HsELGAvKEdfSZJUV1dHnWArGo1Gq93RH2ebzabsgB4dHaVWgT1GwAL2gjJgZWRk2Gw26gRx7LARy2gyWa0l8uLMzIzX66VWgb1EwAJ23dLSktvtlhdtNtsOB9ng0NNpd/rH2Xbs53sJI5FIVBsqgN1GwAJ23fj4uHKxtraWOkF8uh0Pw6qorFL2M0adhAB2GwEL2HUTExPyz3q9numvkIgdZiyDwVBSWiovulyuQCBArQJ7hoAF7C6v1+tyueTFyspK+geRiJ33EpaX/xzlw+Hw5OQktQrsGQIWsLuirmqVlZXUCRKx84BVVl6uXHQ6ndQqsGcIWMDuUvYPSgQsJEyr3elE/1lZ2RaLRV6kBQvY068wVQDsKmXAKiwszMzMpE6QCI1Go93xw5RKy35uxFpfX19cXKRigb1BwAJ20dLSkvIpJVVVVdQJEqdVu5dwZmaGWgX26PtLFQC7J+p6VlJSQp0gcTvvJSwsLFKmtNnZWWoV2KPvL1UA7B7l9Uyj0VitVuoEidt5wNLpdPn5BZuekAB29/tLFQC7R3k9Kygo0Ov11AkSt/MuQkmSioqL5Z/X19dXV1epWGAvvr9UAbBL1tfXPR6PvEj/IJK180Hu0tsBS5Ik5axsAHZPBlUA7JL5+XnlYjoErPn5+aWlJZ1OV1ZWZjKZ+Iz22Pr6+uzsbDgczs/PLygoSOQlWq0mHI7s5E2LioqjzoG6ujo+C2C3EbCA3RJ1S3xRUdE+Fsbj8fzwww9yl6VWq21raztz5gwf096IRCJPnjzp6+uLRP5/WiovL79+/fq203ZoNZqwtKOAZTQas7Kz19fWNj0tAewSugiB3aK8kun1+pycnP0qSTAY/Oabb5QDwsLh8PPnz3t6eviY9sbjx49fvnwppytJkqampr755ptwOBz/hRo1egnz8vI3PS0B7B4CFrBblFey/Pz8fSzJyMjI8vJy7Pre3l7lNF3YJevr6/39/ZueIaOjo/Ffq1LAypN/9vl8az+1ZgHYPQQsYFcEg8GVlRV5McEBN7tkenp60/WhUGhubo4Pa7fNzs4q264S+WhkO5+pQXo7YEmS5Ha7+VCA3UbAAnbF0tKScnF/A1acfqhtu6iwv/WvSguWJe+tBlQCFrAHCFjAroiabUj5zN29V/z2jfpK+zv0/oiIU8lxPhpBlYBlNpuV+2EqLGAPELCAXaGcAUuSpH0c4S5J0vHjx41GY+z6xsbGrKwsPqzdZrFYampqYtdnZWU1NjbGf61GjQJoNJrs7Gx5kYAF7AECFrArlNcwrVarvLztPZPJ9OGHH0Zlqerq6osXL/JJ7Y0rV65UVlYq1+Tk5Hz44YfbTu6vSguWJEnZ2eZNT04Au4R5sIBdobyGZWdnq3WZTFlRUdE//dM/jY2Nud1uvV5fXl7OgxH3kl6vv3Xr1szMzNTUVDgcLigoOHbsmE6nS+S1Go0Uiey0ANlms/TTNB0ejycSiez7OQkcbgQsYFcoA9b+9g/KdDpdfX09H80+Ki0tLS0tTf51GknaacJStqGGw+H19fX9bVUFDj26CIFdsb6+Lv9sNpupEKRMlZYmZRehJEkbGxtULLCrCFiA+kKhUDAYlBd56h/2ncFoUC56vV7qBNhVBCxAfVHTo296Bx+QMBWasIwGY5xTFIDqCFiA+qKuXrRgYSdUGYtufPskpAUL2G0ELEB9UQNcCFjYd0a6CIG9RcAC1Of3+5WLdBFi3+l0GcpZIegiBHYbAQtQXyAQUC5mZDAfCvafVvvzH/xQKESFALv7jaMKgN2W4HySwKYiO54ES9Drf+4ljEQiB7U6gAOCgAWoL6oFi4CFnVAtCylGy0f1YgNQHQELUF9U8wDPJMEOzydVdqPTEvSBvUPAAtQXDoeVi9s+0BfYSkSS1GrAUrakMgYL2G0ELEB9ymncgZ2IhHdlsBQBC9htBCxAfQbDW3MOMaAYKdulk4c7W4HdRsACdl3UmHcgcWH1AlYw+PN5qJyyAcBu4DsGqC+qBYuAhZRFjefbCeV5yLhAYLcRsAD1RQUsHkuClKnYgqWcmoGnCwC7jYAFqC8zM1O5uL6+Tp0gNWGVBrlvbGwoh3NFnaIAVEfAAtRnNpuVi6urq9QJUhCJRNQa5L62thbnFAWgOgIWoL6srCzlIGKPx0OdIAUh9QZgra29dRISsIDdRsACdkV2drb8My1YSE1YvUmw1t5O+crzE8BuIGABuyInJ0f+mYCF1IRC6rVgKQKWVqslYAG7jYAF7AqLxSL/7PF4fD4fdYJkqdhFuLTkln/Ozc3l+ZjAbiNgAbuisLBQubiwsECdICkqNl+Fw+GlpaWtTk4Au4GABewKAhZ2KBhSs/lKeTdiQUEB1QvsNgIWsCvy8vKUNxLOz89TJ0hKKKza85jdi4vKRVqwgD1AwAJ2hU6ny8vLkxcJWEhKJBJR8RZCt5uABew1AhawW4qKiuSfV1dXo2Z6BOJQcQCWJEmu2Vn555ycHJ6TA+wBAhawW8rKypSLU1NT1AkSpOIArPX1NeVUt1GnJYBdQsACdkt5eblykYCFxIVCqg3AUjZfSQQsYK8QsIDdkpmZqZwNa3p6mjpBIoKhUES9vc3OzCgXS0tLqWFgDxCwgF2kbC1YX19XzkUEbCWo6gCs2dmfA5bFYmEOd2BvELCAXRTVHTMxMUGdYFsq9g+63W6v17vVCQlg9xCwgF1UUVGhnA1rfHycOkF8wVA4ol4H4eSEU7lYWVlJDQN7g4AF7CKDwaAc8uJyuTY2NqgWxBEMhlTc26Si0TQjI6OiooIaBvYGAQvYXTabTbn45s0b6gRbiUSkoHr9g57V1eXlJXmxoqJCp9NRycDeIGABu+vYsWPKRQIW4lAxXUmSNPF2/2DUqQhgVxGwgN2VnZ2tfDLJ9PS03++nWrAptfsHfw5YGo2mqqqKGgb2DAEL2HXKloNwODw2NkadIFY4EgmFVZugwbO6urCwIC+WlpbyhBxgLxGwgF1XV1enXHz16hV1gljqNl+Nj7+V42tra6lhYC8RsIBdl5OTY7Va5UWXy7WyskK1IEpg1wKWTqerqamhhoG9RMAC9kJ9fb1y0W63UydQCoZCEfXmv3K5ZtfX1uRFm81mMBioZGAvEbCAvVBTU6OccZSAhSjqNl+9eXucX1QnNYA9kEEVAHvAaDRWVVXJczR4PJ6ZmRkeu7uwsPDy5ctIJNLa2qrsRU3Z9PT04OCgTqc7depUXl7eQamHcDgSUu/5g8Fg0Ol0Ks89JnAH9h4BC9gjdXV1ykmwhoaGjnjACgQCX3/9tc/nkyTpzZs3169f3+E4oZGRkQcPHoiOtunp6T/84Q/KVsO0ropgUMW9Od68CQYD8mJtbe1BqQfgMOFbB+wRm82WlZUlL46Pjx/xx+YsLy+LdCVJUjgcvnv37uPHj8MpzVMQCoV+/PHH+/fvy8OY1tfXPR7PgagHdWdvlyTJbh9RLjY1NfHtA/YeAQvYqy+bVtvY2CgvhsPhkZGRo1whFoslamamly9f/vWvf52cnExqPw6H4y9/+cvQ0JByZVZWltlsPhD1EAyFVHy688L8/JLbLS9ardaCggK+fcDeI2ABe6epqUmj0ciLQ0NDKt44duDo9foPP/zQZDIpVy4tLX3zzTd/+9vf7HZ7IBCI83K/3z8yMvLXv/71zp07q6uryl9lZWV9+OGHB6Z/MKBm/2BU89Xx48f53gH7gjFYwN7Jzs6uqqpyOBxicW1tzel0Rj0N+kgpKir69NNP79y5s7S0pFw/Nzc3Nzen0+mKi4uLi4tFW5derw8EAl6vd3l5WWywaX9iYWHhBx98kJ2dfSBqIBgKhdUL2T6fz/nT2SVJktFoZPorYL8QsIA9dfz4cYfiEjg4OHiUA5YkSbm5ub/+9a8fPXoU1ccnSVIoFJqZmZmZmUlwVxqN5sSJE2fPnj1AY7oDATVHX429HlWGzsbGRp1Ox5cO2BcELGBPVVRU5OTkyF1ak5OTbrc7Pz//KNeJTqe7dOlSQ0PDo0ePXC5XajspKyu7cOHCwRpvFAqHVXz4YDgcfvWK/kEgXej++Mc/UgvAnhFjsJTjuEOhkPJp0EdWdnZ2Y2NjaWmp3+9fXV1NcHSaVqs9duzYlStXTp8+nZmZebAO2e8Pqtg/6HgzPq6YX7Sqqqq5uZnzCtgvtGABe62xsbGnp8fv94vF0dHRs2fPKmdwOMrKysrKysp8Pp/D4ZiZmXG5XKurq1FjrbRabW5urtVqLSsrq6qqOqAPgQmHI+rOzjA0NKhcPHHiBKcTsI8IWMBe0+v1TU1NL1++FIvhcLi/v//cuXPUjMxoNDY0NDQ0NIj62djYEDNmaTQag8GQlZWlvBnzgPKrOrnozPT0suJGgaKiorKyMk4kYB8xTQOwD1paWpQDsYeHh+NPSXCUabXa7OzsgoKCgoKC/Pz87OzsQ5CuIpFIUNWHDw7TfAWkGQIWsA+ys7OV98/7/f7h4WGq5ejwqzr3ldvtnp39+V5Ls9lcXV1NJQP7i4AF7I+TJ08qF/v7+8Pq3VCGdBaJRAKqNl8NDQ4oF1tbW3n4ILDv+BIC+6OgoKCiokJeXFtbO+JPzjk61G2+WllZdjp+foi4wWBQPpEJwH4hYAH7pq2tTbn44sULGrEOPdWbrwb6+pSLra2ter2eegb2HQEL2DdlZWWlpaXyIo1YR4G6zVcez6rT+fODAQwGQ2trK5UMpAMCFrCf2tvblYu9vb00Yh1i6jdf9fcrZ2Q9fvz4AZ0VDDh8CFjAfiorK7NarfKix+MZHR2lWg4r1Zuv3oz/PHV7RkYGszMA6YOABeyz06dPKxefP39OI9ahFN7l5quWlhaTyUQ9A2mCgAXss8rKyuLiYnlxdXXVbrdTLYePys1XqzRfAWmNgAXsv6iRWD09PSFVn1KHfRcOqzx1+8veF8rmq+bmZpqvgLRCwAL2X2VlZUlJiby4trY2ODhItRwmflUfheR2LypvHtTr9VHz1gLYdwQsIC288847ysUXL174/X6q5XAIhcPBkJrj6npfPFcunjhxguYrIN0QsIC0UFJSUlVVJS/6fL6+tyeQxMHl96s5+srlmp2d+fnJgyaTidFXQBoiYAHp4uzZs8rFvr6+jY0NquWgC4ZCofAuNl+dOnWKqduBNETAAtJFQUFBbW2tvBgMBl+8eEG1HHTqNl9NTDgXFxbkxezs7ObmZioZSEMELCCNnDlzRqPRyItDQ0MrKytUy8EVCIbCinv9digSibx8O3OfOXNGq+XPOJCO+GYCaSQ3N7epqUleDIfDjx8/ploOqEhE5bmvRu2vVld/Dtx5eXn19fXUM5CeCFhAejlz5oxySM2bN29mFCOacYAEgsGIes1XAb+/72Wvcs25c+eU7Z0A0goBC0gvJpPp1KlTyjWPHj1S8TqNvRGJRNRtvurv71PO3FFeXq687RRAuiFgAWmntbXVbDbLiwsLCzw858Dx+VV+rrP91Yi8qNFozp8/TyUD6YyABaQdnU4XNe/o06dPg8HgUa2PgycUDgdVfdjRi7cfAd7Y2FhQUEA9A+mMgAWko9raWqvVKi+ur6+/fPmSajko1G2+mnO5Jiec8qJerz9z5gyVDKQ5AhaQpqL6gF6+fLm2tka1pL9AMBRWb2bRSCTyvOepck1bW1tmZib1DKQ5AhaQpqxWa01NjbwYDAa7u7upljSn+tQMr0ftbrdbXjSbzTwYBzgQCFhA+jp37pxOp5MXx8bGpqenqZZ0pu7UDH6//2XvWzOLvvPOO8pTAkDaImAB6ctsNp8+fVq55uHDh2FVH2wHFYXDKk/N8LL3uXJqhrKyMuXDlACkMwIWkNZOnDiRk5MjLy4tLQ0MDFAt6ckXCKi4t8XFxVHF9Bwajaajo4NKBg4KAhaQ1nQ6XdRltaenZ319nZpJN8FQKBRSs3Gx5+kT5WJLS0t+fj71DBwUBCwg3VVVVVVWVsqLgUDgyZMnVEtaiag9NcPY69GFhXl5MTMzk6kZgIOFgAUcABcvXlQObbbb7bOzs1RL+ggEVB7b3vviuXLNuXPnlE+oBJD+CFjAAZCTkxN1c/6PP/7IaPc0sQtj21/4fD55saSkpL6+nnoGDhYCFnAwnDp1SvmAQrfb3dfXR7WkA3XHti8szI/aX8mLGo3m4sWLVDJw4BCwgIMhIyMj6kLb09OzurpKzeyvYFDNse2RSOTJ47emk21paeGxg8BBRMACDoyqqqrq6mp5MRQKPXz4kGrZR5FIxKdq5+Dw0ODy0pK8mJ2dzdh24IAiYAEHyYULF5SDnScmJsbGxqiW/eJXdWz72tpaf99bj/Tu6OhgbDtwQBGwgIMkOzv77NmzyjVdXV3Kyb6xZ0LhcCAYUnGHz548DoV+3qHNZjt27Bj1DBxQBCzggGlubi4qKpIXNzY2mBZrX/j8ao5tdzoc09NT8qJer2dsO3CgEbCAA0aj0Vy+fFmj0chrhoaGXC4XNbOX/IFgOKxa52AgEOh59lZKPnPmTHZ2NvUMHFwELODgKSwsbGlpUa558OCBsncJuyocUXniqxfPe7xeb5zPF8CBQ8ACDqSoFg632/3ixQuqZW+o2znocs2+Hn3roc5RLZQADiICFnAg6fX6y5cvK9f09vYuLi5SM7stoOrEV6FQ8HH3I+WaEydOKMfYATigCFjAQVVZWal8gko4HL5//z7Pz9lVkUjEr+q87S97e9c8HnkxNze3vb2degYOAQIWcIBduHAhMzNTXpyfn+/v76dado/PH1Rv3itpYWH+1ciwcs2VK1cyMjKoZ+AQIGABB5jRaIy6mf/Zs2fLy8vUzG4IhkJB9e4kCIfDjx89Us5T2tzcXFpaSj0DhwMBCzjYqqurldNRhkKh+/fvUy2qi0QiPr+adw72971cWfk5CmdnZ7/zzjvUM3Bo0BYNHHiXLl2amZnx+XxicXZ2dnBwsLm5eW/ePRAILC4uut1uj8fj9Xrl6Qa0Wq3JZMrKyrJYLHl5eXl5eft1Z5zf719YWFheXvZ4POvr6/LE9zqdzmg0Zmdn5+bm5ufnWyyWOCX0qfpUnCW3e2hwQLnmypUrPBUHOEwIWMCBl5mZef78+Xv37slrHj9+XFlZmZOTs3tv6nK53rx5Mz09vbCwkEjy0Ov1JSUllZWVx44d24MpNCORyMzMjMPhmJqacrvdibxEr9eXlpZWVFRUV1dnZWUpfxUKhYNBNTsHux91KSutoaGhoqKCMxk4TDQbGxvUAnAIfPPNN5OTk/JiSUnJJ598onqj0cbGxvDw8MjIiEdx71uyysrKmpqaqqurtVr1Ryl4PJ7h4eFXr16tr6/vpITNzc02m02r1UYi0rrXp2LzVd/L3oH+PnkxMzPzs88+MxqNnMPAYULAAg6JtbW1zz//XPng5/Pnz584cULF/b948eLVq1dqTRmfnZ196tSpxsZGtWLW6urq8+fP7Xa7WmEoJyfn9OnTlbZjKk58tbi4+I9vv1GW8P333+ehzsDhQ8ACDo9Xr14pOwp1Ot1vfvMbi8Wyw92GQqHe3t7e3t740Uqr1WZlZRkMBr1eHwqFgsGgckjWViwWS0dHxw47yAKBwIsXL/r6+uJPAxZVwlAotL6+Lo9di1PC9jPvWEtKdv4BhUKhb7/5amVlRV5TX19/7do1Tl3g8CFgAYfKnTt3HA6HvFhcXPyLX/xiJ01Ec3NznZ2dW039kJOTU1lZWVpaWlBQkJubG9sjGQgElpaW5ubmpqenp6amAlvM0tnQ0HDhwgWDwZBCCaenp+/du7dVl6XFYqmsrCwpKSksLDSbzZuW0O12yyUMBje/VbC2ru50+9kdTlL14nnP8NCgvJiVlfXZZ5+ldtQA0hwBCzhUNjY2/vKXvyhbZc6ePXvq1KnU9tbX1/f48ePYHjej0VhfX9/Y2Jifn5/43kKh0MTExPDw8MTEROxvc3Nzb9y4UVBQkFQJnz9/3tPTE1tCk8nU2NhYX1+fl5eXVAmdTufw8LByNJvMbDZfvnrNYslLrTLn5lx3/3FHuebDDz9kbDtwWBGwgMNmbGzs7t278qJWq/3Vr36VbHAJh8P37t0bHR2NWm80GltbW1tbW3cyp8DS0lJPT8/Y2FjU+oyMjHfffddmsyWyk1Ao1NnZGbuTzMzMtra248eP63S6lEs4NTXV2dkZO0w+IyOj4+Kl8orKZHcYDAZvf/2Vx7Mqr2lqaop6miSAw0T3xz/+kVoADpP8/Hy32720tCQWI5GIy+VqbGxM/I7CYDD47bffKrsaBYvFsra2Njc3ZzabCwsLUy6hyWSqqamprKxcXFxUhphwODw2Npabm7ttHBQldDqdypUajebkyZM3btwoLS3dSa9oJBL5/vvvN+0VDYfDTqcjKzs7qaY7SZKe9zydmZmWF81m8wcffLCTCAggzRGwgEOovLzcbrfLw4k2NjbC4XB5eXkirxXZZXp6WrnSbDa3tbWJ5qJwODwxMVFXV7fDmQWys7MbGho0Gs3s7KxyvcPhiJ+xNi1hTk7Ohx9+2NDQsPPUMjIyMjz88yMCi4uLo1r6pyYnzGZzXl6iGWt2Zqbn2VPlmg8++GDnNx8ASGc8Kgc4hIxG46VLl5RrXr58OTMzs+0LReNNVHapqKj49a9/rZx7MxwOd3V17bycWq22vb391q1byg7HSCRy7969TUdBid/+8MMPUSWsrKz89a9/XVRUtPMi+Xy+J0+eKNeIEkalye5HXdNTU4ns0O/zdT96qFzT2trKMweBQ4+ABRxOx44da2hokBcjkUhnZ+dWN/HJnj59GtUz2NDQcPPmTaPRaLPZlCHD6XRulYGSVVFR8ctf/jIqwN29e1c5nYGsp6fnzZs3yjWNjY03b95U6168N2/eKG8RqKysrKysrKio+OSTT5QljEQiD398sLpZCaM8edKtbACzWCw8cxA4CghYwKHV0dGhfFqOx+N5+PBhnO0nJiZ6e3uVa+rr669evSrGMxkMhrNnz0Ztr1ZR8/LyPvnkE5PJJK/x+/3fffdd1MxbExMTz58/V65pbGy8cuWKihPWK8ug0+kuXrwofs7Pz//kk08yMzPl3waDgQf378WfG2x87PWEYqCYVqu9fv06Q6+Ao4CABRxaer3+2rVryvBht9tjb7sTfD5fZ2enck1VVdXVq1eVa5qampRj25OaAWFbubm5H374oXKiqcXFxZ6eHmUJ79+/H1VC1W/Eq6ysrKmpkSQpIyPj0qVLyoQqSqjszVxZWX7Z+2KrXa15PM+eRvc2qtKPCSD9McgdOMzMZnM4HFaOIp+enq6vr4+dZKGrq0u5WV5e3ocffhjV1qLRaCoqKpaWliKRSH19fVtbm7rPOszKysrNzR0fH5fXzM7OajSa7Ozs5eXlH374QXlnn8ViiS3hToTDYZfLFQ6Hjx8/3tzcfPr06dgwlJmZmZeXpwypCwvz5eUVypYtIRKJ3L/3g3L605KSEnUb2wCkM+bBAg65cDj8xRdfzM/Py2vKy8s/+ugj5Tbz8/P//d//LS/qdLpf/vKX286V4HQ6V1dXq6qqlM08O3f//v2RkZH422i12l/+8pc7mSoiis/n++KLL0SA23Zq1ocPHw4O/jwhe2Fh0fs3b0VtM9Df1/fy5/5WvV7/29/+1mw2c0ICRwRdhMBh/5LHjPuZmprq6+tTbvP06VuTCJw6dWrbdNXT0/Ptt992dXX95S9/Uaa3nbtw4UJubm78bc6cOaNiuhI1IDePRQ3zinXu3DllVFpYmJ95+67GxYWF/r6XyjUXL14kXQFHCgELOPwsFsuFCxeUa54+fSp3CI6OjirvB8zJyTl58uS2+5RnigqFQg8fPox9WE3K9Hr9rVu3srOzt9qgubm5ra1NxfqZn58fGhqSF7VabfzDycjIiKpPZWNVMBjs6vpRuYeampr6+nrOQ+BIYQwWcCQUFRXNz8/LEx9EIhG73T49PT08PDwwMKDc8uLFi4k0DtntdnmAwfr6ek5OjopNSuJZh16v1+12K9dnZ2dfvHgx5UcrbuXu3btra2vyYltb27aTsubl5U1MTMjT0G9sbKytrZlzctbX1h53P3K7F+Uts7Kybt26tcOnRAM4cBiDBRwVGxsbn3/+udfrjbNNYWHhr371q0QGYjscjjt3fn50cVZW1j//8z+rPoLb6/XOzMysra3pdLqCgoLi4uLdGCT+P//n/5RnWzCbzb/73e8SGTs/MTFx+/btbTf76KOPEpxDH8BhQhchcFRkZma+9957caKD0Wi8fv16ggnGZrNVVFTIi+vr6+FwWPUym0ym6urq1tbW48ePW63WXboFr6ysTP754sWLCd6ZWFlZue1zqU+ePEm6Ao4mugiBIyQnJ6e8vHx6etrv90f9qqCg4NatW0lNbVVcXPzq1SuRq6qqqg7uMKPKyspQKJSVlXXmzJljx44l9ULRwLbpb+vq6i5evMi8DMDRRBchcOSEw+GxsbGJiYmVlRWNRmOxWKqqqo4dO5ZCFFhaWhodHTWZTE1NTQdumJHP53v58uXa2lpdXV1lZWVqOwmFQr29vf39/crMajabT58+3djYyMkGHFkELAAqGBkZGRkZyc7OPnPmjMViUWu3kUjk4cOHr1+/zs7Ovnz5stVqVXHPX375pcvlkiRJo9H86le/2skg/fUNn2vOtba2lqHTFhUWFhQU0HAFHHGMwQKOOp/Pt7i4uJMRVLOzs/fv33e5XGNjY99++238x/Ml5fXr10NDQ36/3+1237t3T8WjHhkZEelKkqRIJDI1NZXyriKRyNraqtmcU1Nd09jYWFhYSLoCwJ3DwJE2OTn53XffBQKB7Ozsjz/+eNsZPjelnGh0ZWWlr69PrZkU5HklJElSPidnh3w+35Mnbz0lMOXmK6/X+/e//31paUmr1V66fLmxoYGTCoBECxZwxD1//jwQCEiStLa29v3336fWjqW8C0+SpBcvXsgTRKWn4eFhn88nL1ZWVqZ8r9/9+/eXlpYkSQqHwz3PnnFGARAIWMCRppxwfH5+vqenJ4WdFBQUNChaboLB4LYPE0yfo9bpdBcvXkxtP8PDww6HQ17cjYkqABxQBCzgSDtx4oRysbe3N7WeuHfeeUev18uLCU4ltS3lnYnK/e9QfX19ZmamXPLUHlbt8/m6u7uVaxJ5xBCAI4KABRxp1dXVyvmrIpGI6PBKVmZm5qVLl7RarSRJeXl5as1QUF1dLeeqBpWGN4kpr37/+9/fvHnzt7/9bWtra2r7WVtbE72rQllZWcq7AnD4MMgdOOouXrw4MzPj8XgkScrIyCguLk5tP2I2qfX19by8vGAwuLa2FueBzQnKycn57LPPJicns7OzlRPHpyYQCNy9e3diYiIrK+u9996rqqrayd4sFktmZqaY6cZoNF67do2bBwHImAcLgLS2tvby5ctgMHj8+PGioqId7m18fPyHH34IhUJWq/XWrVsGg2GHO9zY2DAYDDvvdnz48OHg4KD4uaio6Fe/+tUOd7i8vDwwMBAOh1taWvLz8zmRAMhowQIgZWdnd3R0SJLk9Xpv377tcrlKSkquXr1qMplS2Ft3d7eYCsvlcj179kzsOTWBQODbb7+dmZnJyMi4du1adXV1yrtaWFgYGhqSF1P+t2UwGHzw4MHExITFYrl+/XrKA+QBHG6MwQLws2fPnk1MTPj9fqfTeffu3dR2ohyZNDg46Ha7Uy7P6OjozMyMJEnBYPDRo0c7ObSHDx8qbx5MeUTXw4cPR0dHfT6fy+V6+PAh5wyATRGwAPxMjMQSpqen+/r6UtjJ8ePH5Z8jkchOgpGynWmrZyonQuQhedFsNre1taWwn/Hx8VevXqlSJACHGwELwM9qamqUi0+fPk1h1oZTp05lZWXJizt5Co1a9Hq9PC+DJEkXLlxI4dHUPp/vwYMHyjXHjh3jnAGwKQIWgJ81NDQo760LhUKTk5PJ7iQjI+P8+fPyYjqM/tZqte+9915BQUF2dva5c+dSC0azs7PK+d8LCwtPnz7NOQNgUwxyB/CWq1ev/uUvf/F6vWIxtacT1tbWrq+vj4yMZGdnX7hwIeXCKO9ANBqNKewhHA6PjY0FAoHq6urf/OY3O6kZ5XykOp3u+vXrYt4vAIjFNA0Aos3Pz//444/r6+tNTU3t7e073Nvy8vL4+Hhubu6xY8eSTSRer/eLL74Qj3y+cOFCCjN5fvXVV9PT05IkZWdnf/bZZzucDn5oaKi3t1c00VVWVnKqANgKAQtAPMPDwxMTE4WFhSdOnEhh3NLKysrnn38uZm2oq6u7fv16snsIhUILCwtZWVlmsznZ146MjNy/f19evHHjRgoTPUQikYGBgZmZmeLi4pMnTzKbKIBE0EUIYEujo6NiWPebN2/cbvd7772X7B7evHkj0pXYW2NjY1lZWVJ7iEQioVBI3knifD7fkydPlGtSm9bryZMnL1++FMcSiUROnTrFiQFgWwwgALAl5Q2AY2NjyhkKEqS8nVCSpK6urnA4nPjLvV7vX/7yl6+++urPf/6zSDmJ6+/vl0eSSZJUUVFRWlqabPmnp6eV75sOd0QCOBAIWAC2FPVcwq6uLuVEWYmoqalR3kXodrvHxsYSf/no6Kj8jr29vUm9tbKoWq02hSnX/X5/Z2encs3OnyME4IggYAHYUlNTk9VqlRcDgcDw8HBSe9BqtVGPyklqck6/3y//rJwiIRHKOb1Onz6dwu2Q4+PjytLm5uYyLwOABBGwAGxJo9Fcv35deeddCuPcy8rK6urqxM86nW4nzxNMSlVV1SeffHL69On33nsvtWCkfLx0bFUAQBwMcgcQT05OzrVr177//vtQKFRQUNDU1JTCTq5du1ZRUbG2tnbs2LHUJtZKXDAYfPLkyfT0dEFBQUdHRwrjrmTV1dUjIyPT09MajaajoyOqwxQA4mCaBgDbCwQCa2trFotlbW1tYmLCbDanNgvU0tLSo0ePvF5vfX19IpNaDQ8Py0+nyc7O/ud//udtX/Lw4cPBwUHxc1NT0+XLl1Mo5+zs7OLiYmlpaX5+/srKitFoTG2aUwBHFi1YALan1+vz8vJWVlb+67/+KxAISJLU0tISNbgqET/88MPCwoIkSQsLCyaTSe463Ep9ff3Y2NjU1JTBYEjk7RYWFoaGhuTFxcXFFA62r6+vu7tbkiStVvvxxx+XlJRwAgBIFgELQKLEM2fEzwMDA+Xl5TabLak9iHQlPH782GazxR/VpNPpPvroI5/PZzAYEpnh8+HDh5FIRF6sqKhI9hgXFhbk2bPC4bDdbidgAUgBg9wBJCqqm+z+/fvKiaYSoUw86+vricy8sLq6+vr1a4fDoUxOm1paWnK5XPJidnZ2W1tbUsULBoPff/+9cqYuegYBpIaABSBRDQ0NykmtvF5vspN/nj9/XtkQpezO29Ty8vJf//rXhw8f/uMf/+jq6oq/cdQdjufPn0/2nsdXr14tLy/Li1lZWSdPnuRzB5ACAhaAROl0uuvXrysf2JxsC1Z+fn5zc7O8uO2sBw6HQ+6U3HYeebPZfOrUKRHgWlpalPNgJSjqpp+rV6/SggUgNYzBApCEgoKCCxcuPHz4UJIkjUZTX1+f7B7Onj07Nzc3Nzen0+nOnz8ff+NgMLjpz7GWlpbC4fDZs2dPnDgRiURSe+xgbW1tX1+feKOTJ0+mMIQLAAQCFoDkNDc3FxQULCwslJeX5+Xlra2tZWRkJN7So9frf/nLX66urppMJp1O53a7s7OzDQbDTop09+5d8QSe2trad999N4U9BAIBn89nsVg+++wzp9OZk5OT2jwUACAQsID04na7V1dXfT5fZmamxWLJyclJw0KWlJSUlJSEQqGvvvpqenpaq9WeO3cukXmtZDk5OT6f74svvnC73Tqd7sqVK9tO2bAVu90uP9/w9evXp0+fzsvLS2oPY2NjnZ2dYibVjz/+WNmJCQCpIWABaSEUCg0MDAwODkY9TTk/P//EiRP19fWJTFKwxyYmJqanpyVJCofD3d3dRUVFSc1o8OrVK7fbLY79xx9/LC8vz8zMjNrGYrEoqyJ2J36/X8xZJdv2ZsMoKysr9+7dC4VCkiQtLi7a7fakkiIAbIpB7sD+m5+f//Of//z48eOodCVJktvtvnfv3t/+9reknpG8N0QoESKRyA8//CAPSE/25YFAQJ59Sqmmpqa1tTUzM7O4uPjq1auxG7x48UI50L6iomLTHLaVcDj8/fffJz7S68ARd3r29fVF3Y6w1XoAatH98Y9/pBaAfTQ/P//VV1/Fv86tr6+PjY3V1tam1cOGzWbz69ev/X6/WPT7/aFQKPGhS7m5uUNDQ/KkU4uLi8eOHYtqxNJoNJWVlSdPnmxqasrKyordyYsXL+RUqtVqb968mdTw9oGBAeXNiQaD4cqVK3tcyZFIZHV1dWlpaX19PRKJ7HA4mlIoFPqv//qvsbGxycnJ169f22w2MVRuZWXliy++GB8fn5ycfPPmTUtLC19DQHV0EQL7KRAI3LlzJ5GGn/X19e++++4Xv/hF+vQV6vX669ev//3vf5d75ZQTtW8rKyvr1KlTT58+ldeIJzRHbTY9PT0+Pp6VldXS0hIbfaxW68zMjPj55MmTyi7FREQ9S+fSpUubxrhd4vF4Xrx48ebNG2W8zs3Nra2tPXHixM6T1sLCwurqqvh5bW3t73//+yeffCJJ0t///vf19XWxfmVlha8hsBsIWMB+evHihXypkyRJo9E0NzfX1dVlZmaurq4ODQ3Jw7clSXK5XHa7vaGhIX3KX1JScurUqefPn4vF0tLSpF5+4sSJV69eydf4wsLCqA3m5ua+/vprEeDm5uY++OCDqA3OnDmj1Wrn5uZESZItf2lpqdyCVVdXV1tbu2dV9/Lly6dPnypnjRdWVlaeP38+NDR05cqVZJ9EFMVsNms0Gjn+rq+vf/nll9Lb032l4dg+4HCgixDYN2LckjzoR6PR3Lx5s6WlRUxbkJOTU1NTYzAYJicn5Zf4fL7Gxsa0OorS0lKj0ZiRkdHY2NjW1pbUBVur1VZWVq6trRmNxvb29mPHjkVtYLfbp6amxM+rq6unT5+Wq25wcHBoaCgQCIibAEpLS1PICoWFhVlZWTqdrqam5ty5c8o5VHfVw4cPX7x4EWc8fjAYHBsbM5vNsaEzcXq9PjMz0+l0KncbNcjs0qVLRUVFfBkB1dGCBeyb+fl5Zd9Qc3Nz7ACm1tZWp9MphwyXy+X3+1UcprNzGo2mtbVV3Hk3PDzc19en0+k2TUubys3Nff/99yVJCoVC/f39gUCgpqZG7ulTNvAof378+HFfX5/00/Tuybbqzc7Odnd3e73ehoaG06dPNzU17WWNDQ8PDw4ObrtZJBJ58OBBfn7+TgLQ8ePHJUn68ccfN/3tpUuXxAYAVMddhMC+kcfHCFv1TynXRyKR2DsN08Ty8vKDBw+Wl5cXFxe///77qOFN27p79+6jR4+ePXv217/+VflAwFiLi4v9/f3y4sTERFJvtL6+fufOnbm5udXV1WfPnikbCPeA3+9//Pixck1WVta5c+d+8YtffPTRRydPnlQ+PzEcDm/7BMZtHT9+XG75Uzp79izpCtg9BCxg38j33wmxs0AJUbfFRb0qfShTUSgU+uGHH5QTMcQXCoUcDof8s5wqlL1+8s8PHz5Udq7FjouP7969ez6fb9Ni7wHlfZeSJBUXF3/22WdtbW2lpaUVFRXnz5//9a9/rTwTXC5XUrcOxHK73Zs+VLu/v1/MQwZgNxCwgH0TlZy2utotLS0pF7fKYfuutLRUeURut7unpyfB12q1WuXte5OTkyJvKXvHiouLJUmamZmZnZ2VV2ZnZyc1L+jQ0JCyyUqn01VVVe1lLck5Uhz1jRs3op4ylJeXd/ny5a1ekiy3273VJCBer/err74iYwG7hIAF7Juo8cvKbi9ZMBhUNj/o9fr0fHiO9NMkUso1ylsg49NoNGfPnlWuefbsmSRJlZWVly9fLisra2hoeO+996S3pyeVJOn8+fPKPrVtRRXp/Pnze1yfygaz8vJys9kcu43NZlMOs0u5jS0QCMSfYs3r9X799dd8E4HdQMAC9k1OTo6ye2t6evrHH39UDuUOBALfffedctBVZWXlnt3plgKbzaYc1pNUdmloaBBtVIIcC5qamj7++OOrV69mZ2dLklRWViZXWk1NTU1NTbJ1rqzMvX/soLJ3cqs5tzQajTJ4KV+SlMXFRWW60mg0169fv379urLjVTllAwAVcRchsJ9OnDjR2dkpL4oOrOrq6qysrNXV1dHR0aiL64kTJ5J9C6/Xq9frdTpdgut36MKFC4FAYGJiIi8v79KlS0m99tKlS1988YVoo9rqxkCtVvvLX/5ycnJSr9cnO+2WJEnvvPPO+vq6y+UqKSnZ9Nk7u81kMsljsKLucpCFw2Hlr5Kam17JYrFotVoR2UV3pDyxVmdnpxjHpvoJAEDQ8M8XYH/dvn07wfvgWltbL1y4kPieQ6HQt99+OzU1pdPpLl68KE+g5ff7v/vuO7H+ypUrdXV1u3RoKysrot/z+PHjCT4icHl5eWJiIicnJ3aOze7u7oGBgYyMjIsXLyZbZo/H09/fHwwGm5qa9nfapzt37shjqjQazWeffZaXlxe1jd1u/+GHH+TFs2fPpjCHqjA5Odnb2ytJ0qlTp8rLy7ddD0AtBCxgn/n9/m+++WZubi7+ZtXV1e+9915Sc2m+evXq3r178qKY9Cjq7YxG47/+67/uxnGFw+E//elPYp56g8Hw61//OvEew0gk0t3d7XA4LBZLR0dHbm7u6OionDkyMjL+9V//NfGmF7/f/9e//lX0tGZkZPzhD39IuU1o56I+lLy8vI8++kj0fgoul+vrr79WPj3pt7/9bVJPsAaQDpjJHdjvL6FOV1dX5/P5trobX6fTnTlzpqOjI9mZyl0ul7JtzOl06vX6J0+eRIW5U6dO7cbzUtxu98uXL8XPoVBofn6+oaEhwTd69erV06dP/X7/ysrK7OxsTU3NnTt35CnIw+Fwc3Nz4o9k7uzsdLlc8mtLSkqSfWShinJzc0dGRuRj8Xq9w8PDXq83EAgsLCy8fPny0aNHyoH8ZWVlJ0+e5GsCHDiMwQLS4HuYkXHp0qWWlpbh4WGn0+nxeMLhsFarzcvLE8PGU3sCcU1NTW9v79ramrymu7s7apvW1tZdehqd2WzW6/VyS4zL5ert7U2wq0s5d8DCwsLdu3eVbe3l5eWJV8jr16+Vdw5qNJrYLrm9pNfrL168ePfuXXlNIBAQs9JvdWLwBQEOIroIgXSk1vNwVlZW/v73vyufJ610/PjxXb1+R3WHGQyGf/u3f0vkhVNTU8rpA5RPLNZqtb/5zW8SD0l//etflXPKnzlzZtNpzffY8+fPxTwUcUQNSwdwsBCwgENuZWXl66+/jn3AzsmTJ8+dO7eTPU9MTLx8+TL+JAIej0e+aU60ySW489XVVeU4JJnJZEqqPW95eVnuccvIyMjNzU3whRkZGQ0NDbv3mMKRkZHu7u6t5uXPycm5du1aSUkJJzBwQNFFCBxyBoNh0/HgUROIJ2tjY+POnTvKWbu2FQ6Hk31AYSyv1xtn5sz4gsFgUgVwuVwWiyWFySAS0djYeOzYsf7+/vHxceVk/Varta6urqmpKZ0nPAOwLQIWcJiJx6FsOhX4kydPJElqa2tLbc/z8/NJpasDanZ2dpcCliRJRqPxzJkzZ86cCQQC6+vrGo0mOzubiamAw4GABRxafr8//sPmnjx5otPpknqWn+wopKs9O0y9Xr+PNzYC2A0ELOBgUA70TtDY2FhUumpubp6YmFDOEv7s2bOWlpad30hYaZAyD0XLSzgijXoPw4EA2F8ELCCtKaOP/HOySUsQE4Kvra198803ykE/qmjL1pQZpEPAH5FGvZHDcCQA9hWDKIH0tVXDUoINTrW1tfJzkc+dOyfmoMrOzv7kk0/k9WfOnNmlebAA4CijBQtIU/FzTyI9hnq9/te//rXb7Y6a2sBkMm26HgCgFgIWkI4SaVVKJGNpNBq5sSqR9QAAVdBFCAAAoDICFgAAgMoIWAAAACpjDBYAFSwGpVBEWglJB3f6UY0k5TCJOgCVELAAqKBrlbmjAOBnBCwgHUUikW1vJExtulEcboFAoLe3d2Vlpba29tixY1QIsF8IWECaip+x9j1dmc3mo/Ap5OTkHKwCd3Z2vnnzRpKksbGxDz/8sKKigq8SsC8Y5A6kHYfD8fz585mZma1SVDq0XRUWFtbV1R3uD6KkpKS6uvoAFdjn8zkcDnnRbrfzbQL2Cy1YQHrp6+vr7u4WP9+6dauysjJti3r9+vWzZ8/6/X5Jkp49eyZf2nVS5KLWc4Dq/GU4a1n6/+Pbi4qKrly5IklSRkZGTk7OwXqO0NTUlDJ8T0xMJNLXDGA3ELCA9NLf36/8OZ0DlqToKDQajfJKrSQdk3wHqM5HJJP0U8DKyMg4uHPcT0xMKBd9Pt/8/HxxcTFfK2Dv0UUIpBG32722tiYvzszMBINBqgUJigpYkiRNTk5SLcC+IGABaSTqAhkKhWZmZqgWJGJhYWFjYyP+GQVgz9BFCKSR2MvhxMREmvcSYluRSGRoaGh0dHRjYyM/P7+trc1qte7BySNJ0tzcnM/nU3bgAtgbtGAB6SIYDM7OzkatdDqd1MxBd//+/YcPH7pcrtXVVYfD8eWXXyrv9VPLpgErEolMTU3xEQB7j4AFpIupqalwOPpJM6urq6urqwfvYDSaA/XfLtbE7Ozsq1evlGsikciPP/6o7lwbfr/f5XJt+it6CYF9QRchkC62uhA6nc6WlpbdeEePx7O+vp6bm2symVTcrUajMRUVHaCa17ojkn+3di43IGVlZR0/fvzZs2eSJK2vr6+srFgsFhVPnq0S28TERCgU0ul4ziKwpwhYQLrY6oavyclJ1QPW2tpaZ2fn9PS0JEkajaaxsbGjo4Nr8G6QazUUCnk8P08PptXutANB3AMxOTk5OTnpdruVv6qpqRkbGxM/b2xs/O///b9LS0srKysrKipUTHUA4iBgAWlheXl5q67AqakpdVsgwuHw7du35UtyJBIZHh6ORCJigk2oq7Ky8smTJ5Ik+Xy+kZERsdJisaT8EB632z01NTUxMTEzMxMKhWI3sFgsx48flwOWJEnBYHBiYkI0kZrN5vLy8srKyrKyMga/A7uHgAXsJ6/XOzU1JRohlOtLS0vlCRpCodDnn39eWVlZXl5eVlam1+t3+KYOhyOqwUOSpJGRkXfeeUfdvkJIklRQUHD69Onnz5/La/R6/dWrV5Pdz9ra2osXL5xOp3KmtE1VV1eXlJSYTCav1xv7W4/HMzIyMjIyotFoiouL6+rqmpub+ZgA1RGwgL0WDoddLpcIVfPz87Eb6HS6c+fO/e1vf5PXrKysDAwMDAwMaLXakpIS0QJRUFCQ2lNQVlZWxA9ms/njjz/+v//3/8rrCVi74cyZM1arVZ6moaWlJdnmq0gk8vXXXy8vL8ffTKvVVldXt7W1abXaGzduPHjwIM5LIpGIy+VyuVwELGA3ELCAPRIOh+12u8PhmJ6eDgQCcbYsKysrLi42m83KITvyTqanp6enp58+fWoymSoqKmpqamw2W1Ilyc7OFj94PB5ljMvKyuJj2iWVlZU7mc9sfX09frrKyMhoa2trbW2VGzhLS0t/97vfLS4uPn78mPncgb1HwAL2yIMHD6Ju19+U2Ww+f/68JEmXL1/+/vvvfb4tH+rn9XpHR0dHR0fPnTt38uTJxEtis9mysrLW19fFTsTKqqoq+cGCSDeZmZnZ2dlxOgeDweCzZ88GBgbq6urOnTun1WoXFxcfPXo0OzsbO/cHgD3APFjAHhkdHY33VdRqW1paPv3003/6p3/Ky8uTJKmiouJ//I//8dFHH9XU1MTfs91uT6oker3+1q1byjhVVlZ27do1PqO0pdVqb926ZbPZ4t/r4PV6+/v7X758GYlE7ty5Mz09HT9dmc3m06dPU73AbqAFC9gjOTk5cXp5wuHwwMCAy+Wqra1taWnRarWBQODFixcOh2NpaWnbPSdbmIKCgt///vfT09MbGxsWi6W4uJgPKM3l5+d/8MEHoVBodnZWDOBbXFzcdMuxsbGysrLY/mUhIyOjrKysoqKCKRuAXUXAAvbItWvXHjx4sNVFUZifn5+fn/f7/WfOnOns7Hzz5s22uy0rK7t48WIK5dFqtRUVFXwuB4tOpysvLy8vLz937tzGxsbkT5Q3DC4uLsrzQcgKCwtFqCopKdn5FFwAtkXAAvZIcXHxb37zG4/HI66IU1NTfv/m04e/evWqtbU1zuPqsrKyKioqysvLKyoquO/vyMrMzKyvr6+vr49EIoODg11dXcpTSP7ZaDT+7ne/4zwB9hgBC9hTZrO5qampqakpEonMzc2JsDU3N6d8zsna2lp/f3/Uk090Ol1JSYlohCgoKKAmIdNoNLW1tcqApTx5SOHAviBgAftDo9FYrVar1dre3i7m+H78+LH825cvXyo3fv/99ysqKjIy+MJicyaTqbi4eG5uLvZXdAQD+4KeeGD/GY3GlpYW5Q1iykeg5OfnHzt2jHSF+LaaZ2sn828BSBkBC0gLYvDypr+iBQKJ2PQ8KSwszMzMpHKAvUfAAtLFVkGqqqqKysG2iouLYx/eTPMVsF8IWEC62PRamJGRUVJSIklSao8dxNGh0WhiMzrNn8B+IWAB6SI3Nzd2ytDy8nJmLUKCouKUwWCwWq1UC7Av+MMNpJHY3kC6eBAlTltm1NlCOgf2Ed89II3EduiIS6a4ptJLiPjnQGZmpvJWidraWmoM2C/c+A2kkbKyMp1OJ8/RYLFYlI9kBrZ1/fr1J0+erK6u1tTUVFdXUyHAfiFgAen0hczIqKyslB9ByAUSycrMzLx69Sr1AOw7AhaQXjo6OgKBwMLCQnl5+alTp6S3e4U0Gk3UI3RwdMhnAqcBkP4IWEB6yc7O/uijj6gHADjQGOQOAACgMlqwgLQWe9dY+ncPBSLSl+6D1IG1GDiQJwa9hEA6I2AB6Sj+3fjyb/f+Eqt8x6h3V0655AomdCAp1Ilah/zWfjSSVvPzu4TD4U0Lv7/TZDBJB3CwELCAdJHCFVT5km2Th7zBViEpkZ+3otPp9mZOS7Vyxlb70el0wWAwqdcqx55vus2mG+y8qOomTgDqImAB+28noUFcX+WrrGh9ic1Su30Ztlqtdrv9EHwWRUVFCdb5VouJf9xR88cqFzUaTYJnRVIhG8CeIWAB+0++LsZeU5X5KRKJRMWpZNuZdo/NZvP5fFNTU3L/2oGj0WiKiopaWlr27OOO+sg2HW8nxUSuONP672PfMYDo7+PGxga1AOw7ZXiKSlHbvpDaOzSSasuMDV4CpwSQDmjBAvZBJMZWW256xeUKeohPjDif+6Ybx7aHaRSkt28+ALBnCFjAXhApKhwOx49Tm76Q28eO5gkj/xznBNj0XIo9x+S8pdVqOZ2AvUHAAnZROBxOIVTFR/PVUSM+8a3G5yW4B7FxKBSSkxYtW8CuImABuyIUColoRVUgrciNqdJPk2vQpgXsBv4FA6gvGAyGQqFdmRITUE8oFNp20i8AqSFgAepTPRJx+z12OPnWnp2rAAQCFqC+jIwMdQe4cBXEbtBoNBkZDBQBdgVfLUB94rolRrqoMhKLewmhPA12eEYxzh3YAwQsYLdoNBqdTqfT6VKeoyEK7VjYydnITA3AXiJgAbtOvrCJRblNK+q5gYDqZ13UpKMA9gwBC9hrctLS6XTS288ZjHpaDrCtqOfkSMk8KBrA7iFgAftsq2f3xj6aUH7MHPHryJ4hmz7+GUAaImABaWqr4CUok1bU0+hiH06HdP6IYz/r2CwF4MAhYAEHUuJX3zipK/5KJPtxRP0cfyXJCTjcCFjAIZdyQ0j81LXVY4YT2SyRF+7weFPYbNMXxl9JSAKwFQIWgM1t2gADAEgEs8wBAACojIAFAACgMgIWAACAyghYAAAAKiNgAQAAqIyABQAAoDICFgAAgMoIWAAAACojYAEAAKiMgAUAAKAyAhYAAIDKCFgAAAAqI2ABAACojIAFAACgMgIWAACAyghYAAAAKiNgAQAAqIyABQAAoDICFgAAgMoIWAAAACojYAEAAKiMgAUAAKAyAhYAAIDKCFgAAAAqI2ABAACojIAFAACgMgIWAACAyghYAAAAKiNgAQAAqIyABQAAoDICFgAAgMoIWAAAACojYAEAAKiMgAUAAKAyAhYAAIDKMqgCHAhut1uv15vN5gNU5m+//dZoNJ45c+ZgFTttdXZ22u32+vr6a9euyWfFkydPioqK2tvbt1qT8nv5fL6LFy8e8c+OegBSRsBCWhsYGHj9+rXL5ZLXWK3W48eP19fXp3/hnU6nJElFRUUtLS18lDtnt9vF/+WA5ff7nU6n0+msrq7Oz8/fdM1O3mvnQe1w1Dn1AKSAgIU05ff7b9++rYxWgsvlcrlcQ0NDt27dMhgMVNQe8Hg8/f39OTk5+5sUOzo6JicnKyoqNj1btl2Tgvn5eT596gFIDQELaaqnp0ekq/r6+qamppKSEr/fPzMzMzw87HQ6XS6X3W6nZWhvOByO/v5+SZL2t8JbWlr4xAEcFAQspCO/3y+u6MoBNwaDwWaz2Wy2gYGBrq4uBoUAANIWAQvpyO12ix+Kiopif9vS0mKz2aICltvtnp6enpycFIu5ubnV1dUlJSXKDcbHxwsLC202W+w+HQ7HwsKCcuCO3++32+3z8/M+n0+UpLy8XLlDJbvdPjU1JW/Z0NCQeP6bnZ2dmpoSvTBGo7GoqKi+vl7u/Uy22NvuUBgYGJAkSayfnZ0dHx9fWVmJLbyoBLlWxaskSTKbzcry2O32hYUFsQdJkioqKmLfUblDKbHGMHHscrU7HI7p6emojzU1iRdY1OdW9RNbWrk3raKiIuos3cmxb1r+1tbW2JIMDAysrq4qf9XT02M0GsUBut3ukZERcSyx35FtT9RE6iGRL45cJEmS+vv75+fnjUbjyZMnladxUl9AIA0RsJCO5Eud+NsaK+ov+6NHj0SLl1J/f39ra+uFCxfE4vT0dE9PjyRJf/jDH6Je7vF47ty5I0mS0WgUf+LdbvdXX33l9XrlbZxOZ09PT3t7e9Ro39ixYmJLueEtvtiS2+32wcHBGzduiJIkVexEdih0dXXJNSz2Lxd+cHDw448/Fhvb7XZ5S+WrJEn693//d2mLoXJOp/P58+fvv/9+7OXQ4XCInURFtE09ePDA5XJNTk5++umnkiSJ3uGVlZWbN2+mfGolW2DRXLpV/cj77Onpiap2p9PZ1dXV0dEhx6mdHHuUzs5OSZI2HRUn3kL5K/nzNRgM4oVbfUfiSKQeEv/iyEVS3sLi8/nkTzbxLyCQtghYSEf5+fkWi2V5eVn8IY7fIDQwMCCubVVVVRUVFYWFhQsLC+IPt3Jots1mE1eIV69eRf2Ndjgc4gdx2XO73Z9//rkkSVarta2tzWg0SpI0Pj7e398v/uUtX7qUV+uqqqqampqcnJyFhYXBwcGoK9mmxLwDkiR1dHQUFhZKkrS6uvrixYvl5eWvvvrq97//vegVTbDYCe5QuYfnz597vV6LxdLc3CxJ0uTkpNPp9Hq98sZlZWViaLm4I7Kjo0O8UN5Pf3+/y+UymUznz5/PyckR7zg2NuZ0Ont7e2OTUGlpqfhhYWFBLrbf7//b3/62vLysjCOSJImK3XRUe8qSKvDc3JzT6dy0fv7lX/5F3qyrq0tUe9Q5sLy8LD47cVD7e+ziG6H8jogSiu9O/IyVYD0k/sURRAEsFktubu7KyorYPoX9AOmJgIU0de7cOdE809PT09PTY7FYKisrRU9ZVEpYXV2VJEn5D/GSkpL6+npx3RocHBR/js1mc319vd1uf/36dVRSGRwcFHsQMe67776T3h7+JfaZk5PT1dXV1dUld/3Y7XZxIVReHcW7b3oLpJLdbhdX5d/+9rdyM0BJSYnNZvvP//xPr9fb09Nz4cKFxIud4A6Ve/B6vcomgZaWFtEA5vV6HQ5HfX19fn6+2JUIWLEXNlGG06dPyxNniMN/9OiRSHhRzGaz1WoVbTPy+9rt9uXlZUmSurq65K662dlZ8dtN95OypArs9XqV55WyfsSMXMpqjz0HRPCST5j9PXaXyxX7HRFnaX9/f2NjY5xZLRKph6S+OMLy8rJyY/nGz2T3A6QnZnJHmrLZbL/4xS8sFotYFP/U7uzs/F//6389evRIeRN+e3v7tWvXoqKDwWAQ/9oWVy+hurparJEvYJIkud1usY34rcPhEItnzpyJKpJ8IZGbjl6/fi1JktVqjUoeBoPh3XffjX+AQ0NDkiS1trZGXdjkko+OjiZe7KR2KLNarVGhrbW1VfyQ1DQHsbfxX7hwYau5ykSrjDJ9ymO8lHW7sLAgnwmqn10JFthkMm1bP6Laq6qqYs+Bjo4Ok8kkSdKrV6/2/dgtFkvsd0Q+S8fHx+O8NpF6SOqLI1NuLMJlavsB0hAtWEhfJSUlv/vd7+TR66IRRZKk/v7+ubk5eR4sg8Eg/+V1u91+v19cn+RL1+zsrBhbY7PZRM/j+Pi4PNpmZGREkiSLxSLWeDwesbi2tra2thZVJNECIV+exZWytrY2tvDb/gtbvDYnJ0cZmwTRJ+L1et1ud35+fiLFTmqHUes3LbZoF9xWXV1df3+/3W6fm5urra0tLCwsLS2NPz9ZeXm56PkVn4uYGlSSpI6Ojq6urqmpKfFpikquqqpS96RKqsDFxcVRv4qtH1HtNTU1sS83GAzi7eQTZh+PPTc3d9OztKqqyul0xp/pKpF6SOqLI6+M/ZqksB8gPRGwkO5EL5VoHrDb7UNDQ2KuUWWHl7g3Knace6zm5uaurq7R0VH5taJdR7TxSD9d25aXl7/88sutdiKG3su3OqbQjyO/VjlwOJbcPLBtsZPd4bbkO+zia29vX1lZcTqd8oA56aehM1u1vsiJcGFhoaSkRLRG1NfXi9Fm8kTtExMTktoDsFIrcJz6katdDOeKJdbL/zbY32OPY6u7SRI/TxL/4shi831q+wHSEwELB4m4FIkRRRMTEyJt2O12MaLcYrGINgmj0WgwGKanp2PThhgZI8YY2Ww2u90u7lSS28DEFVEez7spkaiys7PForhYJnUg8mtbW1u3ujZLkiS3Nm1b7GR3qBaDwXDz5k25lXFubs7r9bpcrjt37kSN2o76FMQd+JIkTU1NSZJUXl4uD1FyOBwFBQXiAMvKytKhwNt+jvHJPd37e+xxbJp1kpL4F2dv9gPsOwIW0pTcrxfFYDAUFxeLFgix5sWLF5IkWa3WqIfnTE9Pb/ry1tbW/v7+8fFxm80mrnCtra3yC8WVxufzbXutlV+yaW9a/LYig8FgMpm8Xm+Cz5/ZttjJ7lBdylZGh8PR29vrcrm6urq2KklRUZHdbp+YmJCnhhKtR7W1tS6Xa3p6WtSexWJRPRGmVuBtP8epqalNT1cxSq+4uHg3jj3Bblxhq1Yf0QS184CV+Bdnb/YD7DsGuSMdDQwMfPnll/K0lkp+v19cEqxWqyRJHo9HJK3a2tqoYSLK4cNKYlS43W73eDziCiePE5d+utp5vd5N3312dlY5a5RoQBodHRUDR5TEnuOoq6uTJGlwcHDTKPbo0SO5+ymRYqewQ1XEHqbNZjt+/Lj4ObZaoipZvFy+e0602YyOjoroUFlZmSYFTuRzjH2tw+EQI7TKy8vVPXbRJCZ6EqO+OFu9xOVyxQ7Ok+9hVJYwNUl9cfZgP8C+I2AhfXV1dXV2diqvCh6Pp6urS05UkmKwbdS410ePHskDX6KUlJSI69P3338vvT1OXOxQ3CHV1dUV9Sfe4XD84x//6OnpkYvU1NQkSZLX6/3+++/llX6/P2pWxk2Jd1leXr59+7by2uz3+zs7O/v7+588eZJ4sVPYYeLk5CqnE1Ezs7OznZ2d3377bVS2EA1sJpNpq5H+ZrNZHIuYNEG+uov5z7xer1ivek9QygWO/zmKRqxvvvlGea7a7fb79+9LkmS1WpX3J6py7CJ+LS8vy3fUJnLW/eMf/1DmS7vd3t3dLc6lrW75TFxSXxy19jMwMPAf//Eficw5B+w9ugiRjurr68W8iPIkQ+IaJm+gnBlB9J3Z7faVlZWKigq/3z8xMbG8vCzWb7p/MWZctC7EDvVob2+fm5sTfUbPnz8X/TsrKysi2FmtVjnZlJSUiPu/XC7Xl19+KaZMFMEuzrsLZrP52rVrnZ2dLpfrT3/6k9VqFZ0jci4U6S3xYqewwwTZbDZR/52dnWNjY2Lcks1my8/PN5lMTqfT6XTKbydX1OnTp+Pss7a2tqenR2ypHF0u1ovPWvUJGnZS4Dif4/nz5zs7O8W4bHEOiCoS5+3ly5dVP/bW1tbR0VGv19vf3688zeKcdVardWVlpbOzs7u7u7i4WFnCGzduqFK9iX9x1NqPCKNzc3P8zUQa0v3xj3+kFpB256VO19jYaDQaV1dXxdiRYDAofmWxWNrb25UXLavVGgqF5ubm1tbWZmZm5ubmrFbr1atXKyoqRkdHg8HgiRMnMjMzlfu3WCwjIyPBYNBkMl25ckWn02367vPz816vd2VlZWVlxefzmUymd95559y5c8rti4uLxbzYPp/P5/OJ7suOjo729vb5+fmVlZXKykrlEBylgoKC6urqtbW1lZUV8X/x8qqqKlH+qO3jFzupHYqytbS0xJYt9lc6nS4zM3N2djYYDK6srASDwdbW1traWp1OJ6YnEJUvV5T4jOKPodFqtWJ2qNbW1mPHjsnrTSaTPLNUY2NjVMHm5uaqqqqU3WciT7S3tysnl49ao/xkEyxwUvWjrHZxDojTtbW19f33349tFUvh2KMYDIbKysrFxUV5IgNxcra3t/v9/rm5OeVZJ/rUCgoKPvnkE7fbvbi4KJewqqrq+vXrcQZ7JXueJPjFibPbxPfjdrufP38uPuutvmLAPtJsbGxQC0hnHo9HvooYDIatLgZ+v1+MMcrOzo56wm6ch/hu+09qMbFW/LeO2jI/Pz/+RFBxCp/IyxMpdlI7TLaQm1aF3GuzbUUpd7i2tha78Vbr1ZVCgZP6HON/RmodeyJn3X/8x39IklRVVSUeBCR/oaK+KepK/IuT8n5El6jFYvnd737H30mkIQIWABxmUQHr0Pjiiy9cLtcvfvGLZCdJAfYGg9wBAAeMx+NxuVzt7e2kK6QtBrkDAA4Ys9n8wQcflJaWUhVIW7RgAcBhJp5puJcP3tkbNptNlcGFwC5hDBYAAIDKaMECAABQGQELAABAZQQsAAAAlRGwAAAAVEbAAgAAUBkBCwAAQGUELAAAAJURsAAAAFRGwAIAAFAZAQsAAEBlPOwZwCZmZ2f/8Y9/SJL0/vvvl5SUSJLkdrufPHlSVFTU3t6+N2Xo7Oy02+319fXXrl1Lz1rq7Oz0+XwXL140m83p/Gk6HI7h4eGKioqWlpb0P/f2/kwDdgMtWAA2sbCw4PV6vV7vwsKCWOP3+51OZ09Pj9vt3psy2O12+f/pyW63O53OV69epfmn6fF4nE5nV1eX3+9P/3Nv7880YDfQggVgEzabbX5+XvwQ9as9u0h3dHRMTk5WVFTsb1XY7fapqamTJ0/m5+dvuoGoqAPB7XaL9sgDIbUzzePx9Pf35+TkHIjmOhxiBCwAmzCbzfveMdfS0pIO18jOzk5JkoqKirYKWEgrDoejv79fnD/UBvYRXYQAAAAqowULibLb7QsLCysrK2KxoqKivr7eYDBEbeb3+x0Ox9TUlM/nkyQpNze3rKwstptJ5na7x8fHCwsLN93G4XAsLCxUV1crGw/ES+R+mYqKCpvNFjXKWHQTFBYW1tfXx77jyMjIpr+KfyBb7W16enpyclIs5ubmVldXR/XCzM7OTk1NlZeXl5SU+P1+u90utjcajeXl5fGLIRfGbrfPz8+LwhQVFYm9bVqf25ZH1I/D4Yizmd/vF80AcQYaDwwM+Hy+1tbWTU+D/v5+o9EY24qQ+KscDsf09PSm5RdVKs4Bo9FYVFSkPBtFdUmJtWGI02nT+nQ4HB6PR/ws15UkSZue+bOzs+Pj4+ILUlRU1NDQsOnI9/gll6tIfhfRQSk+95qaGvlsEWe4eLutPuU451IiZ+C2RRUbiC+vw+EYHx/3+XyxQ+kTOeREbHtuKw9NrkZJksxms/LPSyLfpgQPDYiDgIXt+f3+27dvu1wu5Uqn0/n8+XP5FjNB3Hrm9XqVW/b391ut1nfffXfT68309HRPT48kSX/4wx9iQ9KdO3ckSTIajSJg+f3+np4eceFXlqSrq6ujo0P5t0/uJoi9eExPT2/1K+WB3L9/f3l5OWr90NDQrVu35GvDo0ePogojjre1tfXChQvymoWFhZ6ensHBwY8//vi7775T7lbEVuXGsdxu91dffaWsVTEEuL29PSr9JFgeu90uur2iNlPer+d2u8XnslWS8/v9z58/93q9fr8/tvziYzKZTFGX0qReNTw87HQ6V1ZWbt68Gf8w7Xb74ODgjRs3xHnicDi6urqkmCvrph48eOByuSYnJz/99NOoX4nTT65zp9MpL0ZdaAcGBsQ7yhuLjzuqV3HbkgvyrlZXV5XbO53OoaGhTz/9NPYT7O/vv3bt2rZhfXV1NerE3uoMTKSo4sQ2mUxXrlyR68rpdBYWFsrnTIKHvK1Ezm273a78FJQ///u//3tS36ZEDg2Ij4CF7fX397tcLpPJdP78+ZycHEmSVldXx8bGnE5nb2+vfPFzu91ffvmlJEkmk6m5ubm8vNzn84k043K5vvnmm1/+8pex/2ytr68Xfwf7+/uj/srLN2fJ18iuri7RMlFVVVVTU5OTk7OwsDA4OLi8vCx2osq/L+UDkSSptbW1sLBQkqSFhQVxILdv3xZX4oGBAfEXv6qqqqKiorCwcGFh4fXr1y6Xa9Mxtl6vV/xlb21tzcnJ8fl8g4ODXq83/oBct9v9+eefS5JktVrb2tqMRqMkSePj4/39/T09PcomogTL4/F4uru7Rc03NTWJ105NTQ0ODtrt9qampgSvHwaDobm5WUSi1tZWZTiWW7/q6uqiPnGDwVBXV9ff39/f39/e3h6VvUZHRzd9lZKYu0GSpI6ODvHRrK6uvnjxYnl5+auvvvr9739vMBhKS0vFxgsLC/LJ4/f7//a3vy0vL0dlcfEvh02H0nd0dEg/XadFrUadkMLc3JzT6bRYLM3NzZIkTU5OOp1O8XH/y7/8S1IlV+5WJFH5fcV57nK5enp6xLW/ubnZaDTKIay7u9tms8VvGeru7k7kDEyqqF6v9/Hjx6KKJElyOp3yb5M95K0keG6XlZWJGyNEFBYfnzjrkv02bXtowLYIWNje4OCgJEmnT5+W/31cUlJSX1//6NEj8UdT+O677yRJslgsH374oXy5tdls1dXVX3755fLyck9PT+w/lA0GQ2tra39//+joaNQV9/Xr15IkVVVVib3Z7Xb5j7X8d1CURASvrq6u2L7CFIgDMZlMyhaI+vr6xsbGr776yuVyud3u/Pz81dVVSZKU/4AWhRFX8cHBwdjMZDQalfusrq4WkWvTjZWFiZoLqqSkJCcnp6urS3nICZbH4XCIf75H7bC6uvrJkydJNSo0NDSIVi6HwxHVfCgfYOyrGhsbxcXS4XAoW1zkgrW2tm71jvI58Nvf/lYuaklJic1m+8///E+v1yvOMbPZbLVaRbuU3Cxht9tFy01XV5fcrjY7Oyt+qzyTZeKgRMCK0z0kIotc7S0tLaK5xev1inm8Ei951G6VjVL19fXyllarVdmSKk4G8Xbb/htDWYBNz8AUirq8vCxv7Pf7RcFS2M9WEjy38/PzxRuJgBVbFYl/m+IfGpAIBrkjUbH3ol+4cEH+6+9wOMTV68qVK1F/oUpKSsQ/Jfv7+ze971pchr1er3xhliTJ7XaLHdbU1Ig1Q0NDkiRVVVVF/d00GAwdHR0mk0lSNHqlTD6Q8+fPR6WN/Pz806dPt7e3i/Xt7e3Xrl2LukKIdh1JkmK7FyVJOnfunHKf+fn5dXV1W22sLMyZM2eifqWsefFDsuWJmmQoPz//5s2bSV0/zGaz+Je9iOCyqakpSZIsFsumjWH5+flWq1WSpLGxsdhXyXl6U+IcaG1tjfpo5MMUbWDSTy1Syn5t5SAqudLkWb627UmMw2QyRfXVyhlRPuETL7nMarUqA6i8pSRJbW1tyk8qkWF8wunTp7c9A1MoqnJjuWAp7GcrKXzXdvhtin9oQCJowcL2RJ+O3W6fm5urra0tLCwsLS2N+lsjxgJvdU212WyiGWDTaXhKSkpEe8PY2Jj8l258fFySJDEcR6wRF0s5bynJHU87n5FIHIjyfZWU2c5gMMjbuN1uv98vrtbyhXx2djbqYEWXhJLochXvGxss5FpdW1tbW1uL+q2oNPmQEyyP/Fl8/vnn9fX1RUVFZWVlKU9A0NTU5HQ6l5eX5YOVB5jLaSDW8ePHXS6X0+mUj9rj8YhXbfr5ysQ5kJOTI7c8RdWt1+sV7Yvl5eWidU0UTMxdKUlSR0dHV1fX1NSUqCtReyImpqy4uDjq6yB/lKLpJamSxzlb5DVRv5LffXJyMn4LVmxDXewZmEJRy8rKdvJhbVvDKXzXtvpqJ/htin9oQCIIWNhee3v7ysqKuI6Ki5b00yAG+d/94g9Tbm7upnuQrzcLCwub/h2MveKK/kHxz2tJ0dwiXw+iiPXKYcipEQdSXFycyMbihsTYsbcpWFtbiw1YojDLy8vymLBY4k6oxMsjJrgSY3HkThyTyVRXVxfVRZsIm81msViWl5fHx8fFJyu3AcRpE6qvrxcFkPsWxau2yrVR54By8HIs0Wgkn2bilBP7r6+vF/nSbreLTqKJiQlpiwFYqhB3+SVV8v0izsDUihqbBVU/5J1/15L9Nm11aECCCFjYnsFguHnzpnyP9NzcnNfrdblcd+7ckYdDbZV7Yne16Xr5ivvq1av29na5Mb+xsVFskJ2dncj+LRbLDg9WHEjs39lY8p1cFotFNOwZjUaDwTA9PR3/opJsYeTR05uS2yQSL4/IGWIKjLm5OZfLJUY6j46OJj7uWNbc3NzV1SUPWhcdQ/X19fEHw4kB8q9fvxbnj+hkjHOYynNAjNHeajPlsDlxN770U/9jeXm5PDzL4XAUFBSIUV+73UqRbMn3kVpFVfeQVfmuJfVtAnaOgIVEiQGkcntDb2+vy+Xq6uoSa8S/85xO56bjQOVWjTh/v06fPt3V1TU4ONje3j49PS1JksViUY5+MJlMXq93ampq0zYw0eIV2/K0addbHOJAXC5XnD47sf7FixeSJEUNN5YkSRReFaIwPp8vkbsjkyqP6HMRzUViTqzER0lHqa+vF/e72e12m80mOobKy8vjv0oMkBd3DEg/DaNpaGiI8xL5HEjwKShFRUV2u31iYkLutRSNarW1tS6Xa3p6WjSfKE+zXZJsyfeRWkVV95BV+a4l9W0Cdo5B7the7NN2bTbb8ePHxc8ic8j9QZu24ff29krbXcnEHsR1Wox+jfqHpuguHBwclOd+lDkcjqjruvxXeGZmRrmlmIcpzsHKB/Ls2bPY3z58+PC///u/PR6Px+MRmaC2tjYqUCoHU++QXCfylIlKs7Ozco9t4uVxu91Rw9vNZnNLS4to/JPHDCVODIATH00iPX3ym4qRT+Pj42K8Xfzh7VHnwKZdS48ePVIemvKMkhSzg4r2qtHRUXGwlZWVe/AlSqrk+0utoqq1H7W+a4l/mwBVELCwjdnZ2c7Ozm+//TYq1og+F5PJJC6KZrNZ3EglJumR/6R6PJ7Ozk6Rfs6dOxfnjcxms7j3SvQVSjGDeFpbW8W/ib/55hvlsFm73X7//n3p7buu5JmQuru75Y1nZ2dv374dNQ9qbDHEgdjt9kePHkUdiJjfyGAwyFEgalTso0ePdj4OLLZOurq6oq4KDofjH//4R09Pjzi6xMvz5MmTr776Kmpv8j2bCXb1RhGFXF5eFuFVHjkXnxjP/vr1a9E/GH94e9Qb3b59W3lC+v3+zs7O/v7+J0+eKGtPpEaxfzl85+fnWywWMTeBlECvkNjJ69evxcngdrtj7zVTt+T7S62iqrWfZL9rcgiT/2UozvbEv01xOByO//N//s+f//zn9AnESFt0EWIb+fn5JpNJTGNttVpFM/vKyoq4Hp8+fVresrW1dXJyUp4IsaqqyufzyffJt7a2bnsnfHV1tZg9SNpsEI/ZbD5//nxnZ6cYpmqxWHJzc8WAMEmSTCbT5cuXlRu3t7f39PR4vV7lmFbRuBLbJqfU3t4+Pz/vdDrFfJhiTgH5QK5duyb+govpu+x2+8rKSkVFhd/vn5iYWF5eFuvVqv/29nYxTKqrq+v58+eiD1Suf6vVKneYJlieiooKMfe9vDfpp5sDEml52pRojhLpU1KMnItPDLwTB5LgW4sR+iKy/+lPf5JPSPlCK0+dKtTW1vb09Ii3UJ5+Yv2mOT6WGGTmcrn+9re/GY1Gl8uVyMm8w5LvI7WKquIhJ/Vds9ls4l9inZ2dY2Nj4k+EmOAq8W/TVoaHh71er9frnZ6e5uHfiI+AhW0YDIZf/epXImooZxUSY0Wjpi349NNPBwYGxIgc+c+oxWI5d+5cIhekkpIS8RdZ2mIQT319fWFh4ZMnT8QtjfL8N62trbF3wLW3txuNRuUY2KqqqnfeeUeSpImJifjtWDdv3pQPRD7qqAMRDV2iWsQ2VVVVV65cyc7OHh0dFQ1dYkvRRmIymWL/fMf5VfxaNZlMyqlfEy9PS0uLwWAQs2krGwDq6+vPnDkjl1kepBznB6Xr16+L5yklNaRJDLyT3k7qMnFTatStqcpzQHlCVlVVtbW1RVWjPFlD1KMPq6urxfqqqqptB/XX19eLycHlLCgnSBErN70JMfZXiZd8q93GOVvilCSFMzDBom579ib1Ycliz7TEv2viK3P+/HnREC7OcPlJA4l/m7Y6NPHvE0nRrgZsRbOxsUEtIEFy+7nBYIh/ERVz1UiSlJ2dndRfIjEFtslkUj5jJJbf75eb6OP/o1Pectsyp3Yg8v6jNtiNSZ/lwsQ5lsTL4/F45NmA8vPzd1haj8fzpz/9SXp7nv0EXyildLlSngNxyu/3+9fW1mKra6v121b+zusqwZKnA7WKqsp+kvqubfvFT+TbtNWZoNfrCVjYFgELacTv94tnaMQ+xhhpTn7a8b/9278x4TUAMMgdaUR+Gt2mz7BDOhMDxuU79QDgiCNgIY2IOSqtViujRw8WeWJYkjEACAQspAu/3+/z+UwmU1tbG7VxsIhxVFVVVTt5ZDIAHCaMwQIAAFAZLVgAAAAqI2ABAACojIAFAACgMgIWAACAyghYAAAAKiNgAQAAqIyABQAAoDICFgAAgMoIWAAAACojYAEAAKiMgAUAAKAyAhYAAIDKCFgAAAAqI2ABAACojIAFAACgMgIWAACAyghYAAAAKiNgAQAAqIyABQAAoDICFgAAgMoIWAAAACojYAEAAKiMgAUAAKAyAhYAAIDKCFgAAAAqI2ABAACojIAFAACgMgIWAACAyghYAAAAKiNgAQAAqIyABQAAoDICFgAAgMoIWAAAACojYAEAAKiMgAUAAKAyAhYAAIDKCFgAAAAqI2ABAACojIAFAACgMgIWAACAyghYAAAAKiNgAQAAqIyABQAAoDICFgAAgMoIWAAAACojYAEAAKiMgAUAAKAyAhYAAIDKCFgAAAAqI2ABAACojIAFAACgMgIWAACAyghYAAAAKiNgAQAAqIyABQAAoDICFgAAgMoIWAAAACojYAEAAKiMgAUAAKAyAhYAAIDKCFgAAAAqI2ABAACojIAFAACgMgIWAACAyghYAAAAKiNgAQAAqIyABQAAoDICFgAAgMoIWAAAACojYAEAAKiMgAUAAKAyAhYAAIDKCFgAAAAqI2ABAACojIAFAACgMgIWAACAyghYAAAAKiNgAQAAqIyABQAAoDICFgAAgMoIWAAAACojYAEAAKiMgAUAAKAyAhYAAIDKCFgAAAAqI2ABAACo7P8B1Ga+DiQEXXsAAAAZdEVYdFNvZnR3YXJlAEFkb2JlIEltYWdlUmVhZHlxyWU8AAAAEnRFWHRFWElGOk9yaWVudGF0aW9uADGEWOzvAAAAAElFTkSuQmCC"
+
+/***/ },
+
+/***/ 33829
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+
+// EXPORTS
+__webpack_require__.d(__webpack_exports__, {
+  A: () => (/* binding */ esm_browser_v4)
+});
+
+;// ./node_modules/uuid/dist/esm-browser/native.js
+const randomUUID = typeof crypto !== 'undefined' && crypto.randomUUID && crypto.randomUUID.bind(crypto);
+/* harmony default export */ const esm_browser_native = ({
+  randomUUID
+});
+;// ./node_modules/uuid/dist/esm-browser/rng.js
+// Unique ID creation requires a high quality random # generator. In the browser we therefore
+// require the crypto API and do not support built-in fallback to lower quality random number
+// generators (like Math.random()).
+let getRandomValues;
+const rnds8 = new Uint8Array(16);
+function rng() {
+  // lazy load so that environments that need to polyfill have a chance to do so
+  if (!getRandomValues) {
+    // getRandomValues needs to be invoked in a context where "this" is a Crypto implementation.
+    getRandomValues = typeof crypto !== 'undefined' && crypto.getRandomValues && crypto.getRandomValues.bind(crypto);
+
+    if (!getRandomValues) {
+      throw new Error('crypto.getRandomValues() not supported. See https://github.com/uuidjs/uuid#getrandomvalues-not-supported');
+    }
+  }
+
+  return getRandomValues(rnds8);
+}
+;// ./node_modules/uuid/dist/esm-browser/stringify.js
+/* unused harmony import specifier */ var validate;
+
+/**
+ * Convert array of 16 byte values to UUID string format of the form:
+ * XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
+ */
+
+const byteToHex = [];
+
+for (let i = 0; i < 256; ++i) {
+  byteToHex.push((i + 0x100).toString(16).slice(1));
+}
+
+function unsafeStringify(arr, offset = 0) {
+  // Note: Be careful editing this code!  It's been tuned for performance
+  // and works in ways you may not expect. See https://github.com/uuidjs/uuid/pull/434
+  return byteToHex[arr[offset + 0]] + byteToHex[arr[offset + 1]] + byteToHex[arr[offset + 2]] + byteToHex[arr[offset + 3]] + '-' + byteToHex[arr[offset + 4]] + byteToHex[arr[offset + 5]] + '-' + byteToHex[arr[offset + 6]] + byteToHex[arr[offset + 7]] + '-' + byteToHex[arr[offset + 8]] + byteToHex[arr[offset + 9]] + '-' + byteToHex[arr[offset + 10]] + byteToHex[arr[offset + 11]] + byteToHex[arr[offset + 12]] + byteToHex[arr[offset + 13]] + byteToHex[arr[offset + 14]] + byteToHex[arr[offset + 15]];
+}
+
+function stringify(arr, offset = 0) {
+  const uuid = unsafeStringify(arr, offset); // Consistency check for valid UUID.  If this throws, it's likely due to one
+  // of the following:
+  // - One or more input array values don't map to a hex octet (leading to
+  // "undefined" in the uuid)
+  // - Invalid input values for the RFC `version` or `variant` fields
+
+  if (!validate(uuid)) {
+    throw TypeError('Stringified UUID is invalid');
+  }
+
+  return uuid;
+}
+
+/* harmony default export */ const esm_browser_stringify = ((/* unused pure expression or super */ null && (stringify)));
+;// ./node_modules/uuid/dist/esm-browser/v4.js
+
+
+
+
+function v4(options, buf, offset) {
+  if (esm_browser_native.randomUUID && !buf && !options) {
+    return esm_browser_native.randomUUID();
+  }
+
+  options = options || {};
+  const rnds = options.random || (options.rng || rng)(); // Per 4.4, set bits for version and `clock_seq_hi_and_reserved`
+
+  rnds[6] = rnds[6] & 0x0f | 0x40;
+  rnds[8] = rnds[8] & 0x3f | 0x80; // Copy bytes to buffer, if provided
+
+  if (buf) {
+    offset = offset || 0;
+
+    for (let i = 0; i < 16; ++i) {
+      buf[offset + i] = rnds[i];
+    }
+
+    return buf;
+  }
+
+  return unsafeStringify(rnds);
+}
+
+/* harmony default export */ const esm_browser_v4 = (v4);
 
 /***/ }
 

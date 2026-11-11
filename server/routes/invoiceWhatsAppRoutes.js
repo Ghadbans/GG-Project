@@ -6,6 +6,7 @@ const { execFile } = require('child_process');
 const axios = require('axios');
 const InvoiceWhatsAppTemplate = require('../model/invoiceWhatsAppTemplateSchema');
 const InvoiceWhatsAppHistory = require('../model/invoiceWhatsAppHistorySchema');
+const cloudWhatsAppService = require('../services/cloudWhatsAppService');
 
 const AGENT_DIR = 'C:\\Users\\GG\\fb-whatsapp-agent';
 const AGENT_SCRIPT = path.join(AGENT_DIR, 'agent.js');
@@ -108,6 +109,37 @@ router.delete('/history/:id', async (req, res) => {
   }
 });
 
+// 2.8 Get Cloud WhatsApp Connection Status
+router.get('/cloud-status', (req, res) => {
+  try {
+    const status = cloudWhatsAppService.getCloudWhatsAppStatus();
+    return res.json({ success: true, ...status });
+  } catch (err) {
+    return res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+// 2.9 Disconnect Cloud WhatsApp Session
+router.post('/cloud-disconnect', async (req, res) => {
+  try {
+    const result = await cloudWhatsAppService.disconnectCloudWhatsApp();
+    return res.json(result);
+  } catch (err) {
+    return res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+// 2.10 Reconnect / Reinitialize Cloud WhatsApp
+router.post('/cloud-reconnect', async (req, res) => {
+  try {
+    await cloudWhatsAppService.initCloudWhatsApp();
+    const status = cloudWhatsAppService.getCloudWhatsAppStatus();
+    return res.json({ success: true, ...status });
+  } catch (err) {
+    return res.status(500).json({ success: false, error: err.message });
+  }
+});
+
 // 3. Dispatch Selected SENT Invoices via WhatsApp
 router.post('/send', async (req, res) => {
   try {
@@ -135,7 +167,62 @@ router.post('/send', async (req, res) => {
       phoneOverrides
     };
 
-    // Strategy 1: Check if Agent HTTP Daemon is running
+    // Strategy 1: Railway 24/7 Cloud WhatsApp Master (Baileys singleton)
+    const cloudStatus = cloudWhatsAppService.getCloudWhatsAppStatus();
+    if (cloudStatus.isReady) {
+      console.log('[InvoiceWhatsApp] Dispatching via Railway Cloud WhatsApp Master (Baileys)...');
+      try {
+        const cloudResult = await cloudWhatsAppService.dispatchInvoicesCloud({
+          invoices: validInvoices,
+          templateMessage: payload.templateMessage,
+          phoneOverrides,
+          sentBy: req.body.sentBy || 'GG'
+        });
+
+        // Record history in MongoDB for all sent items
+        if (cloudResult && Array.isArray(cloudResult.details)) {
+          const sentEntries = cloudResult.details
+            .filter(d => d.status === 'sent')
+            .map(d => ({
+              invoiceId: String(d.invoiceId || ''),
+              invoiceNumber: Number(d.invoiceNumber || 0),
+              customerName: String(d.clientName || ''),
+              phone: String(d.phone || ''),
+              amount: Number(d.amount || 0),
+              sentBy: String(req.body.sentBy || 'GG'),
+              status: 'sent',
+              sentAt: new Date()
+            }));
+          if (sentEntries.length > 0) {
+            InvoiceWhatsAppHistory.insertMany(sentEntries).catch(err => {
+              console.warn('[InvoiceWhatsApp] History logging warning:', err.message);
+            });
+          }
+        }
+
+        const sentCount = Number(cloudResult.sent || 0);
+        const failedCount = Number(cloudResult.failed || 0);
+        const totalCount = Number(cloudResult.total || validInvoices.length);
+
+        return res.json({
+          success: cloudResult.success,
+          total: totalCount,
+          sent: sentCount,
+          failed: failedCount,
+          details: cloudResult.details || [],
+          report: {
+            total: totalCount,
+            sent: sentCount,
+            failed: failedCount,
+            details: cloudResult.details || []
+          }
+        });
+      } catch (cloudErr) {
+        console.error('[InvoiceWhatsApp] Cloud dispatch error:', cloudErr);
+      }
+    }
+
+    // Strategy 2: Local HTTP Daemon fallback (if running on user workstation)
     try {
       const daemonCheck = await axios.get(`${AGENT_DAEMON_URL}/status`, { timeout: 1500 });
       if (daemonCheck.status === 200) {
@@ -162,13 +249,29 @@ router.post('/send', async (req, res) => {
             });
           }
         }
-        return res.json(daemonRes.data);
+
+        const sentCount = Number(daemonRes.data?.sent ?? daemonRes.data?.report?.sent ?? 0);
+        const failedCount = Number(daemonRes.data?.failed ?? daemonRes.data?.report?.failed ?? Math.max(0, validInvoices.length - sentCount));
+        const totalCount = Number(daemonRes.data?.total ?? daemonRes.data?.report?.total ?? validInvoices.length);
+
+        return res.json({
+          ...daemonRes.data,
+          total: totalCount,
+          sent: sentCount,
+          failed: failedCount,
+          report: {
+            total: totalCount,
+            sent: sentCount,
+            failed: failedCount,
+            details: daemonRes.data?.details || daemonRes.data?.report?.details || []
+          }
+        });
       }
     } catch (_) {
       // Daemon not active, proceed to child_process execution
     }
 
-    // Strategy 2: Execute local agent.js script directly via Node
+    // Strategy 3: Execute local agent.js script directly via Node
     if (fs.existsSync(AGENT_SCRIPT)) {
       const tempPayloadPath = path.join(AGENT_DIR, `invoice_batch_${Date.now()}.json`);
       fs.writeFileSync(tempPayloadPath, JSON.stringify(payload, null, 2), 'utf-8');
@@ -249,6 +352,9 @@ router.post('/send', async (req, res) => {
 
         return res.json({
           success: isFullSuccess || hasSentAny,
+          total: validInvoices.length,
+          sent: sentCount,
+          failed: failedCount,
           partial: hasSentAny && failedCount > 0,
           error: error && !hasSentAny ? (error.message || stderr) : null,
           report: {
@@ -265,7 +371,9 @@ router.post('/send', async (req, res) => {
 
     return res.status(503).json({
       success: false,
-      error: 'WhatsApp local agent is not running or not installed on this workstation.'
+      cloudStatus: cloudStatus.status,
+      qrCode: cloudStatus.qrCode,
+      error: 'WhatsApp Cloud Master is not linked yet. Please scan the QR code in the WhatsApp modal to link official business number (+243 827 722 222).'
     });
 
   } catch (err) {

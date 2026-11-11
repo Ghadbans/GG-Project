@@ -4,6 +4,9 @@ const path = require('path');
 const srcPath = path.join(__dirname, '../index.html');
 const destPath = path.join(__dirname, '../dist_web/index.html');
 const buildDestPath = path.join(__dirname, '../build/index.html');
+const iconSrcPath = path.join(__dirname, '../Icon.png');
+const iconDestWeb = path.join(__dirname, '../dist_web/Icon.png');
+const iconDestBuild = path.join(__dirname, '../build/Icon.png');
 
 let indexHtml = fs.readFileSync(srcPath, 'utf8');
 
@@ -23,4 +26,10 @@ if (!fs.existsSync(buildDir)) {
 }
 fs.writeFileSync(buildDestPath, webHtml);
 
-console.log('Copied index.html to dist_web/ and build/ with cache busting!');
+// Copy brand icon for PWA Apple touch icon & favicon
+if (fs.existsSync(iconSrcPath)) {
+  fs.copyFileSync(iconSrcPath, iconDestWeb);
+  fs.copyFileSync(iconSrcPath, iconDestBuild);
+}
+
+console.log('Copied index.html and Icon.png to dist_web/ and build/ with cache busting!');
