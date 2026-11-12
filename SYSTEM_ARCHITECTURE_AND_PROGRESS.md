@@ -5195,3 +5195,22 @@ The standardized `renderStatusBadge` helper was seamlessly integrated into all 1
 - **Android APK**: Compiled via Gradle with Android Studio JBR: `server/public/downloads/GlobalGate-v3.6.50.apk` (19.27 MB) and mirrored to `GlobalGate.apk`.
 - **Artifact Preservation**: All previous builds (`GlobalGate-v3.6.49.exe` through `v3.6.39.exe` and `.apk` files) remain permanently preserved.
 - **Background Task Discipline**: 0 background processes left running in Antigravity.
+
+---
+
+### [Hotfix v3.6.50.1] - Technical Inspection Report Customer Linking & Clean Input Fields
+1. **Empty Bullet Points & Action Items**:
+   - Removed all hardcoded initial placeholder/sample texts (`INSUFFICIENT ROOM VOLUME...`, `REMOVE EXISTING EXHAUST FANS...`) from `findings`, `actionItems`, and `nextSteps`.
+   - Fields now initialize completely blank so users can enter their custom site observations without deleting pre-filled text.
+2. **Customer List Integration**:
+   - Corrected customer fetch endpoint from `/Customer` to the standard lowercase `/customer` in `InspectionReportForm.js`.
+   - Populated the Customer dropdown with all 400+ clients from the database, displaying `customerFullName || companyName || Customer`.
+   - Selecting a customer automatically populates `customerName`, `customerAddress` (billing address and city), and `customerPhone`.
+3. **URL Normalization Middleware**:
+   - Added Express middleware in `server/index.js` to normalize any requests starting with `/endpoint/endpoint/` into `/endpoint/`, eliminating accidental 404s.
+   - Unified all frontend inspection report API calls to `${ENDPOINT_URL}/inspection-reports`.
+4. **Build & Release Deployment**:
+   - Webpack production bundle rebuilt.
+   - Windows installer packaged (`dist/Global Gate Setup 3.6.50.exe`) and mirrored.
+   - Android APK re-assembled with Gradle (`server/public/downloads/GlobalGate-v3.6.50.apk`) and mirrored.
+   - Pushed commit `6eb92133` to GitHub `origin main`.
