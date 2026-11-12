@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const InspectionReport = require('../model/inspectionReportSchema');
-const { GoogleGenAI } = require('@google/genai');
+const axios = require('axios');
 
 /**
  * 1. GET /endpoint/inspection-reports
@@ -236,13 +236,13 @@ Return ONLY a valid JSON object with the following exact keys:
     // Attempt Gemini API if key is present
     if (process.env.GEMINI_API_KEY) {
       try {
-        const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
-        const response = await ai.models.generateContent({
-          model: 'gemini-2.5-flash',
-          contents: prompt
-        });
+        const apiKey = process.env.GEMINI_API_KEY;
+        const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+        const aiRes = await axios.post(geminiUrl, {
+          contents: [{ parts: [{ text: prompt }] }]
+        }, { timeout: 15000 });
 
-        const rawText = response.text || '';
+        const rawText = aiRes.data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
         const jsonMatch = rawText.match(/\{[\s\S]*\}/);
         if (jsonMatch) {
           const parsed = JSON.parse(jsonMatch[0]);
