@@ -5111,19 +5111,34 @@ The standardized `renderStatusBadge` helper was seamlessly integrated into all 1
 
 ---
 
-### Rule 69: Technical Inspection Report Architecture, Layout & Access Scoping (Ver 3.6.50)
-- **Location & Navigation**: Positioned directly beneath 'Marketing' inside the 'More Menu' (`SidebarDashE2.js`), and under the Mobile drawer and bottom menu routes.
-- **Access Control**: Governed by `Grant Access` boolean `grantAccessDoc.inspectionReport` or module row `'Inspection Report'`. User `GG` possesses universal bypass.
-- **Executive PDF / Print Layout**: Replicates Gemini-generated executive engineering reports (`Technical Inspection & Corrective Action Report`). Features:
-  - Header: Corporate logo on left, registered office / contact details on right.
-  - Metadata block: Blue border callout with Subject, Location, Date, Prepared By, and Client details.
-  - Findings: Numbered section headings with bold bullet items and problem descriptions.
-  - Photographic Evidence: Side-by-side photo grid (2 per row on A4 print) with Figure numbers and italicized engineering captions.
-  - Recommended Action Plan: Navy-blue headed table with Item #, Scope / Task, Equipment & Materials, and Execution Timeframe.
-  - Next Steps: Highlight box summarizing execution requirements.
-  - Dual Sign-off: Prepared By (Field Engineer) and Approved By (Technical Director / Client).
-- **Gemini AI Draft Engine**: Integrated backend endpoint `POST /endpoint/inspection-reports/ai-draft` utilizing Gemini API (with deterministic fallback) to convert rough notes and field bullet points into structured executive engineering reports.
-- **Conversion to Quotation**: Allows 1-click transition to `/EstimateForm` pre-populating client, subject, and site notes for seamless commercialization.
+### Rule 69: Technical Inspection Report Architecture, Lifecycle, Cross-Module Linkages & Quotation Synchronization (Ver 3.6.50)
+- **Location & Navigation**:
+  - Positioned directly beneath 'Marketing' inside the 'More Menu' (`SidebarDashE2.js`), and under the Mobile drawer and bottom menu routes.
+  - Fully integrated with the standard ERP `AppBar` (hamburger menu toggle, user status, notifications, logout) and persistent sliding `Drawer` (`SidebarDashE2`) on all subviews to ensure seamless bidirectional navigation across modules.
+- **Access Control & Permissions**:
+  - Governed by `Grant Access` boolean `grantAccessDoc.inspectionReport` or module row `'Inspection Report'`.
+  - Master User `GG` possesses universal bypass across all branches.
+- **Executive PDF / Print Layout**:
+  - Replicates executive engineering field reports (`Technical Inspection & Corrective Action Report`).
+  - **Header**: Corporate logo on the left, registered office / contact details on the right (with redundant subheader text removed for a clean, professional aesthetic).
+  - **Metadata Callout Block**: Blue border card showing Subject, Inspection Location, Date, Prepared By, Client Name, Report Code (`IR-0001`), and real-time **Status Badge**.
+  - **Section 1: Current Situation & Root Cause Findings**: Clean, empty-initialized bullet points for direct technician observations and engineering findings, accompanied by high-resolution photographic evidence (two figures per row on A4 print).
+  - **Section 2: Recommended Solution & Action Plan**: Navy-blue structured remediation table with Action Item and Technical Scope / Execution Details.
+  - **Next Steps & Follow-up**: Outlines executive commercial terms and transitions.
+- **Status Lifecycle & Interactive Controls**:
+  - **`DRAFT`**: Initial site survey in progress; direct technician typing without sample clutter.
+  - **`COMPLETED`**: Inspection reviewed and finalized; 1-click **"Mark Completed"** action on the report print/view screen or via the interactive status menu on the registry table.
+  - **`SENT TO CLIENT`**: Formal report delivery; 1-click **"Send to Client (WhatsApp)"** opens WhatsApp with pre-formatted client message containing Report Code and Subject, automatically transitioning status in MongoDB.
+  - **`CONVERTED TO QUOTE`**: Commercial transition; automatically set when converting to quotation.
+- **Bidirectional Quotation Linkage (`linkedQuotationNumber` & `linkedQuotationId`)**:
+  - When converting a report to quotation, the system pre-populates the customer, billing details, and subject in `EstimateInvoiceForm.js`.
+  - Upon quotation submission, `EstimateInvoiceForm` automatically dispatches `POST /endpoint/inspection-reports/:id/convert-quote` with `{ quotationId, quotationNumber: 'Q-XXXXXX' }`.
+  - The inspection report permanently stores `linkedQuotationNumber` in MongoDB.
+  - The status badge on both the table registry and printable report dynamically displays: **`CONVERTED TO QUOTE Q-XXXXXX`**.
+  - **Context-Aware Convert Button**: The "Convert to Quotation" button is automatically hidden once a report is converted, replaced by a green **"Quotation: Q-XXXXXX"** shortcut button that navigates directly to the quotation in the registry.
+- **Searchable Customer Autocomplete**:
+  - Utilizes MUI `<Autocomplete>` sorted newest-to-oldest (`list.slice().reverse()`).
+  - Search disambiguation displays Full Name, Company Name, Branch ID, and Phone Number for each option, preventing identical-looking customer entries.
 
 ---
 
