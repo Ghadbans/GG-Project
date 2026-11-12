@@ -2424,6 +2424,7 @@ var Drawer = (0,_mui_material__WEBPACK_IMPORTED_MODULE_25__/* ["default"] */ .Ay
 function EstimateInvoiceForm() {
   var isMobile = (0,_utils_isMobile__WEBPACK_IMPORTED_MODULE_1__/* .useIsMobile */ .al)();
   var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_43__/* .useNavigate */ .Zp)();
+  var location = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_43__/* .useLocation */ .zy)();
   var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_55__/* .useDispatch */ .wA)();
   var user = (0,react_redux__WEBPACK_IMPORTED_MODULE_55__/* .useSelector */ .d4)(_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_56__/* .selectCurrentUser */ .xu);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
@@ -2476,7 +2477,10 @@ function EstimateInvoiceForm() {
     _useState4 = _slicedToArray(_useState3, 2),
     estimateDate = _useState4[0],
     setEstimateDate = _useState4[1];
-  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(() => {
+      var _location$state;
+      return ((_location$state = location.state) === null || _location$state === void 0 ? void 0 : _location$state.estimateSubject) || "";
+    }),
     _useState6 = _slicedToArray(_useState5, 2),
     estimateSubject = _useState6[0],
     setEstimateSubject = _useState6[1];

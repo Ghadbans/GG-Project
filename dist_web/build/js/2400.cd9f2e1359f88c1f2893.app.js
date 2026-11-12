@@ -1,26 +1,6 @@
 "use strict";
 (this["webpackChunkgg_management"] = this["webpackChunkgg_management"] || []).push([[2400],{
 
-/***/ 2775
-(__unused_webpack_module, exports, __webpack_require__) {
-
-var __webpack_unused_export__;
-
-"use client";
-
-var _interopRequireDefault = __webpack_require__(24994);
-__webpack_unused_export__ = ({
-  value: true
-});
-exports.A = void 0;
-var _createSvgIcon = _interopRequireDefault(__webpack_require__(42032));
-var _jsxRuntime = __webpack_require__(74848);
-var _default = exports.A = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRuntime.jsx)("path", {
-  d: "m19 9 1.25-2.75L23 5l-2.75-1.25L19 1l-1.25 2.75L15 5l2.75 1.25zm-7.5.5L9 4 6.5 9.5 1 12l5.5 2.5L9 20l2.5-5.5L17 12zM19 15l-1.25 2.75L15 19l2.75 1.25L19 23l1.25-2.75L23 19l-2.75-1.25z"
-}), 'AutoAwesome');
-
-/***/ },
-
 /***/ 59086
 (__unused_webpack_module, exports, __webpack_require__) {
 
@@ -421,22 +401,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(60538);
 /* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(8239);
 /* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(844);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(73896);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(71543);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(77037);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(46831);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(22477);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(58763);
-/* harmony import */ var _mui_icons_material_ArrowBack__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(92659);
-/* harmony import */ var _mui_icons_material_Add__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(16718);
-/* harmony import */ var _mui_icons_material_DeleteOutline__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(81730);
-/* harmony import */ var _mui_icons_material_AutoAwesome__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(2775);
-/* harmony import */ var _mui_icons_material_PhotoCamera__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(59086);
-/* harmony import */ var _mui_icons_material_Save__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(98984);
-/* harmony import */ var _mui_icons_material_Visibility__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(5673);
-/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(74353);
-/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_26___default = /*#__PURE__*/__webpack_require__.n(dayjs__WEBPACK_IMPORTED_MODULE_26__);
-/* harmony import */ var _apiConfig__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(71510);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(86531);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(73896);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(71543);
+/* harmony import */ var _mui_icons_material_ArrowBack__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(92659);
+/* harmony import */ var _mui_icons_material_Add__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(16718);
+/* harmony import */ var _mui_icons_material_DeleteOutline__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(81730);
+/* harmony import */ var _mui_icons_material_PhotoCamera__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(59086);
+/* harmony import */ var _mui_icons_material_Save__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(98984);
+/* harmony import */ var _mui_icons_material_Visibility__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(5673);
+/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(74353);
+/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_22___default = /*#__PURE__*/__webpack_require__.n(dayjs__WEBPACK_IMPORTED_MODULE_22__);
+/* harmony import */ var _apiConfig__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(71510);
+function _extends() { return _extends = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends.apply(null, arguments); }
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
 function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
@@ -446,7 +423,6 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
 function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
 function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 ;
-
 
 
 
@@ -480,13 +456,13 @@ function InspectionReportForm() {
     successMessage = _useState8[0],
     setSuccessMessage = _useState8[1];
 
-  // Customer dropdown data
+  // Client Selection List
   var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState0 = _slicedToArray(_useState9, 2),
     customers = _useState0[0],
     setCustomers = _useState0[1];
 
-  // Form State
+  // Form Fields
   var _useState1 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('Technical Inspection & Corrective Action Report'),
     _useState10 = _slicedToArray(_useState1, 2),
     reportTitle = _useState10[0],
@@ -495,7 +471,7 @@ function InspectionReportForm() {
     _useState12 = _slicedToArray(_useState11, 2),
     subject = _useState12[0],
     setSubject = _useState12[1];
-  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(dayjs__WEBPACK_IMPORTED_MODULE_26___default()().format('YYYY-MM-DD')),
+  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(dayjs__WEBPACK_IMPORTED_MODULE_22___default()().format('YYYY-MM-DD')),
     _useState14 = _slicedToArray(_useState13, 2),
     date = _useState14[0],
     setDate = _useState14[1];
@@ -503,7 +479,7 @@ function InspectionReportForm() {
     _useState16 = _slicedToArray(_useState15, 2),
     location = _useState16[0],
     setLocation = _useState16[1];
-  var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('HVAC Maintenance Team'),
+  var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('Global Gate Technical Team'),
     _useState18 = _slicedToArray(_useState17, 2),
     preparedBy = _useState18[0],
     setPreparedBy = _useState18[1];
@@ -532,7 +508,7 @@ function InspectionReportForm() {
     status = _useState30[0],
     setStatus = _useState30[1];
 
-  // Section 1: Findings
+  // Section 1: Findings (Clean & Empty)
   var _useState31 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
     _useState32 = _slicedToArray(_useState31, 2),
     findingsIntro = _useState32[0],
@@ -549,7 +525,7 @@ function InspectionReportForm() {
     photosSection1 = _useState36[0],
     setPhotosSection1 = _useState36[1];
 
-  // Section 2: Solutions & Action Plan Table
+  // Section 2: Solutions & Action Plan Table (Clean & Empty)
   var _useState37 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
     _useState38 = _slicedToArray(_useState37, 2),
     solutionIntro = _useState38[0],
@@ -572,33 +548,16 @@ function InspectionReportForm() {
     nextSteps = _useState44[0],
     setNextSteps = _useState44[1];
 
-  // AI Smart Draft Dialog State
-  var _useState45 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState46 = _slicedToArray(_useState45, 2),
-    aiOpen = _useState46[0],
-    setAiOpen = _useState46[1];
-  var _useState47 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
-    _useState48 = _slicedToArray(_useState47, 2),
-    aiNotes = _useState48[0],
-    setAiNotes = _useState48[1];
-  var _useState49 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState50 = _slicedToArray(_useState49, 2),
-    aiLoading = _useState50[0],
-    setAiLoading = _useState50[1];
-  var _useState51 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
-    _useState52 = _slicedToArray(_useState51, 2),
-    aiError = _useState52[0],
-    setAiError = _useState52[1];
-
-  // Fetch Customers & Initial Report
+  // Fetch Customers (Newest to Oldest) & Initial Report if editing
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     var fetchCustomers = /*#__PURE__*/function () {
       var _ref = _asyncToGenerator(function* () {
         try {
           var _res$data;
-          var res = yield axios__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_27__/* .ENDPOINT_URL */ .m, "/customer"));
+          var res = yield axios__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_23__/* .ENDPOINT_URL */ .m, "/customer"));
           var list = Array.isArray(res.data) ? res.data : ((_res$data = res.data) === null || _res$data === void 0 ? void 0 : _res$data.data) || [];
-          setCustomers(list);
+          // Reverse array so newest registered clients appear at top of dropdown
+          setCustomers(list.slice().reverse());
         } catch (err) {
           console.error('Error fetching customers:', err);
         }
@@ -612,12 +571,12 @@ function InspectionReportForm() {
       var fetchReport = /*#__PURE__*/function () {
         var _ref2 = _asyncToGenerator(function* () {
           try {
-            var res = yield axios__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_27__/* .ENDPOINT_URL */ .m, "/inspection-reports/").concat(id));
+            var res = yield axios__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_23__/* .ENDPOINT_URL */ .m, "/inspection-reports/").concat(id));
             if (res.data && res.data.success) {
               var r = res.data.data;
               setReportTitle(r.reportTitle || 'Technical Inspection & Corrective Action Report');
               setSubject(r.subject || '');
-              setDate(r.date ? dayjs__WEBPACK_IMPORTED_MODULE_26___default()(r.date).format('YYYY-MM-DD') : dayjs__WEBPACK_IMPORTED_MODULE_26___default()().format('YYYY-MM-DD'));
+              setDate(r.date ? dayjs__WEBPACK_IMPORTED_MODULE_22___default()(r.date).format('YYYY-MM-DD') : dayjs__WEBPACK_IMPORTED_MODULE_22___default()().format('YYYY-MM-DD'));
               setLocation(r.location || '');
               setPreparedBy(r.preparedBy || 'Global Gate Technical Team');
               setCustomerId(r.customerId || '');
@@ -627,10 +586,16 @@ function InspectionReportForm() {
               setBranchId(r.branchId || 'HQ');
               setStatus(r.status || 'DRAFT');
               setFindingsIntro(r.findingsIntro || '');
-              setFindings(Array.isArray(r.findings) && r.findings.length > 0 ? r.findings : []);
+              setFindings(Array.isArray(r.findings) && r.findings.length > 0 ? r.findings : [{
+                title: '',
+                description: ''
+              }]);
               setPhotosSection1(Array.isArray(r.photosSection1) ? r.photosSection1 : []);
               setSolutionIntro(r.solutionIntro || '');
-              setActionItems(Array.isArray(r.actionItems) && r.actionItems.length > 0 ? r.actionItems : []);
+              setActionItems(Array.isArray(r.actionItems) && r.actionItems.length > 0 ? r.actionItems : [{
+                actionItem: '',
+                scope: ''
+              }]);
               setPhotosSection2(Array.isArray(r.photosSection2) ? r.photosSection2 : []);
               setNextSteps(r.nextSteps || '');
             }
@@ -648,19 +613,6 @@ function InspectionReportForm() {
       fetchReport();
     }
   }, [id, isEditing]);
-  var handleCustomerSelect = e => {
-    var selectedId = e.target.value;
-    setCustomerId(selectedId);
-    var found = customers.find(c => c._id === selectedId);
-    if (found) {
-      var name = found.customerFullName || found.companyName || found.Customer || "".concat(found.customerFirstName || '', " ").concat(found.customerLastName || '').trim() || '';
-      var addr = [found.billingAddress, found.billingCity].filter(Boolean).join(', ');
-      var phone = found.customerCompanyPhone || found.customerPhone || found.phone || found.mobile || '';
-      setCustomerName(name);
-      setCustomerAddress(addr);
-      setCustomerPhone(phone);
-    }
-  };
 
   // Section 1: Findings Row Operations
   var handleAddFinding = () => {
@@ -682,9 +634,8 @@ function InspectionReportForm() {
 
   // Section 2: Action Items Table Row Operations
   var handleAddActionItem = () => {
-    var nextIdx = actionItems.length + 1;
     setActionItems(prev => [...prev, {
-      actionItem: "".concat(nextIdx, ". New Scope Item"),
+      actionItem: '',
       scope: ''
     }]);
   };
@@ -699,104 +650,60 @@ function InspectionReportForm() {
     setActionItems(prev => prev.filter((_, i) => i !== index));
   };
 
-  // Image Upload Handler (reads file to base64)
-  var handleImageUpload = (section, e) => {
+  // Photo Upload Handler (Converts to Base64)
+  var handlePhotoUpload = (e, section) => {
     var files = Array.from(e.target.files);
-    if (!files.length) return;
+    if (!files || files.length === 0) return;
     files.forEach(file => {
       var reader = new FileReader();
-      reader.onload = uploadEvent => {
-        var base64 = uploadEvent.target.result;
+      reader.onloadend = () => {
+        var newPhoto = {
+          url: reader.result,
+          caption: file.name.replace(/\.[^/.]+$/, '').toUpperCase()
+        };
         if (section === 1) {
-          setPhotosSection1(prev => [...prev, {
-            url: base64,
-            figure: "Figure ".concat(prev.length + 1),
-            caption: ''
-          }]);
+          setPhotosSection1(prev => [...prev, newPhoto]);
         } else {
-          setPhotosSection2(prev => [...prev, {
-            url: base64,
-            figure: "Figure ".concat(photosSection1.length + prev.length + 1),
-            caption: ''
-          }]);
+          setPhotosSection2(prev => [...prev, newPhoto]);
         }
       };
       reader.readAsDataURL(file);
     });
+    e.target.value = '';
   };
-  var handleDeletePhoto = (section, index) => {
+  var handleUpdatePhotoCaption = (index, caption, section) => {
+    if (section === 1) {
+      setPhotosSection1(prev => {
+        var copy = [...prev];
+        copy[index].caption = caption;
+        return copy;
+      });
+    } else {
+      setPhotosSection2(prev => {
+        var copy = [...prev];
+        copy[index].caption = caption;
+        return copy;
+      });
+    }
+  };
+  var handleDeletePhoto = (index, section) => {
     if (section === 1) {
       setPhotosSection1(prev => prev.filter((_, i) => i !== index));
     } else {
       setPhotosSection2(prev => prev.filter((_, i) => i !== index));
     }
   };
-  var handleUpdatePhotoCaption = (section, index, field, value) => {
-    if (section === 1) {
-      setPhotosSection1(prev => {
-        var copy = [...prev];
-        copy[index][field] = value;
-        return copy;
-      });
-    } else {
-      setPhotosSection2(prev => {
-        var copy = [...prev];
-        copy[index][field] = value;
-        return copy;
-      });
-    }
-  };
 
-  // AI Smart Draft Trigger
-  var handleRunAiDraft = /*#__PURE__*/function () {
-    var _ref3 = _asyncToGenerator(function* () {
-      if (!aiNotes.trim()) {
-        setAiError('Please enter some field notes first.');
-        return;
-      }
-      setAiLoading(true);
-      setAiError('');
-      try {
-        var res = yield axios__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_27__/* .ENDPOINT_URL */ .m, "/inspection-reports/ai-draft"), {
-          notes: aiNotes.trim(),
-          subject,
-          customerName,
-          location
-        });
-        if (res.data && res.data.success && res.data.draft) {
-          var d = res.data.draft;
-          if (d.subject) setSubject(d.subject);
-          if (d.findingsIntro) setFindingsIntro(d.findingsIntro);
-          if (Array.isArray(d.findings) && d.findings.length > 0) setFindings(d.findings);
-          if (d.solutionIntro) setSolutionIntro(d.solutionIntro);
-          if (Array.isArray(d.actionItems) && d.actionItems.length > 0) setActionItems(d.actionItems);
-          if (d.nextSteps) setNextSteps(d.nextSteps);
-          setAiOpen(false);
-          setSuccessMessage('AI Draft generated and applied successfully!');
-        }
-      } catch (err) {
-        var _err$response;
-        console.error('Error generating AI draft:', err);
-        setAiError(((_err$response = err.response) === null || _err$response === void 0 || (_err$response = _err$response.data) === null || _err$response === void 0 ? void 0 : _err$response.error) || err.message || 'AI generation failed.');
-      } finally {
-        setAiLoading(false);
-      }
-    });
-    return function handleRunAiDraft() {
-      return _ref3.apply(this, arguments);
-    };
-  }();
-
-  // Save Report
+  // Save / Submit Form
   var handleSubmit = /*#__PURE__*/function () {
-    var _ref4 = _asyncToGenerator(function* () {
+    var _ref3 = _asyncToGenerator(function* () {
       var andView = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
       if (!subject.trim()) {
-        setErrorMessage('Please provide a report subject.');
+        setErrorMessage('Report Subject is required.');
         return;
       }
       if (!location.trim()) {
-        setErrorMessage('Please provide the inspection location.');
+        setErrorMessage('Inspection Location is required.');
         return;
       }
       setSaving(true);
@@ -804,31 +711,31 @@ function InspectionReportForm() {
       setSuccessMessage('');
       var payload = {
         reportTitle,
-        subject: subject.trim(),
+        subject,
         date,
-        location: location.trim(),
-        preparedBy: preparedBy.trim(),
-        customerId: customerId || null,
-        customerName: customerName.trim(),
-        customerAddress: customerAddress.trim(),
-        customerPhone: customerPhone.trim(),
+        location,
+        preparedBy,
+        customerId,
+        customerName,
+        customerAddress,
+        customerPhone,
         branchId,
+        status,
         findingsIntro,
         findings,
         photosSection1,
         solutionIntro,
         actionItems,
         photosSection2,
-        nextSteps,
-        status
+        nextSteps
       };
       try {
         var savedId = id;
         if (isEditing) {
-          var res = yield axios__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A.put("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_27__/* .ENDPOINT_URL */ .m, "/inspection-reports/").concat(id), payload);
+          var res = yield axios__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A.put("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_23__/* .ENDPOINT_URL */ .m, "/inspection-reports/").concat(id), payload);
           savedId = res.data.data._id;
         } else {
-          var _res = yield axios__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_27__/* .ENDPOINT_URL */ .m, "/inspection-reports"), payload);
+          var _res = yield axios__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_23__/* .ENDPOINT_URL */ .m, "/inspection-reports"), payload);
           savedId = _res.data.data._id;
         }
         setSuccessMessage('Inspection report saved successfully!');
@@ -838,15 +745,15 @@ function InspectionReportForm() {
           setTimeout(() => navigate('/InspectionReportView'), 800);
         }
       } catch (err) {
-        var _err$response2;
-        console.error('Error saving report:', err);
-        setErrorMessage(((_err$response2 = err.response) === null || _err$response2 === void 0 || (_err$response2 = _err$response2.data) === null || _err$response2 === void 0 ? void 0 : _err$response2.error) || 'Failed to save report.');
+        var _err$response;
+        console.error('Error saving inspection report:', err);
+        setErrorMessage(((_err$response = err.response) === null || _err$response === void 0 || (_err$response = _err$response.data) === null || _err$response === void 0 ? void 0 : _err$response.error) || err.message || 'Failed to save report.');
       } finally {
         setSaving(false);
       }
     });
     return function handleSubmit() {
-      return _ref4.apply(this, arguments);
+      return _ref3.apply(this, arguments);
     };
   }();
   if (loading) {
@@ -855,35 +762,30 @@ function InspectionReportForm() {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        minHeight: '60vh'
+        height: '100vh',
+        backgroundColor: '#f8fafc'
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
-      size: 40,
-      sx: {
-        color: '#30368a'
-      }
-    }));
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, null));
   }
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, {
     sx: {
-      p: {
-        xs: 1.5,
-        md: 3
-      },
       backgroundColor: '#f8fafc',
-      minHeight: '100vh'
+      minHeight: '100vh',
+      py: {
+        xs: 2,
+        md: 4
+      }
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
-    maxWidth: "lg",
-    disableGutters: true
+    maxWidth: "lg"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, {
     sx: {
       display: 'flex',
       justifyContent: 'space-between',
       alignItems: 'center',
-      mb: 2.5,
+      mb: 3,
       flexWrap: 'wrap',
-      gap: 1.5
+      gap: 2
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, {
     sx: {
@@ -896,7 +798,7 @@ function InspectionReportForm() {
     sx: {
       color: '#0f172a'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_ArrowBack__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_ArrowBack__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
     variant: "h5",
     sx: {
       fontWeight: 700,
@@ -908,22 +810,8 @@ function InspectionReportForm() {
       gap: 1.5
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
-    variant: "outlined",
-    startIcon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_AutoAwesome__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .A, {
-      sx: {
-        color: '#8b5cf6'
-      }
-    }),
-    onClick: () => setAiOpen(true),
-    sx: {
-      textTransform: 'none',
-      borderColor: '#8b5cf6',
-      color: '#7c3aed',
-      fontWeight: 600
-    }
-  }, "Smart Draft with AI"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
     variant: "contained",
-    startIcon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Save__WEBPACK_IMPORTED_MODULE_24__/* ["default"] */ .A, null),
+    startIcon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Save__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, null),
     onClick: () => handleSubmit(false),
     disabled: saving,
     sx: {
@@ -935,7 +823,7 @@ function InspectionReportForm() {
     }
   }, saving ? 'Saving...' : 'Save'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
     variant: "contained",
-    startIcon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Visibility__WEBPACK_IMPORTED_MODULE_25__/* ["default"] */ .A, null),
+    startIcon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Visibility__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, null),
     onClick: () => handleSubmit(true),
     disabled: saving,
     sx: {
@@ -948,26 +836,27 @@ function InspectionReportForm() {
   }, "Save & View"))), errorMessage && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
     severity: "error",
     sx: {
-      mb: 2
+      mb: 3
     }
   }, errorMessage), successMessage && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
     severity: "success",
     sx: {
-      mb: 2
+      mb: 3
     }
   }, successMessage), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
-    elevation: 0,
     sx: {
-      p: 3,
+      p: {
+        xs: 2,
+        sm: 3
+      },
       mb: 3,
-      borderRadius: 2,
-      border: '1px solid #e2e8f0'
+      borderRadius: 2
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
-    variant: "subtitle1",
+    variant: "h6",
     sx: {
       fontWeight: 700,
-      color: '#0f172a',
+      color: '#1e293b',
       mb: 2
     }
   }, "1. Report Overview & Client Metadata"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .Ay, {
@@ -1004,8 +893,8 @@ function InspectionReportForm() {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
     fullWidth: true,
     size: "small",
-    label: "Report Subject *",
-    placeholder: "e.g. Overheating & Relocation of 3 AC Outdoor Units",
+    label: "Report Subject * *",
+    placeholder: "e.g. Overheating & Relocation of AC Outdoor Units",
     value: subject,
     onChange: e => setSubject(e.target.value),
     required: true
@@ -1016,7 +905,7 @@ function InspectionReportForm() {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
     fullWidth: true,
     size: "small",
-    label: "Inspection Location / Room *",
+    label: "Inspection Location / Room * *",
     placeholder: "e.g. Under-Stairway Mechanical Room & Exterior Wall",
     value: location,
     onChange: e => setLocation(e.target.value),
@@ -1025,19 +914,37 @@ function InspectionReportForm() {
     item: true,
     xs: 12,
     sm: 6
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
-    fullWidth: true,
-    size: "small",
-    select: true,
-    label: "Select Client / Customer",
-    value: customerId,
-    onChange: handleCustomerSelect
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
-    value: ""
-  }, "-- Direct Input / Unlisted Client --"), customers.map(c => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
-    key: c._id,
-    value: c._id
-  }, c.customerFullName || c.companyName || c.Customer || "".concat(c.customerFirstName || '', " ").concat(c.customerLastName || '').trim() || 'Unknown Customer')))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .Ay, {
+    id: "search-customer-select",
+    options: customers,
+    getOptionLabel: option => {
+      if (typeof option === 'string') return option;
+      return option.customerFullName || option.companyName || option.Customer || "".concat(option.customerFirstName || '', " ").concat(option.customerLastName || '').trim() || 'Unknown Customer';
+    },
+    value: customers.find(c => c._id === customerId) || null,
+    onChange: (event, newValue) => {
+      if (newValue) {
+        setCustomerId(newValue._id);
+        var name = newValue.customerFullName || newValue.companyName || newValue.Customer || "".concat(newValue.customerFirstName || '', " ").concat(newValue.customerLastName || '').trim() || '';
+        var addr = [newValue.billingAddress, newValue.billingCity].filter(Boolean).join(', ');
+        var phone = newValue.customerCompanyPhone || newValue.customerPhone || newValue.phone || newValue.mobile || '';
+        setCustomerName(name);
+        setCustomerAddress(addr);
+        setCustomerPhone(phone);
+      } else {
+        setCustomerId('');
+        setCustomerName('');
+        setCustomerAddress('');
+        setCustomerPhone('');
+      }
+    },
+    isOptionEqualToValue: (option, value) => option._id === (value === null || value === void 0 ? void 0 : value._id),
+    renderInput: params => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, _extends({}, params, {
+      size: "small",
+      label: "Search & Select Client / Customer",
+      placeholder: "Type client or company name..."
+    }))
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .Ay, {
     item: true,
     xs: 12,
     sm: 6
@@ -1045,6 +952,7 @@ function InspectionReportForm() {
     fullWidth: true,
     size: "small",
     label: "Client Name",
+    placeholder: "Auto-filled or type direct client name",
     value: customerName,
     onChange: e => setCustomerName(e.target.value)
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .Ay, {
@@ -1068,13 +976,13 @@ function InspectionReportForm() {
     label: "Branch",
     value: branchId,
     onChange: e => setBranchId(e.target.value)
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
     value: "HQ"
-  }, "HQ - Kolwezi"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
-    value: "KOLWEZI"
-  }, "Kolwezi"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
+  }, "HQ - KOLWEZI"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
     value: "LUBUMBASHI"
-  }, "Lubumbashi"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .Ay, {
+  }, "LUBUMBASHI"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
+    value: "LIKASI"
+  }, "LIKASI"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .Ay, {
     item: true,
     xs: 12,
     sm: 3
@@ -1085,19 +993,22 @@ function InspectionReportForm() {
     label: "Report Status",
     value: status,
     onChange: e => setStatus(e.target.value)
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
     value: "DRAFT"
-  }, "Draft"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
+  }, "DRAFT"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
     value: "COMPLETED"
-  }, "Completed"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
-    value: "SENT"
-  }, "Sent to Client"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
-    elevation: 0,
+  }, "COMPLETED"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
+    value: "SENT TO CLIENT"
+  }, "SENT TO CLIENT"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
+    value: "CONVERTED TO QUOTE"
+  }, "CONVERTED TO QUOTE"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
     sx: {
-      p: 3,
+      p: {
+        xs: 2,
+        sm: 3
+      },
       mb: 3,
-      borderRadius: 2,
-      border: '1px solid #e2e8f0'
+      borderRadius: 2
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, {
     sx: {
@@ -1107,61 +1018,68 @@ function InspectionReportForm() {
       mb: 2
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
-    variant: "subtitle1",
+    variant: "h6",
     sx: {
       fontWeight: 700,
-      color: '#0f172a'
+      color: '#1e293b'
     }
   }, "2. Section 1 \u2014 Current Situation & Root Cause Findings"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
     size: "small",
-    startIcon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Add__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, null),
+    startIcon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Add__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, null),
     onClick: handleAddFinding,
     sx: {
       textTransform: 'none',
-      color: '#0284c7'
+      color: '#0284c7',
+      fontWeight: 600
     }
   }, "Add Finding Bullet")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
     fullWidth: true,
-    size: "small",
     multiline: true,
     rows: 2,
+    size: "small",
     label: "Section 1 Introduction Narrative",
-    placeholder: "e.g. During our technical inspection of the three air conditioning outdoor condenser units...",
+    placeholder: "e.g. During our technical inspection of the condenser units housed inside the enclosed room beneath the stairway...",
     value: findingsIntro,
     onChange: e => setFindingsIntro(e.target.value),
     sx: {
       mb: 2.5
     }
-  }), findings.map((item, idx) => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, {
+    sx: {
+      display: 'flex',
+      flexDirection: 'column',
+      gap: 2,
+      mb: 3
+    }
+  }, findings.map((finding, idx) => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, {
     key: idx,
-    elevation: 0,
     sx: {
       p: 2,
-      mb: 1.5,
-      backgroundColor: '#f8fafc',
       border: '1px solid #e2e8f0',
-      borderRadius: 1.5
+      borderRadius: 1.5,
+      backgroundColor: '#ffffff',
+      position: 'relative'
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, {
     sx: {
       display: 'flex',
       justifyContent: 'space-between',
-      alignItems: 'flex-start',
-      mb: 1
+      alignItems: 'center',
+      mb: 1.5
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
-    variant: "caption",
+    variant: "subtitle2",
     sx: {
       fontWeight: 700,
       color: '#334155'
     }
-  }, "Bullet Point #", idx + 1), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+  }, "Bullet Point #", idx + 1), findings.length > 1 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
     size: "small",
     onClick: () => handleDeleteFinding(idx),
     sx: {
-      color: '#dc2626'
+      color: '#ef4444'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_DeleteOutline__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_DeleteOutline__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
     fontSize: "small"
   }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .Ay, {
     container: true,
@@ -1175,7 +1093,7 @@ function InspectionReportForm() {
     size: "small",
     label: "Bold Headline Title",
     placeholder: "e.g. Insufficient Room Volume & Heat Accumulation",
-    value: item.title,
+    value: finding.title,
     onChange: e => handleUpdateFinding(idx, 'title', e.target.value)
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .Ay, {
     item: true,
@@ -1183,121 +1101,18 @@ function InspectionReportForm() {
     sm: 8
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
     fullWidth: true,
-    size: "small",
     multiline: true,
     rows: 2,
+    size: "small",
     label: "Technical Observation & Detail",
-    placeholder: "e.g. The enclosed room is far too compact to accommodate three active condenser units...",
-    value: item.description,
+    placeholder: "e.g. The enclosed room is too compact to accommodate active units simultaneously with restricted airflow...",
+    value: finding.description,
     onChange: e => handleUpdateFinding(idx, 'description', e.target.value)
-  }))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
+  })))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, {
     sx: {
-      my: 2.5
+      my: 2
     }
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, {
-    sx: {
-      display: 'flex',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      mb: 2
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
-    variant: "subtitle2",
-    sx: {
-      fontWeight: 700,
-      color: '#334155'
-    }
-  }, "Section 1 Inspection Photos (", photosSection1.length, ")"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
-    component: "label",
-    size: "small",
-    variant: "outlined",
-    startIcon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_PhotoCamera__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .A, null),
-    sx: {
-      textTransform: 'none'
-    }
-  }, "Upload Photo(s)", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
-    type: "file",
-    hidden: true,
-    accept: "image/*",
-    multiple: true,
-    onChange: e => handleImageUpload(1, e)
-  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .Ay, {
-    container: true,
-    spacing: 2
-  }, photosSection1.map((photo, idx) => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .Ay, {
-    item: true,
-    xs: 12,
-    sm: 6,
-    key: idx
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
-    elevation: 0,
-    sx: {
-      p: 1.5,
-      border: '1px solid #cbd5e1',
-      borderRadius: 1.5
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, {
-    sx: {
-      position: 'relative',
-      height: 180,
-      mb: 1,
-      backgroundColor: '#000',
-      borderRadius: 1,
-      overflow: 'hidden'
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
-    src: photo.url,
-    alt: photo.caption || 'Inspection photo',
-    style: {
-      width: '100%',
-      height: '100%',
-      objectFit: 'contain'
-    }
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
-    size: "small",
-    onClick: () => handleDeletePhoto(1, idx),
-    sx: {
-      position: 'absolute',
-      top: 6,
-      right: 6,
-      backgroundColor: 'rgba(0,0,0,0.6)',
-      color: '#fff',
-      '&:hover': {
-        backgroundColor: 'rgba(220,38,38,0.8)'
-      }
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_DeleteOutline__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
-    fontSize: "small"
-  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .Ay, {
-    container: true,
-    spacing: 1
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .Ay, {
-    item: true,
-    xs: 4
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
-    size: "small",
-    label: "Figure Label",
-    value: photo.figure,
-    onChange: e => handleUpdatePhotoCaption(1, idx, 'figure', e.target.value)
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .Ay, {
-    item: true,
-    xs: 8
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
-    size: "small",
-    fullWidth: true,
-    label: "Photo Caption",
-    placeholder: "e.g. Existing three exhaust ventilation fans...",
-    value: photo.caption,
-    onChange: e => handleUpdatePhotoCaption(1, idx, 'caption', e.target.value)
-  })))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
-    elevation: 0,
-    sx: {
-      p: 3,
-      mb: 3,
-      borderRadius: 2,
-      border: '1px solid #e2e8f0'
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, {
     sx: {
       display: 'flex',
       justifyContent: 'space-between',
@@ -1308,23 +1123,108 @@ function InspectionReportForm() {
     variant: "subtitle1",
     sx: {
       fontWeight: 700,
-      color: '#0f172a'
+      color: '#334155'
     }
-  }, "3. Section 2 \u2014 Recommended Corrective Solution & Action Plan"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
+  }, "Section 1 Inspection Photos (", photosSection1.length, ")"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
+    component: "label",
     size: "small",
-    startIcon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Add__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, null),
+    variant: "outlined",
+    startIcon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_PhotoCamera__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, null),
+    sx: {
+      textTransform: 'none',
+      color: '#0284c7',
+      borderColor: '#0284c7'
+    }
+  }, "Upload Photo(s)", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+    type: "file",
+    hidden: true,
+    multiple: true,
+    accept: "image/*",
+    onChange: e => handlePhotoUpload(e, 1)
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .Ay, {
+    container: true,
+    spacing: 2
+  }, photosSection1.map((photo, pIdx) => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .Ay, {
+    item: true,
+    xs: 12,
+    sm: 6,
+    md: 4,
+    key: pIdx
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+    sx: {
+      p: 1.5,
+      border: '1px solid #e2e8f0',
+      borderRadius: 1.5
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, {
+    component: "img",
+    src: photo.url,
+    alt: photo.caption,
+    sx: {
+      width: '100%',
+      height: 160,
+      objectFit: 'cover',
+      borderRadius: 1,
+      mb: 1
+    }
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, {
+    sx: {
+      display: 'flex',
+      gap: 1,
+      alignItems: 'center'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+    fullWidth: true,
+    size: "small",
+    label: "Figure ".concat(pIdx + 1, " Caption"),
+    value: photo.caption,
+    onChange: e => handleUpdatePhotoCaption(pIdx, e.target.value, 1)
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+    size: "small",
+    onClick: () => handleDeletePhoto(pIdx, 1),
+    sx: {
+      color: '#ef4444'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_DeleteOutline__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
+    fontSize: "small"
+  })))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+    sx: {
+      p: {
+        xs: 2,
+        sm: 3
+      },
+      mb: 3,
+      borderRadius: 2
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, {
+    sx: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      mb: 2
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+    variant: "h6",
+    sx: {
+      fontWeight: 700,
+      color: '#1e293b'
+    }
+  }, "3. Section 2 \u2014 Recommended Corrective Solution & Action Plan Table"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
+    size: "small",
+    startIcon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Add__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, null),
     onClick: handleAddActionItem,
     sx: {
       textTransform: 'none',
-      color: '#0284c7'
+      color: '#0284c7',
+      fontWeight: 600
     }
   }, "Add Action Row")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
     fullWidth: true,
-    size: "small",
     multiline: true,
     rows: 2,
+    size: "small",
     label: "Section 2 Solution Narrative",
-    placeholder: "e.g. To permanently eliminate compressor overheating and restore cooling efficiency, we recommend reconfiguring the installation...",
+    placeholder: "e.g. To permanently resolve the thermal buildup and protect compressor reliability, we recommend the following scope of work:",
     value: solutionIntro,
     onChange: e => setSolutionIntro(e.target.value),
     sx: {
@@ -1337,36 +1237,42 @@ function InspectionReportForm() {
       color: '#334155',
       mb: 1
     }
-  }, "Action Plan Table Rows"), actionItems.map((item, idx) => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+  }, "Action Plan Table Rows"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, {
+    sx: {
+      display: 'flex',
+      flexDirection: 'column',
+      gap: 2,
+      mb: 3
+    }
+  }, actionItems.map((item, idx) => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, {
     key: idx,
-    elevation: 0,
     sx: {
       p: 2,
-      mb: 1.5,
-      backgroundColor: '#f8fafc',
       border: '1px solid #e2e8f0',
-      borderRadius: 1.5
+      borderRadius: 1.5,
+      backgroundColor: '#ffffff',
+      position: 'relative'
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, {
     sx: {
       display: 'flex',
       justifyContent: 'space-between',
       alignItems: 'center',
-      mb: 1
+      mb: 1.5
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
-    variant: "caption",
+    variant: "subtitle2",
     sx: {
       fontWeight: 700,
-      color: '#0f172a'
+      color: '#334155'
     }
-  }, "Action Item #", idx + 1), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+  }, "Action Item #", idx + 1), actionItems.length > 1 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
     size: "small",
     onClick: () => handleDeleteActionItem(idx),
     sx: {
-      color: '#dc2626'
+      color: '#ef4444'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_DeleteOutline__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_DeleteOutline__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
     fontSize: "small"
   }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .Ay, {
     container: true,
@@ -1388,16 +1294,16 @@ function InspectionReportForm() {
     sm: 8
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
     fullWidth: true,
-    size: "small",
     multiline: true,
     rows: 2,
+    size: "small",
     label: "Technical Scope & Execution Details",
-    placeholder: "e.g. Dismantle and remove all three existing wall-mounted ventilation fans from the louver window...",
+    placeholder: "e.g. Dismantle and remove existing ventilation fans from louver opening...",
     value: item.scope,
     onChange: e => handleUpdateActionItem(idx, 'scope', e.target.value)
-  }))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
+  })))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, {
     sx: {
-      my: 2.5
+      my: 2
     }
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, {
     sx: {
@@ -1407,7 +1313,7 @@ function InspectionReportForm() {
       mb: 2
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
-    variant: "subtitle2",
+    variant: "subtitle1",
     sx: {
       fontWeight: 700,
       color: '#334155'
@@ -1416,105 +1322,87 @@ function InspectionReportForm() {
     component: "label",
     size: "small",
     variant: "outlined",
-    startIcon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_PhotoCamera__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .A, null),
+    startIcon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_PhotoCamera__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, null),
     sx: {
-      textTransform: 'none'
+      textTransform: 'none',
+      color: '#0284c7',
+      borderColor: '#0284c7'
     }
   }, "Upload Solution Photo", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
     type: "file",
     hidden: true,
-    accept: "image/*",
     multiple: true,
-    onChange: e => handleImageUpload(2, e)
+    accept: "image/*",
+    onChange: e => handlePhotoUpload(e, 2)
   }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .Ay, {
     container: true,
     spacing: 2
-  }, photosSection2.map((photo, idx) => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .Ay, {
+  }, photosSection2.map((photo, pIdx) => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .Ay, {
     item: true,
     xs: 12,
     sm: 6,
-    key: idx
+    md: 4,
+    key: pIdx
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
-    elevation: 0,
     sx: {
       p: 1.5,
-      border: '1px solid #cbd5e1',
+      border: '1px solid #e2e8f0',
       borderRadius: 1.5
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, {
-    sx: {
-      position: 'relative',
-      height: 180,
-      mb: 1,
-      backgroundColor: '#000',
-      borderRadius: 1,
-      overflow: 'hidden'
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
+    component: "img",
     src: photo.url,
-    alt: photo.caption || 'Solution photo',
-    style: {
+    alt: photo.caption,
+    sx: {
       width: '100%',
-      height: '100%',
-      objectFit: 'contain'
+      height: 160,
+      objectFit: 'cover',
+      borderRadius: 1,
+      mb: 1
     }
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, {
+    sx: {
+      display: 'flex',
+      gap: 1,
+      alignItems: 'center'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+    fullWidth: true,
+    size: "small",
+    label: "Figure Caption",
+    value: photo.caption,
+    onChange: e => handleUpdatePhotoCaption(pIdx, e.target.value, 2)
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
     size: "small",
-    onClick: () => handleDeletePhoto(2, idx),
+    onClick: () => handleDeletePhoto(pIdx, 2),
     sx: {
-      position: 'absolute',
-      top: 6,
-      right: 6,
-      backgroundColor: 'rgba(0,0,0,0.6)',
-      color: '#fff',
-      '&:hover': {
-        backgroundColor: 'rgba(220,38,38,0.8)'
-      }
+      color: '#ef4444'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_DeleteOutline__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_DeleteOutline__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
     fontSize: "small"
-  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .Ay, {
-    container: true,
-    spacing: 1
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .Ay, {
-    item: true,
-    xs: 4
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
-    size: "small",
-    label: "Figure Label",
-    value: photo.figure,
-    onChange: e => handleUpdatePhotoCaption(2, idx, 'figure', e.target.value)
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .Ay, {
-    item: true,
-    xs: 8
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
-    size: "small",
-    fullWidth: true,
-    label: "Photo Caption",
-    placeholder: "e.g. Proposed exterior corner location beneath the window...",
-    value: photo.caption,
-    onChange: e => handleUpdatePhotoCaption(2, idx, 'caption', e.target.value)
   })))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
-    elevation: 0,
     sx: {
-      p: 3,
+      p: {
+        xs: 2,
+        sm: 3
+      },
       mb: 3,
-      borderRadius: 2,
-      border: '1px solid #e2e8f0'
+      borderRadius: 2
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
-    variant: "subtitle1",
+    variant: "h6",
     sx: {
       fontWeight: 700,
-      color: '#0f172a',
+      color: '#1e293b',
       mb: 2
     }
-  }, "4. Next Steps & Commercial Recommendation"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+  }, "4. Section 3 \u2014 Next Steps"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
     fullWidth: true,
-    size: "small",
     multiline: true,
     rows: 3,
-    label: "Next Steps Box Text",
+    size: "small",
+    label: "Next Steps Description",
+    placeholder: "e.g. Upon review and approval of this technical recommendation, Global Gate SARL will submit a detailed commercial quotation...",
     value: nextSteps,
     onChange: e => setNextSteps(e.target.value)
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, {
@@ -1522,100 +1410,43 @@ function InspectionReportForm() {
       display: 'flex',
       justifyContent: 'flex-end',
       gap: 2,
-      pb: 4
+      mb: 4
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
     variant: "outlined",
     onClick: () => navigate('/InspectionReportView'),
     sx: {
-      textTransform: 'none'
+      textTransform: 'none',
+      color: '#64748b',
+      borderColor: '#cbd5e1'
     }
   }, "Cancel"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
     variant: "contained",
-    startIcon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Save__WEBPACK_IMPORTED_MODULE_24__/* ["default"] */ .A, null),
+    startIcon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Save__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, null),
     onClick: () => handleSubmit(false),
     disabled: saving,
     sx: {
       backgroundColor: '#30368a',
+      '&:hover': {
+        backgroundColor: '#1e2468'
+      },
       textTransform: 'none',
-      px: 4
+      px: 3
     }
   }, saving ? 'Saving...' : 'Save Report'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
     variant: "contained",
-    startIcon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Visibility__WEBPACK_IMPORTED_MODULE_25__/* ["default"] */ .A, null),
+    startIcon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Visibility__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, null),
     onClick: () => handleSubmit(true),
     disabled: saving,
     sx: {
       backgroundColor: '#0284c7',
-      textTransform: 'none',
-      px: 4
-    }
-  }, "Save & View Official Report")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, {
-    open: aiOpen,
-    onClose: () => !aiLoading && setAiOpen(false),
-    maxWidth: "md",
-    fullWidth: true
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, {
-    sx: {
-      display: 'flex',
-      alignItems: 'center',
-      gap: 1,
-      fontWeight: 700
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_AutoAwesome__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .A, {
-    sx: {
-      color: '#8b5cf6'
-    }
-  }), "\u2728 Smart Draft with Gemini"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
-    dividers: true
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
-    variant: "body2",
-    sx: {
-      color: '#475569',
-      mb: 2
-    }
-  }, "Paste your rough technician notes, audio transcript, or quick observations from the site. The Gemini engine will transform your raw text into formal engineering findings and a structured action table."), aiError && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
-    severity: "error",
-    sx: {
-      mb: 2
-    }
-  }, aiError), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
-    fullWidth: true,
-    multiline: true,
-    rows: 6,
-    placeholder: "e.g. 3 aircon outdoor units placed under stairs small room with 3 fans. Room space too small, heat damaging fans and tripping compressors on overheating. Suggest to remove the 3 fans, relocate 2 units to face the linear grill, and move 3rd unit outside under window...",
-    value: aiNotes,
-    onChange: e => setAiNotes(e.target.value),
-    disabled: aiLoading
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
-    sx: {
-      p: 2
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
-    onClick: () => setAiOpen(false),
-    disabled: aiLoading,
-    sx: {
-      textTransform: 'none',
-      color: '#64748b'
-    }
-  }, "Cancel"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
-    variant: "contained",
-    onClick: handleRunAiDraft,
-    disabled: aiLoading,
-    startIcon: aiLoading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
-      size: 18,
-      sx: {
-        color: '#fff'
-      }
-    }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_AutoAwesome__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .A, null),
-    sx: {
-      backgroundColor: '#7c3aed',
       '&:hover': {
-        backgroundColor: '#6d28d9'
+        backgroundColor: '#0369a1'
       },
-      textTransform: 'none'
+      textTransform: 'none',
+      px: 3
     }
-  }, aiLoading ? 'Generating Engineering Draft...' : 'Generate AI Draft')))));
+  }, "Save & View Official Report"))));
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (InspectionReportForm);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, [

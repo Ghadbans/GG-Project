@@ -5214,3 +5214,28 @@ The standardized `renderStatusBadge` helper was seamlessly integrated into all 1
    - Windows installer packaged (`dist/Global Gate Setup 3.6.50.exe`) and mirrored.
    - Android APK re-assembled with Gradle (`server/public/downloads/GlobalGate-v3.6.50.apk`) and mirrored.
    - Pushed commit `6eb92133` to GitHub `origin main`.
+
+---
+
+### [Hotfix v3.6.50.2] - Inspection Report UX Refinements, Drawer Navigation & Quotation Conversion
+1. **Left Sliding ERP Navigation Drawer (`SidebarDashE2`)**:
+   - Integrated the standard ERP AppBar (with hamburger menu, assignment icon, user status, and logout) and persistent sliding Drawer containing `SidebarDashE2` into `InspectionReportView.js`.
+   - Users can now seamlessly toggle open the left navigation drawer to navigate back to any ERP module without getting stuck.
+2. **Searchable & Typeable Customer Autocomplete**:
+   - Replaced `<TextField select>` with MUI `<Autocomplete>` in `InspectionReportForm.js`.
+   - Users can now quickly search across 400+ clients by typing client or company name with full keyboard filtering.
+   - Automatically sorts clients newest-to-oldest (`list.slice().reverse()`) so recently added clients appear first.
+   - Selecting a client automatically auto-fills customer name, billing address, and phone number.
+3. **Removal of "Smart Draft with AI"**:
+   - Completely removed the "Smart Draft with AI" button, modal dialog, and AI generation hooks from `InspectionReportForm.js` per user request for direct technician manual data entry.
+4. **Printable PDF Header Clean-up**:
+   - Removed the repetitive `GLOBAL GATE SARL` and `GENERAL SERVICES & TECHNICAL DIVISION` subheader text next to the logo in `InspectionReportPrintView.js`, maintaining a crisp, elegant executive header.
+5. **Convert to Quotation Route Resilience**:
+   - Resolved white screen issue when clicking "Convert to Quotation" by correctly routing to `/EstimateInvoiceForm` (with fallback route alias `/EstimateForm` in `src/js/App.js`).
+   - In `EstimateInvoiceForm.js`, added `useLocation` hook to automatically ingest `location.state` (`customerId`, `customerName`, `estimateSubject`) from the inspection report.
+   - Backend automatically updates report status to `'CONVERTED TO QUOTE'` via `POST /inspection-reports/:id/convert-quote`.
+6. **Multi-Platform Production Build**:
+   - Recompiled Webpack bundles (`dist_web/`).
+   - Packaged Windows Installer: `dist/Global Gate Setup 3.6.50.exe` (99.67 MB) and mirrored to `server/public/downloads/`.
+   - Assembled Android APK: `server/public/downloads/GlobalGate-v3.6.50.apk` (19.56 MB) and mirrored to `GlobalGate.apk`.
+

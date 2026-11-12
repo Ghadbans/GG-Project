@@ -25,8 +25,17 @@ import {
   MenuItem,
   Select,
   FormControl,
-  InputLabel
+  InputLabel,
+  CssBaseline,
+  Toolbar,
+  Divider,
+  List,
+  styled
 } from '@mui/material';
+import MuiAppBar from '@mui/material/AppBar';
+import MuiDrawer from '@mui/material/Drawer';
+import MenuIcon from '@mui/icons-material/Menu';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import AddIcon from '@mui/icons-material/Add';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import EditIcon from '@mui/icons-material/Edit';
@@ -35,10 +44,68 @@ import RequestQuoteIcon from '@mui/icons-material/RequestQuote';
 import SearchIcon from '@mui/icons-material/Search';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import dayjs from 'dayjs';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectCurrentUser, logOut, setUser } from '../../../features/auth/authSlice';
 import { ENDPOINT_URL } from '../../../apiConfig';
+import SidebarDashE2 from '../../../component/SidebarDashE2';
+import NotificationVIewInfo from '../../NotificationVIewInfo';
+import MessageAdminView from '../../MessageAdminView';
+import Logout from '../../../component/NetworkLogoutIcon';
+
+const drawerWidth = 240;
+
+const AppBar = styled(MuiAppBar, {
+  shouldForwardProp: (prop) => prop !== 'open',
+})(({ theme, open }) => ({
+  zIndex: theme.zIndex.drawer + 1,
+  transition: theme.transitions.create(['width', 'margin'], {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  ...(open && {
+    marginLeft: drawerWidth,
+    width: `calc(100% - ${drawerWidth}px)`,
+    transition: theme.transitions.create(['width', 'margin'], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  }),
+}));
+
+const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
+  ({ theme, open }) => ({
+    '& .MuiDrawer-paper': {
+      position: 'relative',
+      whiteSpace: 'nowrap',
+      width: drawerWidth,
+      transition: theme.transitions.create('width', {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.enteringScreen,
+      }),
+      boxSizing: 'border-box',
+      ...(!open && {
+        overflowX: 'hidden',
+        transition: theme.transitions.create('width', {
+          easing: theme.transitions.easing.sharp,
+          duration: theme.transitions.duration.leavingScreen,
+        }),
+        width: theme.spacing(7),
+        [theme.breakpoints.up('sm')]: {
+          width: theme.spacing(9),
+        },
+      }),
+    },
+  })
+);
 
 function InspectionReportView() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const user = useSelector(selectCurrentUser);
+
+  const [sideBar, setSideBar] = useState(false);
+  const toggleDrawer = () => setSideBar(!sideBar);
+
   const [reports, setReports] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
@@ -46,6 +113,30 @@ function InspectionReportView() {
   const [deleteId, setDeleteId] = useState(null);
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [deleting, setDeleting] = useState(false);
+
+  useEffect(() => {
+    const storesUserId = localStorage.getItem('user');
+    const fetchUser = async () => {
+      if (storesUserId) {
+        try {
+          const res = await axios.get(`${ENDPOINT_URL}/get-employeeuser/${storesUserId}`);
+          const Name = res.data.data.employeeName;
+          const Role = res.data.data.role;
+          dispatch(setUser({ userName: Name, role: Role, id: res.data.data._id }));
+        } catch (error) {
+          console.error('Error fetching user:', error);
+        }
+      } else {
+        navigate('/');
+      }
+    };
+    fetchUser();
+  }, [dispatch, navigate]);
+
+  const handleLogout = () => {
+    dispatch(logOut());
+    navigate('/');
+  };
 
   const fetchReports = async () => {
     setLoading(true);
@@ -93,228 +184,304 @@ function InspectionReportView() {
     }
   };
 
+  const handleConvertToQuote = async (row) => {
+    try {
+      await axios.post(`${ENDPOINT_URL}/inspection-reports/${row._id}/convert-quote`);
+      setReports((prev) =>
+        prev.map((r) => (r._id === row._id ? { ...r, status: 'CONVERTED TO QUOTE' } : r))
+      );
+    } catch (err) {
+      console.error('Error updating status on convert:', err);
+    }
+    navigate('/EstimateInvoiceForm', {
+      state: {
+        fromInspectionReport: true,
+        reportCode: row.reportCode,
+        customerId: row.customerId,
+        customerName: row.customerName,
+        estimateSubject: row.subject || `Technical Remediation - ${row.reportCode || ''}`
+      }
+    });
+  };
+
   const getStatusChip = (status) => {
-    switch (status) {
+    const s = (status || '').toUpperCase();
+    switch (s) {
       case 'COMPLETED':
         return <Chip label="COMPLETED" size="small" sx={{ backgroundColor: '#e0f2fe', color: '#0369a1', fontWeight: 'bold' }} />;
+      case 'SENT TO CLIENT':
       case 'SENT':
-        return <Chip label="SENT" size="small" sx={{ backgroundColor: '#dcfce7', color: '#15803d', fontWeight: 'bold' }} />;
+        return <Chip label="SENT TO CLIENT" size="small" sx={{ backgroundColor: '#dcfce7', color: '#15803d', fontWeight: 'bold' }} />;
       case 'CONVERTED TO QUOTE':
-        return <Chip label="CONVERTED" size="small" sx={{ backgroundColor: '#fef3c7', color: '#b45309', fontWeight: 'bold' }} />;
+      case 'CONVERTED':
+        return <Chip label="CONVERTED TO QUOTE" size="small" sx={{ backgroundColor: '#fef3c7', color: '#b45309', fontWeight: 'bold' }} />;
       default:
         return <Chip label="DRAFT" size="small" sx={{ backgroundColor: '#f1f5f9', color: '#64748b', fontWeight: 'bold' }} />;
     }
   };
 
   return (
-    <Box sx={{ p: { xs: 1.5, md: 3 }, backgroundColor: '#f8fafc', minHeight: '100vh' }}>
-      <Container maxWidth="xl" disableGutters>
-        {/* Header Banner */}
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3, flexWrap: 'wrap', gap: 2 }}>
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
-            <AssignmentIcon sx={{ fontSize: 32, color: '#30368a' }} />
+    <Box sx={{ display: 'flex' }}>
+      <CssBaseline />
+
+      {/* ── TOP NAV BAR ── */}
+      <AppBar position="absolute" open={sideBar} sx={{ backgroundColor: '#202a5a' }}>
+        <Toolbar sx={{ pr: '24px' }}>
+          <IconButton
+            edge="start"
+            color="inherit"
+            aria-label="open drawer"
+            onClick={toggleDrawer}
+            sx={{ marginRight: '36px', ...(sideBar && { display: 'none' }) }}
+          >
+            <MenuIcon />
+          </IconButton>
+          <AssignmentIcon sx={{ mr: 1.5, fontSize: 26 }} />
+          <Typography component="h1" variant="h6" color="inherit" noWrap sx={{ flexGrow: 1, fontWeight: 600 }}>
+            Technical Inspection Reports
+          </Typography>
+          <NotificationVIewInfo />
+          <MessageAdminView name={user?.data?.userName || ''} role={user?.data?.role || ''} />
+          <IconButton color="inherit" onClick={handleLogout}>
+            <Logout style={{ color: 'white' }} />
+          </IconButton>
+        </Toolbar>
+      </AppBar>
+
+      {/* ── LEFT SLIDING DRAWER ── */}
+      <Drawer
+        variant="permanent"
+        open={sideBar}
+        onMouseEnter={() => setSideBar(true)}
+        onMouseLeave={() => setSideBar(false)}
+      >
+        <Toolbar sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', px: [1] }}>
+          <IconButton onClick={toggleDrawer}>
+            <ChevronLeftIcon />
+          </IconButton>
+        </Toolbar>
+        <Divider />
+        <List sx={{ height: '700px' }}>
+          <SidebarDashE2 />
+        </List>
+      </Drawer>
+
+      {/* ── MAIN CONTENT ── */}
+      <Box
+        component="main"
+        sx={{
+          backgroundColor: (theme) =>
+            theme.palette.mode === 'light' ? theme.palette.grey[100] : theme.palette.grey[900],
+          flexGrow: 1,
+          height: '100vh',
+          overflow: 'auto',
+          pt: 10,
+          pb: 6,
+          px: { xs: 2, sm: 3 }
+        }}
+      >
+        <Container maxWidth="xl" disableGutters>
+          {/* Header Banner */}
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3, flexWrap: 'wrap', gap: 2 }}>
             <Box>
               <Typography variant="h5" sx={{ fontWeight: 700, color: '#0f172a' }}>
-                Technical Inspection Reports
+                Inspection Reports Registry
               </Typography>
               <Typography variant="body2" sx={{ color: '#64748b' }}>
-                Diagnostic reports, site surveys, and engineering recommendations
+                Engineering surveys, diagnostic root causes, and remediation action plans
               </Typography>
             </Box>
+            <Button
+              variant="contained"
+              component={NavLink}
+              to="/InspectionReportForm"
+              startIcon={<AddIcon />}
+              sx={{
+                backgroundColor: '#30368a',
+                '&:hover': { backgroundColor: '#1e2468' },
+                textTransform: 'none',
+                fontWeight: 600,
+                px: 3,
+                py: 1
+              }}
+            >
+              New Inspection Report
+            </Button>
           </Box>
-          <Button
-            variant="contained"
-            component={NavLink}
-            to="/InspectionReportForm"
-            startIcon={<AddIcon />}
-            sx={{
-              backgroundColor: '#30368a',
-              '&:hover': { backgroundColor: '#1e2468' },
-              textTransform: 'none',
-              fontWeight: 600,
-              px: 3,
-              py: 1
-            }}
-          >
-            New Inspection Report
-          </Button>
-        </Box>
 
-        {/* Search and Filters Bar */}
-        <Paper elevation={0} sx={{ p: 2, mb: 3, borderRadius: 2, border: '1px solid #e2e8f0' }}>
-          <form onSubmit={handleSearchSubmit}>
-            <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', alignItems: 'center' }}>
-              <TextField
-                size="small"
-                placeholder="Search by subject, customer, report #, or location..."
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                sx={{ flex: 1, minWidth: '260px' }}
-                InputProps={{
-                  endAdornment: (
-                    <IconButton size="small" type="submit">
-                      <SearchIcon fontSize="small" />
-                    </IconButton>
-                  )
-                }}
-              />
-              <FormControl size="small" sx={{ minWidth: 150 }}>
-                <InputLabel>Status</InputLabel>
-                <Select
-                  value={statusFilter}
-                  label="Status"
-                  onChange={(e) => setStatusFilter(e.target.value)}
+          {/* Search & Filter Bar */}
+          <Paper sx={{ p: 2, mb: 3, borderRadius: 2 }}>
+            <form onSubmit={handleSearchSubmit}>
+              <Box sx={{ display: 'flex', gap: 2, alignItems: 'center', flexWrap: 'wrap' }}>
+                <TextField
+                  fullWidth
+                  size="small"
+                  placeholder="Search by subject, customer, report #, or location..."
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  sx={{ flex: { xs: '1 1 100%', md: '1 1 auto' } }}
+                  InputProps={{
+                    endAdornment: (
+                      <IconButton type="submit" size="small">
+                        <SearchIcon />
+                      </IconButton>
+                    )
+                  }}
+                />
+                <FormControl size="small" sx={{ minWidth: 200 }}>
+                  <InputLabel id="status-filter-label">Status</InputLabel>
+                  <Select
+                    labelId="status-filter-label"
+                    value={statusFilter}
+                    label="Status"
+                    onChange={(e) => setStatusFilter(e.target.value)}
+                  >
+                    <MenuItem value="All">All Statuses</MenuItem>
+                    <MenuItem value="DRAFT">Draft</MenuItem>
+                    <MenuItem value="COMPLETED">Completed</MenuItem>
+                    <MenuItem value="SENT TO CLIENT">Sent to Client</MenuItem>
+                    <MenuItem value="CONVERTED TO QUOTE">Converted to Quote</MenuItem>
+                  </Select>
+                </FormControl>
+                <Button
+                  type="submit"
+                  variant="outlined"
+                  sx={{ textTransform: 'none', borderColor: '#cbd5e1', color: '#334155' }}
                 >
-                  <MenuItem value="All">All Statuses</MenuItem>
-                  <MenuItem value="DRAFT">Draft</MenuItem>
-                  <MenuItem value="COMPLETED">Completed</MenuItem>
-                  <MenuItem value="SENT">Sent to Client</MenuItem>
-                  <MenuItem value="CONVERTED TO QUOTE">Converted to Quote</MenuItem>
-                </Select>
-              </FormControl>
-              <Button type="submit" variant="outlined" sx={{ textTransform: 'none' }}>
-                Apply
-              </Button>
-            </Box>
-          </form>
-        </Paper>
+                  Apply
+                </Button>
+              </Box>
+            </form>
+          </Paper>
 
-        {/* Data Table */}
-        <TableContainer component={Paper} elevation={0} sx={{ borderRadius: 2, border: '1px solid #e2e8f0' }}>
-          <Table>
-            <TableHead sx={{ backgroundColor: '#f1f5f9' }}>
-              <TableRow>
-                <TableCell sx={{ fontWeight: 700, color: '#334155', width: 50 }}>#</TableCell>
-                <TableCell sx={{ fontWeight: 700, color: '#334155', width: 110 }}>REPORT #</TableCell>
-                <TableCell sx={{ fontWeight: 700, color: '#334155', width: 120 }}>DATE</TableCell>
-                <TableCell sx={{ fontWeight: 700, color: '#334155' }}>CLIENT</TableCell>
-                <TableCell sx={{ fontWeight: 700, color: '#334155' }}>SUBJECT</TableCell>
-                <TableCell sx={{ fontWeight: 700, color: '#334155' }}>LOCATION</TableCell>
-                <TableCell sx={{ fontWeight: 700, color: '#334155', width: 130 }}>STATUS</TableCell>
-                <TableCell sx={{ fontWeight: 700, color: '#334155', width: 150, textAlign: 'center' }}>ACTIONS</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {loading ? (
+          {/* Table Container */}
+          <TableContainer component={Paper} sx={{ borderRadius: 2, boxShadow: '0 1px 3px rgba(0,0,0,0.08)' }}>
+            <Table size="medium">
+              <TableHead sx={{ backgroundColor: '#f8fafc' }}>
                 <TableRow>
-                  <TableCell colSpan={8} sx={{ textAlign: 'center', py: 6 }}>
-                    <CircularProgress size={32} sx={{ color: '#30368a' }} />
-                    <Typography variant="body2" sx={{ mt: 1, color: '#64748b' }}>
-                      Loading inspection reports...
-                    </Typography>
-                  </TableCell>
+                  <TableCell sx={{ fontWeight: 700, color: '#334155' }}>#</TableCell>
+                  <TableCell sx={{ fontWeight: 700, color: '#334155' }}>REPORT #</TableCell>
+                  <TableCell sx={{ fontWeight: 700, color: '#334155' }}>DATE</TableCell>
+                  <TableCell sx={{ fontWeight: 700, color: '#334155' }}>CLIENT</TableCell>
+                  <TableCell sx={{ fontWeight: 700, color: '#334155' }}>SUBJECT</TableCell>
+                  <TableCell sx={{ fontWeight: 700, color: '#334155' }}>LOCATION</TableCell>
+                  <TableCell sx={{ fontWeight: 700, color: '#334155' }}>STATUS</TableCell>
+                  <TableCell sx={{ fontWeight: 700, color: '#334155', textAlign: 'center' }}>ACTIONS</TableCell>
                 </TableRow>
-              ) : reports.length === 0 ? (
-                <TableRow>
-                  <TableCell colSpan={8} sx={{ textAlign: 'center', py: 6 }}>
-                    <AssignmentIcon sx={{ fontSize: 48, color: '#cbd5e1', mb: 1 }} />
-                    <Typography variant="h6" sx={{ color: '#64748b', fontSize: 16 }}>
-                      No Inspection Reports Found
-                    </Typography>
-                    <Typography variant="body2" sx={{ color: '#94a3b8', mb: 2 }}>
-                      Create your first inspection and corrective action report.
-                    </Typography>
-                    <Button
-                      variant="contained"
-                      component={NavLink}
-                      to="/InspectionReportForm"
-                      startIcon={<AddIcon />}
-                      sx={{ backgroundColor: '#30368a', textTransform: 'none' }}
-                    >
-                      New Report
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              ) : (
-                reports.map((row, idx) => (
-                  <TableRow key={row._id} hover sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                    <TableCell sx={{ color: '#64748b' }}>{idx + 1}</TableCell>
-                    <TableCell sx={{ fontWeight: 700, color: '#30368a' }}>{row.reportCode}</TableCell>
-                    <TableCell>{dayjs(row.date).format('DD/MM/YYYY')}</TableCell>
-                    <TableCell sx={{ fontWeight: 600 }}>{row.customerName || 'N/A'}</TableCell>
-                    <TableCell sx={{ maxWidth: 300, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                      {row.subject}
-                    </TableCell>
-                    <TableCell sx={{ maxWidth: 220, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                      {row.location}
-                    </TableCell>
-                    <TableCell>{getStatusChip(row.status)}</TableCell>
-                    <TableCell sx={{ textAlign: 'center', whiteSpace: 'nowrap' }}>
-                      <Tooltip title="View & Print Official PDF">
-                        <IconButton
-                          size="small"
-                          sx={{ color: '#0284c7' }}
-                          onClick={() => navigate(`/InspectionReportPrintView/${row._id}`)}
-                        >
-                          <VisibilityIcon fontSize="small" />
-                        </IconButton>
-                      </Tooltip>
-                      <Tooltip title="Edit Report">
-                        <IconButton
-                          size="small"
-                          sx={{ color: '#d97706' }}
-                          onClick={() => navigate(`/InspectionReportForm/${row._id}`)}
-                        >
-                          <EditIcon fontSize="small" />
-                        </IconButton>
-                      </Tooltip>
-                      <Tooltip title="Convert to Quotation">
-                        <IconButton
-                          size="small"
-                          sx={{ color: '#16a34a' }}
-                          onClick={() =>
-                            navigate('/EstimateForm', {
-                              state: {
-                                customerName: row.customerName,
-                                customerId: row.customerId,
-                                estimateSubject: row.subject
-                              }
-                            })
-                          }
-                        >
-                          <RequestQuoteIcon fontSize="small" />
-                        </IconButton>
-                      </Tooltip>
-                      <Tooltip title="Delete Report">
-                        <IconButton
-                          size="small"
-                          sx={{ color: '#dc2626' }}
-                          onClick={() => handleOpenDelete(row._id)}
-                        >
-                          <DeleteIcon fontSize="small" />
-                        </IconButton>
-                      </Tooltip>
+              </TableHead>
+              <TableBody>
+                {loading ? (
+                  <TableRow>
+                    <TableCell colSpan={8} sx={{ textAlign: 'center', py: 6 }}>
+                      <CircularProgress size={32} />
+                      <Typography variant="body2" sx={{ mt: 1.5, color: '#64748b' }}>
+                        Loading inspection reports...
+                      </Typography>
                     </TableCell>
                   </TableRow>
-                ))
-              )}
-            </TableBody>
-          </Table>
-        </TableContainer>
+                ) : reports.length === 0 ? (
+                  <TableRow>
+                    <TableCell colSpan={8} sx={{ textAlign: 'center', py: 6 }}>
+                      <AssignmentIcon sx={{ fontSize: 48, color: '#cbd5e1', mb: 1 }} />
+                      <Typography variant="body1" sx={{ color: '#64748b', fontWeight: 600 }}>
+                        No inspection reports found.
+                      </Typography>
+                      <Typography variant="body2" sx={{ color: '#94a3b8' }}>
+                        Click "New Inspection Report" above to create your first report.
+                      </Typography>
+                    </TableCell>
+                  </TableRow>
+                ) : (
+                  reports.map((row, index) => (
+                    <TableRow key={row._id} hover sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                      <TableCell sx={{ color: '#64748b' }}>{index + 1}</TableCell>
+                      <TableCell sx={{ fontWeight: 700, color: '#30368a' }}>
+                        {row.reportCode || `IR-${String(row.reportNumber || 0).padStart(4, '0')}`}
+                      </TableCell>
+                      <TableCell sx={{ color: '#334155' }}>
+                        {row.date ? dayjs(row.date).format('DD/MM/YYYY') : '-'}
+                      </TableCell>
+                      <TableCell sx={{ fontWeight: 600, color: '#0f172a' }}>
+                        {row.customerName || 'Direct / Unlisted Client'}
+                      </TableCell>
+                      <TableCell sx={{ maxWidth: 300, color: '#334155' }}>
+                        <Typography variant="body2" noWrap title={row.subject}>
+                          {row.subject || '-'}
+                        </Typography>
+                      </TableCell>
+                      <TableCell sx={{ color: '#64748b' }}>
+                        {row.location || '-'}
+                      </TableCell>
+                      <TableCell>{getStatusChip(row.status)}</TableCell>
+                      <TableCell sx={{ textAlign: 'center', whiteSpace: 'nowrap' }}>
+                        <Tooltip title="View & Print Official PDF">
+                          <IconButton
+                            size="small"
+                            sx={{ color: '#0284c7' }}
+                            onClick={() => navigate(`/InspectionReportPrintView/${row._id}`)}
+                          >
+                            <VisibilityIcon fontSize="small" />
+                          </IconButton>
+                        </Tooltip>
+                        <Tooltip title="Edit Report">
+                          <IconButton
+                            size="small"
+                            sx={{ color: '#d97706' }}
+                            onClick={() => navigate(`/InspectionReportForm/${row._id}`)}
+                          >
+                            <EditIcon fontSize="small" />
+                          </IconButton>
+                        </Tooltip>
+                        <Tooltip title="Convert to Quotation">
+                          <IconButton
+                            size="small"
+                            sx={{ color: '#16a34a' }}
+                            onClick={() => handleConvertToQuote(row)}
+                          >
+                            <RequestQuoteIcon fontSize="small" />
+                          </IconButton>
+                        </Tooltip>
+                        <Tooltip title="Delete Report">
+                          <IconButton
+                            size="small"
+                            sx={{ color: '#dc2626' }}
+                            onClick={() => handleOpenDelete(row._id)}
+                          >
+                            <DeleteIcon fontSize="small" />
+                          </IconButton>
+                        </Tooltip>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                )}
+              </TableBody>
+            </Table>
+          </TableContainer>
 
-        {/* Delete Confirmation Dialog */}
-        <Dialog open={deleteOpen} onClose={() => setDeleteOpen(false)}>
-          <DialogTitle sx={{ fontWeight: 700 }}>Confirm Deletion</DialogTitle>
-          <DialogContent>
-            <Typography variant="body2" sx={{ color: '#475569' }}>
-              Are you sure you want to permanently delete this inspection report? This action cannot be undone.
-            </Typography>
-          </DialogContent>
-          <DialogActions sx={{ p: 2 }}>
-            <Button onClick={() => setDeleteOpen(false)} sx={{ textTransform: 'none', color: '#64748b' }}>
-              Cancel
-            </Button>
-            <Button
-              onClick={handleConfirmDelete}
-              variant="contained"
-              disabled={deleting}
-              sx={{ backgroundColor: '#dc2626', '&:hover': { backgroundColor: '#b91c1c' }, textTransform: 'none' }}
-            >
-              {deleting ? 'Deleting...' : 'Delete'}
-            </Button>
-          </DialogActions>
-        </Dialog>
-      </Container>
+          {/* Delete Confirmation Dialog */}
+          <Dialog open={deleteOpen} onClose={() => setDeleteOpen(false)}>
+            <DialogTitle sx={{ fontWeight: 700 }}>Confirm Deletion</DialogTitle>
+            <DialogContent>
+              <Typography variant="body2" sx={{ color: '#475569' }}>
+                Are you sure you want to permanently delete this inspection report? This action cannot be undone.
+              </Typography>
+            </DialogContent>
+            <DialogActions sx={{ p: 2 }}>
+              <Button onClick={() => setDeleteOpen(false)} sx={{ textTransform: 'none', color: '#64748b' }}>
+                Cancel
+              </Button>
+              <Button
+                onClick={handleConfirmDelete}
+                variant="contained"
+                disabled={deleting}
+                sx={{ backgroundColor: '#dc2626', '&:hover': { backgroundColor: '#b91c1c' }, textTransform: 'none' }}
+              >
+                {deleting ? 'Deleting...' : 'Delete'}
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </Container>
+      </Box>
     </Box>
   );
 }

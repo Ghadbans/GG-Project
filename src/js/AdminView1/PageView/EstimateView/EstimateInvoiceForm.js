@@ -24,7 +24,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import axios from 'axios';
 import { Add, ArrowUpwardOutlined, DragIndicatorRounded, Edit, Refresh, RemoveCircleOutline } from '@mui/icons-material';
 import { v4 } from 'uuid';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { ENDPOINT_URL } from '../../../apiConfig';
 import { invalidateCache } from '../../../utils/apiCache';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
@@ -145,6 +145,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 function EstimateInvoiceForm() {
   const isMobile = useIsMobile();
   const navigate = useNavigate();
+  const location = useLocation();
   const dispatch = useDispatch();
   const user = useSelector(selectCurrentUser);
 
@@ -180,7 +181,7 @@ function EstimateInvoiceForm() {
     const date = new Date()
     return date
   });
-  const [estimateSubject, setEstimateSubject] = useState("");
+  const [estimateSubject, setEstimateSubject] = useState(() => (location.state?.estimateSubject || ""));
   const status = "Draft";
   const [estimateDefect, setEstimateDefect] = useState("");
   const [note, setNote] = useState("WE LOOK FORWARD TO THE OPPORTUNITY TO DO BUSINESS WITH YOU.");

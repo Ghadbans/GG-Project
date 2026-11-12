@@ -61,12 +61,17 @@ function InspectionReportPrintView() {
     window.print();
   };
 
-  const handleConvertToQuote = () => {
-    navigate('/EstimateForm', {
+  const handleConvertToQuote = async () => {
+    try {
+      await axios.post(`${ENDPOINT_URL}/inspection-reports/${report._id}/convert-quote`);
+    } catch (_) {}
+    navigate('/EstimateInvoiceForm', {
       state: {
-        customerName: report.customerName,
+        fromInspectionReport: true,
+        reportCode: report.reportCode,
         customerId: report.customerId,
-        estimateSubject: report.subject
+        customerName: report.customerName,
+        estimateSubject: report.subject || `Technical Remediation - ${report.reportCode || ''}`
       }
     });
   };
@@ -136,20 +141,12 @@ function InspectionReportPrintView() {
       >
         {/* ── 1. CORPORATE HEADER ── */}
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 2 }}>
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <img
               src={defaultLogo}
               alt="Global Gate Logo"
-              style={{ maxHeight: '60px', maxWidth: '170px', objectFit: 'contain' }}
+              style={{ maxHeight: '70px', maxWidth: '200px', objectFit: 'contain' }}
             />
-            <Box>
-              <Typography sx={{ fontWeight: 800, fontSize: '18px', color: '#093170', letterSpacing: '0.5px', lineHeight: 1.2 }}>
-                GLOBAL GATE SARL
-              </Typography>
-              <Typography sx={{ fontSize: '9.5px', fontWeight: 600, color: '#0284c7', letterSpacing: '0.5px' }}>
-                GENERAL SERVICES & TECHNICAL DIVISION
-              </Typography>
-            </Box>
           </Box>
           <Box sx={{ textAlign: 'right', fontSize: '9.5px', color: '#475569', lineHeight: 1.4 }}>
             <Typography sx={{ fontSize: '9.5px', color: '#475569' }}>Avenue Salongo, Q/Industriel, C/Manika, Kolwezi</Typography>

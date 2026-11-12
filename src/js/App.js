@@ -336,6 +336,7 @@ function App() {
             {/**Estimate Routes */}
             <Route path='EstimateViewAdmin' element={<EstimateViewAdmin />}></Route>
             <Route path='EstimateInvoiceForm' element={<EstimateInvoiceForm />}></Route>
+            <Route path='EstimateForm' element={<EstimateInvoiceForm />}></Route>
             <Route path='EstimateInvoiceFormUpdate/:id' element={<EstimateInvoiceFormUpdate />}></Route>
             <Route path='EstimateViewAdminAll/:id' element={<EstimateViewAdminAll />}></Route>
             <Route path='EstimateInformation/:id' element={<EstimateInformation />}></Route>

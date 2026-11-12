@@ -127,15 +127,25 @@ function InspectionReportPrintView() {
   var handlePrint = () => {
     window.print();
   };
-  var handleConvertToQuote = () => {
-    navigate('/EstimateForm', {
-      state: {
-        customerName: report.customerName,
-        customerId: report.customerId,
-        estimateSubject: report.subject
-      }
+  var handleConvertToQuote = /*#__PURE__*/function () {
+    var _ref2 = _asyncToGenerator(function* () {
+      try {
+        yield axios__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_13__/* .ENDPOINT_URL */ .m, "/inspection-reports/").concat(report._id, "/convert-quote"));
+      } catch (_) {}
+      navigate('/EstimateInvoiceForm', {
+        state: {
+          fromInspectionReport: true,
+          reportCode: report.reportCode,
+          customerId: report.customerId,
+          customerName: report.customerName,
+          estimateSubject: report.subject || "Technical Remediation - ".concat(report.reportCode || '')
+        }
+      });
     });
-  };
+    return function handleConvertToQuote() {
+      return _ref2.apply(this, arguments);
+    };
+  }();
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, {
     sx: {
       backgroundColor: '#f1f5f9',
@@ -222,33 +232,17 @@ function InspectionReportPrintView() {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, {
     sx: {
       display: 'flex',
-      alignItems: 'center',
-      gap: 1.5
+      alignItems: 'center'
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
     src: (_img_images_png__WEBPACK_IMPORTED_MODULE_14___default()),
     alt: "Global Gate Logo",
     style: {
-      maxHeight: '60px',
-      maxWidth: '170px',
+      maxHeight: '70px',
+      maxWidth: '200px',
       objectFit: 'contain'
     }
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
-    sx: {
-      fontWeight: 800,
-      fontSize: '18px',
-      color: '#093170',
-      letterSpacing: '0.5px',
-      lineHeight: 1.2
-    }
-  }, "GLOBAL GATE SARL"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
-    sx: {
-      fontSize: '9.5px',
-      fontWeight: 600,
-      color: '#0284c7',
-      letterSpacing: '0.5px'
-    }
-  }, "GENERAL SERVICES & TECHNICAL DIVISION"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, {
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, {
     sx: {
       textAlign: 'right',
       fontSize: '9.5px',

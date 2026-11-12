@@ -13,17 +13,13 @@ import {
   Divider,
   MenuItem,
   CircularProgress,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
   Alert,
-  Tooltip
+  Tooltip,
+  Autocomplete
 } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
 import SaveIcon from '@mui/icons-material/Save';
 import VisibilityIcon from '@mui/icons-material/Visibility';
@@ -40,15 +36,15 @@ function InspectionReportForm() {
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
 
-  // Customer dropdown data
+  // Client Selection List
   const [customers, setCustomers] = useState([]);
 
-  // Form State
+  // Form Fields
   const [reportTitle, setReportTitle] = useState('Technical Inspection & Corrective Action Report');
   const [subject, setSubject] = useState('');
   const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));
   const [location, setLocation] = useState('');
-  const [preparedBy, setPreparedBy] = useState('HVAC Maintenance Team');
+  const [preparedBy, setPreparedBy] = useState('Global Gate Technical Team');
   const [customerId, setCustomerId] = useState('');
   const [customerName, setCustomerName] = useState('');
   const [customerAddress, setCustomerAddress] = useState('');
@@ -56,14 +52,14 @@ function InspectionReportForm() {
   const [branchId, setBranchId] = useState('HQ');
   const [status, setStatus] = useState('DRAFT');
 
-  // Section 1: Findings
+  // Section 1: Findings (Clean & Empty)
   const [findingsIntro, setFindingsIntro] = useState('');
   const [findings, setFindings] = useState([
     { title: '', description: '' }
   ]);
   const [photosSection1, setPhotosSection1] = useState([]);
 
-  // Section 2: Solutions & Action Plan Table
+  // Section 2: Solutions & Action Plan Table (Clean & Empty)
   const [solutionIntro, setSolutionIntro] = useState('');
   const [actionItems, setActionItems] = useState([
     { actionItem: '', scope: '' }
@@ -73,19 +69,14 @@ function InspectionReportForm() {
   // Next steps
   const [nextSteps, setNextSteps] = useState('');
 
-  // AI Smart Draft Dialog State
-  const [aiOpen, setAiOpen] = useState(false);
-  const [aiNotes, setAiNotes] = useState('');
-  const [aiLoading, setAiLoading] = useState(false);
-  const [aiError, setAiError] = useState('');
-
-  // Fetch Customers & Initial Report
+  // Fetch Customers (Newest to Oldest) & Initial Report if editing
   useEffect(() => {
     const fetchCustomers = async () => {
       try {
         const res = await axios.get(`${ENDPOINT_URL}/customer`);
         const list = Array.isArray(res.data) ? res.data : (res.data?.data || []);
-        setCustomers(list);
+        // Reverse array so newest registered clients appear at top of dropdown
+        setCustomers(list.slice().reverse());
       } catch (err) {
         console.error('Error fetching customers:', err);
       }
@@ -110,10 +101,10 @@ function InspectionReportForm() {
             setBranchId(r.branchId || 'HQ');
             setStatus(r.status || 'DRAFT');
             setFindingsIntro(r.findingsIntro || '');
-            setFindings(Array.isArray(r.findings) && r.findings.length > 0 ? r.findings : []);
+            setFindings(Array.isArray(r.findings) && r.findings.length > 0 ? r.findings : [{ title: '', description: '' }]);
             setPhotosSection1(Array.isArray(r.photosSection1) ? r.photosSection1 : []);
             setSolutionIntro(r.solutionIntro || '');
-            setActionItems(Array.isArray(r.actionItems) && r.actionItems.length > 0 ? r.actionItems : []);
+            setActionItems(Array.isArray(r.actionItems) && r.actionItems.length > 0 ? r.actionItems : [{ actionItem: '', scope: '' }]);
             setPhotosSection2(Array.isArray(r.photosSection2) ? r.photosSection2 : []);
             setNextSteps(r.nextSteps || '');
           }
@@ -127,20 +118,6 @@ function InspectionReportForm() {
       fetchReport();
     }
   }, [id, isEditing]);
-
-  const handleCustomerSelect = (e) => {
-    const selectedId = e.target.value;
-    setCustomerId(selectedId);
-    const found = customers.find((c) => c._id === selectedId);
-    if (found) {
-      const name = found.customerFullName || found.companyName || found.Customer || `${found.customerFirstName || ''} ${found.customerLastName || ''}`.trim() || '';
-      const addr = [found.billingAddress, found.billingCity].filter(Boolean).join(', ');
-      const phone = found.customerCompanyPhone || found.customerPhone || found.phone || found.mobile || '';
-      setCustomerName(name);
-      setCustomerAddress(addr);
-      setCustomerPhone(phone);
-    }
-  };
 
   // Section 1: Findings Row Operations
   const handleAddFinding = () => {
@@ -159,8 +136,7 @@ function InspectionReportForm() {
 
   // Section 2: Action Items Table Row Operations
   const handleAddActionItem = () => {
-    const nextIdx = actionItems.length + 1;
-    setActionItems((prev) => [...prev, { actionItem: `${nextIdx}. New Scope Item`, scope: '' }]);
+    setActionItems((prev) => [...prev, { actionItem: '', scope: '' }]);
   };
   const handleUpdateActionItem = (index, field, value) => {
     setActionItems((prev) => {
@@ -173,40 +149,46 @@ function InspectionReportForm() {
     setActionItems((prev) => prev.filter((_, i) => i !== index));
   };
 
-  // Image Upload Handler (reads file to base64)
-  const handleImageUpload = (section, e) => {
+  // Photo Upload Handler (Converts to Base64)
+  const handlePhotoUpload = (e, section) => {
     const files = Array.from(e.target.files);
-    if (!files.length) return;
+    if (!files || files.length === 0) return;
 
     files.forEach((file) => {
       const reader = new FileReader();
-      reader.onload = (uploadEvent) => {
-        const base64 = uploadEvent.target.result;
+      reader.onloadend = () => {
+        const newPhoto = {
+          url: reader.result,
+          caption: file.name.replace(/\.[^/.]+$/, '').toUpperCase()
+        };
         if (section === 1) {
-          setPhotosSection1((prev) => [
-            ...prev,
-            {
-              url: base64,
-              figure: `Figure ${prev.length + 1}`,
-              caption: ''
-            }
-          ]);
+          setPhotosSection1((prev) => [...prev, newPhoto]);
         } else {
-          setPhotosSection2((prev) => [
-            ...prev,
-            {
-              url: base64,
-              figure: `Figure ${photosSection1.length + prev.length + 1}`,
-              caption: ''
-            }
-          ]);
+          setPhotosSection2((prev) => [...prev, newPhoto]);
         }
       };
       reader.readAsDataURL(file);
     });
+    e.target.value = '';
   };
 
-  const handleDeletePhoto = (section, index) => {
+  const handleUpdatePhotoCaption = (index, caption, section) => {
+    if (section === 1) {
+      setPhotosSection1((prev) => {
+        const copy = [...prev];
+        copy[index].caption = caption;
+        return copy;
+      });
+    } else {
+      setPhotosSection2((prev) => {
+        const copy = [...prev];
+        copy[index].caption = caption;
+        return copy;
+      });
+    }
+  };
+
+  const handleDeletePhoto = (index, section) => {
     if (section === 1) {
       setPhotosSection1((prev) => prev.filter((_, i) => i !== index));
     } else {
@@ -214,64 +196,14 @@ function InspectionReportForm() {
     }
   };
 
-  const handleUpdatePhotoCaption = (section, index, field, value) => {
-    if (section === 1) {
-      setPhotosSection1((prev) => {
-        const copy = [...prev];
-        copy[index][field] = value;
-        return copy;
-      });
-    } else {
-      setPhotosSection2((prev) => {
-        const copy = [...prev];
-        copy[index][field] = value;
-        return copy;
-      });
-    }
-  };
-
-  // AI Smart Draft Trigger
-  const handleRunAiDraft = async () => {
-    if (!aiNotes.trim()) {
-      setAiError('Please enter some field notes first.');
-      return;
-    }
-    setAiLoading(true);
-    setAiError('');
-    try {
-      const res = await axios.post(`${ENDPOINT_URL}/inspection-reports/ai-draft`, {
-        notes: aiNotes.trim(),
-        subject,
-        customerName,
-        location
-      });
-      if (res.data && res.data.success && res.data.draft) {
-        const d = res.data.draft;
-        if (d.subject) setSubject(d.subject);
-        if (d.findingsIntro) setFindingsIntro(d.findingsIntro);
-        if (Array.isArray(d.findings) && d.findings.length > 0) setFindings(d.findings);
-        if (d.solutionIntro) setSolutionIntro(d.solutionIntro);
-        if (Array.isArray(d.actionItems) && d.actionItems.length > 0) setActionItems(d.actionItems);
-        if (d.nextSteps) setNextSteps(d.nextSteps);
-        setAiOpen(false);
-        setSuccessMessage('AI Draft generated and applied successfully!');
-      }
-    } catch (err) {
-      console.error('Error generating AI draft:', err);
-      setAiError(err.response?.data?.error || err.message || 'AI generation failed.');
-    } finally {
-      setAiLoading(false);
-    }
-  };
-
-  // Save Report
+  // Save / Submit Form
   const handleSubmit = async (andView = false) => {
     if (!subject.trim()) {
-      setErrorMessage('Please provide a report subject.');
+      setErrorMessage('Report Subject is required.');
       return;
     }
     if (!location.trim()) {
-      setErrorMessage('Please provide the inspection location.');
+      setErrorMessage('Inspection Location is required.');
       return;
     }
 
@@ -281,23 +213,23 @@ function InspectionReportForm() {
 
     const payload = {
       reportTitle,
-      subject: subject.trim(),
+      subject,
       date,
-      location: location.trim(),
-      preparedBy: preparedBy.trim(),
-      customerId: customerId || null,
-      customerName: customerName.trim(),
-      customerAddress: customerAddress.trim(),
-      customerPhone: customerPhone.trim(),
+      location,
+      preparedBy,
+      customerId,
+      customerName,
+      customerAddress,
+      customerPhone,
       branchId,
+      status,
       findingsIntro,
       findings,
       photosSection1,
       solutionIntro,
       actionItems,
       photosSection2,
-      nextSteps,
-      status
+      nextSteps
     };
 
     try {
@@ -317,8 +249,8 @@ function InspectionReportForm() {
         setTimeout(() => navigate('/InspectionReportView'), 800);
       }
     } catch (err) {
-      console.error('Error saving report:', err);
-      setErrorMessage(err.response?.data?.error || 'Failed to save report.');
+      console.error('Error saving inspection report:', err);
+      setErrorMessage(err.response?.data?.error || err.message || 'Failed to save report.');
     } finally {
       setSaving(false);
     }
@@ -326,17 +258,17 @@ function InspectionReportForm() {
 
   if (loading) {
     return (
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '60vh' }}>
-        <CircularProgress size={40} sx={{ color: '#30368a' }} />
+      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', backgroundColor: '#f8fafc' }}>
+        <CircularProgress />
       </Box>
     );
   }
 
   return (
-    <Box sx={{ p: { xs: 1.5, md: 3 }, backgroundColor: '#f8fafc', minHeight: '100vh' }}>
-      <Container maxWidth="lg" disableGutters>
-        {/* Top Navigation & Action Header */}
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2.5, flexWrap: 'wrap', gap: 1.5 }}>
+    <Box sx={{ backgroundColor: '#f8fafc', minHeight: '100vh', py: { xs: 2, md: 4 } }}>
+      <Container maxWidth="lg">
+        {/* Top Header Bar */}
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3, flexWrap: 'wrap', gap: 2 }}>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
             <IconButton onClick={() => navigate('/InspectionReportView')} sx={{ color: '#0f172a' }}>
               <ArrowBackIcon />
@@ -346,14 +278,6 @@ function InspectionReportForm() {
             </Typography>
           </Box>
           <Box sx={{ display: 'flex', gap: 1.5 }}>
-            <Button
-              variant="outlined"
-              startIcon={<AutoAwesomeIcon sx={{ color: '#8b5cf6' }} />}
-              onClick={() => setAiOpen(true)}
-              sx={{ textTransform: 'none', borderColor: '#8b5cf6', color: '#7c3aed', fontWeight: 600 }}
-            >
-              Smart Draft with AI
-            </Button>
             <Button
               variant="contained"
               startIcon={<SaveIcon />}
@@ -375,12 +299,12 @@ function InspectionReportForm() {
           </Box>
         </Box>
 
-        {errorMessage && <Alert severity="error" sx={{ mb: 2 }}>{errorMessage}</Alert>}
-        {successMessage && <Alert severity="success" sx={{ mb: 2 }}>{successMessage}</Alert>}
+        {errorMessage && <Alert severity="error" sx={{ mb: 3 }}>{errorMessage}</Alert>}
+        {successMessage && <Alert severity="success" sx={{ mb: 3 }}>{successMessage}</Alert>}
 
-        {/* 1. Header & General Metadata */}
-        <Paper elevation={0} sx={{ p: 3, mb: 3, borderRadius: 2, border: '1px solid #e2e8f0' }}>
-          <Typography variant="subtitle1" sx={{ fontWeight: 700, color: '#0f172a', mb: 2 }}>
+        {/* ── CARD 1: REPORT OVERVIEW & CLIENT METADATA ── */}
+        <Paper sx={{ p: { xs: 2, sm: 3 }, mb: 3, borderRadius: 2 }}>
+          <Typography variant="h6" sx={{ fontWeight: 700, color: '#1e293b', mb: 2 }}>
             1. Report Overview & Client Metadata
           </Typography>
           <Grid container spacing={2}>
@@ -408,8 +332,8 @@ function InspectionReportForm() {
               <TextField
                 fullWidth
                 size="small"
-                label="Report Subject *"
-                placeholder="e.g. Overheating & Relocation of 3 AC Outdoor Units"
+                label="Report Subject * *"
+                placeholder="e.g. Overheating & Relocation of AC Outdoor Units"
                 value={subject}
                 onChange={(e) => setSubject(e.target.value)}
                 required
@@ -419,35 +343,69 @@ function InspectionReportForm() {
               <TextField
                 fullWidth
                 size="small"
-                label="Inspection Location / Room *"
+                label="Inspection Location / Room * *"
                 placeholder="e.g. Under-Stairway Mechanical Room & Exterior Wall"
                 value={location}
                 onChange={(e) => setLocation(e.target.value)}
                 required
               />
             </Grid>
+
+            {/* Typeable & Searchable Customer Autocomplete */}
             <Grid item xs={12} sm={6}>
-              <TextField
-                fullWidth
-                size="small"
-                select
-                label="Select Client / Customer"
-                value={customerId}
-                onChange={handleCustomerSelect}
-              >
-                <MenuItem value="">-- Direct Input / Unlisted Client --</MenuItem>
-                {customers.map((c) => (
-                  <MenuItem key={c._id} value={c._id}>
-                    {c.customerFullName || c.companyName || c.Customer || `${c.customerFirstName || ''} ${c.customerLastName || ''}`.trim() || 'Unknown Customer'}
-                  </MenuItem>
-                ))}
-              </TextField>
+              <Autocomplete
+                id="search-customer-select"
+                options={customers}
+                getOptionLabel={(option) => {
+                  if (typeof option === 'string') return option;
+                  return (
+                    option.customerFullName ||
+                    option.companyName ||
+                    option.Customer ||
+                    `${option.customerFirstName || ''} ${option.customerLastName || ''}`.trim() ||
+                    'Unknown Customer'
+                  );
+                }}
+                value={customers.find((c) => c._id === customerId) || null}
+                onChange={(event, newValue) => {
+                  if (newValue) {
+                    setCustomerId(newValue._id);
+                    const name =
+                      newValue.customerFullName ||
+                      newValue.companyName ||
+                      newValue.Customer ||
+                      `${newValue.customerFirstName || ''} ${newValue.customerLastName || ''}`.trim() ||
+                      '';
+                    const addr = [newValue.billingAddress, newValue.billingCity].filter(Boolean).join(', ');
+                    const phone =
+                      newValue.customerCompanyPhone || newValue.customerPhone || newValue.phone || newValue.mobile || '';
+                    setCustomerName(name);
+                    setCustomerAddress(addr);
+                    setCustomerPhone(phone);
+                  } else {
+                    setCustomerId('');
+                    setCustomerName('');
+                    setCustomerAddress('');
+                    setCustomerPhone('');
+                  }
+                }}
+                isOptionEqualToValue={(option, value) => option._id === value?._id}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    size="small"
+                    label="Search & Select Client / Customer"
+                    placeholder="Type client or company name..."
+                  />
+                )}
+              />
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
                 fullWidth
                 size="small"
                 label="Client Name"
+                placeholder="Auto-filled or type direct client name"
                 value={customerName}
                 onChange={(e) => setCustomerName(e.target.value)}
               />
@@ -470,9 +428,9 @@ function InspectionReportForm() {
                 value={branchId}
                 onChange={(e) => setBranchId(e.target.value)}
               >
-                <MenuItem value="HQ">HQ - Kolwezi</MenuItem>
-                <MenuItem value="KOLWEZI">Kolwezi</MenuItem>
-                <MenuItem value="LUBUMBASHI">Lubumbashi</MenuItem>
+                <MenuItem value="HQ">HQ - KOLWEZI</MenuItem>
+                <MenuItem value="LUBUMBASHI">LUBUMBASHI</MenuItem>
+                <MenuItem value="LIKASI">LIKASI</MenuItem>
               </TextField>
             </Grid>
             <Grid item xs={12} sm={3}>
@@ -484,83 +442,98 @@ function InspectionReportForm() {
                 value={status}
                 onChange={(e) => setStatus(e.target.value)}
               >
-                <MenuItem value="DRAFT">Draft</MenuItem>
-                <MenuItem value="COMPLETED">Completed</MenuItem>
-                <MenuItem value="SENT">Sent to Client</MenuItem>
+                <MenuItem value="DRAFT">DRAFT</MenuItem>
+                <MenuItem value="COMPLETED">COMPLETED</MenuItem>
+                <MenuItem value="SENT TO CLIENT">SENT TO CLIENT</MenuItem>
+                <MenuItem value="CONVERTED TO QUOTE">CONVERTED TO QUOTE</MenuItem>
               </TextField>
             </Grid>
           </Grid>
         </Paper>
 
-        {/* 2. Section 1: Current Situation & Root Cause Findings */}
-        <Paper elevation={0} sx={{ p: 3, mb: 3, borderRadius: 2, border: '1px solid #e2e8f0' }}>
+        {/* ── CARD 2: SECTION 1 FINDINGS & CAUSE ── */}
+        <Paper sx={{ p: { xs: 2, sm: 3 }, mb: 3, borderRadius: 2 }}>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-            <Typography variant="subtitle1" sx={{ fontWeight: 700, color: '#0f172a' }}>
+            <Typography variant="h6" sx={{ fontWeight: 700, color: '#1e293b' }}>
               2. Section 1 — Current Situation & Root Cause Findings
             </Typography>
             <Button
               size="small"
               startIcon={<AddIcon />}
               onClick={handleAddFinding}
-              sx={{ textTransform: 'none', color: '#0284c7' }}
+              sx={{ textTransform: 'none', color: '#0284c7', fontWeight: 600 }}
             >
               Add Finding Bullet
             </Button>
           </Box>
-
           <TextField
             fullWidth
-            size="small"
             multiline
             rows={2}
+            size="small"
             label="Section 1 Introduction Narrative"
-            placeholder="e.g. During our technical inspection of the three air conditioning outdoor condenser units..."
+            placeholder="e.g. During our technical inspection of the condenser units housed inside the enclosed room beneath the stairway..."
             value={findingsIntro}
             onChange={(e) => setFindingsIntro(e.target.value)}
             sx={{ mb: 2.5 }}
           />
 
-          {findings.map((item, idx) => (
-            <Paper key={idx} elevation={0} sx={{ p: 2, mb: 1.5, backgroundColor: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: 1.5 }}>
-              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 1 }}>
-                <Typography variant="caption" sx={{ fontWeight: 700, color: '#334155' }}>
-                  Bullet Point #{idx + 1}
-                </Typography>
-                <IconButton size="small" onClick={() => handleDeleteFinding(idx)} sx={{ color: '#dc2626' }}>
-                  <DeleteOutlineIcon fontSize="small" />
-                </IconButton>
+          {/* Finding Bullets (Clean & Empty) */}
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, mb: 3 }}>
+            {findings.map((finding, idx) => (
+              <Box
+                key={idx}
+                sx={{
+                  p: 2,
+                  border: '1px solid #e2e8f0',
+                  borderRadius: 1.5,
+                  backgroundColor: '#ffffff',
+                  position: 'relative'
+                }}
+              >
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1.5 }}>
+                  <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#334155' }}>
+                    Bullet Point #{idx + 1}
+                  </Typography>
+                  {findings.length > 1 && (
+                    <IconButton size="small" onClick={() => handleDeleteFinding(idx)} sx={{ color: '#ef4444' }}>
+                      <DeleteOutlineIcon fontSize="small" />
+                    </IconButton>
+                  )}
+                </Box>
+                <Grid container spacing={1.5}>
+                  <Grid item xs={12} sm={4}>
+                    <TextField
+                      fullWidth
+                      size="small"
+                      label="Bold Headline Title"
+                      placeholder="e.g. Insufficient Room Volume & Heat Accumulation"
+                      value={finding.title}
+                      onChange={(e) => handleUpdateFinding(idx, 'title', e.target.value)}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={8}>
+                    <TextField
+                      fullWidth
+                      multiline
+                      rows={2}
+                      size="small"
+                      label="Technical Observation & Detail"
+                      placeholder="e.g. The enclosed room is too compact to accommodate active units simultaneously with restricted airflow..."
+                      value={finding.description}
+                      onChange={(e) => handleUpdateFinding(idx, 'description', e.target.value)}
+                    />
+                  </Grid>
+                </Grid>
               </Box>
-              <Grid container spacing={1.5}>
-                <Grid item xs={12} sm={4}>
-                  <TextField
-                    fullWidth
-                    size="small"
-                    label="Bold Headline Title"
-                    placeholder="e.g. Insufficient Room Volume & Heat Accumulation"
-                    value={item.title}
-                    onChange={(e) => handleUpdateFinding(idx, 'title', e.target.value)}
-                  />
-                </Grid>
-                <Grid item xs={12} sm={8}>
-                  <TextField
-                    fullWidth
-                    size="small"
-                    multiline
-                    rows={2}
-                    label="Technical Observation & Detail"
-                    placeholder="e.g. The enclosed room is far too compact to accommodate three active condenser units..."
-                    value={item.description}
-                    onChange={(e) => handleUpdateFinding(idx, 'description', e.target.value)}
-                  />
-                </Grid>
-              </Grid>
-            </Paper>
-          ))}
+            ))}
+          </Box>
 
-          {/* Section 1 Photo Gallery */}
-          <Divider sx={{ my: 2.5 }} />
+          <Divider sx={{ my: 2 }} />
+
+          {/* Section 1 Photographic Evidence */}
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-            <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#334155' }}>
+            <Typography variant="subtitle1" sx={{ fontWeight: 700, color: '#334155' }}>
               Section 1 Inspection Photos ({photosSection1.length})
             </Typography>
             <Button
@@ -568,130 +541,132 @@ function InspectionReportForm() {
               size="small"
               variant="outlined"
               startIcon={<PhotoCameraIcon />}
-              sx={{ textTransform: 'none' }}
+              sx={{ textTransform: 'none', color: '#0284c7', borderColor: '#0284c7' }}
             >
               Upload Photo(s)
-              <input type="file" hidden accept="image/*" multiple onChange={(e) => handleImageUpload(1, e)} />
+              <input
+                type="file"
+                hidden
+                multiple
+                accept="image/*"
+                onChange={(e) => handlePhotoUpload(e, 1)}
+              />
             </Button>
           </Box>
-
           <Grid container spacing={2}>
-            {photosSection1.map((photo, idx) => (
-              <Grid item xs={12} sm={6} key={idx}>
-                <Paper elevation={0} sx={{ p: 1.5, border: '1px solid #cbd5e1', borderRadius: 1.5 }}>
-                  <Box sx={{ position: 'relative', height: 180, mb: 1, backgroundColor: '#000', borderRadius: 1, overflow: 'hidden' }}>
-                    <img
-                      src={photo.url}
-                      alt={photo.caption || 'Inspection photo'}
-                      style={{ width: '100%', height: '100%', objectFit: 'contain' }}
-                    />
-                    <IconButton
+            {photosSection1.map((photo, pIdx) => (
+              <Grid item xs={12} sm={6} md={4} key={pIdx}>
+                <Paper sx={{ p: 1.5, border: '1px solid #e2e8f0', borderRadius: 1.5 }}>
+                  <Box
+                    component="img"
+                    src={photo.url}
+                    alt={photo.caption}
+                    sx={{ width: '100%', height: 160, objectFit: 'cover', borderRadius: 1, mb: 1 }}
+                  />
+                  <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
+                    <TextField
+                      fullWidth
                       size="small"
-                      onClick={() => handleDeletePhoto(1, idx)}
-                      sx={{ position: 'absolute', top: 6, right: 6, backgroundColor: 'rgba(0,0,0,0.6)', color: '#fff', '&:hover': { backgroundColor: 'rgba(220,38,38,0.8)' } }}
-                    >
+                      label={`Figure ${pIdx + 1} Caption`}
+                      value={photo.caption}
+                      onChange={(e) => handleUpdatePhotoCaption(pIdx, e.target.value, 1)}
+                    />
+                    <IconButton size="small" onClick={() => handleDeletePhoto(pIdx, 1)} sx={{ color: '#ef4444' }}>
                       <DeleteOutlineIcon fontSize="small" />
                     </IconButton>
                   </Box>
-                  <Grid container spacing={1}>
-                    <Grid item xs={4}>
-                      <TextField
-                        size="small"
-                        label="Figure Label"
-                        value={photo.figure}
-                        onChange={(e) => handleUpdatePhotoCaption(1, idx, 'figure', e.target.value)}
-                      />
-                    </Grid>
-                    <Grid item xs={8}>
-                      <TextField
-                        size="small"
-                        fullWidth
-                        label="Photo Caption"
-                        placeholder="e.g. Existing three exhaust ventilation fans..."
-                        value={photo.caption}
-                        onChange={(e) => handleUpdatePhotoCaption(1, idx, 'caption', e.target.value)}
-                      />
-                    </Grid>
-                  </Grid>
                 </Paper>
               </Grid>
             ))}
           </Grid>
         </Paper>
 
-        {/* 3. Section 2: Recommended Corrective Solution & Action Plan Table */}
-        <Paper elevation={0} sx={{ p: 3, mb: 3, borderRadius: 2, border: '1px solid #e2e8f0' }}>
+        {/* ── CARD 3: SECTION 2 RECOMMENDED CORRECTIVE ACTION PLAN ── */}
+        <Paper sx={{ p: { xs: 2, sm: 3 }, mb: 3, borderRadius: 2 }}>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-            <Typography variant="subtitle1" sx={{ fontWeight: 700, color: '#0f172a' }}>
-              3. Section 2 — Recommended Corrective Solution & Action Plan
+            <Typography variant="h6" sx={{ fontWeight: 700, color: '#1e293b' }}>
+              3. Section 2 — Recommended Corrective Solution & Action Plan Table
             </Typography>
             <Button
               size="small"
               startIcon={<AddIcon />}
               onClick={handleAddActionItem}
-              sx={{ textTransform: 'none', color: '#0284c7' }}
+              sx={{ textTransform: 'none', color: '#0284c7', fontWeight: 600 }}
             >
               Add Action Row
             </Button>
           </Box>
-
           <TextField
             fullWidth
-            size="small"
             multiline
             rows={2}
+            size="small"
             label="Section 2 Solution Narrative"
-            placeholder="e.g. To permanently eliminate compressor overheating and restore cooling efficiency, we recommend reconfiguring the installation..."
+            placeholder="e.g. To permanently resolve the thermal buildup and protect compressor reliability, we recommend the following scope of work:"
             value={solutionIntro}
             onChange={(e) => setSolutionIntro(e.target.value)}
             sx={{ mb: 2.5 }}
           />
 
-          {/* Action Plan Table Rows */}
+          {/* Action Table Rows (Clean & Empty) */}
           <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#334155', mb: 1 }}>
             Action Plan Table Rows
           </Typography>
-          {actionItems.map((item, idx) => (
-            <Paper key={idx} elevation={0} sx={{ p: 2, mb: 1.5, backgroundColor: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: 1.5 }}>
-              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
-                <Typography variant="caption" sx={{ fontWeight: 700, color: '#0f172a' }}>
-                  Action Item #{idx + 1}
-                </Typography>
-                <IconButton size="small" onClick={() => handleDeleteActionItem(idx)} sx={{ color: '#dc2626' }}>
-                  <DeleteOutlineIcon fontSize="small" />
-                </IconButton>
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, mb: 3 }}>
+            {actionItems.map((item, idx) => (
+              <Box
+                key={idx}
+                sx={{
+                  p: 2,
+                  border: '1px solid #e2e8f0',
+                  borderRadius: 1.5,
+                  backgroundColor: '#ffffff',
+                  position: 'relative'
+                }}
+              >
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1.5 }}>
+                  <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#334155' }}>
+                    Action Item #{idx + 1}
+                  </Typography>
+                  {actionItems.length > 1 && (
+                    <IconButton size="small" onClick={() => handleDeleteActionItem(idx)} sx={{ color: '#ef4444' }}>
+                      <DeleteOutlineIcon fontSize="small" />
+                    </IconButton>
+                  )}
+                </Box>
+                <Grid container spacing={1.5}>
+                  <Grid item xs={12} sm={4}>
+                    <TextField
+                      fullWidth
+                      size="small"
+                      label="Action Item"
+                      placeholder="e.g. 1. Remove Existing Exhaust Fans"
+                      value={item.actionItem}
+                      onChange={(e) => handleUpdateActionItem(idx, 'actionItem', e.target.value)}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={8}>
+                    <TextField
+                      fullWidth
+                      multiline
+                      rows={2}
+                      size="small"
+                      label="Technical Scope & Execution Details"
+                      placeholder="e.g. Dismantle and remove existing ventilation fans from louver opening..."
+                      value={item.scope}
+                      onChange={(e) => handleUpdateActionItem(idx, 'scope', e.target.value)}
+                    />
+                  </Grid>
+                </Grid>
               </Box>
-              <Grid container spacing={1.5}>
-                <Grid item xs={12} sm={4}>
-                  <TextField
-                    fullWidth
-                    size="small"
-                    label="Action Item"
-                    placeholder="e.g. 1. Remove Existing Exhaust Fans"
-                    value={item.actionItem}
-                    onChange={(e) => handleUpdateActionItem(idx, 'actionItem', e.target.value)}
-                  />
-                </Grid>
-                <Grid item xs={12} sm={8}>
-                  <TextField
-                    fullWidth
-                    size="small"
-                    multiline
-                    rows={2}
-                    label="Technical Scope & Execution Details"
-                    placeholder="e.g. Dismantle and remove all three existing wall-mounted ventilation fans from the louver window..."
-                    value={item.scope}
-                    onChange={(e) => handleUpdateActionItem(idx, 'scope', e.target.value)}
-                  />
-                </Grid>
-              </Grid>
-            </Paper>
-          ))}
+            ))}
+          </Box>
 
-          {/* Section 2 Additional Photos */}
-          <Divider sx={{ my: 2.5 }} />
+          <Divider sx={{ my: 2 }} />
+
+          {/* Section 2 Photos */}
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-            <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#334155' }}>
+            <Typography variant="subtitle1" sx={{ fontWeight: 700, color: '#334155' }}>
               Section 2 Solution Photos ({photosSection2.length})
             </Typography>
             <Button
@@ -699,76 +674,70 @@ function InspectionReportForm() {
               size="small"
               variant="outlined"
               startIcon={<PhotoCameraIcon />}
-              sx={{ textTransform: 'none' }}
+              sx={{ textTransform: 'none', color: '#0284c7', borderColor: '#0284c7' }}
             >
               Upload Solution Photo
-              <input type="file" hidden accept="image/*" multiple onChange={(e) => handleImageUpload(2, e)} />
+              <input
+                type="file"
+                hidden
+                multiple
+                accept="image/*"
+                onChange={(e) => handlePhotoUpload(e, 2)}
+              />
             </Button>
           </Box>
-
           <Grid container spacing={2}>
-            {photosSection2.map((photo, idx) => (
-              <Grid item xs={12} sm={6} key={idx}>
-                <Paper elevation={0} sx={{ p: 1.5, border: '1px solid #cbd5e1', borderRadius: 1.5 }}>
-                  <Box sx={{ position: 'relative', height: 180, mb: 1, backgroundColor: '#000', borderRadius: 1, overflow: 'hidden' }}>
-                    <img
-                      src={photo.url}
-                      alt={photo.caption || 'Solution photo'}
-                      style={{ width: '100%', height: '100%', objectFit: 'contain' }}
-                    />
-                    <IconButton
+            {photosSection2.map((photo, pIdx) => (
+              <Grid item xs={12} sm={6} md={4} key={pIdx}>
+                <Paper sx={{ p: 1.5, border: '1px solid #e2e8f0', borderRadius: 1.5 }}>
+                  <Box
+                    component="img"
+                    src={photo.url}
+                    alt={photo.caption}
+                    sx={{ width: '100%', height: 160, objectFit: 'cover', borderRadius: 1, mb: 1 }}
+                  />
+                  <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
+                    <TextField
+                      fullWidth
                       size="small"
-                      onClick={() => handleDeletePhoto(2, idx)}
-                      sx={{ position: 'absolute', top: 6, right: 6, backgroundColor: 'rgba(0,0,0,0.6)', color: '#fff', '&:hover': { backgroundColor: 'rgba(220,38,38,0.8)' } }}
-                    >
+                      label={`Figure Caption`}
+                      value={photo.caption}
+                      onChange={(e) => handleUpdatePhotoCaption(pIdx, e.target.value, 2)}
+                    />
+                    <IconButton size="small" onClick={() => handleDeletePhoto(pIdx, 2)} sx={{ color: '#ef4444' }}>
                       <DeleteOutlineIcon fontSize="small" />
                     </IconButton>
                   </Box>
-                  <Grid container spacing={1}>
-                    <Grid item xs={4}>
-                      <TextField
-                        size="small"
-                        label="Figure Label"
-                        value={photo.figure}
-                        onChange={(e) => handleUpdatePhotoCaption(2, idx, 'figure', e.target.value)}
-                      />
-                    </Grid>
-                    <Grid item xs={8}>
-                      <TextField
-                        size="small"
-                        fullWidth
-                        label="Photo Caption"
-                        placeholder="e.g. Proposed exterior corner location beneath the window..."
-                        value={photo.caption}
-                        onChange={(e) => handleUpdatePhotoCaption(2, idx, 'caption', e.target.value)}
-                      />
-                    </Grid>
-                  </Grid>
                 </Paper>
               </Grid>
             ))}
           </Grid>
         </Paper>
 
-        {/* 4. Next Steps Callout */}
-        <Paper elevation={0} sx={{ p: 3, mb: 3, borderRadius: 2, border: '1px solid #e2e8f0' }}>
-          <Typography variant="subtitle1" sx={{ fontWeight: 700, color: '#0f172a', mb: 2 }}>
-            4. Next Steps & Commercial Recommendation
+        {/* ── CARD 4: NEXT STEPS & SIGN-OFF ── */}
+        <Paper sx={{ p: { xs: 2, sm: 3 }, mb: 3, borderRadius: 2 }}>
+          <Typography variant="h6" sx={{ fontWeight: 700, color: '#1e293b', mb: 2 }}>
+            4. Section 3 — Next Steps
           </Typography>
           <TextField
             fullWidth
-            size="small"
             multiline
             rows={3}
-            label="Next Steps Box Text"
+            size="small"
+            label="Next Steps Description"
+            placeholder="e.g. Upon review and approval of this technical recommendation, Global Gate SARL will submit a detailed commercial quotation..."
             value={nextSteps}
             onChange={(e) => setNextSteps(e.target.value)}
           />
         </Paper>
 
-        {/* Bottom Actions */}
-        <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2, pb: 4 }}>
-          <Button variant="outlined" onClick={() => navigate('/InspectionReportView')} sx={{ textTransform: 'none' }}>
+        {/* Bottom Save Actions */}
+        <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2, mb: 4 }}>
+          <Button
+            variant="outlined"
+            onClick={() => navigate('/InspectionReportView')}
+            sx={{ textTransform: 'none', color: '#64748b', borderColor: '#cbd5e1' }}
+          >
             Cancel
           </Button>
           <Button
@@ -776,7 +745,7 @@ function InspectionReportForm() {
             startIcon={<SaveIcon />}
             onClick={() => handleSubmit(false)}
             disabled={saving}
-            sx={{ backgroundColor: '#30368a', textTransform: 'none', px: 4 }}
+            sx={{ backgroundColor: '#30368a', '&:hover': { backgroundColor: '#1e2468' }, textTransform: 'none', px: 3 }}
           >
             {saving ? 'Saving...' : 'Save Report'}
           </Button>
@@ -785,48 +754,11 @@ function InspectionReportForm() {
             startIcon={<VisibilityIcon />}
             onClick={() => handleSubmit(true)}
             disabled={saving}
-            sx={{ backgroundColor: '#0284c7', textTransform: 'none', px: 4 }}
+            sx={{ backgroundColor: '#0284c7', '&:hover': { backgroundColor: '#0369a1' }, textTransform: 'none', px: 3 }}
           >
             Save & View Official Report
           </Button>
         </Box>
-
-        {/* AI Smart Draft Modal */}
-        <Dialog open={aiOpen} onClose={() => !aiLoading && setAiOpen(false)} maxWidth="md" fullWidth>
-          <DialogTitle sx={{ display: 'flex', alignItems: 'center', gap: 1, fontWeight: 700 }}>
-            <AutoAwesomeIcon sx={{ color: '#8b5cf6' }} />
-            ✨ Smart Draft with Gemini
-          </DialogTitle>
-          <DialogContent dividers>
-            <Typography variant="body2" sx={{ color: '#475569', mb: 2 }}>
-              Paste your rough technician notes, audio transcript, or quick observations from the site. The Gemini engine will transform your raw text into formal engineering findings and a structured action table.
-            </Typography>
-            {aiError && <Alert severity="error" sx={{ mb: 2 }}>{aiError}</Alert>}
-            <TextField
-              fullWidth
-              multiline
-              rows={6}
-              placeholder="e.g. 3 aircon outdoor units placed under stairs small room with 3 fans. Room space too small, heat damaging fans and tripping compressors on overheating. Suggest to remove the 3 fans, relocate 2 units to face the linear grill, and move 3rd unit outside under window..."
-              value={aiNotes}
-              onChange={(e) => setAiNotes(e.target.value)}
-              disabled={aiLoading}
-            />
-          </DialogContent>
-          <DialogActions sx={{ p: 2 }}>
-            <Button onClick={() => setAiOpen(false)} disabled={aiLoading} sx={{ textTransform: 'none', color: '#64748b' }}>
-              Cancel
-            </Button>
-            <Button
-              variant="contained"
-              onClick={handleRunAiDraft}
-              disabled={aiLoading}
-              startIcon={aiLoading ? <CircularProgress size={18} sx={{ color: '#fff' }} /> : <AutoAwesomeIcon />}
-              sx={{ backgroundColor: '#7c3aed', '&:hover': { backgroundColor: '#6d28d9' }, textTransform: 'none' }}
-            >
-              {aiLoading ? 'Generating Engineering Draft...' : 'Generate AI Draft'}
-            </Button>
-          </DialogActions>
-        </Dialog>
       </Container>
     </Box>
   );
