@@ -101,7 +101,7 @@ function InspectionReportView() {
         var params = {};
         if (search.trim()) params.search = search.trim();
         if (statusFilter !== 'All') params.status = statusFilter;
-        var res = yield axios__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_36__/* .ENDPOINT_URL */ .m, "/endpoint/inspection-reports"), {
+        var res = yield axios__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_36__/* .ENDPOINT_URL */ .m, "/inspection-reports"), {
           params
         });
         if (res.data && res.data.success) {
@@ -133,7 +133,7 @@ function InspectionReportView() {
       if (!deleteId) return;
       setDeleting(true);
       try {
-        yield axios__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A.delete("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_36__/* .ENDPOINT_URL */ .m, "/endpoint/inspection-reports/").concat(deleteId));
+        yield axios__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A.delete("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_36__/* .ENDPOINT_URL */ .m, "/inspection-reports/").concat(deleteId));
         setReports(prev => prev.filter(r => r._id !== deleteId));
         setDeleteOpen(false);
         setDeleteId(null);

@@ -410,6 +410,14 @@ app.use(cors());
 const bcrypt = require('bcrypt');
 const User = require("./model/employeeUserSchema");
 
+// Auto-normalize accidental duplicate /endpoint prefixes
+app.use((req, res, next) => {
+  if (req.url.startsWith('/endpoint/endpoint/')) {
+    req.url = req.url.replace('/endpoint/endpoint/', '/endpoint/');
+  }
+  next();
+});
+
 // RESTful API root
 app.use('/auth', authRoutes);
 

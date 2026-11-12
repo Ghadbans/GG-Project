@@ -538,8 +538,8 @@ function InspectionReportForm() {
     findingsIntro = _useState32[0],
     setFindingsIntro = _useState32[1];
   var _useState33 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([{
-      title: 'Insufficient Room Volume & Heat Accumulation',
-      description: 'The enclosed room is too compact to accommodate active units simultaneously with restricted airflow.'
+      title: '',
+      description: ''
     }]),
     _useState34 = _slicedToArray(_useState33, 2),
     findings = _useState34[0],
@@ -555,11 +555,8 @@ function InspectionReportForm() {
     solutionIntro = _useState38[0],
     setSolutionIntro = _useState38[1];
   var _useState39 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([{
-      actionItem: '1. Remove Existing Exhaust Fans',
-      scope: 'Dismantle and remove existing ventilation fans from louver opening.'
-    }, {
-      actionItem: '2. Reposition Outdoor Units',
-      scope: 'Relocate indoor-housed outdoor units directly facing exterior linear grille.'
+      actionItem: '',
+      scope: ''
     }]),
     _useState40 = _slicedToArray(_useState39, 2),
     actionItems = _useState40[0],
@@ -570,7 +567,7 @@ function InspectionReportForm() {
     setPhotosSection2 = _useState42[1];
 
   // Next steps
-  var _useState43 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('Upon review and approval of this technical recommendation, Global Gate SARL will submit a detailed quotation covering all required materials, custom metal support bases, and certified installation labor.'),
+  var _useState43 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
     _useState44 = _slicedToArray(_useState43, 2),
     nextSteps = _useState44[0],
     setNextSteps = _useState44[1];
@@ -598,10 +595,10 @@ function InspectionReportForm() {
     var fetchCustomers = /*#__PURE__*/function () {
       var _ref = _asyncToGenerator(function* () {
         try {
-          var res = yield axios__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_27__/* .ENDPOINT_URL */ .m, "/endpoint/Customer"));
-          if (res.data && Array.isArray(res.data.data)) {
-            setCustomers(res.data.data);
-          }
+          var _res$data;
+          var res = yield axios__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_27__/* .ENDPOINT_URL */ .m, "/customer"));
+          var list = Array.isArray(res.data) ? res.data : ((_res$data = res.data) === null || _res$data === void 0 ? void 0 : _res$data.data) || [];
+          setCustomers(list);
         } catch (err) {
           console.error('Error fetching customers:', err);
         }
@@ -615,7 +612,7 @@ function InspectionReportForm() {
       var fetchReport = /*#__PURE__*/function () {
         var _ref2 = _asyncToGenerator(function* () {
           try {
-            var res = yield axios__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_27__/* .ENDPOINT_URL */ .m, "/endpoint/inspection-reports/").concat(id));
+            var res = yield axios__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_27__/* .ENDPOINT_URL */ .m, "/inspection-reports/").concat(id));
             if (res.data && res.data.success) {
               var r = res.data.data;
               setReportTitle(r.reportTitle || 'Technical Inspection & Corrective Action Report');
@@ -656,9 +653,9 @@ function InspectionReportForm() {
     setCustomerId(selectedId);
     var found = customers.find(c => c._id === selectedId);
     if (found) {
-      var name = found.Customer || found.customerName || found.companyName || '';
+      var name = found.customerFullName || found.companyName || found.Customer || "".concat(found.customerFirstName || '', " ").concat(found.customerLastName || '').trim() || '';
       var addr = [found.billingAddress, found.billingCity].filter(Boolean).join(', ');
-      var phone = found.customerCompanyPhone || found.phone || found.mobile || '';
+      var phone = found.customerCompanyPhone || found.customerPhone || found.phone || found.mobile || '';
       setCustomerName(name);
       setCustomerAddress(addr);
       setCustomerPhone(phone);
@@ -760,7 +757,7 @@ function InspectionReportForm() {
       setAiLoading(true);
       setAiError('');
       try {
-        var res = yield axios__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_27__/* .ENDPOINT_URL */ .m, "/endpoint/inspection-reports/ai-draft"), {
+        var res = yield axios__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_27__/* .ENDPOINT_URL */ .m, "/inspection-reports/ai-draft"), {
           notes: aiNotes.trim(),
           subject,
           customerName,
@@ -828,10 +825,10 @@ function InspectionReportForm() {
       try {
         var savedId = id;
         if (isEditing) {
-          var res = yield axios__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A.put("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_27__/* .ENDPOINT_URL */ .m, "/endpoint/inspection-reports/").concat(id), payload);
+          var res = yield axios__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A.put("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_27__/* .ENDPOINT_URL */ .m, "/inspection-reports/").concat(id), payload);
           savedId = res.data.data._id;
         } else {
-          var _res = yield axios__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_27__/* .ENDPOINT_URL */ .m, "/endpoint/inspection-reports"), payload);
+          var _res = yield axios__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_27__/* .ENDPOINT_URL */ .m, "/inspection-reports"), payload);
           savedId = _res.data.data._id;
         }
         setSuccessMessage('Inspection report saved successfully!');
@@ -1040,7 +1037,7 @@ function InspectionReportForm() {
   }, "-- Direct Input / Unlisted Client --"), customers.map(c => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
     key: c._id,
     value: c._id
-  }, c.Customer || c.customerName || c.companyName || 'Unknown Customer')))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .Ay, {
+  }, c.customerFullName || c.companyName || c.Customer || "".concat(c.customerFirstName || '', " ").concat(c.customerLastName || '').trim() || 'Unknown Customer')))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .Ay, {
     item: true,
     xs: 12,
     sm: 6

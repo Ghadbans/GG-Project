@@ -53,7 +53,7 @@ function InspectionReportView() {
       const params = {};
       if (search.trim()) params.search = search.trim();
       if (statusFilter !== 'All') params.status = statusFilter;
-      const res = await axios.get(`${ENDPOINT_URL}/endpoint/inspection-reports`, { params });
+      const res = await axios.get(`${ENDPOINT_URL}/inspection-reports`, { params });
       if (res.data && res.data.success) {
         setReports(res.data.data || []);
       }
@@ -82,7 +82,7 @@ function InspectionReportView() {
     if (!deleteId) return;
     setDeleting(true);
     try {
-      await axios.delete(`${ENDPOINT_URL}/endpoint/inspection-reports/${deleteId}`);
+      await axios.delete(`${ENDPOINT_URL}/inspection-reports/${deleteId}`);
       setReports((prev) => prev.filter((r) => r._id !== deleteId));
       setDeleteOpen(false);
       setDeleteId(null);

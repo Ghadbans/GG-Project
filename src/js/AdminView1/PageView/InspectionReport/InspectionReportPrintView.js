@@ -27,7 +27,7 @@ function InspectionReportPrintView() {
   useEffect(() => {
     const fetchReport = async () => {
       try {
-        const res = await axios.get(`${ENDPOINT_URL}/endpoint/inspection-reports/${id}`);
+        const res = await axios.get(`${ENDPOINT_URL}/inspection-reports/${id}`);
         if (res.data && res.data.success) {
           setReport(res.data.data);
         }

@@ -59,22 +59,19 @@ function InspectionReportForm() {
   // Section 1: Findings
   const [findingsIntro, setFindingsIntro] = useState('');
   const [findings, setFindings] = useState([
-    { title: 'Insufficient Room Volume & Heat Accumulation', description: 'The enclosed room is too compact to accommodate active units simultaneously with restricted airflow.' }
+    { title: '', description: '' }
   ]);
   const [photosSection1, setPhotosSection1] = useState([]);
 
   // Section 2: Solutions & Action Plan Table
   const [solutionIntro, setSolutionIntro] = useState('');
   const [actionItems, setActionItems] = useState([
-    { actionItem: '1. Remove Existing Exhaust Fans', scope: 'Dismantle and remove existing ventilation fans from louver opening.' },
-    { actionItem: '2. Reposition Outdoor Units', scope: 'Relocate indoor-housed outdoor units directly facing exterior linear grille.' }
+    { actionItem: '', scope: '' }
   ]);
   const [photosSection2, setPhotosSection2] = useState([]);
 
   // Next steps
-  const [nextSteps, setNextSteps] = useState(
-    'Upon review and approval of this technical recommendation, Global Gate SARL will submit a detailed quotation covering all required materials, custom metal support bases, and certified installation labor.'
-  );
+  const [nextSteps, setNextSteps] = useState('');
 
   // AI Smart Draft Dialog State
   const [aiOpen, setAiOpen] = useState(false);
@@ -86,10 +83,9 @@ function InspectionReportForm() {
   useEffect(() => {
     const fetchCustomers = async () => {
       try {
-        const res = await axios.get(`${ENDPOINT_URL}/endpoint/Customer`);
-        if (res.data && Array.isArray(res.data.data)) {
-          setCustomers(res.data.data);
-        }
+        const res = await axios.get(`${ENDPOINT_URL}/customer`);
+        const list = Array.isArray(res.data) ? res.data : (res.data?.data || []);
+        setCustomers(list);
       } catch (err) {
         console.error('Error fetching customers:', err);
       }
@@ -99,7 +95,7 @@ function InspectionReportForm() {
     if (isEditing) {
       const fetchReport = async () => {
         try {
-          const res = await axios.get(`${ENDPOINT_URL}/endpoint/inspection-reports/${id}`);
+          const res = await axios.get(`${ENDPOINT_URL}/inspection-reports/${id}`);
           if (res.data && res.data.success) {
             const r = res.data.data;
             setReportTitle(r.reportTitle || 'Technical Inspection & Corrective Action Report');
@@ -137,9 +133,9 @@ function InspectionReportForm() {
     setCustomerId(selectedId);
     const found = customers.find((c) => c._id === selectedId);
     if (found) {
-      const name = found.Customer || found.customerName || found.companyName || '';
+      const name = found.customerFullName || found.companyName || found.Customer || `${found.customerFirstName || ''} ${found.customerLastName || ''}`.trim() || '';
       const addr = [found.billingAddress, found.billingCity].filter(Boolean).join(', ');
-      const phone = found.customerCompanyPhone || found.phone || found.mobile || '';
+      const phone = found.customerCompanyPhone || found.customerPhone || found.phone || found.mobile || '';
       setCustomerName(name);
       setCustomerAddress(addr);
       setCustomerPhone(phone);
@@ -243,7 +239,7 @@ function InspectionReportForm() {
     setAiLoading(true);
     setAiError('');
     try {
-      const res = await axios.post(`${ENDPOINT_URL}/endpoint/inspection-reports/ai-draft`, {
+      const res = await axios.post(`${ENDPOINT_URL}/inspection-reports/ai-draft`, {
         notes: aiNotes.trim(),
         subject,
         customerName,
@@ -307,10 +303,10 @@ function InspectionReportForm() {
     try {
       let savedId = id;
       if (isEditing) {
-        const res = await axios.put(`${ENDPOINT_URL}/endpoint/inspection-reports/${id}`, payload);
+        const res = await axios.put(`${ENDPOINT_URL}/inspection-reports/${id}`, payload);
         savedId = res.data.data._id;
       } else {
-        const res = await axios.post(`${ENDPOINT_URL}/endpoint/inspection-reports`, payload);
+        const res = await axios.post(`${ENDPOINT_URL}/inspection-reports`, payload);
         savedId = res.data.data._id;
       }
 
@@ -442,7 +438,7 @@ function InspectionReportForm() {
                 <MenuItem value="">-- Direct Input / Unlisted Client --</MenuItem>
                 {customers.map((c) => (
                   <MenuItem key={c._id} value={c._id}>
-                    {c.Customer || c.customerName || c.companyName || 'Unknown Customer'}
+                    {c.customerFullName || c.companyName || c.Customer || `${c.customerFirstName || ''} ${c.customerLastName || ''}`.trim() || 'Unknown Customer'}
                   </MenuItem>
                 ))}
               </TextField>

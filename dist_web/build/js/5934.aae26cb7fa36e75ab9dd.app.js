@@ -77,7 +77,7 @@ function InspectionReportPrintView() {
     var fetchReport = /*#__PURE__*/function () {
       var _ref = _asyncToGenerator(function* () {
         try {
-          var res = yield axios__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_13__/* .ENDPOINT_URL */ .m, "/endpoint/inspection-reports/").concat(id));
+          var res = yield axios__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_13__/* .ENDPOINT_URL */ .m, "/inspection-reports/").concat(id));
           if (res.data && res.data.success) {
             setReport(res.data.data);
           }
