@@ -193,14 +193,19 @@ router.delete('/:id', async (req, res) => {
 
 /**
  * 6. POST /endpoint/inspection-reports/:id/convert-quote
- * Mark report as CONVERTED TO QUOTE
+ * Mark report as CONVERTED TO QUOTE and optionally link quotation number and ID.
  */
 router.post('/:id/convert-quote', async (req, res) => {
   try {
     const { id } = req.params;
+    const { quotationId, quotationNumber } = req.body || {};
+    const update = { status: 'CONVERTED TO QUOTE', updatedAt: new Date() };
+    if (quotationId) update.linkedQuotationId = quotationId;
+    if (quotationNumber) update.linkedQuotationNumber = String(quotationNumber).trim();
+
     const report = await InspectionReport.findByIdAndUpdate(
       id,
-      { $set: { status: 'CONVERTED TO QUOTE', updatedAt: new Date() } },
+      { $set: update },
       { new: true }
     ).lean();
 
@@ -217,20 +222,24 @@ router.post('/:id/convert-quote', async (req, res) => {
 
 /**
  * 7. PATCH /endpoint/inspection-reports/:id/status
- * Update report status (DRAFT, COMPLETED, SENT TO CLIENT, CONVERTED TO QUOTE)
+ * Update report status (DRAFT, COMPLETED, SENT TO CLIENT, CONVERTED TO QUOTE) and optional quotation link.
  */
 router.patch('/:id/status', async (req, res) => {
   try {
     const { id } = req.params;
-    const { status } = req.body;
+    const { status, quotationNumber, quotationId } = req.body || {};
 
     if (!status) {
       return res.status(400).json({ success: false, error: 'Status is required' });
     }
 
+    const update = { status, updatedAt: new Date() };
+    if (quotationNumber !== undefined) update.linkedQuotationNumber = String(quotationNumber).trim();
+    if (quotationId !== undefined) update.linkedQuotationId = quotationId;
+
     const report = await InspectionReport.findByIdAndUpdate(
       id,
-      { $set: { status, updatedAt: new Date() } },
+      { $set: update },
       { new: true }
     ).lean();
 

@@ -101,6 +101,7 @@ function InspectionReportPrintView() {
     navigate('/EstimateInvoiceForm', {
       state: {
         fromInspectionReport: true,
+        reportId: report._id,
         reportCode: report.reportCode,
         customerId: report.customerId,
         customerName: report.customerName,
@@ -157,14 +158,25 @@ function InspectionReportPrintView() {
           >
             Send to Client (WhatsApp)
           </Button>
-          <Button
-            variant="outlined"
-            startIcon={<RequestQuoteIcon />}
-            onClick={handleConvertToQuote}
-            sx={{ textTransform: 'none', color: '#b45309', borderColor: '#b45309' }}
-          >
-            Convert to Quotation
-          </Button>
+          {report.status !== 'CONVERTED TO QUOTE' ? (
+            <Button
+              variant="outlined"
+              startIcon={<RequestQuoteIcon />}
+              onClick={handleConvertToQuote}
+              sx={{ textTransform: 'none', color: '#b45309', borderColor: '#b45309' }}
+            >
+              Convert to Quotation
+            </Button>
+          ) : (
+            <Button
+              variant="outlined"
+              startIcon={<RequestQuoteIcon />}
+              onClick={() => navigate('/EstimateViewAdmin')}
+              sx={{ textTransform: 'none', color: '#16a34a', borderColor: '#16a34a', fontWeight: 700 }}
+            >
+              {report.linkedQuotationNumber ? `Quotation: ${report.linkedQuotationNumber}` : 'Quotation Generated'}
+            </Button>
+          )}
           <Button
             variant="contained"
             startIcon={<PrintIcon />}
@@ -254,9 +266,13 @@ function InspectionReportPrintView() {
               <Typography sx={{ fontWeight: 700, width: '90px', fontSize: '11px', color: '#093170' }}>Status:</Typography>
               <Chip
                 size="small"
-                label={report.status || 'DRAFT'}
+                label={
+                  report.status === 'CONVERTED TO QUOTE'
+                    ? (report.linkedQuotationNumber ? `CONVERTED TO QUOTE ${report.linkedQuotationNumber}` : 'CONVERTED TO QUOTE')
+                    : (report.status || 'DRAFT')
+                }
                 sx={{
-                  height: '18px',
+                  height: '20px',
                   fontSize: '9.5px',
                   fontWeight: 700,
                   backgroundColor:

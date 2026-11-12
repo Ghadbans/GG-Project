@@ -115,6 +115,11 @@ const inspectionReportSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Estimate'
     },
+    linkedQuotationNumber: {
+      type: String,
+      default: '',
+      trim: true
+    },
     createdBy: {
       type: String,
       default: 'GG',

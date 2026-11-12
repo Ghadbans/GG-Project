@@ -233,6 +233,7 @@ function InspectionReportPrintView() {
       navigate('/EstimateInvoiceForm', {
         state: {
           fromInspectionReport: true,
+          reportId: report._id,
           reportCode: report.reportCode,
           customerId: report.customerId,
           customerName: report.customerName,
@@ -302,7 +303,7 @@ function InspectionReportPrintView() {
       color: '#15803d',
       borderColor: '#15803d'
     }
-  }, "Send to Client (WhatsApp)"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+  }, "Send to Client (WhatsApp)"), report.status !== 'CONVERTED TO QUOTE' ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
     variant: "outlined",
     startIcon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_RequestQuote__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, null),
     onClick: handleConvertToQuote,
@@ -311,7 +312,17 @@ function InspectionReportPrintView() {
       color: '#b45309',
       borderColor: '#b45309'
     }
-  }, "Convert to Quotation"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+  }, "Convert to Quotation") : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+    variant: "outlined",
+    startIcon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_RequestQuote__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, null),
+    onClick: () => navigate('/EstimateViewAdmin'),
+    sx: {
+      textTransform: 'none',
+      color: '#16a34a',
+      borderColor: '#16a34a',
+      fontWeight: 700
+    }
+  }, report.linkedQuotationNumber ? "Quotation: ".concat(report.linkedQuotationNumber) : 'Quotation Generated'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
     variant: "contained",
     startIcon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Print__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, null),
     onClick: handlePrint,
@@ -528,9 +539,9 @@ function InspectionReportPrintView() {
     }
   }, "Status:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
     size: "small",
-    label: report.status || 'DRAFT',
+    label: report.status === 'CONVERTED TO QUOTE' ? report.linkedQuotationNumber ? "CONVERTED TO QUOTE ".concat(report.linkedQuotationNumber) : 'CONVERTED TO QUOTE' : report.status || 'DRAFT',
     sx: {
-      height: '18px',
+      height: '20px',
       fontSize: '9.5px',
       fontWeight: 700,
       backgroundColor: report.status === 'COMPLETED' ? '#e0f2fe' : report.status === 'SENT TO CLIENT' ? '#dcfce7' : report.status === 'CONVERTED TO QUOTE' ? '#fef3c7' : '#f1f5f9',

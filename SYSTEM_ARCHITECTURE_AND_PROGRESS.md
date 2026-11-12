@@ -5263,4 +5263,24 @@ The standardized `renderStatusBadge` helper was seamlessly integrated into all 1
    - Windows Installer packaged: `dist/Global Gate Setup 3.6.50.exe` (99.65 MB) and mirrored to `server/public/downloads/GlobalGateSetup.exe`.
    - Android APK compiled: `server/public/downloads/GlobalGate-v3.6.50.apk` (19.56 MB) and mirrored to `GlobalGate.apk`.
 
+---
+
+### [Hotfix v3.6.50.4] - Quotation Number Linking, Status Badging & Context-Aware Convert Button
+1. **Schema & Backend Quote Linking (`inspectionReportSchema.js` & `inspectionReportRoutes.js`)**:
+   - Added `linkedQuotationNumber` field to `inspectionReportSchema`.
+   - Updated `POST /:id/convert-quote` and `PATCH /:id/status` to accept and persist `quotationNumber` and `quotationId`.
+2. **Automatic Quotation Linking on Save (`EstimateInvoiceForm.js`)**:
+   - When a quotation is submitted from a converted inspection report (`location.state.reportId`), the generated quotation number (e.g. `Q-001753`) and quotation ID are automatically linked back to the inspection report in MongoDB.
+3. **Context-Aware Convert Button & Smart View**:
+   - In `InspectionReportPrintView.js`: When a report is already `CONVERTED TO QUOTE`, the "Convert to Quotation" button is hidden and replaced with a green **"Quotation: Q-001753"** button that navigates directly to the quotation registry.
+   - In `InspectionReportView.js`: The Convert icon in the Actions column is hidden once converted to prevent accidental duplicate conversions, and replaced with a direct link to the quotation.
+4. **Quotation Number Display in Status Badges**:
+   - The Status chip on both the registry table and printable report header now dynamically displays the quotation number: **`CONVERTED TO QUOTE Q-001753`**.
+   - When updating status manually to `CONVERTED TO QUOTE` via the quick menu, prompts for or links the quotation number.
+5. **Multi-Platform Production Build**:
+   - Webpack bundles rebuilt with 0 errors.
+   - Windows Installer packaged: `dist/Global Gate Setup 3.6.50.exe` (99.65 MB) and mirrored.
+   - Android APK compiled: `server/public/downloads/GlobalGate-v3.6.50.apk` (19.56 MB) and mirrored.
+
+
 

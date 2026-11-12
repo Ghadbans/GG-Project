@@ -841,8 +841,21 @@ The GLOBAL GATE Team`;
           handleOpen();
           const ReferenceInfo = res.data.data._id
           const ReferenceInfoNumber = res.data.data.estimateNumber
+          const quoteFormatted = 'Q-' + String(ReferenceInfoNumber).padStart(6, '0');
           handleCreateNotification(ReferenceInfo, ReferenceInfoNumber)
           await db.estimateSchema.put({ ...res.data.data, synced: true })
+
+          // Automatically link quotation to source inspection report
+          if (location.state?.reportId) {
+            try {
+              await axios.post(`${ENDPOINT_URL}/inspection-reports/${location.state.reportId}/convert-quote`, {
+                quotationId: ReferenceInfo,
+                quotationNumber: quoteFormatted
+              });
+            } catch (linkErr) {
+              console.error('Error linking quotation to inspection report:', linkErr);
+            }
+          }
           //Reset form
         }
       } catch (error) {

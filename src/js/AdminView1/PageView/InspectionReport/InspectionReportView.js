@@ -197,6 +197,7 @@ function InspectionReportView() {
     navigate('/EstimateInvoiceForm', {
       state: {
         fromInspectionReport: true,
+        reportId: row._id,
         reportCode: row.reportCode,
         customerId: row.customerId,
         customerName: row.customerName,
@@ -223,10 +224,20 @@ function InspectionReportView() {
   const handleUpdateStatus = async (newStatus) => {
     if (!selectedReportForStatus) return;
     const targetId = selectedReportForStatus._id;
+    let quoteNum = selectedReportForStatus.linkedQuotationNumber || '';
+    if (newStatus === 'CONVERTED TO QUOTE' && !quoteNum) {
+      const input = window.prompt('Enter Quotation Number (e.g. Q-001753) or leave blank:', '');
+      if (input !== null) {
+        quoteNum = input.trim();
+      }
+    }
     try {
-      await axios.patch(`${ENDPOINT_URL}/inspection-reports/${targetId}/status`, { status: newStatus });
+      await axios.patch(`${ENDPOINT_URL}/inspection-reports/${targetId}/status`, {
+        status: newStatus,
+        quotationNumber: quoteNum
+      });
       setReports((prev) =>
-        prev.map((r) => (r._id === targetId ? { ...r, status: newStatus } : r))
+        prev.map((r) => (r._id === targetId ? { ...r, status: newStatus, linkedQuotationNumber: quoteNum } : r))
       );
     } catch (err) {
       console.error('Error updating status:', err);
@@ -245,7 +256,8 @@ function InspectionReportView() {
         return <Chip label="SENT TO CLIENT" size="small" sx={{ backgroundColor: '#dcfce7', color: '#15803d', fontWeight: 'bold' }} />;
       case 'CONVERTED TO QUOTE':
       case 'CONVERTED':
-        return <Chip label="CONVERTED TO QUOTE" size="small" sx={{ backgroundColor: '#fef3c7', color: '#b45309', fontWeight: 'bold' }} />;
+        const quoteLabel = row?.linkedQuotationNumber ? `CONVERTED TO QUOTE ${row.linkedQuotationNumber}` : 'CONVERTED TO QUOTE';
+        return <Chip label={quoteLabel} size="small" sx={{ backgroundColor: '#fef3c7', color: '#b45309', fontWeight: 'bold' }} />;
       default:
         return <Chip label="DRAFT" size="small" sx={{ backgroundColor: '#f1f5f9', color: '#64748b', fontWeight: 'bold' }} />;
     }
@@ -472,15 +484,27 @@ function InspectionReportView() {
                             <EditIcon fontSize="small" />
                           </IconButton>
                         </Tooltip>
-                        <Tooltip title="Convert to Quotation">
-                          <IconButton
-                            size="small"
-                            sx={{ color: '#16a34a' }}
-                            onClick={() => handleConvertToQuote(row)}
-                          >
-                            <RequestQuoteIcon fontSize="small" />
-                          </IconButton>
-                        </Tooltip>
+                        {row.status !== 'CONVERTED TO QUOTE' ? (
+                          <Tooltip title="Convert to Quotation">
+                            <IconButton
+                              size="small"
+                              sx={{ color: '#16a34a' }}
+                              onClick={() => handleConvertToQuote(row)}
+                            >
+                              <RequestQuoteIcon fontSize="small" />
+                            </IconButton>
+                          </Tooltip>
+                        ) : (
+                          <Tooltip title={row.linkedQuotationNumber ? `Quotation: ${row.linkedQuotationNumber}` : 'View Quotations'}>
+                            <IconButton
+                              size="small"
+                              sx={{ color: '#0284c7' }}
+                              onClick={() => navigate('/EstimateViewAdmin')}
+                            >
+                              <RequestQuoteIcon fontSize="small" />
+                            </IconButton>
+                          </Tooltip>
+                        )}
                         <Tooltip title="Delete Report">
                           <IconButton
                             size="small"

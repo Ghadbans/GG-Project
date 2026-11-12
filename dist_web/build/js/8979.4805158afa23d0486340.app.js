@@ -279,6 +279,7 @@ function InspectionReportView() {
       navigate('/EstimateInvoiceForm', {
         state: {
           fromInspectionReport: true,
+          reportId: row._id,
           reportCode: row.reportCode,
           customerId: row.customerId,
           customerName: row.customerName,
@@ -313,12 +314,21 @@ function InspectionReportView() {
     var _ref7 = _asyncToGenerator(function* (newStatus) {
       if (!selectedReportForStatus) return;
       var targetId = selectedReportForStatus._id;
+      var quoteNum = selectedReportForStatus.linkedQuotationNumber || '';
+      if (newStatus === 'CONVERTED TO QUOTE' && !quoteNum) {
+        var input = window.prompt('Enter Quotation Number (e.g. Q-001753) or leave blank:', '');
+        if (input !== null) {
+          quoteNum = input.trim();
+        }
+      }
       try {
         yield axios__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A.patch("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_48__/* .ENDPOINT_URL */ .m, "/inspection-reports/").concat(targetId, "/status"), {
-          status: newStatus
+          status: newStatus,
+          quotationNumber: quoteNum
         });
         setReports(prev => prev.map(r => r._id === targetId ? _objectSpread(_objectSpread({}, r), {}, {
-          status: newStatus
+          status: newStatus,
+          linkedQuotationNumber: quoteNum
         }) : r));
       } catch (err) {
         console.error('Error updating status:', err);
@@ -356,8 +366,9 @@ function InspectionReportView() {
         });
       case 'CONVERTED TO QUOTE':
       case 'CONVERTED':
+        var quoteLabel = row !== null && row !== void 0 && row.linkedQuotationNumber ? "CONVERTED TO QUOTE ".concat(row.linkedQuotationNumber) : 'CONVERTED TO QUOTE';
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
-          label: "CONVERTED TO QUOTE",
+          label: quoteLabel,
           size: "small",
           sx: {
             backgroundColor: '#fef3c7',
@@ -721,7 +732,7 @@ function InspectionReportView() {
     onClick: () => navigate("/InspectionReportForm/".concat(row._id))
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Edit__WEBPACK_IMPORTED_MODULE_40__/* ["default"] */ .A, {
     fontSize: "small"
-  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_27__/* ["default"] */ .A, {
+  }))), row.status !== 'CONVERTED TO QUOTE' ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_27__/* ["default"] */ .A, {
     title: "Convert to Quotation"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
     size: "small",
@@ -729,6 +740,16 @@ function InspectionReportView() {
       color: '#16a34a'
     },
     onClick: () => handleConvertToQuote(row)
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_RequestQuote__WEBPACK_IMPORTED_MODULE_42__/* ["default"] */ .A, {
+    fontSize: "small"
+  }))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_27__/* ["default"] */ .A, {
+    title: row.linkedQuotationNumber ? "Quotation: ".concat(row.linkedQuotationNumber) : 'View Quotations'
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
+    size: "small",
+    sx: {
+      color: '#0284c7'
+    },
+    onClick: () => navigate('/EstimateViewAdmin')
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_RequestQuote__WEBPACK_IMPORTED_MODULE_42__/* ["default"] */ .A, {
     fontSize: "small"
   }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_27__/* ["default"] */ .A, {

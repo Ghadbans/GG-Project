@@ -2422,7 +2422,7 @@ var Drawer = (0,_mui_material__WEBPACK_IMPORTED_MODULE_25__/* ["default"] */ .Ay
   };
 });
 function EstimateInvoiceForm() {
-  var _location$state2;
+  var _location$state3;
   var isMobile = (0,_utils_isMobile__WEBPACK_IMPORTED_MODULE_1__/* .useIsMobile */ .al)();
   var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_43__/* .useNavigate */ .Zp)();
   var location = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_43__/* .useLocation */ .zy)();
@@ -3267,15 +3267,29 @@ function EstimateInvoiceForm() {
         try {
           var res = yield axios__WEBPACK_IMPORTED_MODULE_36__/* ["default"] */ .A.post(apiUrl, data);
           if (res) {
+            var _location$state2;
             (0,_utils_apiCache__WEBPACK_IMPORTED_MODULE_45__/* .invalidateCache */ .gm)('/estimation');
             // Open Loading View
             handleOpen();
             var ReferenceInfo = res.data.data._id;
             var ReferenceInfoNumber = res.data.data.estimateNumber;
+            var quoteFormatted = 'Q-' + String(ReferenceInfoNumber).padStart(6, '0');
             handleCreateNotification(ReferenceInfo, ReferenceInfoNumber);
             yield _dexieDb__WEBPACK_IMPORTED_MODULE_72__/* ["default"] */ .A.estimateSchema.put(_objectSpread(_objectSpread({}, res.data.data), {}, {
               synced: true
             }));
+
+            // Automatically link quotation to source inspection report
+            if ((_location$state2 = location.state) !== null && _location$state2 !== void 0 && _location$state2.reportId) {
+              try {
+                yield axios__WEBPACK_IMPORTED_MODULE_36__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_44__/* .ENDPOINT_URL */ .m, "/inspection-reports/").concat(location.state.reportId, "/convert-quote"), {
+                  quotationId: ReferenceInfo,
+                  quotationNumber: quoteFormatted
+                });
+              } catch (linkErr) {
+                console.error('Error linking quotation to inspection report:', linkErr);
+              }
+            }
             //Reset form
           }
         } catch (error) {
@@ -4813,7 +4827,7 @@ function EstimateInvoiceForm() {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
     onClick: () => handleDecision('stay'),
     className: "btnCustomer"
-  }, "Add New"), (_location$state2 = location.state) !== null && _location$state2 !== void 0 && _location$state2.fromInspectionReport ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+  }, "Add New"), (_location$state3 = location.state) !== null && _location$state3 !== void 0 && _location$state3.fromInspectionReport ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
     onClick: () => navigate('/EstimateViewAdmin'),
     className: "btnCustomer",
     style: {
