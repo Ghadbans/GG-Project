@@ -5,6 +5,8 @@
  * and universal CAPITAL LETTERS formatting.
  */
 
+import { COMPREHENSIVE_DICTIONARY_SET } from './dictionaryData.js';
+
 export const COMMON_PRESETS = {
   defects: [
     'NO POWER',
@@ -246,11 +248,15 @@ export const TYPO_DICTIONARY = [
   { pattern: /\b(purchas)\b/gi, replacement: 'PURCHASE' },
   { pattern: /\b(amont)\b/gi, replacement: 'AMOUNT' },
   { pattern: /\b(quantty)\b/gi, replacement: 'QUANTITY' },
-  { pattern: /\b(numbr)\b/gi, replacement: 'NUMBER' }
+  { pattern: /\b(numbr)\b/gi, replacement: 'NUMBER' },
+  { pattern: /\b(wries|wirez)\b/gi, replacement: 'WIRES' },
+  { pattern: /\b(conatct|contct|conctact)\b/gi, replacement: 'CONTACT' },
+  { pattern: /\b(maintanance|maintenence|mantenance)\b/gi, replacement: 'MAINTENANCE' }
 ];
 
 // Curated vocabulary for word-by-word Damerau-Levenshtein spellchecking
 export const ENGLISH_FRENCH_VOCABULARY = new Set([
+  ...COMPREHENSIVE_DICTIONARY_SET,
   // Numbers (English & French)
   'ZERO', 'ONE', 'TWO', 'THREE', 'FOUR', 'FIVE', 'SIX', 'SEVEN', 'EIGHT', 'NINE', 'TEN',
   'ELEVEN', 'TWELVE', 'THIRTEEN', 'FOURTEEN', 'FIFTEEN', 'SIXTEEN', 'TWENTY', 'THIRTY', 'FORTY', 'FIFTY', 'HUNDRED', 'THOUSAND',
@@ -463,9 +469,7 @@ export function correctWord(word) {
     if (dist <= maxAllowed && dist < bestDist) {
       bestDist = dist;
       bestMatch = vocabWord;
-      if (dist === 1 && Math.abs(vocabWord.length - upper.length) <= 1) {
-        break; // Fast exit on high-confidence match
-      }
+      if (dist === 0) break;
     }
   }
 

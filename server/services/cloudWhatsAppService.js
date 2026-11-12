@@ -49,7 +49,7 @@ async function initCloudWhatsApp() {
       version,
       auth: state,
       printQRInTerminal: false,
-      browser: ['Global Gate Enterprise', 'Cloud Service', '3.6.48'],
+      browser: ['Global Gate Enterprise', 'Cloud Service', '3.6.49'],
       syncFullHistory: false,
       markOnlineOnConnect: true,
       defaultQueryTimeoutMs: 60000,

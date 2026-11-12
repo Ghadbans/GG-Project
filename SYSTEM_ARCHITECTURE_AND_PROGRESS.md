@@ -5031,3 +5031,80 @@ The standardized `renderStatusBadge` helper was seamlessly integrated into all 1
 - **Grant Access Enforcement**: Any employee account granted `whatsappInvoice` permission in the **Grant Access** module can dispatch official WhatsApp invoices independently 24/7 without needing CEO GG's laptop awake or connected.
 - **Production Status**: User tested Release v3.6.48 and confirmed successful delivery: *"testing it working fine will test it more"*.
 - **Background Task Discipline**: 0 background processes left running in Antigravity.
+
+---
+
+## 47. Release v3.6.49: Official WhatsApp Invoice PDF Overhaul & Comprehensive 22,000+ Word Dictionary Engine (November 2026)
+
+### 1. Architectural Upgrades & Root Cause Resolutions
+
+#### A. Invoice WhatsApp PDF Overhaul & Manual Line Item Bug ("empty" item bug)
+1. **The Problem & User Evidence**:
+   - When sending invoice `INV-002425` via WhatsApp, the generated PDF printed:
+     `3 | empty | 1 | $150.00 | $150.00`
+   - In contrast, the official application printout printed:
+     `3 | LABOR FEES | 1 | $150 | $150.00`
+   - User requirement: Invoices sent via WhatsApp must match the official printout exactly. It must NEVER print `'empty'` for manual items, and must take whatever text the user entered in the box verbatim (whether it is a spare part name like `BEARING 6205`, `SPECIAL OIL FILTER`, custom material, or service fees).
+2. **Root Cause**:
+   - In MongoDB, manual write-in rows store `itemName: { _id: null, itemName: 'empty' }` (internal placeholder) and `itemDescription: '<USER_TYPED_TEXT>'`.
+   - In `server/services/invoicePdfGenerator.js` (line 106), `safeString(item.itemName?.itemName || ...)` evaluated `'empty'` as a valid truthy string, thus printing `'empty'` and completely omitting `itemDescription`.
+   - Furthermore, the previous PDF generator lacked the company logo, lacked the corporate metadata grid, lacked `TOTAL IN WORDS`, and didn't replicate the official Global Gate layout.
+3. **The Solution (`server/services/invoicePdfGenerator.js` & `fb-whatsapp-agent/agent.js`)**:
+   - **Verbatim Manual Resolution**:
+     ```javascript
+     const rawName = typeof item.itemName === 'string'
+       ? item.itemName
+       : (item.itemName?.itemName || item.itemName?.name || '');
+     const isManual = !rawName || rawName.trim().toLowerCase() === 'empty';
+     const userManualText = (item.itemDescription || item.newDescription || '').trim();
+
+     let displayName = isManual ? (userManualText || 'Item') : rawName;
+     let displayDesc = isManual ? '' : userManualText;
+     ```
+   - **Suppression of Internal Placeholder**: The word `'empty'` is permanently suppressed and will never appear on any generated PDF.
+   - **Pixel-Perfect Official Layout**:
+     - **Header**: High-resolution company logo (`server/assets/logo.png`) on top left; full registration details on top right (`GLOBAL GATE SARL`, `RCCM CD/KWZ/RCCM/22-B-00317`, `ID NAT 14-H5300N11179P`, `AVENUE DES ROCHES N° 20 QUARTIER INDUSTRIEL`, `LUALABA KOLWEZI`, `DEMOCRATIC REPUBLIC OF CONGO`).
+     - **Title**: Centered `INVOICE` with navy blue divider accents (`#093170`).
+     - **Bill To & Metadata Grid**: Client name and billing address on the left; structured metadata grid on the right (`INVOICE #`, `DATE` in `DD/MM/YYYY`, `DUE DATE`, `SUBJECT`, `DEFECT`).
+     - **Action Taken Callout**: Formatted banner displaying maintenance actions taken when present.
+     - **Table**: Clean `#e8f7fe` header with `#`, `ITEM`, `DESCRIPTION`, `QTY`, `RATE`, `TOTAL` columns.
+     - **Totals & Summary**: `SUB TOTAL (TAX INCLUSIVE)`, `TOTAL`, `BALANCE DUE`.
+     - **Total In Words Banner**: Full-width highlight box displaying `TOTAL IN WORDS` from `invoice.totalW` or formatted words.
+     - **Banking & Terms**: `SOFIBANQUE SA` (USD account `00023233330214247020073`, swift `SFBXCDKIXXX`) and official Terms & Conditions.
+     - **Contact Footer**: `✉ CONTACT@GLOBALGATE.SARL   📞 +243 827 722 222   🌐 WWW.GLOBALGATE.SARL`.
+   - **Local Agent Sync**: Updated `C:/Users/GG/fb-whatsapp-agent/agent.js` line 1388 to also resolve `userManualText` for write-ins so local agent fallback is 100% consistent.
+
+---
+
+#### B. Comprehensive 22,000+ Word Dictionary Engine & Precision Spellchecker
+1. **The Problem & User Evidence**:
+   - In "UPDATE MAINTENANCE" (`Action Taken` field), typing:
+     > *"LINES CHECKING, THE BRACKET FELL DOWN AND THE LINES TOUCHING WERE BEEN FIXED. 2 WIRES EXTENDED."*
+     triggered a false alarm: `Spelling & Word Suggestions: Detected 1 typo(s) across this sentence: WIRES -> TIRES [Fix]`.
+   - Similarly, typing the valid English word `CONTACT` falsely suggested `CONNECT`.
+2. **Root Cause**:
+   - `textAssistUtils.js` only had an incomplete ~300-word list.
+   - Fundamental everyday and technical words (`WIRE`, `WIRES`, `CONTACT`, `LINE`, `LINES`, `TOUCHING`, `EXTENDED`) were missing.
+   - Damerau-Levenshtein fallback treated missing words as misspellings and matched them to the closest word in the 300 words (`WIRES` &rarr; `TIRES` dist 1; `CONTACT` &rarr; `CONNECT` dist 2).
+   - In `correctWord()`, a premature `break` on `dist === 1` halted search on the first dictionary match rather than checking if better alternatives existed.
+3. **The Solution (`src/js/utils/dictionaryData.js` & `src/js/utils/textAssistUtils.js`)**:
+   - **22,378-Word High-Performance Dictionary**: Created `src/js/utils/dictionaryData.js` exporting `COMPREHENSIVE_DICTIONARY_SET` containing 22,378 authoritative English and French words:
+     - Complete general English vocabulary and morphological inflections (+S, +ES, +IES, +ED, +D, +IED, +ING, +ER, +OR, +ABLE, +LY).
+     - Full trade and technical dictionaries: Electrical, electronics, mechanical, automotive, civil, construction, masonry, HVAC, plumbing, hardware, fasteners, and tools.
+     - Commercial ERP and accounting terms: Invoices, quotations, receipts, expenses, payroll, inventory, banking.
+     - French terms for bilingual DRC operations (`facture`, `devis`, `entretien`, `remplacement`, `câblage`, `panne`, etc.).
+   - **$O(1)$ Instant Validation**: If `ENGLISH_FRENCH_VOCABULARY.has(upper)` returns `true`, the word is guaranteed 100% valid and **never** flagged or altered.
+   - **Removal of Premature Break**: `correctWord()` now searches the full candidate space, ensuring true typos (e.g. `wries` &rarr; `WIRES`, `conatct` &rarr; `CONTACT`, `maintanance` &rarr; `MAINTENANCE`) receive accurate suggestions.
+
+---
+
+### 2. Multi-Platform Verification & Packaging
+- **AST Quality Gate**: Verified with 0 errors across 241 source files (`node scripts/pre-build-check.js`).
+- **Comprehensive 14-Module Audit**: Ran `scripts/comprehensive_module_test.js` — **20 of 20 checks passed with zero errors**.
+- **Version Bump**: Bumped to `v3.6.49` across `package.json`, `server/package.json`, `server/routes/downloadRoutes.js`, and `server/index.js`.
+- **Production Bundles**: Compiled desktop and web production bundles via Webpack (`dist_web/` and `build/`).
+- **Windows Executable**: Packaged `dist/Global Gate Setup 3.6.49.exe` (99.66 MB) via `electron-builder` and copied to `server/public/downloads/Global Gate Setup 3.6.49.exe` and mirrored to `GlobalGateSetup.exe`.
+- **Android APK**: Compiled via Gradle with Android Studio JBR: `server/public/downloads/GlobalGate-v3.6.49.apk` (19.27 MB) and mirrored to `GlobalGate.apk`.
+- **Artifact Preservation**: All previous builds (`GlobalGate-v3.6.48.exe`, `GlobalGate-v3.6.47.exe`, `GlobalGate-v3.6.46.exe`, etc.) remain permanently preserved.
+- **Background Task Discipline**: 0 background processes left running in Antigravity.
+
