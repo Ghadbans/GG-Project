@@ -919,7 +919,46 @@ function InspectionReportForm() {
     options: customers,
     getOptionLabel: option => {
       if (typeof option === 'string') return option;
-      return option.customerFullName || option.companyName || option.Customer || "".concat(option.customerFirstName || '', " ").concat(option.customerLastName || '').trim() || 'Unknown Customer';
+      var name = option.Customer || option.customerFullName || "".concat(option.customerFirstName || '', " ").concat(option.customerLastName || '').trim() || 'Client';
+      var comp = option.companyName && option.companyName.trim() && option.companyName.trim().toLowerCase() !== name.toLowerCase() ? " \xB7 ".concat(option.companyName) : '';
+      var branch = option.branchId && option.branchId !== 'HQ' ? " [".concat(option.branchId, "]") : '';
+      return "".concat(name).concat(comp).concat(branch).trim();
+    },
+    filterOptions: (options, state) => {
+      var input = (state.inputValue || '').toLowerCase().trim();
+      if (!input) return options;
+      return options.filter(opt => {
+        var name = (opt.Customer || opt.customerFullName || "".concat(opt.customerFirstName || '', " ").concat(opt.customerLastName || '')).toLowerCase();
+        var company = (opt.companyName || '').toLowerCase();
+        var invoice = (opt.invoiceName || '').toLowerCase();
+        var phone = (opt.customerCompanyPhone || opt.customerPhone || opt.phone || opt.tel || opt.contactPhone || '').toLowerCase();
+        return name.includes(input) || company.includes(input) || invoice.includes(input) || phone.includes(input);
+      });
+    },
+    renderOption: (props, option) => {
+      var name = option.Customer || option.customerFullName || "".concat(option.customerFirstName || '', " ").concat(option.customerLastName || '').trim() || 'Client';
+      var comp = option.companyName && option.companyName.trim() && option.companyName.trim().toLowerCase() !== name.toLowerCase() ? option.companyName : null;
+      var branch = option.branchId || 'HQ';
+      var phone = option.customerCompanyPhone || option.customerPhone || option.phone || option.mobile || '';
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("li", _extends({}, props, {
+        key: option._id
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, {
+        sx: {
+          width: '100%',
+          py: 0.5
+        }
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+        variant: "body2",
+        sx: {
+          fontWeight: 600,
+          color: '#1e293b'
+        }
+      }, name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+        variant: "caption",
+        sx: {
+          color: '#64748b'
+        }
+      }, comp ? "".concat(comp, " \xB7 ") : '', "Branch: ", branch, " ", phone ? "\xB7 ".concat(phone) : '')));
     },
     value: customers.find(c => c._id === customerId) || null,
     onChange: (event, newValue) => {

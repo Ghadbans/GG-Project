@@ -1,6 +1,26 @@
 "use strict";
 (this["webpackChunkgg_management"] = this["webpackChunkgg_management"] || []).push([[5934],{
 
+/***/ 58407
+(__unused_webpack_module, exports, __webpack_require__) {
+
+var __webpack_unused_export__;
+
+"use client";
+
+var _interopRequireDefault = __webpack_require__(24994);
+__webpack_unused_export__ = ({
+  value: true
+});
+exports.A = void 0;
+var _createSvgIcon = _interopRequireDefault(__webpack_require__(42032));
+var _jsxRuntime = __webpack_require__(74848);
+var _default = exports.A = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRuntime.jsx)("path", {
+  d: "M16.59 7.58 10 14.17l-3.59-3.58L5 12l5 5 8-8zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2m0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8"
+}), 'CheckCircleOutline');
+
+/***/ },
+
 /***/ 45234
 (__unused_webpack_module, exports, __webpack_require__) {
 
@@ -21,6 +41,29 @@ var _default = exports.A = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRun
 
 /***/ },
 
+/***/ 61451
+(__unused_webpack_module, exports, __webpack_require__) {
+
+var __webpack_unused_export__;
+
+'use client';
+
+var _interopRequireDefault = __webpack_require__(24994);
+__webpack_unused_export__ = ({
+  value: true
+});
+exports.A = void 0;
+var React = _interopRequireWildcard(__webpack_require__(96540));
+var _createSvgIcon = _interopRequireDefault(__webpack_require__(42032));
+var _jsxRuntime = __webpack_require__(74848);
+function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
+function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
+var _default = exports.A = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRuntime.jsx)("path", {
+  d: "M16.75 13.96c.25.13.41.2.46.3.06.11.04.61-.21 1.18-.2.56-1.24 1.1-1.7 1.12-.46.02-.47.36-2.96-.73-2.49-1.09-3.99-3.75-4.11-3.92-.12-.17-.96-1.38-.92-2.61.05-1.22.69-1.8.95-2.04.24-.26.51-.29.68-.26h.47c.15 0 .36-.06.55.45l.69 1.87c.06.13.1.28.01.44l-.27.41-.39.42c-.12.12-.26.25-.12.5.12.26.62 1.09 1.32 1.78.91.88 1.71 1.17 1.95 1.3.24.14.39.12.54-.04l.81-.94c.19-.25.35-.19.58-.11l1.67.88M12 2a10 10 0 0 1 10 10 10 10 0 0 1-10 10c-1.97 0-3.8-.57-5.35-1.55L2 22l1.55-4.65A9.969 9.969 0 0 1 2 12 10 10 0 0 1 12 2m0 2a8 8 0 0 0-8 8c0 1.72.54 3.31 1.46 4.61L4.5 19.5l2.89-.96A7.95 7.95 0 0 0 12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8z"
+}), 'WhatsApp');
+
+/***/ },
+
 /***/ 85934
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
@@ -33,15 +76,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(14073);
 /* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(86990);
 /* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(97834);
-/* harmony import */ var _mui_icons_material_ArrowBack__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(92659);
-/* harmony import */ var _mui_icons_material_Print__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(45234);
-/* harmony import */ var _mui_icons_material_Edit__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(28597);
-/* harmony import */ var _mui_icons_material_RequestQuote__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(82574);
-/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(74353);
-/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(dayjs__WEBPACK_IMPORTED_MODULE_12__);
-/* harmony import */ var _apiConfig__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(71510);
-/* harmony import */ var _img_images_png__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(72761);
-/* harmony import */ var _img_images_png__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_img_images_png__WEBPACK_IMPORTED_MODULE_14__);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(82022);
+/* harmony import */ var _mui_icons_material_ArrowBack__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(92659);
+/* harmony import */ var _mui_icons_material_Print__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(45234);
+/* harmony import */ var _mui_icons_material_Edit__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(28597);
+/* harmony import */ var _mui_icons_material_RequestQuote__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(82574);
+/* harmony import */ var _mui_icons_material_CheckCircleOutline__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(58407);
+/* harmony import */ var _mui_icons_material_WhatsApp__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(61451);
+/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(74353);
+/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(dayjs__WEBPACK_IMPORTED_MODULE_15__);
+/* harmony import */ var _apiConfig__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(71510);
+/* harmony import */ var _img_images_png__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(72761);
+/* harmony import */ var _img_images_png__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_img_images_png__WEBPACK_IMPORTED_MODULE_17__);
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == typeof i ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
 function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
@@ -51,6 +102,8 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
 function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
 function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 ;
+
+
 
 
 
@@ -77,7 +130,7 @@ function InspectionReportPrintView() {
     var fetchReport = /*#__PURE__*/function () {
       var _ref = _asyncToGenerator(function* () {
         try {
-          var res = yield axios__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_13__/* .ENDPOINT_URL */ .m, "/inspection-reports/").concat(id));
+          var res = yield axios__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_16__/* .ENDPOINT_URL */ .m, "/inspection-reports/").concat(id));
           if (res.data && res.data.success) {
             setReport(res.data.data);
           }
@@ -127,10 +180,55 @@ function InspectionReportPrintView() {
   var handlePrint = () => {
     window.print();
   };
-  var handleConvertToQuote = /*#__PURE__*/function () {
+  var handleMarkCompleted = /*#__PURE__*/function () {
     var _ref2 = _asyncToGenerator(function* () {
       try {
-        yield axios__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_13__/* .ENDPOINT_URL */ .m, "/inspection-reports/").concat(report._id, "/convert-quote"));
+        var res = yield axios__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A.patch("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_16__/* .ENDPOINT_URL */ .m, "/inspection-reports/").concat(report._id, "/status"), {
+          status: 'COMPLETED'
+        });
+        if (res.data && res.data.success) {
+          setReport(prev => _objectSpread(_objectSpread({}, prev), {}, {
+            status: 'COMPLETED'
+          }));
+        }
+      } catch (err) {
+        console.error('Error marking report completed:', err);
+      }
+    });
+    return function handleMarkCompleted() {
+      return _ref2.apply(this, arguments);
+    };
+  }();
+  var handleSendToClient = /*#__PURE__*/function () {
+    var _ref3 = _asyncToGenerator(function* () {
+      try {
+        var res = yield axios__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A.patch("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_16__/* .ENDPOINT_URL */ .m, "/inspection-reports/").concat(report._id, "/status"), {
+          status: 'SENT TO CLIENT'
+        });
+        if (res.data && res.data.success) {
+          setReport(prev => _objectSpread(_objectSpread({}, prev), {}, {
+            status: 'SENT TO CLIENT'
+          }));
+        }
+      } catch (err) {
+        console.error('Error marking report sent:', err);
+      }
+      if (report.customerPhone) {
+        var cleanPhone = String(report.customerPhone).replace(/[^0-9]/g, '');
+        var clientName = report.customerName || 'Valued Client';
+        var msg = "Dear ".concat(clientName, ",\n\nPlease find our Technical Inspection & Corrective Action Report (").concat(report.reportCode || '', ") regarding \"").concat(report.subject || 'Technical Inspection', "\".\n\nGlobal Gate SARL - General Services & Technical Division.");
+        var url = "https://wa.me/".concat(cleanPhone, "?text=").concat(encodeURIComponent(msg));
+        window.open(url, '_blank');
+      }
+    });
+    return function handleSendToClient() {
+      return _ref3.apply(this, arguments);
+    };
+  }();
+  var handleConvertToQuote = /*#__PURE__*/function () {
+    var _ref4 = _asyncToGenerator(function* () {
+      try {
+        yield axios__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_16__/* .ENDPOINT_URL */ .m, "/inspection-reports/").concat(report._id, "/convert-quote"));
       } catch (_) {}
       navigate('/EstimateInvoiceForm', {
         state: {
@@ -143,7 +241,7 @@ function InspectionReportPrintView() {
       });
     });
     return function handleConvertToQuote() {
-      return _ref2.apply(this, arguments);
+      return _ref4.apply(this, arguments);
     };
   }();
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, {
@@ -166,7 +264,7 @@ function InspectionReportPrintView() {
       px: 2
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
-    startIcon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_ArrowBack__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, null),
+    startIcon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_ArrowBack__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, null),
     onClick: () => navigate('/InspectionReportView'),
     sx: {
       textTransform: 'none',
@@ -179,25 +277,43 @@ function InspectionReportPrintView() {
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
     variant: "outlined",
-    startIcon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Edit__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, null),
+    startIcon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Edit__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, null),
     onClick: () => navigate("/InspectionReportForm/".concat(report._id)),
     sx: {
       textTransform: 'none',
       color: '#30368a',
       borderColor: '#30368a'
     }
-  }, "Edit Report"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+  }, "Edit Report"), report.status !== 'COMPLETED' && report.status !== 'SENT TO CLIENT' && report.status !== 'CONVERTED TO QUOTE' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
     variant: "outlined",
-    startIcon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_RequestQuote__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, null),
+    startIcon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_CheckCircleOutline__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, null),
+    onClick: handleMarkCompleted,
+    sx: {
+      textTransform: 'none',
+      color: '#0369a1',
+      borderColor: '#0369a1'
+    }
+  }, "Mark Completed"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+    variant: "outlined",
+    startIcon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_WhatsApp__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, null),
+    onClick: handleSendToClient,
+    sx: {
+      textTransform: 'none',
+      color: '#15803d',
+      borderColor: '#15803d'
+    }
+  }, "Send to Client (WhatsApp)"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+    variant: "outlined",
+    startIcon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_RequestQuote__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, null),
     onClick: handleConvertToQuote,
     sx: {
       textTransform: 'none',
-      color: '#16a34a',
-      borderColor: '#16a34a'
+      color: '#b45309',
+      borderColor: '#b45309'
     }
   }, "Convert to Quotation"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
     variant: "contained",
-    startIcon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Print__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, null),
+    startIcon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Print__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, null),
     onClick: handlePrint,
     sx: {
       backgroundColor: '#30368a',
@@ -235,7 +351,7 @@ function InspectionReportPrintView() {
       alignItems: 'center'
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
-    src: (_img_images_png__WEBPACK_IMPORTED_MODULE_14___default()),
+    src: (_img_images_png__WEBPACK_IMPORTED_MODULE_17___default()),
     alt: "Global Gate Logo",
     style: {
       maxHeight: '70px',
@@ -331,7 +447,7 @@ function InspectionReportPrintView() {
       fontSize: '11px',
       color: '#1e293b'
     }
-  }, dayjs__WEBPACK_IMPORTED_MODULE_12___default()(report.date).format('MMMM D, YYYY'))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, {
+  }, dayjs__WEBPACK_IMPORTED_MODULE_15___default()(report.date).format('MMMM D, YYYY'))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, {
     sx: {
       display: 'flex'
     }
@@ -397,7 +513,30 @@ function InspectionReportPrintView() {
       color: '#1e293b',
       fontWeight: 700
     }
-  }, report.reportCode)))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, {
+  }, report.reportCode)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, {
+    sx: {
+      display: 'flex',
+      alignItems: 'center',
+      mt: 0.3
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+    sx: {
+      fontWeight: 700,
+      width: '90px',
+      fontSize: '11px',
+      color: '#093170'
+    }
+  }, "Status:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
+    size: "small",
+    label: report.status || 'DRAFT',
+    sx: {
+      height: '18px',
+      fontSize: '9.5px',
+      fontWeight: 700,
+      backgroundColor: report.status === 'COMPLETED' ? '#e0f2fe' : report.status === 'SENT TO CLIENT' ? '#dcfce7' : report.status === 'CONVERTED TO QUOTE' ? '#fef3c7' : '#f1f5f9',
+      color: report.status === 'COMPLETED' ? '#0369a1' : report.status === 'SENT TO CLIENT' ? '#15803d' : report.status === 'CONVERTED TO QUOTE' ? '#b45309' : '#64748b'
+    }
+  })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, {
     sx: {
       mb: 3
     }

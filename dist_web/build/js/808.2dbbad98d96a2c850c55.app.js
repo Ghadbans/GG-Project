@@ -2422,6 +2422,7 @@ var Drawer = (0,_mui_material__WEBPACK_IMPORTED_MODULE_25__/* ["default"] */ .Ay
   };
 });
 function EstimateInvoiceForm() {
+  var _location$state2;
   var isMobile = (0,_utils_isMobile__WEBPACK_IMPORTED_MODULE_1__/* .useIsMobile */ .al)();
   var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_43__/* .useNavigate */ .Zp)();
   var location = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_43__/* .useLocation */ .zy)();
@@ -2964,11 +2965,38 @@ function EstimateInvoiceForm() {
     _useState54 = _slicedToArray(_useState53, 2),
     customerName = _useState54[0],
     setCustomerName = _useState54[1];
+
+  // Auto-fill customer from inspection report or previous route state
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    if (location.state && customer && customer.length > 0) {
+      var targetId = location.state.customerId;
+      var targetName = location.state.customerName;
+      if (targetId || targetName) {
+        var matched = customer.find(c => targetId && String(c._id) === String(targetId) || targetName && (c.Customer && c.Customer.trim().toLowerCase() === String(targetName).trim().toLowerCase() || c.customerFullName && c.customerFullName.trim().toLowerCase() === String(targetName).trim().toLowerCase() || c.companyName && c.companyName.trim().toLowerCase() === String(targetName).trim().toLowerCase() || c.invoiceName && c.invoiceName.trim().toLowerCase() === String(targetName).trim().toLowerCase()));
+        if (matched) {
+          setCustomerName({
+            _id: matched._id,
+            customerName: matched.Customer || matched.customerFullName || matched.companyName || targetName,
+            billingAddress: matched.billingAddress || matched.address,
+            billingCity: matched.billingCity
+          });
+        } else if (targetName) {
+          setCustomerName({
+            customerName: targetName
+          });
+        }
+      }
+    }
+  }, [customer, location.state]);
   var handleChangeCustomer = newValue => {
-    var selectedOptions = customer.find(option => option === newValue);
+    if (!newValue) {
+      setCustomerName({});
+      return;
+    }
+    var selectedOptions = typeof newValue === 'object' && newValue._id ? newValue : customer.find(option => option === newValue || option.Customer === newValue || option._id === (newValue === null || newValue === void 0 ? void 0 : newValue._id));
     setCustomerName({
       _id: selectedOptions === null || selectedOptions === void 0 ? void 0 : selectedOptions._id,
-      customerName: selectedOptions === null || selectedOptions === void 0 ? void 0 : selectedOptions.Customer,
+      customerName: (selectedOptions === null || selectedOptions === void 0 ? void 0 : selectedOptions.Customer) || (selectedOptions === null || selectedOptions === void 0 ? void 0 : selectedOptions.customerFullName) || (newValue === null || newValue === void 0 ? void 0 : newValue.customerName) || (typeof newValue === 'string' ? newValue : ''),
       billingAddress: selectedOptions === null || selectedOptions === void 0 ? void 0 : selectedOptions.billingAddress,
       billingCity: selectedOptions === null || selectedOptions === void 0 ? void 0 : selectedOptions.billingCity
     });
@@ -3842,8 +3870,20 @@ function EstimateInvoiceForm() {
     item: true,
     xs: 12
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
-    options: customer,
-    getOptionLabel: option => option.Customer,
+    options: customer || [],
+    isOptionEqualToValue: (option, val) => {
+      if (!val) return false;
+      if (typeof val === 'string') return (option.Customer || '') === val;
+      return option._id === val._id || option.Customer && (option.Customer === val.Customer || option.Customer === val.customerName);
+    },
+    getOptionLabel: option => {
+      if (typeof option === 'string') return option;
+      return (option === null || option === void 0 ? void 0 : option.Customer) || (option === null || option === void 0 ? void 0 : option.customerFullName) || (option === null || option === void 0 ? void 0 : option.customerName) || '';
+    },
+    value: customerName !== null && customerName !== void 0 && customerName.customerName ? customer.find(c => customerName._id && c._id === customerName._id || c.Customer && c.Customer.trim().toLowerCase() === String(customerName.customerName).trim().toLowerCase()) || {
+      Customer: customerName.customerName,
+      _id: customerName._id
+    } : null,
     onChange: (e, newValue) => {
       handleChangeCustomer(newValue);
     },
@@ -4773,7 +4813,20 @@ function EstimateInvoiceForm() {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
     onClick: () => handleDecision('stay'),
     className: "btnCustomer"
-  }, "Add New"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+  }, "Add New"), (_location$state2 = location.state) !== null && _location$state2 !== void 0 && _location$state2.fromInspectionReport ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+    onClick: () => navigate('/EstimateViewAdmin'),
+    className: "btnCustomer",
+    style: {
+      minWidth: '160px'
+    }
+  }, "View Quotations List"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+    onClick: () => navigate('/InspectionReportView'),
+    className: "btnCustomer",
+    style: {
+      minWidth: '160px',
+      backgroundColor: '#30368a'
+    }
+  }, "Back to Reports")) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
     onClick: () => handleDecision('previous'),
     className: "btnCustomer"
   }, "Go Back"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Drawer__WEBPACK_IMPORTED_MODULE_31__/* ["default"] */ .Ay, {

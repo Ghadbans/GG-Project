@@ -22,6 +22,7 @@ import {
   DialogActions,
   CircularProgress,
   Tooltip,
+  Menu,
   MenuItem,
   Select,
   FormControl,
@@ -204,7 +205,37 @@ function InspectionReportView() {
     });
   };
 
-  const getStatusChip = (status) => {
+  // Quick Status Menu State & Handler
+  const [statusMenuAnchor, setStatusMenuAnchor] = useState(null);
+  const [selectedReportForStatus, setSelectedReportForStatus] = useState(null);
+
+  const handleOpenStatusMenu = (e, row) => {
+    e.stopPropagation();
+    setStatusMenuAnchor(e.currentTarget);
+    setSelectedReportForStatus(row);
+  };
+
+  const handleCloseStatusMenu = () => {
+    setStatusMenuAnchor(null);
+    setSelectedReportForStatus(null);
+  };
+
+  const handleUpdateStatus = async (newStatus) => {
+    if (!selectedReportForStatus) return;
+    const targetId = selectedReportForStatus._id;
+    try {
+      await axios.patch(`${ENDPOINT_URL}/inspection-reports/${targetId}/status`, { status: newStatus });
+      setReports((prev) =>
+        prev.map((r) => (r._id === targetId ? { ...r, status: newStatus } : r))
+      );
+    } catch (err) {
+      console.error('Error updating status:', err);
+    } finally {
+      handleCloseStatusMenu();
+    }
+  };
+
+  const getStatusChip = (status, row) => {
     const s = (status || '').toUpperCase();
     switch (s) {
       case 'COMPLETED':
@@ -412,7 +443,16 @@ function InspectionReportView() {
                       <TableCell sx={{ color: '#64748b' }}>
                         {row.location || '-'}
                       </TableCell>
-                      <TableCell>{getStatusChip(row.status)}</TableCell>
+                      <TableCell>
+                        <Tooltip title="Click to change status">
+                          <Box
+                            onClick={(e) => handleOpenStatusMenu(e, row)}
+                            sx={{ display: 'inline-flex', alignItems: 'center', cursor: 'pointer' }}
+                          >
+                            {getStatusChip(row.status, row)}
+                          </Box>
+                        </Tooltip>
+                      </TableCell>
                       <TableCell sx={{ textAlign: 'center', whiteSpace: 'nowrap' }}>
                         <Tooltip title="View & Print Official PDF">
                           <IconButton
@@ -457,6 +497,31 @@ function InspectionReportView() {
               </TableBody>
             </Table>
           </TableContainer>
+
+          {/* Status Change Menu */}
+          <Menu
+            anchorEl={statusMenuAnchor}
+            open={Boolean(statusMenuAnchor)}
+            onClose={handleCloseStatusMenu}
+            PaperProps={{ sx: { borderRadius: 2, minWidth: 230, boxShadow: '0 4px 20px rgba(0,0,0,0.1)' } }}
+          >
+            <MenuItem onClick={() => handleUpdateStatus('DRAFT')} sx={{ fontSize: '0.85rem' }}>
+              <Chip label="DRAFT" size="small" sx={{ mr: 1.5, backgroundColor: '#f1f5f9', color: '#64748b', fontWeight: 'bold' }} />
+              In Progress / Survey Draft
+            </MenuItem>
+            <MenuItem onClick={() => handleUpdateStatus('COMPLETED')} sx={{ fontSize: '0.85rem' }}>
+              <Chip label="COMPLETED" size="small" sx={{ mr: 1.5, backgroundColor: '#e0f2fe', color: '#0369a1', fontWeight: 'bold' }} />
+              Inspection Completed
+            </MenuItem>
+            <MenuItem onClick={() => handleUpdateStatus('SENT TO CLIENT')} sx={{ fontSize: '0.85rem' }}>
+              <Chip label="SENT TO CLIENT" size="small" sx={{ mr: 1.5, backgroundColor: '#dcfce7', color: '#15803d', fontWeight: 'bold' }} />
+              Sent to Client
+            </MenuItem>
+            <MenuItem onClick={() => handleUpdateStatus('CONVERTED TO QUOTE')} sx={{ fontSize: '0.85rem' }}>
+              <Chip label="CONVERTED TO QUOTE" size="small" sx={{ mr: 1.5, backgroundColor: '#fef3c7', color: '#b45309', fontWeight: 'bold' }} />
+              Converted to Quotation
+            </MenuItem>
+          </Menu>
 
           {/* Delete Confirmation Dialog */}
           <Dialog open={deleteOpen} onClose={() => setDeleteOpen(false)}>

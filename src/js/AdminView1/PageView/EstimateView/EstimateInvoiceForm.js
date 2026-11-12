@@ -570,15 +570,53 @@ The GLOBAL GATE Team`;
     fetchCustomer()
   }, [])
   const [customerName, setCustomerName] = useState({});
+
+  // Auto-fill customer from inspection report or previous route state
+  useEffect(() => {
+    if (location.state && customer && customer.length > 0) {
+      const targetId = location.state.customerId;
+      const targetName = location.state.customerName;
+      if (targetId || targetName) {
+        const matched = customer.find((c) =>
+          (targetId && String(c._id) === String(targetId)) ||
+          (targetName && (
+            (c.Customer && c.Customer.trim().toLowerCase() === String(targetName).trim().toLowerCase()) ||
+            (c.customerFullName && c.customerFullName.trim().toLowerCase() === String(targetName).trim().toLowerCase()) ||
+            (c.companyName && c.companyName.trim().toLowerCase() === String(targetName).trim().toLowerCase()) ||
+            (c.invoiceName && c.invoiceName.trim().toLowerCase() === String(targetName).trim().toLowerCase())
+          ))
+        );
+        if (matched) {
+          setCustomerName({
+            _id: matched._id,
+            customerName: matched.Customer || matched.customerFullName || matched.companyName || targetName,
+            billingAddress: matched.billingAddress || matched.address,
+            billingCity: matched.billingCity
+          });
+        } else if (targetName) {
+          setCustomerName({
+            customerName: targetName
+          });
+        }
+      }
+    }
+  }, [customer, location.state]);
+
   const handleChangeCustomer = (newValue) => {
-    const selectedOptions = customer.find((option) => option === newValue)
+    if (!newValue) {
+      setCustomerName({});
+      return;
+    }
+    const selectedOptions = typeof newValue === 'object' && newValue._id
+      ? newValue
+      : customer.find((option) => option === newValue || option.Customer === newValue || option._id === newValue?._id);
     setCustomerName({
       _id: selectedOptions?._id,
-      customerName: selectedOptions?.Customer,
+      customerName: selectedOptions?.Customer || selectedOptions?.customerFullName || newValue?.customerName || (typeof newValue === 'string' ? newValue : ''),
       billingAddress: selectedOptions?.billingAddress,
       billingCity: selectedOptions?.billingCity
     });
-  }
+  };
   const handleShowAutocomplete = (idRow) => {
     SetItems(items => items.map((row) => row.idRow === idRow ? {
       ...row,
@@ -1203,8 +1241,21 @@ The GLOBAL GATE Team`;
                 <Grid container style={{ alignItems: 'center', padding: '15px' }} spacing={2} component={Paper}>
                   <Grid item xs={12}>
                     <Autocomplete
-                      options={customer}
-                      getOptionLabel={(option) => option.Customer}
+                      options={customer || []}
+                      isOptionEqualToValue={(option, val) => {
+                        if (!val) return false;
+                        if (typeof val === 'string') return (option.Customer || '') === val;
+                        return option._id === val._id || (option.Customer && (option.Customer === val.Customer || option.Customer === val.customerName));
+                      }}
+                      getOptionLabel={(option) => {
+                        if (typeof option === 'string') return option;
+                        return option?.Customer || option?.customerFullName || option?.customerName || '';
+                      }}
+                      value={
+                        customerName?.customerName
+                          ? (customer.find((c) => (customerName._id && c._id === customerName._id) || (c.Customer && c.Customer.trim().toLowerCase() === String(customerName.customerName).trim().toLowerCase())) || { Customer: customerName.customerName, _id: customerName._id })
+                          : null
+                      }
                       onChange={(e, newValue) => {
                         handleChangeCustomer(newValue);
                       }}
@@ -1935,9 +1986,20 @@ The GLOBAL GATE Team`;
                 <button onClick={() => handleDecision('stay')} className='btnCustomer'>
                   Add New
                 </button>
-                <button onClick={() => handleDecision('previous')} className='btnCustomer'>
-                  Go Back
-                </button>
+                {location.state?.fromInspectionReport ? (
+                  <>
+                    <button onClick={() => navigate('/EstimateViewAdmin')} className='btnCustomer' style={{ minWidth: '160px' }}>
+                      View Quotations List
+                    </button>
+                    <button onClick={() => navigate('/InspectionReportView')} className='btnCustomer' style={{ minWidth: '160px', backgroundColor: '#30368a' }}>
+                      Back to Reports
+                    </button>
+                  </>
+                ) : (
+                  <button onClick={() => handleDecision('previous')} className='btnCustomer'>
+                    Go Back
+                  </button>
+                )}
               </div>
             </div>
           )}

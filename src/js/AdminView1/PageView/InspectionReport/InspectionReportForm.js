@@ -358,12 +358,38 @@ function InspectionReportForm() {
                 options={customers}
                 getOptionLabel={(option) => {
                   if (typeof option === 'string') return option;
+                  const name = option.Customer || option.customerFullName || `${option.customerFirstName || ''} ${option.customerLastName || ''}`.trim() || 'Client';
+                  const comp = option.companyName && option.companyName.trim() && option.companyName.trim().toLowerCase() !== name.toLowerCase() ? ` · ${option.companyName}` : '';
+                  const branch = option.branchId && option.branchId !== 'HQ' ? ` [${option.branchId}]` : '';
+                  return `${name}${comp}${branch}`.trim();
+                }}
+                filterOptions={(options, state) => {
+                  const input = (state.inputValue || '').toLowerCase().trim();
+                  if (!input) return options;
+                  return options.filter((opt) => {
+                    const name = (opt.Customer || opt.customerFullName || `${opt.customerFirstName || ''} ${opt.customerLastName || ''}`).toLowerCase();
+                    const company = (opt.companyName || '').toLowerCase();
+                    const invoice = (opt.invoiceName || '').toLowerCase();
+                    const phone = (opt.customerCompanyPhone || opt.customerPhone || opt.phone || opt.tel || opt.contactPhone || '').toLowerCase();
+                    return name.includes(input) || company.includes(input) || invoice.includes(input) || phone.includes(input);
+                  });
+                }}
+                renderOption={(props, option) => {
+                  const name = option.Customer || option.customerFullName || `${option.customerFirstName || ''} ${option.customerLastName || ''}`.trim() || 'Client';
+                  const comp = option.companyName && option.companyName.trim() && option.companyName.trim().toLowerCase() !== name.toLowerCase() ? option.companyName : null;
+                  const branch = option.branchId || 'HQ';
+                  const phone = option.customerCompanyPhone || option.customerPhone || option.phone || option.mobile || '';
                   return (
-                    option.customerFullName ||
-                    option.companyName ||
-                    option.Customer ||
-                    `${option.customerFirstName || ''} ${option.customerLastName || ''}`.trim() ||
-                    'Unknown Customer'
+                    <li {...props} key={option._id}>
+                      <Box sx={{ width: '100%', py: 0.5 }}>
+                        <Typography variant="body2" sx={{ fontWeight: 600, color: '#1e293b' }}>
+                          {name}
+                        </Typography>
+                        <Typography variant="caption" sx={{ color: '#64748b' }}>
+                          {comp ? `${comp} · ` : ''}Branch: {branch} {phone ? `· ${phone}` : ''}
+                        </Typography>
+                      </Box>
+                    </li>
                   );
                 }}
                 value={customers.find((c) => c._id === customerId) || null}

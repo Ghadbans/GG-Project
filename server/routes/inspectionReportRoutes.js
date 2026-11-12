@@ -192,7 +192,61 @@ router.delete('/:id', async (req, res) => {
 });
 
 /**
- * 6. POST /endpoint/inspection-reports/ai-draft
+ * 6. POST /endpoint/inspection-reports/:id/convert-quote
+ * Mark report as CONVERTED TO QUOTE
+ */
+router.post('/:id/convert-quote', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const report = await InspectionReport.findByIdAndUpdate(
+      id,
+      { $set: { status: 'CONVERTED TO QUOTE', updatedAt: new Date() } },
+      { new: true }
+    ).lean();
+
+    if (!report) {
+      return res.status(404).json({ success: false, error: 'Inspection report not found' });
+    }
+
+    return res.json({ success: true, data: report });
+  } catch (err) {
+    console.error('[InspectionReport] Error converting report to quote:', err);
+    return res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+/**
+ * 7. PATCH /endpoint/inspection-reports/:id/status
+ * Update report status (DRAFT, COMPLETED, SENT TO CLIENT, CONVERTED TO QUOTE)
+ */
+router.patch('/:id/status', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { status } = req.body;
+
+    if (!status) {
+      return res.status(400).json({ success: false, error: 'Status is required' });
+    }
+
+    const report = await InspectionReport.findByIdAndUpdate(
+      id,
+      { $set: { status, updatedAt: new Date() } },
+      { new: true }
+    ).lean();
+
+    if (!report) {
+      return res.status(404).json({ success: false, error: 'Inspection report not found' });
+    }
+
+    return res.json({ success: true, data: report });
+  } catch (err) {
+    console.error('[InspectionReport] Error updating report status:', err);
+    return res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+/**
+ * 8. POST /endpoint/inspection-reports/ai-draft
  * Smart AI Technical Report Drafter.
  * Transforms rough field notes into executive engineering findings and action plans.
  */

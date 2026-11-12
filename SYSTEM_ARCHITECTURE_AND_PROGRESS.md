@@ -5239,3 +5239,28 @@ The standardized `renderStatusBadge` helper was seamlessly integrated into all 1
    - Packaged Windows Installer: `dist/Global Gate Setup 3.6.50.exe` (99.67 MB) and mirrored to `server/public/downloads/`.
    - Assembled Android APK: `server/public/downloads/GlobalGate-v3.6.50.apk` (19.56 MB) and mirrored to `GlobalGate.apk`.
 
+---
+
+### [Hotfix v3.6.50.3] - Inspection Report Status Workflow, Backend Convert Route & Quotation Customer Pre-fill
+1. **Backend Convert & Status Endpoints (`server/routes/inspectionReportRoutes.js`)**:
+   - Added missing `POST /endpoint/inspection-reports/:id/convert-quote` endpoint, resolving the 404 error on Railway and properly setting report status to `'CONVERTED TO QUOTE'`.
+   - Added `PATCH /endpoint/inspection-reports/:id/status` endpoint to allow instant status transitions (`DRAFT`, `COMPLETED`, `SENT TO CLIENT`, `CONVERTED TO QUOTE`).
+2. **Quotation Customer Name Auto-Selection (`EstimateInvoiceForm.js`)**:
+   - Fixed Desktop and Mobile customer Autocomplete by making them properly controlled with `value` and `isOptionEqualToValue`.
+   - Added `useEffect` listening to `[customer, location.state]` to find and auto-select matching customer ID/name passed from the inspection report.
+   - Quotation save confirmation modal now offers clear navigation buttons ("View Quotations List" and "Back to Reports") when converted from an inspection report.
+3. **Interactive Status Workflow & Quick Status Menu (`InspectionReportView.js`)**:
+   - Made the status chip on every row of the inspection reports table interactive.
+   - Clicking the chip opens a quick-change menu allowing users to switch between `DRAFT`, `COMPLETED`, `SENT TO CLIENT`, and `CONVERTED TO QUOTE` in 1 second.
+4. **Actionable Status Buttons & WhatsApp Sharing (`InspectionReportPrintView.js`)**:
+   - Added **"Mark Completed"** button for quick finalization of reports in `DRAFT`.
+   - Added **"Send to Client (WhatsApp)"** button which sets status to `SENT TO CLIENT` and automatically opens WhatsApp with a pre-formatted message including the Report Code and Subject.
+   - Added on-screen status badge in the report header metadata.
+5. **Customer Dropdown Search Disambiguation (`InspectionReportForm.js`)**:
+   - Enhanced `getOptionLabel`, `filterOptions`, and `renderOption` so each customer option in the Autocomplete displays Company Name, Branch, and Phone number, eliminating identical-looking customer entries.
+6. **Multi-Platform Production Build**:
+   - Webpack production bundle rebuilt with 0 errors.
+   - Windows Installer packaged: `dist/Global Gate Setup 3.6.50.exe` (99.65 MB) and mirrored to `server/public/downloads/GlobalGateSetup.exe`.
+   - Android APK compiled: `server/public/downloads/GlobalGate-v3.6.50.apk` (19.56 MB) and mirrored to `GlobalGate.apk`.
+
+

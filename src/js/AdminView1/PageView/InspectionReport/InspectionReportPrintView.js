@@ -8,12 +8,15 @@ import {
   Button,
   IconButton,
   CircularProgress,
-  Paper
+  Paper,
+  Chip
 } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import PrintIcon from '@mui/icons-material/Print';
 import EditIcon from '@mui/icons-material/Edit';
 import RequestQuoteIcon from '@mui/icons-material/RequestQuote';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import dayjs from 'dayjs';
 import { ENDPOINT_URL } from '../../../apiConfig';
 import defaultLogo from '../../../img/images.png';
@@ -61,6 +64,36 @@ function InspectionReportPrintView() {
     window.print();
   };
 
+  const handleMarkCompleted = async () => {
+    try {
+      const res = await axios.patch(`${ENDPOINT_URL}/inspection-reports/${report._id}/status`, { status: 'COMPLETED' });
+      if (res.data && res.data.success) {
+        setReport((prev) => ({ ...prev, status: 'COMPLETED' }));
+      }
+    } catch (err) {
+      console.error('Error marking report completed:', err);
+    }
+  };
+
+  const handleSendToClient = async () => {
+    try {
+      const res = await axios.patch(`${ENDPOINT_URL}/inspection-reports/${report._id}/status`, { status: 'SENT TO CLIENT' });
+      if (res.data && res.data.success) {
+        setReport((prev) => ({ ...prev, status: 'SENT TO CLIENT' }));
+      }
+    } catch (err) {
+      console.error('Error marking report sent:', err);
+    }
+
+    if (report.customerPhone) {
+      const cleanPhone = String(report.customerPhone).replace(/[^0-9]/g, '');
+      const clientName = report.customerName || 'Valued Client';
+      const msg = `Dear ${clientName},\n\nPlease find our Technical Inspection & Corrective Action Report (${report.reportCode || ''}) regarding "${report.subject || 'Technical Inspection'}".\n\nGlobal Gate SARL - General Services & Technical Division.`;
+      const url = `https://wa.me/${cleanPhone}?text=${encodeURIComponent(msg)}`;
+      window.open(url, '_blank');
+    }
+  };
+
   const handleConvertToQuote = async () => {
     try {
       await axios.post(`${ENDPOINT_URL}/inspection-reports/${report._id}/convert-quote`);
@@ -106,11 +139,29 @@ function InspectionReportPrintView() {
           >
             Edit Report
           </Button>
+          {report.status !== 'COMPLETED' && report.status !== 'SENT TO CLIENT' && report.status !== 'CONVERTED TO QUOTE' && (
+            <Button
+              variant="outlined"
+              startIcon={<CheckCircleOutlineIcon />}
+              onClick={handleMarkCompleted}
+              sx={{ textTransform: 'none', color: '#0369a1', borderColor: '#0369a1' }}
+            >
+              Mark Completed
+            </Button>
+          )}
+          <Button
+            variant="outlined"
+            startIcon={<WhatsAppIcon />}
+            onClick={handleSendToClient}
+            sx={{ textTransform: 'none', color: '#15803d', borderColor: '#15803d' }}
+          >
+            Send to Client (WhatsApp)
+          </Button>
           <Button
             variant="outlined"
             startIcon={<RequestQuoteIcon />}
             onClick={handleConvertToQuote}
-            sx={{ textTransform: 'none', color: '#16a34a', borderColor: '#16a34a' }}
+            sx={{ textTransform: 'none', color: '#b45309', borderColor: '#b45309' }}
           >
             Convert to Quotation
           </Button>
@@ -198,6 +249,26 @@ function InspectionReportPrintView() {
             <Box sx={{ display: 'flex' }}>
               <Typography sx={{ fontWeight: 700, width: '90px', fontSize: '11px', color: '#093170' }}>Report #:</Typography>
               <Typography sx={{ fontSize: '11px', color: '#1e293b', fontWeight: 700 }}>{report.reportCode}</Typography>
+            </Box>
+            <Box sx={{ display: 'flex', alignItems: 'center', mt: 0.3 }}>
+              <Typography sx={{ fontWeight: 700, width: '90px', fontSize: '11px', color: '#093170' }}>Status:</Typography>
+              <Chip
+                size="small"
+                label={report.status || 'DRAFT'}
+                sx={{
+                  height: '18px',
+                  fontSize: '9.5px',
+                  fontWeight: 700,
+                  backgroundColor:
+                    report.status === 'COMPLETED' ? '#e0f2fe' :
+                    report.status === 'SENT TO CLIENT' ? '#dcfce7' :
+                    report.status === 'CONVERTED TO QUOTE' ? '#fef3c7' : '#f1f5f9',
+                  color:
+                    report.status === 'COMPLETED' ? '#0369a1' :
+                    report.status === 'SENT TO CLIENT' ? '#15803d' :
+                    report.status === 'CONVERTED TO QUOTE' ? '#b45309' : '#64748b'
+                }}
+              />
             </Box>
           </Box>
         </Box>
