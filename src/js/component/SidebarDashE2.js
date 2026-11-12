@@ -16,6 +16,7 @@ import CategoryIcon from '@mui/icons-material/Category';
 import StoreIcon from '@mui/icons-material/Store';
 import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
 import CampaignIcon from '@mui/icons-material/Campaign';
+import AssignmentIcon from '@mui/icons-material/Assignment';
 import SideBlockFactory from './SideBlockFactory';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
@@ -103,6 +104,8 @@ function SidebarDashE2({ onView, isSubmenu }) {
   const MainInfo = grantAccess.filter((row) => row.moduleName === "Main" && row.access.readM === true);
   const MarketingInfo = grantAccess.filter((row) => row.moduleName === "Marketing" && row.access.readM === true);
   const hasMarketingAccess = user.data?.userName === 'GG' || Boolean(grantAccessDoc?.marketing) || MarketingInfo.length > 0;
+  const InspectionReportInfo = grantAccess.filter((row) => row.moduleName === "Inspection Report" && row.access.readM === true);
+  const hasInspectionReportAccess = user.data?.userName === 'GG' || Boolean(grantAccessDoc?.inspectionReport) || InspectionReportInfo.length > 0;
   const RateInfo = grantAccess.filter((row) => row.moduleName === "Rate" && row.access.readM === true);
   const EmployeeInfo = grantAccess.filter((row) => row.moduleName === "Employee" && row.access.readM === true);
   const FleetInfo = grantAccess.filter((row) => row.moduleName === "Fleet Management" && row.access.readM === true);
@@ -130,6 +133,14 @@ function SidebarDashE2({ onView, isSubmenu }) {
                 <CampaignIcon />
               </ListItemIcon>
               <ListItemText primary="Marketing" />
+            </ListItemButton>
+          )}
+          {hasInspectionReportAccess && (
+            <ListItemButton disabled={loadingAccess} sx={{ color: 'gray' }} component={NavLink} to="/InspectionReportView" onClick={handleNavClick} style={isActive('/InspectionReportView') ? { backgroundColor: '#30368a', color: 'white' } : null}>
+              <ListItemIcon sx={{ color: 'gray' }} style={isActive('/InspectionReportView') ? { backgroundColor: '#30368a', color: 'white' } : null}>
+                <AssignmentIcon />
+              </ListItemIcon>
+              <ListItemText primary="Inspection Report" />
             </ListItemButton>
           )}
           <ListItemButton disabled={loadingAccess || (user.data?.userName !== 'GG' && RateInfo.length === 0)} sx={{ color: 'gray' }} component={NavLink} to="/RateViewAdmin" onClick={handleNavClick} style={isActive('/RateViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>

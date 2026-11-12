@@ -278,10 +278,14 @@ function GrantAccessUpdateView() {
     _useState16 = _slicedToArray(_useState15, 2),
     whatsappInvoice = _useState16[0],
     setWhatsappInvoice = _useState16[1];
-  var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+  var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState18 = _slicedToArray(_useState17, 2),
-    branchOptions = _useState18[0],
-    setBranchOptions = _useState18[1];
+    inspectionReport = _useState18[0],
+    setInspectionReport = _useState18[1];
+  var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    _useState20 = _slicedToArray(_useState19, 2),
+    branchOptions = _useState20[0],
+    setBranchOptions = _useState20[1];
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     var fetchBranches = /*#__PURE__*/function () {
       var _ref8 = _asyncToGenerator(function* () {
@@ -316,6 +320,7 @@ function GrantAccessUpdateView() {
           setBackupVisibility(res.data.data.backupVisibility || false);
           setMarketing(res.data.data.marketing || false);
           setWhatsappInvoice(res.data.data.whatsappInvoice || false);
+          setInspectionReport(res.data.data.inspectionReport || false);
           var fetchedModules = res.data.data.modules;
           if (!fetchedModules.find(m => m.moduleName === 'Purchase-Order')) {
             fetchedModules.push({
@@ -473,18 +478,18 @@ function GrantAccessUpdateView() {
     updateModule[i].access[type] = !updateModule[i].access[type];
     setModules(updateModule);
   };
-  var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState20 = _slicedToArray(_useState19, 2),
-    loading = _useState20[0],
-    setLoading = _useState20[1];
   var _useState21 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState22 = _slicedToArray(_useState21, 2),
-    loadingOpenModal = _useState22[0],
-    setLoadingOpenModal = _useState22[1];
+    loading = _useState22[0],
+    setLoading = _useState22[1];
   var _useState23 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState24 = _slicedToArray(_useState23, 2),
-    ErrorOpenModal = _useState24[0],
-    setErrorOpenModal = _useState24[1];
+    loadingOpenModal = _useState24[0],
+    setLoadingOpenModal = _useState24[1];
+  var _useState25 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState26 = _slicedToArray(_useState25, 2),
+    ErrorOpenModal = _useState26[0],
+    setErrorOpenModal = _useState26[1];
   var handleOpen = () => {
     setLoadingOpenModal(true);
     setLoading(true);
@@ -547,7 +552,8 @@ function GrantAccessUpdateView() {
         messageVisibility,
         backupVisibility,
         marketing,
-        whatsappInvoice
+        whatsappInvoice,
+        inspectionReport
       };
       try {
         var res = yield axios__WEBPACK_IMPORTED_MODULE_27__/* ["default"] */ .A.put("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_28__/* .ENDPOINT_URL */ .m, "/update-grantAccess/").concat(id), data);
@@ -843,6 +849,17 @@ function GrantAccessUpdateView() {
       onChange: e => setWhatsappInvoice(e.target.checked)
     }),
     label: "Send WhatsApp Invoices: ".concat(whatsappInvoice ? 'Granted' : 'Denied')
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .Ay, {
+    item: true,
+    xs: 12,
+    sm: 6,
+    md: 3
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+    control: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+      checked: inspectionReport,
+      onChange: e => setInspectionReport(e.target.checked)
+    }),
+    label: "Inspection Report: ".concat(inspectionReport ? 'Granted' : 'Denied')
   }))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .Ay, {
     item: true,
     xs: 12

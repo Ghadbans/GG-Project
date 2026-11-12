@@ -97,6 +97,9 @@ const PayRollViewAdmin = React.lazy(() => import('./AdminView1/PayRollViewAdmin'
 const ExpensesViewAdmin = React.lazy(() => import('./AdminView1/ExpensesViewAdmin'))
 const RateViewAdmin = React.lazy(() => import('./AdminView1/RateViewAdmin'))
 const MarketingViewAdmin = React.lazy(() => import('./AdminView1/PageView/MarketingView/MarketingViewAdmin'))
+const InspectionReportView = React.lazy(() => import('./AdminView1/PageView/InspectionReport/InspectionReportView'))
+const InspectionReportForm = React.lazy(() => import('./AdminView1/PageView/InspectionReport/InspectionReportForm'))
+const InspectionReportPrintView = React.lazy(() => import('./AdminView1/PageView/InspectionReport/InspectionReportPrintView'))
 const SettingsViewAdmin = React.lazy(() => import('./AdminView1/SettingsViewAdmin'))
 const ReportsViewAdmin = React.lazy(() => import('./AdminView1/ReportsViewAdmin'))
 const PaymentView = React.lazy(() => import('./AdminView1/PaymentView'))
@@ -442,6 +445,11 @@ function App() {
             <Route path='SettingsViewAdmin' element={<SettingsViewAdmin />}></Route>
             <Route path='BranchManagement' element={<BranchManagement />}></Route>
             <Route path='MarketingViewAdmin' element={<MarketingViewAdmin />}></Route>
+            {/** Inspection Reports */}
+            <Route path='InspectionReportView' element={<InspectionReportView />}></Route>
+            <Route path='InspectionReportForm' element={<InspectionReportForm />}></Route>
+            <Route path='InspectionReportForm/:id' element={<InspectionReportForm />}></Route>
+            <Route path='InspectionReportPrintView/:id' element={<InspectionReportPrintView />}></Route>
             <Route path='RateViewAdmin' element={<RateViewAdmin />}></Route>
             <Route path='RolePermission' element={<RolePermission />}></Route>
             <Route path='UserAccount' element={<UserAccount />}></Route>

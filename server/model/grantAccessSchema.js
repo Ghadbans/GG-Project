@@ -21,6 +21,7 @@ const grantAccessSchema = new Schema(
     backupVisibility: { type: Boolean, default: false },
     marketing: { type: Boolean, default: false },
     whatsappInvoice: { type: Boolean, default: false },
+    inspectionReport: { type: Boolean, default: false },
     branchId: { type: String, default: 'HQ' },
   },
   {

@@ -35,6 +35,7 @@ import AccountTreeIcon from '@mui/icons-material/AccountTree';
 import BadgeIcon from '@mui/icons-material/Badge';
 import StorefrontIcon from '@mui/icons-material/Storefront';
 import BusinessIcon from '@mui/icons-material/Business';
+import AssignmentIcon from '@mui/icons-material/Assignment';
 import LogoutIcon from './NetworkLogoutIcon';
 import pkg from '../../../package.json';
 
@@ -240,6 +241,16 @@ function MobileDrawer({ open, onClose }) {
           )}
 
           <Divider sx={{ my: 0.5 }} />
+
+          {/* Inspection Report */}
+          {(user?.data?.userName === 'GG' || canAccess('Inspection Report')) && (
+            <ListItemButton onClick={() => handleNav('/InspectionReportView')} sx={{ py: 1, px: 2 }}>
+              <ListItemIcon sx={{ minWidth: 38, color: '#64748b' }}>
+                <AssignmentIcon fontSize="small" />
+              </ListItemIcon>
+              <ListItemText primary="Inspection Reports" primaryTypographyProps={{ fontSize: '0.9rem' }} />
+            </ListItemButton>
+          )}
 
           {/* 8. Maintenance (Group: Job Cards, Maintenance Orders, Technician Store) */}
           {(canAccess('Maintenance') || canAccess('Maintenance-Order') || canAccess('Technician-Store')) && (

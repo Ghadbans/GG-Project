@@ -5108,3 +5108,90 @@ The standardized `renderStatusBadge` helper was seamlessly integrated into all 1
 - **Artifact Preservation**: All previous builds (`GlobalGate-v3.6.48.exe`, `GlobalGate-v3.6.47.exe`, `GlobalGate-v3.6.46.exe`, etc.) remain permanently preserved.
 - **Background Task Discipline**: 0 background processes left running in Antigravity.
 
+
+---
+
+### Rule 69: Technical Inspection Report Architecture, Layout & Access Scoping (Ver 3.6.50)
+- **Location & Navigation**: Positioned directly beneath 'Marketing' inside the 'More Menu' (`SidebarDashE2.js`), and under the Mobile drawer and bottom menu routes.
+- **Access Control**: Governed by `Grant Access` boolean `grantAccessDoc.inspectionReport` or module row `'Inspection Report'`. User `GG` possesses universal bypass.
+- **Executive PDF / Print Layout**: Replicates Gemini-generated executive engineering reports (`Technical Inspection & Corrective Action Report`). Features:
+  - Header: Corporate logo on left, registered office / contact details on right.
+  - Metadata block: Blue border callout with Subject, Location, Date, Prepared By, and Client details.
+  - Findings: Numbered section headings with bold bullet items and problem descriptions.
+  - Photographic Evidence: Side-by-side photo grid (2 per row on A4 print) with Figure numbers and italicized engineering captions.
+  - Recommended Action Plan: Navy-blue headed table with Item #, Scope / Task, Equipment & Materials, and Execution Timeframe.
+  - Next Steps: Highlight box summarizing execution requirements.
+  - Dual Sign-off: Prepared By (Field Engineer) and Approved By (Technical Director / Client).
+- **Gemini AI Draft Engine**: Integrated backend endpoint `POST /endpoint/inspection-reports/ai-draft` utilizing Gemini API (with deterministic fallback) to convert rough notes and field bullet points into structured executive engineering reports.
+- **Conversion to Quotation**: Allows 1-click transition to `/EstimateForm` pre-populating client, subject, and site notes for seamless commercialization.
+
+---
+
+## [Release v3.6.50] - 2026-11-12
+### 1. Technical Inspection Report Module Implementation
+#### A. Architecture & Schema Design
+- **MongoDB Schema (`server/model/inspectionReportSchema.js`)**:
+  - `reportNumber` (Integer, auto-incremented) and `reportCode` (`IR-0001`, `IR-0002`...).
+  - `subject`, `location`, `reportDate`, `preparedBy`, `division` (`GENERAL SERVICES & HVAC TECHNICAL DIVISION`).
+  - `client`: `customerId`, `customerName`, `customerEmail`, `customerPhone`, `siteAddress`.
+  - `status`: `'Draft'`, `'Submitted'`, `'Approved'`, `'Archived'`, `'Converted to Quotation'`.
+  - `findings`: Array of `{ title, description, severity }`.
+  - `photos`: Array of `{ url, caption, figureNumber }`.
+  - `actionItems`: Array of `{ itemNumber, taskDescription, materialsRequired, timeframe }`.
+  - `nextSteps`: Formatted text block.
+  - `signOff`: `{ preparedByTitle, preparedBySignatureDate, approvedByTitle, approvedBySignatureDate }`.
+  - Multi-branch scoping (`branchId`), audit tracking (`createdBy`, `updatedBy`).
+- **Grant Access Extension (`server/model/grantAccessSchema.js`)**:
+  - Added `inspectionReport: { type: Boolean, default: false }`.
+  - Integrated into `src/js/AdminView1/PageView/SettingsView/GrantAccessUpdateView.js` with toggle switch and permission state management.
+
+#### B. Backend API Routes (`server/routes/inspectionReportRoutes.js`)
+- `GET /` & `GET /branch/:branchId`: Paginated query with regex search across subject, location, customerName, preparedBy, and reportCode.
+- `GET /:id`: Full report detail retrieval.
+- `POST /`: Atomic report creation with auto-incrementing `IR-xxxx` numbering.
+- `PUT /:id`: Dynamic in-place report updating.
+- `DELETE /:id`: Scoped report deletion with permission checks.
+- `POST /ai-draft`: "Smart Draft with Gemini" endpoint parsing user inspection notes and bullet points into executive report structure.
+- `POST /:id/convert-quote`: Tracks conversion status when report transitions to commercial quotation.
+- Mounted in `server/index.js` under both `/api/inspection-reports` and `/endpoint/inspection-reports`.
+
+#### C. Frontend UI & Interactive Engineering Document
+- **Master Listing (`InspectionReportView.js`)**:
+  - Search across report code, subject, customer, and engineer.
+  - Status filter pills (`All`, `Draft`, `Submitted`, `Approved`, `Converted to Quotation`).
+  - Actions: View & Print, Edit Report, Convert to Quotation, Delete.
+- **Dynamic Report Editor (`InspectionReportForm.js`)**:
+  - Customer selection with auto-fill of site address and contact numbers.
+  - Dynamic rows for Findings with severity tags (`High`, `Medium`, `Low`, `Critical`).
+  - Photographic Evidence uploader supporting file uploads, image preview, Figure auto-numbering, and technical captions.
+  - Action Plan dynamic table editor with Scope, Materials/Equipment, and Timeframe rows.
+  - Built-in "Smart Draft with Gemini" modal to auto-generate reports from rough field notes.
+- **Executive Document & Print Replica (`InspectionReportPrintView.js`)**:
+  - Pixel-perfect replica of the Gemini executive report template (`Technical_Inspection_Report_-_AC_Outdoor_Units_Relocation.pdf`).
+  - Global Gate official corporate header (`server/assets/logo.png` / `src/js/img/Image1.png`) and registration details.
+  - Blue callout metadata summary block.
+  - High-resolution photo gallery with Figure captions.
+  - Navy-blue bordered Action Plan table.
+  - Dual sign-off endorsement block.
+  - Clean `@media print` CSS for standard A4 landscape/portrait printing.
+
+#### D. Navigation & Routing
+- Wired under 'Marketing' inside More Menu (`SidebarDashE2.js`).
+- Wired in `MobileLayout.js` title resolver and `MobileDrawer.js`.
+- Registered routes in `src/js/App.js`:
+  - `/InspectionReportView`
+  - `/InspectionReportForm`
+  - `/InspectionReportForm/:id`
+  - `/InspectionReportPrintView/:id`
+
+---
+
+### 2. Multi-Platform Verification & Packaging
+- **AST Quality Gate**: Verified with 0 errors across 244 source files (`node scripts/pre-build-check.js`).
+- **Comprehensive 14-Module Audit**: Ran `scripts/comprehensive_module_test.js` — **20 of 20 checks passed with zero errors**.
+- **Version Bump**: Bumped to `v3.6.50` across `package.json`, `server/package.json`, `server/routes/downloadRoutes.js`, and `server/index.js`.
+- **Production Bundles**: Compiled desktop and web production bundles via Webpack (`dist_web/` and `build/`).
+- **Windows Executable**: Packaged `dist/Global Gate Setup 3.6.50.exe` (99.66 MB) via `electron-builder` and mirrored to `server/public/downloads/Global Gate Setup 3.6.50.exe` and `GlobalGateSetup.exe`.
+- **Android APK**: Compiled via Gradle with Android Studio JBR: `server/public/downloads/GlobalGate-v3.6.50.apk` (19.27 MB) and mirrored to `GlobalGate.apk`.
+- **Artifact Preservation**: All previous builds (`GlobalGate-v3.6.49.exe` through `v3.6.39.exe` and `.apk` files) remain permanently preserved.
+- **Background Task Discipline**: 0 background processes left running in Antigravity.

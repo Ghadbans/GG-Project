@@ -155,6 +155,7 @@ function GrantAccessUpdateView() {
   const [backupVisibility, setBackupVisibility] = useState(false);
   const [marketing, setMarketing] = useState(false);
   const [whatsappInvoice, setWhatsappInvoice] = useState(false);
+  const [inspectionReport, setInspectionReport] = useState(false);
   const [branchOptions, setBranchOptions] = useState([]);
 
   useEffect(() => {
@@ -185,6 +186,7 @@ function GrantAccessUpdateView() {
         setBackupVisibility(res.data.data.backupVisibility || false);
         setMarketing(res.data.data.marketing || false);
         setWhatsappInvoice(res.data.data.whatsappInvoice || false);
+        setInspectionReport(res.data.data.inspectionReport || false);
         let fetchedModules = res.data.data.modules;
 
         
@@ -344,7 +346,8 @@ fetchedModules = fetchedModules.map((m, index) => ({ ...m, id: index + 1 }));
       messageVisibility,
       backupVisibility,
       marketing,
-      whatsappInvoice
+      whatsappInvoice,
+      inspectionReport
     };
     try {
       const res = await axios.put(`${ENDPOINT_URL}/update-grantAccess/${id}`, data)
@@ -607,6 +610,17 @@ fetchedModules = fetchedModules.map((m, index) => ({ ...m, id: index + 1 }));
                             />
                           }
                           label={`Send WhatsApp Invoices: ${whatsappInvoice ? 'Granted' : 'Denied'}`}
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={6} md={3}>
+                        <FormControlLabel
+                          control={
+                            <Checkbox
+                              checked={inspectionReport}
+                              onChange={(e) => setInspectionReport(e.target.checked)}
+                            />
+                          }
+                          label={`Inspection Report: ${inspectionReport ? 'Granted' : 'Denied'}`}
                         />
                       </Grid>
                     </Grid>

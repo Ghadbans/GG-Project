@@ -40,6 +40,7 @@ import SidebarDash from './SidebarDash';
 import MobileDrawer from './MobileDrawer';
 
 function getTitleFromPath(pathname) {
+  if (pathname.includes('InspectionReport')) return 'Inspection Reports';
   if (pathname.includes('Customer')) return 'Customers';
   if (pathname.includes('Invoice')) return 'Invoices';
   if (pathname.includes('Maintenance')) return 'Maintenance';
