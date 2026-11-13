@@ -1022,10 +1022,11 @@ footer {
   }
 
   .invoicedetails.po-print-full-page {
-    min-height: 265mm !important;
+    min-height: 268mm !important;
     display: flex !important;
     flex-direction: column !important;
     justify-content: space-between !important;
+    box-sizing: border-box !important;
   }
 
   .invoicedetails table {

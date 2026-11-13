@@ -5396,3 +5396,34 @@ The standardized `renderStatusBadge` helper was seamlessly integrated into all 1
   - Recompiled Webpack desktop and web bundles (`dist_web/`).
   - Packaged Windows Installer: `dist/Global Gate Setup 3.6.54.exe` and mirrored to `server/public/downloads/Global Gate Setup 3.6.54.exe`, `GlobalGate-v3.6.54.exe`, and `GlobalGateSetup.exe`.
   - Compiled Android APK: `server/public/downloads/GlobalGate-v3.6.54.apk` and mirrored to `GlobalGate.apk`.
+
+
+---
+
+### Rule 74: Desktop/Web Unified Build Pipeline & Reinforced A4 Print Geometry for Purchase Orders (Ver 3.6.55)
+- **Unified Multi-Platform Build Pipeline Synchronization**:
+  - `electron-builder` packages files strictly from `'build/**/*'` (compiled by `webpack.prod.js`), whereas Cloudflare Pages and the web portal consume `'dist_web/**/*'` (compiled by `webpack.web.prod.js`).
+  - Running partial web-only builds previously left `build/` on an older revision, causing the Windows desktop installer to launch with outdated bundle assets despite the version bump.
+  - Enforced full unified builds (`npm run build`) which executes `webpack.prod.js` and `webpack.web.prod.js` synchronously, guaranteeing desktop Electron (`build/js/app.js`), web portal (`dist_web/`), and Android APK assets remain in 100% lockstep on every release.
+- **Purchase Order Reinforced A4 Print Geometry**:
+  - In `src/js/AdminView1/PageView/PurchaseOrder/PurchaseOrderInfoView.js`, reinforced the `useReactToPrint` `pageStyle` property across both `handlePrint` (Supplier Order / Qty Only) and `handlePrint2` (Full Order with Prices):
+    ```css
+    @page { size: A4 portrait; margin: 8mm 10mm 10mm 10mm; }
+    @media print {
+      html, body { height: 100% !important; margin: 0 !important; padding: 0 !important; background: #fff !important; }
+      .po-print-full-page {
+        min-height: 268mm !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: space-between !important;
+        box-sizing: border-box !important;
+      }
+      body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    }
+    ```
+  - Updated container styling and `src/js/AdminView1/PageView/Chartview.css` to 268mm, providing precise single-page full A4 portrait fitting with 11mm of safe margin, anchoring the signature lines and corporate footer directly to the bottom of the page.
+- **Universal Multi-Platform Production Artifacts**:
+  - Incremental version bump: **v3.6.55**.
+  - Recompiled both desktop bundle (`build/js/app.js`) and web bundle (`dist_web/build/js/app.js`).
+  - Packaged Windows Installer: `dist/Global Gate Setup 3.6.55.exe` and mirrored to `server/public/downloads/Global Gate Setup 3.6.55.exe`, `GlobalGate-v3.6.55.exe`, and `GlobalGateSetup.exe`.
+  - Compiled Android APK: `server/public/downloads/GlobalGate-v3.6.55.apk` and mirrored to `GlobalGate.apk`.

@@ -216,12 +216,12 @@ function PurchaseOrderInfoView() {
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
     documentTitle: 'PO-' + String(purchaseNumber).padStart(6, '0'),
-    pageStyle: `@page { size: A4 portrait; margin: 8mm 10mm 10mm 10mm; } @media print { body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }`,
+    pageStyle: `@page { size: A4 portrait; margin: 8mm 10mm 10mm 10mm; } @media print { html, body { height: 100% !important; margin: 0 !important; padding: 0 !important; background: #fff !important; } .po-print-full-page { min-height: 268mm !important; display: flex !important; flex-direction: column !important; justify-content: space-between !important; box-sizing: border-box !important; } body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }`,
   });
   const handlePrint2 = useReactToPrint({
     content: () => componentRef2.current,
     documentTitle: 'PO-' + String(purchaseNumber).padStart(6, '0'),
-    pageStyle: `@page { size: A4 portrait; margin: 8mm 10mm 10mm 10mm; } @media print { body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }`,
+    pageStyle: `@page { size: A4 portrait; margin: 8mm 10mm 10mm 10mm; } @media print { html, body { height: 100% !important; margin: 0 !important; padding: 0 !important; background: #fff !important; } .po-print-full-page { min-height: 268mm !important; display: flex !important; flex-direction: column !important; justify-content: space-between !important; box-sizing: border-box !important; } body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }`,
   });
   const handleOpenPrint = () => {
     handlePrint()
@@ -648,7 +648,7 @@ function PurchaseOrderInfoView() {
                               <hr />
                               <div style={{ height: 'calc(100vh - 230px)', overflow: 'hidden', overflowY: 'auto', width: '100%', background: 'white' }}>
                                 <Box hidden >
-                                  <div ref={componentRef} className='invoicedetails po-print-full-page' style={{ minHeight: '265mm', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', boxSizing: 'border-box', background: '#fff' }}>
+                                  <div ref={componentRef} className='invoicedetails po-print-full-page' style={{ minHeight: '268mm', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', boxSizing: 'border-box', background: '#fff' }}>
                                     <div>
                                       <div className='invoiceTest' style={{ borderBottom: '1.5px solid #1e3a8a', paddingBottom: '6px', marginBottom: '8px' }}>
                                         <PrintHeader branchId={typeof row !== "undefined" ? row?.branchId : ""} />
@@ -770,7 +770,7 @@ function PurchaseOrderInfoView() {
                                   </div>
                                 </Box>
                                 <Box hidden >
-                                  <div ref={componentRef2} className='invoicedetails po-print-full-page' style={{ minHeight: '265mm', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', boxSizing: 'border-box', background: '#fff' }}>
+                                  <div ref={componentRef2} className='invoicedetails po-print-full-page' style={{ minHeight: '268mm', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', boxSizing: 'border-box', background: '#fff' }}>
                                     <div>
                                       <div className='invoiceTest' style={{ borderBottom: '1.5px solid #1e3a8a', paddingBottom: '6px', marginBottom: '8px' }}>
                                         <PrintHeader branchId={typeof row !== "undefined" ? row?.branchId : ""} />

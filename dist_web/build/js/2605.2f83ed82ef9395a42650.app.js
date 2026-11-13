@@ -390,12 +390,12 @@ function PurchaseOrderInfoView() {
   var handlePrint = (0,react_to_print__WEBPACK_IMPORTED_MODULE_42__.useReactToPrint)({
     content: () => componentRef.current,
     documentTitle: 'PO-' + String(purchaseNumber).padStart(6, '0'),
-    pageStyle: "@page { size: A4 portrait; margin: 8mm 10mm 10mm 10mm; } @media print { body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }"
+    pageStyle: "@page { size: A4 portrait; margin: 8mm 10mm 10mm 10mm; } @media print { html, body { height: 100% !important; margin: 0 !important; padding: 0 !important; background: #fff !important; } .po-print-full-page { min-height: 268mm !important; display: flex !important; flex-direction: column !important; justify-content: space-between !important; box-sizing: border-box !important; } body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }"
   });
   var handlePrint2 = (0,react_to_print__WEBPACK_IMPORTED_MODULE_42__.useReactToPrint)({
     content: () => componentRef2.current,
     documentTitle: 'PO-' + String(purchaseNumber).padStart(6, '0'),
-    pageStyle: "@page { size: A4 portrait; margin: 8mm 10mm 10mm 10mm; } @media print { body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }"
+    pageStyle: "@page { size: A4 portrait; margin: 8mm 10mm 10mm 10mm; } @media print { html, body { height: 100% !important; margin: 0 !important; padding: 0 !important; background: #fff !important; } .po-print-full-page { min-height: 268mm !important; display: flex !important; flex-direction: column !important; justify-content: space-between !important; box-sizing: border-box !important; } body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }"
   });
   var handleOpenPrint = () => {
     handlePrint();
@@ -909,7 +909,7 @@ function PurchaseOrderInfoView() {
       ref: componentRef,
       className: "invoicedetails po-print-full-page",
       style: {
-        minHeight: '265mm',
+        minHeight: '268mm',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
@@ -1246,7 +1246,7 @@ function PurchaseOrderInfoView() {
       ref: componentRef2,
       className: "invoicedetails po-print-full-page",
       style: {
-        minHeight: '265mm',
+        minHeight: '268mm',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
