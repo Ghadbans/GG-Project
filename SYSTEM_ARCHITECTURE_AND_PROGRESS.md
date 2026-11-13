@@ -5443,3 +5443,22 @@ The standardized `renderStatusBadge` helper was seamlessly integrated into all 1
   - Recompiled both desktop bundle (`build/js/app.js`) and web bundle (`dist_web/build/js/app.js`).
   - Packaged Windows Installer: `dist/Global Gate Setup 3.6.56.exe` and mirrored to `server/public/downloads/Global Gate Setup 3.6.56.exe`, `GlobalGate-v3.6.56.exe`, and `GlobalGateSetup.exe`.
   - Compiled Android APK: `server/public/downloads/GlobalGate-v3.6.56.apk` and mirrored to `GlobalGate.apk`.
+
+
+---
+
+### Rule 76: Pure Vector SVG Icons for Server-Side PDFKit Document Generation (Ver 3.6.57)
+- **PDFKit WinAnsiEncoding Emoji Corruption Avoidance**:
+  - In `server/services/invoicePdfGenerator.js`, the bottom footer contact details previously used raw Unicode emojis in text string: `'✉ CONTACT@GLOBALGATE.SARL      📞 +243 827 722 222      🌐 WWW.GLOBALGATE.SARL'`.
+  - Standard PDF fonts (`Helvetica`, `Helvetica-Bold`) in PDFKit use single-byte `WinAnsiEncoding` (Windows-1252), which lacks multi-byte UTF-8 emoji definitions. PDFKit decomposed the UTF-8 bytes into Windows-1252 characters, producing garbled mojibake: `' CONTACT@GLOBALGATE.SARL      Ø=ÜÞ +243 827 722 222      Ø<ß    WWW.GLOBALGATE.SARL`.
+  - Implemented `drawVectorIcon()` utility using native PDFKit vector paths:
+    - **Email Icon**: Vector SVG envelope path (`M20 4H4c-1.1...`).
+    - **Phone Icon**: Vector SVG phone handset path (`M6.62 10.79...`).
+    - **Web Icon**: Vector SVG globe path (`M11.99 2C6.47...`).
+  - Positioned each vector icon with resolution-independent scaling (`size / 24`), followed by clean ASCII corporate contact text, and dynamically calculated `totalFooterW` using `doc.widthOfString()` to ensure perfect mathematical centering above the bottom page margin.
+- **Universal Multi-Platform Production Artifacts**:
+  - Incremental version bump: **v3.6.57**.
+  - Recompiled both desktop bundle (`build/js/app.js`) and web bundle (`dist_web/build/js/app.js`).
+  - Packaged Windows Installer: `dist/Global Gate Setup 3.6.57.exe` and mirrored to `server/public/downloads/Global Gate Setup 3.6.57.exe`, `GlobalGate-v3.6.57.exe`, and `GlobalGateSetup.exe`.
+  - Compiled Android APK: `server/public/downloads/GlobalGate-v3.6.57.apk` and mirrored to `GlobalGate.apk`.
+

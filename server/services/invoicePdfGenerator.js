@@ -298,8 +298,51 @@ function generateInvoicePdfBuffer(invoice) {
 
       // ── 7. FOOTER ──
       doc.rect(32, 792, 533, 0.8).fill('#093170');
-      doc.fillColor('#093170').fontSize(7.5).font('Helvetica-Bold')
-        .text('✉ CONTACT@GLOBALGATE.SARL      📞 +243 827 722 222      🌐 WWW.GLOBALGATE.SARL', 32, 798, { width: 533, align: 'center' });
+
+      // SVG vector icon paths (Email, Phone, Web) rendered without font/encoding dependencies
+      const emailIconPath = 'M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2m0 4-8 5-8-5V6l8 5 8-5z';
+      const phoneIconPath = 'M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02z';
+      const webIconPath = 'M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2m6.93 6h-2.95c-.32-1.25-.78-2.45-1.38-3.56 1.84.63 3.37 1.91 4.33 3.56M12 4.04c.83 1.2 1.48 2.53 1.91 3.96h-3.82c.43-1.43 1.08-2.76 1.91-3.96M4.26 14C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2 0 .68.06 1.34.14 2zm.82 2h2.95c.32 1.25.78 2.45 1.38 3.56-1.84-.63-3.37-1.9-4.33-3.56m2.95-8H5.08c.96-1.66 2.49-2.93 4.33-3.56C8.81 5.55 8.35 6.75 8.03 8M12 19.96c-.83-1.2-1.48-2.53-1.91-3.96h3.82c-.43 1.43-1.08 2.76-1.91 3.96M14.34 14H9.66c-.09-.66-.16-1.32-.16-2 0-.68.07-1.35.16-2h4.68c.09.65.16 1.32.16 2 0 .68-.07 1.34-.16 2m.25 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95c-.96 1.65-2.49 2.93-4.33 3.56M16.36 14c.08-.66.14-1.32.14-2 0-.68-.06-1.34-.14-2h3.38c.16.64.26 1.31.26 2s-.1 1.36-.26 2z';
+
+      const drawVectorIcon = (svgPath, x, y, size = 8.5, color = '#093170') => {
+        doc.save();
+        doc.translate(x, y);
+        doc.scale(size / 24);
+        doc.path(svgPath).fillColor(color).fill();
+        doc.restore();
+      };
+
+      doc.fontSize(7.5).font('Helvetica-Bold');
+      const emailText = 'CONTACT@GLOBALGATE.SARL';
+      const phoneText = '+243 827 722 222';
+      const webText = 'WWW.GLOBALGATE.SARL';
+
+      const emailW = doc.widthOfString(emailText);
+      const phoneW = doc.widthOfString(phoneText);
+      const webW = doc.widthOfString(webText);
+
+      const iconSize = 8.5;
+      const iconGap = 4;
+      const secGap = 20;
+
+      const totalFooterW = (iconSize + iconGap + emailW) + secGap + (iconSize + iconGap + phoneW) + secGap + (iconSize + iconGap + webW);
+      const footStartX = 32 + (533 - totalFooterW) / 2;
+      const footY = 800;
+
+      let curFootX = footStartX;
+      drawVectorIcon(emailIconPath, curFootX, footY - 0.5, iconSize, '#093170');
+      curFootX += iconSize + iconGap;
+      doc.fillColor('#093170').text(emailText, curFootX, footY, { lineBreak: false });
+      curFootX += emailW + secGap;
+
+      drawVectorIcon(phoneIconPath, curFootX, footY - 0.5, iconSize, '#093170');
+      curFootX += iconSize + iconGap;
+      doc.fillColor('#093170').text(phoneText, curFootX, footY, { lineBreak: false });
+      curFootX += phoneW + secGap;
+
+      drawVectorIcon(webIconPath, curFootX, footY - 0.5, iconSize, '#093170');
+      curFootX += iconSize + iconGap;
+      doc.fillColor('#093170').text(webText, curFootX, footY, { lineBreak: false });
 
       doc.end();
     } catch (err) {
