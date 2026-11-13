@@ -5367,3 +5367,32 @@ The standardized `renderStatusBadge` helper was seamlessly integrated into all 1
 
 
 
+
+
+---
+
+### Rule 73: WhatsApp Multi-Invoice Dispatch Single Greeting & Full A4 Page-Fitting for Purchase Order Printouts (Ver 3.6.54)
+- **WhatsApp Batch Invoices Dispatch Architecture**:
+  - In `server/services/cloudWhatsAppService.js`, `dispatchInvoicesCloud` was iterating through invoices sequentially and attaching the full Customizable Short Message (`templateMessage`) to every single invoice caption. When a client had multiple invoices (e.g. 16 invoices), the client received the long corporate greeting text repeated with every single document.
+  - Implemented recipient grouping by normalized phone number (`cleanPhone`):
+    - For the client's first invoice in the dispatch batch (`idx === 0`), the full `templateMessage` greeting is attached.
+    - For all subsequent invoices for that client (`idx > 0`), only the concise invoice details are sent:
+      ```
+      📄 *Invoice:* INV-XXXXXX
+      💰 *Balance Due:* $YY.YY
+      🏛️ *Global Gate S.A.R.L*
+      ```
+    - When invoices belong to different clients, each recipient receives the greeting on their first invoice exactly once.
+- **Purchase Order Full A4 Page-Fitting**:
+  - In `src/js/AdminView1/PageView/PurchaseOrder/PurchaseOrderInfoView.js`, the print templates (`componentRef` and `componentRef2`) were previously enclosed in collapsing `<table>` structures. In Chromium print engines, short tables collapsed into the top third or half of the paper with the signature block and `PrintFooter` floating in the middle of the sheet.
+  - Refactored both `componentRef` and `componentRef2` into full A4 flex print containers:
+    - Root container: `.invoicedetails.po-print-full-page` with `minHeight: '265mm'`, `display: 'flex'`, `flexDirection: 'column'`, `justifyContent: 'space-between'`, `boxSizing: 'border-box'`, `background: '#fff'`.
+    - Added corresponding CSS rule in `src/js/AdminView1/PageView/Chartview.css` (`.invoicedetails.po-print-full-page`).
+    - Top Section: Corporate `PrintHeader`, "PURCHASE ORDER" title, metadata card (Order #, Date, Manufacturer, Subject), and full-width items table with generous padding (`7px 8px`).
+    - Bottom Section (`marginTop: 'auto'`, `pageBreakInside: 'avoid'`): Spaced signature lines ("Authorized By" and "Supplier Acknowledgment & Receipt") and corporate `PrintFooter` pinned directly to the bottom of the A4 page.
+    - Multi-page safety: When items exceed one page, the container expands naturally and flows across pages, anchoring the signatures and footer to the bottom of the final page.
+- **Universal Multi-Platform Production Artifacts**:
+  - Incremental version bump: **v3.6.54**.
+  - Recompiled Webpack desktop and web bundles (`dist_web/`).
+  - Packaged Windows Installer: `dist/Global Gate Setup 3.6.54.exe` and mirrored to `server/public/downloads/Global Gate Setup 3.6.54.exe`, `GlobalGate-v3.6.54.exe`, and `GlobalGateSetup.exe`.
+  - Compiled Android APK: `server/public/downloads/GlobalGate-v3.6.54.apk` and mirrored to `GlobalGate.apk`.

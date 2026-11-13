@@ -171,36 +171,115 @@ async function dispatchInvoicesCloud({ invoices = [], templateMessage = '', phon
     details: []
   };
 
-  for (let i = 0; i < validInvoices.length; i++) {
-    const inv = validInvoices[i];
-    const invId = inv._id || inv.id;
-    const invNum = typeof inv.invoiceNumber === 'number'
-      ? `INV-${String(inv.invoiceNumber).padStart(6, '0')}`
-      : String(inv.invoiceNumber || 'INV-000000');
+  // Group invoices by recipient (clean phone number) to ensure the Customizable Short Message
+  // is attached ONCE to the client's first invoice, and subsequent invoices for that client
+  // carry only the concise invoice details without repeating the full greeting text.
+  const clientGroups = new Map();
 
+  for (const inv of validInvoices) {
+    const invId = inv._id || inv.id;
     const cust = inv.customerName || {};
     const clientName = typeof cust === 'string' ? cust : (cust.Customer || cust.customerName || cust.customerFullName || 'Valued Client');
     const rawPhone = phoneOverrides[invId] || (typeof cust === 'object' ? (cust.customerCompanyPhone || cust.customerPhone || cust.phone || cust.mobile) : '') || '';
     const cleanPhone = normalizePhoneNumber(rawPhone);
+    const clientKey = cleanPhone ? cleanPhone : `missing_${invId}`;
+
+    if (!clientGroups.has(clientKey)) {
+      clientGroups.set(clientKey, {
+        phone: cleanPhone,
+        rawPhone,
+        clientName,
+        invoices: []
+      });
+    }
+    clientGroups.get(clientKey).invoices.push(inv);
+  }
+
+  for (const [, group] of clientGroups.entries()) {
+    const { phone: cleanPhone, rawPhone, clientName, invoices: groupInvoices } = group;
 
     if (!cleanPhone || cleanPhone.length < 9) {
-      results.failed++;
-      results.details.push({
-        invoiceNumber: inv.invoiceNumber,
-        invoiceId: invId,
-        clientName,
-        phone: rawPhone,
-        status: 'failed',
-        error: 'Invalid or missing phone number'
-      });
+      for (const inv of groupInvoices) {
+        results.failed++;
+        results.details.push({
+          invoiceNumber: inv.invoiceNumber,
+          invoiceId: inv._id || inv.id,
+          clientName,
+          phone: rawPhone,
+          status: 'failed',
+          error: 'Invalid or missing phone number'
+        });
+      }
       continue;
     }
 
+    // 1. Verify WhatsApp registration for this recipient
+    const jid = `${cleanPhone}@s.whatsapp.net`;
     try {
-      // 1. Verify WhatsApp registration
-      const jid = `${cleanPhone}@s.whatsapp.net`;
       const [waCheck] = await sock.onWhatsApp(cleanPhone).catch(() => [{ exists: true }]);
       if (waCheck && !waCheck.exists) {
+        for (const inv of groupInvoices) {
+          results.failed++;
+          results.details.push({
+            invoiceNumber: inv.invoiceNumber,
+            invoiceId: inv._id || inv.id,
+            clientName,
+            phone: cleanPhone,
+            status: 'failed',
+            error: `Phone +${cleanPhone} is not registered on WhatsApp`
+          });
+        }
+        continue;
+      }
+    } catch (_) {}
+
+    // 2. Dispatch each invoice for this client
+    for (let idx = 0; idx < groupInvoices.length; idx++) {
+      const inv = groupInvoices[idx];
+      const invId = inv._id || inv.id;
+      const invNum = typeof inv.invoiceNumber === 'number'
+        ? `INV-${String(inv.invoiceNumber).padStart(6, '0')}`
+        : String(inv.invoiceNumber || 'INV-000000');
+
+      try {
+        const pdfBuffer = await generateInvoicePdfBuffer(inv);
+        const balanceText = inv.balanceDue !== undefined
+          ? `$${Number(inv.balanceDue).toFixed(2)}`
+          : `$${Number(inv.totalInvoice || inv.total || 0).toFixed(2)}`;
+
+        // When a client has multiple invoices, the customizable short message is attached
+        // to the first invoice PDF, followed sequentially by subsequent invoices without duplicate greetings.
+        let caption = '';
+        if (idx === 0 && templateMessage && templateMessage.trim()) {
+          caption = `${templateMessage.trim()}\n\n📄 *Invoice:* ${invNum}\n💰 *Balance Due:* ${balanceText}\n🏛️ *Global Gate S.A.R.L*`;
+        } else {
+          caption = `📄 *Invoice:* ${invNum}\n💰 *Balance Due:* ${balanceText}\n🏛️ *Global Gate S.A.R.L*`;
+        }
+
+        // 3. Send Document via Baileys WebSocket
+        await sock.sendMessage(jid, {
+          document: pdfBuffer,
+          mimetype: 'application/pdf',
+          fileName: `${invNum}.pdf`,
+          caption
+        });
+
+        results.sent++;
+        results.details.push({
+          invoiceNumber: inv.invoiceNumber,
+          invoiceId: invId,
+          clientName,
+          phone: cleanPhone,
+          amount: Number(inv.balanceDue ?? inv.totalInvoice ?? 0),
+          status: 'sent'
+        });
+
+        console.log(`✅ [CloudWhatsApp] Delivered ${invNum} (${idx + 1}/${groupInvoices.length}) to +${cleanPhone} (${clientName})`);
+
+        // Gentle pause between dispatches to respect rate limits
+        await new Promise(r => setTimeout(r, 1200));
+      } catch (err) {
+        console.error(`❌ [CloudWhatsApp] Failed to deliver ${invNum} to ${cleanPhone}:`, err.message);
         results.failed++;
         results.details.push({
           invoiceNumber: inv.invoiceNumber,
@@ -208,54 +287,9 @@ async function dispatchInvoicesCloud({ invoices = [], templateMessage = '', phon
           clientName,
           phone: cleanPhone,
           status: 'failed',
-          error: `Phone +${cleanPhone} is not registered on WhatsApp`
+          error: err.message
         });
-        continue;
       }
-
-      // 2. Generate PDF Document
-      const pdfBuffer = await generateInvoicePdfBuffer(inv);
-      const balanceText = inv.balanceDue !== undefined
-        ? `$${Number(inv.balanceDue).toFixed(2)}`
-        : `$${Number(inv.totalInvoice || inv.total || 0).toFixed(2)}`;
-
-      const caption = `${templateMessage.trim()}\n\n📄 *Invoice:* ${invNum}\n💰 *Balance Due:* ${balanceText}\n🏛️ *Global Gate S.A.R.L*`;
-
-      // 3. Send Document via Baileys WebSocket
-      await sock.sendMessage(jid, {
-        document: pdfBuffer,
-        mimetype: 'application/pdf',
-        fileName: `${invNum}.pdf`,
-        caption
-      });
-
-      results.sent++;
-      results.details.push({
-        invoiceNumber: inv.invoiceNumber,
-        invoiceId: invId,
-        clientName,
-        phone: cleanPhone,
-        amount: Number(inv.balanceDue ?? inv.totalInvoice ?? 0),
-        status: 'sent'
-      });
-
-      console.log(`✅ [CloudWhatsApp] Delivered ${invNum} to +${cleanPhone} (${clientName})`);
-
-      // Gentle pause between dispatches to respect rate limits
-      if (i < validInvoices.length - 1) {
-        await new Promise(r => setTimeout(r, 1200));
-      }
-    } catch (err) {
-      console.error(`❌ [CloudWhatsApp] Failed to deliver ${invNum} to ${cleanPhone}:`, err.message);
-      results.failed++;
-      results.details.push({
-        invoiceNumber: inv.invoiceNumber,
-        invoiceId: invId,
-        clientName,
-        phone: cleanPhone,
-        status: 'failed',
-        error: err.message
-      });
     }
   }
 

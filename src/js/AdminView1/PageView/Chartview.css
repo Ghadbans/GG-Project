@@ -1021,6 +1021,13 @@ footer {
     font-size: 11px !important;
   }
 
+  .invoicedetails.po-print-full-page {
+    min-height: 265mm !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+  }
+
   .invoicedetails table {
     width: 100% !important;
     box-sizing: border-box !important;

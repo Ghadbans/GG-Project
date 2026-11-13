@@ -648,320 +648,284 @@ function PurchaseOrderInfoView() {
                               <hr />
                               <div style={{ height: 'calc(100vh - 230px)', overflow: 'hidden', overflowY: 'auto', width: '100%', background: 'white' }}>
                                 <Box hidden >
-                                  <table ref={componentRef} className='invoicedetails'>
-                                    <thead>
-                                      <tr>
-                                        <th></th>
-                                      </tr>
-                                    </thead>
-                                    <tbody>
-                                      <tr>
-                                        <th style={{ borderBottom: '1px solid black' }}>
-                                          <div className='invoiceTest'>
-                                            <PrintHeader branchId={typeof row !== "undefined" ? row?.branchId : ""} />
-                                          </div>
-                                        </th>
-                                      </tr>
-                                    </tbody>
-                                    <tbody>
-                                      <tr>
-                                        <td>
-                                          <div>
-                                            <p className='invoicehr' style={{ fontSize: '14px' }}>Purchase Order</p>
-                                            <div className='content' style={{ marginBottom: '20px', position: 'relative' }}>
-                                              <section style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '5px' }}>
-                                                <address style={{ position: 'relative', lineHeight: 1.35, width: '60%' }}>
-                                                  <p style={{}}>
-                                                    <span style={{ fontWeight: 'bold', fontSize: '13px' }}>
-                                                      For
-                                                    </span>
-                                                    <br />
-                                                    <span style={{ fontWeight: 'bold', fontSize: '13px' }}>
-                                                      {row.reference !== undefined && row.reference !== null ? row.reference.referenceName + ' ' + row.description : row.description}
-                                                    </span>
-                                                  </p>
-                                                </address>
+                                  <div ref={componentRef} className='invoicedetails po-print-full-page' style={{ minHeight: '265mm', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', boxSizing: 'border-box', background: '#fff' }}>
+                                    <div>
+                                      <div className='invoiceTest' style={{ borderBottom: '1.5px solid #1e3a8a', paddingBottom: '6px', marginBottom: '8px' }}>
+                                        <PrintHeader branchId={typeof row !== "undefined" ? row?.branchId : ""} />
+                                      </div>
+                                      <p className='invoicehr' style={{ fontSize: '14px', margin: '6px 0 14px' }}>Purchase Order</p>
+                                      <div className='content' style={{ marginBottom: '20px', position: 'relative' }}>
+                                        <section style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '14px' }}>
+                                          <address style={{ position: 'relative', lineHeight: 1.35, width: '60%', margin: 0 }}>
+                                            <p style={{ margin: 0 }}>
+                                              <span style={{ fontWeight: 'bold', fontSize: '13px' }}>
+                                                For
+                                              </span>
+                                              <br />
+                                              <span style={{ fontWeight: 'bold', fontSize: '13px', color: '#1e293b' }}>
+                                                {row.reference !== undefined && row.reference !== null ? row.reference.referenceName + ' ' + row.description : row.description}
+                                              </span>
+                                            </p>
+                                          </address>
 
-                                                <table style={{ minWidth: "220px", width: "38%", fontSize: "11px", borderCollapse: "collapse", marginLeft: "auto", marginBottom: "10px" }}>
-                                                  <tbody>
-                                                    <tr>
-                                                      <td style={{ backgroundColor: "white", border: "none", textAlign: "left", fontWeight: "bold", padding: "2px 4px", color: "#334155", width: "45%" }}>Order #</td>
-                                                      <td style={{ backgroundColor: "white", border: "none", textAlign: "right", fontWeight: "bold", padding: "2px 4px", width: "55%" }}>PO-{String(row.outNumber).padStart(6, "0")}</td>
+                                          <table style={{ minWidth: "220px", width: "38%", fontSize: "11px", borderCollapse: "collapse", marginLeft: "auto", marginBottom: "10px" }}>
+                                            <tbody>
+                                              <tr>
+                                                <td style={{ backgroundColor: "white", border: "none", textAlign: "left", fontWeight: "bold", padding: "2px 4px", color: "#334155", width: "45%" }}>Order #</td>
+                                                <td style={{ backgroundColor: "white", border: "none", textAlign: "right", fontWeight: "bold", padding: "2px 4px", width: "55%" }}>PO-{String(row.outNumber).padStart(6, "0")}</td>
+                                              </tr>
+                                              <tr>
+                                                <td style={{ backgroundColor: "white", border: "none", textAlign: "left", fontWeight: "bold", padding: "2px 4px", color: "#334155" }}>Date</td>
+                                                <td style={{ backgroundColor: "white", border: "none", textAlign: "right", padding: "2px 4px" }}>{dayjs(row.itemOutDate).format("DD/MM/YYYY")}</td>
+                                              </tr>
+                                              {row.manufacturer ? (
+                                                <tr>
+                                                  <td style={{ backgroundColor: "white", border: "none", textAlign: "left", fontWeight: "bold", padding: "2px 4px", color: "#334155" }}>Manufacturer</td>
+                                                  <td style={{ backgroundColor: "white", border: "none", textAlign: "right", padding: "2px 4px" }}>{row.manufacturer}</td>
+                                                </tr>
+                                              ) : null}
+                                              {row.manufacturerNumber ? (
+                                                <tr>
+                                                  <td style={{ backgroundColor: "white", border: "none", textAlign: "left", fontWeight: "bold", padding: "2px 4px", color: "#334155" }}>Reference</td>
+                                                  <td style={{ backgroundColor: "white", border: "none", textAlign: "right", padding: "2px 4px" }}>{row.manufacturerNumber}</td>
+                                                </tr>
+                                              ) : null}
+                                              {row.reason ? (
+                                                <tr>
+                                                  <td style={{ backgroundColor: "white", border: "none", textAlign: "left", fontWeight: "bold", padding: "2px 4px", color: "#334155" }}>Subject</td>
+                                                  <td style={{ backgroundColor: "white", border: "none", textAlign: "right", padding: "2px 4px" }}>{row.reason}</td>
+                                                </tr>
+                                              ) : null}
+                                            </tbody>
+                                          </table>
+                                        </section>
+                                        <section style={{}}>
+                                          <table className="secondTable" style={{ width: "100%", fontSize: "11px", border: "1px solid #cbd5e1", borderCollapse: "collapse" }}>
+                                            <thead>
+                                              <tr style={{ backgroundColor: "#f1f5f9" }}>
+                                                <th style={{ width: "5%", border: "1px solid #cbd5e1", padding: "7px 8px", textAlign: "center" }}>#</th>
+                                                <th style={{ width: "35%", border: "1px solid #cbd5e1", padding: "7px 8px", textAlign: "left" }}>Item</th>
+                                                <th style={{ width: "40%", border: "1px solid #cbd5e1", padding: "7px 8px", textAlign: "left" }}>Description</th>
+                                                <th style={{ width: "10%", border: "1px solid #cbd5e1", padding: "7px 8px", textAlign: "right" }}>Qty Need</th>
+                                                <th style={{ width: "10%", border: "1px solid #cbd5e1", padding: "7px 8px", textAlign: "right" }}>Qty Buy</th>
+                                              </tr>
+                                            </thead>
+                                            <tbody>
+                                              {newArray2?.map((Item, i) => {
+                                                const relatedUnit = item.find((Item1) => Item1._id === Item.itemName?._id);
+                                                const isBlankRow = Boolean(Item.newDescription && String(Item.newDescription).trim() !== "" && (!Item.itemName?._id || Item.itemName?.itemName === "empty" || !Item.itemName || (typeof Item.itemName === "string" ? Item.itemName.trim() === "" : !Item.itemName.itemName)));
+                                                if (isBlankRow) {
+                                                  return (
+                                                    <tr key={Item.idRow || i}>
+                                                      <td style={{ textAlign: "center", border: "1px solid #cbd5e1", padding: "7px 8px" }}>{i + 1}</td>
+                                                      <td colSpan={4} style={{ textAlign: "center", fontWeight: "bold", border: "1px solid #cbd5e1", backgroundColor: "#f8f9fa", padding: "7px 8px" }}>{Item.newDescription}</td>
                                                     </tr>
-                                                    <tr>
-                                                      <td style={{ backgroundColor: "white", border: "none", textAlign: "left", fontWeight: "bold", padding: "2px 4px", color: "#334155" }}>Date</td>
-                                                      <td style={{ backgroundColor: "white", border: "none", textAlign: "right", padding: "2px 4px" }}>{dayjs(row.itemOutDate).format("DD/MM/YYYY")}</td>
-                                                    </tr>
-                                                    {row.manufacturer ? (
-                                                      <tr>
-                                                        <td style={{ backgroundColor: "white", border: "none", textAlign: "left", fontWeight: "bold", padding: "2px 4px", color: "#334155" }}>Manufacturer</td>
-                                                        <td style={{ backgroundColor: "white", border: "none", textAlign: "right", padding: "2px 4px" }}>{row.manufacturer}</td>
-                                                      </tr>
-                                                    ) : null}
-                                                    {row.manufacturerNumber ? (
-                                                      <tr>
-                                                        <td style={{ backgroundColor: "white", border: "none", textAlign: "left", fontWeight: "bold", padding: "2px 4px", color: "#334155" }}>Reference</td>
-                                                        <td style={{ backgroundColor: "white", border: "none", textAlign: "right", padding: "2px 4px" }}>{row.manufacturerNumber}</td>
-                                                      </tr>
-                                                    ) : null}
-                                                    {row.reason ? (
-                                                      <tr>
-                                                        <td style={{ backgroundColor: "white", border: "none", textAlign: "left", fontWeight: "bold", padding: "2px 4px", color: "#334155" }}>Subject</td>
-                                                        <td style={{ backgroundColor: "white", border: "none", textAlign: "right", padding: "2px 4px" }}>{row.reason}</td>
-                                                      </tr>
-                                                    ) : null}
-                                                  </tbody>
-                                                </table>
-                                              </section>
-                                              <section style={{}}>
-                                                <table className="secondTable" style={{ width: "100%", fontSize: "11px", border: "1px solid #cbd5e1", borderCollapse: "collapse" }}>
-                                                   <thead>
-                                                     <tr style={{ backgroundColor: "#f1f5f9" }}>
-                                                       <th style={{ width: "5%", border: "1px solid #cbd5e1", padding: "6px 8px", textAlign: "center" }}>#</th>
-                                                       <th style={{ width: "35%", border: "1px solid #cbd5e1", padding: "6px 8px", textAlign: "left" }}>Item</th>
-                                                       <th style={{ width: "40%", border: "1px solid #cbd5e1", padding: "6px 8px", textAlign: "left" }}>Description</th>
-                                                       <th style={{ width: "10%", border: "1px solid #cbd5e1", padding: "6px 8px", textAlign: "right" }}>Qty Need</th>
-                                                       <th style={{ width: "10%", border: "1px solid #cbd5e1", padding: "6px 8px", textAlign: "right" }}>Qty Buy</th>
-                                                     </tr>
-                                                   </thead>
-                                                   <tbody>
-                                                     {newArray2?.map((Item, i) => {
-                                                       const relatedUnit = item.find((Item1) => Item1._id === Item.itemName?._id);
-                                                       const isBlankRow = Boolean(Item.newDescription && String(Item.newDescription).trim() !== "" && (!Item.itemName?._id || Item.itemName?.itemName === "empty" || !Item.itemName || (typeof Item.itemName === "string" ? Item.itemName.trim() === "" : !Item.itemName.itemName)));
-                                                       if (isBlankRow) {
-                                                         return (
-                                                           <tr key={Item.idRow || i}>
-                                                             <td style={{ textAlign: "center", border: "1px solid #cbd5e1", padding: "6px 8px" }}>{i + 1}</td>
-                                                             <td colSpan={4} style={{ textAlign: "center", fontWeight: "bold", border: "1px solid #cbd5e1", backgroundColor: "#f8f9fa", padding: "6px 8px" }}>{Item.newDescription}</td>
-                                                           </tr>
-                                                         );
-                                                       }
-                                                       const itemNameStr = Item.itemName ? (typeof Item.itemName === "object" ? (Item.itemName.itemName && Item.itemName.itemName !== "empty" ? Item.itemName.itemName.toUpperCase() : "") : String(Item.itemName).toUpperCase()) : "";
-                                                       const itemDescStr = Item.itemDescription ? String(Item.itemDescription).toUpperCase() : "";
-                                                       const brandStr = relatedUnit?.itemBrand ? `(${relatedUnit.itemBrand.toUpperCase()})` : "";
-                                                       const unitStr = relatedUnit?.unit ? String(relatedUnit.unit).toUpperCase() : "";
+                                                  );
+                                                }
+                                                const itemNameStr = Item.itemName ? (typeof Item.itemName === "object" ? (Item.itemName.itemName && Item.itemName.itemName !== "empty" ? Item.itemName.itemName.toUpperCase() : "") : String(Item.itemName).toUpperCase()) : "";
+                                                const itemDescStr = Item.itemDescription ? String(Item.itemDescription).toUpperCase() : "";
+                                                const brandStr = relatedUnit?.itemBrand ? `(${relatedUnit.itemBrand.toUpperCase()})` : "";
+                                                const unitStr = relatedUnit?.unit ? String(relatedUnit.unit).toUpperCase() : "";
 
-                                                       return (
-                                                         <tr key={Item.idRow || i}>
-                                                           <td style={{ textAlign: "center", border: "1px solid #cbd5e1", padding: "6px 8px" }}>{i + 1}</td>
-                                                           <td style={{ textAlign: "left", border: "1px solid #cbd5e1", padding: "6px 8px" }}>
-                                                             <span style={{ fontWeight: "600" }}>{itemNameStr}</span>
-                                                           </td>
-                                                           <td style={{ textAlign: "left", border: "1px solid #cbd5e1", padding: "6px 8px" }}>
-                                                             <span>{itemDescStr} {brandStr}</span>
-                                                           </td>
-                                                           <td style={{ textAlign: "right", border: "1px solid #cbd5e1", padding: "6px 8px" }}>
-                                                             {Item.itemQty} {unitStr}
-                                                           </td>
-                                                           <td style={{ textAlign: "right", border: "1px solid #cbd5e1", padding: "6px 8px", fontWeight: "bold" }}>
-                                                             {Item.qtyBuy} {unitStr}
-                                                           </td>
-                                                         </tr>
-                                                       );
-                                                     })}
-                                                   </tbody>
-                                                 </table>
-                                                 <section style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginTop: '35px', padding: '0 10px', pageBreakInside: 'avoid' }}>
-                                                   <div style={{ textAlign: 'left' }}>
-                                                     <p style={{ fontWeight: 'bold', margin: '0 0 2px', fontSize: '11px', color: '#1e293b' }}>Authorized By:</p>
-                                                     <p style={{ margin: 0, fontSize: '10px', color: '#64748b' }}>GLOBAL GATE SARL - Purchasing</p>
-                                                     <div style={{ marginTop: '35px', borderBottom: '1px solid #cbd5e1', width: '200px' }}></div>
-                                                   </div>
-                                                   <div style={{ textAlign: 'right' }}>
-                                                     <p style={{ fontWeight: 'bold', margin: '0 0 2px', fontSize: '11px', color: '#1e293b' }}>Supplier Acknowledgment & Receipt:</p>
-                                                     <p style={{ margin: 0, fontSize: '10px', color: '#64748b' }}>Name, Signature & Date</p>
-                                                     <div style={{ marginTop: '35px', borderBottom: '1px solid #cbd5e1', width: '200px', marginLeft: 'auto' }}></div>
-                                                   </div>
-                                                 </section></section>
-                                            </div>
-                                          </div>
-                                        </td>
-                                      </tr>
-                                    </tbody>
-                                    <tfoot>
-                                      <tr>
-                                        <td>
-                                          <div style={{ position: 'relative', marginTop: '20px' }}>
-                                            <p hidden>...</p>
-                                            <p hidden>...</p>
-                                            <br />
-                                            <PrintFooter branchId={typeof row !== "undefined" ? row?.branchId : typeof data !== "undefined" ? data?.branchId : ""} />
+                                                return (
+                                                  <tr key={Item.idRow || i}>
+                                                    <td style={{ textAlign: "center", border: "1px solid #cbd5e1", padding: "7px 8px" }}>{i + 1}</td>
+                                                    <td style={{ textAlign: "left", border: "1px solid #cbd5e1", padding: "7px 8px" }}>
+                                                      <span style={{ fontWeight: "600" }}>{itemNameStr}</span>
+                                                    </td>
+                                                    <td style={{ textAlign: "left", border: "1px solid #cbd5e1", padding: "7px 8px" }}>
+                                                      <span>{itemDescStr} {brandStr}</span>
+                                                    </td>
+                                                    <td style={{ textAlign: "right", border: "1px solid #cbd5e1", padding: "7px 8px" }}>
+                                                      {Item.itemQty} {unitStr}
+                                                    </td>
+                                                    <td style={{ textAlign: "right", border: "1px solid #cbd5e1", padding: "7px 8px", fontWeight: "bold" }}>
+                                                      {Item.qtyBuy} {unitStr}
+                                                    </td>
+                                                  </tr>
+                                                );
+                                              })}
+                                            </tbody>
+                                          </table>
+                                        </section>
+                                      </div>
+                                    </div>
 
-                                          </div>
-                                        </td>
-                                      </tr>
-                                    </tfoot>
-                                  </table>
+                                    {/* Bottom area: Signatures + Corporate PrintFooter pinned to bottom of A4 page */}
+                                    <div style={{ marginTop: 'auto', paddingTop: '25px', pageBreakInside: 'avoid' }}>
+                                      <section style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '30px', padding: '0 10px', pageBreakInside: 'avoid' }}>
+                                        <div style={{ textAlign: 'left' }}>
+                                          <p style={{ fontWeight: 'bold', margin: '0 0 2px', fontSize: '11px', color: '#1e293b' }}>Authorized By:</p>
+                                          <p style={{ margin: 0, fontSize: '10px', color: '#64748b' }}>GLOBAL GATE SARL - Purchasing</p>
+                                          <div style={{ marginTop: '40px', borderBottom: '1px solid #94a3b8', width: '220px' }}></div>
+                                        </div>
+                                        <div style={{ textAlign: 'right' }}>
+                                          <p style={{ fontWeight: 'bold', margin: '0 0 2px', fontSize: '11px', color: '#1e293b' }}>Supplier Acknowledgment & Receipt:</p>
+                                          <p style={{ margin: 0, fontSize: '10px', color: '#64748b' }}>Name, Signature & Date</p>
+                                          <div style={{ marginTop: '40px', borderBottom: '1px solid #94a3b8', width: '220px', marginLeft: 'auto' }}></div>
+                                        </div>
+                                      </section>
+                                      <PrintFooter branchId={typeof row !== "undefined" ? row?.branchId : typeof data !== "undefined" ? data?.branchId : ""} />
+                                    </div>
+                                  </div>
                                 </Box>
                                 <Box hidden >
-                                  <table ref={componentRef2} className='invoicedetails'>
-                                    <thead>
-                                      <tr>
-                                        <th></th>
-                                      </tr>
-                                    </thead>
-                                    <tbody>
-                                      <tr>
-                                        <th style={{ borderBottom: '1px solid black' }}>
-                                          <div className='invoiceTest'>
-                                            <PrintHeader branchId={typeof row !== "undefined" ? row?.branchId : ""} />
-                                          </div>
-                                        </th>
-                                      </tr>
-                                    </tbody>
-                                    <tbody>
-                                      <tr>
-                                        <td>
-                                          <div>
-                                            <p className='invoicehr' style={{ fontSize: '14px' }}>Purchase Order</p>
-                                            <div className='content' style={{ marginBottom: '20px', position: 'relative' }}>
-                                              <section style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '5px' }}>
-                                                <address style={{ position: 'relative', lineHeight: 1.35, width: '60%' }}>
-                                                  <p style={{}}>
-                                                    <span style={{ fontWeight: 'bold', fontSize: '13px' }}>
-                                                      For
-                                                    </span>
-                                                    <br />
-                                                    <span style={{ fontWeight: 'bold', fontSize: '13px' }}>
-                                                      {row.reference !== undefined && row.reference !== null ? row.reference.referenceName + ' ' + row.description : row.description}
-                                                    </span>
-                                                  </p>
-                                                </address>
+                                  <div ref={componentRef2} className='invoicedetails po-print-full-page' style={{ minHeight: '265mm', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', boxSizing: 'border-box', background: '#fff' }}>
+                                    <div>
+                                      <div className='invoiceTest' style={{ borderBottom: '1.5px solid #1e3a8a', paddingBottom: '6px', marginBottom: '8px' }}>
+                                        <PrintHeader branchId={typeof row !== "undefined" ? row?.branchId : ""} />
+                                      </div>
+                                      <p className='invoicehr' style={{ fontSize: '14px', margin: '6px 0 14px' }}>Purchase Order</p>
+                                      <div className='content' style={{ marginBottom: '20px', position: 'relative' }}>
+                                        <section style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '14px' }}>
+                                          <address style={{ position: 'relative', lineHeight: 1.35, width: '60%', margin: 0 }}>
+                                            <p style={{ margin: 0 }}>
+                                              <span style={{ fontWeight: 'bold', fontSize: '13px' }}>
+                                                For
+                                              </span>
+                                              <br />
+                                              <span style={{ fontWeight: 'bold', fontSize: '13px', color: '#1e293b' }}>
+                                                {row.reference !== undefined && row.reference !== null ? row.reference.referenceName + ' ' + row.description : row.description}
+                                              </span>
+                                            </p>
+                                          </address>
 
-                                                <table style={{ minWidth: "220px", width: "38%", fontSize: "11px", borderCollapse: "collapse", marginLeft: "auto", marginBottom: "10px" }}>
-                                                  <tbody>
-                                                    <tr>
-                                                      <td style={{ backgroundColor: "white", border: "none", textAlign: "left", fontWeight: "bold", padding: "2px 4px", color: "#334155", width: "45%" }}>Order #</td>
-                                                      <td style={{ backgroundColor: "white", border: "none", textAlign: "right", fontWeight: "bold", padding: "2px 4px", width: "55%" }}>PO-{String(row.outNumber).padStart(6, "0")}</td>
+                                          <table style={{ minWidth: "220px", width: "38%", fontSize: "11px", borderCollapse: "collapse", marginLeft: "auto", marginBottom: "10px" }}>
+                                            <tbody>
+                                              <tr>
+                                                <td style={{ backgroundColor: "white", border: "none", textAlign: "left", fontWeight: "bold", padding: "2px 4px", color: "#334155", width: "45%" }}>Order #</td>
+                                                <td style={{ backgroundColor: "white", border: "none", textAlign: "right", fontWeight: "bold", padding: "2px 4px", width: "55%" }}>PO-{String(row.outNumber).padStart(6, "0")}</td>
+                                              </tr>
+                                              <tr>
+                                                <td style={{ backgroundColor: "white", border: "none", textAlign: "left", fontWeight: "bold", padding: "2px 4px", color: "#334155" }}>Date</td>
+                                                <td style={{ backgroundColor: "white", border: "none", textAlign: "right", padding: "2px 4px" }}>{dayjs(row.itemOutDate).format("DD/MM/YYYY")}</td>
+                                              </tr>
+                                              {row.manufacturer ? (
+                                                <tr>
+                                                  <td style={{ backgroundColor: "white", border: "none", textAlign: "left", fontWeight: "bold", padding: "2px 4px", color: "#334155" }}>Manufacturer</td>
+                                                  <td style={{ backgroundColor: "white", border: "none", textAlign: "right", padding: "2px 4px" }}>{row.manufacturer}</td>
+                                                </tr>
+                                              ) : null}
+                                              {row.manufacturerNumber ? (
+                                                <tr>
+                                                  <td style={{ backgroundColor: "white", border: "none", textAlign: "left", fontWeight: "bold", padding: "2px 4px", color: "#334155" }}>Reference</td>
+                                                  <td style={{ backgroundColor: "white", border: "none", textAlign: "right", padding: "2px 4px" }}>{row.manufacturerNumber}</td>
+                                                </tr>
+                                              ) : null}
+                                              {row.reason ? (
+                                                <tr>
+                                                  <td style={{ backgroundColor: "white", border: "none", textAlign: "left", fontWeight: "bold", padding: "2px 4px", color: "#334155" }}>Subject</td>
+                                                  <td style={{ backgroundColor: "white", border: "none", textAlign: "right", padding: "2px 4px" }}>{row.reason}</td>
+                                                </tr>
+                                              ) : null}
+                                            </tbody>
+                                          </table>
+                                        </section>
+                                        <section style={{}}>
+                                          <table className="secondTable" style={{ width: "100%", fontSize: "10px", border: "1px solid #cbd5e1", borderCollapse: "collapse" }}>
+                                            <thead>
+                                              <tr style={{ backgroundColor: "#f1f5f9" }}>
+                                                <th style={{ width: "4%", border: "1px solid #cbd5e1", padding: "6px 4px", textAlign: "center" }}>#</th>
+                                                <th style={{ width: "24%", border: "1px solid #cbd5e1", padding: "6px 4px", textAlign: "left" }}>Item</th>
+                                                <th style={{ width: "8%", border: "1px solid #cbd5e1", padding: "6px 4px", textAlign: "right" }}>Qty Need</th>
+                                                <th style={{ width: "8%", border: "1px solid #cbd5e1", padding: "6px 4px", textAlign: "right" }}>Qty Buy</th>
+                                                <th style={{ width: "11%", border: "1px solid #cbd5e1", padding: "6px 4px", textAlign: "right" }}>Price($)</th>
+                                                <th style={{ width: "13%", border: "1px solid #cbd5e1", padding: "6px 4px", textAlign: "right" }}>Amount Paid(FC)</th>
+                                                <th style={{ width: "8%", border: "1px solid #cbd5e1", padding: "6px 4px", textAlign: "right" }}>Rate</th>
+                                                <th style={{ width: "11%", border: "1px solid #cbd5e1", padding: "6px 4px", textAlign: "right" }}>Amount Paid($)</th>
+                                                <th style={{ width: "13%", border: "1px solid #cbd5e1", padding: "6px 4px", textAlign: "right" }}>Total($)</th>
+                                              </tr>
+                                            </thead>
+                                            <tbody>
+                                              {newArray2?.map((Item, i) => {
+                                                const relatedUnit = item.find((Item1) => Item1._id === Item.itemName?._id);
+                                                const isBlankRow = Boolean(Item.newDescription && String(Item.newDescription).trim() !== "" && (!Item.itemName?._id || Item.itemName?.itemName === "empty" || !Item.itemName || (typeof Item.itemName === "string" ? Item.itemName.trim() === "" : !Item.itemName.itemName)));
+                                                if (isBlankRow) {
+                                                  return (
+                                                    <tr key={Item.idRow || i}>
+                                                      <td style={{ textAlign: "center", border: "1px solid #cbd5e1", padding: "5px 4px" }}>{i + 1}</td>
+                                                      <td colSpan={8} style={{ textAlign: "center", fontWeight: "bold", border: "1px solid #cbd5e1", backgroundColor: "#f8f9fa", padding: "5px 4px" }}>{Item.newDescription}</td>
                                                     </tr>
-                                                    <tr>
-                                                      <td style={{ backgroundColor: "white", border: "none", textAlign: "left", fontWeight: "bold", padding: "2px 4px", color: "#334155" }}>Date</td>
-                                                      <td style={{ backgroundColor: "white", border: "none", textAlign: "right", padding: "2px 4px" }}>{dayjs(row.itemOutDate).format("DD/MM/YYYY")}</td>
-                                                    </tr>
-                                                    {row.manufacturer ? (
-                                                      <tr>
-                                                        <td style={{ backgroundColor: "white", border: "none", textAlign: "left", fontWeight: "bold", padding: "2px 4px", color: "#334155" }}>Manufacturer</td>
-                                                        <td style={{ backgroundColor: "white", border: "none", textAlign: "right", padding: "2px 4px" }}>{row.manufacturer}</td>
-                                                      </tr>
-                                                    ) : null}
-                                                    {row.manufacturerNumber ? (
-                                                      <tr>
-                                                        <td style={{ backgroundColor: "white", border: "none", textAlign: "left", fontWeight: "bold", padding: "2px 4px", color: "#334155" }}>Reference</td>
-                                                        <td style={{ backgroundColor: "white", border: "none", textAlign: "right", padding: "2px 4px" }}>{row.manufacturerNumber}</td>
-                                                      </tr>
-                                                    ) : null}
-                                                    {row.reason ? (
-                                                      <tr>
-                                                        <td style={{ backgroundColor: "white", border: "none", textAlign: "left", fontWeight: "bold", padding: "2px 4px", color: "#334155" }}>Subject</td>
-                                                        <td style={{ backgroundColor: "white", border: "none", textAlign: "right", padding: "2px 4px" }}>{row.reason}</td>
-                                                      </tr>
-                                                    ) : null}
-                                                  </tbody>
-                                                </table>
-                                              </section>
-                                              <section style={{}}>
-                                                <table className="secondTable" style={{ width: "100%", fontSize: "10px", border: "1px solid #cbd5e1", borderCollapse: "collapse" }}>
-                                                   <thead>
-                                                     <tr style={{ backgroundColor: "#f1f5f9" }}>
-                                                       <th style={{ width: "4%", border: "1px solid #cbd5e1", padding: "5px 4px", textAlign: "center" }}>#</th>
-                                                       <th style={{ width: "26%", border: "1px solid #cbd5e1", padding: "5px 4px", textAlign: "left" }}>Item</th>
-                                                       <th style={{ width: "8%", border: "1px solid #cbd5e1", padding: "5px 4px", textAlign: "right" }}>Qty Need</th>
-                                                       <th style={{ width: "8%", border: "1px solid #cbd5e1", padding: "5px 4px", textAlign: "right" }}>Qty Buy</th>
-                                                       <th style={{ width: "10%", border: "1px solid #cbd5e1", padding: "5px 4px", textAlign: "right" }}>Price($)</th>
-                                                       <th style={{ width: "12%", border: "1px solid #cbd5e1", padding: "5px 4px", textAlign: "right" }}>Amount Paid(FC)</th>
-                                                       <th style={{ width: "8%", border: "1px solid #cbd5e1", padding: "5px 4px", textAlign: "right" }}>Rate</th>
-                                                       <th style={{ width: "12%", border: "1px solid #cbd5e1", padding: "5px 4px", textAlign: "right" }}>Amount Paid($)</th>
-                                                       <th style={{ width: "12%", border: "1px solid #cbd5e1", padding: "5px 4px", textAlign: "right" }}>Total($)</th>
-                                                     </tr>
-                                                   </thead>
-                                                   <tbody>
-                                                     {newArray2?.map((Item, i) => {
-                                                       const relatedUnit = item.find((Item1) => Item1._id === Item.itemName?._id);
-                                                       const isBlankRow = Boolean(Item.newDescription && String(Item.newDescription).trim() !== "" && (!Item.itemName?._id || Item.itemName?.itemName === "empty" || !Item.itemName || (typeof Item.itemName === "string" ? Item.itemName.trim() === "" : !Item.itemName.itemName)));
-                                                       if (isBlankRow) {
-                                                         return (
-                                                           <tr key={Item.idRow || i}>
-                                                             <td style={{ textAlign: "center", border: "1px solid #cbd5e1", padding: "5px 4px" }}>{i + 1}</td>
-                                                             <td colSpan={8} style={{ textAlign: "center", fontWeight: "bold", border: "1px solid #cbd5e1", backgroundColor: "#f8f9fa", padding: "5px 4px" }}>{Item.newDescription}</td>
-                                                           </tr>
-                                                         );
-                                                       }
-                                                       const itemNameStr = Item.itemName ? (typeof Item.itemName === "object" ? (Item.itemName.itemName && Item.itemName.itemName !== "empty" ? Item.itemName.itemName.toUpperCase() : "") : String(Item.itemName).toUpperCase()) : "";
-                                                       const itemDescStr = Item.itemDescription ? String(Item.itemDescription).toUpperCase() : "";
-                                                       const brandStr = relatedUnit?.itemBrand ? `(${relatedUnit.itemBrand.toUpperCase()})` : "";
-                                                       const unitStr = relatedUnit?.unit ? String(relatedUnit.unit).toUpperCase() : "";
+                                                  );
+                                                }
+                                                const itemNameStr = Item.itemName ? (typeof Item.itemName === "object" ? (Item.itemName.itemName && Item.itemName.itemName !== "empty" ? Item.itemName.itemName.toUpperCase() : "") : String(Item.itemName).toUpperCase()) : "";
+                                                const itemDescStr = Item.itemDescription ? String(Item.itemDescription).toUpperCase() : "";
+                                                const brandStr = relatedUnit?.itemBrand ? `(${relatedUnit.itemBrand.toUpperCase()})` : "";
+                                                const unitStr = relatedUnit?.unit ? String(relatedUnit.unit).toUpperCase() : "";
 
-                                                       return (
-                                                         <tr key={Item.idRow || i}>
-                                                           <td style={{ textAlign: "center", border: "1px solid #cbd5e1", padding: "5px 4px" }}>{i + 1}</td>
-                                                           <td style={{ textAlign: "left", border: "1px solid #cbd5e1", padding: "5px 4px" }}>
-                                                             <span style={{ fontWeight: "600" }}>{itemNameStr}</span>
-                                                             {itemDescStr ? (
-                                                               <div style={{ fontSize: "9px", color: "#475569", textTransform: "uppercase" }}>
-                                                                 {itemDescStr} {brandStr}
-                                                               </div>
-                                                             ) : null}
-                                                           </td>
-                                                           <td style={{ textAlign: "right", border: "1px solid #cbd5e1", padding: "5px 4px" }}>
-                                                             {Item.itemQty} {unitStr}
-                                                           </td>
-                                                           <td style={{ textAlign: "right", border: "1px solid #cbd5e1", padding: "5px 4px", fontWeight: "bold" }}>
-                                                             {Item.qtyBuy} {unitStr}
-                                                           </td>
-                                                           <td style={{ textAlign: "right", border: "1px solid #cbd5e1", padding: "5px 4px" }}>
-                                                             ${Item.itemRate !== undefined ? parseFloat(Item.itemRate).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 }) : "0"}
-                                                           </td>
-                                                           <td style={{ textAlign: "right", border: "1px solid #cbd5e1", padding: "5px 4px" }}>
-                                                             FC{Item.totalAmountFC !== undefined ? parseFloat(Item.totalAmountFC).toLocaleString() : "0"}
-                                                           </td>
-                                                           <td style={{ textAlign: "right", border: "1px solid #cbd5e1", padding: "5px 4px" }}>
-                                                             {Item.Taux !== undefined ? parseFloat(Item.Taux).toLocaleString() : "0"}
-                                                           </td>
-                                                           <td style={{ textAlign: "right", border: "1px solid #cbd5e1", padding: "5px 4px", fontWeight: "600" }}>
-                                                             ${Item.totalAmount !== undefined ? parseFloat(Item.totalAmount).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 }) : "0"}
-                                                           </td>
-                                                           <td style={{ textAlign: "right", border: "1px solid #cbd5e1", padding: "5px 4px", fontWeight: "bold" }}>
-                                                             ${Item.fcConvertToUsdTotal !== undefined ? parseFloat(Item.fcConvertToUsdTotal).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 }) : "0"}
-                                                           </td>
-                                                         </tr>
-                                                       );
-                                                     })}
-                                                   </tbody>
-                                                   <tfoot>
-                                                     <tr style={{ backgroundColor: "#f8fafc", fontWeight: "bold" }}>
-                                                       <td colSpan={5} style={{ border: "1px solid #cbd5e1", padding: "6px 8px", textAlign: "right" }}>Total</td>
-                                                       <td style={{ border: "1px solid #cbd5e1", padding: "6px 8px", textAlign: "right" }}>
-                                                         FC{row.totalFC !== undefined ? parseFloat(row.totalFC).toLocaleString() : "0"}
-                                                       </td>
-                                                       <td style={{ border: "1px solid #cbd5e1", padding: "6px 8px", textAlign: "center" }}>-</td>
-                                                       <td style={{ border: "1px solid #cbd5e1", padding: "6px 8px", textAlign: "right" }}>
-                                                         ${row.total !== undefined ? parseFloat(row.total).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 }) : "0"}
-                                                       </td>
-                                                       <td style={{ border: "1px solid #cbd5e1", padding: "6px 8px", textAlign: "right" }}>
-                                                         ${row.totalUSD !== undefined ? parseFloat(row.totalUSD).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 }) : "0"}
-                                                       </td>
-                                                     </tr>
-                                                   </tfoot>
-                                                 </table></section>
-                                            </div>
-                                          </div>
-                                        </td>
-                                      </tr>
-                                    </tbody>
-                                    <tfoot>
-                                      <tr>
-                                        <td>
-                                          <div style={{ position: 'relative', marginTop: '20px' }}>
-                                            <p hidden>...</p>
-                                            <p hidden>...</p>
-                                            <br />
-                                            <PrintFooter branchId={typeof row !== "undefined" ? row?.branchId : typeof data !== "undefined" ? data?.branchId : ""} />
+                                                return (
+                                                  <tr key={Item.idRow || i}>
+                                                    <td style={{ textAlign: "center", border: "1px solid #cbd5e1", padding: "5px 4px" }}>{i + 1}</td>
+                                                    <td style={{ textAlign: "left", border: "1px solid #cbd5e1", padding: "5px 4px" }}>
+                                                      <span style={{ fontWeight: "600" }}>{itemNameStr}</span>
+                                                      {itemDescStr ? (
+                                                        <div style={{ fontSize: "9px", color: "#475569", textTransform: "uppercase" }}>
+                                                          {itemDescStr} {brandStr}
+                                                        </div>
+                                                      ) : null}
+                                                    </td>
+                                                    <td style={{ textAlign: "right", border: "1px solid #cbd5e1", padding: "5px 4px" }}>
+                                                      {Item.itemQty} {unitStr}
+                                                    </td>
+                                                    <td style={{ textAlign: "right", border: "1px solid #cbd5e1", padding: "5px 4px", fontWeight: "bold" }}>
+                                                      {Item.qtyBuy} {unitStr}
+                                                    </td>
+                                                    <td style={{ textAlign: "right", border: "1px solid #cbd5e1", padding: "5px 4px" }}>
+                                                      ${Item.itemRate !== undefined ? parseFloat(Item.itemRate).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 }) : "0"}
+                                                    </td>
+                                                    <td style={{ textAlign: "right", border: "1px solid #cbd5e1", padding: "5px 4px" }}>
+                                                      FC{Item.totalAmountFC !== undefined ? parseFloat(Item.totalAmountFC).toLocaleString() : "0"}
+                                                    </td>
+                                                    <td style={{ textAlign: "right", border: "1px solid #cbd5e1", padding: "5px 4px" }}>
+                                                      {Item.Taux !== undefined ? parseFloat(Item.Taux).toLocaleString() : "0"}
+                                                    </td>
+                                                    <td style={{ textAlign: "right", border: "1px solid #cbd5e1", padding: "5px 4px", fontWeight: "600" }}>
+                                                      ${parseFloat(Item.totalAmount || 0).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 })}
+                                                    </td>
+                                                    <td style={{ textAlign: "right", border: "1px solid #cbd5e1", padding: "5px 4px", fontWeight: "bold" }}>
+                                                      ${Item.fcConvertToUsdTotal !== undefined ? parseFloat(Item.fcConvertToUsdTotal).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 }) : "0"}
+                                                    </td>
+                                                  </tr>
+                                                );
+                                              })}
+                                            </tbody>
+                                            <tfoot>
+                                              <tr style={{ backgroundColor: "#f8fafc", fontWeight: "bold" }}>
+                                                <td colSpan={5} style={{ border: "1px solid #cbd5e1", padding: "6px 8px", textAlign: "right" }}>Total</td>
+                                                <td style={{ border: "1px solid #cbd5e1", padding: "6px 8px", textAlign: "right" }}>
+                                                  FC{row.totalFC !== undefined ? parseFloat(row.totalFC).toLocaleString() : "0"}
+                                                </td>
+                                                <td style={{ border: "1px solid #cbd5e1", padding: "6px 8px", textAlign: "center" }}>-</td>
+                                                <td style={{ border: "1px solid #cbd5e1", padding: "6px 8px", textAlign: "right" }}>
+                                                  ${row.total !== undefined ? parseFloat(row.total).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 }) : "0"}
+                                                </td>
+                                                <td style={{ border: "1px solid #cbd5e1", padding: "6px 8px", textAlign: "right" }}>
+                                                  ${row.totalUSD !== undefined ? parseFloat(row.totalUSD).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 }) : "0"}
+                                                </td>
+                                              </tr>
+                                            </tfoot>
+                                          </table>
+                                        </section>
+                                      </div>
+                                    </div>
 
-                                          </div>
-                                        </td>
-                                      </tr>
-                                    </tfoot>
-                                  </table>
+                                    {/* Bottom area: Signatures + Corporate PrintFooter pinned to bottom of A4 page */}
+                                    <div style={{ marginTop: 'auto', paddingTop: '25px', pageBreakInside: 'avoid' }}>
+                                      <section style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '30px', padding: '0 10px', pageBreakInside: 'avoid' }}>
+                                        <div style={{ textAlign: 'left' }}>
+                                          <p style={{ fontWeight: 'bold', margin: '0 0 2px', fontSize: '11px', color: '#1e293b' }}>Authorized By:</p>
+                                          <p style={{ margin: 0, fontSize: '10px', color: '#64748b' }}>GLOBAL GATE SARL - Purchasing</p>
+                                          <div style={{ marginTop: '40px', borderBottom: '1px solid #94a3b8', width: '220px' }}></div>
+                                        </div>
+                                        <div style={{ textAlign: 'right' }}>
+                                          <p style={{ fontWeight: 'bold', margin: '0 0 2px', fontSize: '11px', color: '#1e293b' }}>Supplier Acknowledgment & Receipt:</p>
+                                          <p style={{ margin: 0, fontSize: '10px', color: '#64748b' }}>Name, Signature & Date</p>
+                                          <div style={{ marginTop: '40px', borderBottom: '1px solid #94a3b8', width: '220px', marginLeft: 'auto' }}></div>
+                                        </div>
+                                      </section>
+                                      <PrintFooter branchId={typeof row !== "undefined" ? row?.branchId : typeof data !== "undefined" ? data?.branchId : ""} />
+                                    </div>
+                                  </div>
                                 </Box>
                                 <Box sx={{ padding: '20px' }}>
                                   <div style={{ padding: '20px' }}>

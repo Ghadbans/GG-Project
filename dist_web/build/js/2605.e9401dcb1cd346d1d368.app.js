@@ -905,21 +905,31 @@ function PurchaseOrderInfoView() {
       }
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       hidden: true
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("table", {
-      ref: componentRef,
-      className: "invoicedetails"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("th", null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tbody", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("th", {
-      style: {
-        borderBottom: '1px solid black'
-      }
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("div", {
-      className: "invoiceTest"
+      ref: componentRef,
+      className: "invoicedetails po-print-full-page",
+      style: {
+        minHeight: '265mm',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        boxSizing: 'border-box',
+        background: '#fff'
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("div", {
+      className: "invoiceTest",
+      style: {
+        borderBottom: '1.5px solid #1e3a8a',
+        paddingBottom: '6px',
+        marginBottom: '8px'
+      }
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_component_PrintHeader__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A, {
       branchId: typeof row !== "undefined" ? row === null || row === void 0 ? void 0 : row.branchId : ""
-    }))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tbody", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("p", {
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("p", {
       className: "invoicehr",
       style: {
-        fontSize: '14px'
+        fontSize: '14px',
+        margin: '6px 0 14px'
       }
     }, "Purchase Order"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("div", {
       className: "content",
@@ -931,16 +941,20 @@ function PurchaseOrderInfoView() {
       style: {
         display: 'flex',
         justifyContent: 'space-between',
-        marginBottom: '5px'
+        alignItems: 'flex-start',
+        marginBottom: '14px'
       }
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("address", {
       style: {
         position: 'relative',
         lineHeight: 1.35,
-        width: '60%'
+        width: '60%',
+        margin: 0
       }
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("p", {
-      style: {}
+      style: {
+        margin: 0
+      }
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
       style: {
         fontWeight: 'bold',
@@ -949,7 +963,8 @@ function PurchaseOrderInfoView() {
     }, "For"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
       style: {
         fontWeight: 'bold',
-        fontSize: '13px'
+        fontSize: '13px',
+        color: '#1e293b'
       }
     }, row.reference !== undefined && row.reference !== null ? row.reference.referenceName + ' ' + row.description : row.description))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("table", {
       style: {
@@ -1061,35 +1076,35 @@ function PurchaseOrderInfoView() {
       style: {
         width: "5%",
         border: "1px solid #cbd5e1",
-        padding: "6px 8px",
+        padding: "7px 8px",
         textAlign: "center"
       }
     }, "#"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("th", {
       style: {
         width: "35%",
         border: "1px solid #cbd5e1",
-        padding: "6px 8px",
+        padding: "7px 8px",
         textAlign: "left"
       }
     }, "Item"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("th", {
       style: {
         width: "40%",
         border: "1px solid #cbd5e1",
-        padding: "6px 8px",
+        padding: "7px 8px",
         textAlign: "left"
       }
     }, "Description"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("th", {
       style: {
         width: "10%",
         border: "1px solid #cbd5e1",
-        padding: "6px 8px",
+        padding: "7px 8px",
         textAlign: "right"
       }
     }, "Qty Need"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("th", {
       style: {
         width: "10%",
         border: "1px solid #cbd5e1",
-        padding: "6px 8px",
+        padding: "7px 8px",
         textAlign: "right"
       }
     }, "Qty Buy"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tbody", null, newArray2 === null || newArray2 === void 0 ? void 0 : newArray2.map((Item, i) => {
@@ -1106,7 +1121,7 @@ function PurchaseOrderInfoView() {
           style: {
             textAlign: "center",
             border: "1px solid #cbd5e1",
-            padding: "6px 8px"
+            padding: "7px 8px"
           }
         }, i + 1), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
           colSpan: 4,
@@ -1115,7 +1130,7 @@ function PurchaseOrderInfoView() {
             fontWeight: "bold",
             border: "1px solid #cbd5e1",
             backgroundColor: "#f8f9fa",
-            padding: "6px 8px"
+            padding: "7px 8px"
           }
         }, Item.newDescription));
       }
@@ -1129,13 +1144,13 @@ function PurchaseOrderInfoView() {
         style: {
           textAlign: "center",
           border: "1px solid #cbd5e1",
-          padding: "6px 8px"
+          padding: "7px 8px"
         }
       }, i + 1), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
         style: {
           textAlign: "left",
           border: "1px solid #cbd5e1",
-          padding: "6px 8px"
+          padding: "7px 8px"
         }
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
         style: {
@@ -1145,28 +1160,34 @@ function PurchaseOrderInfoView() {
         style: {
           textAlign: "left",
           border: "1px solid #cbd5e1",
-          padding: "6px 8px"
+          padding: "7px 8px"
         }
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, itemDescStr, " ", brandStr)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
         style: {
           textAlign: "right",
           border: "1px solid #cbd5e1",
-          padding: "6px 8px"
+          padding: "7px 8px"
         }
       }, Item.itemQty, " ", unitStr), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
         style: {
           textAlign: "right",
           border: "1px solid #cbd5e1",
-          padding: "6px 8px",
+          padding: "7px 8px",
           fontWeight: "bold"
         }
       }, Item.qtyBuy, " ", unitStr));
-    }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("section", {
+    })))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("div", {
+      style: {
+        marginTop: 'auto',
+        paddingTop: '25px',
+        pageBreakInside: 'avoid'
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("section", {
       style: {
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'flex-start',
-        marginTop: '35px',
+        marginBottom: '30px',
         padding: '0 10px',
         pageBreakInside: 'avoid'
       }
@@ -1189,9 +1210,9 @@ function PurchaseOrderInfoView() {
       }
     }, "GLOBAL GATE SARL - Purchasing"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("div", {
       style: {
-        marginTop: '35px',
-        borderBottom: '1px solid #cbd5e1',
-        width: '200px'
+        marginTop: '40px',
+        borderBottom: '1px solid #94a3b8',
+        width: '220px'
       }
     })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("div", {
       style: {
@@ -1212,39 +1233,40 @@ function PurchaseOrderInfoView() {
       }
     }, "Name, Signature & Date"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("div", {
       style: {
-        marginTop: '35px',
-        borderBottom: '1px solid #cbd5e1',
-        width: '200px',
+        marginTop: '40px',
+        borderBottom: '1px solid #94a3b8',
+        width: '220px',
         marginLeft: 'auto'
       }
-    }))))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tfoot", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("div", {
-      style: {
-        position: 'relative',
-        marginTop: '20px'
-      }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("p", {
-      hidden: true
-    }, "..."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("p", {
-      hidden: true
-    }, "..."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_component_PrintFooter__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A, {
+    }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_component_PrintFooter__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A, {
       branchId: typeof row !== "undefined" ? row === null || row === void 0 ? void 0 : row.branchId : typeof data !== "undefined" ? (_data = data) === null || _data === void 0 ? void 0 : _data.branchId : ""
-    }))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+    })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       hidden: true
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("table", {
-      ref: componentRef2,
-      className: "invoicedetails"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("th", null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tbody", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("th", {
-      style: {
-        borderBottom: '1px solid black'
-      }
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("div", {
-      className: "invoiceTest"
+      ref: componentRef2,
+      className: "invoicedetails po-print-full-page",
+      style: {
+        minHeight: '265mm',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        boxSizing: 'border-box',
+        background: '#fff'
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("div", {
+      className: "invoiceTest",
+      style: {
+        borderBottom: '1.5px solid #1e3a8a',
+        paddingBottom: '6px',
+        marginBottom: '8px'
+      }
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_component_PrintHeader__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A, {
       branchId: typeof row !== "undefined" ? row === null || row === void 0 ? void 0 : row.branchId : ""
-    }))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tbody", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("p", {
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("p", {
       className: "invoicehr",
       style: {
-        fontSize: '14px'
+        fontSize: '14px',
+        margin: '6px 0 14px'
       }
     }, "Purchase Order"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("div", {
       className: "content",
@@ -1256,16 +1278,20 @@ function PurchaseOrderInfoView() {
       style: {
         display: 'flex',
         justifyContent: 'space-between',
-        marginBottom: '5px'
+        alignItems: 'flex-start',
+        marginBottom: '14px'
       }
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("address", {
       style: {
         position: 'relative',
         lineHeight: 1.35,
-        width: '60%'
+        width: '60%',
+        margin: 0
       }
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("p", {
-      style: {}
+      style: {
+        margin: 0
+      }
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
       style: {
         fontWeight: 'bold',
@@ -1274,7 +1300,8 @@ function PurchaseOrderInfoView() {
     }, "For"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
       style: {
         fontWeight: 'bold',
-        fontSize: '13px'
+        fontSize: '13px',
+        color: '#1e293b'
       }
     }, row.reference !== undefined && row.reference !== null ? row.reference.referenceName + ' ' + row.description : row.description))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("table", {
       style: {
@@ -1386,63 +1413,63 @@ function PurchaseOrderInfoView() {
       style: {
         width: "4%",
         border: "1px solid #cbd5e1",
-        padding: "5px 4px",
+        padding: "6px 4px",
         textAlign: "center"
       }
     }, "#"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("th", {
       style: {
-        width: "26%",
+        width: "24%",
         border: "1px solid #cbd5e1",
-        padding: "5px 4px",
+        padding: "6px 4px",
         textAlign: "left"
       }
     }, "Item"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("th", {
       style: {
         width: "8%",
         border: "1px solid #cbd5e1",
-        padding: "5px 4px",
+        padding: "6px 4px",
         textAlign: "right"
       }
     }, "Qty Need"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("th", {
       style: {
         width: "8%",
         border: "1px solid #cbd5e1",
-        padding: "5px 4px",
+        padding: "6px 4px",
         textAlign: "right"
       }
     }, "Qty Buy"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("th", {
       style: {
-        width: "10%",
+        width: "11%",
         border: "1px solid #cbd5e1",
-        padding: "5px 4px",
+        padding: "6px 4px",
         textAlign: "right"
       }
     }, "Price($)"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("th", {
       style: {
-        width: "12%",
+        width: "13%",
         border: "1px solid #cbd5e1",
-        padding: "5px 4px",
+        padding: "6px 4px",
         textAlign: "right"
       }
     }, "Amount Paid(FC)"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("th", {
       style: {
         width: "8%",
         border: "1px solid #cbd5e1",
-        padding: "5px 4px",
+        padding: "6px 4px",
         textAlign: "right"
       }
     }, "Rate"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("th", {
       style: {
-        width: "12%",
+        width: "11%",
         border: "1px solid #cbd5e1",
-        padding: "5px 4px",
+        padding: "6px 4px",
         textAlign: "right"
       }
     }, "Amount Paid($)"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("th", {
       style: {
-        width: "12%",
+        width: "13%",
         border: "1px solid #cbd5e1",
-        padding: "5px 4px",
+        padding: "6px 4px",
         textAlign: "right"
       }
     }, "Total($)"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tbody", null, newArray2 === null || newArray2 === void 0 ? void 0 : newArray2.map((Item, i) => {
@@ -1541,10 +1568,10 @@ function PurchaseOrderInfoView() {
           padding: "5px 4px",
           fontWeight: "600"
         }
-      }, "$", Item.totalAmount !== undefined ? parseFloat(Item.totalAmount).toLocaleString(undefined, {
+      }, "$", parseFloat(Item.totalAmount || 0).toLocaleString(undefined, {
         minimumFractionDigits: 0,
         maximumFractionDigits: 2
-      }) : "0"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
         style: {
           textAlign: "right",
           border: "1px solid #cbd5e1",
@@ -1597,18 +1624,71 @@ function PurchaseOrderInfoView() {
     }, "$", row.totalUSD !== undefined ? parseFloat(row.totalUSD).toLocaleString(undefined, {
       minimumFractionDigits: 0,
       maximumFractionDigits: 2
-    }) : "0")))))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tfoot", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("div", {
+    }) : "0"))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("div", {
       style: {
-        position: 'relative',
-        marginTop: '20px'
+        marginTop: 'auto',
+        paddingTop: '25px',
+        pageBreakInside: 'avoid'
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("section", {
+      style: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'flex-start',
+        marginBottom: '30px',
+        padding: '0 10px',
+        pageBreakInside: 'avoid'
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("div", {
+      style: {
+        textAlign: 'left'
       }
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("p", {
-      hidden: true
-    }, "..."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("p", {
-      hidden: true
-    }, "..."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_component_PrintFooter__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A, {
+      style: {
+        fontWeight: 'bold',
+        margin: '0 0 2px',
+        fontSize: '11px',
+        color: '#1e293b'
+      }
+    }, "Authorized By:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("p", {
+      style: {
+        margin: 0,
+        fontSize: '10px',
+        color: '#64748b'
+      }
+    }, "GLOBAL GATE SARL - Purchasing"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("div", {
+      style: {
+        marginTop: '40px',
+        borderBottom: '1px solid #94a3b8',
+        width: '220px'
+      }
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("div", {
+      style: {
+        textAlign: 'right'
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("p", {
+      style: {
+        fontWeight: 'bold',
+        margin: '0 0 2px',
+        fontSize: '11px',
+        color: '#1e293b'
+      }
+    }, "Supplier Acknowledgment & Receipt:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("p", {
+      style: {
+        margin: 0,
+        fontSize: '10px',
+        color: '#64748b'
+      }
+    }, "Name, Signature & Date"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("div", {
+      style: {
+        marginTop: '40px',
+        borderBottom: '1px solid #94a3b8',
+        width: '220px',
+        marginLeft: 'auto'
+      }
+    }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_component_PrintFooter__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A, {
       branchId: typeof row !== "undefined" ? row === null || row === void 0 ? void 0 : row.branchId : typeof data !== "undefined" ? (_data2 = data) === null || _data2 === void 0 ? void 0 : _data2.branchId : ""
-    }))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+    })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       sx: {
         padding: '20px'
       }
