@@ -1050,8 +1050,14 @@ footer {
     color: #1f2937 !important;
   }
 
-  /* Prevent awkward page breaks in the middle of items or summary blocks */
-  tr, .avoid-page-break, .avoid-break, .invoicehr, .content, .print-summary-card, address {
+  /* Allow natural pagination on parent tables and content containers */
+  .invoicedetails, .content, .invoicedetails > tbody > tr {
+    page-break-inside: auto !important;
+    break-inside: auto !important;
+  }
+
+  /* Prevent awkward page breaks strictly inside leaf rows and summary cards */
+  .secondTable tr, .tableinvoice tr, .tableItem tr, .tableItemInfo tr, .tableInfo10 tr, .avoid-page-break, .avoid-break, .print-summary-card, address {
     page-break-inside: avoid !important;
     break-inside: avoid !important;
   }

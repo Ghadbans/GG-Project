@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef, useMemo } from 'react'
 import useLayoutConfig from '../../../hooks/useLayoutConfig';
 import SidebarDash from '../../../component/SidebarDash';
 import PrintHeader from '../../../component/PrintHeader';
+import PrintFooter from '../../../component/PrintFooter';
 import '../../view.css';
 import '../InvoiceView/AdminView.css'
 import '../Chartview.css';
@@ -1204,20 +1205,7 @@ function EstimateViewAdminAll() {
                                             <p hidden>...</p>
                                             <p hidden>...</p>
                                             <br />
-                                            <section style={{ position: 'fixed', bottom: 0, left: 0, right: 0, justifyContent: 'center', display: 'flex', alignItems: 'center', gap: '10px' }}>
-                                              <p style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                                                <span><EmailIcon /></span>
-                                                <span>contact@globalgate.sarl</span>
-                                              </p>
-                                              <p style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                                                <span><PhoneIcon /></span>
-                                                <span>+243 827 722 222</span>
-                                              </p>
-                                              <p style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                                                <span><WebIcon /></span>
-                                                <span>www.GlobalGate.sarl</span>
-                                              </p>
-                                            </section>
+                                            <PrintFooter branchId={typeof row !== "undefined" ? row?.branchId : typeof data !== "undefined" ? data?.branchId : ""} />
 
                                           </div>
                                         </td>

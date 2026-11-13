@@ -5318,6 +5318,29 @@ The standardized `renderStatusBadge` helper was seamlessly integrated into all 1
   - Packaged Windows Installer: `dist/Global Gate Setup 3.6.51.exe` (99.66 MB) and mirrored to `server/public/downloads/Global Gate Setup 3.6.51.exe`, `GlobalGate-v3.6.51.exe`, and `GlobalGateSetup.exe`.
   - Compiled Android APK: `server/public/downloads/GlobalGate-v3.6.51.apk` (17.88 MB) and mirrored to `GlobalGate.apk`.
 
+---
+
+### Rule 71: Universal Printout Template Restoration & Chromium Table Page-Break Flow (Ver 3.6.52)
+- **Root Cause & Print Integrity Analysis**:
+  - In v3.6.51, invoices (e.g. `INV-002692`) and quotations suffered from two major regressions:
+    1. **Missing Corporate Header & Footer**: `PrintHeader.js` and `PrintFooter.js` relied on `useCompanyProfile().getBranchDetails(branchId)`. If `profileData` had not finished asynchronously loading from `/companyProfile` at the instant printing was invoked via `useReactToPrint`, `getBranchDetails` returned `null` and both components short-circuited with `if (!branchInfo) return null;`, causing the header logo, corporate details (RCCM, ID NAT, address), and footer contacts to vanish completely.
+    2. **Blank Pages & Table Displacement**: In `Chartview.css`, `tr, .avoid-page-break, .avoid-break, .invoicehr, .content, .print-summary-card, address { page-break-inside: avoid !important; }` inadvertently applied `page-break-inside: avoid` to the top-level layout `.content` container and outer `<tr>` of `invoicedetails`. Multi-item tables (e.g. 21 items in `Q-001755`) could not fit on Page 1, so Chromium pushed the entire content block onto Page 2 or Page 3, resulting in blank pages with only headers/footers.
+    3. **Quotation Trailing Blank Page**: In `EstimateViewAdminAll.js`, the `<tfoot>` contained `<section style={{ position: 'fixed', bottom: 0 ... }}>` which conflicted with Chromium's `table-footer-group` layout geometry and caused phantom blank pages.
+- **Architectural Fixes Implemented**:
+  - `src/js/hooks/useCompanyProfile.js`: Initialized `profileData` state synchronously with `DEFAULT_HQ_DETAILS` and guaranteed `getBranchDetails()` always falls back to `DEFAULT_HQ_DETAILS` if branch details are unpopulated or loading.
+  - `src/js/component/PrintHeader.js`: Added local `DEFAULT_HQ` fallback and removed `if (!branchInfo) return null;` so company metadata and logo render synchronously 100% of the time across all documents.
+  - `src/js/component/PrintFooter.js`: Added local `DEFAULT_FOOTER` fallback and removed `if (!branchInfo) return null;`.
+  - `src/js/AdminView1/PageView/Chartview.css`: Separated parent containers from leaf rows:
+    - Set `.invoicedetails, .content, .invoicedetails > tbody > tr { page-break-inside: auto !important; break-inside: auto !important; }` so multi-row tables flow naturally starting on Page 1 directly under the header.
+    - Preserved `page-break-inside: avoid !important` strictly on leaf row elements (`.secondTable tr, .tableinvoice tr, .tableItem tr, .tableItemInfo tr, .tableInfo10 tr, .avoid-page-break, .avoid-break, .print-summary-card, address`).
+  - `src/js/AdminView1/PageView/EstimateView/EstimateViewAdminAll.js`: Imported `PrintFooter` and replaced the legacy `position: fixed` section inside `<tfoot>` with `<PrintFooter branchId={...} />`.
+- **Multi-Platform Production Artifacts**:
+  - Incremental version bump: **v3.6.52**.
+  - Recompiled Webpack desktop and web bundles (`dist_web/`).
+  - Packaged Windows Installer: `dist/Global Gate Setup 3.6.52.exe` (99.66 MB) and mirrored to `server/public/downloads/Global Gate Setup 3.6.52.exe`, `GlobalGate-v3.6.52.exe`, and `GlobalGateSetup.exe`.
+  - Compiled Android APK: `server/public/downloads/GlobalGate-v3.6.52.apk` (17.88 MB / 17.05 MB) and mirrored to `GlobalGate.apk`.
+
+
 
 
 

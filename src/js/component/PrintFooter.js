@@ -4,30 +4,39 @@ import EmailIcon from '@mui/icons-material/Email';
 import PhoneIcon from '@mui/icons-material/Phone';
 import WebIcon from '@mui/icons-material/Web';
 
+const DEFAULT_FOOTER = {
+  email: 'contact@globalgate.sarl',
+  phone: '+243 827 722 222',
+  website: 'www.GlobalGate.sarl'
+};
+
 const PrintFooter = ({ branchId }) => {
   const { getBranchDetails } = useCompanyProfile();
-  const branchInfo = getBranchDetails(branchId);
+  const fetched = getBranchDetails ? getBranchDetails(branchId) : null;
+  const branchInfo = fetched || DEFAULT_FOOTER;
 
-  if (!branchInfo) return null;
+  const email = branchInfo.email || DEFAULT_FOOTER.email;
+  const phone = branchInfo.phone || DEFAULT_FOOTER.phone;
+  const website = branchInfo.website || DEFAULT_FOOTER.website;
 
   return (
     <section className="avoid-page-break" style={{ width: '100%', borderTop: '1px solid #d1d5db', marginTop: '12px', paddingTop: '6px', justifyContent: 'center', display: 'flex', alignItems: 'center', gap: '16px', backgroundColor: 'transparent', fontSize: '9px', color: '#4b5563' }}>
-      {branchInfo.email && (
+      {email && (
         <p style={{ display: 'flex', gap: '4px', alignItems: 'center', margin: 0 }}>
           <span><EmailIcon sx={{ fontSize: '13px' }} /></span>
-          <span>{branchInfo.email}</span>
+          <span>{email}</span>
         </p>
       )}
-      {branchInfo.phone && (
+      {phone && (
         <p style={{ display: 'flex', gap: '4px', alignItems: 'center', margin: 0 }}>
           <span><PhoneIcon sx={{ fontSize: '13px' }} /></span>
-          <span>{branchInfo.phone}</span>
+          <span>{phone}</span>
         </p>
       )}
-      {branchInfo.website && (
+      {website && (
         <p style={{ display: 'flex', gap: '4px', alignItems: 'center', margin: 0 }}>
           <span><WebIcon sx={{ fontSize: '13px' }} /></span>
-          <span>{branchInfo.website}</span>
+          <span>{website}</span>
         </p>
       )}
     </section>
