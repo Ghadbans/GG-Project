@@ -2,8 +2,9 @@
 /* heading */
 
 .invoiceTest {
-    margin: 0 0 3em;
-    height: 75px;
+    margin: 0 0 1em;
+    height: auto;
+    min-height: 85px;
   }
   
    h1 {

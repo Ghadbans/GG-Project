@@ -5427,3 +5427,19 @@ The standardized `renderStatusBadge` helper was seamlessly integrated into all 1
   - Recompiled both desktop bundle (`build/js/app.js`) and web bundle (`dist_web/build/js/app.js`).
   - Packaged Windows Installer: `dist/Global Gate Setup 3.6.55.exe` and mirrored to `server/public/downloads/Global Gate Setup 3.6.55.exe`, `GlobalGate-v3.6.55.exe`, and `GlobalGateSetup.exe`.
   - Compiled Android APK: `server/public/downloads/GlobalGate-v3.6.55.apk` and mirrored to `GlobalGate.apk`.
+
+
+---
+
+### Rule 75: Print Header Container Height & Separator Line Alignment (Ver 3.6.56)
+- **Header Box Height & Bottom Separator Geometry**:
+  - In `src/js/AdminView1/PageView/InvoiceView/AdminView.css`, `.invoiceTest` was previously restricted to `height: 75px`.
+  - The corporate header address block in `PrintHeader.js` contains 6 text lines (Company Name, RCCM, NAT ID, Avenue Address, Province, and Country "DRC"), which naturally requires ~85px–92px of vertical height.
+  - Due to the rigid 75px container constraint, the bottom separator border (`borderBottom: '1.5px solid #1e3a8a'`) cut through the address block, forcing "DRC" to overflow and render awkwardly below the line separator.
+  - Refactored `.invoiceTest` in `AdminView.css` and `Chartview.css` to `height: auto; min-height: 85px;` and updated `PurchaseOrderInfoView.js` (`componentRef` and `componentRef2`) header wrappers with `height: 'auto', minHeight: '85px', paddingBottom: '8px'`.
+  - The header box now naturally expands to contain all 6 address lines with proper padding, ensuring the separator line renders cleanly below "DRC".
+- **Universal Multi-Platform Production Artifacts**:
+  - Incremental version bump: **v3.6.56**.
+  - Recompiled both desktop bundle (`build/js/app.js`) and web bundle (`dist_web/build/js/app.js`).
+  - Packaged Windows Installer: `dist/Global Gate Setup 3.6.56.exe` and mirrored to `server/public/downloads/Global Gate Setup 3.6.56.exe`, `GlobalGate-v3.6.56.exe`, and `GlobalGateSetup.exe`.
+  - Compiled Android APK: `server/public/downloads/GlobalGate-v3.6.56.apk` and mirrored to `GlobalGate.apk`.

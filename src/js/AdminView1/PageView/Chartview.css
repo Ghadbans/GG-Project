@@ -1086,8 +1086,10 @@ footer {
 
   /* Compact header margins and clean typography in print */
   .invoiceTest {
+    height: auto !important;
+    min-height: 85px !important;
     margin-bottom: 6px !important;
-    padding-bottom: 4px !important;
+    padding-bottom: 6px !important;
   }
 
   .invoicehr {

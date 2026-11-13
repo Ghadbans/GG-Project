@@ -650,7 +650,7 @@ function PurchaseOrderInfoView() {
                                 <Box hidden >
                                   <div ref={componentRef} className='invoicedetails po-print-full-page' style={{ minHeight: '268mm', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', boxSizing: 'border-box', background: '#fff' }}>
                                     <div>
-                                      <div className='invoiceTest' style={{ borderBottom: '1.5px solid #1e3a8a', paddingBottom: '6px', marginBottom: '8px' }}>
+                                      <div className='invoiceTest' style={{ height: 'auto', minHeight: '85px', borderBottom: '1.5px solid #1e3a8a', paddingBottom: '8px', marginBottom: '8px' }}>
                                         <PrintHeader branchId={typeof row !== "undefined" ? row?.branchId : ""} />
                                       </div>
                                       <p className='invoicehr' style={{ fontSize: '14px', margin: '6px 0 14px' }}>Purchase Order</p>
@@ -772,7 +772,7 @@ function PurchaseOrderInfoView() {
                                 <Box hidden >
                                   <div ref={componentRef2} className='invoicedetails po-print-full-page' style={{ minHeight: '268mm', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', boxSizing: 'border-box', background: '#fff' }}>
                                     <div>
-                                      <div className='invoiceTest' style={{ borderBottom: '1.5px solid #1e3a8a', paddingBottom: '6px', marginBottom: '8px' }}>
+                                      <div className='invoiceTest' style={{ height: 'auto', minHeight: '85px', borderBottom: '1.5px solid #1e3a8a', paddingBottom: '8px', marginBottom: '8px' }}>
                                         <PrintHeader branchId={typeof row !== "undefined" ? row?.branchId : ""} />
                                       </div>
                                       <p className='invoicehr' style={{ fontSize: '14px', margin: '6px 0 14px' }}>Purchase Order</p>
