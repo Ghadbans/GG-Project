@@ -5297,5 +5297,27 @@ The standardized `renderStatusBadge` helper was seamlessly integrated into all 1
    - Windows Installer packaged: `dist/Global Gate Setup 3.6.50.exe` (99.65 MB) and mirrored.
    - Android APK compiled: `server/public/downloads/GlobalGate-v3.6.50.apk` (19.56 MB) and mirrored.
 
+---
+
+### Rule 70: Customer Dual-Phone Persistence & Mandatory 12-Digit WhatsApp Format Validation (Ver 3.6.51)
+- **Root Cause & Data Integrity Fix**:
+  - `CustomerFormUpdate.js` previously failed to set `customerPhone` in `fetchData` state initialization, causing Phone Number 2 (`PHONE2`) to appear blank on edit and permanently overwriting it with an empty string upon saving.
+  - Resolved by explicitly binding `res.data.data.customerPhone` on data retrieval, maintaining complete dual-phone (`customerCompanyPhone` and `customerPhone`) persistence across updates.
+- **Mandatory 12-Digit WhatsApp Compliance**:
+  - When creating or editing customers across desktop and mobile (`CustomerForm.js`, `CustomerFormUpdate.js`, and `CustomerFormView2.js`), at least 1 phone number is strictly required.
+  - Input fields now use `type="tel"` with `inputProps={{ maxLength: 12, pattern: '[0-9]*' }}` and real-time non-digit stripping (`replace(/[^0-9]/g, '').slice(0, 12)`).
+  - Validation requires Phone 1 to contain **exactly 12 digits** (DR Congo international format `243XXXXXXXXX` for WhatsApp Cloud API / Baileys messaging).
+  - Phone 2 is optional, but if entered, must also contain **exactly 12 digits**.
+  - Dynamic character counters and real-time WhatsApp validation status badges (`12/12 digits ✓ WhatsApp Valid`) provide immediate feedback to users.
+- **Backend API Normalization & Gatekeeping (`server/routes/customerRoutes.js`)**:
+  - `POST /create-customer` validates that at least one 12-digit phone number is present (promoting Phone 2 to Phone 1 if Phone 1 is omitted), validates Phone 2 if present, and rejects invalid inputs with HTTP 400.
+  - `PUT /update-customer/:id` sanitizes and validates 12-digit phone formats, preserving existing phone numbers and updating embedded `customerName.phone` references across invoices, estimates, purchases, maintenance, projects, and payments.
+- **Multi-Platform Production Artifacts**:
+  - Incremental version bump: **v3.6.51**.
+  - Recompiled Webpack desktop and web bundles (`dist_web/`).
+  - Packaged Windows Installer: `dist/Global Gate Setup 3.6.51.exe` (99.66 MB) and mirrored to `server/public/downloads/Global Gate Setup 3.6.51.exe`, `GlobalGate-v3.6.51.exe`, and `GlobalGateSetup.exe`.
+  - Compiled Android APK: `server/public/downloads/GlobalGate-v3.6.51.apk` (17.88 MB) and mirrored to `GlobalGate.apk`.
+
+
 
 

@@ -1,5 +1,6 @@
 import SmartTextInput from '../../../component/SmartTextInput';
 import React, { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import SidebarDash1 from '../../../component/SidebarDash1';
 import '../../view.css';
 import '../Chartview.css';
@@ -171,7 +172,8 @@ function CustomerFormUpdate() {
         setCompanyName(res.data.data.companyName);
         setCustomer(res.data.data.Customer);
         setCustomerEmail(res.data.data.customerEmail);
-        setCustomerCompanyPhone(res.data.data.customerCompanyPhone);
+        setCustomerCompanyPhone(res.data.data.customerCompanyPhone ? String(res.data.data.customerCompanyPhone).replace(/[^0-9]/g, '').slice(0, 12) : '');
+        setCustomerPhone(res.data.data.customerPhone ? String(res.data.data.customerPhone).replace(/[^0-9]/g, '').slice(0, 12) : '');
         setCurrency(res.data.data.currency);
         setCredit(res.data.data.credit);
         setPaymentTerms(res.data.data.paymentTerms);
@@ -199,8 +201,30 @@ function CustomerFormUpdate() {
   }
   const [open1, setOpen1] = useState(false);
 
+
+  const validateCustomerPhones = (phone1, phone2) => {
+    const clean1 = (phone1 || '').toString().replace(/[^0-9]/g, '');
+    const clean2 = (phone2 || '').toString().replace(/[^0-9]/g, '');
+
+    if (!clean1) {
+      toast.error("Phone Number 1 is required and must contain exactly 12 digits (e.g. 243XXXXXXXXX for WhatsApp).");
+      return false;
+    }
+    if (clean1.length !== 12) {
+      toast.error(`Phone Number 1 must be exactly 12 digits (e.g. 243XXXXXXXXX for WhatsApp). You entered ${clean1.length} digits.`);
+      return false;
+    }
+    if (clean2 && clean2.length !== 12) {
+      toast.error(`Phone Number 2 must be exactly 12 digits (e.g. 243XXXXXXXXX for WhatsApp). You entered ${clean2.length} digits.`);
+      return false;
+    }
+    return { clean1, clean2 };
+  };
+
   const handleOpenUpdate = (e) => {
-    e.preventDefault()
+    e.preventDefault();
+    const validated = validateCustomerPhones(customerCompanyPhone, customerPhone);
+    if (!validated) return;
     setOpen1(true);
   };
   const handleCloseUpdate = () => {
@@ -271,12 +295,17 @@ function CustomerFormUpdate() {
     }
   }
   const handleSubmitEdit = async (e) => {
-    e.preventDefault();
+    if (e && e.preventDefault) e.preventDefault();
+    const validated = validateCustomerPhones(customerCompanyPhone, customerPhone);
+    if (!validated) return;
+    const { clean1, clean2 } = validated;
     const data = {
       _id: id,
       customerType, designation, customerFirstName,
       customerLastName, customerFullName, companyName,
-      customerEmail, customerCompanyPhone, customerPhone,
+      customerEmail,
+      customerCompanyPhone: clean1,
+      customerPhone: clean2,
       currency, paymentTerms, billingAddress,
       billingCity, shippingAddress, shippingCity, Customer, customerDescription, updateS: false
     };

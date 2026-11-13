@@ -96,18 +96,41 @@ Route.route("/customer", cors(corsOptionsDelegate)).get(
 );
 
 Route.route("/create-customer").post(async (req, res, next) => {
-  await customerSchema
-    .create(req.body)
-    .then((result) => {
-      res.json({
-        data: result,
-        message: "Data successfully added.",
-        status: 200,
+  try {
+    let cleanPhone1 = req.body.customerCompanyPhone ? String(req.body.customerCompanyPhone).replace(/[^0-9]/g, '') : '';
+    let cleanPhone2 = req.body.customerPhone ? String(req.body.customerPhone).replace(/[^0-9]/g, '') : '';
+
+    if (!cleanPhone1 && cleanPhone2) {
+      cleanPhone1 = cleanPhone2;
+      cleanPhone2 = '';
+    }
+
+    if (!cleanPhone1 || cleanPhone1.length !== 12) {
+      return res.status(400).json({
+        status: 400,
+        message: "At least one valid 12-digit phone number is required (e.g. 243XXXXXXXXX for WhatsApp)."
       });
-    })
-    .catch((err) => {
-      return next(err);
+    }
+
+    if (cleanPhone2 && cleanPhone2.length !== 12) {
+      return res.status(400).json({
+        status: 400,
+        message: "Phone Number 2 must contain exactly 12 digits (e.g. 243XXXXXXXXX for WhatsApp)."
+      });
+    }
+
+    req.body.customerCompanyPhone = cleanPhone1;
+    req.body.customerPhone = cleanPhone2;
+
+    const result = await customerSchema.create(req.body);
+    res.json({
+      data: result,
+      message: "Data successfully added.",
+      status: 200,
     });
+  } catch (err) {
+    return next(err);
+  }
 });
 
 Route.route("/get-customer/:id").get(async (req, res, next) => {
@@ -131,6 +154,23 @@ Route.route("/update-customer/:id").put(async (req, res, next) => {
     let objectId = null;
     try { objectId = new require('mongoose').Types.ObjectId(id); } catch (e) {}
     const idFilter = objectId ? { $in: [id, objectId] } : id;
+
+    // Sanitize and validate phones if present
+    if (req.body.customerCompanyPhone !== undefined) {
+      const clean1 = String(req.body.customerCompanyPhone || '').replace(/[^0-9]/g, '');
+      if (clean1 && clean1.length !== 12) {
+        return res.status(400).json({ status: 400, message: "Phone Number 1 must contain exactly 12 digits (e.g. 243XXXXXXXXX)." });
+      }
+      req.body.customerCompanyPhone = clean1;
+    }
+
+    if (req.body.customerPhone !== undefined) {
+      const clean2 = String(req.body.customerPhone || '').replace(/[^0-9]/g, '');
+      if (clean2 && clean2.length !== 12) {
+        return res.status(400).json({ status: 400, message: "Phone Number 2 must contain exactly 12 digits (e.g. 243XXXXXXXXX)." });
+      }
+      req.body.customerPhone = clean2;
+    }
 
     const { Customer, customerCompanyPhone, billingAddress, billingCity, customerEmail, companyName } = req.body;
       

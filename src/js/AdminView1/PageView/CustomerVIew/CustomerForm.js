@@ -236,18 +236,39 @@ function CustomerForm() {
       toast.error("Please select a Customer Type and a Name for Billing before saving.");
       return;
     }
+
+    const clean1 = (customerCompanyPhone || '').toString().replace(/[^0-9]/g, '');
+    const clean2 = (customerPhone || '').toString().replace(/[^0-9]/g, '');
+
+    if (!clean1) {
+      toast.error("Phone Number 1 is required and must contain exactly 12 digits (e.g. 243XXXXXXXXX for WhatsApp).");
+      return;
+    }
+    if (clean1.length !== 12) {
+      toast.error(`Phone Number 1 must be exactly 12 digits (e.g. 243XXXXXXXXX for WhatsApp). You entered ${clean1.length} digits.`);
+      return;
+    }
+    if (clean2 && clean2.length !== 12) {
+      toast.error(`Phone Number 2 must be exactly 12 digits (e.g. 243XXXXXXXXX for WhatsApp). You entered ${clean2.length} digits.`);
+      return;
+    }
+
     setSaving('true')
     const data = {
       _id: v4(),
       customerType, designation, customerFirstName, customerLastName,
-      customerFullName, companyName, customerEmail, customerCompanyPhone, customerPhone,
+      customerFullName, companyName, customerEmail,
+      customerCompanyPhone: clean1,
+      customerPhone: clean2,
       currency, paymentTerms, billingAddress, billingCity,
       shippingAddress, shippingCity, customerDescription, Customer, credit: 0, synced: false
     };
     try {
       const res = await axios.post(apiUrl, {
         customerType, designation, customerFirstName, customerLastName,
-        customerFullName, companyName, customerEmail, customerCompanyPhone, customerPhone,
+        customerFullName, companyName, customerEmail,
+        customerCompanyPhone: clean1,
+        customerPhone: clean2,
         currency, paymentTerms, billingAddress, billingCity,
         shippingAddress, shippingCity, customerDescription, Customer, credit: 0, synced: false
       });
