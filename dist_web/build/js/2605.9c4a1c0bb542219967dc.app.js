@@ -821,7 +821,7 @@ function PurchaseOrderInfoView() {
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, {
       variant: "contained",
       disableElevation: true,
-      onClick: handleOpenPrint2,
+      onClick: handleOpenPrint,
       startIcon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_icons_material_LocalPrintshop__WEBPACK_IMPORTED_MODULE_37__/* ["default"] */ .A, null),
       sx: {
         bgcolor: '#30368a',
@@ -1049,7 +1049,7 @@ function PurchaseOrderInfoView() {
       className: "secondTable",
       style: {
         width: "100%",
-        fontSize: "10px",
+        fontSize: "11px",
         border: "1px solid #cbd5e1",
         borderCollapse: "collapse"
       }
@@ -1059,68 +1059,40 @@ function PurchaseOrderInfoView() {
       }
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("th", {
       style: {
-        width: "4%",
+        width: "5%",
         border: "1px solid #cbd5e1",
-        padding: "5px 4px",
+        padding: "6px 8px",
         textAlign: "center"
       }
     }, "#"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("th", {
       style: {
-        width: "28%",
+        width: "35%",
         border: "1px solid #cbd5e1",
-        padding: "5px 4px",
+        padding: "6px 8px",
         textAlign: "left"
       }
     }, "Item"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("th", {
       style: {
-        width: "8%",
+        width: "40%",
         border: "1px solid #cbd5e1",
-        padding: "5px 4px",
+        padding: "6px 8px",
+        textAlign: "left"
+      }
+    }, "Description"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("th", {
+      style: {
+        width: "10%",
+        border: "1px solid #cbd5e1",
+        padding: "6px 8px",
         textAlign: "right"
       }
     }, "Qty Need"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("th", {
       style: {
-        width: "8%",
-        border: "1px solid #cbd5e1",
-        padding: "5px 4px",
-        textAlign: "right"
-      }
-    }, "Qty Buy"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("th", {
-      style: {
         width: "10%",
         border: "1px solid #cbd5e1",
-        padding: "5px 4px",
+        padding: "6px 8px",
         textAlign: "right"
       }
-    }, "Price($)"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("th", {
-      style: {
-        width: "13%",
-        border: "1px solid #cbd5e1",
-        padding: "5px 4px",
-        textAlign: "right"
-      }
-    }, "Amount Paid(FC)"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("th", {
-      style: {
-        width: "8%",
-        border: "1px solid #cbd5e1",
-        padding: "5px 4px",
-        textAlign: "right"
-      }
-    }, "Rate"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("th", {
-      style: {
-        width: "10%",
-        border: "1px solid #cbd5e1",
-        padding: "5px 4px",
-        textAlign: "right"
-      }
-    }, "Amount Paid($)"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("th", {
-      style: {
-        width: "11%",
-        border: "1px solid #cbd5e1",
-        padding: "5px 4px",
-        textAlign: "right"
-      }
-    }, "Total($)"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tbody", null, newArray2 === null || newArray2 === void 0 ? void 0 : newArray2.map((Item, i) => {
+    }, "Qty Buy"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tbody", null, newArray2 === null || newArray2 === void 0 ? void 0 : newArray2.map((Item, i) => {
       var _Item$itemName2, _Item$itemName3;
       var relatedUnit = item.find(Item1 => {
         var _Item$itemName;
@@ -1134,141 +1106,118 @@ function PurchaseOrderInfoView() {
           style: {
             textAlign: "center",
             border: "1px solid #cbd5e1",
-            padding: "5px 4px"
+            padding: "6px 8px"
           }
         }, i + 1), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
-          colSpan: 8,
+          colSpan: 4,
           style: {
             textAlign: "center",
             fontWeight: "bold",
             border: "1px solid #cbd5e1",
             backgroundColor: "#f8f9fa",
-            padding: "5px 4px"
+            padding: "6px 8px"
           }
         }, Item.newDescription));
       }
+      var itemNameStr = Item.itemName ? typeof Item.itemName === "object" ? Item.itemName.itemName && Item.itemName.itemName !== "empty" ? Item.itemName.itemName.toUpperCase() : "" : String(Item.itemName).toUpperCase() : "";
+      var itemDescStr = Item.itemDescription ? String(Item.itemDescription).toUpperCase() : "";
+      var brandStr = relatedUnit !== null && relatedUnit !== void 0 && relatedUnit.itemBrand ? "(".concat(relatedUnit.itemBrand.toUpperCase(), ")") : "";
+      var unitStr = relatedUnit !== null && relatedUnit !== void 0 && relatedUnit.unit ? String(relatedUnit.unit).toUpperCase() : "";
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", {
         key: Item.idRow || i
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
         style: {
           textAlign: "center",
           border: "1px solid #cbd5e1",
-          padding: "5px 4px"
+          padding: "6px 8px"
         }
       }, i + 1), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
         style: {
           textAlign: "left",
           border: "1px solid #cbd5e1",
-          padding: "5px 4px"
+          padding: "6px 8px"
         }
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
         style: {
           fontWeight: "600"
         }
-      }, Item.itemName ? typeof Item.itemName === "object" ? Item.itemName.itemName && Item.itemName.itemName !== "empty" ? Item.itemName.itemName.toUpperCase() : "" : String(Item.itemName).toUpperCase() : ""), Item.itemDescription ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("div", {
+      }, itemNameStr)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
         style: {
-          fontSize: "9px",
-          color: "#475569",
-          textTransform: "uppercase"
+          textAlign: "left",
+          border: "1px solid #cbd5e1",
+          padding: "6px 8px"
         }
-      }, Item.itemDescription.toUpperCase(), " ", relatedUnit !== null && relatedUnit !== void 0 && relatedUnit.itemBrand ? "(".concat(relatedUnit.itemBrand.toUpperCase(), ")") : "") : null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, itemDescStr, " ", brandStr)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
         style: {
           textAlign: "right",
           border: "1px solid #cbd5e1",
-          padding: "5px 4px"
+          padding: "6px 8px"
         }
-      }, Item.itemQty, " ", relatedUnit !== null && relatedUnit !== void 0 && relatedUnit.unit ? String(relatedUnit.unit).toUpperCase() : ""), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+      }, Item.itemQty, " ", unitStr), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
         style: {
           textAlign: "right",
           border: "1px solid #cbd5e1",
-          padding: "5px 4px",
+          padding: "6px 8px",
           fontWeight: "bold"
         }
-      }, Item.qtyBuy, " ", relatedUnit !== null && relatedUnit !== void 0 && relatedUnit.unit ? String(relatedUnit.unit).toUpperCase() : ""), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
-        style: {
-          textAlign: "right",
-          border: "1px solid #cbd5e1",
-          padding: "5px 4px"
-        }
-      }, "$", Item.itemRate !== undefined ? parseFloat(Item.itemRate).toLocaleString(undefined, {
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 2
-      }) : "0"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
-        style: {
-          textAlign: "right",
-          border: "1px solid #cbd5e1",
-          padding: "5px 4px"
-        }
-      }, "FC", Item.totalAmountFC !== undefined ? parseFloat(Item.totalAmountFC).toLocaleString() : "0"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
-        style: {
-          textAlign: "right",
-          border: "1px solid #cbd5e1",
-          padding: "5px 4px"
-        }
-      }, Item.Taux !== undefined ? parseFloat(Item.Taux).toLocaleString() : "0"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
-        style: {
-          textAlign: "right",
-          border: "1px solid #cbd5e1",
-          padding: "5px 4px",
-          fontWeight: "600"
-        }
-      }, "$", Item.totalAmount !== undefined ? parseFloat(Item.totalAmount).toLocaleString(undefined, {
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 2
-      }) : "0"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
-        style: {
-          textAlign: "right",
-          border: "1px solid #cbd5e1",
-          padding: "5px 4px",
-          fontWeight: "bold"
-        }
-      }, "$", Item.fcConvertToUsdTotal !== undefined ? parseFloat(Item.fcConvertToUsdTotal).toLocaleString(undefined, {
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 2
-      }) : "0"));
-    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tfoot", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", {
+      }, Item.qtyBuy, " ", unitStr));
+    }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("section", {
       style: {
-        backgroundColor: "#f8fafc",
-        fontWeight: "bold"
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'flex-start',
+        marginTop: '35px',
+        padding: '0 10px',
+        pageBreakInside: 'avoid'
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
-      colSpan: 5,
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("div", {
       style: {
-        border: "1px solid #cbd5e1",
-        padding: "6px 8px",
-        textAlign: "right"
+        textAlign: 'left'
       }
-    }, "Total"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("p", {
       style: {
-        border: "1px solid #cbd5e1",
-        padding: "6px 8px",
-        textAlign: "right"
+        fontWeight: 'bold',
+        margin: '0 0 2px',
+        fontSize: '11px',
+        color: '#1e293b'
       }
-    }, "FC", row.totalFC !== undefined ? parseFloat(row.totalFC).toLocaleString() : "0"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+    }, "Authorized By:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("p", {
       style: {
-        border: "1px solid #cbd5e1",
-        padding: "6px 8px",
-        textAlign: "center"
+        margin: 0,
+        fontSize: '10px',
+        color: '#64748b'
       }
-    }, "-"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+    }, "GLOBAL GATE SARL - Purchasing"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("div", {
       style: {
-        border: "1px solid #cbd5e1",
-        padding: "6px 8px",
-        textAlign: "right"
+        marginTop: '35px',
+        borderBottom: '1px solid #cbd5e1',
+        width: '200px'
       }
-    }, "$", row.total !== undefined ? parseFloat(row.total).toLocaleString(undefined, {
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 2
-    }) : "0"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("div", {
       style: {
-        border: "1px solid #cbd5e1",
-        padding: "6px 8px",
-        textAlign: "right"
+        textAlign: 'right'
       }
-    }, "$", row.totalUSD !== undefined ? parseFloat(row.totalUSD).toLocaleString(undefined, {
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 2
-    }) : "0")))))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tfoot", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("div", {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("p", {
+      style: {
+        fontWeight: 'bold',
+        margin: '0 0 2px',
+        fontSize: '11px',
+        color: '#1e293b'
+      }
+    }, "Supplier Acknowledgment & Receipt:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("p", {
+      style: {
+        margin: 0,
+        fontSize: '10px',
+        color: '#64748b'
+      }
+    }, "Name, Signature & Date"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("div", {
+      style: {
+        marginTop: '35px',
+        borderBottom: '1px solid #cbd5e1',
+        width: '200px',
+        marginLeft: 'auto'
+      }
+    }))))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tfoot", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("div", {
       style: {
         position: 'relative',
         marginTop: '20px'
@@ -1424,171 +1373,231 @@ function PurchaseOrderInfoView() {
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("table", {
       className: "secondTable",
       style: {
-        fontSize: '70%',
-        border: '1px solid #DDD'
+        width: "100%",
+        fontSize: "10px",
+        border: "1px solid #cbd5e1",
+        borderCollapse: "collapse"
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("th", {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", {
       style: {
-        width: '100px',
-        borderBottom: '1px solid #DDD',
-        backgroundColor: '#e8f7fe'
+        backgroundColor: "#f1f5f9"
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("th", {
+      style: {
+        width: "4%",
+        border: "1px solid #cbd5e1",
+        padding: "5px 4px",
+        textAlign: "center"
       }
     }, "#"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("th", {
       style: {
-        width: '150px',
-        borderBottom: '1px solid #DDD',
-        backgroundColor: '#e8f7fe'
-      },
-      align: "left"
+        width: "26%",
+        border: "1px solid #cbd5e1",
+        padding: "5px 4px",
+        textAlign: "left"
+      }
     }, "Item"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("th", {
       style: {
-        width: '100px',
-        borderBottom: '1px solid #DDD',
-        backgroundColor: '#e8f7fe'
-      },
-      align: "left"
+        width: "8%",
+        border: "1px solid #cbd5e1",
+        padding: "5px 4px",
+        textAlign: "right"
+      }
     }, "Qty Need"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("th", {
       style: {
-        width: '100px',
-        borderBottom: '1px solid #DDD',
-        backgroundColor: '#e8f7fe'
-      },
-      align: "left"
+        width: "8%",
+        border: "1px solid #cbd5e1",
+        padding: "5px 4px",
+        textAlign: "right"
+      }
     }, "Qty Buy"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("th", {
       style: {
-        width: '100px',
-        borderBottom: '1px solid #DDD',
-        backgroundColor: '#e8f7fe'
-      },
-      align: "left"
+        width: "10%",
+        border: "1px solid #cbd5e1",
+        padding: "5px 4px",
+        textAlign: "right"
+      }
     }, "Price($)"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("th", {
       style: {
-        width: '150px',
-        borderBottom: '1px solid #DDD',
-        backgroundColor: '#e8f7fe'
-      },
-      align: "left"
+        width: "12%",
+        border: "1px solid #cbd5e1",
+        padding: "5px 4px",
+        textAlign: "right"
+      }
     }, "Amount Paid(FC)"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("th", {
       style: {
-        width: '100px',
-        borderBottom: '1px solid #DDD',
-        backgroundColor: '#e8f7fe'
-      },
-      align: "left"
+        width: "8%",
+        border: "1px solid #cbd5e1",
+        padding: "5px 4px",
+        textAlign: "right"
+      }
     }, "Rate"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("th", {
       style: {
-        width: '100px',
-        borderBottom: '1px solid #DDD',
-        backgroundColor: '#e8f7fe'
-      },
-      align: "left"
+        width: "12%",
+        border: "1px solid #cbd5e1",
+        padding: "5px 4px",
+        textAlign: "right"
+      }
     }, "Amount Paid($)"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("th", {
       style: {
-        width: '150px',
-        borderBottom: '1px solid #DDD',
-        backgroundColor: '#e8f7fe'
-      },
-      align: "left"
+        width: "12%",
+        border: "1px solid #cbd5e1",
+        padding: "5px 4px",
+        textAlign: "right"
+      }
     }, "Total($)"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tbody", null, newArray2 === null || newArray2 === void 0 ? void 0 : newArray2.map((Item, i) => {
       var _Item$itemName5, _Item$itemName6;
       var relatedUnit = item.find(Item1 => {
         var _Item$itemName4;
         return Item1._id === ((_Item$itemName4 = Item.itemName) === null || _Item$itemName4 === void 0 ? void 0 : _Item$itemName4._id);
       });
+      var isBlankRow = Boolean(Item.newDescription && String(Item.newDescription).trim() !== "" && (!((_Item$itemName5 = Item.itemName) !== null && _Item$itemName5 !== void 0 && _Item$itemName5._id) || ((_Item$itemName6 = Item.itemName) === null || _Item$itemName6 === void 0 ? void 0 : _Item$itemName6.itemName) === "empty" || !Item.itemName || (typeof Item.itemName === "string" ? Item.itemName.trim() === "" : !Item.itemName.itemName)));
+      if (isBlankRow) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", {
+          key: Item.idRow || i
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+          style: {
+            textAlign: "center",
+            border: "1px solid #cbd5e1",
+            padding: "5px 4px"
+          }
+        }, i + 1), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+          colSpan: 8,
+          style: {
+            textAlign: "center",
+            fontWeight: "bold",
+            border: "1px solid #cbd5e1",
+            backgroundColor: "#f8f9fa",
+            padding: "5px 4px"
+          }
+        }, Item.newDescription));
+      }
+      var itemNameStr = Item.itemName ? typeof Item.itemName === "object" ? Item.itemName.itemName && Item.itemName.itemName !== "empty" ? Item.itemName.itemName.toUpperCase() : "" : String(Item.itemName).toUpperCase() : "";
+      var itemDescStr = Item.itemDescription ? String(Item.itemDescription).toUpperCase() : "";
+      var brandStr = relatedUnit !== null && relatedUnit !== void 0 && relatedUnit.itemBrand ? "(".concat(relatedUnit.itemBrand.toUpperCase(), ")") : "";
+      var unitStr = relatedUnit !== null && relatedUnit !== void 0 && relatedUnit.unit ? String(relatedUnit.unit).toUpperCase() : "";
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", {
-        key: Item.idRow
-      }, Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName._id && !Item.itemName.itemName))) ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(react__WEBPACK_IMPORTED_MODULE_2__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+        key: Item.idRow || i
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
         style: {
-          textAlign: 'center'
-        }
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, i + 1)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
-        colSpan: 6,
-        style: {
-          textAlign: 'center',
-          border: '1px solid #DDD'
-        },
-        align: "center"
-      }, Item.newDescription)) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(react__WEBPACK_IMPORTED_MODULE_2__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
-        style: {
-          textAlign: 'center',
-          width: '30px'
+          textAlign: "center",
+          border: "1px solid #cbd5e1",
+          padding: "5px 4px"
         }
       }, i + 1), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
         style: {
-          width: '200px',
-          borderLeft: '1px solid #DDD'
+          textAlign: "left",
+          border: "1px solid #cbd5e1",
+          padding: "5px 4px"
         }
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
-        hidden: Item.itemName ? typeof Item.itemName === 'object' ? String(typeof Item.itemName === 'string' ? Item.itemName : (_Item$itemName5 = Item.itemName) === null || _Item$itemName5 === void 0 ? void 0 : _Item$itemName5.itemName).trim().toLowerCase() === 'empty' : String(typeof Item.itemName === 'string' ? Item.itemName : (_Item$itemName6 = Item.itemName) === null || _Item$itemName6 === void 0 ? void 0 : _Item$itemName6.itemName).trim().toLowerCase() === 'empty' : false
-      }, Item.itemName ? typeof Item.itemName === 'object' ? Item.itemName.itemName ? Item.itemName.itemName.toUpperCase() : '' : String(Item.itemName).toUpperCase() : ''), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, Item.itemDescription ? Item.itemDescription.toUpperCase() : '')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
         style: {
-          textAlign: 'right',
-          width: '30px',
-          borderLeft: '1px solid #DDD'
+          fontWeight: "600"
         }
-      }, Item.itemQty, " ", relatedUnit !== null && relatedUnit !== void 0 && relatedUnit.unit ? String(relatedUnit.unit).toUpperCase() : ''), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+      }, itemNameStr), itemDescStr ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("div", {
         style: {
-          textAlign: 'right',
-          width: '30px',
-          borderLeft: '1px solid #DDD'
+          fontSize: "9px",
+          color: "#475569",
+          textTransform: "uppercase"
         }
-      }, Item.qtyBuy, " ", relatedUnit !== null && relatedUnit !== void 0 && relatedUnit.unit ? String(relatedUnit.unit).toUpperCase() : ''), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+      }, itemDescStr, " ", brandStr) : null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
         style: {
-          textAlign: 'right',
-          width: '80px',
-          borderLeft: '1px solid #DDD'
+          textAlign: "right",
+          border: "1px solid #cbd5e1",
+          padding: "5px 4px"
         }
-      }, Item.itemRate !== undefined ? parseFloat(Item.itemRate).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+      }, Item.itemQty, " ", unitStr), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
         style: {
-          textAlign: 'right',
-          width: '100px',
-          borderLeft: '1px solid #DDD'
+          textAlign: "right",
+          border: "1px solid #cbd5e1",
+          padding: "5px 4px",
+          fontWeight: "bold"
         }
-      }, "FC", Item.totalAmountFC !== undefined ? parseFloat(Item.totalAmountFC).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+      }, Item.qtyBuy, " ", unitStr), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
         style: {
-          textAlign: 'right',
-          width: '100px',
-          borderLeft: '1px solid #DDD'
+          textAlign: "right",
+          border: "1px solid #cbd5e1",
+          padding: "5px 4px"
         }
-      }, Item.Taux !== undefined ? parseFloat(Item.Taux).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+      }, "$", Item.itemRate !== undefined ? parseFloat(Item.itemRate).toLocaleString(undefined, {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 2
+      }) : "0"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
         style: {
-          textAlign: 'right',
-          width: '100px',
-          borderLeft: '1px solid #DDD'
+          textAlign: "right",
+          border: "1px solid #cbd5e1",
+          padding: "5px 4px"
         }
-      }, "$", parseFloat(Item.totalAmount).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+      }, "FC", Item.totalAmountFC !== undefined ? parseFloat(Item.totalAmountFC).toLocaleString() : "0"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
         style: {
-          textAlign: 'right',
-          width: '100px',
-          borderLeft: '1px solid #DDD'
+          textAlign: "right",
+          border: "1px solid #cbd5e1",
+          padding: "5px 4px"
         }
-      }, Item.fcConvertToUsdTotal !== undefined ? parseFloat(Item.fcConvertToUsdTotal).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0)));
-    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tbody", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+      }, Item.Taux !== undefined ? parseFloat(Item.Taux).toLocaleString() : "0"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+        style: {
+          textAlign: "right",
+          border: "1px solid #cbd5e1",
+          padding: "5px 4px",
+          fontWeight: "600"
+        }
+      }, "$", Item.totalAmount !== undefined ? parseFloat(Item.totalAmount).toLocaleString(undefined, {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 2
+      }) : "0"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+        style: {
+          textAlign: "right",
+          border: "1px solid #cbd5e1",
+          padding: "5px 4px",
+          fontWeight: "bold"
+        }
+      }, "$", Item.fcConvertToUsdTotal !== undefined ? parseFloat(Item.fcConvertToUsdTotal).toLocaleString(undefined, {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 2
+      }) : "0"));
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tfoot", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", {
+      style: {
+        backgroundColor: "#f8fafc",
+        fontWeight: "bold"
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
       colSpan: 5,
       style: {
-        border: '1px solid #DDD'
+        border: "1px solid #cbd5e1",
+        padding: "6px 8px",
+        textAlign: "right"
       }
-    }, "Total "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+    }, "Total"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
       style: {
-        border: '1px solid #DDD',
-        textAlign: 'right'
+        border: "1px solid #cbd5e1",
+        padding: "6px 8px",
+        textAlign: "right"
       }
-    }, "FC", row.totalFC !== undefined ? parseFloat(row.totalFC).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+    }, "FC", row.totalFC !== undefined ? parseFloat(row.totalFC).toLocaleString() : "0"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
       style: {
-        border: '1px solid #DDD',
-        textAlign: 'center'
+        border: "1px solid #cbd5e1",
+        padding: "6px 8px",
+        textAlign: "center"
       }
     }, "-"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
       style: {
-        border: '1px solid #DDD',
-        textAlign: 'right'
+        border: "1px solid #cbd5e1",
+        padding: "6px 8px",
+        textAlign: "right"
       }
-    }, "$", row.total !== undefined ? row.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+    }, "$", row.total !== undefined ? parseFloat(row.total).toLocaleString(undefined, {
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 2
+    }) : "0"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
       style: {
-        border: '1px solid #DDD',
-        textAlign: 'right'
+        border: "1px solid #cbd5e1",
+        padding: "6px 8px",
+        textAlign: "right"
       }
-    }, "$", row.totalUSD !== undefined ? parseFloat(row.totalUSD).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0)))))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tfoot", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("div", {
+    }, "$", row.totalUSD !== undefined ? parseFloat(row.totalUSD).toLocaleString(undefined, {
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 2
+    }) : "0")))))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tfoot", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("div", {
       style: {
         position: 'relative',
         marginTop: '20px'
@@ -1727,16 +1736,17 @@ function PurchaseOrderInfoView() {
         textAlign: "right",
         padding: "2px 4px"
       }
-    }, row.reason)) : null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("section", {
+    }, row.reason)) : null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("div", {
       style: {
-        position: 'relative',
-        float: 'right',
-        padding: '10px',
-        marginTop: '-60px'
+        display: 'flex',
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+        margin: '10px 0'
       }
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, {
       label: "Search",
       id: "search2",
+      size: "small",
       value: search2,
       variant: "standard",
       onChange: handleSearch2
@@ -1832,7 +1842,7 @@ function PurchaseOrderInfoView() {
         }
       }, "                ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
         hidden: Item.itemName ? typeof Item.itemName === 'object' ? String(typeof Item.itemName === 'string' ? Item.itemName : (_Item$itemName8 = Item.itemName) === null || _Item$itemName8 === void 0 ? void 0 : _Item$itemName8.itemName).trim().toLowerCase() === 'empty' : String(typeof Item.itemName === 'string' ? Item.itemName : (_Item$itemName9 = Item.itemName) === null || _Item$itemName9 === void 0 ? void 0 : _Item$itemName9.itemName).trim().toLowerCase() === 'empty' : false
-      }, Item.itemName ? typeof Item.itemName === 'object' ? Item.itemName.itemName ? Item.itemName.itemName.toUpperCase() : '' : String(Item.itemName).toUpperCase() : ''), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, Item.itemDescription ? Item.itemDescription.toUpperCase() : '', " ( ", relatedUnit !== undefined ? relatedUnit.itemBrand.toUpperCase() : '', " )")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+      }, Item.itemName ? typeof Item.itemName === 'object' ? Item.itemName.itemName ? Item.itemName.itemName.toUpperCase() : '' : String(Item.itemName).toUpperCase() : ''), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, Item.itemDescription ? Item.itemDescription.toUpperCase() : '', relatedUnit !== null && relatedUnit !== void 0 && relatedUnit.itemBrand && String(relatedUnit.itemBrand).trim() !== '' ? " (".concat(relatedUnit.itemBrand.toUpperCase(), ")") : '')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
         style: {
           textAlign: 'right',
           width: '30px',

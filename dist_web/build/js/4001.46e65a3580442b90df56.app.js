@@ -2402,119 +2402,113 @@ function PurchaseOrderViewAdmin() {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("table", {
     className: "secondTable",
     style: {
-      fontSize: '70%',
-      marginBottom: '5px',
-      border: '1px solid #DDD',
-      maxHeight: '400px',
-      overflow: 'auto',
-      pageBreakInside: 'auto'
+      width: "100%",
+      fontSize: "11px",
+      marginBottom: "5px",
+      border: "1px solid #cbd5e1",
+      borderCollapse: "collapse",
+      pageBreakInside: "auto"
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("th", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", {
     style: {
-      width: '100px',
-      borderBottom: '1px solid #DDD',
-      backgroundColor: '#e8f7fe'
+      backgroundColor: "#f1f5f9"
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("th", {
+    style: {
+      width: "5%",
+      border: "1px solid #cbd5e1",
+      padding: "6px 8px",
+      textAlign: "center"
     }
   }, "#"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("th", {
     style: {
-      width: '150px',
-      borderBottom: '1px solid #DDD',
-      backgroundColor: '#e8f7fe'
-    },
-    align: "left"
+      width: "35%",
+      border: "1px solid #cbd5e1",
+      padding: "6px 8px",
+      textAlign: "left"
+    }
   }, "Item"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("th", {
     style: {
-      width: '400px',
-      borderBottom: '1px solid #DDD',
-      backgroundColor: '#e8f7fe'
-    },
-    align: "left"
+      width: "40%",
+      border: "1px solid #cbd5e1",
+      padding: "6px 8px",
+      textAlign: "left"
+    }
   }, "Description"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("th", {
     style: {
-      width: '100px',
-      borderBottom: '1px solid #DDD',
-      backgroundColor: '#e8f7fe'
-    },
-    align: "left"
+      width: "10%",
+      border: "1px solid #cbd5e1",
+      padding: "6px 8px",
+      textAlign: "right"
+    }
   }, "Qty Need"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("th", {
     style: {
-      width: '100px',
-      borderBottom: '1px solid #DDD',
-      backgroundColor: '#e8f7fe'
-    },
-    align: "left"
-  }, "Qty Buy"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("th", {
-    style: {
-      width: '100px',
-      borderBottom: '1px solid #DDD',
-      backgroundColor: '#e8f7fe'
-    },
-    align: "left"
-  }, "Rate"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("th", {
-    style: {
-      width: '150px',
-      borderBottom: '1px solid #DDD',
-      backgroundColor: '#e8f7fe'
-    },
-    align: "left"
-  }, "Total"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tbody", null, itemPurchaseView.itemsQtyArray.filter(row => parseInt(row.newItemOut) !== 0 || row.newDescription !== undefined).map((row, i) => {
+      width: "10%",
+      border: "1px solid #cbd5e1",
+      padding: "6px 8px",
+      textAlign: "right"
+    }
+  }, "Qty Buy"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tbody", null, itemPurchaseView.itemsQtyArray.filter(row => parseInt(row.newItemOut) !== 0 || row.newDescription !== undefined).map((row, i) => {
     var _row$itemName, _row$itemName2;
     var relatedUnit = item.find(Item1 => Item1._id === row.itemName._id);
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", {
       key: row.idRow
     }, row.newDescription !== undefined ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(react__WEBPACK_IMPORTED_MODULE_2__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
       style: {
-        textAlign: 'center'
+        textAlign: "center",
+        border: "1px solid #cbd5e1",
+        padding: "6px 8px"
       }
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, i + 1)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
-      colSpan: 6,
+      colSpan: 4,
       style: {
-        textAlign: 'center',
-        border: '1px solid #DDD'
+        textAlign: "center",
+        fontWeight: "bold",
+        border: "1px solid #cbd5e1",
+        backgroundColor: "#f8f9fa",
+        padding: "6px 8px"
       },
       align: "center"
     }, row.newDescription)) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(react__WEBPACK_IMPORTED_MODULE_2__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
       style: {
-        textAlign: 'center',
-        width: '30px'
+        textAlign: "center",
+        border: "1px solid #cbd5e1",
+        padding: "6px 8px"
       }
     }, i + 1), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
       style: {
-        width: '200px',
-        borderLeft: '1px solid #DDD'
+        textAlign: "left",
+        border: "1px solid #cbd5e1",
+        padding: "6px 8px"
       }
-    }, typeof row.itemName === 'object' ? ((_row$itemName = row.itemName) === null || _row$itemName === void 0 ? void 0 : _row$itemName.itemName) !== 'empty' ? (_row$itemName2 = row.itemName) === null || _row$itemName2 === void 0 ? void 0 : _row$itemName2.itemName : '' : row.itemName || ''), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
       style: {
-        textAlign: 'left',
-        width: '250px',
-        borderLeft: '1px solid #DDD',
-        textTransform: 'uppercase'
+        fontWeight: "600"
       }
-    }, String(row.itemDescription || '').toUpperCase()), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+    }, typeof row.itemName === 'object' ? ((_row$itemName = row.itemName) === null || _row$itemName === void 0 ? void 0 : _row$itemName.itemName) !== 'empty' ? (_row$itemName2 = row.itemName) === null || _row$itemName2 === void 0 ? void 0 : _row$itemName2.itemName : '' : row.itemName || '')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
       style: {
-        textAlign: 'right',
-        width: '30px',
-        borderLeft: '1px solid #DDD'
+        textAlign: "left",
+        border: "1px solid #cbd5e1",
+        padding: "6px 8px"
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
+      style: {
+        textTransform: "uppercase"
+      }
+    }, String(row.itemDescription || '').toUpperCase())), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+      style: {
+        textAlign: "right",
+        border: "1px solid #cbd5e1",
+        padding: "6px 8px"
       }
     }, row.itemQty, " ", relatedUnit !== null && relatedUnit !== void 0 && relatedUnit.unit ? String(relatedUnit.unit).toUpperCase() : ''), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
       style: {
-        textAlign: 'right',
-        width: '30px',
-        borderLeft: '1px solid #DDD'
+        textAlign: "right",
+        border: "1px solid #cbd5e1",
+        padding: "6px 8px",
+        fontWeight: "bold"
       }
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
-      style: {
-        textAlign: 'right',
-        width: '80px',
-        borderLeft: '1px solid #DDD'
-      }
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
-      style: {
-        textAlign: 'right',
-        width: '100px',
-        borderLeft: '1px solid #DDD'
-      }
-    })));
+    }, row.qtyBuy || '')));
   }))))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tfoot", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("div", {
     style: {
       position: 'relative',

@@ -573,7 +573,7 @@ function PurchaseOrderInfoView() {
                                     <Button
                                       variant="contained"
                                       disableElevation
-                                      onClick={handleOpenPrint2}
+                                      onClick={handleOpenPrint}
                                       startIcon={<LocalPrintshopIcon />}
                                       sx={{
                                         bgcolor: '#30368a',
@@ -714,87 +714,65 @@ function PurchaseOrderInfoView() {
                                                 </table>
                                               </section>
                                               <section style={{}}>
-                                                <table className="secondTable" style={{ width: "100%", fontSize: "10px", border: "1px solid #cbd5e1", borderCollapse: "collapse" }}>
-                                                  <thead>
-                                                    <tr style={{ backgroundColor: "#f1f5f9" }}>
-                                                      <th style={{ width: "4%", border: "1px solid #cbd5e1", padding: "5px 4px", textAlign: "center" }}>#</th>
-                                                      <th style={{ width: "28%", border: "1px solid #cbd5e1", padding: "5px 4px", textAlign: "left" }}>Item</th>
-                                                      <th style={{ width: "8%", border: "1px solid #cbd5e1", padding: "5px 4px", textAlign: "right" }}>Qty Need</th>
-                                                      <th style={{ width: "8%", border: "1px solid #cbd5e1", padding: "5px 4px", textAlign: "right" }}>Qty Buy</th>
-                                                      <th style={{ width: "10%", border: "1px solid #cbd5e1", padding: "5px 4px", textAlign: "right" }}>Price($)</th>
-                                                      <th style={{ width: "13%", border: "1px solid #cbd5e1", padding: "5px 4px", textAlign: "right" }}>Amount Paid(FC)</th>
-                                                      <th style={{ width: "8%", border: "1px solid #cbd5e1", padding: "5px 4px", textAlign: "right" }}>Rate</th>
-                                                      <th style={{ width: "10%", border: "1px solid #cbd5e1", padding: "5px 4px", textAlign: "right" }}>Amount Paid($)</th>
-                                                      <th style={{ width: "11%", border: "1px solid #cbd5e1", padding: "5px 4px", textAlign: "right" }}>Total($)</th>
-                                                    </tr>
-                                                  </thead>
-                                                  <tbody>
-                                                    {newArray2?.map((Item, i) => {
-                                                      const relatedUnit = item.find((Item1) => Item1._id === Item.itemName?._id);
-                                                      const isBlankRow = Boolean(Item.newDescription && String(Item.newDescription).trim() !== "" && (!Item.itemName?._id || Item.itemName?.itemName === "empty" || !Item.itemName || (typeof Item.itemName === "string" ? Item.itemName.trim() === "" : !Item.itemName.itemName)));
-                                                      if (isBlankRow) {
-                                                        return (
-                                                          <tr key={Item.idRow || i}>
-                                                            <td style={{ textAlign: "center", border: "1px solid #cbd5e1", padding: "5px 4px" }}>{i + 1}</td>
-                                                            <td colSpan={8} style={{ textAlign: "center", fontWeight: "bold", border: "1px solid #cbd5e1", backgroundColor: "#f8f9fa", padding: "5px 4px" }}>{Item.newDescription}</td>
-                                                          </tr>
-                                                        );
-                                                      }
-                                                      return (
-                                                        <tr key={Item.idRow || i}>
-                                                          <td style={{ textAlign: "center", border: "1px solid #cbd5e1", padding: "5px 4px" }}>{i + 1}</td>
-                                                          <td style={{ textAlign: "left", border: "1px solid #cbd5e1", padding: "5px 4px" }}>
-                                                            <span style={{ fontWeight: "600" }}>
-                                                              {Item.itemName ? (typeof Item.itemName === "object" ? (Item.itemName.itemName && Item.itemName.itemName !== "empty" ? Item.itemName.itemName.toUpperCase() : "") : String(Item.itemName).toUpperCase()) : ""}
-                                                            </span>
-                                                            {Item.itemDescription ? (
-                                                              <div style={{ fontSize: "9px", color: "#475569", textTransform: "uppercase" }}>
-                                                                {Item.itemDescription.toUpperCase()} {relatedUnit?.itemBrand ? `(${relatedUnit.itemBrand.toUpperCase()})` : ""}
-                                                              </div>
-                                                            ) : null}
-                                                          </td>
-                                                          <td style={{ textAlign: "right", border: "1px solid #cbd5e1", padding: "5px 4px" }}>
-                                                            {Item.itemQty} {relatedUnit?.unit ? String(relatedUnit.unit).toUpperCase() : ""}
-                                                          </td>
-                                                          <td style={{ textAlign: "right", border: "1px solid #cbd5e1", padding: "5px 4px", fontWeight: "bold" }}>
-                                                            {Item.qtyBuy} {relatedUnit?.unit ? String(relatedUnit.unit).toUpperCase() : ""}
-                                                          </td>
-                                                          <td style={{ textAlign: "right", border: "1px solid #cbd5e1", padding: "5px 4px" }}>
-                                                            ${Item.itemRate !== undefined ? parseFloat(Item.itemRate).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 }) : "0"}
-                                                          </td>
-                                                          <td style={{ textAlign: "right", border: "1px solid #cbd5e1", padding: "5px 4px" }}>
-                                                            FC{Item.totalAmountFC !== undefined ? parseFloat(Item.totalAmountFC).toLocaleString() : "0"}
-                                                          </td>
-                                                          <td style={{ textAlign: "right", border: "1px solid #cbd5e1", padding: "5px 4px" }}>
-                                                            {Item.Taux !== undefined ? parseFloat(Item.Taux).toLocaleString() : "0"}
-                                                          </td>
-                                                          <td style={{ textAlign: "right", border: "1px solid #cbd5e1", padding: "5px 4px", fontWeight: "600" }}>
-                                                            ${Item.totalAmount !== undefined ? parseFloat(Item.totalAmount).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 }) : "0"}
-                                                          </td>
-                                                          <td style={{ textAlign: "right", border: "1px solid #cbd5e1", padding: "5px 4px", fontWeight: "bold" }}>
-                                                            ${Item.fcConvertToUsdTotal !== undefined ? parseFloat(Item.fcConvertToUsdTotal).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 }) : "0"}
-                                                          </td>
-                                                        </tr>
-                                                      );
-                                                    })}
-                                                  </tbody>
-                                                  <tfoot>
-                                                    <tr style={{ backgroundColor: "#f8fafc", fontWeight: "bold" }}>
-                                                      <td colSpan={5} style={{ border: "1px solid #cbd5e1", padding: "6px 8px", textAlign: "right" }}>Total</td>
-                                                      <td style={{ border: "1px solid #cbd5e1", padding: "6px 8px", textAlign: "right" }}>
-                                                        FC{row.totalFC !== undefined ? parseFloat(row.totalFC).toLocaleString() : "0"}
-                                                      </td>
-                                                      <td style={{ border: "1px solid #cbd5e1", padding: "6px 8px", textAlign: "center" }}>-</td>
-                                                      <td style={{ border: "1px solid #cbd5e1", padding: "6px 8px", textAlign: "right" }}>
-                                                        ${row.total !== undefined ? parseFloat(row.total).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 }) : "0"}
-                                                      </td>
-                                                      <td style={{ border: "1px solid #cbd5e1", padding: "6px 8px", textAlign: "right" }}>
-                                                        ${row.totalUSD !== undefined ? parseFloat(row.totalUSD).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 }) : "0"}
-                                                      </td>
-                                                    </tr>
-                                                  </tfoot>
-                                                </table>
-                                              </section>
+                                                <table className="secondTable" style={{ width: "100%", fontSize: "11px", border: "1px solid #cbd5e1", borderCollapse: "collapse" }}>
+                                                   <thead>
+                                                     <tr style={{ backgroundColor: "#f1f5f9" }}>
+                                                       <th style={{ width: "5%", border: "1px solid #cbd5e1", padding: "6px 8px", textAlign: "center" }}>#</th>
+                                                       <th style={{ width: "35%", border: "1px solid #cbd5e1", padding: "6px 8px", textAlign: "left" }}>Item</th>
+                                                       <th style={{ width: "40%", border: "1px solid #cbd5e1", padding: "6px 8px", textAlign: "left" }}>Description</th>
+                                                       <th style={{ width: "10%", border: "1px solid #cbd5e1", padding: "6px 8px", textAlign: "right" }}>Qty Need</th>
+                                                       <th style={{ width: "10%", border: "1px solid #cbd5e1", padding: "6px 8px", textAlign: "right" }}>Qty Buy</th>
+                                                     </tr>
+                                                   </thead>
+                                                   <tbody>
+                                                     {newArray2?.map((Item, i) => {
+                                                       const relatedUnit = item.find((Item1) => Item1._id === Item.itemName?._id);
+                                                       const isBlankRow = Boolean(Item.newDescription && String(Item.newDescription).trim() !== "" && (!Item.itemName?._id || Item.itemName?.itemName === "empty" || !Item.itemName || (typeof Item.itemName === "string" ? Item.itemName.trim() === "" : !Item.itemName.itemName)));
+                                                       if (isBlankRow) {
+                                                         return (
+                                                           <tr key={Item.idRow || i}>
+                                                             <td style={{ textAlign: "center", border: "1px solid #cbd5e1", padding: "6px 8px" }}>{i + 1}</td>
+                                                             <td colSpan={4} style={{ textAlign: "center", fontWeight: "bold", border: "1px solid #cbd5e1", backgroundColor: "#f8f9fa", padding: "6px 8px" }}>{Item.newDescription}</td>
+                                                           </tr>
+                                                         );
+                                                       }
+                                                       const itemNameStr = Item.itemName ? (typeof Item.itemName === "object" ? (Item.itemName.itemName && Item.itemName.itemName !== "empty" ? Item.itemName.itemName.toUpperCase() : "") : String(Item.itemName).toUpperCase()) : "";
+                                                       const itemDescStr = Item.itemDescription ? String(Item.itemDescription).toUpperCase() : "";
+                                                       const brandStr = relatedUnit?.itemBrand ? `(${relatedUnit.itemBrand.toUpperCase()})` : "";
+                                                       const unitStr = relatedUnit?.unit ? String(relatedUnit.unit).toUpperCase() : "";
+
+                                                       return (
+                                                         <tr key={Item.idRow || i}>
+                                                           <td style={{ textAlign: "center", border: "1px solid #cbd5e1", padding: "6px 8px" }}>{i + 1}</td>
+                                                           <td style={{ textAlign: "left", border: "1px solid #cbd5e1", padding: "6px 8px" }}>
+                                                             <span style={{ fontWeight: "600" }}>{itemNameStr}</span>
+                                                           </td>
+                                                           <td style={{ textAlign: "left", border: "1px solid #cbd5e1", padding: "6px 8px" }}>
+                                                             <span>{itemDescStr} {brandStr}</span>
+                                                           </td>
+                                                           <td style={{ textAlign: "right", border: "1px solid #cbd5e1", padding: "6px 8px" }}>
+                                                             {Item.itemQty} {unitStr}
+                                                           </td>
+                                                           <td style={{ textAlign: "right", border: "1px solid #cbd5e1", padding: "6px 8px", fontWeight: "bold" }}>
+                                                             {Item.qtyBuy} {unitStr}
+                                                           </td>
+                                                         </tr>
+                                                       );
+                                                     })}
+                                                   </tbody>
+                                                 </table>
+                                                 <section style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginTop: '35px', padding: '0 10px', pageBreakInside: 'avoid' }}>
+                                                   <div style={{ textAlign: 'left' }}>
+                                                     <p style={{ fontWeight: 'bold', margin: '0 0 2px', fontSize: '11px', color: '#1e293b' }}>Authorized By:</p>
+                                                     <p style={{ margin: 0, fontSize: '10px', color: '#64748b' }}>GLOBAL GATE SARL - Purchasing</p>
+                                                     <div style={{ marginTop: '35px', borderBottom: '1px solid #cbd5e1', width: '200px' }}></div>
+                                                   </div>
+                                                   <div style={{ textAlign: 'right' }}>
+                                                     <p style={{ fontWeight: 'bold', margin: '0 0 2px', fontSize: '11px', color: '#1e293b' }}>Supplier Acknowledgment & Receipt:</p>
+                                                     <p style={{ margin: 0, fontSize: '10px', color: '#64748b' }}>Name, Signature & Date</p>
+                                                     <div style={{ marginTop: '35px', borderBottom: '1px solid #cbd5e1', width: '200px', marginLeft: 'auto' }}></div>
+                                                   </div>
+                                                 </section></section>
                                             </div>
                                           </div>
                                         </td>
@@ -882,64 +860,89 @@ function PurchaseOrderInfoView() {
                                                 </table>
                                               </section>
                                               <section style={{}}>
-                                                <table className="secondTable" style={{ fontSize: '70%', border: '1px solid #DDD' }}>
-                                                  <thead>
-                                                    <tr>
-                                                      <th style={{ width: '100px', borderBottom: '1px solid #DDD', backgroundColor: '#e8f7fe' }}>#</th>
-                                                      <th style={{ width: '150px', borderBottom: '1px solid #DDD', backgroundColor: '#e8f7fe' }} align="left">Item</th>
-                                                      <th style={{ width: '100px', borderBottom: '1px solid #DDD', backgroundColor: '#e8f7fe' }} align="left">Qty Need</th>
-                                                      <th style={{ width: '100px', borderBottom: '1px solid #DDD', backgroundColor: '#e8f7fe' }} align="left">Qty Buy</th>
-                                                      <th style={{ width: '100px', borderBottom: '1px solid #DDD', backgroundColor: '#e8f7fe' }} align="left">Price($)</th>
-                                                      <th style={{ width: '150px', borderBottom: '1px solid #DDD', backgroundColor: '#e8f7fe' }} align="left">Amount Paid(FC)</th>
-                                                      <th style={{ width: '100px', borderBottom: '1px solid #DDD', backgroundColor: '#e8f7fe' }} align="left">Rate</th>
-                                                      <th style={{ width: '100px', borderBottom: '1px solid #DDD', backgroundColor: '#e8f7fe' }} align="left">Amount Paid($)</th>
-                                                      <th style={{ width: '150px', borderBottom: '1px solid #DDD', backgroundColor: '#e8f7fe' }} align="left">Total($)</th>
-                                                    </tr>
-                                                  </thead>
-                                                  <tbody>
-                                                    {newArray2?.map((Item, i) => {
-                                                      const relatedUnit = item.find((Item1) => Item1._id === Item.itemName?._id)
-                                                      return (
-                                                        <tr key={Item.idRow}>
-                                                          {
+                                                <table className="secondTable" style={{ width: "100%", fontSize: "10px", border: "1px solid #cbd5e1", borderCollapse: "collapse" }}>
+                                                   <thead>
+                                                     <tr style={{ backgroundColor: "#f1f5f9" }}>
+                                                       <th style={{ width: "4%", border: "1px solid #cbd5e1", padding: "5px 4px", textAlign: "center" }}>#</th>
+                                                       <th style={{ width: "26%", border: "1px solid #cbd5e1", padding: "5px 4px", textAlign: "left" }}>Item</th>
+                                                       <th style={{ width: "8%", border: "1px solid #cbd5e1", padding: "5px 4px", textAlign: "right" }}>Qty Need</th>
+                                                       <th style={{ width: "8%", border: "1px solid #cbd5e1", padding: "5px 4px", textAlign: "right" }}>Qty Buy</th>
+                                                       <th style={{ width: "10%", border: "1px solid #cbd5e1", padding: "5px 4px", textAlign: "right" }}>Price($)</th>
+                                                       <th style={{ width: "12%", border: "1px solid #cbd5e1", padding: "5px 4px", textAlign: "right" }}>Amount Paid(FC)</th>
+                                                       <th style={{ width: "8%", border: "1px solid #cbd5e1", padding: "5px 4px", textAlign: "right" }}>Rate</th>
+                                                       <th style={{ width: "12%", border: "1px solid #cbd5e1", padding: "5px 4px", textAlign: "right" }}>Amount Paid($)</th>
+                                                       <th style={{ width: "12%", border: "1px solid #cbd5e1", padding: "5px 4px", textAlign: "right" }}>Total($)</th>
+                                                     </tr>
+                                                   </thead>
+                                                   <tbody>
+                                                     {newArray2?.map((Item, i) => {
+                                                       const relatedUnit = item.find((Item1) => Item1._id === Item.itemName?._id);
+                                                       const isBlankRow = Boolean(Item.newDescription && String(Item.newDescription).trim() !== "" && (!Item.itemName?._id || Item.itemName?.itemName === "empty" || !Item.itemName || (typeof Item.itemName === "string" ? Item.itemName.trim() === "" : !Item.itemName.itemName)));
+                                                       if (isBlankRow) {
+                                                         return (
+                                                           <tr key={Item.idRow || i}>
+                                                             <td style={{ textAlign: "center", border: "1px solid #cbd5e1", padding: "5px 4px" }}>{i + 1}</td>
+                                                             <td colSpan={8} style={{ textAlign: "center", fontWeight: "bold", border: "1px solid #cbd5e1", backgroundColor: "#f8f9fa", padding: "5px 4px" }}>{Item.newDescription}</td>
+                                                           </tr>
+                                                         );
+                                                       }
+                                                       const itemNameStr = Item.itemName ? (typeof Item.itemName === "object" ? (Item.itemName.itemName && Item.itemName.itemName !== "empty" ? Item.itemName.itemName.toUpperCase() : "") : String(Item.itemName).toUpperCase()) : "";
+                                                       const itemDescStr = Item.itemDescription ? String(Item.itemDescription).toUpperCase() : "";
+                                                       const brandStr = relatedUnit?.itemBrand ? `(${relatedUnit.itemBrand.toUpperCase()})` : "";
+                                                       const unitStr = relatedUnit?.unit ? String(relatedUnit.unit).toUpperCase() : "";
 
-                                                            (Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName._id && !Item.itemName.itemName)))) ?
-                                                              <>
-                                                                <td style={{ textAlign: 'center' }}><span>{i + 1}</span></td>
-                                                                <td colSpan={6} style={{ textAlign: 'center', border: '1px solid #DDD' }} align='center'>{Item.newDescription}</td>
-                                                              </>
-
-                                                              :
-                                                              <>
-                                                                <td style={{ textAlign: 'center', width: '30px' }}>{i + 1}</td>
-                                                                <td style={{ width: '200px', borderLeft: '1px solid #DDD' }}><span hidden={Item.itemName ? (typeof Item.itemName === 'object' ? String(typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName).trim().toLowerCase() === 'empty' : String(typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName).trim().toLowerCase() === 'empty') : false}>{Item.itemName ? (typeof Item.itemName === 'object' ? (Item.itemName.itemName ? Item.itemName.itemName.toUpperCase() : '') : String(Item.itemName).toUpperCase()) : ''}</span>
-                                                                  <br />
-                                                                  <span>{Item.itemDescription ? Item.itemDescription.toUpperCase() : ''}</span></td>
-                                                                <td style={{ textAlign: 'right', width: '30px', borderLeft: '1px solid #DDD' }}>{Item.itemQty} {relatedUnit?.unit ? String(relatedUnit.unit).toUpperCase() : ''}</td>
-                                                                <td style={{ textAlign: 'right', width: '30px', borderLeft: '1px solid #DDD' }}>{Item.qtyBuy} {relatedUnit?.unit ? String(relatedUnit.unit).toUpperCase() : ''}</td>
-                                                                <td style={{ textAlign: 'right', width: '80px', borderLeft: '1px solid #DDD' }}>{Item.itemRate !== undefined ? parseFloat(Item.itemRate).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</td>
-                                                                <td style={{ textAlign: 'right', width: '100px', borderLeft: '1px solid #DDD' }}>FC{Item.totalAmountFC !== undefined ? parseFloat(Item.totalAmountFC).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</td>
-                                                                <td style={{ textAlign: 'right', width: '100px', borderLeft: '1px solid #DDD' }}>{Item.Taux !== undefined ? parseFloat(Item.Taux).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</td>
-                                                                <td style={{ textAlign: 'right', width: '100px', borderLeft: '1px solid #DDD' }}>${parseFloat(Item.totalAmount).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
-                                                                <td style={{ textAlign: 'right', width: '100px', borderLeft: '1px solid #DDD' }}>{Item.fcConvertToUsdTotal !== undefined ? parseFloat(Item.fcConvertToUsdTotal).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</td>
-                                                              </>
-                                                          }
-
-                                                        </tr>
-                                                      )
-                                                    })}
-                                                  </tbody>
-                                                  <tbody>
-                                                    <tr>
-                                                      <td colSpan={5} style={{ border: '1px solid #DDD' }} >Total </td>
-                                                      <td style={{ border: '1px solid #DDD', textAlign: 'right' }} >FC{row.totalFC !== undefined ? parseFloat(row.totalFC).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</td>
-                                                      <td style={{ border: '1px solid #DDD', textAlign: 'center' }} >-</td>
-                                                      <td style={{ border: '1px solid #DDD', textAlign: 'right' }} >${row.total !== undefined ? row.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</td>
-                                                      <td style={{ border: '1px solid #DDD', textAlign: 'right' }} >${row.totalUSD !== undefined ? parseFloat(row.totalUSD).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</td>
-                                                    </tr>
-                                                  </tbody>
-                                                </table>
-                                              </section>
+                                                       return (
+                                                         <tr key={Item.idRow || i}>
+                                                           <td style={{ textAlign: "center", border: "1px solid #cbd5e1", padding: "5px 4px" }}>{i + 1}</td>
+                                                           <td style={{ textAlign: "left", border: "1px solid #cbd5e1", padding: "5px 4px" }}>
+                                                             <span style={{ fontWeight: "600" }}>{itemNameStr}</span>
+                                                             {itemDescStr ? (
+                                                               <div style={{ fontSize: "9px", color: "#475569", textTransform: "uppercase" }}>
+                                                                 {itemDescStr} {brandStr}
+                                                               </div>
+                                                             ) : null}
+                                                           </td>
+                                                           <td style={{ textAlign: "right", border: "1px solid #cbd5e1", padding: "5px 4px" }}>
+                                                             {Item.itemQty} {unitStr}
+                                                           </td>
+                                                           <td style={{ textAlign: "right", border: "1px solid #cbd5e1", padding: "5px 4px", fontWeight: "bold" }}>
+                                                             {Item.qtyBuy} {unitStr}
+                                                           </td>
+                                                           <td style={{ textAlign: "right", border: "1px solid #cbd5e1", padding: "5px 4px" }}>
+                                                             ${Item.itemRate !== undefined ? parseFloat(Item.itemRate).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 }) : "0"}
+                                                           </td>
+                                                           <td style={{ textAlign: "right", border: "1px solid #cbd5e1", padding: "5px 4px" }}>
+                                                             FC{Item.totalAmountFC !== undefined ? parseFloat(Item.totalAmountFC).toLocaleString() : "0"}
+                                                           </td>
+                                                           <td style={{ textAlign: "right", border: "1px solid #cbd5e1", padding: "5px 4px" }}>
+                                                             {Item.Taux !== undefined ? parseFloat(Item.Taux).toLocaleString() : "0"}
+                                                           </td>
+                                                           <td style={{ textAlign: "right", border: "1px solid #cbd5e1", padding: "5px 4px", fontWeight: "600" }}>
+                                                             ${Item.totalAmount !== undefined ? parseFloat(Item.totalAmount).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 }) : "0"}
+                                                           </td>
+                                                           <td style={{ textAlign: "right", border: "1px solid #cbd5e1", padding: "5px 4px", fontWeight: "bold" }}>
+                                                             ${Item.fcConvertToUsdTotal !== undefined ? parseFloat(Item.fcConvertToUsdTotal).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 }) : "0"}
+                                                           </td>
+                                                         </tr>
+                                                       );
+                                                     })}
+                                                   </tbody>
+                                                   <tfoot>
+                                                     <tr style={{ backgroundColor: "#f8fafc", fontWeight: "bold" }}>
+                                                       <td colSpan={5} style={{ border: "1px solid #cbd5e1", padding: "6px 8px", textAlign: "right" }}>Total</td>
+                                                       <td style={{ border: "1px solid #cbd5e1", padding: "6px 8px", textAlign: "right" }}>
+                                                         FC{row.totalFC !== undefined ? parseFloat(row.totalFC).toLocaleString() : "0"}
+                                                       </td>
+                                                       <td style={{ border: "1px solid #cbd5e1", padding: "6px 8px", textAlign: "center" }}>-</td>
+                                                       <td style={{ border: "1px solid #cbd5e1", padding: "6px 8px", textAlign: "right" }}>
+                                                         ${row.total !== undefined ? parseFloat(row.total).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 }) : "0"}
+                                                       </td>
+                                                       <td style={{ border: "1px solid #cbd5e1", padding: "6px 8px", textAlign: "right" }}>
+                                                         ${row.totalUSD !== undefined ? parseFloat(row.totalUSD).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 }) : "0"}
+                                                       </td>
+                                                     </tr>
+                                                   </tfoot>
+                                                 </table></section>
                                             </div>
                                           </div>
                                         </td>
@@ -1009,15 +1012,16 @@ function PurchaseOrderInfoView() {
                                                   </tbody>
                                                 </table>
                                       </section>
-                                      <section style={{ position: 'relative', float: 'right', padding: '10px', marginTop: '-60px' }}>
+                                      <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', margin: '10px 0' }}>
                                         <TextField
                                           label='Search'
                                           id='search2'
+                                          size='small'
                                           value={search2}
                                           variant="standard"
                                           onChange={handleSearch2}
                                         />
-                                      </section>
+                                      </div>
                                       <table className="secondTable" style={{ fontSize: '90%', border: '1px solid #DDD' }}>
                                         <thead>
                                           <tr>
@@ -1050,7 +1054,7 @@ function PurchaseOrderInfoView() {
                                                       <td style={{ textAlign: 'center', width: '30px' }}>{i + 1}</td>
                                                       <td style={{ width: '200px', borderLeft: '1px solid #DDD' }}>                <span hidden={Item.itemName ? (typeof Item.itemName === 'object' ? String(typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName).trim().toLowerCase() === 'empty' : String(typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName).trim().toLowerCase() === 'empty') : false}>{Item.itemName ? (typeof Item.itemName === 'object' ? (Item.itemName.itemName ? Item.itemName.itemName.toUpperCase() : '') : String(Item.itemName).toUpperCase()) : ''}</span>
                                                         <br />
-                                                        <span>{Item.itemDescription ? Item.itemDescription.toUpperCase() : ''} ( {relatedUnit !== undefined ? relatedUnit.itemBrand.toUpperCase() : ''} )</span></td>
+                                                        <span>{Item.itemDescription ? Item.itemDescription.toUpperCase() : ''}{relatedUnit?.itemBrand && String(relatedUnit.itemBrand).trim() !== '' ? ` (${relatedUnit.itemBrand.toUpperCase()})` : ''}</span></td>
                                                       <td style={{ textAlign: 'right', width: '30px', borderLeft: '1px solid #DDD' }}>{Item.itemQty} {relatedUnit?.unit ? String(relatedUnit.unit).toUpperCase() : ''}</td>
                                                       <td style={{ textAlign: 'right', width: '30px', borderLeft: '1px solid #DDD' }}>{Item.qtyBuy} {relatedUnit?.unit ? String(relatedUnit.unit).toUpperCase() : ''}</td>
                                                       <td style={{ textAlign: 'right', width: '80px', borderLeft: '1px solid #DDD' }}>{Item.itemRate !== undefined ? parseFloat(Item.itemRate).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</td>

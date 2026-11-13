@@ -5340,6 +5340,29 @@ The standardized `renderStatusBadge` helper was seamlessly integrated into all 1
   - Packaged Windows Installer: `dist/Global Gate Setup 3.6.52.exe` (99.66 MB) and mirrored to `server/public/downloads/Global Gate Setup 3.6.52.exe`, `GlobalGate-v3.6.52.exe`, and `GlobalGateSetup.exe`.
   - Compiled Android APK: `server/public/downloads/GlobalGate-v3.6.52.apk` (17.88 MB / 17.05 MB) and mirrored to `GlobalGate.apk`.
 
+---
+
+### Rule 72: Purchase Order Supplier Print (Qty Only / No Prices), On-Screen Search Overlap Fix & Clean Brand Formatting (Ver 3.6.53)
+- **Purchase Order Supplier vs Internal Print Separation**:
+  - In `PurchaseOrderInfoView.js`, the primary `Print` button in the action header previously fired `handleOpenPrint2` (Full Order with Prices & Totals), and `componentRef` had been overwritten with a duplicate of the priced table. Consequently, all Purchase Order printouts displayed internal financial columns (`Price($)`, `Amount Paid(FC)`, `Rate`, `Amount Paid($)`, `Total($)`, and currency totals).
+  - Resolved by fixing `onClick={handleOpenPrint}` on the primary `Print` button and restoring `componentRef` to strictly print the Supplier Order (Qty Only / No Prices):
+    - Table columns: `#` (5%), `Item` (35%), `Description` (40%), `Qty Need` (10%), `Qty Buy` (10%).
+    - Zero prices, zero rates, zero currency conversions, and zero price total rows.
+    - Integrated clean authorized purchasing & supplier receipt signature blocks so the printout cleanly and professionally fills the A4 page.
+  - Refactored `componentRef2` (Full Order with Prices & Totals) table from rigid pixel widths (1050px) to responsive percentage columns (`width: 100%`) ensuring multi-column accounting printouts fit within standard A4 portrait margins without horizontal clipping.
+  - Updated `PurchaseOrderViewAdmin.js` table headers to remove redundant empty `Rate` and `Total` columns.
+- **On-Screen Search Filter & Metadata Collision Fix**:
+  - In `PurchaseOrderInfoView.js`, the items table search filter section had `marginTop: '-60px'` floated right, pulling the "Search" input directly into the right-hand metadata card and rendering it on top of "Subject / Project" (`SBReOaJErCcHhT`).
+  - Replaced the negative margin layout with an independent flex row positioned directly above the table (`display: flex; justifyContent: flex-end; margin: 10px 0`), eliminating all visual collisions.
+- **Brand Formatting Cleanup**:
+  - Fixed row brand rendering across `PurchaseOrderInfoView.js` to guard against empty strings, eliminating phantom empty parentheses `( )` when an item has no brand.
+- **Universal Multi-Platform Production Artifacts**:
+  - Incremental version bump: **v3.6.53**.
+  - Recompiled Webpack desktop and web bundles (`dist_web/`).
+  - Packaged Windows Installer: `dist/Global Gate Setup 3.6.53.exe` (99.66 MB) and mirrored to `server/public/downloads/Global Gate Setup 3.6.53.exe`, `GlobalGate-v3.6.53.exe`, and `GlobalGateSetup.exe`.
+  - Compiled Android APK: `server/public/downloads/GlobalGate-v3.6.53.apk` (17.88 MB / 17.05 MB) and mirrored to `GlobalGate.apk`.
+
+
 
 
 

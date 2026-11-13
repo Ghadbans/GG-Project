@@ -733,16 +733,14 @@ function PurchaseOrderViewAdmin() {
                                 </table>
                               </section>
                               <section style={{}}>
-                                <table className="secondTable" style={{ fontSize: '70%', marginBottom: '5px', border: '1px solid #DDD', maxHeight: '400px', overflow: 'auto', pageBreakInside: 'auto' }}>
+                                <table className="secondTable" style={{ width: "100%", fontSize: "11px", marginBottom: "5px", border: "1px solid #cbd5e1", borderCollapse: "collapse", pageBreakInside: "auto" }}>
                                   <thead>
-                                    <tr>
-                                      <th style={{ width: '100px', borderBottom: '1px solid #DDD', backgroundColor: '#e8f7fe' }}>#</th>
-                                      <th style={{ width: '150px', borderBottom: '1px solid #DDD', backgroundColor: '#e8f7fe' }} align="left">Item</th>
-                                      <th style={{ width: '400px', borderBottom: '1px solid #DDD', backgroundColor: '#e8f7fe' }} align="left">Description</th>
-                                      <th style={{ width: '100px', borderBottom: '1px solid #DDD', backgroundColor: '#e8f7fe' }} align="left">Qty Need</th>
-                                      <th style={{ width: '100px', borderBottom: '1px solid #DDD', backgroundColor: '#e8f7fe' }} align="left">Qty Buy</th>
-                                      <th style={{ width: '100px', borderBottom: '1px solid #DDD', backgroundColor: '#e8f7fe' }} align="left">Rate</th>
-                                      <th style={{ width: '150px', borderBottom: '1px solid #DDD', backgroundColor: '#e8f7fe' }} align="left">Total</th>
+                                    <tr style={{ backgroundColor: "#f1f5f9" }}>
+                                      <th style={{ width: "5%", border: "1px solid #cbd5e1", padding: "6px 8px", textAlign: "center" }}>#</th>
+                                      <th style={{ width: "35%", border: "1px solid #cbd5e1", padding: "6px 8px", textAlign: "left" }}>Item</th>
+                                      <th style={{ width: "40%", border: "1px solid #cbd5e1", padding: "6px 8px", textAlign: "left" }}>Description</th>
+                                      <th style={{ width: "10%", border: "1px solid #cbd5e1", padding: "6px 8px", textAlign: "right" }}>Qty Need</th>
+                                      <th style={{ width: "10%", border: "1px solid #cbd5e1", padding: "6px 8px", textAlign: "right" }}>Qty Buy</th>
                                     </tr>
                                   </thead>
                                   <tbody>
@@ -756,19 +754,21 @@ function PurchaseOrderViewAdmin() {
 
                                                 row.newDescription !== undefined ?
                                                   <>
-                                                    <td style={{ textAlign: 'center' }}><span>{i + 1}</span></td>
-                                                    <td colSpan={6} style={{ textAlign: 'center', border: '1px solid #DDD' }} align='center'>{row.newDescription}</td>
+                                                    <td style={{ textAlign: "center", border: "1px solid #cbd5e1", padding: "6px 8px" }}><span>{i + 1}</span></td>
+                                                    <td colSpan={4} style={{ textAlign: "center", fontWeight: "bold", border: "1px solid #cbd5e1", backgroundColor: "#f8f9fa", padding: "6px 8px" }} align='center'>{row.newDescription}</td>
                                                   </>
 
                                                   :
                                                   <>
-                                                    <td style={{ textAlign: 'center', width: '30px' }}>{i + 1}</td>
-                                                    <td style={{ width: '200px', borderLeft: '1px solid #DDD' }}>{typeof row.itemName === 'object' ? (row.itemName?.itemName !== 'empty' ? row.itemName?.itemName : '') : (row.itemName || '')}</td>
-                                                    <td style={{ textAlign: 'left', width: '250px', borderLeft: '1px solid #DDD', textTransform: 'uppercase' }}>{String(row.itemDescription || '').toUpperCase()}</td>
-                                                    <td style={{ textAlign: 'right', width: '30px', borderLeft: '1px solid #DDD' }}>{row.itemQty} {relatedUnit?.unit ? String(relatedUnit.unit).toUpperCase() : ''}</td>
-                                                    <td style={{ textAlign: 'right', width: '30px', borderLeft: '1px solid #DDD' }}></td>
-                                                    <td style={{ textAlign: 'right', width: '80px', borderLeft: '1px solid #DDD' }}></td>
-                                                    <td style={{ textAlign: 'right', width: '100px', borderLeft: '1px solid #DDD' }}></td>
+                                                    <td style={{ textAlign: "center", border: "1px solid #cbd5e1", padding: "6px 8px" }}>{i + 1}</td>
+                                                    <td style={{ textAlign: "left", border: "1px solid #cbd5e1", padding: "6px 8px" }}>
+                                                      <span style={{ fontWeight: "600" }}>{typeof row.itemName === 'object' ? (row.itemName?.itemName !== 'empty' ? row.itemName?.itemName : '') : (row.itemName || '')}</span>
+                                                    </td>
+                                                    <td style={{ textAlign: "left", border: "1px solid #cbd5e1", padding: "6px 8px" }}>
+                                                      <span style={{ textTransform: "uppercase" }}>{String(row.itemDescription || '').toUpperCase()}</span>
+                                                    </td>
+                                                    <td style={{ textAlign: "right", border: "1px solid #cbd5e1", padding: "6px 8px" }}>{row.itemQty} {relatedUnit?.unit ? String(relatedUnit.unit).toUpperCase() : ''}</td>
+                                                    <td style={{ textAlign: "right", border: "1px solid #cbd5e1", padding: "6px 8px", fontWeight: "bold" }}>{row.qtyBuy || ''}</td>
                                                   </>
                                               }
 
