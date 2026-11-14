@@ -5558,5 +5558,37 @@ The standardized `renderStatusBadge` helper was seamlessly integrated into all 1
   - Compiled Android APK: `dist_web/GlobalGate-v3.6.59.apk` and mirrored to `server/public/downloads/GlobalGate-v3.6.59.apk` & `GlobalGate.apk`.
   - Pushed to GitHub `main` for Railway backend and Cloudflare Pages auto-deployment.
 
+---
+
+### Rule 79: Fleet Vehicle Custom & Compound Color Engine (Olive Green Support) (Ver 3.6.60)
+- **Problem & Requirement Reported by User**:
+  - In `FleetFormUpdate`, when the user updated vehicle details or wrote "OLIVE GREEN" into `Chassis #` or `Vehicle Color`, the color was not changing or reverted back to generic "GREEN".
+  - User requested: "the color is not changing when i change them .. plus if i write olive green show olive green".
+  - **Root Causes**:
+    1. MUI `Autocomplete freeSolo` without `clearOnBlur={false}` or explicit `autoSelect` triggered a reset to the previous option value upon clicking outside or clicking the submit button.
+    2. The regex and color mapping only recognized single basic words, failing on compound colors like `OLIVE GREEN`, `DARK BLUE`, `NAVY BLUE`, etc.
+    3. If the user typed "OLIVE GREEN" into `Chassis #` (which is often used in the fleet UI as a color container by habit), `getEffectiveVehicleColor` was overridden by the stale generic "GREEN" in `vehicleColor`.
+- **Architectural Implementation**:
+  1. **Dynamic Color Resolver (`src/js/utils/fleetUtils.js`)**:
+     - Added `resolveColorHex(colorName)` which recognizes standard colors as well as semantic compound terms: "olive" &rarr; `#556b2f` (Olive Green hex), "navy" / "dark blue" &rarr; `#1e3a8a`, "light blue" &rarr; `#38bdf8`, "charcoal" / "dark grey" &rarr; `#334155`, "burgundy" &rarr; `#881337`, etc.
+     - Added `Olive Green` to `STANDARD_VEHICLE_COLORS`.
+     - Updated `KNOWN_COLOR_REGEX` and `isColorWord` to support compound color phrases (`olive green`, `navy blue`, `dark grey`, etc.).
+     - Updated `getEffectiveVehicleColor(car)` so if `chassisNumber` contains a more specific color phrase (e.g. `OLIVE GREEN` vs `GREEN`), the specific phrase is prioritized and displayed.
+  2. **Solid Form Inputs (`FleetFormUpdate.js` & `FleetFormView.js`)**:
+     - Configured `Autocomplete` with `freeSolo`, `autoSelect`, `clearOnBlur={false}`, and direct input listener so custom typed text like "Olive Green" is never wiped on blur.
+     - Synchronized `chassisNumber` input: If the user writes a recognized color into Chassis #, `vehicleColor` is automatically kept in sync.
+     - In `handleUpdateCar`: Ensures custom compound colors are saved to MongoDB.
+  3. **Backend Synchronization (`server/Controller/fleetController.js`)**:
+     - Updated `updateFleet`, `getAllFleets`, and `getFleetById` to detect compound colors like `OLIVE GREEN` in `chassisNumber` and automatically backfill/update `vehicleColor`.
+  4. **Table & Overview Display**:
+     - Both `FleetViewAdmin.js` and `FleetFormUpdate.js` use `resolveColorHex` to render the exact matching color circle (e.g. olive green dot `#556b2f`) and display the color in bold uppercase (e.g. **OLIVE GREEN**).
+- **Universal Multi-Platform Production Artifacts**:
+  - Incremental version bump: **v3.6.60** across `package.json`, `server/package.json`, `server/routes/downloadRoutes.js`, and `server/index.js`.
+  - Recompiled desktop and web bundles (`npm run build`).
+  - Packaged Windows Installer: `dist/Global Gate Setup 3.6.60.exe` and mirrored to `server/public/downloads/Global Gate Setup 3.6.60.exe`, `GlobalGate-v3.6.60.exe`, and `GlobalGateSetup.exe`.
+  - Compiled Android APK: `dist_web/GlobalGate-v3.6.60.apk` and mirrored to `server/public/downloads/GlobalGate-v3.6.60.apk` & `GlobalGate.apk`.
+  - Pushed to GitHub `main` for Railway backend and Cloudflare Pages auto-deployment.
+
+
 
 

@@ -12,7 +12,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import axios from 'axios';
 import { ENDPOINT_URL } from '../apiConfig';
-import { STANDARD_VEHICLE_COLORS } from '../utils/fleetUtils';
+import { STANDARD_VEHICLE_COLORS, resolveColorHex } from '../utils/fleetUtils';
 import { Add, Close } from '@mui/icons-material';
 import { useSelector } from "react-redux"
 import { selectCurrentUser } from '../features/auth/authSlice';
@@ -166,36 +166,45 @@ export default function FleetFormView() {
                   <TextField label="Plate Number" variant="outlined" value={plateNumber} onChange={e => setPlateNumber(e.target.value)} required sx={{ flex: '1 1 45%' }} />
                   <Autocomplete
                     freeSolo
+                    autoSelect
+                    clearOnBlur={false}
                     options={STANDARD_VEHICLE_COLORS.map(c => c.name)}
                     value={vehicleColor}
                     onChange={(event, newValue) => {
-                      setVehicleColor(newValue || '');
+                      const val = typeof newValue === 'string' ? newValue : (newValue?.name || '');
+                      setVehicleColor(val);
                     }}
-                    onInputChange={(event, newInputValue) => {
-                      setVehicleColor(newInputValue || '');
+                    onInputChange={(event, newInputValue, reason) => {
+                      if (reason === 'input' || reason === 'clear') {
+                        setVehicleColor(newInputValue);
+                      }
                     }}
                     renderOption={(props, option) => {
-                      const matched = STANDARD_VEHICLE_COLORS.find(c => c.name.toLowerCase() === option.toLowerCase());
+                      const { hex, border } = resolveColorHex(option);
                       return (
                         <li {...props} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                          {matched && (
-                            <span
-                              style={{
-                                width: '12px',
-                                height: '12px',
-                                borderRadius: '50%',
-                                backgroundColor: matched.hex,
-                                border: `1px solid ${matched.border || matched.hex}`,
-                                display: 'inline-block'
-                              }}
-                            />
-                          )}
+                          <span
+                            style={{
+                              width: '12px',
+                              height: '12px',
+                              borderRadius: '50%',
+                              backgroundColor: hex,
+                              border: `1px solid ${border !== 'transparent' ? border : hex}`,
+                              display: 'inline-block'
+                            }}
+                          />
                           {option}
                         </li>
                       );
                     }}
                     renderInput={(params) => (
-                      <TextField {...params} label="Vehicle Color" variant="outlined" placeholder="e.g. White, Black, Silver..." />
+                      <TextField
+                        {...params}
+                        label="Vehicle Color"
+                        variant="outlined"
+                        placeholder="e.g. Olive Green, White, Black..."
+                        onChange={(e) => setVehicleColor(e.target.value)}
+                      />
                     )}
                     sx={{ flex: '1 1 45%' }}
                   />

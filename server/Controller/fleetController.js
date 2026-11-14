@@ -75,13 +75,16 @@ exports.getAllFleets = async (req, res) => {
 
         const total = await Fleet.countDocuments(query);
 
-        // Auto-backfill vehicleColor if empty and chassisNumber contains a color word (e.g. historical data)
-        const COLOR_REGEX = /^(black|white|grey|gray|silver|red|blue|green|yellow|brown|gold|orange|beige|noir|blanc|gris|rouge|bleu|vert|jaune)$/i;
+        // Auto-backfill vehicleColor if empty or more specific in chassisNumber (e.g. "OLIVE GREEN")
+        const COLOR_REGEX = /^(olive\s*green|navy\s*blue|dark\s*(blue|grey|gray|green|red)|light\s*(blue|grey|gray|green)|pearl\s*white|matte\s*black|black|white|grey|gray|silver|red|blue|green|yellow|brown|gold|orange|beige|olive|navy|charcoal|burgundy|bronze|champagne|noir|blanc|gris|rouge|bleu|vert|jaune)$/i;
         for (let car of fleets) {
-            if ((!car.vehicleColor || car.vehicleColor.trim() === '' || car.vehicleColor.trim().toUpperCase() === 'N/A') && car.chassisNumber && COLOR_REGEX.test(car.chassisNumber.trim())) {
-                const detectedColor = car.chassisNumber.trim();
-                car.vehicleColor = detectedColor;
-                Fleet.findByIdAndUpdate(car._id, { vehicleColor: detectedColor }).catch(err => console.error("Color backfill error:", err));
+            if (car.chassisNumber && COLOR_REGEX.test(car.chassisNumber.trim())) {
+                const detected = car.chassisNumber.trim();
+                const cur = (car.vehicleColor || '').trim();
+                if (!cur || cur.toUpperCase() === 'N/A' || (detected.toLowerCase().includes(cur.toLowerCase()) && detected.length > cur.length)) {
+                    car.vehicleColor = detected;
+                    Fleet.findByIdAndUpdate(car._id, { vehicleColor: detected }).catch(err => console.error("Color backfill error:", err));
+                }
             }
         }
 
@@ -139,10 +142,14 @@ exports.getFleetById = async (req, res) => {
             return res.status(404).json({ message: "Car not found" });
         }
 
-        const COLOR_REGEX = /^(black|white|grey|gray|silver|red|blue|green|yellow|brown|gold|orange|beige|noir|blanc|gris|rouge|bleu|vert|jaune)$/i;
-        if ((!fleet.vehicleColor || fleet.vehicleColor.trim() === '' || fleet.vehicleColor.trim().toUpperCase() === 'N/A') && fleet.chassisNumber && COLOR_REGEX.test(fleet.chassisNumber.trim())) {
-            fleet.vehicleColor = fleet.chassisNumber.trim();
-            Fleet.findByIdAndUpdate(fleet._id, { vehicleColor: fleet.vehicleColor }).catch(err => console.error("Color backfill error:", err));
+        const COLOR_REGEX = /^(olive\s*green|navy\s*blue|dark\s*(blue|grey|gray|green|red)|light\s*(blue|grey|gray|green)|pearl\s*white|matte\s*black|black|white|grey|gray|silver|red|blue|green|yellow|brown|gold|orange|beige|olive|navy|charcoal|burgundy|bronze|champagne|noir|blanc|gris|rouge|bleu|vert|jaune)$/i;
+        if (fleet.chassisNumber && COLOR_REGEX.test(fleet.chassisNumber.trim())) {
+            const detected = fleet.chassisNumber.trim();
+            const cur = (fleet.vehicleColor || '').trim();
+            if (!cur || cur.toUpperCase() === 'N/A' || (detected.toLowerCase().includes(cur.toLowerCase()) && detected.length > cur.length)) {
+                fleet.vehicleColor = detected;
+                Fleet.findByIdAndUpdate(fleet._id, { vehicleColor: detected }).catch(err => console.error("Color backfill error:", err));
+            }
         }
 
         res.status(200).json(fleet);
@@ -154,7 +161,18 @@ exports.getFleetById = async (req, res) => {
 // Update a car (including status, etc)
 exports.updateFleet = async (req, res) => {
     try {
-        const updatedFleet = await Fleet.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        const body = { ...req.body };
+        if (body.vehicleColor) {
+            body.vehicleColor = body.vehicleColor.trim();
+        }
+        const COLOR_REGEX = /^(olive\s*green|navy\s*blue|dark\s*(blue|grey|gray|green|red)|light\s*(blue|grey|gray|green)|pearl\s*white|matte\s*black|black|white|grey|gray|silver|red|blue|green|yellow|brown|gold|orange|beige|olive|navy|charcoal|burgundy|bronze|champagne|noir|blanc|gris|rouge|bleu|vert|jaune)$/i;
+        if (body.chassisNumber && COLOR_REGEX.test(body.chassisNumber.trim())) {
+            const detected = body.chassisNumber.trim();
+            if (!body.vehicleColor || body.vehicleColor === '' || detected.toLowerCase().includes(body.vehicleColor.toLowerCase())) {
+                body.vehicleColor = detected;
+            }
+        }
+        const updatedFleet = await Fleet.findByIdAndUpdate(req.params.id, body, { new: true });
         if (!updatedFleet) {
             return res.status(404).json({ message: "Car not found" });
         }

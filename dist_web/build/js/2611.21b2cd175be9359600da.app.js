@@ -361,29 +361,36 @@ function FleetFormView() {
     }
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
     freeSolo: true,
+    autoSelect: true,
+    clearOnBlur: false,
     options: _utils_fleetUtils__WEBPACK_IMPORTED_MODULE_25__/* .STANDARD_VEHICLE_COLORS */ .Os.map(c => c.name),
     value: vehicleColor,
     onChange: (event, newValue) => {
-      setVehicleColor(newValue || '');
+      var val = typeof newValue === 'string' ? newValue : (newValue === null || newValue === void 0 ? void 0 : newValue.name) || '';
+      setVehicleColor(val);
     },
-    onInputChange: (event, newInputValue) => {
-      setVehicleColor(newInputValue || '');
+    onInputChange: (event, newInputValue, reason) => {
+      if (reason === 'input' || reason === 'clear') {
+        setVehicleColor(newInputValue);
+      }
     },
     renderOption: (props, option) => {
-      var matched = _utils_fleetUtils__WEBPACK_IMPORTED_MODULE_25__/* .STANDARD_VEHICLE_COLORS */ .Os.find(c => c.name.toLowerCase() === option.toLowerCase());
+      var _resolveColorHex = (0,_utils_fleetUtils__WEBPACK_IMPORTED_MODULE_25__/* .resolveColorHex */ .bO)(option),
+        hex = _resolveColorHex.hex,
+        border = _resolveColorHex.border;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("li", _extends({}, props, {
         style: {
           display: 'flex',
           alignItems: 'center',
           gap: '8px'
         }
-      }), matched && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
         style: {
           width: '12px',
           height: '12px',
           borderRadius: '50%',
-          backgroundColor: matched.hex,
-          border: "1px solid ".concat(matched.border || matched.hex),
+          backgroundColor: hex,
+          border: "1px solid ".concat(border !== 'transparent' ? border : hex),
           display: 'inline-block'
         }
       }), option);
@@ -391,7 +398,8 @@ function FleetFormView() {
     renderInput: params => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, _extends({}, params, {
       label: "Vehicle Color",
       variant: "outlined",
-      placeholder: "e.g. White, Black, Silver..."
+      placeholder: "e.g. Olive Green, White, Black...",
+      onChange: e => setVehicleColor(e.target.value)
     })),
     sx: {
       flex: '1 1 45%'
@@ -460,6 +468,7 @@ function FleetFormView() {
 /* harmony export */   $y: () => (/* binding */ getEffectiveVehicleColor),
 /* harmony export */   Hx: () => (/* binding */ evaluateFleetCompliance),
 /* harmony export */   Os: () => (/* binding */ STANDARD_VEHICLE_COLORS),
+/* harmony export */   bO: () => (/* binding */ resolveColorHex),
 /* harmony export */   sb: () => (/* binding */ isColorWord),
 /* harmony export */   u_: () => (/* binding */ isTruckVehicle)
 /* harmony export */ });
@@ -481,20 +490,44 @@ var STANDARD_VEHICLE_COLORS = [{
   name: 'Grey',
   hex: '#64748b'
 }, {
+  name: 'Dark Grey',
+  hex: '#334155'
+}, {
+  name: 'Charcoal',
+  hex: '#374151'
+}, {
+  name: 'Olive Green',
+  hex: '#556b2f'
+}, {
+  name: 'Green',
+  hex: '#16a34a'
+}, {
+  name: 'Navy Blue',
+  hex: '#1e3a8a'
+}, {
+  name: 'Dark Blue',
+  hex: '#1d4ed8'
+}, {
   name: 'Blue',
   hex: '#2563eb'
+}, {
+  name: 'Light Blue',
+  hex: '#38bdf8'
 }, {
   name: 'Red',
   hex: '#dc2626'
 }, {
-  name: 'Green',
-  hex: '#16a34a'
+  name: 'Burgundy',
+  hex: '#881337'
 }, {
   name: 'Yellow',
   hex: '#eab308'
 }, {
   name: 'Brown',
   hex: '#78350f'
+}, {
+  name: 'Bronze',
+  hex: '#92400e'
 }, {
   name: 'Gold',
   hex: '#d97706'
@@ -504,19 +537,128 @@ var STANDARD_VEHICLE_COLORS = [{
 }, {
   name: 'Beige',
   hex: '#d4c5b9'
+}, {
+  name: 'Champagne',
+  hex: '#fef3c7',
+  border: '#d97706'
 }];
-var KNOWN_COLOR_REGEX = /^(black|white|grey|gray|silver|red|blue|green|yellow|brown|gold|orange|beige|noir|blanc|gris|rouge|bleu|vert|jaune)$/i;
+var KNOWN_COLOR_REGEX = /^(olive\s*green|navy\s*blue|dark\s*(blue|grey|gray|green|red)|light\s*(blue|grey|gray|green)|pearl\s*white|matte\s*black|black|white|grey|gray|silver|red|blue|green|yellow|brown|gold|orange|beige|olive|navy|charcoal|burgundy|bronze|champagne|noir|blanc|gris|rouge|bleu|vert|jaune)$/i;
 function isColorWord(str) {
   if (!str || typeof str !== 'string') return false;
   var clean = str.trim();
   return KNOWN_COLOR_REGEX.test(clean);
 }
-function getEffectiveVehicleColor(car) {
-  if (car !== null && car !== void 0 && car.vehicleColor && car.vehicleColor.trim() && car.vehicleColor.trim().toUpperCase() !== 'N/A') {
-    return car.vehicleColor.trim();
+function resolveColorHex(colorName) {
+  if (!colorName || typeof colorName !== 'string') {
+    return {
+      hex: '#64748b',
+      border: 'transparent'
+    };
   }
-  if (isColorWord(car === null || car === void 0 ? void 0 : car.chassisNumber)) {
-    return car.chassisNumber.trim();
+  var clean = colorName.trim().toLowerCase();
+
+  // 1. Direct standard list match
+  var matched = STANDARD_VEHICLE_COLORS.find(c => c.name.toLowerCase() === clean);
+  if (matched) {
+    return {
+      hex: matched.hex,
+      border: matched.border || 'transparent'
+    };
+  }
+
+  // 2. Compound and semantic color keyword detection
+  if (clean.includes('olive')) return {
+    hex: '#556b2f',
+    border: 'transparent'
+  };
+  if (clean.includes('navy') || clean.includes('dark blue')) return {
+    hex: '#1e3a8a',
+    border: 'transparent'
+  };
+  if (clean.includes('light blue') || clean.includes('sky')) return {
+    hex: '#38bdf8',
+    border: 'transparent'
+  };
+  if (clean.includes('blue') || clean.includes('bleu')) return {
+    hex: '#2563eb',
+    border: 'transparent'
+  };
+  if (clean.includes('green') || clean.includes('vert')) return {
+    hex: '#16a34a',
+    border: 'transparent'
+  };
+  if (clean.includes('burgundy') || clean.includes('wine')) return {
+    hex: '#881337',
+    border: 'transparent'
+  };
+  if (clean.includes('red') || clean.includes('rouge')) return {
+    hex: '#dc2626',
+    border: 'transparent'
+  };
+  if (clean.includes('dark grey') || clean.includes('dark gray') || clean.includes('charcoal')) return {
+    hex: '#334155',
+    border: 'transparent'
+  };
+  if (clean.includes('grey') || clean.includes('gray') || clean.includes('gris')) return {
+    hex: '#64748b',
+    border: 'transparent'
+  };
+  if (clean.includes('silver') || clean.includes('argent')) return {
+    hex: '#94a3b8',
+    border: 'transparent'
+  };
+  if (clean.includes('white') || clean.includes('blanc') || clean.includes('pearl')) return {
+    hex: '#f8fafc',
+    border: '#cbd5e1'
+  };
+  if (clean.includes('black') || clean.includes('noir')) return {
+    hex: '#0f172a',
+    border: 'transparent'
+  };
+  if (clean.includes('gold') || clean.includes('or')) return {
+    hex: '#d97706',
+    border: 'transparent'
+  };
+  if (clean.includes('yellow') || clean.includes('jaune')) return {
+    hex: '#eab308',
+    border: 'transparent'
+  };
+  if (clean.includes('brown') || clean.includes('marron') || clean.includes('bronze')) return {
+    hex: '#78350f',
+    border: 'transparent'
+  };
+  if (clean.includes('orange')) return {
+    hex: '#ea580c',
+    border: 'transparent'
+  };
+  if (clean.includes('beige') || clean.includes('champagne')) return {
+    hex: '#d4c5b9',
+    border: 'transparent'
+  };
+  return {
+    hex: '#64748b',
+    border: 'transparent'
+  };
+}
+function getEffectiveVehicleColor(car) {
+  var vColor = ((car === null || car === void 0 ? void 0 : car.vehicleColor) || '').trim();
+  var cNumber = ((car === null || car === void 0 ? void 0 : car.chassisNumber) || '').trim();
+
+  // If chassisNumber is a more specific color (e.g. "OLIVE GREEN" vs "GREEN" or vehicleColor is empty)
+  if (isColorWord(cNumber)) {
+    if (!vColor || vColor.toUpperCase() === 'N/A') {
+      return cNumber;
+    }
+    // If chassis has specific color like "Olive Green" while vehicleColor is generic "Green"
+    if (cNumber.toLowerCase().includes(vColor.toLowerCase()) && cNumber.length > vColor.length) {
+      return cNumber;
+    }
+  }
+  if (vColor && vColor.toUpperCase() !== 'N/A') {
+    return vColor;
+  }
+  if (isColorWord(cNumber)) {
+    return cNumber;
   }
   return '';
 }

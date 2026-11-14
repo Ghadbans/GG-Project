@@ -24,7 +24,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import dayjs from 'dayjs';
-import { evaluateFleetCompliance, getEffectiveVehicleColor, STANDARD_VEHICLE_COLORS, isColorWord, isTruckVehicle } from '../utils/fleetUtils';
+import { evaluateFleetCompliance, getEffectiveVehicleColor, STANDARD_VEHICLE_COLORS, isColorWord, isTruckVehicle, resolveColorHex } from '../utils/fleetUtils';
 
 const drawerWidth = 240;
 const AppBar = styled(MuiAppBar, { shouldForwardProp: (prop) => prop !== 'open' })(({ theme, open }) => ({
@@ -135,7 +135,13 @@ export default function FleetFormUpdate() {
 
   const handleUpdateCar = async () => {
     try {
-      await axios.put(`${ENDPOINT_URL}/fleet/${id}`, carData);
+      const payload = { ...carData };
+      if (payload.chassisNumber && isColorWord(payload.chassisNumber)) {
+        if (!payload.vehicleColor || isColorWord(payload.vehicleColor)) {
+          payload.vehicleColor = payload.vehicleColor || payload.chassisNumber;
+        }
+      }
+      await axios.put(`${ENDPOINT_URL}/fleet/${id}`, payload);
       toast.success('Vehicle details updated');
       setCarModal(false);
       fetchFleet();
@@ -438,9 +444,7 @@ export default function FleetFormUpdate() {
                     {(() => {
                       const effColor = getEffectiveVehicleColor(fleet);
                       if (!effColor) return <Typography sx={{ fontWeight: 600, color: '#94a3b8' }}>Not Set</Typography>;
-                      const matched = STANDARD_VEHICLE_COLORS.find(c => c.name.toLowerCase() === effColor.toLowerCase());
-                      const hex = matched ? matched.hex : '#64748b';
-                      const border = matched?.border || 'transparent';
+                      const { hex, border } = resolveColorHex(effColor);
                       return (
                         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mt: 0.2 }}>
                           <span
@@ -451,10 +455,11 @@ export default function FleetFormUpdate() {
                               backgroundColor: hex,
                               border: `1.5px solid ${border !== 'transparent' ? border : hex}`,
                               display: 'inline-block',
-                              boxShadow: '0 1px 2px rgba(0,0,0,0.15)'
+                              boxShadow: '0 1px 2px rgba(0,0,0,0.15)',
+                              flexShrink: 0
                             }}
                           />
-                          <Typography sx={{ fontWeight: 600, textTransform: 'capitalize', color: '#0f172a' }}>
+                          <Typography sx={{ fontWeight: 700, textTransform: 'uppercase', color: '#0f172a' }}>
                             {effColor}
                           </Typography>
                         </Box>
@@ -785,39 +790,68 @@ export default function FleetFormUpdate() {
           <TextField fullWidth label="Plate Number" size="small" sx={{ mb: 2 }} value={carData.plateNumber} onChange={e => setCarData({...carData, plateNumber: e.target.value})} />
           <Autocomplete
             freeSolo
+            autoSelect
+            clearOnBlur={false}
             options={STANDARD_VEHICLE_COLORS.map(c => c.name)}
             value={carData.vehicleColor || ''}
             onChange={(event, newValue) => {
-              setCarData({ ...carData, vehicleColor: newValue || '' });
+              const val = typeof newValue === 'string' ? newValue : (newValue?.name || '');
+              setCarData(prev => ({ ...prev, vehicleColor: val }));
             }}
-            onInputChange={(event, newInputValue) => {
-              setCarData({ ...carData, vehicleColor: newInputValue || '' });
+            onInputChange={(event, newInputValue, reason) => {
+              if (reason === 'input' || reason === 'clear') {
+                setCarData(prev => ({ ...prev, vehicleColor: newInputValue }));
+              }
             }}
             renderOption={(props, option) => {
-              const matched = STANDARD_VEHICLE_COLORS.find(c => c.name.toLowerCase() === option.toLowerCase());
+              const { hex, border } = resolveColorHex(option);
               return (
                 <li {...props} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  {matched && (
-                    <span
-                      style={{
-                        width: '12px',
-                        height: '12px',
-                        borderRadius: '50%',
-                        backgroundColor: matched.hex,
-                        border: `1px solid ${matched.border || matched.hex}`,
-                        display: 'inline-block'
-                      }}
-                    />
-                  )}
+                  <span
+                    style={{
+                      width: '12px',
+                      height: '12px',
+                      borderRadius: '50%',
+                      backgroundColor: hex,
+                      border: `1px solid ${border !== 'transparent' ? border : hex}`,
+                      display: 'inline-block'
+                    }}
+                  />
                   {option}
                 </li>
               );
             }}
             renderInput={(params) => (
-              <TextField {...params} label="Vehicle Color" size="small" sx={{ mb: 2 }} fullWidth placeholder="e.g. Black, White, Silver" />
+              <TextField
+                {...params}
+                label="Vehicle Color"
+                size="small"
+                sx={{ mb: 2 }}
+                fullWidth
+                placeholder="e.g. Olive Green, White, Black..."
+                onChange={(e) => {
+                  setCarData(prev => ({ ...prev, vehicleColor: e.target.value }));
+                }}
+              />
             )}
           />
-          <TextField fullWidth label="Chassis Number" size="small" sx={{ mb: 2 }} value={carData.chassisNumber} onChange={e => setCarData({...carData, chassisNumber: e.target.value})} />
+          <TextField
+            fullWidth
+            label="Chassis Number"
+            size="small"
+            sx={{ mb: 2 }}
+            value={carData.chassisNumber}
+            onChange={e => {
+              const val = e.target.value;
+              setCarData(prev => {
+                const next = { ...prev, chassisNumber: val };
+                if (isColorWord(val)) {
+                  next.vehicleColor = val;
+                }
+                return next;
+              });
+            }}
+          />
           <FormControl fullWidth size="small" sx={{ mb: 3 }}>
             <InputLabel>Branch</InputLabel>
             <Select value={carData.branchId || 'HQ'} label="Branch" onChange={e => setCarData({...carData, branchId: e.target.value})}>

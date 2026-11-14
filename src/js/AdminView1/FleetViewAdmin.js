@@ -17,7 +17,7 @@ import { ENDPOINT_URL } from '../apiConfig';
 import { renderStatusBadge } from '../utils/formatUtils';
 import { Add, Delete, Edit, Visibility, DirectionsCar as DirectionsCarIcon } from '@mui/icons-material';
 import dayjs from 'dayjs';
-import { evaluateFleetCompliance, getEffectiveVehicleColor, STANDARD_VEHICLE_COLORS } from '../utils/fleetUtils';
+import { evaluateFleetCompliance, getEffectiveVehicleColor, STANDARD_VEHICLE_COLORS, resolveColorHex } from '../utils/fleetUtils';
 import Loader from '../component/Loader';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { useDispatch, useSelector } from "react-redux"
@@ -192,9 +192,7 @@ export default function FleetViewAdmin() {
         const colorName = getEffectiveVehicleColor(params.row);
         if (!colorName) return <span style={{ color: '#94a3b8' }}>—</span>;
 
-        const matched = STANDARD_VEHICLE_COLORS.find(c => c.name.toLowerCase() === colorName.toLowerCase());
-        const hex = matched ? matched.hex : '#64748b';
-        const border = matched?.border || 'transparent';
+        const { hex, border } = resolveColorHex(colorName);
 
         return (
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
@@ -210,7 +208,7 @@ export default function FleetViewAdmin() {
                 flexShrink: 0
               }}
             />
-            <span style={{ fontWeight: 500, textTransform: 'capitalize', color: '#1e293b' }}>
+            <span style={{ fontWeight: 600, textTransform: 'uppercase', color: '#1e293b' }}>
               {colorName}
             </span>
           </div>
