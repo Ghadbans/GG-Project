@@ -297,9 +297,111 @@ async function dispatchInvoicesCloud({ invoices = [], templateMessage = '', phon
   return results;
 }
 
+/**
+ * Dispatch marketing flyer image and caption via 24/7 Cloud WhatsApp (Baileys singleton)
+ */
+async function dispatchMarketingFlyerCloud({ imageBuffer, caption, recipients = [], postToStatus = false }) {
+  if (currentStatus !== 'CONNECTED' || !sock) {
+    throw new Error('Cloud WhatsApp Master is not connected. Please ensure session is linked in Invoice > Send Invoices via WhatsApp.');
+  }
+
+  const rawList = Array.isArray(recipients)
+    ? recipients
+    : String(recipients || '').split(/[,;]+/).map(s => s.trim()).filter(Boolean);
+  const cleanList = [...new Set(rawList.map(normalizePhoneNumber).filter(p => p && p.length >= 9))];
+
+  const results = {
+    success: false,
+    total: cleanList.length,
+    sent: 0,
+    failed: 0,
+    details: []
+  };
+
+  const selfPhone = connectedPhone ? normalizePhoneNumber(connectedPhone) : '243827722222';
+
+  for (let idx = 0; idx < cleanList.length; idx++) {
+    const phone = cleanList[idx];
+    const isSelf = phone === selfPhone || phone.endsWith(selfPhone) || selfPhone.endsWith(phone);
+    const jid = `${phone}@s.whatsapp.net`;
+
+    if (idx > 0) {
+      // Gentle pause between recipients
+      await new Promise(r => setTimeout(r, 2000));
+    }
+
+    try {
+      await sock.sendMessage(jid, {
+        image: imageBuffer,
+        caption: caption
+      });
+
+      results.sent++;
+      results.details.push({
+        number: phone,
+        status: 'sent',
+        self: isSelf
+      });
+      console.log(`✅ [CloudWhatsApp] Marketing flyer delivered to +${phone} (isSelf: ${isSelf})`);
+    } catch (err) {
+      console.error(`❌ [CloudWhatsApp] Failed to send flyer to +${phone}:`, err.message);
+      results.failed++;
+      results.details.push({
+        number: phone,
+        status: 'failed',
+        self: isSelf,
+        error: err.message
+      });
+    }
+  }
+
+  // Optional: Post to Status Story if requested
+  let statusSent = false;
+  if (postToStatus) {
+    try {
+      await sock.sendMessage('status@broadcast', {
+        image: imageBuffer,
+        caption: caption
+      });
+      statusSent = true;
+      console.log('✅ [CloudWhatsApp] Marketing flyer posted to WhatsApp Status Story');
+    } catch (stErr) {
+      console.warn('[CloudWhatsApp] Status story dispatch warning:', stErr.message);
+    }
+  }
+
+  const sentCount = results.details.filter(d => d.status === 'sent').length;
+  const failedCount = results.details.filter(d => d.status === 'failed').length;
+  const isSelf = results.details.length === 1 && results.details[0].self;
+
+  let dmMessage = null;
+  if (results.sent > 0) {
+    if (isSelf && failedCount === 0) {
+      dmMessage = 'Delivered to "Message yourself" (Your own WhatsApp)';
+    } else {
+      dmMessage = `WhatsApp: ${sentCount} sent` + (failedCount ? `, ${failedCount} failed` : '');
+    }
+  }
+
+  results.success = results.sent > 0 || statusSent;
+  results.statusStory = statusSent;
+  results.message = results.sent > 0 && statusSent
+    ? 'WhatsApp Delivered to Contact & Status Story'
+    : (statusSent ? 'WhatsApp Published to Status Story' : dmMessage);
+  results.report = {
+    total: cleanList.length,
+    sent: sentCount,
+    failed: failedCount,
+    details: results.details
+  };
+
+  return results;
+}
+
 module.exports = {
   initCloudWhatsApp,
   getCloudWhatsAppStatus,
   disconnectCloudWhatsApp,
-  dispatchInvoicesCloud
+  dispatchInvoicesCloud,
+  dispatchMarketingFlyerCloud
 };

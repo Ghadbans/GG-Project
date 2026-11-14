@@ -5629,6 +5629,33 @@ The standardized `renderStatusBadge` helper was seamlessly integrated into all 1
   - Compiled Android APK: `android/app/build/outputs/apk/debug/app-debug.apk` and mirrored to `server/public/downloads/GlobalGate-v3.6.61.apk` and `GlobalGate.apk`.
   - Pushed to GitHub `main` for Railway backend and Cloudflare Pages auto-deployment.
 
+- **Unified 24/7 Cloud WhatsApp Master Integration for Marketing & Invoices (Ver 3.6.62)**:
+  - **Problem Reported**:
+    - Users reported WhatsApp marketing dispatch timing out / failing on workstations.
+    - Invoices already possessed an active, persistent 24/7 WhatsApp connection on Railway ("Send Invoices via WhatsApp" with `+243 827 722 222` Cloud Master via Baileys & MongoDB session).
+    - Marketing was previously attempting to run a second, isolated local Puppeteer agent on a single workstation (`C:\Users\GG\fb-whatsapp-agent`), which required a separate phone scan, caused directory lock contentions, and failed when other users logged in from different laptops or web browsers.
+  - **Architectural Resolution & Implementation**:
+    1. **Unified Cloud WhatsApp Service Engine (`server/services/cloudWhatsAppService.js`)**:
+       - Added `dispatchMarketingFlyerCloud({ imageBuffer, caption, recipients, postToStatus })` to the existing 24/7 Baileys cloud socket on Railway.
+       - Sends the generated 1080x1080 flyer image with promotional caption to Global Gate (+243 827 722 222) and all selected customer recipient phone numbers sequentially with rate-limit safety pauses.
+       - Supports optional dispatch to WhatsApp Status Story (`status@broadcast`).
+    2. **Cloud-First Marketing API Pipeline (`server/routes/marketingRoutes.js`)**:
+       - Replaced the hardcoded workstation agent requirement in `/publish`.
+       - Prioritizes `cloudWhatsAppService.getCloudWhatsAppStatus()`. When the Cloud Master is connected on Railway (which is active 24/7), the server executes Facebook Page post, Instagram Feed container, and WhatsApp Cloud Master dispatch in one unified backend workflow.
+       - Accepts `flyerImage` (raster PNG/JPEG data URL) or `productImage` from the client and converts it into a clean binary buffer for Meta Photos and Baileys image messaging.
+    3. **Synchronized UI & Cloud Master Status Pill (`src/js/AdminView1/PageView/MarketingView/MarketingViewAdmin.js`)**:
+       - Connected Marketing to `${ENDPOINT_URL}/invoice-whatsapp/cloud-status` (the exact same endpoint as Invoices).
+       - Displays the identical live status pill: `● Cloud Master: Connected (+243 827 722 222)`.
+       - Added Cloud Master Pairing dialog matching Invoices, allowing authorized users to view linked phone status (`Global Gate S.A.R.L`) or trigger force-reconnect if ever needed.
+       - Added client-side `convertSvgToPngDataUrl` helper to rasterize SVG flyer previews into 1080x1080 PNG data URLs before submission, ensuring full image compatibility with Meta and WhatsApp APIs.
+       - Routed `handleApproveAndPublish` directly to `${API_BASE_URL}/api/marketing/publish`, allowing any user with grant access to publish from any laptop, web browser (`portal.globalgate.sarl`), or mobile device without installing local agents.
+  - **Universal Multi-Platform Production Artifacts**:
+    - Incremental version bump: **v3.6.62** across `package.json`, `server/package.json`, `server/routes/downloadRoutes.js`, and `server/index.js`.
+    - Recompiled desktop and web bundles (`npm run build`).
+    - Packaged Windows Installer: `dist/Global Gate Setup 3.6.62.exe` (99.8 MB) and mirrored to `server/public/downloads/Global Gate Setup 3.6.62.exe` and `Global Gate Setup.exe`.
+    - Compiled Android APK: `android/app/build/outputs/apk/debug/app-debug.apk` (17.9 MB) and mirrored to `server/public/downloads/GlobalGate-v3.6.62.apk` and `GlobalGate.apk`.
+    - Ready for GitHub `main` push to trigger auto-deployment to Railway backend and Cloudflare Pages web portal.
+
 
 
 

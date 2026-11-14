@@ -416,6 +416,76 @@ ipcMain.handle('run-marketing', async (event, payload) => {
   const waCount = String(whatsappNumber || '').split(/[,;]+/).filter((s) => s.trim()).length;
   const execTimeout = 120000 + Math.max(0, waCount - 1) * 35000;
 
+  // Strategy A: If local persistent background daemon is running on port 5055, forward directly for ultra-fast dispatch!
+  try {
+    const isDaemonAlive = await new Promise((resolve) => {
+      const ping = http.get('http://127.0.0.1:5055/status', { timeout: 1500 }, (res) => {
+        resolve(res.statusCode === 200);
+      });
+      ping.on('error', () => resolve(false));
+      ping.on('timeout', () => { ping.destroy(); resolve(false); });
+    });
+
+    if (isDaemonAlive) {
+      console.log('⚡ Main IPC dispatching marketing campaign directly to daemon on port 5055...');
+      let tempProductBase64 = null;
+      if (productImage && typeof productImage === 'string') {
+        tempProductBase64 = productImage;
+      }
+      const daemonPayload = {
+        brief,
+        whatsappNumber,
+        productImage: tempProductBase64,
+        theme,
+        isFullFlyer,
+        previewOnly,
+        customSlogan,
+        postToFacebook,
+        sendWhatsApp,
+        sendWhatsAppStatus,
+        postToInstagram
+      };
+
+      const daemonRes = await new Promise((resolve, reject) => {
+        const bodyStr = JSON.stringify(daemonPayload);
+        const req = http.request({
+          hostname: '127.0.0.1',
+          port: 5055,
+          path: '/publish',
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Content-Length': Buffer.byteLength(bodyStr)
+          },
+          timeout: execTimeout
+        }, (res) => {
+          let resData = '';
+          res.on('data', chunk => { resData += chunk; });
+          res.on('end', () => {
+            try {
+              resolve(JSON.parse(resData || '{}'));
+            } catch (e) {
+              reject(e);
+            }
+          });
+        });
+        req.on('error', reject);
+        req.on('timeout', () => {
+          req.destroy();
+          reject(new Error('Persistent daemon marketing dispatch timed out'));
+        });
+        req.write(bodyStr);
+        req.end();
+      });
+
+      if (daemonRes && (daemonRes.success || daemonRes.facebook || daemonRes.whatsapp || daemonRes.flyerBase64)) {
+        return daemonRes;
+      }
+    }
+  } catch (daemonErr) {
+    console.warn('Daemon dispatch failed or inactive, falling back to node CLI:', daemonErr.message);
+  }
+
   return new Promise((resolve) => {
     execFile('node', args, { cwd: agentDir, timeout: execTimeout, maxBuffer: 20 * 1024 * 1024 }, (error, stdout, stderr) => {
       let waReport = null;
@@ -676,4 +746,50 @@ ipcMain.handle('send-invoice-whatsapp', async (event, payload) => {
     });
   });
 });
+
+ipcMain.handle('get-whatsapp-status', async () => {
+  try {
+    const statusData = await new Promise((resolve, reject) => {
+      const ping = http.get('http://127.0.0.1:5055/status', { timeout: 2000 }, (res) => {
+        let data = '';
+        res.on('data', chunk => { data += chunk; });
+        res.on('end', () => {
+          try { resolve(JSON.parse(data || '{}')); } catch (e) { reject(e); }
+        });
+      });
+      ping.on('error', reject);
+      ping.on('timeout', () => { ping.destroy(); reject(new Error('timeout')); });
+    });
+    return statusData;
+  } catch (err) {
+    return { status: 'offline', whatsappState: 'DISCONNECTED', error: err.message };
+  }
+});
+
+ipcMain.handle('reconnect-whatsapp', async () => {
+  try {
+    const resData = await new Promise((resolve, reject) => {
+      const req = http.request({
+        hostname: '127.0.0.1',
+        port: 5055,
+        path: '/reconnect',
+        method: 'POST',
+        timeout: 5000
+      }, (res) => {
+        let data = '';
+        res.on('data', chunk => { data += chunk; });
+        res.on('end', () => {
+          try { resolve(JSON.parse(data || '{}')); } catch (e) { reject(e); }
+        });
+      });
+      req.on('error', reject);
+      req.on('timeout', () => { req.destroy(); reject(new Error('timeout')); });
+      req.end();
+    });
+    return resData;
+  } catch (err) {
+    return { success: false, error: err.message };
+  }
+});
+
 

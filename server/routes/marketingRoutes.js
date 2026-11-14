@@ -7,6 +7,7 @@ const axios = require('axios');
 const FormData = require('form-data');
 const GrantAccess = require('../model/grantAccessSchema');
 const MarketingRecipient = require('../model/marketingRecipientSchema');
+const cloudWhatsAppService = require('../services/cloudWhatsAppService');
 
 // Path to local fb-whatsapp-agent
 const AGENT_DIR = 'C:\\Users\\GG\\fb-whatsapp-agent';
@@ -493,7 +494,7 @@ router.get('/flyer', (req, res) => {
  * POST /publish - Generate flyer and publish to Facebook and/or WhatsApp
  */
 router.post('/publish', verifyMarketingAccess, async (req, res) => {
-  const { brief, whatsappNumber, platforms = {}, productImage = null, previewOnly = false, theme = 'universal', isFullFlyer = false, customSlogan = '' } = req.body;
+  const { brief, whatsappNumber, platforms = {}, productImage = null, flyerImage = null, previewOnly = false, theme = 'universal', isFullFlyer = false, customSlogan = '' } = req.body;
 
   if (!brief || !String(brief).trim()) {
     return res.status(400).json({ success: false, error: 'Promotional brief is required.' });
@@ -504,37 +505,40 @@ router.post('/publish', verifyMarketingAccess, async (req, res) => {
   const sendWhatsAppStatus = Boolean(platforms.whatsappStatus);
   const postToInstagram = Boolean(platforms.instagram);
 
-  // Strategy 1: If local agent daemon is listening on port 5055, forward request directly
-  try {
-    const httpRes = await fetch('http://127.0.0.1:5055/publish', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        brief,
-        whatsappNumber,
-        postToFacebook,
-        sendWhatsApp,
-        sendWhatsAppStatus,
-        postToInstagram,
-        productImage,
-        theme,
-        isFullFlyer,
-        previewOnly,
-        customSlogan
-      }),
-      signal: AbortSignal.timeout(60000)
-    });
-    if (httpRes.ok) {
-      const data = await httpRes.json();
-      return res.json(data);
-    }
-  } catch (_) {
-    // Daemon not running, continue to local script invocation or direct dispatch
-  }
+  const cloudWa = cloudWhatsAppService.getCloudWhatsAppStatus();
 
-  // Strategy 2: Execute local agent.js script via Node child_process
-  if (fs.existsSync(AGENT_SCRIPT)) {
-    console.log('[Marketing] Executing local agent script at:', AGENT_SCRIPT);
+  // If Cloud WhatsApp is not ready, check if local agent daemon is listening on port 5055
+  if (!cloudWa.isReady) {
+    try {
+      const httpRes = await fetch('http://127.0.0.1:5055/publish', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          brief,
+          whatsappNumber,
+          postToFacebook,
+          sendWhatsApp,
+          sendWhatsAppStatus,
+          postToInstagram,
+          productImage,
+          theme,
+          isFullFlyer,
+          previewOnly,
+          customSlogan
+        }),
+        signal: AbortSignal.timeout(60000)
+      });
+      if (httpRes.ok) {
+        const data = await httpRes.json();
+        return res.json(data);
+      }
+    } catch (_) {
+      // Daemon not running, continue to local script invocation or direct dispatch
+    }
+
+    // Strategy 2: Execute local agent.js script via Node child_process
+    if (fs.existsSync(AGENT_SCRIPT)) {
+      console.log('[Marketing] Executing local agent script at:', AGENT_SCRIPT);
 
     // Clear previous flyer before generating new one so stale flyers are never returned
     if (fs.existsSync(AGENT_FLYER)) {
@@ -667,9 +671,10 @@ router.post('/publish', verifyMarketingAccess, async (req, res) => {
       });
     });
   }
+}
 
-  // Strategy 3: Cloud / Remote fallback (when running on Railway server without local agent directory)
-  console.log('[Marketing] Running in remote environment. Generating agency-grade flyer...');
+  // Strategy 3: Cloud / Remote environment (24/7 Cloud WhatsApp Master on Railway)
+  console.log('[Marketing] Running via Cloud Platform engine. Generating agency-grade flyer...');
   try {
     const copyData = parseMarketingContent(brief, customSlogan);
     const flyerBase64 = generateSvgFlyerBase64(copyData, '', copyData.badge, productImage, theme, isFullFlyer, customSlogan);
@@ -700,40 +705,54 @@ router.post('/publish', verifyMarketingAccess, async (req, res) => {
       });
     }
 
+    // Prepare raster photo buffer (PNG/JPEG) from client rendered flyerImage or productImage
+    let photoBuffer = null;
+    let photoMime = 'image/png';
+    let photoExt = 'png';
+
+    if (flyerImage && typeof flyerImage === 'string' && flyerImage.startsWith('data:image')) {
+      const match = flyerImage.match(/^data:(image\/[a-zA-Z0-9+.-]+);base64,(.+)$/);
+      if (match) {
+        photoMime = match[1];
+        photoExt = photoMime.includes('jpeg') || photoMime.includes('jpg') ? 'jpg' : 'png';
+        photoBuffer = Buffer.from(match[2], 'base64');
+      }
+    } else if (productImage && typeof productImage === 'string' && productImage.startsWith('data:image')) {
+      const match = productImage.match(/^data:(image\/[a-zA-Z0-9+.-]+);base64,(.+)$/);
+      if (match) {
+        photoMime = match[1];
+        photoExt = photoMime.includes('jpeg') || photoMime.includes('jpg') ? 'jpg' : 'png';
+        photoBuffer = Buffer.from(match[2], 'base64');
+      }
+    }
+
     // DISPATCH STAGE: User clicked "Approve & Publish"
     let fbResult = null;
     if (postToFacebook && FB_PAGE_ACCESS_TOKEN && FB_PAGE_ID) {
       try {
         let photoId = null;
 
-        // Step 1: If product image is provided and is a valid raster base64 (PNG/JPG/WEBP), upload to Photos API
-        if (productImage && typeof productImage === 'string' && productImage.startsWith('data:image')) {
-          const match = productImage.match(/^data:(image\/[a-zA-Z0-9+.-]+);base64,(.+)$/);
-          if (match) {
-            try {
-              const mimeType = match[1];
-              const ext = mimeType.includes('png') ? 'png' : (mimeType.includes('jpeg') || mimeType.includes('jpg') ? 'jpg' : 'png');
-              const rasterBuf = Buffer.from(match[2], 'base64');
-              const uploadForm = new FormData();
-              uploadForm.append('source', rasterBuf, { filename: `flyer.${ext}`, contentType: mimeType });
-              uploadForm.append('published', 'false');
-              uploadForm.append('access_token', FB_PAGE_ACCESS_TOKEN);
+        if (photoBuffer) {
+          try {
+            const uploadForm = new FormData();
+            uploadForm.append('source', photoBuffer, { filename: `flyer.${photoExt}`, contentType: photoMime });
+            uploadForm.append('published', 'false');
+            uploadForm.append('access_token', FB_PAGE_ACCESS_TOKEN);
 
-              const photoRes = await axios.post(
-                `https://graph.facebook.com/v21.0/${FB_PAGE_ID}/photos`,
-                uploadForm,
-                { headers: uploadForm.getHeaders(), timeout: 30000 }
-              );
-              if (photoRes.data && photoRes.data.id) {
-                photoId = photoRes.data.id;
-              }
-            } catch (pErr) {
-              console.warn('[Marketing] Photo upload failed, continuing with feed post:', pErr.response?.data?.error?.message || pErr.message);
+            const photoRes = await axios.post(
+              `https://graph.facebook.com/v21.0/${FB_PAGE_ID}/photos`,
+              uploadForm,
+              { headers: uploadForm.getHeaders(), timeout: 30000 }
+            );
+            if (photoRes.data && photoRes.data.id) {
+              photoId = photoRes.data.id;
             }
+          } catch (pErr) {
+            console.warn('[Marketing] Photo upload failed, continuing with feed post:', pErr.response?.data?.error?.message || pErr.message);
           }
         }
 
-        // Step 2: Publish to Page Feed
+        // Publish to Page Feed
         const feedPayload = {
           message: caption,
           access_token: FB_PAGE_ACCESS_TOKEN
@@ -797,20 +816,52 @@ router.post('/publish', verifyMarketingAccess, async (req, res) => {
       }
     }
 
+    // Step 3: Dispatch via 24/7 Cloud WhatsApp Master (Baileys singleton on Railway)
+    let waResult = null;
+    if (sendWhatsApp || sendWhatsAppStatus) {
+      try {
+        const cloudStatus = cloudWhatsAppService.getCloudWhatsAppStatus();
+        if (cloudStatus.isReady) {
+          console.log('[Marketing] Dispatching flyer via Railway Cloud WhatsApp Master (+243 827 722 222)...');
+          const waBuffer = photoBuffer || latestFlyerBuffer;
+          if (waBuffer) {
+            waResult = await cloudWhatsAppService.dispatchMarketingFlyerCloud({
+              imageBuffer: waBuffer,
+              caption,
+              recipients: whatsappNumber,
+              postToStatus: sendWhatsAppStatus
+            });
+          } else {
+            waResult = { success: false, error: 'No valid flyer image buffer found for WhatsApp dispatch.' };
+          }
+        } else {
+          waResult = {
+            success: false,
+            error: `Cloud WhatsApp Master is ${cloudStatus.status || 'DISCONNECTED'}. Please verify connection in Send Invoices via WhatsApp.`
+          };
+        }
+      } catch (waErr) {
+        console.error('[Marketing] Cloud WhatsApp dispatch error:', waErr.message);
+        waResult = { success: false, error: waErr.message };
+      }
+    }
+
     return res.json({
       success: true,
       brief,
       copy: {
-        badge,
-        headline,
-        details: brief,
+        badge: copyData.badge,
+        headline: copyData.headline,
+        details: copyData.subtitle || brief,
+        slogan: copyData.slogan,
+        badges: copyData.badges,
         caption
       },
       flyerBase64,
       facebook: fbResult || { success: false, error: postToFacebook ? 'Facebook publish failed.' : 'Facebook dispatch not selected.' },
-      whatsapp: {
+      whatsapp: waResult || {
         success: false,
-        error: 'WhatsApp Web automated dispatch requires the local agent running on the workstation.'
+        error: (sendWhatsApp || sendWhatsAppStatus) ? 'WhatsApp dispatch failed' : 'WhatsApp dispatch not selected.'
       },
       instagram: igResult || {
         success: false,

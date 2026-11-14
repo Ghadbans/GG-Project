@@ -127,6 +127,26 @@ var _default = exports.A = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRun
 
 /***/ },
 
+/***/ 3445
+(__unused_webpack_module, exports, __webpack_require__) {
+
+var __webpack_unused_export__;
+
+"use client";
+
+var _interopRequireDefault = __webpack_require__(24994);
+__webpack_unused_export__ = ({
+  value: true
+});
+exports.A = void 0;
+var _createSvgIcon = _interopRequireDefault(__webpack_require__(42032));
+var _jsxRuntime = __webpack_require__(74848);
+var _default = exports.A = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRuntime.jsx)("path", {
+  d: "M15 21h-2v-2h2zm-2-7h-2v5h2zm8-2h-2v4h2zm-2-2h-2v2h2zM7 12H5v2h2zm-2-2H3v2h2zm7-5h2V3h-2zm-7.5-.5v3h3v-3zM9 9H3V3h6zm-4.5 7.5v3h3v-3zM9 21H3v-6h6zm7.5-16.5v3h3v-3zM21 9h-6V3h6zm-2 10v-3h-4v2h2v3h4v-2zm-2-7h-4v2h4zm-4-2H7v2h2v2h2v-2h2zm1-1V7h-2V5h-2v4zM6.75 5.25h-1.5v1.5h1.5zm0 12h-1.5v1.5h1.5zm12-12h-1.5v1.5h1.5z"
+}), 'QrCode2');
+
+/***/ },
+
 /***/ 80242
 (__unused_webpack_module, exports, __webpack_require__) {
 
@@ -557,17 +577,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mui_icons_material_Refresh__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(42702);
 /* harmony import */ var _mui_icons_material_Close__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(39781);
 /* harmony import */ var _mui_icons_material_RocketLaunch__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(80242);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_44__ = __webpack_require__(99380);
-/* harmony import */ var react_toastify__WEBPACK_IMPORTED_MODULE_45__ = __webpack_require__(99571);
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_46__ = __webpack_require__(13561);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_47__ = __webpack_require__(47767);
-/* harmony import */ var _features_auth_authSlice__WEBPACK_IMPORTED_MODULE_48__ = __webpack_require__(32005);
-/* harmony import */ var _apiConfig__WEBPACK_IMPORTED_MODULE_49__ = __webpack_require__(71510);
-/* harmony import */ var _utils_apiCache__WEBPACK_IMPORTED_MODULE_50__ = __webpack_require__(46986);
-/* harmony import */ var _component_SidebarDashE2__WEBPACK_IMPORTED_MODULE_51__ = __webpack_require__(34687);
-/* harmony import */ var _NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_52__ = __webpack_require__(95236);
-/* harmony import */ var _MessageAdminView__WEBPACK_IMPORTED_MODULE_53__ = __webpack_require__(83818);
-/* harmony import */ var _component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_54__ = __webpack_require__(40301);
+/* harmony import */ var _mui_icons_material_QrCode2__WEBPACK_IMPORTED_MODULE_44__ = __webpack_require__(3445);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_45__ = __webpack_require__(99380);
+/* harmony import */ var react_toastify__WEBPACK_IMPORTED_MODULE_46__ = __webpack_require__(99571);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_47__ = __webpack_require__(13561);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_48__ = __webpack_require__(47767);
+/* harmony import */ var _features_auth_authSlice__WEBPACK_IMPORTED_MODULE_49__ = __webpack_require__(32005);
+/* harmony import */ var _apiConfig__WEBPACK_IMPORTED_MODULE_50__ = __webpack_require__(71510);
+/* harmony import */ var _utils_apiCache__WEBPACK_IMPORTED_MODULE_51__ = __webpack_require__(46986);
+/* harmony import */ var _component_SidebarDashE2__WEBPACK_IMPORTED_MODULE_52__ = __webpack_require__(34687);
+/* harmony import */ var _NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_53__ = __webpack_require__(95236);
+/* harmony import */ var _MessageAdminView__WEBPACK_IMPORTED_MODULE_54__ = __webpack_require__(83818);
+/* harmony import */ var _component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_55__ = __webpack_require__(40301);
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
 function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
@@ -582,6 +603,7 @@ function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == typeof i ? i : i + ""; }
 function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 ;
+
 
 
 
@@ -667,9 +689,9 @@ var Drawer = (0,_mui_material__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .Ay
 });
 function MarketingViewAdmin() {
   var _user$data5, _user$data0, _user$data1, _result$copy, _result$copy2, _result$copy3, _result$copy4;
-  var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_47__/* .useNavigate */ .Zp)();
-  var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_46__/* .useDispatch */ .wA)();
-  var user = (0,react_redux__WEBPACK_IMPORTED_MODULE_46__/* .useSelector */ .d4)(_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_48__/* .selectCurrentUser */ .xu);
+  var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_48__/* .useNavigate */ .Zp)();
+  var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_47__/* .useDispatch */ .wA)();
+  var user = (0,react_redux__WEBPACK_IMPORTED_MODULE_47__/* .useSelector */ .d4)(_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_49__/* .selectCurrentUser */ .xu);
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState2 = _slicedToArray(_useState, 2),
     sideBar = _useState2[0],
@@ -772,6 +794,97 @@ function MarketingViewAdmin() {
     _useState44 = _slicedToArray(_useState43, 2),
     refreshingCustomers = _useState44[0],
     setRefreshingCustomers = _useState44[1];
+
+  // 24/7 Cloud WhatsApp Master status (Shared with Invoice module)
+  var _useState45 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
+      status: 'CONNECTING',
+      phone: '+243 827 722 222',
+      name: 'Global Gate S.A.R.L',
+      qrCode: null,
+      isReady: false
+    }),
+    _useState46 = _slicedToArray(_useState45, 2),
+    cloudWaStatus = _useState46[0],
+    setCloudWaStatus = _useState46[1];
+  var _useState47 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState48 = _slicedToArray(_useState47, 2),
+    openCloudQrDialog = _useState48[0],
+    setOpenCloudQrDialog = _useState48[1];
+  var _useState49 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState50 = _slicedToArray(_useState49, 2),
+    reconnectingCloudWa = _useState50[0],
+    setReconnectingCloudWa = _useState50[1];
+  var fetchCloudWaStatus = /*#__PURE__*/function () {
+    var _ref3 = _asyncToGenerator(function* () {
+      try {
+        var _res$data;
+        var res = yield axios__WEBPACK_IMPORTED_MODULE_45__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_50__/* .ENDPOINT_URL */ .m, "/invoice-whatsapp/cloud-status")).catch(() => axios__WEBPACK_IMPORTED_MODULE_45__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_50__/* .API_BASE_URL */ .J, "/api/invoice-whatsapp/cloud-status")));
+        if (res !== null && res !== void 0 && (_res$data = res.data) !== null && _res$data !== void 0 && _res$data.success) {
+          setCloudWaStatus(res.data);
+        }
+      } catch (err) {
+        console.warn('[Marketing] Cloud WhatsApp status fetch warning:', err);
+      }
+    });
+    return function fetchCloudWaStatus() {
+      return _ref3.apply(this, arguments);
+    };
+  }();
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    fetchCloudWaStatus();
+    var interval = setInterval(fetchCloudWaStatus, openCloudQrDialog ? 4000 : 15000);
+    return () => clearInterval(interval);
+  }, [openCloudQrDialog]);
+  var handleCloudWaReconnect = /*#__PURE__*/function () {
+    var _ref4 = _asyncToGenerator(function* () {
+      setReconnectingCloudWa(true);
+      try {
+        var _res$data2;
+        var res = yield axios__WEBPACK_IMPORTED_MODULE_45__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_50__/* .ENDPOINT_URL */ .m, "/invoice-whatsapp/cloud-reconnect")).catch(() => axios__WEBPACK_IMPORTED_MODULE_45__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_50__/* .API_BASE_URL */ .J, "/api/invoice-whatsapp/cloud-reconnect")));
+        if (res !== null && res !== void 0 && (_res$data2 = res.data) !== null && _res$data2 !== void 0 && _res$data2.success) {
+          setCloudWaStatus(res.data);
+          react_toastify__WEBPACK_IMPORTED_MODULE_46__/* .toast */ .oR.info('Cloud WhatsApp reconnect requested. If QR code appears, scan it with your phone.');
+        }
+      } catch (err) {
+        react_toastify__WEBPACK_IMPORTED_MODULE_46__/* .toast */ .oR.error('Failed to reconnect Cloud WhatsApp: ' + err.message);
+      } finally {
+        setReconnectingCloudWa(false);
+      }
+    });
+    return function handleCloudWaReconnect() {
+      return _ref4.apply(this, arguments);
+    };
+  }();
+
+  // Convert SVG flyer preview to PNG data URL for WhatsApp & Facebook raster compatibility
+  var convertSvgToPngDataUrl = /*#__PURE__*/function () {
+    var _ref5 = _asyncToGenerator(function* (dataUrl) {
+      if (!dataUrl || typeof dataUrl !== 'string' || !dataUrl.startsWith('data:image/svg+xml')) return dataUrl;
+      return new Promise(resolve => {
+        var img = new Image();
+        img.crossOrigin = 'anonymous';
+        img.onload = () => {
+          try {
+            var canvas = document.createElement('canvas');
+            canvas.width = 1080;
+            canvas.height = 1080;
+            var ctx = canvas.getContext('2d');
+            ctx.fillStyle = '#0f172a';
+            ctx.fillRect(0, 0, 1080, 1080);
+            ctx.drawImage(img, 0, 0, 1080, 1080);
+            resolve(canvas.toDataURL('image/png'));
+          } catch (_) {
+            resolve(dataUrl);
+          }
+        };
+        img.onerror = () => resolve(dataUrl);
+        img.src = dataUrl;
+      });
+    });
+    return function convertSvgToPngDataUrl(_x) {
+      return _ref5.apply(this, arguments);
+    };
+  }();
   var getCustomerPhone = c => {
     if (!c) return '';
     var candidates = [c === null || c === void 0 ? void 0 : c.customerCompanyPhone, c === null || c === void 0 ? void 0 : c.customerPhone, c === null || c === void 0 ? void 0 : c.phone, c === null || c === void 0 ? void 0 : c.telephone, c === null || c === void 0 ? void 0 : c.mobile, c === null || c === void 0 ? void 0 : c.contactPhone, c === null || c === void 0 ? void 0 : c.tel, c === null || c === void 0 ? void 0 : c.whatsapp];
@@ -792,23 +905,23 @@ function MarketingViewAdmin() {
   var customersWithPhone = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(() => (customers || []).filter(c => Boolean(getCustomerPhone(c))), [customers]);
   var savedRecipients = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(() => customersWithPhone.filter(c => savedRecipientIds.includes(String(c._id))), [customersWithPhone, savedRecipientIds]);
   var reloadCustomers = /*#__PURE__*/function () {
-    var _ref3 = _asyncToGenerator(function* () {
+    var _ref6 = _asyncToGenerator(function* () {
       setRefreshingCustomers(true);
       try {
-        var _res$data;
-        var res = yield axios__WEBPACK_IMPORTED_MODULE_44__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_49__/* .ENDPOINT_URL */ .m, "/customer?_t=").concat(Date.now()));
-        var list = ((_res$data = res.data) === null || _res$data === void 0 ? void 0 : _res$data.data) || [];
+        var _res$data3;
+        var res = yield axios__WEBPACK_IMPORTED_MODULE_45__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_50__/* .ENDPOINT_URL */ .m, "/customer?_t=").concat(Date.now()));
+        var list = ((_res$data3 = res.data) === null || _res$data3 === void 0 ? void 0 : _res$data3.data) || [];
         setCustomers(list);
-        react_toastify__WEBPACK_IMPORTED_MODULE_45__/* .toast */ .oR.success("Refreshed ".concat(list.length, " customers from database."));
+        react_toastify__WEBPACK_IMPORTED_MODULE_46__/* .toast */ .oR.success("Refreshed ".concat(list.length, " customers from database."));
       } catch (err) {
         console.error('Refresh customers error:', err);
-        react_toastify__WEBPACK_IMPORTED_MODULE_45__/* .toast */ .oR.error('Failed to refresh customer list.');
+        react_toastify__WEBPACK_IMPORTED_MODULE_46__/* .toast */ .oR.error('Failed to refresh customer list.');
       } finally {
         setRefreshingCustomers(false);
       }
     });
     return function reloadCustomers() {
-      return _ref3.apply(this, arguments);
+      return _ref6.apply(this, arguments);
     };
   }();
   var pickerFiltered = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(() => {
@@ -861,12 +974,12 @@ function MarketingViewAdmin() {
     setPickerSelection(prev => prev.includes(sid) ? prev.filter(x => x !== sid) : [...prev, sid]);
   };
   var saveRecipientList = /*#__PURE__*/function () {
-    var _ref4 = _asyncToGenerator(function* () {
+    var _ref7 = _asyncToGenerator(function* () {
       setSavingList(true);
       try {
         var _user$data3;
         var ids = pickerSelection.map(String);
-        yield axios__WEBPACK_IMPORTED_MODULE_44__/* ["default"] */ .A.put("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_49__/* .API_BASE_URL */ .J, "/api/marketing/recipients"), {
+        yield axios__WEBPACK_IMPORTED_MODULE_45__/* ["default"] */ .A.put("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_50__/* .API_BASE_URL */ .J, "/api/marketing/recipients"), {
           customerIds: ids,
           userName: (user === null || user === void 0 || (_user$data3 = user.data) === null || _user$data3 === void 0 ? void 0 : _user$data3.userName) || ''
         }, {
@@ -875,17 +988,17 @@ function MarketingViewAdmin() {
         setSavedRecipientIds(ids);
         setIncludeSavedList(ids.length > 0);
         setPickerOpen(false);
-        react_toastify__WEBPACK_IMPORTED_MODULE_45__/* .toast */ .oR.success("WhatsApp recipients list saved (".concat(ids.length, " customers)."));
+        react_toastify__WEBPACK_IMPORTED_MODULE_46__/* .toast */ .oR.success("WhatsApp recipients list saved (".concat(ids.length, " customers)."));
       } catch (err) {
         var _err$response;
         console.error('Save recipients failed:', err);
-        react_toastify__WEBPACK_IMPORTED_MODULE_45__/* .toast */ .oR.error(((_err$response = err.response) === null || _err$response === void 0 || (_err$response = _err$response.data) === null || _err$response === void 0 ? void 0 : _err$response.error) || 'Failed to save recipients list.');
+        react_toastify__WEBPACK_IMPORTED_MODULE_46__/* .toast */ .oR.error(((_err$response = err.response) === null || _err$response === void 0 || (_err$response = _err$response.data) === null || _err$response === void 0 ? void 0 : _err$response.error) || 'Failed to save recipients list.');
       } finally {
         setSavingList(false);
       }
     });
     return function saveRecipientList() {
-      return _ref4.apply(this, arguments);
+      return _ref7.apply(this, arguments);
     };
   }();
 
@@ -902,11 +1015,11 @@ function MarketingViewAdmin() {
     var file = (_e$target$files = e.target.files) === null || _e$target$files === void 0 ? void 0 : _e$target$files[0];
     if (!file) return;
     if (!file.type.startsWith('image/')) {
-      react_toastify__WEBPACK_IMPORTED_MODULE_45__/* .toast */ .oR.warning('Please select an image file (PNG, JPG, WEBP).');
+      react_toastify__WEBPACK_IMPORTED_MODULE_46__/* .toast */ .oR.warning('Please select an image file (PNG, JPG, WEBP).');
       return;
     }
     if (file.size > 15 * 1024 * 1024) {
-      react_toastify__WEBPACK_IMPORTED_MODULE_45__/* .toast */ .oR.warning('Image size should be under 15MB.');
+      react_toastify__WEBPACK_IMPORTED_MODULE_46__/* .toast */ .oR.warning('Image size should be under 15MB.');
       return;
     }
     var reader = new FileReader();
@@ -926,29 +1039,29 @@ function MarketingViewAdmin() {
   };
 
   // Access Permission Verification
-  var _useState45 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
-    _useState46 = _slicedToArray(_useState45, 2),
-    hasAccess = _useState46[0],
-    setHasAccess = _useState46[1];
-  var _useState47 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
-    _useState48 = _slicedToArray(_useState47, 2),
-    loadingPermission = _useState48[0],
-    setLoadingPermission = _useState48[1];
+  var _useState51 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
+    _useState52 = _slicedToArray(_useState51, 2),
+    hasAccess = _useState52[0],
+    setHasAccess = _useState52[1];
+  var _useState53 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
+    _useState54 = _slicedToArray(_useState53, 2),
+    loadingPermission = _useState54[0],
+    setLoadingPermission = _useState54[1];
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     var storesUserId = localStorage.getItem('user');
     var fetchUserAndAccess = /*#__PURE__*/function () {
-      var _ref5 = _asyncToGenerator(function* () {
+      var _ref8 = _asyncToGenerator(function* () {
         if (!storesUserId) {
           navigate('/');
           return;
         }
         try {
           var _resAccess$data;
-          var resUser = yield axios__WEBPACK_IMPORTED_MODULE_44__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_49__/* .ENDPOINT_URL */ .m, "/get-employeeuser/").concat(storesUserId));
+          var resUser = yield axios__WEBPACK_IMPORTED_MODULE_45__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_50__/* .ENDPOINT_URL */ .m, "/get-employeeuser/").concat(storesUserId));
           var name = resUser.data.data.employeeName;
           var role = resUser.data.data.role;
           var id = resUser.data.data._id;
-          dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_48__/* .setUser */ .gV)({
+          dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_49__/* .setUser */ .gV)({
             userName: name,
             role,
             id
@@ -962,7 +1075,7 @@ function MarketingViewAdmin() {
           }
 
           // Check GrantAccess permissions
-          var resAccess = yield (0,_utils_apiCache__WEBPACK_IMPORTED_MODULE_50__/* .cachedGet */ .Fe)("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_49__/* .ENDPOINT_URL */ .m, "/grantAccess"));
+          var resAccess = yield (0,_utils_apiCache__WEBPACK_IMPORTED_MODULE_51__/* .cachedGet */ .Fe)("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_50__/* .ENDPOINT_URL */ .m, "/grantAccess"));
           var userAccess = resAccess === null || resAccess === void 0 || (_resAccess$data = resAccess.data) === null || _resAccess$data === void 0 || (_resAccess$data = _resAccess$data.data) === null || _resAccess$data === void 0 ? void 0 : _resAccess$data.find(row => row.userID === id);
           var isMarketingGranted = Boolean((userAccess === null || userAccess === void 0 ? void 0 : userAccess.marketing) || Array.isArray(userAccess === null || userAccess === void 0 ? void 0 : userAccess.modules) && userAccess.modules.some(m => {
             var _m$access, _m$access2;
@@ -977,7 +1090,7 @@ function MarketingViewAdmin() {
         }
       });
       return function fetchUserAndAccess() {
-        return _ref5.apply(this, arguments);
+        return _ref8.apply(this, arguments);
       };
     }();
     fetchUserAndAccess();
@@ -991,13 +1104,13 @@ function MarketingViewAdmin() {
     _asyncToGenerator(function* () {
       try {
         var _resCustomers$data;
-        var resCustomers = yield axios__WEBPACK_IMPORTED_MODULE_44__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_49__/* .ENDPOINT_URL */ .m, "/customer?_t=").concat(Date.now()));
+        var resCustomers = yield axios__WEBPACK_IMPORTED_MODULE_45__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_50__/* .ENDPOINT_URL */ .m, "/customer?_t=").concat(Date.now()));
         if (!cancelled) setCustomers((resCustomers === null || resCustomers === void 0 || (_resCustomers$data = resCustomers.data) === null || _resCustomers$data === void 0 ? void 0 : _resCustomers$data.data) || []);
       } catch (err) {
         console.warn('[Marketing] Could not load customers:', err.message);
       }
       try {
-        var resSaved = yield axios__WEBPACK_IMPORTED_MODULE_44__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_49__/* .API_BASE_URL */ .J, "/api/marketing/recipients"), {
+        var resSaved = yield axios__WEBPACK_IMPORTED_MODULE_45__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_50__/* .API_BASE_URL */ .J, "/api/marketing/recipients"), {
           headers: marketingHeaders()
         });
         if (!cancelled) {
@@ -1017,15 +1130,15 @@ function MarketingViewAdmin() {
   }, [loadingPermission, hasAccess, user === null || user === void 0 || (_user$data5 = user.data) === null || _user$data5 === void 0 ? void 0 : _user$data5.userName]);
   var handleLogout = () => {
     localStorage.removeItem('user');
-    dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_48__/* .setUser */ .gV)(null));
+    dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_49__/* .setUser */ .gV)(null));
     navigate('/');
   };
   var handleGeneratePreview = /*#__PURE__*/function () {
-    var _ref7 = _asyncToGenerator(function* (e) {
+    var _ref0 = _asyncToGenerator(function* (e) {
       var _user$data6, _user$data7;
       if (e && e.preventDefault) e.preventDefault();
       if (!brief.trim()) {
-        react_toastify__WEBPACK_IMPORTED_MODULE_45__/* .toast */ .oR.warning('Please enter a promotional brief first.');
+        react_toastify__WEBPACK_IMPORTED_MODULE_46__/* .toast */ .oR.warning('Please enter a promotional brief first.');
         return;
       }
       setLoadingPreview(true);
@@ -1065,7 +1178,7 @@ function MarketingViewAdmin() {
         }
         if (!resData) {
           try {
-            var localRes = yield axios__WEBPACK_IMPORTED_MODULE_44__/* ["default"] */ .A.post('http://127.0.0.1:5055/publish', payload, {
+            var localRes = yield axios__WEBPACK_IMPORTED_MODULE_45__/* ["default"] */ .A.post('http://127.0.0.1:5055/publish', payload, {
               timeout: 10000
             });
             if (localRes.data && localRes.data.success) {
@@ -1074,18 +1187,18 @@ function MarketingViewAdmin() {
           } catch (_) {}
         }
         if (!resData) {
-          var res = yield axios__WEBPACK_IMPORTED_MODULE_44__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_49__/* .API_BASE_URL */ .J, "/api/marketing/publish"), payload);
+          var res = yield axios__WEBPACK_IMPORTED_MODULE_45__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_50__/* .API_BASE_URL */ .J, "/api/marketing/publish"), payload);
           resData = res.data;
         }
         if (resData && resData.success) {
           setResult(resData);
           setPreviewGenerated(true);
-          react_toastify__WEBPACK_IMPORTED_MODULE_45__/* .toast */ .oR.success('🎨 Flyer preview generated! Review the card and click "Approve & Publish" when ready.');
+          react_toastify__WEBPACK_IMPORTED_MODULE_46__/* .toast */ .oR.success('🎨 Flyer preview generated! Review the card and click "Approve & Publish" when ready.');
         } else {
           var _resData;
           var err = ((_resData = resData) === null || _resData === void 0 ? void 0 : _resData.error) || 'Preview generation failed.';
           setErrorMessage(err);
-          react_toastify__WEBPACK_IMPORTED_MODULE_45__/* .toast */ .oR.error(err);
+          react_toastify__WEBPACK_IMPORTED_MODULE_46__/* .toast */ .oR.error(err);
           if (resData) setResult(resData);
         }
       } catch (err) {
@@ -1093,20 +1206,20 @@ function MarketingViewAdmin() {
         console.error('Marketing preview failed:', err);
         var serverErr = ((_err$response2 = err.response) === null || _err$response2 === void 0 || (_err$response2 = _err$response2.data) === null || _err$response2 === void 0 ? void 0 : _err$response2.error) || err.message || 'Failed to generate flyer preview.';
         setErrorMessage(serverErr);
-        react_toastify__WEBPACK_IMPORTED_MODULE_45__/* .toast */ .oR.error(serverErr);
+        react_toastify__WEBPACK_IMPORTED_MODULE_46__/* .toast */ .oR.error(serverErr);
       } finally {
         setLoadingPreview(false);
       }
     });
-    return function handleGeneratePreview(_x) {
-      return _ref7.apply(this, arguments);
+    return function handleGeneratePreview(_x2) {
+      return _ref0.apply(this, arguments);
     };
   }();
   var handleApproveAndPublish = /*#__PURE__*/function () {
-    var _ref8 = _asyncToGenerator(function* () {
+    var _ref1 = _asyncToGenerator(function* () {
       var _user$data8, _user$data9;
       if (!targetPlatforms.facebook && !targetPlatforms.whatsapp && !targetPlatforms.instagram) {
-        react_toastify__WEBPACK_IMPORTED_MODULE_45__/* .toast */ .oR.warning('Please select at least one target dispatch platform.');
+        react_toastify__WEBPACK_IMPORTED_MODULE_46__/* .toast */ .oR.warning('Please select at least one target dispatch platform.');
         return;
       }
       var externalCount = buildWhatsappNumbers().split(',').filter(Boolean).length - 1;
@@ -1116,10 +1229,17 @@ function MarketingViewAdmin() {
       }
       setLoadingPublish(true);
       setErrorMessage('');
+      var exportFlyerImage = (result === null || result === void 0 ? void 0 : result.flyerBase64) || productImage || null;
+      if (exportFlyerImage && typeof exportFlyerImage === 'string' && exportFlyerImage.startsWith('data:image/svg+xml')) {
+        try {
+          exportFlyerImage = yield convertSvgToPngDataUrl(exportFlyerImage);
+        } catch (_) {}
+      }
       var payload = {
         brief: brief.trim(),
         whatsappNumber: buildWhatsappNumbers(),
         productImage: productImage || null,
+        flyerImage: exportFlyerImage,
         theme,
         isFullFlyer,
         previewOnly: false,
@@ -1134,32 +1254,43 @@ function MarketingViewAdmin() {
       };
       try {
         var resData = null;
-        if (window.electron && typeof window.electron.runMarketing === 'function') {
+
+        // Primary Channel: Railway Cloud API (where 24/7 Cloud WhatsApp Master is connected for all users)
+        try {
+          var cloudRes = yield axios__WEBPACK_IMPORTED_MODULE_45__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_50__/* .API_BASE_URL */ .J, "/api/marketing/publish"), payload, {
+            timeout: 120000 + Math.max(0, (payload.whatsappNumber.match(/,/g) || []).length) * 35000
+          });
+          if (cloudRes.data && (cloudRes.data.success || cloudRes.data.facebook || cloudRes.data.whatsapp || cloudRes.data.instagram)) {
+            resData = cloudRes.data;
+          }
+        } catch (cloudErr) {
+          var _cloudErr$response;
+          console.warn('[Marketing] Cloud dispatch attempt note:', ((_cloudErr$response = cloudErr.response) === null || _cloudErr$response === void 0 || (_cloudErr$response = _cloudErr$response.data) === null || _cloudErr$response === void 0 ? void 0 : _cloudErr$response.error) || cloudErr.message);
+        }
+
+        // Secondary Fallback: Electron local agent IPC if cloud request had network connection failure
+        if (!resData && window.electron && typeof window.electron.runMarketing === 'function') {
           try {
-            console.log('[Marketing] Running publish via Electron local agent IPC...');
+            console.log('[Marketing] Falling back to Electron local agent IPC...');
             var ipcRes = yield window.electron.runMarketing(payload);
             if (ipcRes && ipcRes.success) {
               resData = ipcRes;
-            } else {
-              console.warn('[Marketing] Electron local agent IPC failed, falling back to server...', ipcRes === null || ipcRes === void 0 ? void 0 : ipcRes.error);
             }
           } catch (ipcErr) {
-            console.warn('[Marketing] Electron IPC error, falling back:', ipcErr);
+            console.warn('[Marketing] Electron IPC error:', ipcErr);
           }
         }
+
+        // Tertiary Fallback: Local daemon if active on port 5055
         if (!resData) {
           try {
-            var localRes = yield axios__WEBPACK_IMPORTED_MODULE_44__/* ["default"] */ .A.post('http://127.0.0.1:5055/publish', payload, {
-              timeout: 120000 + Math.max(0, (payload.whatsappNumber.match(/,/g) || []).length) * 35000
+            var localRes = yield axios__WEBPACK_IMPORTED_MODULE_45__/* ["default"] */ .A.post('http://127.0.0.1:5055/publish', payload, {
+              timeout: 15000
             });
             if (localRes.data && localRes.data.success) {
               resData = localRes.data;
             }
           } catch (_) {}
-        }
-        if (!resData) {
-          var res = yield axios__WEBPACK_IMPORTED_MODULE_44__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_49__/* .API_BASE_URL */ .J, "/api/marketing/publish"), payload);
-          resData = res.data;
         }
         if (resData && resData.success) {
           var _resData$facebook, _resData$whatsapp, _resData$instagram;
@@ -1172,15 +1303,15 @@ function MarketingViewAdmin() {
           if (waOk) successChannels.push('WhatsApp');
           if (igOk) successChannels.push('Instagram');
           if (successChannels.length > 0) {
-            react_toastify__WEBPACK_IMPORTED_MODULE_45__/* .toast */ .oR.success("\uD83C\uDF89 Flyer successfully dispatched to ".concat(successChannels.join(' & '), "!"));
+            react_toastify__WEBPACK_IMPORTED_MODULE_46__/* .toast */ .oR.success("\uD83C\uDF89 Flyer successfully dispatched to ".concat(successChannels.join(' & '), "!"));
           } else {
-            react_toastify__WEBPACK_IMPORTED_MODULE_45__/* .toast */ .oR.info('Publishing completed. Check platform statuses on the right.');
+            react_toastify__WEBPACK_IMPORTED_MODULE_46__/* .toast */ .oR.info('Publishing completed. Check platform statuses on the right.');
           }
         } else {
           var _resData2;
           var err = ((_resData2 = resData) === null || _resData2 === void 0 ? void 0 : _resData2.error) || 'Campaign execution returned an error.';
           setErrorMessage(err);
-          react_toastify__WEBPACK_IMPORTED_MODULE_45__/* .toast */ .oR.error(err);
+          react_toastify__WEBPACK_IMPORTED_MODULE_46__/* .toast */ .oR.error(err);
           if (resData) setResult(resData);
         }
       } catch (err) {
@@ -1188,13 +1319,13 @@ function MarketingViewAdmin() {
         console.error('Marketing publish failed:', err);
         var serverErr = ((_err$response3 = err.response) === null || _err$response3 === void 0 || (_err$response3 = _err$response3.data) === null || _err$response3 === void 0 ? void 0 : _err$response3.error) || err.message || 'Failed to connect to marketing agent.';
         setErrorMessage(serverErr);
-        react_toastify__WEBPACK_IMPORTED_MODULE_45__/* .toast */ .oR.error(serverErr);
+        react_toastify__WEBPACK_IMPORTED_MODULE_46__/* .toast */ .oR.error(serverErr);
       } finally {
         setLoadingPublish(false);
       }
     });
     return function handleApproveAndPublish() {
-      return _ref8.apply(this, arguments);
+      return _ref1.apply(this, arguments);
     };
   }();
   if (loadingPermission) {
@@ -1290,13 +1421,13 @@ function MarketingViewAdmin() {
       flexGrow: 1,
       fontWeight: 600
     }
-  }, "Marketing Campaign & Flyer Publisher"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_52__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_MessageAdminView__WEBPACK_IMPORTED_MODULE_53__/* ["default"] */ .A, {
+  }, "Marketing Campaign & Flyer Publisher"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_53__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_MessageAdminView__WEBPACK_IMPORTED_MODULE_54__/* ["default"] */ .A, {
     name: (user === null || user === void 0 || (_user$data0 = user.data) === null || _user$data0 === void 0 ? void 0 : _user$data0.userName) || '',
     role: (user === null || user === void 0 || (_user$data1 = user.data) === null || _user$data1 === void 0 ? void 0 : _user$data1.role) || ''
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
     color: "inherit",
     onClick: handleLogout
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_54__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_55__/* ["default"] */ .A, {
     style: {
       color: 'white'
     }
@@ -1318,7 +1449,7 @@ function MarketingViewAdmin() {
     sx: {
       height: '700px'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_SidebarDashE2__WEBPACK_IMPORTED_MODULE_51__/* ["default"] */ .A, null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_SidebarDashE2__WEBPACK_IMPORTED_MODULE_52__/* ["default"] */ .A, null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, {
     component: "main",
     sx: {
       backgroundColor: theme => theme.palette.mode === 'light' ? theme.palette.grey[100] : theme.palette.grey[900],
@@ -1910,7 +2041,133 @@ function MarketingViewAdmin() {
         backgroundColor: '#0e6e63'
       }
     }
-  }, savingList ? 'Saving...' : 'Save List'))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+  }, savingList ? 'Saving...' : 'Save List'))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
+    open: openCloudQrDialog,
+    onClose: () => setOpenCloudQrDialog(false),
+    maxWidth: "xs",
+    fullWidth: true,
+    PaperProps: {
+      sx: {
+        borderRadius: 2,
+        p: 2,
+        textAlign: 'center'
+      }
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
+    sx: {
+      fontWeight: 800,
+      pb: 1,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, {
+    sx: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: 1
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_WhatsApp__WEBPACK_IMPORTED_MODULE_33__/* ["default"] */ .A, {
+    sx: {
+      color: '#25d366',
+      fontSize: 26
+    }
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+    variant: "h6",
+    sx: {
+      fontWeight: 800
+    }
+  }, "WhatsApp Cloud Master Pairing")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+    size: "small",
+    onClick: () => setOpenCloudQrDialog(false)
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Close__WEBPACK_IMPORTED_MODULE_42__/* ["default"] */ .A, {
+    fontSize: "small"
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
+    sx: {
+      pt: 1
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+    variant: "body2",
+    color: "text.secondary",
+    sx: {
+      mb: 2
+    }
+  }, "Official Company WhatsApp Line: ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("strong", null, "+243 827 722 222")), cloudWaStatus.isReady ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, {
+    sx: {
+      p: 2,
+      bgcolor: '#f0fdf4',
+      borderRadius: 2,
+      border: '1px solid #86efac',
+      mb: 2
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+    variant: "subtitle1",
+    sx: {
+      color: '#16a34a',
+      fontWeight: 800
+    }
+  }, "\u2705 Cloud Master is Online & Connected!"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+    variant: "caption",
+    sx: {
+      color: '#15803d'
+    }
+  }, "Linked Device: ", cloudWaStatus.name || 'Global Gate SARL', " (", cloudWaStatus.phone, ")")) : cloudWaStatus.qrCode ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, {
+    sx: {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      mb: 2
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
+    src: cloudWaStatus.qrCode,
+    alt: "WhatsApp QR Code",
+    style: {
+      width: 240,
+      height: 240,
+      borderRadius: 8,
+      border: '1px solid #cbd5e1'
+    }
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+    variant: "caption",
+    sx: {
+      mt: 1.5,
+      color: '#475569',
+      fontWeight: 600
+    }
+  }, "1. Open WhatsApp on +243 827 722 222", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("br", null), "2. Tap Menu / Settings > Linked Devices", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("br", null), "3. Scan this QR Code to pair Cloud WhatsApp")) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, {
+    sx: {
+      p: 3,
+      bgcolor: '#f8fafc',
+      borderRadius: 2,
+      mb: 2
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+    variant: "body2",
+    color: "text.secondary"
+  }, cloudWaStatus.status === 'CONNECTING' ? 'Connecting to WhatsApp Cloud Master...' : 'Ready to link device.'))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .A, {
+    sx: {
+      justifyContent: 'space-between',
+      px: 2
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+    size: "small",
+    color: "warning",
+    onClick: handleCloudWaReconnect,
+    disabled: reconnectingCloudWa,
+    startIcon: reconnectingCloudWa ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, {
+      size: 14
+    }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Refresh__WEBPACK_IMPORTED_MODULE_41__/* ["default"] */ .A, null)
+  }, reconnectingCloudWa ? 'Reconnecting...' : 'Force Reconnect'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+    variant: "contained",
+    size: "small",
+    onClick: () => setOpenCloudQrDialog(false),
+    sx: {
+      backgroundColor: '#25d366',
+      '&:hover': {
+        backgroundColor: '#1ebe5d'
+      }
+    }
+  }, cloudWaStatus.isReady ? 'Done' : 'Close'))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
     variant: "subtitle2",
     sx: {
       fontWeight: 600,
@@ -1971,7 +2228,8 @@ function MarketingViewAdmin() {
       sx: {
         display: 'flex',
         alignItems: 'center',
-        gap: 0.8
+        gap: 0.8,
+        flexWrap: 'wrap'
       }
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_WhatsApp__WEBPACK_IMPORTED_MODULE_33__/* ["default"] */ .A, {
       sx: {
@@ -1981,7 +2239,20 @@ function MarketingViewAdmin() {
       sx: {
         fontWeight: 500
       }
-    }, "WhatsApp Direct Message"))
+    }, "WhatsApp Direct Message"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
+      clickable: true,
+      onClick: () => setOpenCloudQrDialog(true),
+      label: cloudWaStatus.isReady ? "\u25CF Cloud Master: Connected" : cloudWaStatus.status === 'QR_READY' ? "\u25CF Cloud Master: Scan QR to Link" : cloudWaStatus.status === 'CONNECTING' ? "\u25CF Cloud Master: Connecting..." : "\u25CF Cloud Master: Offline (Click to Link)",
+      sx: {
+        fontWeight: 700,
+        fontSize: '0.68rem',
+        cursor: 'pointer',
+        bgcolor: cloudWaStatus.isReady ? '#dcfce7' : cloudWaStatus.status === 'QR_READY' ? '#fef3c7' : '#fee2e2',
+        color: cloudWaStatus.isReady ? '#15803d' : cloudWaStatus.status === 'QR_READY' ? '#b45309' : '#b91c1c',
+        border: '1px solid',
+        borderColor: cloudWaStatus.isReady ? '#86efac' : cloudWaStatus.status === 'QR_READY' ? '#fcd34d' : '#fca5a5'
+      }
+    }))
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, {
     control: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, {
       checked: targetPlatforms.instagram,
@@ -2296,15 +2567,30 @@ function MarketingViewAdmin() {
         color: d.status === 'sent' ? '#15803d' : d.status === 'failed' ? '#dc2626' : '#b45309'
       }
     }, d.status === 'sent' ? '✅' : d.status === 'failed' ? '❌' : '⏭️', " ", label ? "".concat(label, " - ") : '', "+", d.number, d.error ? " (".concat(d.error, ")") : '');
-  }))), result.whatsapp.error && !result.whatsapp.success && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
-    variant: "caption",
+  }))), result.whatsapp.error && !result.whatsapp.success && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, {
     sx: {
-      color: '#dc2626',
-      display: 'block',
       mt: 0.75,
       pl: 4
     }
-  }, result.whatsapp.error, " \u2014 You can also click \"Open Chat\" above to dispatch directly via WhatsApp.")), result.instagram && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+    variant: "caption",
+    sx: {
+      color: '#dc2626',
+      display: 'block'
+    }
+  }, result.whatsapp.error, " \u2014 You can also click \"Open Chat\" above to dispatch directly via WhatsApp."), (result.whatsapp.error.includes('QR') || result.whatsapp.error.includes('linked') || result.whatsapp.error.includes('timed out') || !cloudWaStatus.isReady) && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+    size: "small",
+    variant: "outlined",
+    color: "warning",
+    onClick: () => setOpenCloudQrDialog(true),
+    startIcon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_QrCode2__WEBPACK_IMPORTED_MODULE_44__/* ["default"] */ .A, null),
+    sx: {
+      mt: 0.75,
+      fontSize: '0.75rem',
+      textTransform: 'none',
+      fontWeight: 600
+    }
+  }, "Check Cloud WhatsApp Master"))), result.instagram && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, {
     sx: {
       p: 1.5,
       backgroundColor: result.instagram.success ? '#fdf2f8' : '#fffbeb',
