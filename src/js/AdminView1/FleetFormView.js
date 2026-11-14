@@ -73,6 +73,7 @@ export default function FleetFormView() {
   const [carModel, setCarModel] = useState('');
   const [plateNumber, setPlateNumber] = useState('');
   const [chassisNumber, setChassisNumber] = useState('');
+  const [vehicleColor, setVehicleColor] = useState('');
   const [status, setStatus] = useState('Running');
   const [branchId, setBranchId] = useState('');
   const [branches, setBranches] = useState([]);
@@ -115,7 +116,7 @@ export default function FleetFormView() {
     }
     try {
       const res = await axios.post(`${ENDPOINT_URL}/fleet`, {
-        carMake, carModel, plateNumber, chassisNumber, status, branchId: branchId || 'HQ'
+        carMake, carModel, plateNumber, chassisNumber, vehicleColor, status, branchId: branchId || 'HQ'
       });
       toast.success('Vehicle added successfully!');
       setTimeout(() => {
@@ -162,6 +163,7 @@ export default function FleetFormView() {
                   <TextField label="Vehicle Make" variant="outlined" value={carMake} onChange={e => setCarMake(e.target.value)} required sx={{ flex: '1 1 45%' }} />
                   <TextField label="Vehicle Model" variant="outlined" value={carModel} onChange={e => setCarModel(e.target.value)} required sx={{ flex: '1 1 45%' }} />
                   <TextField label="Plate Number" variant="outlined" value={plateNumber} onChange={e => setPlateNumber(e.target.value)} required sx={{ flex: '1 1 45%' }} />
+                  <TextField label="Vehicle Color" variant="outlined" value={vehicleColor} onChange={e => setVehicleColor(e.target.value)} placeholder="e.g. White, Black, Silver..." sx={{ flex: '1 1 45%' }} />
                   <TextField label="Chassis Number" variant="outlined" value={chassisNumber} onChange={e => setChassisNumber(e.target.value)} sx={{ flex: '1 1 45%' }} />
                   <FormControl sx={{ flex: '1 1 45%' }}>
                     <InputLabel>Status</InputLabel>

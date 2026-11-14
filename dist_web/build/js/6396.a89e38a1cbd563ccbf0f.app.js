@@ -1,4 +1,4 @@
-(this["webpackChunkgg_management"] = this["webpackChunkgg_management"] || []).push([[7189],{
+(this["webpackChunkgg_management"] = this["webpackChunkgg_management"] || []).push([[6396],{
 
 /***/ 99682
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
@@ -13,6 +13,26 @@
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("path", {
   d: "M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6z"
 }), 'Add'));
+/* harmony export */ __webpack_require__.d(__webpack_exports__, [
+/* harmony export */   "A", 0, /* export default binding */ __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ ]);
+
+
+/***/ },
+
+/***/ 27341
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var _utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(20561);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(74848);
+"use client";
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("path", {
+  d: "M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16m11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5M5 11l1.5-4.5h11L19 11z"
+}), 'DirectionsCar'));
 /* harmony export */ __webpack_require__.d(__webpack_exports__, [
 /* harmony export */   "A", 0, /* export default binding */ __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ ]);
@@ -619,7 +639,7 @@ const GridToolbar = /*#__PURE__*/react.forwardRef(function GridToolbar(props, re
 
 /***/ },
 
-/***/ 17189
+/***/ 96396
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -645,6 +665,8 @@ var dist = __webpack_require__(47767);
 var react_router_dom_dist = __webpack_require__(84976);
 // EXTERNAL MODULE: ./node_modules/@mui/material/styles/styled.js
 var styled = __webpack_require__(11848);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Avatar/Avatar.js + 2 modules
+var Avatar = __webpack_require__(81385);
 // EXTERNAL MODULE: ./node_modules/@mui/material/Box/Box.js + 2 modules
 var Box = __webpack_require__(69067);
 // EXTERNAL MODULE: ./node_modules/@mui/material/IconButton/IconButton.js + 1 modules
@@ -677,6 +699,8 @@ var axios = __webpack_require__(99380);
 var apiConfig = __webpack_require__(71510);
 // EXTERNAL MODULE: ./src/js/utils/formatUtils.js
 var formatUtils = __webpack_require__(37402);
+// EXTERNAL MODULE: ./node_modules/@mui/icons-material/esm/DirectionsCar.js
+var DirectionsCar = __webpack_require__(27341);
 // EXTERNAL MODULE: ./node_modules/@mui/material/utils/createSvgIcon.js
 var createSvgIcon = __webpack_require__(20561);
 // EXTERNAL MODULE: ./node_modules/react/jsx-runtime.js
@@ -694,6 +718,150 @@ var Add = __webpack_require__(99682);
 // EXTERNAL MODULE: ./node_modules/dayjs/dayjs.min.js
 var dayjs_min = __webpack_require__(74353);
 var dayjs_min_default = /*#__PURE__*/__webpack_require__.n(dayjs_min);
+;// ./src/js/utils/fleetUtils.js
+
+var MANDATORY_DOCS_CAR = [{
+  key: 'CARTE_ROSE',
+  label: 'Carte Rose',
+  match: /carte\s*rose|registration/i
+}, {
+  key: 'CONTROLE_TECHNIQUE',
+  label: 'Contrôle Technique',
+  match: /contr[oô]le\s*technique|roadworthiness/i
+}, {
+  key: 'STATIONNEMENT',
+  label: 'Stationnement',
+  match: /stationnement|parking/i
+}, {
+  key: 'VIGNETTE',
+  label: 'Vignette',
+  match: /vignette|road\s*tax/i
+}, {
+  key: 'ASSURANCE',
+  label: 'Attestation d\'Assurance',
+  match: /assurance|insurance/i
+}];
+var MANDATORY_DOCS_TRUCK = [...MANDATORY_DOCS_CAR, {
+  key: 'AUTORISATION_TRANSPORT',
+  label: 'Autorisation Transport',
+  match: /autorisation\s*transport|transport\s*authorization/i
+}];
+
+/**
+ * Checks whether a vehicle is classified as a truck based on its make and model.
+ */
+function isTruckVehicle(car) {
+  var combined = "".concat((car === null || car === void 0 ? void 0 : car.carMake) || '', " ").concat((car === null || car === void 0 ? void 0 : car.carModel) || '').toUpperCase();
+  return /(TRUCK|CAMION|TRAILER|BENNE|TRACTEUR|SHACMAN|HOWO|ACTROS)/i.test(combined);
+}
+
+/**
+ * Evaluates the legal document compliance of a fleet vehicle.
+ * Rules:
+ * 1. If any mandatory document is missing -> MISSING DOCS (Red)
+ * 2. If any mandatory document is UNPAID (isPaid !== true) -> EXPIRED (Red)
+ * 3. If any mandatory document has expired (diff < 0) -> EXPIRED (Red)
+ * 4. If all exist and are paid, but any expires within 7 days -> EXPIRING SOON (Orange)
+ * 5. If all exist, are paid, and valid > 7 days -> OK (Green)
+ */
+function evaluateFleetCompliance(car) {
+  var docs = Array.isArray(car === null || car === void 0 ? void 0 : car.documents) ? car.documents : [];
+  var requiredList = isTruckVehicle(car) ? MANDATORY_DOCS_TRUCK : MANDATORY_DOCS_CAR;
+  var now = dayjs_min_default()();
+  if (docs.length === 0) {
+    return {
+      status: 'NO DOCS',
+      color: '#d32f2f',
+      bgColor: '#ffebee',
+      tooltip: "No documents recorded. Mandatory: ".concat(requiredList.map(r => r.label).join(', ')),
+      severity: 'error'
+    };
+  }
+  var missingDocs = [];
+  var unpaidDocs = [];
+  var expiredDocs = [];
+  var expiringSoonDocs = [];
+  var _loop = function _loop(req) {
+    var matches = docs.filter(d => req.match.test(d.documentName || ''));
+    if (matches.length === 0) {
+      missingDocs.push(req.label);
+      return 1; // continue
+    }
+
+    // Find the latest document for this required paper by expiryDate
+    var latest = matches[0];
+    for (var i = 1; i < matches.length; i++) {
+      if (dayjs_min_default()(matches[i].expiryDate).isAfter(dayjs_min_default()(latest.expiryDate))) {
+        latest = matches[i];
+      }
+    }
+    var isPaid = latest.isPaid === true || String(latest.isPaid).toLowerCase() === 'true';
+    var expDate = dayjs_min_default()(latest.expiryDate);
+    var diffDays = expDate.diff(now, 'day');
+    if (!isPaid) {
+      unpaidDocs.push(req.label);
+    } else if (diffDays < 0) {
+      expiredDocs.push(req.label);
+    } else if (diffDays <= 7) {
+      expiringSoonDocs.push("".concat(req.label, " (").concat(diffDays <= 0 ? 'today' : diffDays + 'd', ")"));
+    }
+  };
+  for (var req of requiredList) {
+    if (_loop(req)) continue;
+  }
+
+  // Also verify any additional custom documents recorded on the vehicle
+  docs.forEach(doc => {
+    var isCovered = requiredList.some(r => r.match.test(doc.documentName || ''));
+    if (!isCovered) {
+      var expDate = dayjs_min_default()(doc.expiryDate);
+      var diffDays = expDate.diff(now, 'day');
+      var isPaid = doc.isPaid === true || String(doc.isPaid).toLowerCase() === 'true';
+      if (!isPaid) {
+        if (!unpaidDocs.includes(doc.documentName)) unpaidDocs.push(doc.documentName);
+      } else if (diffDays < 0) {
+        if (!expiredDocs.includes(doc.documentName)) expiredDocs.push(doc.documentName);
+      } else if (diffDays <= 7) {
+        expiringSoonDocs.push("".concat(doc.documentName, " (").concat(diffDays <= 0 ? 'today' : diffDays + 'd', ")"));
+      }
+    }
+  });
+  if (missingDocs.length > 0) {
+    return {
+      status: 'MISSING DOCS',
+      color: '#d32f2f',
+      bgColor: '#ffebee',
+      tooltip: "Missing: ".concat(missingDocs.join(', ')),
+      severity: 'error'
+    };
+  }
+  if (unpaidDocs.length > 0 || expiredDocs.length > 0) {
+    var reasons = [...(unpaidDocs.length > 0 ? ["Unpaid: ".concat(unpaidDocs.join(', '))] : []), ...(expiredDocs.length > 0 ? ["Expired: ".concat(expiredDocs.join(', '))] : [])];
+    return {
+      status: 'EXPIRED',
+      color: '#d32f2f',
+      bgColor: '#ffebee',
+      tooltip: reasons.join(' | '),
+      severity: 'error'
+    };
+  }
+  if (expiringSoonDocs.length > 0) {
+    return {
+      status: 'EXPIRING SOON',
+      color: '#ed6c02',
+      bgColor: '#fff3e0',
+      tooltip: "Expiring Soon: ".concat(expiringSoonDocs.join(', ')),
+      severity: 'warning'
+    };
+  }
+  return {
+    status: 'OK',
+    color: '#2e7d32',
+    bgColor: '#e8f5e9',
+    tooltip: 'All mandatory documents active & paid',
+    severity: 'success'
+  };
+}
 // EXTERNAL MODULE: ./src/js/component/Loader.js + 1 modules
 var Loader = __webpack_require__(65821);
 // EXTERNAL MODULE: ./node_modules/react-redux/es/index.js + 14 modules
@@ -733,6 +901,7 @@ function _extends() { return _extends = Object.assign ? Object.assign.bind() : f
 function _objectWithoutProperties(e, t) { if (null == e) return {}; var o, r, i = _objectWithoutPropertiesLoose(e, t); if (Object.getOwnPropertySymbols) { var n = Object.getOwnPropertySymbols(e); for (r = 0; r < n.length; r++) o = n[r], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]); } return i; }
 function _objectWithoutPropertiesLoose(r, e) { if (null == r) return {}; var t = {}; for (var n in r) if ({}.hasOwnProperty.call(r, n)) { if (-1 !== e.indexOf(n)) continue; t[n] = r[n]; } return t; }
 ;
+
 
 
 
@@ -915,9 +1084,35 @@ function FleetViewAdmin() {
   var columns = [{
     field: 'counter',
     headerName: '#',
-    width: 60,
+    width: 50,
     filterable: false,
     renderCell: params => params.api.getRowIndexRelativeToVisibleRows(params.id) + 1
+  }, {
+    field: 'photo',
+    headerName: 'Photo',
+    width: 65,
+    sortable: false,
+    filterable: false,
+    renderCell: params => {
+      var img = params.row.vehicleImage;
+      return /*#__PURE__*/react.createElement(Avatar/* default */.A, {
+        variant: "rounded",
+        src: img || undefined,
+        sx: {
+          width: 38,
+          height: 38,
+          borderRadius: '6px',
+          border: '1px solid #e2e8f0',
+          backgroundColor: '#f1f5f9',
+          boxShadow: '0 1px 2px rgba(0,0,0,0.05)'
+        }
+      }, !img && /*#__PURE__*/react.createElement(DirectionsCar/* default */.A, {
+        sx: {
+          fontSize: 22,
+          color: '#94a3b8'
+        }
+      }));
+    }
   }, {
     field: 'carMake',
     headerName: 'Make',
@@ -929,77 +1124,52 @@ function FleetViewAdmin() {
   }, {
     field: 'plateNumber',
     headerName: 'Plate #',
-    flex: 1
+    flex: 1,
+    renderCell: params => /*#__PURE__*/react.createElement("strong", null, params.value || 'N/A')
+  }, {
+    field: 'vehicleColor',
+    headerName: 'Vehicle Color',
+    flex: 1,
+    valueFormatter: params => params.value || '—'
   }, {
     field: 'branchId',
     headerName: 'Branch',
-    flex: 1,
+    flex: 0.8,
     valueFormatter: params => params.value || 'HQ'
   }, {
     field: 'status',
     headerName: 'Status',
-    flex: 1,
+    flex: 0.9,
     renderCell: params => (0,formatUtils/* renderStatusBadge */.UM)(params.row.status)
   }, {
     field: 'documents',
     headerName: 'Expiring Soon',
-    flex: 1,
+    flex: 1.2,
     renderCell: params => {
-      var docs = params.row.documents;
-      if (!docs || docs.length === 0) return /*#__PURE__*/react.createElement("span", {
+      var compliance = evaluateFleetCompliance(params.row);
+      return /*#__PURE__*/react.createElement(ViewTooltip, {
+        title: compliance.tooltip,
+        placement: "top"
+      }, /*#__PURE__*/react.createElement("span", {
         style: {
-          color: '#f44336',
-          fontWeight: 'bold'
+          color: compliance.color,
+          backgroundColor: compliance.bgColor,
+          padding: '4px 10px',
+          borderRadius: '6px',
+          fontWeight: 'bold',
+          fontSize: '11.5px',
+          display: 'inline-flex',
+          alignItems: 'center',
+          gap: '4px',
+          border: "1px solid ".concat(compliance.color, "40"),
+          cursor: 'pointer'
         }
-      }, "No Docs");
-      var latestDocs = {};
-      docs.forEach(doc => {
-        var exp = dayjs_min_default()(doc.expiryDate);
-        if (!latestDocs[doc.documentName] || exp.isAfter(latestDocs[doc.documentName].exp)) {
-          latestDocs[doc.documentName] = {
-            exp,
-            isPaid: doc.isPaid
-          };
-        }
-      });
-      var now = dayjs_min_default()();
-      var isExpired = false;
-      var isExpiringSoon = false;
-      Object.values(latestDocs).forEach(docInfo => {
-        var diff = docInfo.exp.diff(now, 'day');
-        if (diff < 0 && !docInfo.isPaid) {
-          isExpired = true;
-        } else if (diff <= 7 && !docInfo.isPaid) {
-          isExpiringSoon = true;
-        }
-      });
-      if (isExpired) {
-        return /*#__PURE__*/react.createElement("span", {
-          style: {
-            color: '#f44336',
-            fontWeight: 'bold'
-          }
-        }, "EXPIRED");
-      } else if (isExpiringSoon) {
-        return /*#__PURE__*/react.createElement("span", {
-          style: {
-            color: '#ff9800',
-            fontWeight: 'bold'
-          }
-        }, "OK");
-      } else {
-        return /*#__PURE__*/react.createElement("span", {
-          style: {
-            color: '#4caf50',
-            fontWeight: 'bold'
-          }
-        }, "OK");
-      }
+      }, compliance.status));
     }
   }, {
     field: 'action',
     headerName: 'Action',
-    flex: 1,
+    width: 80,
     renderCell: params => {
       return /*#__PURE__*/react.createElement("div", {
         className: "cellAction"
@@ -1122,32 +1292,22 @@ function FleetViewAdmin() {
         '&:hover': {
           backgroundColor: '#ffcdd2'
         }
+      },
+      '& .row-expiring-soon': {
+        backgroundColor: '#fff3e0',
+        '&:hover': {
+          backgroundColor: '#ffe0b2'
+        }
       }
     }
   }, /*#__PURE__*/react.createElement(DataGrid/* DataGrid */.zh, {
+    rowHeight: 52,
     getRowClassName: params => {
       if (params.row.status !== 'Running') return '';
-      var docs = params.row.documents;
-      if (!docs || docs.length === 0) return '';
-      var latestDocs = {};
-      docs.forEach(doc => {
-        var exp = dayjs_min_default()(doc.expiryDate);
-        if (!latestDocs[doc.documentName] || exp.isAfter(latestDocs[doc.documentName])) {
-          latestDocs[doc.documentName] = exp;
-        }
-      });
-      var now = dayjs_min_default()();
-      var expiring = false;
-      docs.forEach(doc => {
-        var isLatest = dayjs_min_default()(doc.expiryDate).isSame(latestDocs[doc.documentName]);
-        if (isLatest) {
-          var exp = dayjs_min_default()(doc.expiryDate);
-          if (exp.diff(now, 'day') <= 7 && !doc.isPaid) {
-            expiring = true;
-          }
-        }
-      });
-      return expiring ? 'row-expiring-soon' : '';
+      var compliance = evaluateFleetCompliance(params.row);
+      if (compliance.status === 'EXPIRED') return 'super-app-theme--Expiring';
+      if (compliance.status === 'EXPIRING SOON') return 'row-expiring-soon';
+      return '';
     },
     paginationMode: "server",
     filterMode: "server",

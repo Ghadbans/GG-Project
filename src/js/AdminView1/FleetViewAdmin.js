@@ -3,7 +3,7 @@ import './view.css';
 import './PageView/Chartview.css';
 import SidebarDash from '../component/SidebarDash';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { IconButton, styled, Typography, Modal, Box, Backdrop, Container } from '@mui/material';
+import { IconButton, styled, Typography, Modal, Box, Backdrop, Container, Avatar } from '@mui/material';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -15,8 +15,9 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import axios from 'axios';
 import { ENDPOINT_URL } from '../apiConfig';
 import { renderStatusBadge } from '../utils/formatUtils';
-import { Add, Delete, Edit, Visibility } from '@mui/icons-material';
+import { Add, Delete, Edit, Visibility, DirectionsCar as DirectionsCarIcon } from '@mui/icons-material';
 import dayjs from 'dayjs';
+import { evaluateFleetCompliance } from '../utils/fleetUtils';
 import Loader from '../component/Loader';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { useDispatch, useSelector } from "react-redux"
@@ -148,57 +149,75 @@ export default function FleetViewAdmin() {
     {
       field: 'counter',
       headerName: '#',
-      width: 60,
+      width: 50,
       filterable: false,
       renderCell: (params) => params.api.getRowIndexRelativeToVisibleRows(params.id) + 1,
     },
+    {
+      field: 'photo',
+      headerName: 'Photo',
+      width: 65,
+      sortable: false,
+      filterable: false,
+      renderCell: (params) => {
+        const img = params.row.vehicleImage;
+        return (
+          <Avatar
+            variant="rounded"
+            src={img || undefined}
+            sx={{
+              width: 38,
+              height: 38,
+              borderRadius: '6px',
+              border: '1px solid #e2e8f0',
+              backgroundColor: '#f1f5f9',
+              boxShadow: '0 1px 2px rgba(0,0,0,0.05)',
+            }}
+          >
+            {!img && <DirectionsCarIcon sx={{ fontSize: 22, color: '#94a3b8' }} />}
+          </Avatar>
+        );
+      }
+    },
     { field: 'carMake', headerName: 'Make', flex: 1 },
     { field: 'carModel', headerName: 'Model', flex: 1 },
-    { field: 'plateNumber', headerName: 'Plate #', flex: 1 },
-    { field: 'branchId', headerName: 'Branch', flex: 1, valueFormatter: (params) => params.value || 'HQ' },
-    { field: 'status', headerName: 'Status', flex: 1, renderCell: (params) => renderStatusBadge(params.row.status) },
+    { field: 'plateNumber', headerName: 'Plate #', flex: 1, renderCell: (params) => <strong>{params.value || 'N/A'}</strong> },
+    { field: 'vehicleColor', headerName: 'Vehicle Color', flex: 1, valueFormatter: (params) => params.value || '—' },
+    { field: 'branchId', headerName: 'Branch', flex: 0.8, valueFormatter: (params) => params.value || 'HQ' },
+    { field: 'status', headerName: 'Status', flex: 0.9, renderCell: (params) => renderStatusBadge(params.row.status) },
     {
       field: 'documents',
       headerName: 'Expiring Soon',
-      flex: 1,
+      flex: 1.2,
       renderCell: (params) => {
-        const docs = params.row.documents;
-        if (!docs || docs.length === 0) return <span style={{ color: '#f44336', fontWeight: 'bold' }}>No Docs</span>;
-        
-        const latestDocs = {};
-        docs.forEach(doc => {
-          const exp = dayjs(doc.expiryDate);
-          if (!latestDocs[doc.documentName] || exp.isAfter(latestDocs[doc.documentName].exp)) {
-            latestDocs[doc.documentName] = { exp, isPaid: doc.isPaid };
-          }
-        });
-
-        const now = dayjs();
-        let isExpired = false;
-        let isExpiringSoon = false;
-        
-        Object.values(latestDocs).forEach(docInfo => {
-           const diff = docInfo.exp.diff(now, 'day');
-           if (diff < 0 && !docInfo.isPaid) {
-             isExpired = true;
-           } else if (diff <= 7 && !docInfo.isPaid) {
-             isExpiringSoon = true;
-           }
-        });
-
-        if (isExpired) {
-          return <span style={{ color: '#f44336', fontWeight: 'bold' }}>EXPIRED</span>;
-        } else if (isExpiringSoon) {
-          return <span style={{ color: '#ff9800', fontWeight: 'bold' }}>OK</span>;
-        } else {
-          return <span style={{ color: '#4caf50', fontWeight: 'bold' }}>OK</span>;
-        }
+        const compliance = evaluateFleetCompliance(params.row);
+        return (
+          <ViewTooltip title={compliance.tooltip} placement="top">
+            <span
+              style={{
+                color: compliance.color,
+                backgroundColor: compliance.bgColor,
+                padding: '4px 10px',
+                borderRadius: '6px',
+                fontWeight: 'bold',
+                fontSize: '11.5px',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '4px',
+                border: `1px solid ${compliance.color}40`,
+                cursor: 'pointer'
+              }}
+            >
+              {compliance.status}
+            </span>
+          </ViewTooltip>
+        );
       }
     },
     {
       field: 'action',
       headerName: 'Action',
-      flex: 1,
+      width: 80,
       renderCell: (params) => {
         return (
           <div className="cellAction">
@@ -208,7 +227,7 @@ export default function FleetViewAdmin() {
               </NavLink>
             </ViewTooltip>
           </div>
-        )
+        );
       }
     }
   ];
@@ -275,33 +294,15 @@ export default function FleetViewAdmin() {
                       </span>
                     </ViewTooltip>
                   </section>
-                  <Box sx={{ height: 600, width: '100%', '& .super-app-theme--Expiring': { backgroundColor: '#ffebee', '&:hover': { backgroundColor: '#ffcdd2' } } }}>
+                  <Box sx={{ height: 600, width: '100%', '& .super-app-theme--Expiring': { backgroundColor: '#ffebee', '&:hover': { backgroundColor: '#ffcdd2' } }, '& .row-expiring-soon': { backgroundColor: '#fff3e0', '&:hover': { backgroundColor: '#ffe0b2' } } }}>
                     <DataGrid
+                      rowHeight={52}
                       getRowClassName={(params) => {
                         if (params.row.status !== 'Running') return '';
-                        const docs = params.row.documents;
-                        if (!docs || docs.length === 0) return '';
-                        
-                        const latestDocs = {};
-                        docs.forEach(doc => {
-                          const exp = dayjs(doc.expiryDate);
-                          if (!latestDocs[doc.documentName] || exp.isAfter(latestDocs[doc.documentName])) {
-                            latestDocs[doc.documentName] = exp;
-                          }
-                        });
-
-                        const now = dayjs();
-                        let expiring = false;
-                        docs.forEach(doc => {
-                           const isLatest = dayjs(doc.expiryDate).isSame(latestDocs[doc.documentName]);
-                           if (isLatest) {
-                             const exp = dayjs(doc.expiryDate);
-                             if (exp.diff(now, 'day') <= 7 && !doc.isPaid) {
-                               expiring = true;
-                             }
-                           }
-                        });
-                        return expiring ? 'row-expiring-soon' : '';
+                        const compliance = evaluateFleetCompliance(params.row);
+                        if (compliance.status === 'EXPIRED') return 'super-app-theme--Expiring';
+                        if (compliance.status === 'EXPIRING SOON') return 'row-expiring-soon';
+                        return '';
                       }}
                       paginationMode="server"
                           filterMode="server"

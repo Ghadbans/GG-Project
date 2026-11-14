@@ -3,13 +3,15 @@ const Fleet = require('../model/fleetSchema');
 // Create a new car
 exports.createFleet = async (req, res) => {
     try {
-        const { carMake, carModel, plateNumber, chassisNumber, status, branchId } = req.body;
+        const { carMake, carModel, plateNumber, chassisNumber, vehicleColor, vehicleImage, status, branchId } = req.body;
         
         const newFleet = new Fleet({
             carMake,
             carModel,
             plateNumber,
             chassisNumber,
+            vehicleColor: vehicleColor || '',
+            vehicleImage: vehicleImage || '',
             status,
             branchId
         });

@@ -1,5 +1,5 @@
 "use strict";
-(this["webpackChunkgg_management"] = this["webpackChunkgg_management"] || []).push([[9127],{
+(this["webpackChunkgg_management"] = this["webpackChunkgg_management"] || []).push([[204],{
 
 /***/ 99682
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
@@ -32,6 +32,25 @@
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("path", {
   d: "M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6zM19 4h-3.5l-1-1h-5l-1 1H5v2h14z"
 }), 'Delete'));
+/* harmony export */ __webpack_require__.d(__webpack_exports__, [
+/* harmony export */   "A", 0, /* export default binding */ __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ ]);
+
+
+/***/ },
+
+/***/ 27341
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+/* harmony import */ var _utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(20561);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(74848);
+"use client";
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("path", {
+  d: "M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16m11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5M5 11l1.5-4.5h11L19 11z"
+}), 'DirectionsCar'));
 /* harmony export */ __webpack_require__.d(__webpack_exports__, [
 /* harmony export */   "A", 0, /* export default binding */ __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ ]);
@@ -656,58 +675,133 @@ const GridToolbar = /*#__PURE__*/react.forwardRef(function GridToolbar(props, re
 
 /***/ },
 
-/***/ 69127
+/***/ 40204
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
+// ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ FleetFormUpdate)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(96540);
-/* harmony import */ var _view_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(68525);
-/* harmony import */ var _component_SidebarDash__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(4640);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(47767);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(69067);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(11641);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(14073);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(97834);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(86990);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(8239);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(50779);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(29571);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(2071);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(73896);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(844);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(86531);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(35406);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(11848);
-/* harmony import */ var _mui_material_AppBar__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(89828);
-/* harmony import */ var _mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(8532);
-/* harmony import */ var _mui_material_Drawer__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(88248);
-/* harmony import */ var _mui_material_List__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(49799);
-/* harmony import */ var _mui_material_Divider__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(71543);
-/* harmony import */ var _mui_icons_material_Menu__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(62274);
-/* harmony import */ var _mui_icons_material_ChevronLeft__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(8451);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(99380);
-/* harmony import */ var _utils_apiCache__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(46986);
-/* harmony import */ var _apiConfig__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(71510);
-/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(99682);
-/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(11735);
-/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(67110);
-/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(72297);
-/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(42758);
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(13561);
-/* harmony import */ var _features_auth_authSlice__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(32005);
-/* harmony import */ var _component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(40301);
-/* harmony import */ var _MessageAdminView__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(83818);
-/* harmony import */ var _NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(95236);
-/* harmony import */ var _mui_material_CssBaseline__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(14519);
-/* harmony import */ var react_toastify__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(99571);
-/* harmony import */ var react_toastify_dist_ReactToastify_css__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(12717);
-/* harmony import */ var _mui_x_data_grid__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(1835);
-/* harmony import */ var _mui_x_data_grid__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(53071);
-/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(74353);
-/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_43___default = /*#__PURE__*/__webpack_require__.n(dayjs__WEBPACK_IMPORTED_MODULE_43__);
+
+// EXPORTS
+__webpack_require__.d(__webpack_exports__, {
+  "default": () => (/* binding */ FleetFormUpdate)
+});
+
+// EXTERNAL MODULE: ./node_modules/react/index.js
+var react = __webpack_require__(96540);
+// EXTERNAL MODULE: ./src/js/AdminView1/view.css
+var view = __webpack_require__(68525);
+// EXTERNAL MODULE: ./src/js/component/SidebarDash.js
+var SidebarDash = __webpack_require__(4640);
+// EXTERNAL MODULE: ./node_modules/react-router/dist/index.js
+var dist = __webpack_require__(47767);
+// EXTERNAL MODULE: ./node_modules/@mui/material/styles/styled.js
+var styled = __webpack_require__(11848);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Box/Box.js + 2 modules
+var Box = __webpack_require__(69067);
+// EXTERNAL MODULE: ./node_modules/@mui/material/IconButton/IconButton.js + 1 modules
+var IconButton = __webpack_require__(11641);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Typography/Typography.js + 1 modules
+var Typography = __webpack_require__(14073);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Container/Container.js + 1 modules
+var Container = __webpack_require__(97834);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Button/Button.js + 3 modules
+var Button = __webpack_require__(86990);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Grid/Grid.js + 2 modules
+var Grid = __webpack_require__(8239);
+// EXTERNAL MODULE: ./node_modules/@mui/material/FormControl/FormControl.js + 1 modules
+var FormControl = __webpack_require__(50779);
+// EXTERNAL MODULE: ./node_modules/@mui/material/InputLabel/InputLabel.js + 1 modules
+var InputLabel = __webpack_require__(29571);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Select/Select.js + 4 modules
+var Select = __webpack_require__(2071);
+// EXTERNAL MODULE: ./node_modules/@mui/material/MenuItem/MenuItem.js + 1 modules
+var MenuItem = __webpack_require__(73896);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Modal/Modal.js + 3 modules
+var Modal = __webpack_require__(35406);
+// EXTERNAL MODULE: ./node_modules/@mui/material/TextField/TextField.js + 2 modules
+var TextField = __webpack_require__(844);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Autocomplete/Autocomplete.js + 1 modules
+var Autocomplete = __webpack_require__(86531);
+// EXTERNAL MODULE: ./node_modules/@mui/material/AppBar/AppBar.js + 1 modules
+var AppBar = __webpack_require__(89828);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Toolbar/Toolbar.js + 1 modules
+var Toolbar = __webpack_require__(8532);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Drawer/Drawer.js + 1 modules
+var Drawer = __webpack_require__(88248);
+// EXTERNAL MODULE: ./node_modules/@mui/material/List/List.js + 1 modules
+var List = __webpack_require__(49799);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Divider/Divider.js
+var Divider = __webpack_require__(71543);
+// EXTERNAL MODULE: ./node_modules/@mui/icons-material/Menu.js
+var Menu = __webpack_require__(62274);
+// EXTERNAL MODULE: ./node_modules/@mui/icons-material/ChevronLeft.js
+var ChevronLeft = __webpack_require__(8451);
+// EXTERNAL MODULE: ./node_modules/axios/lib/axios.js + 48 modules
+var axios = __webpack_require__(99380);
+// EXTERNAL MODULE: ./src/js/utils/apiCache.js
+var apiCache = __webpack_require__(46986);
+// EXTERNAL MODULE: ./src/js/apiConfig.js
+var apiConfig = __webpack_require__(71510);
+// EXTERNAL MODULE: ./node_modules/@mui/icons-material/esm/ArrowBack.js
+var ArrowBack = __webpack_require__(11735);
+// EXTERNAL MODULE: ./node_modules/@mui/icons-material/esm/Edit.js
+var Edit = __webpack_require__(72297);
+// EXTERNAL MODULE: ./node_modules/@mui/icons-material/esm/Delete.js
+var Delete = __webpack_require__(67110);
+// EXTERNAL MODULE: ./node_modules/@mui/icons-material/esm/DirectionsCar.js
+var DirectionsCar = __webpack_require__(27341);
+// EXTERNAL MODULE: ./node_modules/@mui/material/utils/createSvgIcon.js
+var createSvgIcon = __webpack_require__(20561);
+// EXTERNAL MODULE: ./node_modules/react/jsx-runtime.js
+var jsx_runtime = __webpack_require__(74848);
+;// ./node_modules/@mui/icons-material/esm/PhotoCamera.js
+"use client";
+
+
+
+/* harmony default export */ const PhotoCamera = ((0,createSvgIcon/* default */.A)([/*#__PURE__*/(0,jsx_runtime.jsx)("circle", {
+  cx: "12",
+  cy: "12",
+  r: "3.2"
+}, "0"), /*#__PURE__*/(0,jsx_runtime.jsx)("path", {
+  d: "M9 2 7.17 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2h-3.17L15 2zm3 15c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5"
+}, "1")], 'PhotoCamera'));
+;// ./node_modules/@mui/icons-material/esm/DeleteOutline.js
+"use client";
+
+
+
+/* harmony default export */ const DeleteOutline = ((0,createSvgIcon/* default */.A)( /*#__PURE__*/(0,jsx_runtime.jsx)("path", {
+  d: "M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6zM8 9h8v10H8zm7.5-5-1-1h-5l-1 1H5v2h14V4z"
+}), 'DeleteOutline'));
+// EXTERNAL MODULE: ./node_modules/@mui/icons-material/esm/Print.js
+var Print = __webpack_require__(42758);
+// EXTERNAL MODULE: ./node_modules/@mui/icons-material/esm/Add.js
+var Add = __webpack_require__(99682);
+// EXTERNAL MODULE: ./node_modules/react-redux/es/index.js + 14 modules
+var es = __webpack_require__(13561);
+// EXTERNAL MODULE: ./src/js/features/auth/authSlice.js
+var authSlice = __webpack_require__(32005);
+// EXTERNAL MODULE: ./src/js/component/NetworkLogoutIcon.js
+var NetworkLogoutIcon = __webpack_require__(40301);
+// EXTERNAL MODULE: ./src/js/AdminView1/MessageAdminView.js + 2 modules
+var MessageAdminView = __webpack_require__(83818);
+// EXTERNAL MODULE: ./src/js/AdminView1/NotificationVIewInfo.js
+var NotificationVIewInfo = __webpack_require__(95236);
+// EXTERNAL MODULE: ./node_modules/@mui/material/CssBaseline/CssBaseline.js
+var CssBaseline = __webpack_require__(14519);
+// EXTERNAL MODULE: ./node_modules/react-toastify/dist/react-toastify.esm.mjs
+var react_toastify_esm = __webpack_require__(99571);
+// EXTERNAL MODULE: ./node_modules/react-toastify/dist/ReactToastify.css
+var ReactToastify = __webpack_require__(12717);
+// EXTERNAL MODULE: ./node_modules/@mui/x-data-grid/DataGrid/DataGrid.js + 185 modules
+var DataGrid = __webpack_require__(1835);
+// EXTERNAL MODULE: ./node_modules/@mui/x-data-grid/components/toolbar/GridToolbar.js + 5 modules
+var GridToolbar = __webpack_require__(53071);
+// EXTERNAL MODULE: ./node_modules/dayjs/dayjs.min.js
+var dayjs_min = __webpack_require__(74353);
+var dayjs_min_default = /*#__PURE__*/__webpack_require__.n(dayjs_min);
+;// ./src/js/AdminView1/FleetFormUpdate.js
 var _excluded = ["_id"],
   _excluded2 = ["_id"];
 function _extends() { return _extends = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends.apply(null, arguments); }
@@ -753,7 +847,7 @@ function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = 
 
 
 var drawerWidth = 240;
-var AppBar = (0,_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .Ay)(_mui_material_AppBar__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
+var FleetFormUpdate_AppBar = (0,styled/* default */.Ay)(AppBar/* default */.A, {
   shouldForwardProp: prop => prop !== 'open'
 })(_ref => {
   var theme = _ref.theme,
@@ -773,7 +867,7 @@ var AppBar = (0,_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .Ay
     })
   });
 });
-var Drawer = (0,_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .Ay)(_mui_material_Drawer__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .Ay, {
+var FleetFormUpdate_Drawer = (0,styled/* default */.Ay)(Drawer/* default */.Ay, {
   shouldForwardProp: prop => prop !== 'open'
 })(_ref2 => {
   var theme = _ref2.theme,
@@ -814,60 +908,61 @@ var modalStyle = {
 };
 function FleetFormUpdate() {
   var _user$data4, _user$data5;
-  var _useParams = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_3__/* .useParams */ .g)(),
+  var _useParams = (0,dist/* useParams */.g)(),
     id = _useParams.id;
-  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+  var _useState = (0,react.useState)(false),
     _useState2 = _slicedToArray(_useState, 2),
     sideBar = _useState2[0],
     setSideBar = _useState2[1];
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+  var _useState3 = (0,react.useState)(null),
     _useState4 = _slicedToArray(_useState3, 2),
     fleet = _useState4[0],
     setFleet = _useState4[1];
-  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+  var _useState5 = (0,react.useState)(''),
     _useState6 = _slicedToArray(_useState5, 2),
     status = _useState6[0],
     setStatus = _useState6[1];
 
   // Grant Access
-  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+  var _useState7 = (0,react.useState)([]),
     _useState8 = _slicedToArray(_useState7, 2),
     grantAccess = _useState8[0],
     setGrantAccess = _useState8[1];
 
   // Edit Vehicle Modal
-  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+  var _useState9 = (0,react.useState)(false),
     _useState0 = _slicedToArray(_useState9, 2),
     carModal = _useState0[0],
     setCarModal = _useState0[1];
-  var _useState1 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
+  var _useState1 = (0,react.useState)({
       carMake: '',
       carModel: '',
       plateNumber: '',
       chassisNumber: '',
+      vehicleColor: '',
       branchId: ''
     }),
     _useState10 = _slicedToArray(_useState1, 2),
     carData = _useState10[0],
     setCarData = _useState10[1];
-  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+  var _useState11 = (0,react.useState)([]),
     _useState12 = _slicedToArray(_useState11, 2),
     branches = _useState12[0],
     setBranches = _useState12[1];
 
   // Document Modal state
-  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+  var _useState13 = (0,react.useState)(false),
     _useState14 = _slicedToArray(_useState13, 2),
     docModal = _useState14[0],
     setDocModal = _useState14[1];
-  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+  var _useState15 = (0,react.useState)(false),
     _useState16 = _slicedToArray(_useState15, 2),
     isEditDoc = _useState16[0],
     setIsEditDoc = _useState16[1];
-  var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
+  var _useState17 = (0,react.useState)({
       _id: '',
       documentName: '',
-      year: dayjs__WEBPACK_IMPORTED_MODULE_43___default()().format('YYYY'),
+      year: dayjs_min_default()().format('YYYY'),
       startDate: '',
       expiryDate: '',
       amountPaid: 0,
@@ -879,15 +974,15 @@ function FleetFormUpdate() {
     setDocData = _useState18[1];
 
   // Oil Change Modal state
-  var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+  var _useState19 = (0,react.useState)(false),
     _useState20 = _slicedToArray(_useState19, 2),
     oilModal = _useState20[0],
     setOilModal = _useState20[1];
-  var _useState21 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+  var _useState21 = (0,react.useState)(false),
     _useState22 = _slicedToArray(_useState21, 2),
     isEditOil = _useState22[0],
     setIsEditOil = _useState22[1];
-  var _useState23 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
+  var _useState23 = (0,react.useState)({
       _id: '',
       date: '',
       kilometers: '',
@@ -898,13 +993,13 @@ function FleetFormUpdate() {
     setOilData = _useState24[1];
 
   // Year Filter
-  var _useState25 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('All'),
+  var _useState25 = (0,react.useState)('All'),
     _useState26 = _slicedToArray(_useState25, 2),
     yearFilter = _useState26[0],
     setYearFilter = _useState26[1];
-  var user = (0,react_redux__WEBPACK_IMPORTED_MODULE_33__/* .useSelector */ .d4)(_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_34__/* .selectCurrentUser */ .xu);
-  var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_3__/* .useNavigate */ .Zp)();
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+  var user = (0,es/* useSelector */.d4)(authSlice/* selectCurrentUser */.xu);
+  var navigate = (0,dist/* useNavigate */.Zp)();
+  (0,react.useEffect)(() => {
     fetchFleet();
     fetchAccess();
   }, [id, user]);
@@ -912,7 +1007,7 @@ function FleetFormUpdate() {
     var _ref3 = _asyncToGenerator(function* () {
       try {
         var _user$data;
-        var res = yield (0,_utils_apiCache__WEBPACK_IMPORTED_MODULE_26__/* .cachedGet */ .Fe)("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_27__/* .ENDPOINT_URL */ .m, "/grantAccess"));
+        var res = yield (0,apiCache/* cachedGet */.Fe)("".concat(apiConfig/* ENDPOINT_URL */.m, "/grantAccess"));
         if (user !== null && user !== void 0 && (_user$data = user.data) !== null && _user$data !== void 0 && _user$data.id) {
           var _res$data;
           var userAccess = (_res$data = res.data) === null || _res$data === void 0 || (_res$data = _res$data.data) === null || _res$data === void 0 ? void 0 : _res$data.filter(row => row.userID === user.data.id);
@@ -932,7 +1027,7 @@ function FleetFormUpdate() {
     var _ref4 = _asyncToGenerator(function* () {
       try {
         var _res$data2;
-        var res = yield axios__WEBPACK_IMPORTED_MODULE_25__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_27__/* .ENDPOINT_URL */ .m, "/companyProfile"));
+        var res = yield axios/* default */.A.get("".concat(apiConfig/* ENDPOINT_URL */.m, "/companyProfile"));
         if ((_res$data2 = res.data) !== null && _res$data2 !== void 0 && (_res$data2 = _res$data2.data) !== null && _res$data2 !== void 0 && (_res$data2 = _res$data2[0]) !== null && _res$data2 !== void 0 && _res$data2.branches) {
           setBranches(res.data.data[0].branches);
         }
@@ -944,7 +1039,7 @@ function FleetFormUpdate() {
       return _ref4.apply(this, arguments);
     };
   }();
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+  (0,react.useEffect)(() => {
     fetchBranches();
   }, []);
   var FleetInfoC = grantAccess.filter(row => row.moduleName === "Fleet Management" && row.access.createM === true);
@@ -956,11 +1051,11 @@ function FleetFormUpdate() {
   var fetchFleet = /*#__PURE__*/function () {
     var _ref5 = _asyncToGenerator(function* () {
       try {
-        var res = yield axios__WEBPACK_IMPORTED_MODULE_25__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_27__/* .ENDPOINT_URL */ .m, "/fleet/").concat(id));
+        var res = yield axios/* default */.A.get("".concat(apiConfig/* ENDPOINT_URL */.m, "/fleet/").concat(id));
         setFleet(res.data);
         setStatus(res.data.status);
       } catch (err) {
-        react_toastify__WEBPACK_IMPORTED_MODULE_39__/* .toast */ .oR.error('Failed to load fleet data');
+        react_toastify_esm/* toast */.oR.error('Failed to load fleet data');
       }
     });
     return function fetchFleet() {
@@ -972,13 +1067,13 @@ function FleetFormUpdate() {
       var newStatus = e.target.value;
       setStatus(newStatus);
       try {
-        yield axios__WEBPACK_IMPORTED_MODULE_25__/* ["default"] */ .A.put("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_27__/* .ENDPOINT_URL */ .m, "/fleet/").concat(id), {
+        yield axios/* default */.A.put("".concat(apiConfig/* ENDPOINT_URL */.m, "/fleet/").concat(id), {
           status: newStatus
         });
-        react_toastify__WEBPACK_IMPORTED_MODULE_39__/* .toast */ .oR.success('Status updated');
+        react_toastify_esm/* toast */.oR.success('Status updated');
         fetchFleet();
       } catch (err) {
-        react_toastify__WEBPACK_IMPORTED_MODULE_39__/* .toast */ .oR.error('Failed to update status');
+        react_toastify_esm/* toast */.oR.error('Failed to update status');
       }
     });
     return function handleStatusChange(_x) {
@@ -988,12 +1083,12 @@ function FleetFormUpdate() {
   var handleUpdateCar = /*#__PURE__*/function () {
     var _ref7 = _asyncToGenerator(function* () {
       try {
-        yield axios__WEBPACK_IMPORTED_MODULE_25__/* ["default"] */ .A.put("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_27__/* .ENDPOINT_URL */ .m, "/fleet/").concat(id), carData);
-        react_toastify__WEBPACK_IMPORTED_MODULE_39__/* .toast */ .oR.success('Vehicle details updated');
+        yield axios/* default */.A.put("".concat(apiConfig/* ENDPOINT_URL */.m, "/fleet/").concat(id), carData);
+        react_toastify_esm/* toast */.oR.success('Vehicle details updated');
         setCarModal(false);
         fetchFleet();
       } catch (err) {
-        react_toastify__WEBPACK_IMPORTED_MODULE_39__/* .toast */ .oR.error('Failed to update vehicle details');
+        react_toastify_esm/* toast */.oR.error('Failed to update vehicle details');
       }
     });
     return function handleUpdateCar() {
@@ -1004,11 +1099,11 @@ function FleetFormUpdate() {
     var _ref8 = _asyncToGenerator(function* () {
       if (window.confirm("Are you sure you want to delete this vehicle and all its records?")) {
         try {
-          yield axios__WEBPACK_IMPORTED_MODULE_25__/* ["default"] */ .A.delete("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_27__/* .ENDPOINT_URL */ .m, "/fleet/").concat(id));
-          react_toastify__WEBPACK_IMPORTED_MODULE_39__/* .toast */ .oR.success('Vehicle deleted successfully');
+          yield axios/* default */.A.delete("".concat(apiConfig/* ENDPOINT_URL */.m, "/fleet/").concat(id));
+          react_toastify_esm/* toast */.oR.success('Vehicle deleted successfully');
           navigate('/FleetViewAdmin');
         } catch (err) {
-          react_toastify__WEBPACK_IMPORTED_MODULE_39__/* .toast */ .oR.error('Failed to delete vehicle');
+          react_toastify_esm/* toast */.oR.error('Failed to delete vehicle');
         }
       }
     });
@@ -1016,106 +1111,187 @@ function FleetFormUpdate() {
       return _ref8.apply(this, arguments);
     };
   }();
+  var handleImageFileChange = /*#__PURE__*/function () {
+    var _ref9 = _asyncToGenerator(function* (e) {
+      var _e$target$files;
+      var file = (_e$target$files = e.target.files) === null || _e$target$files === void 0 ? void 0 : _e$target$files[0];
+      if (!file) return;
+      if (!file.type.startsWith('image/')) {
+        react_toastify_esm/* toast */.oR.error('Please select an image file (PNG, JPG, WEBP).');
+        return;
+      }
+      try {
+        var reader = new FileReader();
+        reader.onload = /*#__PURE__*/function () {
+          var _ref0 = _asyncToGenerator(function* (event) {
+            var img = new Image();
+            img.onload = /*#__PURE__*/_asyncToGenerator(function* () {
+              var canvas = document.createElement('canvas');
+              var width = img.width;
+              var height = img.height;
+              var maxDim = 800;
+              if (width > maxDim || height > maxDim) {
+                if (width > height) {
+                  height = Math.round(height * maxDim / width);
+                  width = maxDim;
+                } else {
+                  width = Math.round(width * maxDim / height);
+                  height = maxDim;
+                }
+              }
+              canvas.width = width;
+              canvas.height = height;
+              var ctx = canvas.getContext('2d');
+              ctx.drawImage(img, 0, 0, width, height);
+              var dataUrl = canvas.toDataURL('image/jpeg', 0.85);
+              try {
+                yield axios/* default */.A.put("".concat(apiConfig/* ENDPOINT_URL */.m, "/fleet/").concat(id), {
+                  vehicleImage: dataUrl
+                });
+                setFleet(prev => _objectSpread(_objectSpread({}, prev), {}, {
+                  vehicleImage: dataUrl
+                }));
+                react_toastify_esm/* toast */.oR.success('Vehicle photo updated successfully!');
+              } catch (uploadErr) {
+                react_toastify_esm/* toast */.oR.error('Failed to update vehicle photo.');
+              }
+            });
+            img.src = event.target.result;
+          });
+          return function (_x3) {
+            return _ref0.apply(this, arguments);
+          };
+        }();
+        reader.readAsDataURL(file);
+      } catch (err) {
+        react_toastify_esm/* toast */.oR.error('Error reading image file.');
+      }
+      e.target.value = '';
+    });
+    return function handleImageFileChange(_x2) {
+      return _ref9.apply(this, arguments);
+    };
+  }();
+  var handleRemovePhoto = /*#__PURE__*/function () {
+    var _ref10 = _asyncToGenerator(function* () {
+      if (window.confirm('Are you sure you want to remove the vehicle photo?')) {
+        try {
+          yield axios/* default */.A.put("".concat(apiConfig/* ENDPOINT_URL */.m, "/fleet/").concat(id), {
+            vehicleImage: ''
+          });
+          setFleet(prev => _objectSpread(_objectSpread({}, prev), {}, {
+            vehicleImage: ''
+          }));
+          react_toastify_esm/* toast */.oR.success('Vehicle photo removed.');
+        } catch (err) {
+          react_toastify_esm/* toast */.oR.error('Failed to remove vehicle photo.');
+        }
+      }
+    });
+    return function handleRemovePhoto() {
+      return _ref10.apply(this, arguments);
+    };
+  }();
   var handleAddDocument = /*#__PURE__*/function () {
-    var _ref9 = _asyncToGenerator(function* () {
+    var _ref11 = _asyncToGenerator(function* () {
       try {
         if (isEditDoc) {
-          yield axios__WEBPACK_IMPORTED_MODULE_25__/* ["default"] */ .A.put("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_27__/* .ENDPOINT_URL */ .m, "/fleet/").concat(id, "/documents/").concat(docData._id), docData);
-          react_toastify__WEBPACK_IMPORTED_MODULE_39__/* .toast */ .oR.success('Document log updated');
+          yield axios/* default */.A.put("".concat(apiConfig/* ENDPOINT_URL */.m, "/fleet/").concat(id, "/documents/").concat(docData._id), docData);
+          react_toastify_esm/* toast */.oR.success('Document log updated');
         } else {
           var _id = docData._id,
             postData = _objectWithoutProperties(docData, _excluded);
-          yield axios__WEBPACK_IMPORTED_MODULE_25__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_27__/* .ENDPOINT_URL */ .m, "/fleet/").concat(id, "/documents"), postData);
-          react_toastify__WEBPACK_IMPORTED_MODULE_39__/* .toast */ .oR.success('Document log added');
+          yield axios/* default */.A.post("".concat(apiConfig/* ENDPOINT_URL */.m, "/fleet/").concat(id, "/documents"), postData);
+          react_toastify_esm/* toast */.oR.success('Document log added');
         }
         setDocModal(false);
         fetchFleet();
       } catch (err) {
-        react_toastify__WEBPACK_IMPORTED_MODULE_39__/* .toast */ .oR.error('Failed to save document');
+        react_toastify_esm/* toast */.oR.error('Failed to save document');
       }
     });
     return function handleAddDocument() {
-      return _ref9.apply(this, arguments);
+      return _ref11.apply(this, arguments);
     };
   }();
   var handleDeleteDocument = /*#__PURE__*/function () {
-    var _ref0 = _asyncToGenerator(function* (docId) {
+    var _ref12 = _asyncToGenerator(function* (docId) {
       if (window.confirm("Are you sure you want to delete this document?")) {
         try {
-          yield axios__WEBPACK_IMPORTED_MODULE_25__/* ["default"] */ .A.delete("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_27__/* .ENDPOINT_URL */ .m, "/fleet/").concat(id, "/documents/").concat(docId));
-          react_toastify__WEBPACK_IMPORTED_MODULE_39__/* .toast */ .oR.success('Document deleted');
+          yield axios/* default */.A.delete("".concat(apiConfig/* ENDPOINT_URL */.m, "/fleet/").concat(id, "/documents/").concat(docId));
+          react_toastify_esm/* toast */.oR.success('Document deleted');
           fetchFleet();
         } catch (err) {
-          react_toastify__WEBPACK_IMPORTED_MODULE_39__/* .toast */ .oR.error('Failed to delete document');
+          react_toastify_esm/* toast */.oR.error('Failed to delete document');
         }
       }
     });
-    return function handleDeleteDocument(_x2) {
-      return _ref0.apply(this, arguments);
+    return function handleDeleteDocument(_x4) {
+      return _ref12.apply(this, arguments);
     };
   }();
   var handleAddOilChange = /*#__PURE__*/function () {
-    var _ref1 = _asyncToGenerator(function* () {
+    var _ref13 = _asyncToGenerator(function* () {
       try {
         if (isEditOil) {
-          yield axios__WEBPACK_IMPORTED_MODULE_25__/* ["default"] */ .A.put("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_27__/* .ENDPOINT_URL */ .m, "/fleet/").concat(id, "/oilChanges/").concat(oilData._id), oilData);
-          react_toastify__WEBPACK_IMPORTED_MODULE_39__/* .toast */ .oR.success('Oil change log updated');
+          yield axios/* default */.A.put("".concat(apiConfig/* ENDPOINT_URL */.m, "/fleet/").concat(id, "/oilChanges/").concat(oilData._id), oilData);
+          react_toastify_esm/* toast */.oR.success('Oil change log updated');
         } else {
           var _id = oilData._id,
             postData = _objectWithoutProperties(oilData, _excluded2);
-          yield axios__WEBPACK_IMPORTED_MODULE_25__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_27__/* .ENDPOINT_URL */ .m, "/fleet/").concat(id, "/oilChanges"), postData);
-          react_toastify__WEBPACK_IMPORTED_MODULE_39__/* .toast */ .oR.success('Oil change log added');
+          yield axios/* default */.A.post("".concat(apiConfig/* ENDPOINT_URL */.m, "/fleet/").concat(id, "/oilChanges"), postData);
+          react_toastify_esm/* toast */.oR.success('Oil change log added');
         }
         setOilModal(false);
         fetchFleet();
       } catch (err) {
-        react_toastify__WEBPACK_IMPORTED_MODULE_39__/* .toast */ .oR.error('Failed to save oil change');
+        react_toastify_esm/* toast */.oR.error('Failed to save oil change');
       }
     });
     return function handleAddOilChange() {
-      return _ref1.apply(this, arguments);
+      return _ref13.apply(this, arguments);
     };
   }();
   var handleDeleteOilChange = /*#__PURE__*/function () {
-    var _ref10 = _asyncToGenerator(function* (oilId) {
+    var _ref14 = _asyncToGenerator(function* (oilId) {
       if (window.confirm("Are you sure you want to delete this oil change log?")) {
         try {
-          yield axios__WEBPACK_IMPORTED_MODULE_25__/* ["default"] */ .A.delete("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_27__/* .ENDPOINT_URL */ .m, "/fleet/").concat(id, "/oilChanges/").concat(oilId));
-          react_toastify__WEBPACK_IMPORTED_MODULE_39__/* .toast */ .oR.success('Oil change deleted');
+          yield axios/* default */.A.delete("".concat(apiConfig/* ENDPOINT_URL */.m, "/fleet/").concat(id, "/oilChanges/").concat(oilId));
+          react_toastify_esm/* toast */.oR.success('Oil change deleted');
           fetchFleet();
         } catch (err) {
-          react_toastify__WEBPACK_IMPORTED_MODULE_39__/* .toast */ .oR.error('Failed to delete oil change');
+          react_toastify_esm/* toast */.oR.error('Failed to delete oil change');
         }
       }
     });
-    return function handleDeleteOilChange(_x3) {
-      return _ref10.apply(this, arguments);
+    return function handleDeleteOilChange(_x5) {
+      return _ref14.apply(this, arguments);
     };
   }();
   if (!fleet) {
     var _user$data2, _user$data3;
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    return /*#__PURE__*/react.createElement("div", {
       style: {
         backgroundColor: '#f9f9f9',
         height: '100vh',
         width: '100%',
         overflowX: 'hidden'
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react.createElement(Box/* default */.A, {
       sx: {
         display: 'flex'
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_CssBaseline__WEBPACK_IMPORTED_MODULE_38__/* ["default"] */ .Ay, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(AppBar, {
+    }, /*#__PURE__*/react.createElement(CssBaseline/* default */.Ay, null), /*#__PURE__*/react.createElement(FleetFormUpdate_AppBar, {
       position: "absolute",
       open: sideBar,
       style: {
         backgroundColor: '#202a5a'
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react.createElement(Toolbar/* default */.A, {
       sx: {
         pr: '24px'
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react.createElement(IconButton/* default */.A, {
       edge: "start",
       color: "inherit",
       onClick: () => setSideBar(!sideBar),
@@ -1124,7 +1300,7 @@ function FleetFormUpdate() {
       }, sideBar && {
         display: 'none'
       })
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Menu__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react.createElement(Menu/* default */.A, null)), /*#__PURE__*/react.createElement(Typography/* default */.A, {
       component: "h1",
       variant: "h6",
       color: "inherit",
@@ -1132,38 +1308,38 @@ function FleetFormUpdate() {
       sx: {
         flexGrow: 1
       }
-    }, "Loading Vehicle..."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_37__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_MessageAdminView__WEBPACK_IMPORTED_MODULE_36__/* ["default"] */ .A, {
+    }, "Loading Vehicle..."), /*#__PURE__*/react.createElement(NotificationVIewInfo/* default */.A, null), /*#__PURE__*/react.createElement(MessageAdminView/* default */.A, {
       name: user === null || user === void 0 || (_user$data2 = user.data) === null || _user$data2 === void 0 ? void 0 : _user$data2.userName,
       role: user === null || user === void 0 || (_user$data3 = user.data) === null || _user$data3 === void 0 ? void 0 : _user$data3.role
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+    }), /*#__PURE__*/react.createElement(IconButton/* default */.A, {
       color: "inherit",
       onClick: () => {
         localStorage.removeItem('token');
         navigate('/LoginSystem');
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react.createElement(NetworkLogoutIcon/* default */.A, {
       style: {
         color: 'white'
       }
-    })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(Drawer, {
+    })))), /*#__PURE__*/react.createElement(FleetFormUpdate_Drawer, {
       variant: "permanent",
       open: sideBar,
       onMouseEnter: () => setSideBar(true),
       onMouseLeave: () => setSideBar(false)
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react.createElement(Toolbar/* default */.A, {
       sx: {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'flex-end',
         px: [1]
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react.createElement(IconButton/* default */.A, {
       onClick: () => setSideBar(!sideBar)
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_ChevronLeft__WEBPACK_IMPORTED_MODULE_24__/* ["default"] */ .A, null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Divider__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_List__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react.createElement(ChevronLeft/* default */.A, null))), /*#__PURE__*/react.createElement(Divider/* default */.A, null), /*#__PURE__*/react.createElement(List/* default */.A, {
       sx: {
         height: '700px'
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_SidebarDash__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react.createElement(SidebarDash/* default */.A, null))), /*#__PURE__*/react.createElement(Box/* default */.A, {
       component: "main",
       sx: {
         backgroundColor: theme => theme.palette.mode === 'light' ? theme.palette.grey[100] : theme.palette.grey[900],
@@ -1171,13 +1347,13 @@ function FleetFormUpdate() {
         height: '100vh',
         overflow: 'auto'
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react.createElement(Toolbar/* default */.A, null), /*#__PURE__*/react.createElement(Container/* default */.A, {
       maxWidth: "lg",
       sx: {
         mt: 4,
         mb: 4
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
       variant: "h5",
       align: "center",
       style: {
@@ -1195,28 +1371,28 @@ function FleetFormUpdate() {
       document.body.classList.remove('printing-document-history');
     }, 1000);
   };
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+  return /*#__PURE__*/react.createElement("div", {
     style: {
       backgroundColor: '#f9f9f9',
       height: '100vh',
       width: '100%',
       overflowX: 'hidden'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react.createElement(Box/* default */.A, {
     sx: {
       display: 'flex'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_CssBaseline__WEBPACK_IMPORTED_MODULE_38__/* ["default"] */ .Ay, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(AppBar, {
+  }, /*#__PURE__*/react.createElement(CssBaseline/* default */.Ay, null), /*#__PURE__*/react.createElement(FleetFormUpdate_AppBar, {
     position: "absolute",
     open: sideBar,
     style: {
       backgroundColor: '#202a5a'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react.createElement(Toolbar/* default */.A, {
     sx: {
       pr: '24px'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react.createElement(IconButton/* default */.A, {
     edge: "start",
     color: "inherit",
     onClick: () => setSideBar(!sideBar),
@@ -1225,7 +1401,7 @@ function FleetFormUpdate() {
     }, sideBar && {
       display: 'none'
     })
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Menu__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react.createElement(Menu/* default */.A, null)), /*#__PURE__*/react.createElement(Typography/* default */.A, {
     component: "h1",
     variant: "h6",
     color: "inherit",
@@ -1233,38 +1409,38 @@ function FleetFormUpdate() {
     sx: {
       flexGrow: 1
     }
-  }, "Vehicle Details: ", fleet.plateNumber), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_37__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_MessageAdminView__WEBPACK_IMPORTED_MODULE_36__/* ["default"] */ .A, {
+  }, "Vehicle Details: ", fleet.plateNumber), /*#__PURE__*/react.createElement(NotificationVIewInfo/* default */.A, null), /*#__PURE__*/react.createElement(MessageAdminView/* default */.A, {
     name: user === null || user === void 0 || (_user$data4 = user.data) === null || _user$data4 === void 0 ? void 0 : _user$data4.userName,
     role: user === null || user === void 0 || (_user$data5 = user.data) === null || _user$data5 === void 0 ? void 0 : _user$data5.role
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+  }), /*#__PURE__*/react.createElement(IconButton/* default */.A, {
     color: "inherit",
     onClick: () => {
       localStorage.removeItem('token');
       navigate('/LoginSystem');
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react.createElement(NetworkLogoutIcon/* default */.A, {
     style: {
       color: 'white'
     }
-  })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(Drawer, {
+  })))), /*#__PURE__*/react.createElement(FleetFormUpdate_Drawer, {
     variant: "permanent",
     open: sideBar,
     onMouseEnter: () => setSideBar(true),
     onMouseLeave: () => setSideBar(false)
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react.createElement(Toolbar/* default */.A, {
     sx: {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'flex-end',
       px: [1]
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react.createElement(IconButton/* default */.A, {
     onClick: () => setSideBar(!sideBar)
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_ChevronLeft__WEBPACK_IMPORTED_MODULE_24__/* ["default"] */ .A, null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Divider__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_List__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react.createElement(ChevronLeft/* default */.A, null))), /*#__PURE__*/react.createElement(Divider/* default */.A, null), /*#__PURE__*/react.createElement(List/* default */.A, {
     sx: {
       height: '700px'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_SidebarDash__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react.createElement(SidebarDash/* default */.A, null))), /*#__PURE__*/react.createElement(Box/* default */.A, {
     component: "main",
     sx: {
       backgroundColor: theme => theme.palette.mode === 'light' ? theme.palette.grey[100] : theme.palette.grey[900],
@@ -1272,27 +1448,27 @@ function FleetFormUpdate() {
       height: '100vh',
       overflow: 'auto'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react.createElement(Toolbar/* default */.A, null), /*#__PURE__*/react.createElement(Container/* default */.A, {
     maxWidth: "lg",
     sx: {
       mt: 4,
       mb: 4
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react.createElement(Box/* default */.A, {
     sx: {
       display: 'flex',
       justifyContent: 'space-between',
       mb: 2
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react.createElement(Button/* default */.A, {
     variant: "outlined",
     style: {
       borderColor: '#202a5a',
       color: '#202a5a'
     },
     onClick: () => navigate('/FleetViewAdmin'),
-    startIcon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_29__/* ["default"] */ .A, null)
-  }, "Back to List")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
+    startIcon: /*#__PURE__*/react.createElement(ArrowBack/* default */.A, null)
+  }, "Back to List")), /*#__PURE__*/react.createElement(Box/* default */.A, {
     sx: {
       backgroundColor: 'white',
       padding: '20px',
@@ -1300,77 +1476,209 @@ function FleetFormUpdate() {
       mb: 3,
       boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react.createElement(Box/* default */.A, {
     sx: {
       display: 'flex',
-      justifyContent: 'space-between'
+      justifyContent: 'space-between',
+      alignItems: 'center'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
     variant: "h6"
-  }, "Overview"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
+  }, "Overview"), /*#__PURE__*/react.createElement(Box/* default */.A, null, /*#__PURE__*/react.createElement(Button/* default */.A, {
     variant: "outlined",
     size: "small",
-    startIcon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_31__/* ["default"] */ .A, null),
+    startIcon: /*#__PURE__*/react.createElement(Edit/* default */.A, null),
     sx: {
       mr: 1
     },
     disabled: !canEdit,
     onClick: () => {
-      setCarData(fleet);
+      setCarData({
+        carMake: fleet.carMake || '',
+        carModel: fleet.carModel || '',
+        plateNumber: fleet.plateNumber || '',
+        chassisNumber: fleet.chassisNumber || '',
+        vehicleColor: fleet.vehicleColor || '',
+        branchId: fleet.branchId || 'HQ'
+      });
       setCarModal(true);
     }
-  }, "Edit Details"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
+  }, "Edit Details"), /*#__PURE__*/react.createElement(Button/* default */.A, {
     variant: "outlined",
     color: "error",
     size: "small",
-    startIcon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .A, null),
+    startIcon: /*#__PURE__*/react.createElement(Delete/* default */.A, null),
     disabled: !canDelete,
     onClick: handleDeleteCar
-  }, "Delete Vehicle"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Ay, {
-    container: true,
-    spacing: 3,
+  }, "Delete Vehicle"))), /*#__PURE__*/react.createElement(Box/* default */.A, {
     sx: {
+      display: 'flex',
+      gap: 3,
+      mt: 2,
+      alignItems: 'center',
+      flexWrap: {
+        xs: 'wrap',
+        md: 'nowrap'
+      }
+    }
+  }, /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      minWidth: 140
+    }
+  }, /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      width: 130,
+      height: 130,
+      borderRadius: '8px',
+      border: '1.5px solid #cbd5e1',
+      overflow: 'hidden',
+      backgroundColor: '#f8fafc',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      boxShadow: '0 1px 3px rgba(0,0,0,0.08)'
+    }
+  }, fleet.vehicleImage ? /*#__PURE__*/react.createElement("img", {
+    src: fleet.vehicleImage,
+    alt: "Vehicle",
+    style: {
+      width: '100%',
+      height: '100%',
+      objectFit: 'cover'
+    }
+  }) : /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      textAlign: 'center',
+      color: '#94a3b8'
+    }
+  }, /*#__PURE__*/react.createElement(DirectionsCar/* default */.A, {
+    sx: {
+      fontSize: 52,
+      color: '#cbd5e1'
+    }
+  }), /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    variant: "caption",
+    display: "block"
+  }, "No Photo"))), /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      display: 'flex',
+      gap: 0.5,
       mt: 1
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Ay, {
+  }, /*#__PURE__*/react.createElement("label", {
+    htmlFor: "vehicle-photo-input"
+  }, /*#__PURE__*/react.createElement("input", {
+    id: "vehicle-photo-input",
+    type: "file",
+    accept: "image/*",
+    style: {
+      display: 'none'
+    },
+    onChange: handleImageFileChange
+  }), /*#__PURE__*/react.createElement(Button/* default */.A, {
+    variant: "outlined",
+    size: "small",
+    component: "span",
+    startIcon: /*#__PURE__*/react.createElement(PhotoCamera, null),
+    disabled: !canEdit,
+    sx: {
+      fontSize: '11px',
+      py: 0.3,
+      px: 1,
+      textTransform: 'none'
+    }
+  }, fleet.vehicleImage ? 'Change' : 'Upload')), fleet.vehicleImage && canEdit && /*#__PURE__*/react.createElement(IconButton/* default */.A, {
+    size: "small",
+    color: "error",
+    onClick: handleRemovePhoto,
+    title: "Remove Photo"
+  }, /*#__PURE__*/react.createElement(DeleteOutline, {
+    fontSize: "small"
+  })))), /*#__PURE__*/react.createElement(Grid/* default */.Ay, {
+    container: true,
+    spacing: 2.5,
+    sx: {
+      flex: 1
+    }
+  }, /*#__PURE__*/react.createElement(Grid/* default */.Ay, {
     item: true,
-    xs: 3
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
-    color: "textSecondary"
-  }, "Make/Model"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, null, fleet.carMake, " ", fleet.carModel)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Ay, {
+    xs: 6,
+    sm: 4
+  }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    color: "textSecondary",
+    variant: "body2"
+  }, "Make/Model"), /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    sx: {
+      fontWeight: 600
+    }
+  }, fleet.carMake, " ", fleet.carModel)), /*#__PURE__*/react.createElement(Grid/* default */.Ay, {
     item: true,
-    xs: 3
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
-    color: "textSecondary"
-  }, "Plate #"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, null, fleet.plateNumber)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Ay, {
+    xs: 6,
+    sm: 4
+  }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    color: "textSecondary",
+    variant: "body2"
+  }, "Plate #"), /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    sx: {
+      fontWeight: 600
+    }
+  }, fleet.plateNumber)), /*#__PURE__*/react.createElement(Grid/* default */.Ay, {
     item: true,
-    xs: 3
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
-    color: "textSecondary"
-  }, "Chassis #"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, null, fleet.chassisNumber || 'N/A')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Ay, {
+    xs: 6,
+    sm: 4
+  }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    color: "textSecondary",
+    variant: "body2"
+  }, "Vehicle Color"), /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    sx: {
+      fontWeight: 600,
+      color: fleet.vehicleColor ? '#0f172a' : '#94a3b8'
+    }
+  }, fleet.vehicleColor || 'N/A')), /*#__PURE__*/react.createElement(Grid/* default */.Ay, {
     item: true,
-    xs: 3
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
-    color: "textSecondary"
-  }, "Branch ID"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, null, fleet.branchId || 'HQ')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Ay, {
+    xs: 6,
+    sm: 4
+  }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    color: "textSecondary",
+    variant: "body2"
+  }, "Chassis #"), /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    sx: {
+      fontWeight: 600
+    }
+  }, fleet.chassisNumber || 'N/A')), /*#__PURE__*/react.createElement(Grid/* default */.Ay, {
     item: true,
-    xs: 3
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+    xs: 6,
+    sm: 4
+  }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    color: "textSecondary",
+    variant: "body2"
+  }, "Branch ID"), /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    sx: {
+      fontWeight: 600
+    }
+  }, fleet.branchId || 'HQ')), /*#__PURE__*/react.createElement(Grid/* default */.Ay, {
+    item: true,
+    xs: 6,
+    sm: 4
+  }, /*#__PURE__*/react.createElement(FormControl/* default */.A, {
     fullWidth: true,
     size: "small"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, null, "Status"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react.createElement(InputLabel/* default */.A, null, "Status"), /*#__PURE__*/react.createElement(Select/* default */.A, {
     value: status,
     label: "Status",
     onChange: handleStatusChange
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react.createElement(MenuItem/* default */.A, {
     value: "Running"
-  }, "Running"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
+  }, "Running"), /*#__PURE__*/react.createElement(MenuItem/* default */.A, {
     value: "Stopped"
-  }, "Stopped"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
+  }, "Stopped"), /*#__PURE__*/react.createElement(MenuItem/* default */.A, {
     value: "Sold"
-  }, "Sold"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
+  }, "Sold"), /*#__PURE__*/react.createElement(MenuItem/* default */.A, {
     value: "Damaged"
-  }, "Damaged")))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
+  }, "Damaged"))))))), /*#__PURE__*/react.createElement(Box/* default */.A, {
     sx: {
       backgroundColor: 'white',
       padding: '20px',
@@ -1378,39 +1686,39 @@ function FleetFormUpdate() {
       mb: 3,
       boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react.createElement(Box/* default */.A, {
     sx: {
       display: 'flex',
       justifyContent: 'space-between',
       mb: 2,
       alignItems: 'center'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
     variant: "h6"
-  }, "Document History"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
+  }, "Document History"), /*#__PURE__*/react.createElement(Box/* default */.A, {
     sx: {
       display: 'flex',
       gap: 2,
       alignItems: 'center'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react.createElement(FormControl/* default */.A, {
     size: "small",
     sx: {
       minWidth: 120
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, null, "Filter Year"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react.createElement(InputLabel/* default */.A, null, "Filter Year"), /*#__PURE__*/react.createElement(Select/* default */.A, {
     value: yearFilter,
     label: "Filter Year",
     onChange: e => setYearFilter(e.target.value)
-  }, availableYears.map(yr => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
+  }, availableYears.map(yr => /*#__PURE__*/react.createElement(MenuItem/* default */.A, {
     key: yr,
     value: yr
-  }, yr)))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
+  }, yr)))), /*#__PURE__*/react.createElement(Button/* default */.A, {
     variant: "outlined",
     size: "small",
-    startIcon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A, null),
+    startIcon: /*#__PURE__*/react.createElement(Print/* default */.A, null),
     onClick: handlePrintDocuments
-  }, "Print"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
+  }, "Print"), /*#__PURE__*/react.createElement(Button/* default */.A, {
     variant: "contained",
     size: "small",
     disabled: !canAdd,
@@ -1422,7 +1730,7 @@ function FleetFormUpdate() {
       setDocData({
         _id: '',
         documentName: '',
-        year: dayjs__WEBPACK_IMPORTED_MODULE_43___default()().format('YYYY'),
+        year: dayjs_min_default()().format('YYYY'),
         startDate: '',
         expiryDate: '',
         amountPaid: 0,
@@ -1431,7 +1739,7 @@ function FleetFormUpdate() {
       });
       setDocModal(true);
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_28__/* ["default"] */ .A, null), " Add Document"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react.createElement(Add/* default */.A, null), " Add Document"))), /*#__PURE__*/react.createElement(Box/* default */.A, {
     id: "printable-document-history",
     sx: {
       height: 800,
@@ -1449,7 +1757,7 @@ function FleetFormUpdate() {
         }
       }
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react.createElement(Box/* default */.A, {
     className: "print-header",
     sx: {
       display: 'none',
@@ -1460,11 +1768,11 @@ function FleetFormUpdate() {
         borderBottom: '1px solid #ccc'
       }
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
     variant: "h5"
-  }, "Vehicle Details: ", fleet.plateNumber), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+  }, "Vehicle Details: ", fleet.plateNumber), /*#__PURE__*/react.createElement(Typography/* default */.A, {
     variant: "subtitle1"
-  }, "Make/Model: ", fleet.carMake, " ", fleet.carModel, " | Chassis: ", fleet.chassisNumber || 'N/A', " | Branch: ", fleet.branchId || 'HQ')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_x_data_grid__WEBPACK_IMPORTED_MODULE_41__/* .DataGrid */ .zh, {
+  }, "Make/Model: ", fleet.carMake, " ", fleet.carModel, " | Chassis: ", fleet.chassisNumber || 'N/A', " | Branch: ", fleet.branchId || 'HQ')), /*#__PURE__*/react.createElement(DataGrid/* DataGrid */.zh, {
     rows: filteredDocuments,
     getRowId: row => row._id,
     columns: [{
@@ -1479,12 +1787,12 @@ function FleetFormUpdate() {
       field: 'startDate',
       headerName: 'Valid From',
       flex: 1,
-      valueFormatter: params => dayjs__WEBPACK_IMPORTED_MODULE_43___default()(params.value).format('DD/MM/YYYY')
+      valueFormatter: params => dayjs_min_default()(params.value).format('DD/MM/YYYY')
     }, {
       field: 'expiryDate',
       headerName: 'Expires',
       flex: 1,
-      valueFormatter: params => dayjs__WEBPACK_IMPORTED_MODULE_43___default()(params.value).format('DD/MM/YYYY')
+      valueFormatter: params => dayjs_min_default()(params.value).format('DD/MM/YYYY')
     }, {
       field: 'amountPaid',
       headerName: 'Cost',
@@ -1502,7 +1810,7 @@ function FleetFormUpdate() {
       field: 'actions',
       headerName: 'Actions',
       width: 120,
-      renderCell: params => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+      renderCell: params => /*#__PURE__*/react.createElement(Box/* default */.A, null, /*#__PURE__*/react.createElement(IconButton/* default */.A, {
         size: "small",
         color: "primary",
         disabled: !canEdit,
@@ -1511,28 +1819,28 @@ function FleetFormUpdate() {
           setDocData(params.row);
           setDocModal(true);
         }
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_31__/* ["default"] */ .A, {
+      }, /*#__PURE__*/react.createElement(Edit/* default */.A, {
         fontSize: "small"
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+      })), /*#__PURE__*/react.createElement(IconButton/* default */.A, {
         size: "small",
         color: "error",
         disabled: !canDelete,
         onClick: () => handleDeleteDocument(params.row._id)
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .A, {
+      }, /*#__PURE__*/react.createElement(Delete/* default */.A, {
         fontSize: "small"
       })))
     }],
     getRowClassName: params => {
       var latestDocs = {};
       fleet.documents.forEach(doc => {
-        var exp = dayjs__WEBPACK_IMPORTED_MODULE_43___default()(doc.expiryDate);
+        var exp = dayjs_min_default()(doc.expiryDate);
         if (!latestDocs[doc.documentName] || exp.isAfter(latestDocs[doc.documentName])) {
           latestDocs[doc.documentName] = exp;
         }
       });
-      var isLatest = dayjs__WEBPACK_IMPORTED_MODULE_43___default()(params.row.expiryDate).isSame(latestDocs[params.row.documentName]);
+      var isLatest = dayjs_min_default()(params.row.expiryDate).isSame(latestDocs[params.row.documentName]);
       if (isLatest) {
-        var diff = dayjs__WEBPACK_IMPORTED_MODULE_43___default()(params.row.expiryDate).diff(dayjs__WEBPACK_IMPORTED_MODULE_43___default()(), 'day');
+        var diff = dayjs_min_default()(params.row.expiryDate).diff(dayjs_min_default()(), 'day');
         if (diff < 0 && !params.row.isPaid) {
           return 'row-expired';
         } else if (diff <= 7 && !params.row.isPaid) {
@@ -1542,7 +1850,7 @@ function FleetFormUpdate() {
       return '';
     },
     slots: {
-      toolbar: _mui_x_data_grid__WEBPACK_IMPORTED_MODULE_42__/* .GridToolbar */ .O
+      toolbar: GridToolbar/* GridToolbar */.O
     },
     slotProps: {
       toolbar: {
@@ -1552,22 +1860,22 @@ function FleetFormUpdate() {
         }
       }
     }
-  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
+  }))), /*#__PURE__*/react.createElement(Box/* default */.A, {
     sx: {
       backgroundColor: 'white',
       padding: '20px',
       borderRadius: '8px',
       boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react.createElement(Box/* default */.A, {
     sx: {
       display: 'flex',
       justifyContent: 'space-between',
       mb: 2
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
     variant: "h6"
-  }, "Oil Changes"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
+  }, "Oil Changes"), /*#__PURE__*/react.createElement(Button/* default */.A, {
     variant: "contained",
     size: "small",
     disabled: !canAdd,
@@ -1584,19 +1892,19 @@ function FleetFormUpdate() {
       });
       setOilModal(true);
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_28__/* ["default"] */ .A, null), " Log Oil Change")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+  }, /*#__PURE__*/react.createElement(Add/* default */.A, null), " Log Oil Change")), /*#__PURE__*/react.createElement("div", {
     style: {
       height: 500,
       width: '100%'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_x_data_grid__WEBPACK_IMPORTED_MODULE_41__/* .DataGrid */ .zh, {
+  }, /*#__PURE__*/react.createElement(DataGrid/* DataGrid */.zh, {
     rows: fleet.oilChanges,
     getRowId: row => row._id,
     columns: [{
       field: 'date',
       headerName: 'Date',
       flex: 1,
-      valueFormatter: params => dayjs__WEBPACK_IMPORTED_MODULE_43___default()(params.value).format('DD/MM/YYYY')
+      valueFormatter: params => dayjs_min_default()(params.value).format('DD/MM/YYYY')
     }, {
       field: 'kilometers',
       headerName: 'Kilometers (KM)',
@@ -1609,7 +1917,7 @@ function FleetFormUpdate() {
       field: 'actions',
       headerName: 'Actions',
       width: 120,
-      renderCell: params => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+      renderCell: params => /*#__PURE__*/react.createElement(Box/* default */.A, null, /*#__PURE__*/react.createElement(IconButton/* default */.A, {
         size: "small",
         color: "primary",
         disabled: !canEdit,
@@ -1618,19 +1926,19 @@ function FleetFormUpdate() {
           setOilData(params.row);
           setOilModal(true);
         }
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_31__/* ["default"] */ .A, {
+      }, /*#__PURE__*/react.createElement(Edit/* default */.A, {
         fontSize: "small"
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+      })), /*#__PURE__*/react.createElement(IconButton/* default */.A, {
         size: "small",
         color: "error",
         disabled: !canDelete,
         onClick: () => handleDeleteOilChange(params.row._id)
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .A, {
+      }, /*#__PURE__*/react.createElement(Delete/* default */.A, {
         fontSize: "small"
       })))
     }],
     slots: {
-      toolbar: _mui_x_data_grid__WEBPACK_IMPORTED_MODULE_42__/* .GridToolbar */ .O
+      toolbar: GridToolbar/* GridToolbar */.O
     },
     slotProps: {
       toolbar: {
@@ -1640,15 +1948,15 @@ function FleetFormUpdate() {
         }
       }
     }
-  })))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, {
+  })))))), /*#__PURE__*/react.createElement(Modal/* default */.A, {
     open: carModal,
     onClose: () => setCarModal(false)
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react.createElement(Box/* default */.A, {
     sx: modalStyle
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
     variant: "h6",
     mb: 2
-  }, "Edit Vehicle Details"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
+  }, "Edit Vehicle Details"), /*#__PURE__*/react.createElement(TextField/* default */.A, {
     fullWidth: true,
     label: "Make",
     size: "small",
@@ -1659,7 +1967,7 @@ function FleetFormUpdate() {
     onChange: e => setCarData(_objectSpread(_objectSpread({}, carData), {}, {
       carMake: e.target.value
     }))
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
+  }), /*#__PURE__*/react.createElement(TextField/* default */.A, {
     fullWidth: true,
     label: "Model",
     size: "small",
@@ -1670,7 +1978,7 @@ function FleetFormUpdate() {
     onChange: e => setCarData(_objectSpread(_objectSpread({}, carData), {}, {
       carModel: e.target.value
     }))
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
+  }), /*#__PURE__*/react.createElement(TextField/* default */.A, {
     fullWidth: true,
     label: "Plate Number",
     size: "small",
@@ -1681,7 +1989,18 @@ function FleetFormUpdate() {
     onChange: e => setCarData(_objectSpread(_objectSpread({}, carData), {}, {
       plateNumber: e.target.value
     }))
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
+  }), /*#__PURE__*/react.createElement(TextField/* default */.A, {
+    fullWidth: true,
+    label: "Vehicle Color",
+    size: "small",
+    sx: {
+      mb: 2
+    },
+    value: carData.vehicleColor || '',
+    onChange: e => setCarData(_objectSpread(_objectSpread({}, carData), {}, {
+      vehicleColor: e.target.value
+    }))
+  }), /*#__PURE__*/react.createElement(TextField/* default */.A, {
     fullWidth: true,
     label: "Chassis Number",
     size: "small",
@@ -1692,37 +2011,37 @@ function FleetFormUpdate() {
     onChange: e => setCarData(_objectSpread(_objectSpread({}, carData), {}, {
       chassisNumber: e.target.value
     }))
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+  }), /*#__PURE__*/react.createElement(FormControl/* default */.A, {
     fullWidth: true,
     size: "small",
     sx: {
       mb: 3
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, null, "Branch"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react.createElement(InputLabel/* default */.A, null, "Branch"), /*#__PURE__*/react.createElement(Select/* default */.A, {
     value: carData.branchId || 'HQ',
     label: "Branch",
     onChange: e => setCarData(_objectSpread(_objectSpread({}, carData), {}, {
       branchId: e.target.value
     }))
-  }, branches.map(b => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
+  }, branches.map(b => /*#__PURE__*/react.createElement(MenuItem/* default */.A, {
     key: b.branchId,
     value: b.branchId
-  }, b.branchName, " (", b.branchId, ")")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
+  }, b.branchName, " (", b.branchId, ")")))), /*#__PURE__*/react.createElement(Button/* default */.A, {
     variant: "contained",
     fullWidth: true,
     style: {
       backgroundColor: '#202a5a'
     },
     onClick: handleUpdateCar
-  }, "Update Vehicle Details"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, {
+  }, "Update Vehicle Details"))), /*#__PURE__*/react.createElement(Modal/* default */.A, {
     open: docModal,
     onClose: () => setDocModal(false)
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react.createElement(Box/* default */.A, {
     sx: modalStyle
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
     variant: "h6",
     mb: 2
-  }, isEditDoc ? 'Edit Document Payment Log' : 'Add Document Payment Log'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, {
+  }, isEditDoc ? 'Edit Document Payment Log' : 'Add Document Payment Log'), /*#__PURE__*/react.createElement(Autocomplete/* default */.A, {
     freeSolo: true,
     options: ["CARTE ROSE (VEHICLE REGISTRATION CARD)", "CONTRÔLE TECHNIQUE (ROADWORTHINESS CERTIFICATE)", "STATIONNEMENT", "VIGNETTE", "ATTESTATION D'ASSURANCE (INSURANCE CERTIFICATE)", "AUTORISATION TRANSPORT (ONLY FOR TRUCKS)"],
     value: docData.documentName || '',
@@ -1736,7 +2055,7 @@ function FleetFormUpdate() {
         documentName: newInputValue || ''
       }));
     },
-    renderInput: params => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, _extends({}, params, {
+    renderInput: params => /*#__PURE__*/react.createElement(TextField/* default */.A, _extends({}, params, {
       label: "Document Name",
       size: "small",
       sx: {
@@ -1744,7 +2063,7 @@ function FleetFormUpdate() {
       },
       fullWidth: true
     }))
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
+  }), /*#__PURE__*/react.createElement(TextField/* default */.A, {
     fullWidth: true,
     label: "Year",
     size: "small",
@@ -1755,7 +2074,7 @@ function FleetFormUpdate() {
     onChange: e => setDocData(_objectSpread(_objectSpread({}, docData), {}, {
       year: e.target.value
     }))
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
+  }), /*#__PURE__*/react.createElement(TextField/* default */.A, {
     fullWidth: true,
     type: "date",
     label: "Start Date",
@@ -1770,7 +2089,7 @@ function FleetFormUpdate() {
     onChange: e => setDocData(_objectSpread(_objectSpread({}, docData), {}, {
       startDate: e.target.value
     }))
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
+  }), /*#__PURE__*/react.createElement(TextField/* default */.A, {
     fullWidth: true,
     type: "date",
     label: "Expiry Date",
@@ -1785,7 +2104,7 @@ function FleetFormUpdate() {
     onChange: e => setDocData(_objectSpread(_objectSpread({}, docData), {}, {
       expiryDate: e.target.value
     }))
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
+  }), /*#__PURE__*/react.createElement(TextField/* default */.A, {
     fullWidth: true,
     type: "number",
     label: "Amount Paid",
@@ -1797,38 +2116,38 @@ function FleetFormUpdate() {
     onChange: e => setDocData(_objectSpread(_objectSpread({}, docData), {}, {
       amountPaid: e.target.value
     }))
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+  }), /*#__PURE__*/react.createElement(FormControl/* default */.A, {
     fullWidth: true,
     size: "small",
     sx: {
       mb: 2
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, null, "Is Paid?"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react.createElement(InputLabel/* default */.A, null, "Is Paid?"), /*#__PURE__*/react.createElement(Select/* default */.A, {
     value: docData.isPaid,
     label: "Is Paid?",
     onChange: e => setDocData(_objectSpread(_objectSpread({}, docData), {}, {
       isPaid: e.target.value
     }))
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react.createElement(MenuItem/* default */.A, {
     value: true
-  }, "Yes"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
+  }, "Yes"), /*#__PURE__*/react.createElement(MenuItem/* default */.A, {
     value: false
-  }, "No"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
+  }, "No"))), /*#__PURE__*/react.createElement(Button/* default */.A, {
     variant: "contained",
     fullWidth: true,
     style: {
       backgroundColor: '#202a5a'
     },
     onClick: handleAddDocument
-  }, "Save Document"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, {
+  }, "Save Document"))), /*#__PURE__*/react.createElement(Modal/* default */.A, {
     open: oilModal,
     onClose: () => setOilModal(false)
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react.createElement(Box/* default */.A, {
     sx: modalStyle
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
     variant: "h6",
     mb: 2
-  }, "Log Oil Change"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
+  }, "Log Oil Change"), /*#__PURE__*/react.createElement(TextField/* default */.A, {
     fullWidth: true,
     type: "date",
     label: "Date",
@@ -1843,7 +2162,7 @@ function FleetFormUpdate() {
     onChange: e => setOilData(_objectSpread(_objectSpread({}, oilData), {}, {
       date: e.target.value
     }))
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
+  }), /*#__PURE__*/react.createElement(TextField/* default */.A, {
     fullWidth: true,
     type: "number",
     label: "Kilometers (KM)",
@@ -1855,7 +2174,7 @@ function FleetFormUpdate() {
     onChange: e => setOilData(_objectSpread(_objectSpread({}, oilData), {}, {
       kilometers: e.target.value
     }))
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
+  }), /*#__PURE__*/react.createElement(TextField/* default */.A, {
     fullWidth: true,
     label: "Notes",
     size: "small",
@@ -1868,7 +2187,7 @@ function FleetFormUpdate() {
     onChange: e => setOilData(_objectSpread(_objectSpread({}, oilData), {}, {
       notes: e.target.value
     }))
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
+  }), /*#__PURE__*/react.createElement(Button/* default */.A, {
     variant: "contained",
     fullWidth: true,
     style: {

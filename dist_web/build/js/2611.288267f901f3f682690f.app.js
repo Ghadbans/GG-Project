@@ -147,18 +147,22 @@ function FleetFormView() {
     _useState0 = _slicedToArray(_useState9, 2),
     chassisNumber = _useState0[0],
     setChassisNumber = _useState0[1];
-  var _useState1 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('Running'),
+  var _useState1 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
     _useState10 = _slicedToArray(_useState1, 2),
-    status = _useState10[0],
-    setStatus = _useState10[1];
-  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+    vehicleColor = _useState10[0],
+    setVehicleColor = _useState10[1];
+  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('Running'),
     _useState12 = _slicedToArray(_useState11, 2),
-    branchId = _useState12[0],
-    setBranchId = _useState12[1];
-  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    status = _useState12[0],
+    setStatus = _useState12[1];
+  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
     _useState14 = _slicedToArray(_useState13, 2),
-    branches = _useState14[0],
-    setBranches = _useState14[1];
+    branchId = _useState14[0],
+    setBranchId = _useState14[1];
+  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    _useState16 = _slicedToArray(_useState15, 2),
+    branches = _useState16[0],
+    setBranches = _useState16[1];
   var user = (0,react_redux__WEBPACK_IMPORTED_MODULE_24__/* .useSelector */ .d4)(_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_25__/* .selectCurrentUser */ .xu);
   var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_3__/* .useNavigate */ .Zp)();
   react__WEBPACK_IMPORTED_MODULE_0__.useEffect(() => {
@@ -204,6 +208,7 @@ function FleetFormView() {
           carModel,
           plateNumber,
           chassisNumber,
+          vehicleColor,
           status,
           branchId: branchId || 'HQ'
         });
@@ -347,6 +352,15 @@ function FleetFormView() {
     value: plateNumber,
     onChange: e => setPlateNumber(e.target.value),
     required: true,
+    sx: {
+      flex: '1 1 45%'
+    }
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
+    label: "Vehicle Color",
+    variant: "outlined",
+    value: vehicleColor,
+    onChange: e => setVehicleColor(e.target.value),
+    placeholder: "e.g. White, Black, Silver...",
     sx: {
       flex: '1 1 45%'
     }

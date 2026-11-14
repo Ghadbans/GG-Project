@@ -22,6 +22,8 @@ const fleetSchema = new Schema({
     carModel: { type: String, required: true },
     plateNumber: { type: String, required: true, unique: true },
     chassisNumber: { type: String },
+    vehicleColor: { type: String, default: '' },
+    vehicleImage: { type: String, default: '' },
     status: {
         type: String,
         enum: ['Running', 'Stopped', 'Sold', 'Damaged'],

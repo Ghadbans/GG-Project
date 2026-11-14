@@ -5490,3 +5490,43 @@ The standardized `renderStatusBadge` helper was seamlessly integrated into all 1
   - Compiled Android APK: `server/public/downloads/GlobalGate-v3.6.57.apk` (17.05 MB) and mirrored to `GlobalGate.apk`.
   - Pushed to GitHub `main` branch for automatic Railway backend API and Cloudflare Pages web portal deployment.
 
+
+---
+
+### Rule 77: Fleet Management Mandatory Compliance, Vehicle Color & Photo Upload Engine (Ver 3.6.58)
+- **Problem & Requirement Reported by User**:
+  - In Fleet Management, legal documents were only checked if they existed and were within 7 days of expiry; unpaid documents (like on `SHACMAN 6091AA24`) erroneously showed `OK` in green when they should be `EXPIRED`.
+  - User established the mandatory document rule:
+    - Standard Cars: Must have `Carte Rose`, `Contrôle Technique`, `Stationnement`, `Vignette`, and `Attestation d'Assurance`.
+    - Trucks: Must have all 5 standard papers PLUS `Autorisation Transport (Only for Trucks)`.
+    - If any required document is missing &rarr; **`MISSING DOCS`** in red (`#d32f2f`).
+    - If any required document is unpaid (`isPaid !== true`) or has expired (`diff < 0`) &rarr; **`EXPIRED`** in red (`#d32f2f`).
+    - If all required documents are paid and valid, but any is within 7 days &rarr; **`EXPIRING SOON`** in orange (`#ed6c02`).
+    - Only when all mandatory documents are present, active, and paid &rarr; **`OK`** in green (`#2e7d32`).
+  - User also required:
+    - **Vehicle Color**: Stored in DB, editable in creation and overview, and displayed as a dedicated column directly beside `Plate #` in the main table.
+    - **Vehicle Photo Upload & Thumbnails**: Overview card includes photo upload/change/remove action with automatic client-side resizing, and the main table displays a 42x42px square rounded vehicle photo thumbnail at the start of each row.
+- **Architectural Implementation**:
+  1. **Schema & Backend (`server/model/fleetSchema.js` & `server/Controller/fleetController.js`)**:
+     - Added `vehicleColor: { type: String, default: '' }` and `vehicleImage: { type: String, default: '' }`.
+     - Updated `createFleet` and `updateFleet` to persist color and photo attributes.
+  2. **Compliance Engine (`src/js/utils/fleetUtils.js`)**:
+     - Created `isTruckVehicle(car)` detecting truck models (`TRUCK`, `CAMION`, `TRAILER`, `BENNE`, `SHACMAN`, `HOWO`, `ACTROS`).
+     - Created `evaluateFleetCompliance(car)` which checks completeness, payment status, and expiry intervals across both standard and truck mandatory document sets, returning color-coded statuses, backgrounds, and comprehensive tooltips.
+  3. **Main Fleet Table (`src/js/AdminView1/FleetViewAdmin.js`)**:
+     - Added `photo` thumbnail column using MUI `Avatar variant="rounded"` (42x42px) with `DirectionsCarIcon` fallback.
+     - Added `vehicleColor` column directly adjacent to `plateNumber`.
+     - Integrated `evaluateFleetCompliance` into the `documents` column with colored pill badges and detailed hover tooltips.
+     - Set `rowHeight={52}` in DataGrid for comfortable thumbnail alignment.
+  4. **Vehicle Forms (`FleetFormView.js` & `FleetFormUpdate.js`)**:
+     - Added `Vehicle Color` input to creation form, overview specs, and edit modal.
+     - Implemented interactive photo upload card in Overview with hidden file input, HTML5 canvas scaling (max 800x800 JPEG), instant PUT update, and photo removal.
+- **Universal Multi-Platform Production Artifacts**:
+  - Incremental version bump: **v3.6.58** across `package.json`, `server/package.json`, `server/routes/downloadRoutes.js`, and `server/index.js`.
+  - Quality Gate: 245 source files verified with 0 syntax or AST errors.
+  - Recompiled both desktop bundle (`build/js/app.js`) and web bundle (`dist_web/build/js/app.js`).
+  - Packaged Windows Installer: `dist/Global Gate Setup 3.6.58.exe` and mirrored to `server/public/downloads/Global Gate Setup 3.6.58.exe`, `GlobalGate-v3.6.58.exe`, and `GlobalGateSetup.exe`.
+  - Compiled Android APK: `server/public/downloads/GlobalGate-v3.6.58.apk` and mirrored to `GlobalGate.apk`.
+  - Pushed to GitHub `main` branch for automatic Railway backend API and Cloudflare Pages web portal deployment.
+
+

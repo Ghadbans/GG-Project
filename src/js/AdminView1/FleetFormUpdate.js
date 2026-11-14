@@ -13,7 +13,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import axios from 'axios';
 import { cachedGet } from '../utils/apiCache';
 import { ENDPOINT_URL } from '../apiConfig';
-import { Add, Close, ArrowBack, Edit, Delete, Print as PrintIcon } from '@mui/icons-material';
+import { Add, Close, ArrowBack, Edit, Delete, Print as PrintIcon, PhotoCamera, DeleteOutline as DeleteOutlineIcon, DirectionsCar as DirectionsCarIcon } from '@mui/icons-material';
 import { useSelector, useDispatch } from "react-redux"
 import { selectCurrentUser } from '../features/auth/authSlice';
 import Logout from '../component/NetworkLogoutIcon';
@@ -49,7 +49,7 @@ export default function FleetFormUpdate() {
   
   // Edit Vehicle Modal
   const [carModal, setCarModal] = useState(false);
-  const [carData, setCarData] = useState({ carMake: '', carModel: '', plateNumber: '', chassisNumber: '', branchId: '' });
+  const [carData, setCarData] = useState({ carMake: '', carModel: '', plateNumber: '', chassisNumber: '', vehicleColor: '', branchId: '' });
   const [branches, setBranches] = useState([]);
 
 
@@ -151,6 +151,68 @@ export default function FleetFormUpdate() {
         navigate('/FleetViewAdmin');
       } catch (err) {
         toast.error('Failed to delete vehicle');
+      }
+    }
+  };
+
+  const handleImageFileChange = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (!file.type.startsWith('image/')) {
+      toast.error('Please select an image file (PNG, JPG, WEBP).');
+      return;
+    }
+
+    try {
+      const reader = new FileReader();
+      reader.onload = async (event) => {
+        const img = new Image();
+        img.onload = async () => {
+          const canvas = document.createElement('canvas');
+          let width = img.width;
+          let height = img.height;
+          const maxDim = 800;
+          if (width > maxDim || height > maxDim) {
+            if (width > height) {
+              height = Math.round((height * maxDim) / width);
+              width = maxDim;
+            } else {
+              width = Math.round((width * maxDim) / height);
+              height = maxDim;
+            }
+          }
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, width, height);
+          const dataUrl = canvas.toDataURL('image/jpeg', 0.85);
+
+          try {
+            await axios.put(`${ENDPOINT_URL}/fleet/${id}`, { vehicleImage: dataUrl });
+            setFleet(prev => ({ ...prev, vehicleImage: dataUrl }));
+            toast.success('Vehicle photo updated successfully!');
+          } catch (uploadErr) {
+            toast.error('Failed to update vehicle photo.');
+          }
+        };
+        img.src = event.target.result;
+      };
+      reader.readAsDataURL(file);
+    } catch (err) {
+      toast.error('Error reading image file.');
+    }
+    e.target.value = '';
+  };
+
+  const handleRemovePhoto = async () => {
+    if (window.confirm('Are you sure you want to remove the vehicle photo?')) {
+      try {
+        await axios.put(`${ENDPOINT_URL}/fleet/${id}`, { vehicleImage: '' });
+        setFleet(prev => ({ ...prev, vehicleImage: '' }));
+        toast.success('Vehicle photo removed.');
+      } catch (err) {
+        toast.error('Failed to remove vehicle photo.');
       }
     }
   };
@@ -280,30 +342,92 @@ export default function FleetFormUpdate() {
                 <Button variant="outlined" style={{ borderColor: '#202a5a', color: '#202a5a' }} onClick={() => navigate('/FleetViewAdmin')} startIcon={<ArrowBack />}>Back to List</Button>
             </Box>
             <Box sx={{ backgroundColor: 'white', padding: '20px', borderRadius: '8px', mb: 3, boxShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>
-              <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <Typography variant="h6">Overview</Typography>
                 <Box>
-                  <Button variant="outlined" size="small" startIcon={<Edit />} sx={{ mr: 1 }} disabled={!canEdit} onClick={() => { setCarData(fleet); setCarModal(true); }}>Edit Details</Button>
+                  <Button variant="outlined" size="small" startIcon={<Edit />} sx={{ mr: 1 }} disabled={!canEdit} onClick={() => { setCarData({ carMake: fleet.carMake || '', carModel: fleet.carModel || '', plateNumber: fleet.plateNumber || '', chassisNumber: fleet.chassisNumber || '', vehicleColor: fleet.vehicleColor || '', branchId: fleet.branchId || 'HQ' }); setCarModal(true); }}>Edit Details</Button>
                   <Button variant="outlined" color="error" size="small" startIcon={<Delete />} disabled={!canDelete} onClick={handleDeleteCar}>Delete Vehicle</Button>
                 </Box>
               </Box>
-              <Grid container spacing={3} sx={{ mt: 1 }}>
-                <Grid item xs={3}><Typography color="textSecondary">Make/Model</Typography><Typography>{fleet.carMake} {fleet.carModel}</Typography></Grid>
-                <Grid item xs={3}><Typography color="textSecondary">Plate #</Typography><Typography>{fleet.plateNumber}</Typography></Grid>
-                <Grid item xs={3}><Typography color="textSecondary">Chassis #</Typography><Typography>{fleet.chassisNumber || 'N/A'}</Typography></Grid>
-                <Grid item xs={3}><Typography color="textSecondary">Branch ID</Typography><Typography>{fleet.branchId || 'HQ'}</Typography></Grid>
-                <Grid item xs={3}>
-                  <FormControl fullWidth size="small">
-                    <InputLabel>Status</InputLabel>
-                    <Select value={status} label="Status" onChange={handleStatusChange}>
-                      <MenuItem value="Running">Running</MenuItem>
-                      <MenuItem value="Stopped">Stopped</MenuItem>
-                      <MenuItem value="Sold">Sold</MenuItem>
-                      <MenuItem value="Damaged">Damaged</MenuItem>
-                    </Select>
-                  </FormControl>
+
+              <Box sx={{ display: 'flex', gap: 3, mt: 2, alignItems: 'center', flexWrap: { xs: 'wrap', md: 'nowrap' } }}>
+                {/* Vehicle Photo Container */}
+                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', minWidth: 140 }}>
+                  <Box
+                    sx={{
+                      width: 130,
+                      height: 130,
+                      borderRadius: '8px',
+                      border: '1.5px solid #cbd5e1',
+                      overflow: 'hidden',
+                      backgroundColor: '#f8fafc',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      boxShadow: '0 1px 3px rgba(0,0,0,0.08)'
+                    }}
+                  >
+                    {fleet.vehicleImage ? (
+                      <img
+                        src={fleet.vehicleImage}
+                        alt="Vehicle"
+                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                      />
+                    ) : (
+                      <Box sx={{ textAlign: 'center', color: '#94a3b8' }}>
+                        <DirectionsCarIcon sx={{ fontSize: 52, color: '#cbd5e1' }} />
+                        <Typography variant="caption" display="block">No Photo</Typography>
+                      </Box>
+                    )}
+                  </Box>
+                  <Box sx={{ display: 'flex', gap: 0.5, mt: 1 }}>
+                    <label htmlFor="vehicle-photo-input">
+                      <input
+                        id="vehicle-photo-input"
+                        type="file"
+                        accept="image/*"
+                        style={{ display: 'none' }}
+                        onChange={handleImageFileChange}
+                      />
+                      <Button
+                        variant="outlined"
+                        size="small"
+                        component="span"
+                        startIcon={<PhotoCamera />}
+                        disabled={!canEdit}
+                        sx={{ fontSize: '11px', py: 0.3, px: 1, textTransform: 'none' }}
+                      >
+                        {fleet.vehicleImage ? 'Change' : 'Upload'}
+                      </Button>
+                    </label>
+                    {fleet.vehicleImage && canEdit && (
+                      <IconButton size="small" color="error" onClick={handleRemovePhoto} title="Remove Photo">
+                        <DeleteOutlineIcon fontSize="small" />
+                      </IconButton>
+                    )}
+                  </Box>
+                </Box>
+
+                {/* Vehicle Specs Grid */}
+                <Grid container spacing={2.5} sx={{ flex: 1 }}>
+                  <Grid item xs={6} sm={4}><Typography color="textSecondary" variant="body2">Make/Model</Typography><Typography sx={{ fontWeight: 600 }}>{fleet.carMake} {fleet.carModel}</Typography></Grid>
+                  <Grid item xs={6} sm={4}><Typography color="textSecondary" variant="body2">Plate #</Typography><Typography sx={{ fontWeight: 600 }}>{fleet.plateNumber}</Typography></Grid>
+                  <Grid item xs={6} sm={4}><Typography color="textSecondary" variant="body2">Vehicle Color</Typography><Typography sx={{ fontWeight: 600, color: fleet.vehicleColor ? '#0f172a' : '#94a3b8' }}>{fleet.vehicleColor || 'N/A'}</Typography></Grid>
+                  <Grid item xs={6} sm={4}><Typography color="textSecondary" variant="body2">Chassis #</Typography><Typography sx={{ fontWeight: 600 }}>{fleet.chassisNumber || 'N/A'}</Typography></Grid>
+                  <Grid item xs={6} sm={4}><Typography color="textSecondary" variant="body2">Branch ID</Typography><Typography sx={{ fontWeight: 600 }}>{fleet.branchId || 'HQ'}</Typography></Grid>
+                  <Grid item xs={6} sm={4}>
+                    <FormControl fullWidth size="small">
+                      <InputLabel>Status</InputLabel>
+                      <Select value={status} label="Status" onChange={handleStatusChange}>
+                        <MenuItem value="Running">Running</MenuItem>
+                        <MenuItem value="Stopped">Stopped</MenuItem>
+                        <MenuItem value="Sold">Sold</MenuItem>
+                        <MenuItem value="Damaged">Damaged</MenuItem>
+                      </Select>
+                    </FormControl>
+                  </Grid>
                 </Grid>
-              </Grid>
+              </Box>
             </Box>
 
             {/* Document History */}
@@ -419,6 +543,7 @@ export default function FleetFormUpdate() {
           <TextField fullWidth label="Make" size="small" sx={{ mb: 2 }} value={carData.carMake} onChange={e => setCarData({...carData, carMake: e.target.value})} />
           <TextField fullWidth label="Model" size="small" sx={{ mb: 2 }} value={carData.carModel} onChange={e => setCarData({...carData, carModel: e.target.value})} />
           <TextField fullWidth label="Plate Number" size="small" sx={{ mb: 2 }} value={carData.plateNumber} onChange={e => setCarData({...carData, plateNumber: e.target.value})} />
+          <TextField fullWidth label="Vehicle Color" size="small" sx={{ mb: 2 }} value={carData.vehicleColor || ''} onChange={e => setCarData({...carData, vehicleColor: e.target.value})} />
           <TextField fullWidth label="Chassis Number" size="small" sx={{ mb: 2 }} value={carData.chassisNumber} onChange={e => setCarData({...carData, chassisNumber: e.target.value})} />
           <FormControl fullWidth size="small" sx={{ mb: 3 }}>
             <InputLabel>Branch</InputLabel>
