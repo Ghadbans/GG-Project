@@ -37,65 +37,126 @@ function sanitizeUserBrief(raw) {
 }
 
 /**
- * Intelligent B2B & Retail Marketing Copy Engine
+ * Intelligent B2B & Retail Marketing Copy Engine (Universal Products & Services)
  */
-function parseMarketingContent(rawBrief) {
+function parseMarketingContent(rawBrief, customSlogan = '') {
   const clean = sanitizeUserBrief(rawBrief);
   const lower = clean.toLowerCase();
 
+  const isService = /service|maintenance|repar|repair|installat|preventi|electri|depann|diagnos|climat|froid|technic|bobinage/i.test(lower);
+  const isAppliance = /appliance|electromenag|restaurant|cuisine|four|refrigerat|frigo|congelat|kitchen|lave|blender|micro|cuisiniere|hotte/i.test(lower);
+  const isTelecom = /walkie|talkie|radio|motorola|baofeng|vhf|uhf|comms|communicat|talky|walke/i.test(lower);
+  const isSpareParts = /spare|piece|filtre|filter|brake|frein|courroie|belt|moteur|engine|suspension|roulement|bearing|clutch|embrayage|amortisseur/i.test(lower);
+  const isLighting = /light|lumiere|led|lamp|lampe|projecteur|spotlight|eclairage|ampoule|floodlight|disjoncteur/i.test(lower);
+  const isTools = /tool|outil|outillage|perceuse|drill|grinder|meuleuse|cle|wrench|securite|casque|gant|ppe|soudure/i.test(lower);
+  const isConstruction = /concrete|block|brique|ciment|cement|carrilu|chantier|beton|chaux|fer|rebar/i.test(lower);
+  const isSolar = /solar|solaire|inverter|onduleur|battery|batterie|panneau/i.test(lower);
+
   const discountMatch = clean.match(/(\d+%\s*(?:off|discount|remise))/i);
   const priceMatch = clean.match(/(\$\s*\d+(?:\.\d+)?|\d+(?:\.\d+)?\s*(?:\$|usd|fc))/i);
-  let badge = discountMatch ? discountMatch[1].toUpperCase() : (priceMatch ? 'BEST PRICE' : 'SPECIAL OFFER');
+  let badge = discountMatch ? discountMatch[1].toUpperCase() : (priceMatch ? 'BEST PRICE' : (isService ? 'CERTIFIED SERVICE' : 'SPECIAL OFFER'));
 
   let headline = '';
   let subtitle = '';
   let badges = [];
+  let defaultSlogan = 'Professional solutions and guaranteed quality across Lualaba.';
 
-  if (lower.includes('concrete') || lower.includes('block') || lower.includes('brique') || lower.includes('ciment') || lower.includes('chantier')) {
-    badge = 'PREMIUM QUALITY';
-    headline = 'PREMIUM CONCRETE BLOCKS';
-    if (lower.includes('all size') || lower.includes('sizes')) {
-      headline = 'PREMIUM CONCRETE BLOCKS (ALL SIZES)';
-    }
-    subtitle = 'Strength, durability and precision for high-quality construction.';
+  if (isService) {
+    headline = clean.split(/[.\n|;]/)[0] || 'TECHNICAL SERVICES & MAINTENANCE';
+    subtitle = 'Certified expert technicians and preventive maintenance available on-site.';
+    defaultSlogan = 'Certified technicians and rapid intervention for peak reliability.';
     badges = [
-      { icon: 'STRENGTH', title: 'High Strength', sub: 'Certified load-bearing' },
-      { icon: 'DURABILITY', title: 'Long Durability', sub: 'Weather-resistant' },
-      { icon: 'QUALITY', title: 'Consistent Quality', sub: 'Calibrated dimensions' },
-      { icon: 'PROJECTS', title: 'Villas & Heavy Builds', sub: 'Ideal for premium sites' }
+      { icon: '🛠️', title: 'Certified Experts', sub: 'Experienced technicians' },
+      { icon: '⚡', title: 'Fast On-Site Response', sub: 'Rapid intervention' },
+      { icon: '📋', title: 'Preventive Care', sub: 'Avoid costly downtime' },
+      { icon: '🛡️', title: 'Guaranteed Work', sub: 'Full service warranty' }
     ];
-  } else if (lower.includes('solar') || lower.includes('inverter') || lower.includes('battery') || lower.includes('panneau')) {
-    badge = 'CLEAN ENERGY';
-    headline = 'SOLAR & POWER SOLUTIONS';
+  } else if (isAppliance) {
+    headline = clean.split(/[.\n|;]/)[0] || 'COMMERCIAL & HOME APPLIANCES';
+    subtitle = 'High-performance commercial and domestic equipment built for daily heavy duty.';
+    defaultSlogan = 'Commercial-grade performance built for daily heavy-duty use.';
+    badges = [
+      { icon: '⭐', title: 'Heavy Duty Grade', sub: 'Built for intense use' },
+      { icon: '⚡', title: 'Energy Efficient', sub: 'Optimized consumption' },
+      { icon: '🛡️', title: 'Full Warranty', sub: 'Complete local support' },
+      { icon: '📦', title: 'In Stock Kolwezi', sub: 'Direct showroom pickup' }
+    ];
+  } else if (isTelecom) {
+    headline = clean.split(/[.\n|;]/)[0] || 'TWO-WAY RADIOS & TELECOM';
+    subtitle = 'Long-range crystal-clear communication engineered for harsh field sites.';
+    defaultSlogan = 'Instant, crystal-clear communication across any distance.';
+    badges = [
+      { icon: '📻', title: 'Long Range Audio', sub: 'Multi-km clear signal' },
+      { icon: '🔊', title: 'Noise Reduction', sub: 'Clear sound on noisy sites' },
+      { icon: '🛡️', title: 'Rugged & Tough', sub: 'Weather & dust resistant' },
+      { icon: '⚡', title: 'Pre-Programmed', sub: 'Ready to deploy immediately' }
+    ];
+  } else if (isSpareParts) {
+    headline = clean.split(/[.\n|;]/)[0] || 'HEAVY-DUTY SPARE PARTS';
+    subtitle = 'Precision OEM replacement parts engineered for machinery and fleet uptime.';
+    defaultSlogan = 'Engineered for endurance. Keep your operations moving.';
+    badges = [
+      { icon: '⚙️', title: 'Heavy Duty Build', sub: 'High endurance parts' },
+      { icon: '🛡️', title: 'OEM Quality', sub: 'Certified exact fit' },
+      { icon: '📦', title: 'Warehouse Stock', sub: 'Immediate availability' },
+      { icon: '🚀', title: 'Fast Dispatch', sub: 'Direct delivery in Kolwezi' }
+    ];
+  } else if (isLighting) {
+    headline = clean.split(/[.\n|;]/)[0] || 'COMMERCIAL & INDUSTRIAL LIGHTING';
+    subtitle = 'High-lumen, weatherproof illumination engineered for tough environments.';
+    defaultSlogan = 'High-efficiency illumination built for demanding environments.';
+    badges = [
+      { icon: '💡', title: 'Ultra High Lumens', sub: 'Maximum visibility' },
+      { icon: '🌧️', title: 'Weatherproof IP66', sub: 'All-weather certified' },
+      { icon: '⚡', title: 'Low Power Draw', sub: 'High energy savings' },
+      { icon: '🏢', title: 'Industrial Grade', sub: 'Long continuous lifespan' }
+    ];
+  } else if (isTools) {
+    headline = clean.split(/[.\n|;]/)[0] || 'PROFESSIONAL HARDWARE & TOOLS';
+    subtitle = 'Heavy-duty equipment and safety gear built for professional contractors.';
+    defaultSlogan = 'Precision, durability and safety for professionals.';
+    badges = [
+      { icon: '🛠️', title: 'Pro Durability', sub: 'Contractor-grade tough' },
+      { icon: '🦺', title: 'Certified Safe', sub: 'Compliance tested' },
+      { icon: '👌', title: 'Ergonomic Grip', sub: 'Built for long shifts' },
+      { icon: '⭐', title: 'Maximum Precision', sub: 'Guaranteed performance' }
+    ];
+  } else if (isConstruction) {
+    headline = clean.split(/[.\n|;]/)[0] || 'PREMIUM CONSTRUCTION MATERIALS';
+    subtitle = 'Strength, durability and precision for high-quality construction across Lualaba.';
+    defaultSlogan = 'Superior strength and quality for lasting structures.';
+    badges = [
+      { icon: '💪', title: 'High Strength', sub: 'Certified load-bearing' },
+      { icon: '🛡️', title: 'Long Durability', sub: 'Weather-resistant' },
+      { icon: '📏', title: 'Consistent Quality', sub: 'Calibrated dimensions' },
+      { icon: '🚚', title: 'Factory Dispatch', sub: 'Direct site delivery' }
+    ];
+  } else if (isSolar) {
+    headline = clean.split(/[.\n|;]/)[0] || 'SOLAR & CLEAN ENERGY';
     subtitle = 'Reliable uninterrupted energy engineered for industrial & residential power.';
+    defaultSlogan = 'Uninterrupted, reliable energy engineered for peak performance.';
     badges = [
-      { icon: 'POWER', title: 'High Efficiency', sub: 'Maximum output' },
-      { icon: 'BATTERY', title: 'Deep Cycle Storage', sub: 'Long battery life' },
-      { icon: 'CERTIFIED', title: 'Certified Safe', sub: 'Full warranty included' },
-      { icon: 'SUPPORT', title: 'Pro Installation', sub: 'Local technical support' }
-    ];
-  } else if (lower.includes('mining') || lower.includes('heavy') || lower.includes('safety') || lower.includes('ppe')) {
-    badge = 'CERTIFIED B2B';
-    headline = 'MINING & INDUSTRIAL SUPPLIES';
-    subtitle = 'Heavy-duty equipment and consumables built for harsh operating environments.';
-    badges = [
-      { icon: 'HEAVY', title: 'Industrial Grade', sub: 'Engineered for mine sites' },
-      { icon: 'SAFETY', title: 'ISO Compliant', sub: 'Guaranteed protection' },
-      { icon: 'STOCK', title: 'Immediate Stock', sub: 'Direct from Kolwezi' },
-      { icon: 'DELIVERY', title: 'Site Delivery', sub: 'Fast logistics' }
+      { icon: '☀️', title: 'High Efficiency', sub: 'Tier-1 solar tech' },
+      { icon: '🔋', title: 'Deep Cycle Life', sub: 'Long-lasting batteries' },
+      { icon: '⚡', title: 'Pure Sine Wave', sub: 'Protects delicate gear' },
+      { icon: '🔧', title: 'Turnkey Setup', sub: 'Expert local installation' }
     ];
   } else {
     headline = clean.split(/[.\n|;]/)[0] || 'OFFICIAL PROMOTION';
-    if (headline.length > 40) headline = headline.substring(0, 38) + '...';
-    headline = headline.toUpperCase();
     subtitle = 'Professional-grade quality and certified turnkey solutions available now.';
+    defaultSlogan = 'Professional solutions and guaranteed quality across Lualaba.';
     badges = [
-      { icon: 'QUALITY', title: 'Guaranteed Quality', sub: 'Certified standards' },
-      { icon: 'SUPPORT', title: 'Full Technical Support', sub: 'Dedicated service' },
-      { icon: 'VALUE', title: 'Competitive Pricing', sub: 'Best B2B terms' },
-      { icon: 'LOCAL', title: 'Immediate Availability', sub: 'In stock in Kolwezi' }
+      { icon: '⭐', title: 'Guaranteed Quality', sub: 'Certified standards' },
+      { icon: '🤝', title: 'Full Tech Support', sub: 'Dedicated service' },
+      { icon: '💰', title: 'Best B2B Pricing', sub: 'Competitive terms' },
+      { icon: '📍', title: 'Immediate Availability', sub: 'In stock in Kolwezi' }
     ];
   }
+
+  if (headline.length > 40) headline = headline.substring(0, 38) + '...';
+  headline = headline.toUpperCase();
+
+  const finalSlogan = customSlogan ? customSlogan.trim() : defaultSlogan;
 
   const caption = '🔥 **GLOBAL GATE | EXCLUSIVE PROMOTION** 🔥\n\n' +
     '⭐ **' + headline + '** 🏷️ **' + badge + '**\n\n' +
@@ -112,6 +173,7 @@ function parseMarketingContent(rawBrief) {
     badge,
     headline,
     subtitle,
+    slogan: finalSlogan,
     badges,
     caption
   };
@@ -120,27 +182,29 @@ function parseMarketingContent(rawBrief) {
 /**
  * Agency-Grade Commercial Advertisement Flyer Generator (1080x1080 SVG)
  */
-function generateSvgFlyerBase64(copyOrHeadline, details = '', badge = 'SPECIAL OFFER', productImage = null, theme = 'villa', isFullFlyer = false) {
+function generateSvgFlyerBase64(copyOrHeadline, details = '', badge = 'SPECIAL OFFER', productImage = null, theme = 'universal', isFullFlyer = false, customSlogan = '') {
   // If user uploaded a full finished flyer directly (ChatGPT / designer):
   if (isFullFlyer && productImage && typeof productImage === 'string' && productImage.startsWith('data:image')) {
     return productImage;
   }
 
-  let headline, subtitle, badgeText, badges;
+  let headline, subtitle, badgeText, badges, slogan;
   if (typeof copyOrHeadline === 'object' && copyOrHeadline !== null) {
     headline = copyOrHeadline.headline || 'PROMOTIONAL OFFER';
     subtitle = copyOrHeadline.subtitle || copyOrHeadline.details || '';
     badgeText = copyOrHeadline.badge || 'SPECIAL OFFER';
     badges = copyOrHeadline.badges || [];
+    slogan = copyOrHeadline.slogan || customSlogan || 'Professional solutions and guaranteed quality across Lualaba.';
     productImage = productImage || copyOrHeadline.productImage;
     if (copyOrHeadline.theme) theme = copyOrHeadline.theme;
     if (copyOrHeadline.isFullFlyer) isFullFlyer = copyOrHeadline.isFullFlyer;
   } else {
-    const parsed = parseMarketingContent(copyOrHeadline);
+    const parsed = parseMarketingContent(copyOrHeadline, customSlogan);
     headline = parsed.headline;
     subtitle = parsed.subtitle;
     badgeText = badge || parsed.badge;
     badges = parsed.badges;
+    slogan = parsed.slogan;
   }
 
   if (isFullFlyer && productImage && typeof productImage === 'string' && productImage.startsWith('data:image')) {
@@ -149,7 +213,8 @@ function generateSvgFlyerBase64(copyOrHeadline, details = '', badge = 'SPECIAL O
 
   const safeBadge = String(badgeText || 'SPECIAL OFFER').toUpperCase();
   const safeHeadline = String(headline || 'PREMIUM PROMOTION').toUpperCase().replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-  const safeSubtitle = String(subtitle || 'Strength, durability and precision for high-quality construction.').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  const safeSubtitle = String(subtitle || 'Professional quality and guaranteed turnkey solutions.').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  const safeSlogan = String(slogan || 'Professional solutions and guaranteed quality across Lualaba.').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
   let productSlotSvg = '';
   if (productImage && typeof productImage === 'string' && productImage.startsWith('data:image')) {
@@ -179,33 +244,19 @@ function generateSvgFlyerBase64(copyOrHeadline, details = '', badge = 'SPECIAL O
   }
 
   // 4 Feature Badges
-  const badge1 = badges[0] || { title: 'High Strength', sub: 'Certified load-bearing' };
-  const badge2 = badges[1] || { title: 'Long Durability', sub: 'Weather-resistant' };
-  const badge3 = badges[2] || { title: 'Consistent Quality', sub: 'Calibrated dimensions' };
-  const badge4 = badges[3] || { title: 'Villas & Heavy Builds', sub: 'Ideal for premium sites' };
+  const badge1 = badges[0] || { icon: '⭐', title: 'Guaranteed Quality', sub: 'Certified standards' };
+  const badge2 = badges[1] || { icon: '🤝', title: 'Dedicated Support', sub: 'Expert team' };
+  const badge3 = badges[2] || { icon: '💰', title: 'Competitive Pricing', sub: 'Best terms' };
+  const badge4 = badges[3] || { icon: '📍', title: 'Immediate Availability', sub: 'In stock in Kolwezi' };
 
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" viewBox="0 0 1080 1080">
     <defs>
       <!-- Twilight Sky Gradient -->
       <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="#060b18"/>
-        <stop offset="40%" stop-color="#101a2f"/>
-        <stop offset="75%" stop-color="#251d38"/>
-        <stop offset="100%" stop-color="#3a2b38"/>
-      </linearGradient>
-
-      <!-- Luxury Villa Window Glow -->
-      <linearGradient id="windowGlow" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0%" stop-color="rgba(245, 158, 11, 0.45)"/>
-        <stop offset="50%" stop-color="rgba(251, 191, 36, 0.65)"/>
-        <stop offset="100%" stop-color="rgba(245, 158, 11, 0.35)"/>
-      </linearGradient>
-
-      <!-- Infinity Pool Water Gradient -->
-      <linearGradient id="poolGrad" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0%" stop-color="#0e7490"/>
-        <stop offset="50%" stop-color="#075985"/>
-        <stop offset="100%" stop-color="#082f49"/>
+        <stop offset="0%" stop-color="#040711"/>
+        <stop offset="35%" stop-color="#0b1324"/>
+        <stop offset="70%" stop-color="#111c34"/>
+        <stop offset="100%" stop-color="#070b16"/>
       </linearGradient>
 
       <!-- Polished Pedestal Disc Gradient -->
@@ -234,49 +285,22 @@ function generateSvgFlyerBase64(copyOrHeadline, details = '', badge = 'SPECIAL O
       </filter>
     </defs>
 
-    <!-- 1. Architectural Dusk Sky Canvas -->
+    <!-- 1. Universal Commercial Studio Canvas -->
     <rect width="1080" height="1080" fill="url(#skyGrad)"/>
     <rect x="0" y="0" width="1080" height="12" fill="url(#goldGrad)"/>
 
-    <!-- Evening Sky Stars -->
-    <circle cx="120" cy="80" r="1.5" fill="#ffffff" opacity="0.4"/>
-    <circle cx="310" cy="60" r="1.5" fill="#ffffff" opacity="0.4"/>
-    <circle cx="540" cy="95" r="1.5" fill="#ffffff" opacity="0.4"/>
-    <circle cx="780" cy="50" r="1.5" fill="#ffffff" opacity="0.4"/>
-    <circle cx="920" cy="110" r="1.5" fill="#ffffff" opacity="0.4"/>
+    <!-- Subtle Architectural Studio Grid Lines -->
+    <line x1="120" y1="80" x2="120" y2="700" stroke="rgba(56, 189, 248, 0.05)" stroke-width="1"/>
+    <line x1="280" y1="80" x2="280" y2="700" stroke="rgba(56, 189, 248, 0.05)" stroke-width="1"/>
+    <line x1="800" y1="80" x2="800" y2="700" stroke="rgba(56, 189, 248, 0.05)" stroke-width="1"/>
+    <line x1="960" y1="80" x2="960" y2="700" stroke="rgba(56, 189, 248, 0.05)" stroke-width="1"/>
 
-    <!-- 2. Modernist Luxury Villa Architecture (Upper Cantilever Floor) -->
-    <rect x="360" y="190" width="660" height="140" rx="12" fill="#141c2b" stroke="#2d3b55" stroke-width="2"/>
-    <rect x="385" y="210" width="610" height="95" fill="url(#windowGlow)"/>
+    <!-- Atmospheric Ambient Glows -->
+    <circle cx="180" cy="220" r="180" fill="#f59e0b" opacity="0.08"/>
+    <circle cx="900" cy="240" r="200" fill="#38bdf8" opacity="0.07"/>
 
-    <!-- Vertical Architectural Window Mullions -->
-    <rect x="475" y="210" width="6" height="95" fill="#0f172a"/>
-    <rect x="565" y="210" width="6" height="95" fill="#0f172a"/>
-    <rect x="655" y="210" width="6" height="95" fill="#0f172a"/>
-    <rect x="745" y="210" width="6" height="95" fill="#0f172a"/>
-    <rect x="835" y="210" width="6" height="95" fill="#0f172a"/>
-    <rect x="925" y="210" width="6" height="95" fill="#0f172a"/>
-
-    <!-- Villa Lower Floor & Columns Pavilion -->
-    <rect x="440" y="330" width="580" height="120" fill="#0f172a"/>
-    <rect x="470" y="335" width="220" height="70" fill="rgba(251, 191, 36, 0.3)"/>
-    <rect x="480" y="330" width="18" height="120" fill="#1e293b"/>
-    <rect x="600" y="330" width="18" height="120" fill="#1e293b"/>
-    <rect x="740" y="330" width="18" height="120" fill="#1e293b"/>
-
-    <!-- Pool Terrace & Swimming Pool Water Reflections -->
-    <rect x="460" y="450" width="560" height="190" rx="14" fill="url(#poolGrad)"/>
-    <line x1="480" y1="480" x2="820" y2="480" stroke="rgba(56, 189, 248, 0.35)" stroke-width="2"/>
-    <line x1="540" y1="510" x2="960" y2="510" stroke="rgba(56, 189, 248, 0.35)" stroke-width="2"/>
-    <line x1="500" y1="540" x2="980" y2="540" stroke="rgba(56, 189, 248, 0.35)" stroke-width="2"/>
-    <line x1="580" y1="570" x2="970" y2="570" stroke="rgba(56, 189, 248, 0.35)" stroke-width="2"/>
-
-    <!-- Golden Light Reflection on Water -->
-    <line x1="560" y1="495" x2="760" y2="495" stroke="rgba(245, 158, 11, 0.28)" stroke-width="2"/>
-    <line x1="600" y1="525" x2="820" y2="525" stroke="rgba(245, 158, 11, 0.28)" stroke-width="2"/>
-
-    <!-- Stone Terrace Ground -->
-    <path d="M 0 440 L 460 440 L 460 660 L 0 660 Z" fill="#151d2d"/>
+    <!-- Studio Floor Horizon -->
+    <rect x="0" y="560" width="1080" height="160" fill="rgba(15, 23, 42, 0.75)"/>
 
     <!-- 3. Top Header: Brand & Badge -->
     <g transform="translate(80, 42)">
@@ -303,32 +327,32 @@ function generateSvgFlyerBase64(copyOrHeadline, details = '', badge = 'SPECIAL O
     <!-- 5. Center 3D Showcase Slot (Pedestal + Product Photo) -->
     ${productSlotSvg}
 
-    <!-- 6. Callout Slogan Banner -->
-    <text x="540" y="695" font-family="'Montserrat', Arial, sans-serif" font-weight="800" font-size="21" fill="#f8fafc" text-anchor="middle">Not all products are created equal. <tspan fill="#f59e0b">Build with confidence.</tspan></text>
+    <!-- 6. Callout Slogan Banner (Dynamic) -->
+    <text x="540" y="695" font-family="'Montserrat', Arial, sans-serif" font-weight="800" font-size="21" fill="#f8fafc" text-anchor="middle">${safeSlogan}</text>
 
-    <!-- 7. 4 Value Badges (Agency Grid) -->
+    <!-- 7. 4 Value Badges (Dynamic Agency Grid) -->
     <g transform="translate(80, 720)">
       <!-- Badge 1 -->
       <rect x="0" y="0" width="215" height="105" rx="14" fill="#131c2e" stroke="#25334d" stroke-width="1.5"/>
-      <text x="107" y="34" font-size="18" text-anchor="middle">💪</text>
+      <text x="107" y="34" font-size="18" text-anchor="middle">${badge1.icon || '⭐'}</text>
       <text x="107" y="65" font-family="'Montserrat', Arial, sans-serif" font-weight="800" font-size="14" fill="#ffffff" text-anchor="middle">${badge1.title}</text>
       <text x="107" y="86" font-family="Arial, sans-serif" font-weight="500" font-size="11" fill="#94a3b8" text-anchor="middle">${badge1.sub}</text>
 
       <!-- Badge 2 -->
       <rect x="235" y="0" width="215" height="105" rx="14" fill="#131c2e" stroke="#25334d" stroke-width="1.5"/>
-      <text x="342" y="34" font-size="18" text-anchor="middle">🛡️</text>
+      <text x="342" y="34" font-size="18" text-anchor="middle">${badge2.icon || '🛡️'}</text>
       <text x="342" y="65" font-family="'Montserrat', Arial, sans-serif" font-weight="800" font-size="14" fill="#ffffff" text-anchor="middle">${badge2.title}</text>
       <text x="342" y="86" font-family="Arial, sans-serif" font-weight="500" font-size="11" fill="#94a3b8" text-anchor="middle">${badge2.sub}</text>
 
       <!-- Badge 3 -->
       <rect x="470" y="0" width="215" height="105" rx="14" fill="#131c2e" stroke="#25334d" stroke-width="1.5"/>
-      <text x="577" y="34" font-size="18" text-anchor="middle">📏</text>
+      <text x="577" y="34" font-size="18" text-anchor="middle">${badge3.icon || '📦'}</text>
       <text x="577" y="65" font-family="'Montserrat', Arial, sans-serif" font-weight="800" font-size="14" fill="#ffffff" text-anchor="middle">${badge3.title}</text>
       <text x="577" y="86" font-family="Arial, sans-serif" font-weight="500" font-size="11" fill="#94a3b8" text-anchor="middle">${badge3.sub}</text>
 
       <!-- Badge 4 -->
       <rect x="705" y="0" width="215" height="105" rx="14" fill="#131c2e" stroke="#25334d" stroke-width="1.5"/>
-      <text x="812" y="34" font-size="18" text-anchor="middle">🏛️</text>
+      <text x="812" y="34" font-size="18" text-anchor="middle">${badge4.icon || '🚀'}</text>
       <text x="812" y="65" font-family="'Montserrat', Arial, sans-serif" font-weight="800" font-size="14" fill="#ffffff" text-anchor="middle">${badge4.title}</text>
       <text x="812" y="86" font-family="Arial, sans-serif" font-weight="500" font-size="11" fill="#94a3b8" text-anchor="middle">${badge4.sub}</text>
     </g>
@@ -469,7 +493,7 @@ router.get('/flyer', (req, res) => {
  * POST /publish - Generate flyer and publish to Facebook and/or WhatsApp
  */
 router.post('/publish', verifyMarketingAccess, async (req, res) => {
-  const { brief, whatsappNumber, platforms = {}, productImage = null, previewOnly = false, theme = 'villa', isFullFlyer = false } = req.body;
+  const { brief, whatsappNumber, platforms = {}, productImage = null, previewOnly = false, theme = 'universal', isFullFlyer = false, customSlogan = '' } = req.body;
 
   if (!brief || !String(brief).trim()) {
     return res.status(400).json({ success: false, error: 'Promotional brief is required.' });
@@ -495,7 +519,8 @@ router.post('/publish', verifyMarketingAccess, async (req, res) => {
         productImage,
         theme,
         isFullFlyer,
-        previewOnly
+        previewOnly,
+        customSlogan
       }),
       signal: AbortSignal.timeout(60000)
     });
@@ -560,6 +585,10 @@ router.post('/publish', verifyMarketingAccess, async (req, res) => {
 
     if (isFullFlyer) {
       args.push('--full-flyer');
+    }
+
+    if (customSlogan && String(customSlogan).trim()) {
+      args.push(`--custom-slogan=${String(customSlogan).trim()}`);
     }
 
     return execFile('node', args, { cwd: AGENT_DIR, timeout: 120000 }, (error, stdout, stderr) => {
@@ -642,8 +671,8 @@ router.post('/publish', verifyMarketingAccess, async (req, res) => {
   // Strategy 3: Cloud / Remote fallback (when running on Railway server without local agent directory)
   console.log('[Marketing] Running in remote environment. Generating agency-grade flyer...');
   try {
-    const copyData = parseMarketingContent(brief);
-    const flyerBase64 = generateSvgFlyerBase64(copyData, '', copyData.badge, productImage, theme, isFullFlyer);
+    const copyData = parseMarketingContent(brief, customSlogan);
+    const flyerBase64 = generateSvgFlyerBase64(copyData, '', copyData.badge, productImage, theme, isFullFlyer, customSlogan);
     const caption = copyData.caption;
 
     const svgBuffer = Buffer.from(flyerBase64.replace(/^data:image\/svg\+xml;base64,/, ''), 'base64');
@@ -660,6 +689,8 @@ router.post('/publish', verifyMarketingAccess, async (req, res) => {
           badge: copyData.badge,
           headline: copyData.headline,
           details: copyData.subtitle,
+          slogan: copyData.slogan,
+          badges: copyData.badges,
           caption: copyData.caption
         },
         flyerBase64,

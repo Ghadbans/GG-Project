@@ -116,7 +116,8 @@ function MarketingViewAdmin() {
   const [whatsappNumber, setWhatsappNumber] = useState('');
   const [productImage, setProductImage] = useState(null);
   const [productImageName, setProductImageName] = useState('');
-  const [theme, setTheme] = useState('villa'); // 'villa' | 'corporate' | 'industrial' | 'solar'
+  const [theme, setTheme] = useState('universal'); // 'universal' | 'villa' | 'corporate' | 'industrial' | 'solar'
+  const [customSlogan, setCustomSlogan] = useState('');
   const [isFullFlyer, setIsFullFlyer] = useState(false);
   const [targetPlatforms, setTargetPlatforms] = useState({
     facebook: true,
@@ -407,6 +408,7 @@ function MarketingViewAdmin() {
       theme,
       isFullFlyer,
       previewOnly: true,
+      customSlogan: customSlogan.trim(),
       platforms: {
         facebook: targetPlatforms.facebook,
         whatsapp: targetPlatforms.whatsapp,
@@ -491,6 +493,7 @@ function MarketingViewAdmin() {
       theme,
       isFullFlyer,
       previewOnly: false,
+      customSlogan: customSlogan.trim(),
       platforms: {
         facebook: targetPlatforms.facebook,
         whatsapp: targetPlatforms.whatsapp,
@@ -714,44 +717,35 @@ function MarketingViewAdmin() {
                       />
 
                       {!isFullFlyer && (
-                        <Box sx={{ mt: 1 }}>
-                          <Typography variant="subtitle2" sx={{ fontWeight: 600, color: '#475569', mb: 1 }}>
-                            🏛️ Architectural 3D Scene Theme:
-                          </Typography>
-                          <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
+                        <Box sx={{ mt: 1.5, mb: 1 }}>
+                          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1.5, p: 1.2, bgcolor: '#f8fafc', borderRadius: 2, border: '1px solid #e2e8f0', flexWrap: 'wrap' }}>
+                            <Typography variant="body2" sx={{ fontWeight: 700, color: '#1e293b' }}>
+                              🎨 Template Style:
+                            </Typography>
                             <Chip
-                              label="🏡 Luxury Modern Villa"
-                              clickable
-                              color={theme === 'villa' ? 'primary' : 'default'}
-                              variant={theme === 'villa' ? 'filled' : 'outlined'}
-                              onClick={() => { setTheme('villa'); setPreviewGenerated(false); setResult(null); }}
-                              sx={{ fontWeight: 600 }}
+                              label="✨ Clean Universal Commercial Studio"
+                              size="small"
+                              sx={{ fontWeight: 700, bgcolor: '#0f172a', color: '#f8fafc' }}
                             />
-                            <Chip
-                              label="🏢 Corporate Plaza"
-                              clickable
-                              color={theme === 'corporate' ? 'primary' : 'default'}
-                              variant={theme === 'corporate' ? 'filled' : 'outlined'}
-                              onClick={() => { setTheme('corporate'); setPreviewGenerated(false); setResult(null); }}
-                              sx={{ fontWeight: 600 }}
-                            />
-                            <Chip
-                              label="🏭 Industrial Complex"
-                              clickable
-                              color={theme === 'industrial' ? 'primary' : 'default'}
-                              variant={theme === 'industrial' ? 'filled' : 'outlined'}
-                              onClick={() => { setTheme('industrial'); setPreviewGenerated(false); setResult(null); }}
-                              sx={{ fontWeight: 600 }}
-                            />
-                            <Chip
-                              label="☀️ Clean Energy & Solar"
-                              clickable
-                              color={theme === 'solar' ? 'primary' : 'default'}
-                              variant={theme === 'solar' ? 'filled' : 'outlined'}
-                              onClick={() => { setTheme('solar'); setPreviewGenerated(false); setResult(null); }}
-                              sx={{ fontWeight: 600 }}
-                            />
+                            <Typography variant="caption" sx={{ color: '#64748b' }}>
+                              (Universal high-end layout for any product, equipment, or technical service)
+                            </Typography>
                           </Box>
+
+                          <TextField
+                            fullWidth
+                            size="small"
+                            label="Custom Slogan / Tagline (Optional)"
+                            placeholder="Leave blank to automatically generate smart slogan from brief..."
+                            value={customSlogan}
+                            onChange={(e) => {
+                              setCustomSlogan(e.target.value);
+                              setPreviewGenerated(false);
+                              setResult(null);
+                            }}
+                            helperText="Overrides the default banner text. If left blank, the AI will generate a tailored commercial slogan."
+                            sx={{ mb: 1 }}
+                          />
                         </Box>
                       )}
                     </Box>
@@ -760,7 +754,7 @@ function MarketingViewAdmin() {
                     <Box sx={{ mb: 2.5 }}>
                       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1 }}>
                         <Typography variant="subtitle2" sx={{ fontWeight: 600, color: '#475569' }}>
-                          {isFullFlyer ? 'Ready-Made Flyer Graphic *' : 'Product Photo (Embedded on 3D Pedestal in Architectural Scene)'}
+                          {isFullFlyer ? 'Ready-Made Flyer Graphic *' : 'Product / Equipment / Service Photo (Embedded on Studio Showcase Pedestal)'}
                         </Typography>
                         {productImage && (
                           <Button
@@ -840,7 +834,7 @@ function MarketingViewAdmin() {
                               {productImageName || 'Selected Image'}
                             </Typography>
                             <Typography variant="caption" sx={{ color: '#10b981', fontWeight: 600, display: 'flex', alignItems: 'center', gap: 0.5 }}>
-                              <CheckCircleIcon sx={{ fontSize: 14 }} /> {isFullFlyer ? 'Ready for direct full-bleed broadcast' : 'Ready for 3D architectural composition'}
+                              <CheckCircleIcon sx={{ fontSize: 14 }} /> {isFullFlyer ? 'Ready for direct full-bleed broadcast' : 'Ready for studio showcase composition'}
                             </Typography>
                           </Box>
                         </Box>
@@ -1330,7 +1324,7 @@ function MarketingViewAdmin() {
                       {(result.flyerBase64 || (isFullFlyer && productImage)) ? (
                         <Box sx={{ textAlign: 'center', mt: 1.5 }}>
                           <Typography variant="subtitle2" sx={{ fontWeight: 600, color: '#475569', mb: 1, textAlign: 'left' }}>
-                            {isFullFlyer ? 'Ready-Made Flyer Graphic (Direct Broadcast)' : 'Generated 3D Scene Flyer (1080x1080)'}
+                            {isFullFlyer ? 'Ready-Made Flyer Graphic (Direct Broadcast)' : 'Generated Studio Flyer (1080x1080)'}
                           </Typography>
                           <img
                             src={result.flyerBase64 || productImage}

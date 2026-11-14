@@ -461,14 +461,14 @@ const inspectionReportRoutes = require('./routes/inspectionReportRoutes');
 app.use('/api/inspection-reports', inspectionReportRoutes);
 app.use('/endpoint/inspection-reports', inspectionReportRoutes);
 
-app.get('/', (req, res) => res.json({ name: 'Global Gate API', version: '3.6.60', status: 'online', uptime: process.uptime(), cloudWhatsApp: true }));
+app.get('/', (req, res) => res.json({ name: 'Global Gate API', version: '3.6.61', status: 'online', uptime: process.uptime(), cloudWhatsApp: true }));
 app.get('/robots.txt', (req, res) => {
   res.type('text/plain');
   res.send("User-agent: *\nDisallow: /\n");
 });
 app.get('/favicon.ico', (req, res) => res.status(204).end());
-app.get('/test', (req, res) => res.send('Backend is LIVE and UPDATED! [v3.6.60-fleet-compound-colors-olive-green]'));
-app.get('/status', (req, res) => res.json({ status: 'ok', version: '3.6.60', attachments: true, cloudWhatsApp: true, uptime: process.uptime() })); // health check
+app.get('/test', (req, res) => res.send('Backend is LIVE and UPDATED! [v3.6.61-marketing-universal-template-smart-slogans]'));
+app.get('/status', (req, res) => res.json({ status: 'ok', version: '3.6.61', attachments: true, cloudWhatsApp: true, uptime: process.uptime() })); // health check
 
 // SECURITY GUARD FOR INTERNAL INIT & DEBUG ROUTES
 const verifyInternalSetupKey = (req, res, next) => {

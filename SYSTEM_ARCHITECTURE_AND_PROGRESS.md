@@ -5589,6 +5589,47 @@ The standardized `renderStatusBadge` helper was seamlessly integrated into all 1
   - Compiled Android APK: `dist_web/GlobalGate-v3.6.60.apk` and mirrored to `server/public/downloads/GlobalGate-v3.6.60.apk` & `GlobalGate.apk`.
   - Pushed to GitHub `main` for Railway backend and Cloudflare Pages auto-deployment.
 
+---
+
+### Rule 80: Marketing Universal Commercial Studio Template & Smart Dynamic Slogan Engine (Ver 3.6.61)
+- **Problem & Requirement Reported by User**:
+  - Flyers generated in the Social Marketing & Flyer Generator module previously had hardcoded construction slogans: `"Not all products are created equal. Build with confidence."` and concrete block badges (`High Strength`, `Villas & Heavy Builds`) regardless of the product advertised.
+  - The scene themes were artificially constrained to only 4 architectural backdrops (`Luxury Modern Villa`, `Corporate Plaza`, `Industrial Complex`, `Clean Energy & Solar`).
+  - Global Gate sells a diverse spectrum of commercial products (spare parts, walkie-talkies/radios, lighting, electrical tools, hardware, home & restaurant appliances, cement, solar) AND technical services (home appliance repairs, restaurant appliance maintenance, electrical installations, HVAC/cold room services, preventive maintenance). Rigid architectural themes and static slogans made no sense for services and non-construction equipment.
+  - User requested: "make one professional tamplate clear enough as for the solagan will be created assign the smart category slogan".
+- **Architectural Implementation**:
+  1. **Clean Universal Commercial Studio Template (`C:\Users\GG\fb-whatsapp-agent\agent.js` & `server/routes/marketingRoutes.js`)**:
+     - Removed rigid architectural scene restrictions.
+     - Implemented `drawUniversalStudioBackdrop` in Canvas and SVG: an ultra-clean, prestigious obsidian-to-titanium slate commercial studio backdrop (`#040711` to `#111c34`) with subtle architectural studio illumination, atmospheric ambient accent glows, and an overhead spotlight with polished showcase pedestal.
+     - Accommodates product photos, machine equipment, or technical service graphics with perfect visual hierarchy.
+  2. **Dynamic AI & Contextual Slogan Engine (No Hardcoded Slogans)**:
+     - Completely removed `'Not all products are created equal. Build with confidence.'` from `agent.js` (line 714) and `marketingRoutes.js` (line 307).
+     - Updated Gemini AI copywriter prompt to return a tailored `slogan` (punchy 6-10 word commercial tagline) and 4 context-specific `badges` `[{ icon, title, sub }]`.
+     - In the smart contextual engine, automatically detects:
+       - **Services & Maintenance**: Slogan: *"Certified technicians and rapid intervention for peak reliability."* | Badges: 🛠️ Certified Experts, ⚡ Fast On-Site Response, 📋 Preventive Care, 🛡️ Guaranteed Work.
+       - **Appliances & Equipment (Home / Commercial / Restaurant)**: Slogan: *"Commercial-grade performance built for daily heavy-duty use."* | Badges: ⭐ Heavy Duty Grade, ⚡ Energy Efficient, 🛡️ Full Warranty, 📦 In Stock Kolwezi.
+       - **Telecom & Radios**: Slogan: *"Instant, crystal-clear communication across any distance."* | Badges: 📻 Long Range Audio, 🔊 Noise Reduction, 🛡️ Rugged & Tough, ⚡ Pre-Programmed.
+       - **Spare Parts & Mechanics**: Slogan: *"Engineered for endurance. Keep your operations moving."* | Badges: ⚙️ Heavy Duty Build, 🛡️ OEM Quality, 📦 Warehouse Stock, 🚀 Fast Dispatch.
+       - **Lighting & Electrical**: Slogan: *"High-efficiency illumination built for demanding environments."* | Badges: 💡 Ultra High Lumens, 🌧️ Weatherproof IP66, ⚡ Low Power Draw, 🏢 Industrial Grade.
+       - **Tools, Hardware & PPE**: Slogan: *"Precision, durability and safety for professionals."* | Badges: 🛠️ Pro Durability, 🦺 Certified Safe, 👌 Ergonomic Grip, ⭐ Maximum Precision.
+       - **Construction & Building Materials**: Slogan: *"Superior strength and quality for lasting structures."* | Badges: 💪 High Strength, 🛡️ Long Durability, 📏 Consistent Quality, 🚚 Factory Dispatch.
+       - **Clean Energy & Solar**: Slogan: *"Uninterrupted, reliable energy engineered for peak performance."* | Badges: ☀️ High Efficiency, 🔋 Deep Cycle Life, ⚡ Pure Sine Wave, 🔧 Turnkey Setup.
+       - **Universal Showcase (Any Other Product or Service)**: Slogan: *"Professional solutions and guaranteed quality across Lualaba."* | Badges: ⭐ Guaranteed Quality, 🤝 Full Tech Support, 💰 Best B2B Pricing, 📍 Immediate Availability.
+  3. **Custom Slogan / Tagline Override**:
+     - Added `customSlogan` state and text field in `MarketingViewAdmin.js`.
+     - Allows users to enter an exact custom slogan if desired; if left blank, the smart category engine automatically crafts the appropriate slogan.
+     - Piped `customSlogan` seamlessly across Electron IPC, local HTTP server (`5055`), and Railway REST API `/publish`.
+  4. **UI Modernization (`MarketingViewAdmin.js`)**:
+     - Simplified the flyer setup interface: replaced the 4 architectural theme chips with a prominent "✨ Clean Universal Commercial Studio" badge and helper notes.
+     - Updated image upload label to: *"Product / Equipment / Service Photo (Embedded on Studio Showcase Pedestal)"*.
+- **Universal Multi-Platform Production Artifacts**:
+  - Incremental version bump: **v3.6.61** across `package.json`, `server/package.json`, `server/routes/downloadRoutes.js`, and `server/index.js`.
+  - Recompiled desktop and web bundles (`npm run build`).
+  - Packaged Windows Installer: `dist/Global Gate Setup 3.6.61.exe` and mirrored to `server/public/downloads/Global Gate Setup 3.6.61.exe` and `Global Gate Setup.exe`.
+  - Compiled Android APK: `android/app/build/outputs/apk/debug/app-debug.apk` and mirrored to `server/public/downloads/GlobalGate-v3.6.61.apk` and `GlobalGate.apk`.
+  - Pushed to GitHub `main` for Railway backend and Cloudflare Pages auto-deployment.
+
+
 
 
 

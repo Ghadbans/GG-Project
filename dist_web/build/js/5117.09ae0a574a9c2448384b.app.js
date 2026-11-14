@@ -693,81 +693,85 @@ function MarketingViewAdmin() {
     _useState0 = _slicedToArray(_useState9, 2),
     productImageName = _useState0[0],
     setProductImageName = _useState0[1];
-  var _useState1 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('villa'),
+  var _useState1 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('universal'),
     _useState10 = _slicedToArray(_useState1, 2),
     theme = _useState10[0],
-    setTheme = _useState10[1]; // 'villa' | 'corporate' | 'industrial' | 'solar'
-  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    setTheme = _useState10[1]; // 'universal' | 'villa' | 'corporate' | 'industrial' | 'solar'
+  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
     _useState12 = _slicedToArray(_useState11, 2),
-    isFullFlyer = _useState12[0],
-    setIsFullFlyer = _useState12[1];
-  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
+    customSlogan = _useState12[0],
+    setCustomSlogan = _useState12[1];
+  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState14 = _slicedToArray(_useState13, 2),
+    isFullFlyer = _useState14[0],
+    setIsFullFlyer = _useState14[1];
+  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
       facebook: true,
       whatsapp: true,
       instagram: true
     }),
-    _useState14 = _slicedToArray(_useState13, 2),
-    targetPlatforms = _useState14[0],
-    setTargetPlatforms = _useState14[1];
-  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState16 = _slicedToArray(_useState15, 2),
-    previewGenerated = _useState16[0],
-    setPreviewGenerated = _useState16[1];
+    targetPlatforms = _useState16[0],
+    setTargetPlatforms = _useState16[1];
   var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState18 = _slicedToArray(_useState17, 2),
-    loadingPreview = _useState18[0],
-    setLoadingPreview = _useState18[1];
+    previewGenerated = _useState18[0],
+    setPreviewGenerated = _useState18[1];
   var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState20 = _slicedToArray(_useState19, 2),
-    loadingPublish = _useState20[0],
-    setLoadingPublish = _useState20[1];
-  var _useState21 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    loadingPreview = _useState20[0],
+    setLoadingPreview = _useState20[1];
+  var _useState21 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState22 = _slicedToArray(_useState21, 2),
-    result = _useState22[0],
-    setResult = _useState22[1];
-  var _useState23 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+    loadingPublish = _useState22[0],
+    setLoadingPublish = _useState22[1];
+  var _useState23 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
     _useState24 = _slicedToArray(_useState23, 2),
-    errorMessage = _useState24[0],
-    setErrorMessage = _useState24[1];
+    result = _useState24[0],
+    setResult = _useState24[1];
+  var _useState25 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+    _useState26 = _slicedToArray(_useState25, 2),
+    errorMessage = _useState26[0],
+    setErrorMessage = _useState26[1];
 
   // WhatsApp recipients (saved customer selection list)
   var SELF_NUMBER = '+243827722222';
-  var _useState25 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
-    _useState26 = _slicedToArray(_useState25, 2),
-    customers = _useState26[0],
-    setCustomers = _useState26[1];
   var _useState27 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState28 = _slicedToArray(_useState27, 2),
-    savedRecipientIds = _useState28[0],
-    setSavedRecipientIds = _useState28[1];
-  var _useState29 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
+    customers = _useState28[0],
+    setCustomers = _useState28[1];
+  var _useState29 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState30 = _slicedToArray(_useState29, 2),
-    includeSavedList = _useState30[0],
-    setIncludeSavedList = _useState30[1];
-  var _useState31 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    savedRecipientIds = _useState30[0],
+    setSavedRecipientIds = _useState30[1];
+  var _useState31 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
     _useState32 = _slicedToArray(_useState31, 2),
-    pickerOpen = _useState32[0],
-    setPickerOpen = _useState32[1];
-  var _useState33 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    includeSavedList = _useState32[0],
+    setIncludeSavedList = _useState32[1];
+  var _useState33 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState34 = _slicedToArray(_useState33, 2),
-    pickerSelection = _useState34[0],
-    setPickerSelection = _useState34[1];
-  var _useState35 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+    pickerOpen = _useState34[0],
+    setPickerOpen = _useState34[1];
+  var _useState35 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState36 = _slicedToArray(_useState35, 2),
-    pickerSearch = _useState36[0],
-    setPickerSearch = _useState36[1];
-  var _useState37 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('withPhone'),
+    pickerSelection = _useState36[0],
+    setPickerSelection = _useState36[1];
+  var _useState37 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
     _useState38 = _slicedToArray(_useState37, 2),
-    pickerTab = _useState38[0],
-    setPickerTab = _useState38[1]; // 'withPhone' | 'all' | 'selected'
-  var _useState39 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    pickerSearch = _useState38[0],
+    setPickerSearch = _useState38[1];
+  var _useState39 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('withPhone'),
     _useState40 = _slicedToArray(_useState39, 2),
-    savingList = _useState40[0],
-    setSavingList = _useState40[1];
+    pickerTab = _useState40[0],
+    setPickerTab = _useState40[1]; // 'withPhone' | 'all' | 'selected'
   var _useState41 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState42 = _slicedToArray(_useState41, 2),
-    refreshingCustomers = _useState42[0],
-    setRefreshingCustomers = _useState42[1];
+    savingList = _useState42[0],
+    setSavingList = _useState42[1];
+  var _useState43 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState44 = _slicedToArray(_useState43, 2),
+    refreshingCustomers = _useState44[0],
+    setRefreshingCustomers = _useState44[1];
   var getCustomerPhone = c => {
     if (!c) return '';
     var candidates = [c === null || c === void 0 ? void 0 : c.customerCompanyPhone, c === null || c === void 0 ? void 0 : c.customerPhone, c === null || c === void 0 ? void 0 : c.phone, c === null || c === void 0 ? void 0 : c.telephone, c === null || c === void 0 ? void 0 : c.mobile, c === null || c === void 0 ? void 0 : c.contactPhone, c === null || c === void 0 ? void 0 : c.tel, c === null || c === void 0 ? void 0 : c.whatsapp];
@@ -922,14 +926,14 @@ function MarketingViewAdmin() {
   };
 
   // Access Permission Verification
-  var _useState43 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
-    _useState44 = _slicedToArray(_useState43, 2),
-    hasAccess = _useState44[0],
-    setHasAccess = _useState44[1];
   var _useState45 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
     _useState46 = _slicedToArray(_useState45, 2),
-    loadingPermission = _useState46[0],
-    setLoadingPermission = _useState46[1];
+    hasAccess = _useState46[0],
+    setHasAccess = _useState46[1];
+  var _useState47 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
+    _useState48 = _slicedToArray(_useState47, 2),
+    loadingPermission = _useState48[0],
+    setLoadingPermission = _useState48[1];
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     var storesUserId = localStorage.getItem('user');
     var fetchUserAndAccess = /*#__PURE__*/function () {
@@ -1035,6 +1039,7 @@ function MarketingViewAdmin() {
         theme,
         isFullFlyer,
         previewOnly: true,
+        customSlogan: customSlogan.trim(),
         platforms: {
           facebook: targetPlatforms.facebook,
           whatsapp: targetPlatforms.whatsapp,
@@ -1118,6 +1123,7 @@ function MarketingViewAdmin() {
         theme,
         isFullFlyer,
         previewOnly: false,
+        customSlogan: customSlogan.trim(),
         platforms: {
           facebook: targetPlatforms.facebook,
           whatsapp: targetPlatforms.whatsapp,
@@ -1446,74 +1452,56 @@ function MarketingViewAdmin() {
     }
   }), !isFullFlyer && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, {
     sx: {
-      mt: 1
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
-    variant: "subtitle2",
-    sx: {
-      fontWeight: 600,
-      color: '#475569',
+      mt: 1.5,
       mb: 1
     }
-  }, "\uD83C\uDFDB\uFE0F Architectural 3D Scene Theme:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, {
     sx: {
       display: 'flex',
+      alignItems: 'center',
       gap: 1,
+      mb: 1.5,
+      p: 1.2,
+      bgcolor: '#f8fafc',
+      borderRadius: 2,
+      border: '1px solid #e2e8f0',
       flexWrap: 'wrap'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
-    label: "\uD83C\uDFE1 Luxury Modern Villa",
-    clickable: true,
-    color: theme === 'villa' ? 'primary' : 'default',
-    variant: theme === 'villa' ? 'filled' : 'outlined',
-    onClick: () => {
-      setTheme('villa');
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+    variant: "body2",
+    sx: {
+      fontWeight: 700,
+      color: '#1e293b'
+    }
+  }, "\uD83C\uDFA8 Template Style:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
+    label: "\u2728 Clean Universal Commercial Studio",
+    size: "small",
+    sx: {
+      fontWeight: 700,
+      bgcolor: '#0f172a',
+      color: '#f8fafc'
+    }
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+    variant: "caption",
+    sx: {
+      color: '#64748b'
+    }
+  }, "(Universal high-end layout for any product, equipment, or technical service)")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
+    fullWidth: true,
+    size: "small",
+    label: "Custom Slogan / Tagline (Optional)",
+    placeholder: "Leave blank to automatically generate smart slogan from brief...",
+    value: customSlogan,
+    onChange: e => {
+      setCustomSlogan(e.target.value);
       setPreviewGenerated(false);
       setResult(null);
     },
+    helperText: "Overrides the default banner text. If left blank, the AI will generate a tailored commercial slogan.",
     sx: {
-      fontWeight: 600
+      mb: 1
     }
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
-    label: "\uD83C\uDFE2 Corporate Plaza",
-    clickable: true,
-    color: theme === 'corporate' ? 'primary' : 'default',
-    variant: theme === 'corporate' ? 'filled' : 'outlined',
-    onClick: () => {
-      setTheme('corporate');
-      setPreviewGenerated(false);
-      setResult(null);
-    },
-    sx: {
-      fontWeight: 600
-    }
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
-    label: "\uD83C\uDFED Industrial Complex",
-    clickable: true,
-    color: theme === 'industrial' ? 'primary' : 'default',
-    variant: theme === 'industrial' ? 'filled' : 'outlined',
-    onClick: () => {
-      setTheme('industrial');
-      setPreviewGenerated(false);
-      setResult(null);
-    },
-    sx: {
-      fontWeight: 600
-    }
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
-    label: "\u2600\uFE0F Clean Energy & Solar",
-    clickable: true,
-    color: theme === 'solar' ? 'primary' : 'default',
-    variant: theme === 'solar' ? 'filled' : 'outlined',
-    onClick: () => {
-      setTheme('solar');
-      setPreviewGenerated(false);
-      setResult(null);
-    },
-    sx: {
-      fontWeight: 600
-    }
-  })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, {
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, {
     sx: {
       mb: 2.5
     }
@@ -1530,7 +1518,7 @@ function MarketingViewAdmin() {
       fontWeight: 600,
       color: '#475569'
     }
-  }, isFullFlyer ? 'Ready-Made Flyer Graphic *' : 'Product Photo (Embedded on 3D Pedestal in Architectural Scene)'), productImage && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+  }, isFullFlyer ? 'Ready-Made Flyer Graphic *' : 'Product / Equipment / Service Photo (Embedded on Studio Showcase Pedestal)'), productImage && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
     size: "small",
     color: "error",
     startIcon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_DeleteOutline__WEBPACK_IMPORTED_MODULE_36__/* ["default"] */ .A, null),
@@ -1630,7 +1618,7 @@ function MarketingViewAdmin() {
     sx: {
       fontSize: 14
     }
-  }), " ", isFullFlyer ? 'Ready for direct full-bleed broadcast' : 'Ready for 3D architectural composition')))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+  }), " ", isFullFlyer ? 'Ready for direct full-bleed broadcast' : 'Ready for studio showcase composition')))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
     variant: "subtitle2",
     sx: {
       fontWeight: 600,
@@ -2395,7 +2383,7 @@ function MarketingViewAdmin() {
       mb: 1,
       textAlign: 'left'
     }
-  }, isFullFlyer ? 'Ready-Made Flyer Graphic (Direct Broadcast)' : 'Generated 3D Scene Flyer (1080x1080)'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
+  }, isFullFlyer ? 'Ready-Made Flyer Graphic (Direct Broadcast)' : 'Generated Studio Flyer (1080x1080)'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
     src: result.flyerBase64 || productImage,
     alt: "Flyer Preview",
     style: {
