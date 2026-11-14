@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './view.css';
 import SidebarDash from '../component/SidebarDash';
 import { NavLink, useNavigate, useParams } from 'react-router-dom';
-import { IconButton, styled, Typography, Box, Container, TextField, Button, MenuItem, Select, FormControl, InputLabel, Modal, Grid, Autocomplete, Chip } from '@mui/material';
+import { IconButton, styled, Typography, Box, Container, TextField, Button, MenuItem, Select, FormControl, InputLabel, Modal, Grid, Autocomplete, Chip, Dialog, DialogTitle, DialogContent, DialogActions, Table, TableHead, TableBody, TableRow, TableCell, Tooltip, Checkbox, Paper } from '@mui/material';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import MuiDrawer from '@mui/material/Drawer';
@@ -13,7 +13,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import axios from 'axios';
 import { cachedGet } from '../utils/apiCache';
 import { ENDPOINT_URL } from '../apiConfig';
-import { Add, Close, ArrowBack, Edit, Delete, Print as PrintIcon, PhotoCamera, DeleteOutline as DeleteOutlineIcon, DirectionsCar as DirectionsCarIcon } from '@mui/icons-material';
+import { Add, Close, ArrowBack, Edit, Delete, Print as PrintIcon, PhotoCamera, DeleteOutline as DeleteOutlineIcon, DirectionsCar as DirectionsCarIcon, Build as BuildIcon, Link as LinkIcon, LinkOff as LinkOffIcon, Visibility as VisibilityIcon, AutoAwesome as AutoAwesomeIcon, OpenInNew as OpenInNewIcon, ReceiptLong as ReceiptLongIcon, CheckCircle as CheckCircleIcon } from '@mui/icons-material';
 import { useSelector, useDispatch } from "react-redux"
 import { selectCurrentUser } from '../features/auth/authSlice';
 import Logout from '../component/NetworkLogoutIcon';
@@ -67,13 +67,184 @@ export default function FleetFormUpdate() {
   // Year Filter
   const [yearFilter, setYearFilter] = useState('All');
 
+  // Maintenance Orders & History state
+  const [maintenanceOrders, setMaintenanceOrders] = useState([]);
+  const [maintenanceSummary, setMaintenanceSummary] = useState({
+    totalMaintenanceCost: 0,
+    totalOrdersCount: 0,
+    closedOrdersCount: 0,
+    openOrdersCount: 0,
+    lastServiceDate: null
+  });
+  const [loadingMaintenance, setLoadingMaintenance] = useState(false);
+  const [suggestions, setSuggestions] = useState([]);
+  const [loadingSuggestions, setLoadingSuggestions] = useState(false);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [selectedSuggestionIds, setSelectedSuggestionIds] = useState([]);
+
+  // Link Order Modal
+  const [linkModalOpen, setLinkModalOpen] = useState(false);
+  const [orderNumberInput, setOrderNumberInput] = useState('');
+  const [linkingOrder, setLinkingOrder] = useState(false);
+
+  // Slip Modal
+  const [slipModalOpen, setSlipModalOpen] = useState(false);
+  const [selectedSlipOrder, setSelectedSlipOrder] = useState(null);
+
   const user = useSelector(selectCurrentUser);
   const navigate = useNavigate();
 
   useEffect(() => {
     fetchFleet();
     fetchAccess();
+    fetchMaintenanceOrders();
+    fetchSuggestions();
   }, [id, user]);
+
+  const fetchMaintenanceOrders = async () => {
+    if (!id) return;
+    setLoadingMaintenance(true);
+    try {
+      const res = await axios.get(`${ENDPOINT_URL}/fleet/${id}/maintenance`);
+      if (res.data?.success) {
+        setMaintenanceOrders(res.data.orders || []);
+        setMaintenanceSummary(res.data.summary || {
+          totalMaintenanceCost: 0,
+          totalOrdersCount: 0,
+          closedOrdersCount: 0,
+          openOrdersCount: 0,
+          lastServiceDate: null
+        });
+      }
+    } catch (err) {
+      console.error('Error fetching vehicle maintenance orders:', err);
+    } finally {
+      setLoadingMaintenance(false);
+    }
+  };
+
+  const fetchSuggestions = async () => {
+    if (!id) return;
+    setLoadingSuggestions(true);
+    try {
+      const res = await axios.get(`${ENDPOINT_URL}/fleet/${id}/maintenance-suggestions`);
+      if (res.data?.success) {
+        setSuggestions(res.data.suggestions || []);
+        setSelectedSuggestionIds((res.data.suggestions || []).map(s => s._id));
+      }
+    } catch (err) {
+      console.error('Error fetching maintenance suggestions:', err);
+    } finally {
+      setLoadingSuggestions(false);
+    }
+  };
+
+  const handleLinkSingleOrder = async (e) => {
+    if (e && e.preventDefault) e.preventDefault();
+    if (!orderNumberInput.trim()) {
+      toast.warning('Please enter a Maintenance Order number (e.g. M-001349 or 1349)');
+      return;
+    }
+    setLinkingOrder(true);
+    try {
+      const res = await axios.post(`${ENDPOINT_URL}/fleet/${id}/link-maintenance`, {
+        serviceName: orderNumberInput.trim()
+      });
+      toast.success(res.data.message || 'Maintenance order linked successfully!');
+      setOrderNumberInput('');
+      setLinkModalOpen(false);
+      fetchMaintenanceOrders();
+      fetchSuggestions();
+    } catch (err) {
+      toast.error(err.response?.data?.message || 'Failed to link maintenance order.');
+    } finally {
+      setLinkingOrder(false);
+    }
+  };
+
+  const handleLinkSuggestedOrders = async (idsToLink) => {
+    if (!idsToLink || idsToLink.length === 0) {
+      toast.warning('No orders selected to link.');
+      return;
+    }
+    setLinkingOrder(true);
+    try {
+      const res = await axios.post(`${ENDPOINT_URL}/fleet/${id}/link-maintenance`, {
+        maintenanceIds: idsToLink
+      });
+      toast.success(res.data.message || `Linked ${idsToLink.length} order(s) successfully!`);
+      setShowSuggestions(false);
+      fetchMaintenanceOrders();
+      fetchSuggestions();
+    } catch (err) {
+      toast.error(err.response?.data?.message || 'Failed to link suggested orders.');
+    } finally {
+      setLinkingOrder(false);
+    }
+  };
+
+  const handleUnlinkOrder = async (maintenanceId, serviceName) => {
+    if (window.confirm(`Are you sure you want to unlink order ${serviceName} from this vehicle?`)) {
+      try {
+        const res = await axios.delete(`${ENDPOINT_URL}/fleet/${id}/maintenance/${maintenanceId}`);
+        toast.success(res.data.message || 'Order unlinked successfully.');
+        fetchMaintenanceOrders();
+        fetchSuggestions();
+      } catch (err) {
+        toast.error(err.response?.data?.message || 'Failed to unlink order.');
+      }
+    }
+  };
+
+  const handlePrintSlip = () => {
+    const printContent = document.getElementById('printable-maintenance-slip');
+    if (!printContent) return;
+    const printWindow = window.open('', '', 'width=900,height=700');
+    printWindow.document.write(`
+      <html>
+        <head>
+          <title>Maintenance Slip - ${selectedSlipOrder?.serviceName || 'Order'}</title>
+          <style>
+            body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; padding: 25px; color: #1e293b; }
+            table { width: 100%; border-collapse: collapse; margin-top: 15px; margin-bottom: 15px; }
+            th, td { border: 1px solid #cbd5e1; padding: 8px 12px; text-align: left; font-size: 13px; }
+            th { background-color: #f1f5f9; font-weight: bold; }
+            .header { border-bottom: 2px solid #202a5a; padding-bottom: 12px; margin-bottom: 15px; }
+            .title { font-size: 20px; font-weight: bold; color: #202a5a; }
+            .badge { display: inline-block; padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: bold; }
+            .total-box { margin-top: 20px; text-align: right; font-size: 16px; font-weight: bold; }
+            @media print {
+              body { padding: 0; }
+              @page { margin: 10mm; }
+            }
+          </style>
+        </head>
+        <body>
+          ${printContent.innerHTML}
+        </body>
+      </html>
+    `);
+    printWindow.document.close();
+    printWindow.focus();
+    setTimeout(() => {
+      printWindow.print();
+      printWindow.close();
+    }, 250);
+  };
+
+  const renderMaintStatusChip = (st, isConverted) => {
+    const upper = String(st || '').toUpperCase();
+    if (isConverted || upper === 'CONVERTED') {
+      return <Chip label="CONVERTED" size="small" sx={{ fontWeight: 700, fontSize: '10.5px', color: '#6b21a8', backgroundColor: '#f3e8ff', border: '1px solid #d8b4fe' }} />;
+    }
+    if (upper === 'CLOSE' || upper === 'CLOSED') {
+      return <Chip label="CLOSED" size="small" sx={{ fontWeight: 700, fontSize: '10.5px', color: '#166534', backgroundColor: '#dcfce7', border: '1px solid #86efac' }} />;
+    }
+    if (upper === 'PENDING') {
+      return <Chip label="PENDING" size="small" sx={{ fontWeight: 700, fontSize: '10.5px', color: '#9a3412', backgroundColor: '#ffedd5', border: '1px solid #fed7aa' }} />;
+    }
+    return <Chip label="OPEN" size="small" sx={{ fontWeight: 700, fontSize: '10.5px', color: '#1e40af', backgroundColor: '#dbeafe', border: '1px solid #bfdbfe' }} />;
+  };
 
   const fetchAccess = async () => {
     try {
@@ -777,6 +948,380 @@ export default function FleetFormUpdate() {
               </div>
             </Box>
 
+            {/* Maintenance & Repairs History Card */}
+            <Box sx={{ backgroundColor: 'white', padding: '20px', borderRadius: '8px', mt: 3, mb: 3, boxShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>
+              {/* Card Header & KPIs */}
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 2, flexWrap: 'wrap', gap: 2 }}>
+                <Box>
+                  <Typography variant="h6" sx={{ display: 'flex', alignItems: 'center', gap: 1, fontWeight: 700, color: '#1e293b' }}>
+                    <BuildIcon sx={{ color: '#202a5a', fontSize: '22px' }} />
+                    <span>Maintenance & Repairs History</span>
+                  </Typography>
+                  <Typography variant="body2" sx={{ color: '#64748b', mt: 0.5 }}>
+                    Complete repair logs, parts used, mechanic work, and maintenance costs for this vehicle.
+                  </Typography>
+                </Box>
+
+                {/* KPI Metrics & Action Buttons */}
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, flexWrap: 'wrap' }}>
+                  {/* Total Lifetime Spend KPI */}
+                  <Box
+                    sx={{
+                      px: 1.8,
+                      py: 0.8,
+                      borderRadius: '8px',
+                      backgroundColor: '#f0fdf4',
+                      border: '1.5px solid #86efac',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'flex-start'
+                    }}
+                  >
+                    <Typography variant="caption" sx={{ color: '#166534', fontWeight: 600, fontSize: '10.5px', textTransform: 'uppercase' }}>
+                      Lifetime Spend
+                    </Typography>
+                    <Typography sx={{ color: '#15803d', fontWeight: 800, fontSize: '1.05rem', lineHeight: 1.2 }}>
+                      ${(maintenanceSummary.totalMaintenanceCost || 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                    </Typography>
+                  </Box>
+
+                  {/* Total Orders Count KPI */}
+                  <Box
+                    sx={{
+                      px: 1.8,
+                      py: 0.8,
+                      borderRadius: '8px',
+                      backgroundColor: '#eff6ff',
+                      border: '1.5px solid #bfdbfe',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'flex-start'
+                    }}
+                  >
+                    <Typography variant="caption" sx={{ color: '#1e40af', fontWeight: 600, fontSize: '10.5px', textTransform: 'uppercase' }}>
+                      Total Orders
+                    </Typography>
+                    <Typography sx={{ color: '#1d4ed8', fontWeight: 800, fontSize: '1.05rem', lineHeight: 1.2 }}>
+                      {maintenanceSummary.totalOrdersCount || 0}
+                      <span style={{ fontSize: '11px', fontWeight: 500, color: '#64748b', marginLeft: '5px' }}>
+                        ({maintenanceSummary.closedOrdersCount || 0} Done)
+                      </span>
+                    </Typography>
+                  </Box>
+
+                  {/* Smart Match Suggestions Button */}
+                  {suggestions.length > 0 && (
+                    <Button
+                      variant={showSuggestions ? "contained" : "outlined"}
+                      size="small"
+                      disabled={!canAdd}
+                      onClick={() => setShowSuggestions(prev => !prev)}
+                      startIcon={<AutoAwesomeIcon sx={{ color: showSuggestions ? 'white' : '#d97706' }} />}
+                      sx={{
+                        fontSize: '11.5px',
+                        py: 0.7,
+                        px: 1.5,
+                        color: showSuggestions ? 'white' : '#d97706',
+                        backgroundColor: showSuggestions ? '#d97706' : 'white',
+                        borderColor: '#d97706',
+                        '&:hover': {
+                          backgroundColor: showSuggestions ? '#b45309' : '#fffbeb',
+                          borderColor: '#b45309'
+                        },
+                        textTransform: 'none',
+                        fontWeight: 700
+                      }}
+                    >
+                      {showSuggestions ? 'Hide Suggestions' : `Smart Match (${suggestions.length})`}
+                    </Button>
+                  )}
+
+                  {/* Link Order Button */}
+                  <Button
+                    variant="contained"
+                    size="small"
+                    disabled={!canAdd}
+                    onClick={() => {
+                      setOrderNumberInput('');
+                      setLinkModalOpen(true);
+                    }}
+                    startIcon={<LinkIcon />}
+                    sx={{
+                      backgroundColor: '#202a5a',
+                      '&:hover': { backgroundColor: '#161e42' },
+                      fontSize: '11.5px',
+                      py: 0.7,
+                      px: 1.5,
+                      textTransform: 'none',
+                      fontWeight: 600
+                    }}
+                  >
+                    Link Order
+                  </Button>
+                </Box>
+              </Box>
+
+              {/* Suggestions Panel (if expanded) */}
+              {showSuggestions && suggestions.length > 0 && (
+                <Box
+                  sx={{
+                    mb: 3,
+                    p: 2,
+                    borderRadius: '8px',
+                    backgroundColor: '#fffbeb',
+                    border: '1.5px dashed #f59e0b'
+                  }}
+                >
+                  <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1.5, flexWrap: 'wrap', gap: 1 }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                      <AutoAwesomeIcon sx={{ color: '#d97706' }} />
+                      <Typography sx={{ fontWeight: 700, fontSize: '0.95rem', color: '#92400e' }}>
+                        Found {suggestions.length} Historical Maintenance Order(s) Mentioning Plate "{fleet.plateNumber}"
+                      </Typography>
+                    </Box>
+                    <Box sx={{ display: 'flex', gap: 1 }}>
+                      <Button
+                        size="small"
+                        variant="contained"
+                        disabled={linkingOrder || selectedSuggestionIds.length === 0}
+                        onClick={() => handleLinkSuggestedOrders(selectedSuggestionIds)}
+                        sx={{
+                          backgroundColor: '#d97706',
+                          '&:hover': { backgroundColor: '#b45309' },
+                          fontSize: '11px',
+                          textTransform: 'none',
+                          fontWeight: 700
+                        }}
+                      >
+                        Link Selected ({selectedSuggestionIds.length})
+                      </Button>
+                      <Button
+                        size="small"
+                        variant="outlined"
+                        onClick={() => setShowSuggestions(false)}
+                        sx={{ fontSize: '11px', textTransform: 'none', color: '#78350f', borderColor: '#d97706' }}
+                      >
+                        Dismiss
+                      </Button>
+                    </Box>
+                  </Box>
+
+                  <TableContainer component={Paper} sx={{ maxHeight: 240, boxShadow: 'none', border: '1px solid #fde68a' }}>
+                    <Table size="small" stickyHeader>
+                      <TableHead>
+                        <TableRow sx={{ backgroundColor: '#fef3c7' }}>
+                          <TableCell padding="checkbox">
+                            <Checkbox
+                              size="small"
+                              checked={selectedSuggestionIds.length === suggestions.length && suggestions.length > 0}
+                              indeterminate={selectedSuggestionIds.length > 0 && selectedSuggestionIds.length < suggestions.length}
+                              onChange={(e) => {
+                                if (e.target.checked) {
+                                  setSelectedSuggestionIds(suggestions.map(s => s._id));
+                                } else {
+                                  setSelectedSuggestionIds([]);
+                                }
+                              }}
+                            />
+                          </TableCell>
+                          <TableCell sx={{ fontWeight: 700, fontSize: '11.5px' }}>Service #</TableCell>
+                          <TableCell sx={{ fontWeight: 700, fontSize: '11.5px' }}>Date</TableCell>
+                          <TableCell sx={{ fontWeight: 700, fontSize: '11.5px' }}>Description / Car Mentioned</TableCell>
+                          <TableCell sx={{ fontWeight: 700, fontSize: '11.5px' }}>Defect / Work</TableCell>
+                          <TableCell sx={{ fontWeight: 700, fontSize: '11.5px' }}>Cost</TableCell>
+                          <TableCell sx={{ fontWeight: 700, fontSize: '11.5px' }}>Action</TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {suggestions.map((sug) => {
+                          const isChecked = selectedSuggestionIds.includes(sug._id);
+                          return (
+                            <TableRow key={sug._id} hover selected={isChecked}>
+                              <TableCell padding="checkbox">
+                                <Checkbox
+                                  size="small"
+                                  checked={isChecked}
+                                  onChange={(e) => {
+                                    if (e.target.checked) {
+                                      setSelectedSuggestionIds(prev => [...prev, sug._id]);
+                                    } else {
+                                      setSelectedSuggestionIds(prev => prev.filter(id => id !== sug._id));
+                                    }
+                                  }}
+                                />
+                              </TableCell>
+                              <TableCell sx={{ fontWeight: 700, color: '#1e40af' }}>{sug.serviceName}</TableCell>
+                              <TableCell>{sug.serviceDate ? dayjs(sug.serviceDate).format('DD/MM/YYYY') : '—'}</TableCell>
+                              <TableCell sx={{ maxWidth: 220, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                                {sug.itemDescriptionInfo || sug.model || sug.brand || '—'}
+                              </TableCell>
+                              <TableCell sx={{ maxWidth: 220, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                                {sug.defectDescription || sug.actionTaken || '—'}
+                              </TableCell>
+                              <TableCell sx={{ fontWeight: 700, color: '#0f766e' }}>
+                                ${Number(sug.totalInvoice || sug.subTotal || 0).toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                              </TableCell>
+                              <TableCell>
+                                <Button
+                                  size="small"
+                                  variant="outlined"
+                                  disabled={linkingOrder}
+                                  onClick={() => handleLinkSuggestedOrders([sug._id])}
+                                  sx={{ fontSize: '10.5px', py: 0.1, px: 1, textTransform: 'none', color: '#d97706', borderColor: '#d97706' }}
+                                >
+                                  Link
+                                </Button>
+                              </TableCell>
+                            </TableRow>
+                          );
+                        })}
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                </Box>
+              )}
+
+              {/* Maintenance Orders DataGrid */}
+              <div style={{ height: 480, width: '100%' }}>
+                <DataGrid
+                  rows={maintenanceOrders}
+                  getRowId={(row) => row._id}
+                  columns={[
+                    {
+                      field: 'serviceName',
+                      headerName: 'Service #',
+                      width: 130,
+                      renderCell: (params) => (
+                        <Box
+                          onClick={() => {
+                            setSelectedSlipOrder(params.row);
+                            setSlipModalOpen(true);
+                          }}
+                          sx={{
+                            fontWeight: 700,
+                            color: '#1d4ed8',
+                            cursor: 'pointer',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: 0.5,
+                            '&:hover': { textDecoration: 'underline', color: '#1e40af' }
+                          }}
+                        >
+                          <ReceiptLongIcon sx={{ fontSize: 16 }} />
+                          {params.value}
+                        </Box>
+                      )
+                    },
+                    {
+                      field: 'serviceDate',
+                      headerName: 'Date',
+                      width: 120,
+                      valueFormatter: (params) => params.value ? dayjs(params.value).format('DD/MM/YYYY') : '—'
+                    },
+                    {
+                      field: 'defectDescription',
+                      headerName: 'Defect / Issue',
+                      flex: 1.5,
+                      minWidth: 160,
+                      renderCell: (params) => (
+                        <Typography variant="body2" sx={{ fontSize: '12.5px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                          {params.value || params.row.itemDescriptionInfo || '—'}
+                        </Typography>
+                      )
+                    },
+                    {
+                      field: 'actionTaken',
+                      headerName: 'Action / Work Done',
+                      flex: 1.5,
+                      minWidth: 160,
+                      renderCell: (params) => (
+                        <Typography variant="body2" sx={{ fontSize: '12.5px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                          {params.value || params.row.note || '—'}
+                        </Typography>
+                      )
+                    },
+                    {
+                      field: 'technicianAssign',
+                      headerName: 'Technician',
+                      width: 150,
+                      renderCell: (params) => (
+                        <span style={{ fontWeight: 500, fontSize: '12px', color: '#334155' }}>
+                          {params.value || 'GG Mechanic'}
+                        </span>
+                      )
+                    },
+                    {
+                      field: 'totalInvoice',
+                      headerName: 'Total Cost',
+                      width: 130,
+                      renderCell: (params) => {
+                        const val = Number(params.value || params.row.subTotal || 0);
+                        return (
+                          <span style={{ fontWeight: 700, color: '#0f766e', fontSize: '13px' }}>
+                            ${val.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                          </span>
+                        );
+                      }
+                    },
+                    {
+                      field: 'status',
+                      headerName: 'Status',
+                      width: 120,
+                      renderCell: (params) => renderMaintStatusChip(params.value, params.row.Converted)
+                    },
+                    {
+                      field: 'actions',
+                      headerName: 'Actions',
+                      width: 130,
+                      sortable: false,
+                      renderCell: (params) => (
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                          <Tooltip title="View Maintenance Slip" placement="top">
+                            <IconButton
+                              size="small"
+                              color="primary"
+                              onClick={() => {
+                                setSelectedSlipOrder(params.row);
+                                setSlipModalOpen(true);
+                              }}
+                            >
+                              <VisibilityIcon fontSize="small" />
+                            </IconButton>
+                          </Tooltip>
+                          <Tooltip title="Open in Maintenance Module" placement="top">
+                            <IconButton
+                              size="small"
+                              sx={{ color: '#6366f1' }}
+                              onClick={() => window.open(`#/MaintenanceViewInformation/${params.row._id}`, '_blank')}
+                            >
+                              <OpenInNewIcon fontSize="small" />
+                            </IconButton>
+                          </Tooltip>
+                          <Tooltip title="Unlink from Vehicle" placement="top">
+                            <IconButton
+                              size="small"
+                              color="error"
+                              disabled={!canDelete}
+                              onClick={() => handleUnlinkOrder(params.row._id, params.row.serviceName)}
+                            >
+                              <LinkOffIcon fontSize="small" />
+                            </IconButton>
+                          </Tooltip>
+                        </Box>
+                      )
+                    }
+                  ]}
+                  slots={{ toolbar: GridToolbar }}
+                  slotProps={{
+                    toolbar: {
+                      showQuickFilter: true,
+                      quickFilterProps: { debounceMs: 500 }
+                    }
+                  }}
+                />
+              </div>
+            </Box>
+
           </Container>
         </Box>
       </Box>
@@ -914,6 +1459,219 @@ export default function FleetFormUpdate() {
           <Button variant="contained" fullWidth style={{ backgroundColor: '#202a5a' }} onClick={handleAddOilChange}>Save Log</Button>
         </Box>
       </Modal>
+
+      {/* Link Maintenance Order Modal */}
+      <Dialog open={linkModalOpen} onClose={() => setLinkModalOpen(false)} maxWidth="xs" fullWidth>
+        <DialogTitle sx={{ fontWeight: 700, color: '#202a5a', display: 'flex', alignItems: 'center', gap: 1 }}>
+          <LinkIcon /> Link Maintenance Order
+        </DialogTitle>
+        <form onSubmit={handleLinkSingleOrder}>
+          <DialogContent>
+            <Typography variant="body2" sx={{ color: '#64748b', mb: 2 }}>
+              Enter the Maintenance Order Service Number (e.g. <strong>M-001349</strong> or simply <strong>1349</strong>) to attach it to <strong>{fleet?.plateNumber}</strong>.
+            </Typography>
+            <TextField
+              autoFocus
+              fullWidth
+              size="small"
+              label="Maintenance Order # (e.g. M-001349)"
+              placeholder="M-001349"
+              value={orderNumberInput}
+              onChange={(e) => setOrderNumberInput(e.target.value)}
+              disabled={linkingOrder}
+            />
+          </DialogContent>
+          <DialogActions sx={{ px: 3, pb: 2.5 }}>
+            <Button onClick={() => setLinkModalOpen(false)} disabled={linkingOrder} color="inherit">
+              Cancel
+            </Button>
+            <Button
+              type="submit"
+              variant="contained"
+              disabled={linkingOrder || !orderNumberInput.trim()}
+              sx={{ backgroundColor: '#202a5a', '&:hover': { backgroundColor: '#161e42' } }}
+            >
+              {linkingOrder ? 'Linking...' : 'Link to Vehicle'}
+            </Button>
+          </DialogActions>
+        </form>
+      </Dialog>
+
+      {/* Maintenance Slip View & Print Dialog */}
+      <Dialog open={slipModalOpen} onClose={() => setSlipModalOpen(false)} maxWidth="md" fullWidth>
+        <DialogTitle sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #e2e8f0', pb: 1.5 }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+            <ReceiptLongIcon sx={{ color: '#202a5a' }} />
+            <Typography variant="h6" sx={{ fontWeight: 700, color: '#202a5a' }}>
+              Maintenance Slip: {selectedSlipOrder?.serviceName || '—'}
+            </Typography>
+            {selectedSlipOrder && renderMaintStatusChip(selectedSlipOrder.status, selectedSlipOrder.Converted)}
+          </Box>
+          <Box sx={{ display: 'flex', gap: 1 }}>
+            <Button
+              size="small"
+              variant="outlined"
+              startIcon={<PrintIcon />}
+              onClick={handlePrintSlip}
+              sx={{ textTransform: 'none' }}
+            >
+              Print Slip
+            </Button>
+            <IconButton size="small" onClick={() => setSlipModalOpen(false)}>
+              <Close fontSize="small" />
+            </IconButton>
+          </Box>
+        </DialogTitle>
+        <DialogContent sx={{ pt: 2.5 }}>
+          {selectedSlipOrder && (
+            <Box id="printable-maintenance-slip">
+              {/* Slip Header Banner */}
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2, pb: 1.5, borderBottom: '1.5px solid #e2e8f0' }}>
+                <Box>
+                  <Typography variant="h6" sx={{ fontWeight: 800, color: '#202a5a' }}>
+                    GLOBAL GATE S.A.R.L
+                  </Typography>
+                  <Typography variant="caption" sx={{ color: '#64748b', display: 'block' }}>
+                    Vehicle Maintenance & Mechanical Repair Voucher
+                  </Typography>
+                  <Typography variant="body2" sx={{ fontWeight: 600, mt: 0.5, color: '#0f172a' }}>
+                    Vehicle: {fleet?.carMake} {fleet?.carModel} • Plate: {fleet?.plateNumber} {fleet?.vehicleColor ? `(${fleet.vehicleColor})` : ''}
+                  </Typography>
+                </Box>
+                <Box sx={{ textAlign: 'right' }}>
+                  <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#1e40af' }}>
+                    Order: {selectedSlipOrder.serviceName}
+                  </Typography>
+                  <Typography variant="caption" sx={{ color: '#64748b', display: 'block' }}>
+                    Date: {selectedSlipOrder.serviceDate ? dayjs(selectedSlipOrder.serviceDate).format('DD/MM/YYYY') : '—'}
+                  </Typography>
+                  <Typography variant="caption" sx={{ color: '#475569', display: 'block' }}>
+                    Mechanic: <strong>{selectedSlipOrder.technicianAssign || 'GG Mechanic'}</strong>
+                  </Typography>
+                </Box>
+              </Box>
+
+              {/* Diagnosis & Defect Box */}
+              <Grid container spacing={2} sx={{ mb: 2 }}>
+                <Grid item xs={12} sm={6}>
+                  <Box sx={{ p: 1.5, borderRadius: '6px', backgroundColor: '#f8fafc', border: '1px solid #e2e8f0', height: '100%' }}>
+                    <Typography variant="caption" sx={{ fontWeight: 700, color: '#64748b', textTransform: 'uppercase' }}>
+                      Defect Reported / Diagnosis
+                    </Typography>
+                    <Typography variant="body2" sx={{ mt: 0.5, fontWeight: 500 }}>
+                      {selectedSlipOrder.defectDescription || selectedSlipOrder.itemDescriptionInfo || 'Standard maintenance and mechanical overhaul.'}
+                    </Typography>
+                  </Box>
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <Box sx={{ p: 1.5, borderRadius: '6px', backgroundColor: '#f8fafc', border: '1px solid #e2e8f0', height: '100%' }}>
+                    <Typography variant="caption" sx={{ fontWeight: 700, color: '#64748b', textTransform: 'uppercase' }}>
+                      Action Taken / Resolution
+                    </Typography>
+                    <Typography variant="body2" sx={{ mt: 0.5, fontWeight: 500 }}>
+                      {selectedSlipOrder.actionTaken || selectedSlipOrder.note || 'Repairs performed and tested in workshop.'}
+                    </Typography>
+                  </Box>
+                </Grid>
+              </Grid>
+
+              {/* Parts & Spares Used Table */}
+              <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 1, color: '#1e293b' }}>
+                Spare Parts & Consumables Replaced
+              </Typography>
+              <TableContainer component={Paper} sx={{ mb: 2, boxShadow: 'none', border: '1px solid #e2e8f0' }}>
+                <Table size="small">
+                  <TableHead sx={{ backgroundColor: '#f1f5f9' }}>
+                    <TableRow>
+                      <TableCell sx={{ fontWeight: 700, width: 40 }}>#</TableCell>
+                      <TableCell sx={{ fontWeight: 700 }}>Part / Description</TableCell>
+                      <TableCell sx={{ fontWeight: 700, width: 70, textAlign: 'center' }}>Qty</TableCell>
+                      <TableCell sx={{ fontWeight: 700, width: 110, textAlign: 'right' }}>Rate</TableCell>
+                      <TableCell sx={{ fontWeight: 700, width: 110, textAlign: 'right' }}>Amount</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {selectedSlipOrder.items && selectedSlipOrder.items.length > 0 ? (
+                      selectedSlipOrder.items.map((item, idx) => (
+                        <TableRow key={idx}>
+                          <TableCell>{idx + 1}</TableCell>
+                          <TableCell sx={{ fontWeight: 500 }}>
+                            {item.itemName?.itemName || item.itemName?.name || item.itemName || item.itemDescription || item.description || 'Spare Part'}
+                          </TableCell>
+                          <TableCell sx={{ textAlign: 'center' }}>{item.quantity || 1}</TableCell>
+                          <TableCell sx={{ textAlign: 'right' }}>
+                            ${Number(item.rate || 0).toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                          </TableCell>
+                          <TableCell sx={{ textAlign: 'right', fontWeight: 600 }}>
+                            ${Number(item.amount || ((item.quantity || 1) * (item.rate || 0))).toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                          </TableCell>
+                        </TableRow>
+                      ))
+                    ) : (
+                      <TableRow>
+                        <TableCell colSpan={5} sx={{ textAlign: 'center', color: '#94a3b8', py: 2 }}>
+                          No individual parts logged (Labor-only service or package repair)
+                        </TableCell>
+                      </TableRow>
+                    )}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+
+              {/* Labor Fees & Grand Total */}
+              <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2 }}>
+                <Box sx={{ minWidth: 260, p: 1.5, borderRadius: '8px', backgroundColor: '#f8fafc', border: '1px solid #e2e8f0' }}>
+                  <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 0.5 }}>
+                    <Typography variant="caption" sx={{ color: '#64748b' }}>Parts Subtotal:</Typography>
+                    <Typography variant="caption" sx={{ fontWeight: 600 }}>
+                      ${Number(selectedSlipOrder.subTotal || 0).toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                    </Typography>
+                  </Box>
+                  {Number(selectedSlipOrder.totalLaborFeesGenerale || selectedSlipOrder.totalLaborFees || 0) > 0 && (
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 0.5 }}>
+                      <Typography variant="caption" sx={{ color: '#64748b' }}>Labor Fees:</Typography>
+                      <Typography variant="caption" sx={{ fontWeight: 600 }}>
+                        +${Number(selectedSlipOrder.totalLaborFeesGenerale || selectedSlipOrder.totalLaborFees || 0).toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                      </Typography>
+                    </Box>
+                  )}
+                  {Number(selectedSlipOrder.totalDiscount || 0) > 0 && (
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 0.5 }}>
+                      <Typography variant="caption" sx={{ color: '#dc2626' }}>Discount:</Typography>
+                      <Typography variant="caption" sx={{ fontWeight: 600, color: '#dc2626' }}>
+                        -${Number(selectedSlipOrder.totalDiscount || 0).toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                      </Typography>
+                    </Box>
+                  )}
+                  <Divider sx={{ my: 0.8 }} />
+                  <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#0f172a' }}>
+                      Total Maintenance Cost:
+                    </Typography>
+                    <Typography variant="subtitle1" sx={{ fontWeight: 800, color: '#15803d' }}>
+                      ${Number(selectedSlipOrder.totalInvoice || selectedSlipOrder.subTotal || 0).toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                    </Typography>
+                  </Box>
+                </Box>
+              </Box>
+            </Box>
+          )}
+        </DialogContent>
+        <DialogActions sx={{ px: 3, pb: 2, borderTop: '1px solid #e2e8f0' }}>
+          <Button
+            size="small"
+            startIcon={<OpenInNewIcon />}
+            onClick={() => window.open(`#/MaintenanceViewInformation/${selectedSlipOrder?._id}`, '_blank')}
+            sx={{ textTransform: 'none' }}
+          >
+            Open in Maintenance Module
+          </Button>
+          <Box sx={{ flexGrow: 1 }} />
+          <Button variant="contained" onClick={() => setSlipModalOpen(false)} sx={{ backgroundColor: '#202a5a' }}>
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
 
     </div>
   );

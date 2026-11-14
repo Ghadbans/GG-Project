@@ -5656,6 +5656,45 @@ The standardized `renderStatusBadge` helper was seamlessly integrated into all 1
     - Compiled Android APK: `android/app/build/outputs/apk/debug/app-debug.apk` (17.9 MB) and mirrored to `server/public/downloads/GlobalGate-v3.6.62.apk` and `GlobalGate.apk`.
     - Ready for GitHub `main` push to trigger auto-deployment to Railway backend and Cloudflare Pages web portal.
 
+---
+
+### Rule 82: Fleet Management & Maintenance Orders Bi-Directional Integration & Lifecycle Ledger (Ver 3.6.63)
+- **Requirement & Problem**:
+  - The Fleet Management module previously tracked vehicles, mandatory compliance papers (Carte Rose, Contrôle Technique, Stationnement, Vignette, etc.), and oil changes, but had no connection to the Maintenance module.
+  - Over 1,300+ maintenance orders existed in the database (`M-001349`, `M-001316`, etc.) containing mechanical repairs, parts replaced, labor charges, and total invoice amounts for company vehicles (e.g. *"GREY HILUX"*, *"HILUX OLIVE GREEN"*, *"HILUX WHITE 5006AA14"*), but each vehicle's repair history and lifetime maintenance cost were untracked.
+  - User requested: "a way to link the maintenance orders that has been done as mechanics to the fleet management so each car will have its own history of maintenance repair orders and costs to save the records for each car... link each car by its maintenance order number... show the maintenance slip and cost how much".
+  - Strict instruction: Ensure zero regressions or negative side-effects on the existing Maintenance module.
+- **Architectural Implementation**:
+  1. **Backward-Compatible Schema Reference (`server/model/maintenanceSchema.js`)**:
+     - Added optional fields: `fleetId: { type: Schema.Types.ObjectId, ref: 'Fleet', default: null }`, `fleetPlateNumber: { type: String, trim: true, default: '' }`, and `fleetVehicleName: { type: String, trim: true, default: '' }`.
+     - Indexed `{ fleetId: 1 }` and `{ fleetPlateNumber: 1 }` for high-performance sub-millisecond querying.
+     - Preserves 100% compatibility with all existing non-fleet maintenance orders.
+  2. **Targeted Backend Controller & REST Endpoints (`server/routes/fleet.js` & `server/Controller/fleetController.js`)**:
+     - `GET /fleet/active-list`: Returns a lightweight list of active vehicles for autocomplete selectors across the system.
+     - `GET /fleet/:id/maintenance`: Fetches all linked maintenance orders for a vehicle with real-time financial aggregation (`totalMaintenanceCost`, `totalOrdersCount`, `closedOrdersCount`, `openOrdersCount`, `lastServiceDate`).
+     - `GET /fleet/:id/maintenance-suggestions`: Smart plate matcher that scans unlinked historical orders where the vehicle's plate number (e.g. `5370AE05` or `5370 AE 05`) is mentioned in description, brand, or defect.
+     - `POST /fleet/:id/link-maintenance`: Links one or multiple maintenance orders by ID, IDs array, or Service Number (`M-001349` or `1349`).
+     - `DELETE /fleet/:id/maintenance/:maintenanceId`: Safely unlinks an order from a vehicle without deleting the maintenance record.
+     - `getAllFleets`: Enriched with 1-query aggregation for `totalMaintenanceCost` and `maintenanceCount` per vehicle.
+  3. **Bi-Directional Maintenance Creation & Editing (`MaintenanceFormView.js` & `MaintenanceUpdateView.js`)**:
+     - Added optional **"Company Fleet Vehicle (Optional)"** autocomplete in Card 2.
+     - When selected, automatically populates make, model, vehicle description, and customer (Global Gate), while linking `fleetId`.
+     - When unselected or cleared, orders behave exactly as before with zero disruption.
+  4. **Vehicle Details Maintenance Ledger & Slip Modal (`src/js/AdminView1/FleetFormUpdate.js`)**:
+     - Added **"Maintenance & Repairs History"** card with Lifetime Spend KPI (`$X,XXX.00`), total orders counter, and status breakdown.
+     - Integrated **"Smart Match Suggestions"** panel allowing 1-click batch linking of historical repairs.
+     - Added **"Link Maintenance Order"** dialog supporting lookup by service number (e.g. `M-001349` or `1349`).
+     - Built an integrated **Maintenance Slip View & Print Dialog** displaying parts used, quantities, unit prices, labor fees, technician, status, and printable repair voucher.
+  5. **Master Fleet Table Cost Visibility (`src/js/AdminView1/FleetViewAdmin.js`)**:
+     - Added **"Maint. Spend"** column displaying lifetime maintenance dollars and repair count per vehicle at a glance.
+- **Universal Multi-Platform Production Artifacts**:
+  - Incremental version bump: **v3.6.63** across `package.json`, `server/package.json`, `server/routes/downloadRoutes.js`, and `server/index.js`.
+  - Recompiled desktop and web bundles (`npm run build`).
+  - Packaged Windows Installer: `dist/Global Gate Setup 3.6.63.exe` (66.7 MB) and mirrored to `server/public/downloads/Global Gate Setup 3.6.63.exe` and `Global Gate Setup.exe`.
+  - Compiled Android APK: `android/app/build/outputs/apk/debug/app-debug.apk` (21.0 MB) and mirrored to `server/public/downloads/GlobalGate-v3.6.63.apk` and `GlobalGate.apk`.
+  - Pushed to GitHub `main` for Railway backend and Cloudflare Pages auto-deployment.
+
+
 
 
 

@@ -227,6 +227,22 @@ function MaintenanceFormView() {
   const [assetControlReport, setAssetControlReport] = useState(DEFAULT_ASSET_CONTROL_REPORT);
   const serviceName = `M-${String(serviceNumber).padStart(6, '0')}`;
   const [inputValue, setInputValue] = React.useState('');
+  const [fleetList, setFleetList] = useState([]);
+  const [selectedFleetVehicle, setSelectedFleetVehicle] = useState(null);
+
+  useEffect(() => {
+    const fetchFleetList = async () => {
+      try {
+        const res = await cachedGet(`${ENDPOINT_URL}/fleet/active-list`);
+        if (res.data?.success) {
+          setFleetList(res.data.data || []);
+        }
+      } catch (err) {
+        console.error('Error fetching fleet vehicles in MaintenanceFormView:', err);
+      }
+    };
+    fetchFleetList();
+  }, []);
 
   useEffect(() => {
     const fetchGrant = async () => {
@@ -815,7 +831,10 @@ function MaintenanceFormView() {
        actionTaken: actionTaken || '',
        visitDate: visitDate && dayjs.isDayjs(visitDate) ? visitDate.toDate() : (visitDate ? new Date(visitDate) : null), itemDescriptionInfo: itemDescriptionInfo || '', warranty, defectDescription: defectDescription || '', technicianAssign, brand: brand || '', model, serviceName, action, serialNo: serialNo || '', status, items: itemsWithoutData, adjustmentNumber, adjustment, totalInvoice, subTotal,
        note, totalLaborFees, laborPercentage, totalDiscount, laborDiscount, laborQty, totalLaborFeesGenerale, synced: false,
-       includeAssetControl, assetControlReport
+       includeAssetControl, assetControlReport,
+       fleetId: selectedFleetVehicle?._id || null,
+       fleetPlateNumber: selectedFleetVehicle?.plateNumber || '',
+       fleetVehicleName: selectedFleetVehicle ? `${selectedFleetVehicle.carMake} ${selectedFleetVehicle.carModel} (${selectedFleetVehicle.plateNumber})`.trim() : ''
     };
     try {
       const res = await axios.post(apiUrl, data);
@@ -940,6 +959,43 @@ function MaintenanceFormView() {
               Appliance & Defect Info
             </Typography>
             <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <Autocomplete
+                  options={fleetList}
+                  getOptionLabel={(option) => option ? `[${option.plateNumber}] ${option.carMake} ${option.carModel} ${option.vehicleColor ? `• ${option.vehicleColor}` : ''}` : ''}
+                  value={selectedFleetVehicle}
+                  isOptionEqualToValue={(option, val) => option?._id === val?._id}
+                  onChange={(event, newValue) => {
+                    setSelectedFleetVehicle(newValue);
+                    if (newValue) {
+                      if (!brand || brand.trim() === '') setBrand(newValue.carMake || '');
+                      if (!model || model.trim() === '') setModel(newValue.carModel || '');
+                      if (!itemDescriptionInfo || itemDescriptionInfo.trim() === '') {
+                        setItemDescriptionInfo(`${newValue.carMake} ${newValue.carModel} ${newValue.plateNumber}`.trim());
+                      }
+                      // If customerName not set or empty, auto-populate Global Gate
+                      if (!customerName || !customerName.customerName) {
+                        const ggCust = (customer || []).find(c => (c.Customer || c.customerName || '').toUpperCase().includes('GLOBAL GATE'));
+                        if (ggCust) {
+                          setCustomerName({
+                            _id: ggCust._id,
+                            customerName: ggCust.Customer || ggCust.customerName,
+                            Customer: ggCust.Customer || ggCust.customerName
+                          });
+                        }
+                      }
+                    }
+                  }}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      size="small"
+                      label="Company Fleet Vehicle (Optional - If Company Car)"
+                      placeholder="Select car by plate # or model..."
+                    />
+                  )}
+                />
+              </Grid>
               <Grid item xs={12}>
                 <SmartTextInput
                   fullWidth

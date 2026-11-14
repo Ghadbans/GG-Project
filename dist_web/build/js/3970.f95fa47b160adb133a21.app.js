@@ -1,5 +1,5 @@
 "use strict";
-(this["webpackChunkgg_management"] = this["webpackChunkgg_management"] || []).push([[204],{
+(this["webpackChunkgg_management"] = this["webpackChunkgg_management"] || []).push([[3970],{
 
 /***/ 99682
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
@@ -13,6 +13,25 @@
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("path", {
   d: "M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6z"
 }), 'Add'));
+/* harmony export */ __webpack_require__.d(__webpack_exports__, [
+/* harmony export */   "A", 0, /* export default binding */ __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ ]);
+
+
+/***/ },
+
+/***/ 34485
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+/* harmony import */ var _utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(20561);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(74848);
+"use client";
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("path", {
+  d: "m22.7 19-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.4 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.5-.4.5-1.1.1-1.4"
+}), 'Build'));
 /* harmony export */ __webpack_require__.d(__webpack_exports__, [
 /* harmony export */   "A", 0, /* export default binding */ __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ ]);
@@ -70,6 +89,46 @@
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("path", {
   d: "M3 17.25V21h3.75L17.81 9.94l-3.75-3.75zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 0 0-1.41 0l-1.83 1.83 3.75 3.75z"
 }), 'Edit'));
+/* harmony export */ __webpack_require__.d(__webpack_exports__, [
+/* harmony export */   "A", 0, /* export default binding */ __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ ]);
+
+
+/***/ },
+
+/***/ 48083
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+/* harmony import */ var _utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(20561);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(74848);
+"use client";
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)([/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("path", {
+  d: "M19.5 3.5 18 2l-1.5 1.5L15 2l-1.5 1.5L12 2l-1.5 1.5L9 2 7.5 3.5 6 2v14H3v3c0 1.66 1.34 3 3 3h12c1.66 0 3-1.34 3-3V2zM19 19c0 .55-.45 1-1 1s-1-.45-1-1v-3H8V5h11z"
+}, "0"), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("path", {
+  d: "M9 7h6v2H9zm7 0h2v2h-2zm-7 3h6v2H9zm7 0h2v2h-2z"
+}, "1")], 'ReceiptLong'));
+/* harmony export */ __webpack_require__.d(__webpack_exports__, [
+/* harmony export */   "A", 0, /* export default binding */ __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ ]);
+
+
+/***/ },
+
+/***/ 52653
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+/* harmony import */ var _utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(20561);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(74848);
+"use client";
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("path", {
+  d: "M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5M12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5m0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3"
+}), 'Visibility'));
 /* harmony export */ __webpack_require__.d(__webpack_exports__, [
 /* harmony export */   "A", 0, /* export default binding */ __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ ]);
@@ -675,7 +734,7 @@ const GridToolbar = /*#__PURE__*/react.forwardRef(function GridToolbar(props, re
 
 /***/ },
 
-/***/ 40204
+/***/ 63970
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 // ESM COMPAT FLAG
@@ -696,6 +755,8 @@ var SidebarDash = __webpack_require__(4640);
 var dist = __webpack_require__(47767);
 // EXTERNAL MODULE: ./node_modules/@mui/material/styles/styled.js
 var styled = __webpack_require__(11848);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Chip/Chip.js + 2 modules
+var Chip = __webpack_require__(82022);
 // EXTERNAL MODULE: ./node_modules/@mui/material/Box/Box.js + 2 modules
 var Box = __webpack_require__(69067);
 // EXTERNAL MODULE: ./node_modules/@mui/material/IconButton/IconButton.js + 1 modules
@@ -716,14 +777,36 @@ var InputLabel = __webpack_require__(29571);
 var Select = __webpack_require__(2071);
 // EXTERNAL MODULE: ./node_modules/@mui/material/MenuItem/MenuItem.js + 1 modules
 var MenuItem = __webpack_require__(73896);
-// EXTERNAL MODULE: ./node_modules/@mui/material/Chip/Chip.js + 2 modules
-var Chip = __webpack_require__(82022);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Paper/Paper.js + 2 modules
+var Paper = __webpack_require__(60538);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Table/Table.js + 1 modules
+var Table = __webpack_require__(64137);
+// EXTERNAL MODULE: ./node_modules/@mui/material/TableHead/TableHead.js + 1 modules
+var TableHead = __webpack_require__(96627);
+// EXTERNAL MODULE: ./node_modules/@mui/material/TableRow/TableRow.js + 1 modules
+var TableRow = __webpack_require__(86798);
+// EXTERNAL MODULE: ./node_modules/@mui/material/TableCell/TableCell.js
+var TableCell = __webpack_require__(70691);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Checkbox/Checkbox.js + 4 modules
+var Checkbox = __webpack_require__(27558);
+// EXTERNAL MODULE: ./node_modules/@mui/material/TableBody/TableBody.js + 1 modules
+var TableBody = __webpack_require__(43884);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Tooltip/Tooltip.js
+var Tooltip = __webpack_require__(56655);
 // EXTERNAL MODULE: ./node_modules/@mui/material/Modal/Modal.js + 3 modules
 var Modal = __webpack_require__(35406);
 // EXTERNAL MODULE: ./node_modules/@mui/material/TextField/TextField.js + 2 modules
 var TextField = __webpack_require__(844);
 // EXTERNAL MODULE: ./node_modules/@mui/material/Autocomplete/Autocomplete.js + 1 modules
 var Autocomplete = __webpack_require__(86531);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Dialog/Dialog.js
+var Dialog = __webpack_require__(77037);
+// EXTERNAL MODULE: ./node_modules/@mui/material/DialogTitle/DialogTitle.js
+var DialogTitle = __webpack_require__(46831);
+// EXTERNAL MODULE: ./node_modules/@mui/material/DialogContent/DialogContent.js + 1 modules
+var DialogContent = __webpack_require__(22477);
+// EXTERNAL MODULE: ./node_modules/@mui/material/DialogActions/DialogActions.js + 1 modules
+var DialogActions = __webpack_require__(58763);
 // EXTERNAL MODULE: ./node_modules/@mui/material/AppBar/AppBar.js + 1 modules
 var AppBar = __webpack_require__(89828);
 // EXTERNAL MODULE: ./node_modules/@mui/material/Toolbar/Toolbar.js + 1 modules
@@ -780,6 +863,46 @@ var jsx_runtime = __webpack_require__(74848);
 var Add = __webpack_require__(99682);
 // EXTERNAL MODULE: ./node_modules/@mui/icons-material/esm/Print.js
 var Print = __webpack_require__(42758);
+// EXTERNAL MODULE: ./node_modules/@mui/icons-material/esm/Build.js
+var Build = __webpack_require__(34485);
+;// ./node_modules/@mui/icons-material/esm/AutoAwesome.js
+"use client";
+
+
+
+/* harmony default export */ const AutoAwesome = ((0,createSvgIcon/* default */.A)( /*#__PURE__*/(0,jsx_runtime.jsx)("path", {
+  d: "m19 9 1.25-2.75L23 5l-2.75-1.25L19 1l-1.25 2.75L15 5l2.75 1.25zm-7.5.5L9 4 6.5 9.5 1 12l5.5 2.5L9 20l2.5-5.5L17 12zM19 15l-1.25 2.75L15 19l2.75 1.25L19 23l1.25-2.75L23 19l-2.75-1.25z"
+}), 'AutoAwesome'));
+;// ./node_modules/@mui/icons-material/esm/Link.js
+"use client";
+
+
+
+/* harmony default export */ const Link = ((0,createSvgIcon/* default */.A)( /*#__PURE__*/(0,jsx_runtime.jsx)("path", {
+  d: "M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1M8 13h8v-2H8zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5"
+}), 'Link'));
+// EXTERNAL MODULE: ./node_modules/@mui/icons-material/esm/ReceiptLong.js
+var ReceiptLong = __webpack_require__(48083);
+// EXTERNAL MODULE: ./node_modules/@mui/icons-material/esm/Visibility.js
+var Visibility = __webpack_require__(52653);
+;// ./node_modules/@mui/icons-material/esm/OpenInNew.js
+"use client";
+
+
+
+/* harmony default export */ const OpenInNew = ((0,createSvgIcon/* default */.A)( /*#__PURE__*/(0,jsx_runtime.jsx)("path", {
+  d: "M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3z"
+}), 'OpenInNew'));
+;// ./node_modules/@mui/icons-material/esm/LinkOff.js
+"use client";
+
+
+
+/* harmony default export */ const LinkOff = ((0,createSvgIcon/* default */.A)( /*#__PURE__*/(0,jsx_runtime.jsx)("path", {
+  d: "M17 7h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1 0 1.43-.98 2.63-2.31 2.98l1.46 1.46C20.88 15.61 22 13.95 22 12c0-2.76-2.24-5-5-5m-1 4h-2.19l2 2H16zM2 4.27l3.11 3.11C3.29 8.12 2 9.91 2 12c0 2.76 2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1 0-1.59 1.21-2.9 2.76-3.07L8.73 11H8v2h2.73L13 15.27V17h1.73l4.01 4L20 19.74 3.27 3z"
+}), 'LinkOff'));
+// EXTERNAL MODULE: ./node_modules/@mui/icons-material/esm/Close.js
+var Close = __webpack_require__(17809);
 // EXTERNAL MODULE: ./node_modules/react-redux/es/index.js + 14 modules
 var es = __webpack_require__(13561);
 // EXTERNAL MODULE: ./src/js/features/auth/authSlice.js
@@ -1002,20 +1125,267 @@ function FleetFormUpdate() {
     _useState26 = _slicedToArray(_useState25, 2),
     yearFilter = _useState26[0],
     setYearFilter = _useState26[1];
+
+  // Maintenance Orders & History state
+  var _useState27 = (0,react.useState)([]),
+    _useState28 = _slicedToArray(_useState27, 2),
+    maintenanceOrders = _useState28[0],
+    setMaintenanceOrders = _useState28[1];
+  var _useState29 = (0,react.useState)({
+      totalMaintenanceCost: 0,
+      totalOrdersCount: 0,
+      closedOrdersCount: 0,
+      openOrdersCount: 0,
+      lastServiceDate: null
+    }),
+    _useState30 = _slicedToArray(_useState29, 2),
+    maintenanceSummary = _useState30[0],
+    setMaintenanceSummary = _useState30[1];
+  var _useState31 = (0,react.useState)(false),
+    _useState32 = _slicedToArray(_useState31, 2),
+    loadingMaintenance = _useState32[0],
+    setLoadingMaintenance = _useState32[1];
+  var _useState33 = (0,react.useState)([]),
+    _useState34 = _slicedToArray(_useState33, 2),
+    suggestions = _useState34[0],
+    setSuggestions = _useState34[1];
+  var _useState35 = (0,react.useState)(false),
+    _useState36 = _slicedToArray(_useState35, 2),
+    loadingSuggestions = _useState36[0],
+    setLoadingSuggestions = _useState36[1];
+  var _useState37 = (0,react.useState)(false),
+    _useState38 = _slicedToArray(_useState37, 2),
+    showSuggestions = _useState38[0],
+    setShowSuggestions = _useState38[1];
+  var _useState39 = (0,react.useState)([]),
+    _useState40 = _slicedToArray(_useState39, 2),
+    selectedSuggestionIds = _useState40[0],
+    setSelectedSuggestionIds = _useState40[1];
+
+  // Link Order Modal
+  var _useState41 = (0,react.useState)(false),
+    _useState42 = _slicedToArray(_useState41, 2),
+    linkModalOpen = _useState42[0],
+    setLinkModalOpen = _useState42[1];
+  var _useState43 = (0,react.useState)(''),
+    _useState44 = _slicedToArray(_useState43, 2),
+    orderNumberInput = _useState44[0],
+    setOrderNumberInput = _useState44[1];
+  var _useState45 = (0,react.useState)(false),
+    _useState46 = _slicedToArray(_useState45, 2),
+    linkingOrder = _useState46[0],
+    setLinkingOrder = _useState46[1];
+
+  // Slip Modal
+  var _useState47 = (0,react.useState)(false),
+    _useState48 = _slicedToArray(_useState47, 2),
+    slipModalOpen = _useState48[0],
+    setSlipModalOpen = _useState48[1];
+  var _useState49 = (0,react.useState)(null),
+    _useState50 = _slicedToArray(_useState49, 2),
+    selectedSlipOrder = _useState50[0],
+    setSelectedSlipOrder = _useState50[1];
   var user = (0,es/* useSelector */.d4)(authSlice/* selectCurrentUser */.xu);
   var navigate = (0,dist/* useNavigate */.Zp)();
   (0,react.useEffect)(() => {
     fetchFleet();
     fetchAccess();
+    fetchMaintenanceOrders();
+    fetchSuggestions();
   }, [id, user]);
-  var fetchAccess = /*#__PURE__*/function () {
+  var fetchMaintenanceOrders = /*#__PURE__*/function () {
     var _ref3 = _asyncToGenerator(function* () {
+      if (!id) return;
+      setLoadingMaintenance(true);
+      try {
+        var _res$data;
+        var res = yield axios/* default */.A.get("".concat(apiConfig/* ENDPOINT_URL */.m, "/fleet/").concat(id, "/maintenance"));
+        if ((_res$data = res.data) !== null && _res$data !== void 0 && _res$data.success) {
+          setMaintenanceOrders(res.data.orders || []);
+          setMaintenanceSummary(res.data.summary || {
+            totalMaintenanceCost: 0,
+            totalOrdersCount: 0,
+            closedOrdersCount: 0,
+            openOrdersCount: 0,
+            lastServiceDate: null
+          });
+        }
+      } catch (err) {
+        console.error('Error fetching vehicle maintenance orders:', err);
+      } finally {
+        setLoadingMaintenance(false);
+      }
+    });
+    return function fetchMaintenanceOrders() {
+      return _ref3.apply(this, arguments);
+    };
+  }();
+  var fetchSuggestions = /*#__PURE__*/function () {
+    var _ref4 = _asyncToGenerator(function* () {
+      if (!id) return;
+      setLoadingSuggestions(true);
+      try {
+        var _res$data2;
+        var res = yield axios/* default */.A.get("".concat(apiConfig/* ENDPOINT_URL */.m, "/fleet/").concat(id, "/maintenance-suggestions"));
+        if ((_res$data2 = res.data) !== null && _res$data2 !== void 0 && _res$data2.success) {
+          setSuggestions(res.data.suggestions || []);
+          setSelectedSuggestionIds((res.data.suggestions || []).map(s => s._id));
+        }
+      } catch (err) {
+        console.error('Error fetching maintenance suggestions:', err);
+      } finally {
+        setLoadingSuggestions(false);
+      }
+    });
+    return function fetchSuggestions() {
+      return _ref4.apply(this, arguments);
+    };
+  }();
+  var handleLinkSingleOrder = /*#__PURE__*/function () {
+    var _ref5 = _asyncToGenerator(function* (e) {
+      if (e && e.preventDefault) e.preventDefault();
+      if (!orderNumberInput.trim()) {
+        react_toastify_esm/* toast */.oR.warning('Please enter a Maintenance Order number (e.g. M-001349 or 1349)');
+        return;
+      }
+      setLinkingOrder(true);
+      try {
+        var res = yield axios/* default */.A.post("".concat(apiConfig/* ENDPOINT_URL */.m, "/fleet/").concat(id, "/link-maintenance"), {
+          serviceName: orderNumberInput.trim()
+        });
+        react_toastify_esm/* toast */.oR.success(res.data.message || 'Maintenance order linked successfully!');
+        setOrderNumberInput('');
+        setLinkModalOpen(false);
+        fetchMaintenanceOrders();
+        fetchSuggestions();
+      } catch (err) {
+        var _err$response;
+        react_toastify_esm/* toast */.oR.error(((_err$response = err.response) === null || _err$response === void 0 || (_err$response = _err$response.data) === null || _err$response === void 0 ? void 0 : _err$response.message) || 'Failed to link maintenance order.');
+      } finally {
+        setLinkingOrder(false);
+      }
+    });
+    return function handleLinkSingleOrder(_x) {
+      return _ref5.apply(this, arguments);
+    };
+  }();
+  var handleLinkSuggestedOrders = /*#__PURE__*/function () {
+    var _ref6 = _asyncToGenerator(function* (idsToLink) {
+      if (!idsToLink || idsToLink.length === 0) {
+        react_toastify_esm/* toast */.oR.warning('No orders selected to link.');
+        return;
+      }
+      setLinkingOrder(true);
+      try {
+        var res = yield axios/* default */.A.post("".concat(apiConfig/* ENDPOINT_URL */.m, "/fleet/").concat(id, "/link-maintenance"), {
+          maintenanceIds: idsToLink
+        });
+        react_toastify_esm/* toast */.oR.success(res.data.message || "Linked ".concat(idsToLink.length, " order(s) successfully!"));
+        setShowSuggestions(false);
+        fetchMaintenanceOrders();
+        fetchSuggestions();
+      } catch (err) {
+        var _err$response2;
+        react_toastify_esm/* toast */.oR.error(((_err$response2 = err.response) === null || _err$response2 === void 0 || (_err$response2 = _err$response2.data) === null || _err$response2 === void 0 ? void 0 : _err$response2.message) || 'Failed to link suggested orders.');
+      } finally {
+        setLinkingOrder(false);
+      }
+    });
+    return function handleLinkSuggestedOrders(_x2) {
+      return _ref6.apply(this, arguments);
+    };
+  }();
+  var handleUnlinkOrder = /*#__PURE__*/function () {
+    var _ref7 = _asyncToGenerator(function* (maintenanceId, serviceName) {
+      if (window.confirm("Are you sure you want to unlink order ".concat(serviceName, " from this vehicle?"))) {
+        try {
+          var res = yield axios/* default */.A.delete("".concat(apiConfig/* ENDPOINT_URL */.m, "/fleet/").concat(id, "/maintenance/").concat(maintenanceId));
+          react_toastify_esm/* toast */.oR.success(res.data.message || 'Order unlinked successfully.');
+          fetchMaintenanceOrders();
+          fetchSuggestions();
+        } catch (err) {
+          var _err$response3;
+          react_toastify_esm/* toast */.oR.error(((_err$response3 = err.response) === null || _err$response3 === void 0 || (_err$response3 = _err$response3.data) === null || _err$response3 === void 0 ? void 0 : _err$response3.message) || 'Failed to unlink order.');
+        }
+      }
+    });
+    return function handleUnlinkOrder(_x3, _x4) {
+      return _ref7.apply(this, arguments);
+    };
+  }();
+  var handlePrintSlip = () => {
+    var printContent = document.getElementById('printable-maintenance-slip');
+    if (!printContent) return;
+    var printWindow = window.open('', '', 'width=900,height=700');
+    printWindow.document.write("\n      <html>\n        <head>\n          <title>Maintenance Slip - ".concat((selectedSlipOrder === null || selectedSlipOrder === void 0 ? void 0 : selectedSlipOrder.serviceName) || 'Order', "</title>\n          <style>\n            body { font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Arial, sans-serif; padding: 25px; color: #1e293b; }\n            table { width: 100%; border-collapse: collapse; margin-top: 15px; margin-bottom: 15px; }\n            th, td { border: 1px solid #cbd5e1; padding: 8px 12px; text-align: left; font-size: 13px; }\n            th { background-color: #f1f5f9; font-weight: bold; }\n            .header { border-bottom: 2px solid #202a5a; padding-bottom: 12px; margin-bottom: 15px; }\n            .title { font-size: 20px; font-weight: bold; color: #202a5a; }\n            .badge { display: inline-block; padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: bold; }\n            .total-box { margin-top: 20px; text-align: right; font-size: 16px; font-weight: bold; }\n            @media print {\n              body { padding: 0; }\n              @page { margin: 10mm; }\n            }\n          </style>\n        </head>\n        <body>\n          ").concat(printContent.innerHTML, "\n        </body>\n      </html>\n    "));
+    printWindow.document.close();
+    printWindow.focus();
+    setTimeout(() => {
+      printWindow.print();
+      printWindow.close();
+    }, 250);
+  };
+  var renderMaintStatusChip = (st, isConverted) => {
+    var upper = String(st || '').toUpperCase();
+    if (isConverted || upper === 'CONVERTED') {
+      return /*#__PURE__*/react.createElement(Chip/* default */.A, {
+        label: "CONVERTED",
+        size: "small",
+        sx: {
+          fontWeight: 700,
+          fontSize: '10.5px',
+          color: '#6b21a8',
+          backgroundColor: '#f3e8ff',
+          border: '1px solid #d8b4fe'
+        }
+      });
+    }
+    if (upper === 'CLOSE' || upper === 'CLOSED') {
+      return /*#__PURE__*/react.createElement(Chip/* default */.A, {
+        label: "CLOSED",
+        size: "small",
+        sx: {
+          fontWeight: 700,
+          fontSize: '10.5px',
+          color: '#166534',
+          backgroundColor: '#dcfce7',
+          border: '1px solid #86efac'
+        }
+      });
+    }
+    if (upper === 'PENDING') {
+      return /*#__PURE__*/react.createElement(Chip/* default */.A, {
+        label: "PENDING",
+        size: "small",
+        sx: {
+          fontWeight: 700,
+          fontSize: '10.5px',
+          color: '#9a3412',
+          backgroundColor: '#ffedd5',
+          border: '1px solid #fed7aa'
+        }
+      });
+    }
+    return /*#__PURE__*/react.createElement(Chip/* default */.A, {
+      label: "OPEN",
+      size: "small",
+      sx: {
+        fontWeight: 700,
+        fontSize: '10.5px',
+        color: '#1e40af',
+        backgroundColor: '#dbeafe',
+        border: '1px solid #bfdbfe'
+      }
+    });
+  };
+  var fetchAccess = /*#__PURE__*/function () {
+    var _ref8 = _asyncToGenerator(function* () {
       try {
         var _user$data;
         var res = yield (0,apiCache/* cachedGet */.Fe)("".concat(apiConfig/* ENDPOINT_URL */.m, "/grantAccess"));
         if (user !== null && user !== void 0 && (_user$data = user.data) !== null && _user$data !== void 0 && _user$data.id) {
-          var _res$data;
-          var userAccess = (_res$data = res.data) === null || _res$data === void 0 || (_res$data = _res$data.data) === null || _res$data === void 0 ? void 0 : _res$data.filter(row => row.userID === user.data.id);
+          var _res$data3;
+          var userAccess = (_res$data3 = res.data) === null || _res$data3 === void 0 || (_res$data3 = _res$data3.data) === null || _res$data3 === void 0 ? void 0 : _res$data3.filter(row => row.userID === user.data.id);
           if (userAccess.length > 0) {
             setGrantAccess(userAccess[0].modules);
           }
@@ -1025,15 +1395,15 @@ function FleetFormUpdate() {
       }
     });
     return function fetchAccess() {
-      return _ref3.apply(this, arguments);
+      return _ref8.apply(this, arguments);
     };
   }();
   var fetchBranches = /*#__PURE__*/function () {
-    var _ref4 = _asyncToGenerator(function* () {
+    var _ref9 = _asyncToGenerator(function* () {
       try {
-        var _res$data2;
+        var _res$data4;
         var res = yield axios/* default */.A.get("".concat(apiConfig/* ENDPOINT_URL */.m, "/companyProfile"));
-        if ((_res$data2 = res.data) !== null && _res$data2 !== void 0 && (_res$data2 = _res$data2.data) !== null && _res$data2 !== void 0 && (_res$data2 = _res$data2[0]) !== null && _res$data2 !== void 0 && _res$data2.branches) {
+        if ((_res$data4 = res.data) !== null && _res$data4 !== void 0 && (_res$data4 = _res$data4.data) !== null && _res$data4 !== void 0 && (_res$data4 = _res$data4[0]) !== null && _res$data4 !== void 0 && _res$data4.branches) {
           setBranches(res.data.data[0].branches);
         }
       } catch (error) {
@@ -1041,7 +1411,7 @@ function FleetFormUpdate() {
       }
     });
     return function fetchBranches() {
-      return _ref4.apply(this, arguments);
+      return _ref9.apply(this, arguments);
     };
   }();
   (0,react.useEffect)(() => {
@@ -1054,7 +1424,7 @@ function FleetFormUpdate() {
   var canEdit = FleetInfoU.length > 0;
   var canDelete = FleetInfoD.length > 0;
   var fetchFleet = /*#__PURE__*/function () {
-    var _ref5 = _asyncToGenerator(function* () {
+    var _ref0 = _asyncToGenerator(function* () {
       try {
         var res = yield axios/* default */.A.get("".concat(apiConfig/* ENDPOINT_URL */.m, "/fleet/").concat(id));
         setFleet(res.data);
@@ -1064,11 +1434,11 @@ function FleetFormUpdate() {
       }
     });
     return function fetchFleet() {
-      return _ref5.apply(this, arguments);
+      return _ref0.apply(this, arguments);
     };
   }();
   var handleStatusChange = /*#__PURE__*/function () {
-    var _ref6 = _asyncToGenerator(function* (e) {
+    var _ref1 = _asyncToGenerator(function* (e) {
       var newStatus = e.target.value;
       setStatus(newStatus);
       try {
@@ -1081,12 +1451,12 @@ function FleetFormUpdate() {
         react_toastify_esm/* toast */.oR.error('Failed to update status');
       }
     });
-    return function handleStatusChange(_x) {
-      return _ref6.apply(this, arguments);
+    return function handleStatusChange(_x5) {
+      return _ref1.apply(this, arguments);
     };
   }();
   var handleUpdateCar = /*#__PURE__*/function () {
-    var _ref7 = _asyncToGenerator(function* () {
+    var _ref10 = _asyncToGenerator(function* () {
       try {
         var payload = _objectSpread({}, carData);
         if (payload.chassisNumber && (0,fleetUtils/* isColorWord */.sb)(payload.chassisNumber)) {
@@ -1103,11 +1473,11 @@ function FleetFormUpdate() {
       }
     });
     return function handleUpdateCar() {
-      return _ref7.apply(this, arguments);
+      return _ref10.apply(this, arguments);
     };
   }();
   var handleDeleteCar = /*#__PURE__*/function () {
-    var _ref8 = _asyncToGenerator(function* () {
+    var _ref11 = _asyncToGenerator(function* () {
       if (window.confirm("Are you sure you want to delete this vehicle and all its records?")) {
         try {
           yield axios/* default */.A.delete("".concat(apiConfig/* ENDPOINT_URL */.m, "/fleet/").concat(id));
@@ -1119,11 +1489,11 @@ function FleetFormUpdate() {
       }
     });
     return function handleDeleteCar() {
-      return _ref8.apply(this, arguments);
+      return _ref11.apply(this, arguments);
     };
   }();
   var handleImageFileChange = /*#__PURE__*/function () {
-    var _ref9 = _asyncToGenerator(function* (e) {
+    var _ref12 = _asyncToGenerator(function* (e) {
       var _e$target$files;
       var file = (_e$target$files = e.target.files) === null || _e$target$files === void 0 ? void 0 : _e$target$files[0];
       if (!file) return;
@@ -1134,7 +1504,7 @@ function FleetFormUpdate() {
       try {
         var reader = new FileReader();
         reader.onload = /*#__PURE__*/function () {
-          var _ref0 = _asyncToGenerator(function* (event) {
+          var _ref13 = _asyncToGenerator(function* (event) {
             var img = new Image();
             img.onload = /*#__PURE__*/_asyncToGenerator(function* () {
               var canvas = document.createElement('canvas');
@@ -1169,8 +1539,8 @@ function FleetFormUpdate() {
             });
             img.src = event.target.result;
           });
-          return function (_x3) {
-            return _ref0.apply(this, arguments);
+          return function (_x7) {
+            return _ref13.apply(this, arguments);
           };
         }();
         reader.readAsDataURL(file);
@@ -1179,12 +1549,12 @@ function FleetFormUpdate() {
       }
       e.target.value = '';
     });
-    return function handleImageFileChange(_x2) {
-      return _ref9.apply(this, arguments);
+    return function handleImageFileChange(_x6) {
+      return _ref12.apply(this, arguments);
     };
   }();
   var handleRemovePhoto = /*#__PURE__*/function () {
-    var _ref10 = _asyncToGenerator(function* () {
+    var _ref15 = _asyncToGenerator(function* () {
       if (window.confirm('Are you sure you want to remove the vehicle photo?')) {
         try {
           yield axios/* default */.A.put("".concat(apiConfig/* ENDPOINT_URL */.m, "/fleet/").concat(id), {
@@ -1200,11 +1570,11 @@ function FleetFormUpdate() {
       }
     });
     return function handleRemovePhoto() {
-      return _ref10.apply(this, arguments);
+      return _ref15.apply(this, arguments);
     };
   }();
   var handleAddDocument = /*#__PURE__*/function () {
-    var _ref11 = _asyncToGenerator(function* () {
+    var _ref16 = _asyncToGenerator(function* () {
       try {
         if (isEditDoc) {
           yield axios/* default */.A.put("".concat(apiConfig/* ENDPOINT_URL */.m, "/fleet/").concat(id, "/documents/").concat(docData._id), docData);
@@ -1222,11 +1592,11 @@ function FleetFormUpdate() {
       }
     });
     return function handleAddDocument() {
-      return _ref11.apply(this, arguments);
+      return _ref16.apply(this, arguments);
     };
   }();
   var handleDeleteDocument = /*#__PURE__*/function () {
-    var _ref12 = _asyncToGenerator(function* (docId) {
+    var _ref17 = _asyncToGenerator(function* (docId) {
       if (window.confirm("Are you sure you want to delete this document?")) {
         try {
           yield axios/* default */.A.delete("".concat(apiConfig/* ENDPOINT_URL */.m, "/fleet/").concat(id, "/documents/").concat(docId));
@@ -1237,12 +1607,12 @@ function FleetFormUpdate() {
         }
       }
     });
-    return function handleDeleteDocument(_x4) {
-      return _ref12.apply(this, arguments);
+    return function handleDeleteDocument(_x8) {
+      return _ref17.apply(this, arguments);
     };
   }();
   var handleAddOilChange = /*#__PURE__*/function () {
-    var _ref13 = _asyncToGenerator(function* () {
+    var _ref18 = _asyncToGenerator(function* () {
       try {
         if (isEditOil) {
           yield axios/* default */.A.put("".concat(apiConfig/* ENDPOINT_URL */.m, "/fleet/").concat(id, "/oilChanges/").concat(oilData._id), oilData);
@@ -1260,11 +1630,11 @@ function FleetFormUpdate() {
       }
     });
     return function handleAddOilChange() {
-      return _ref13.apply(this, arguments);
+      return _ref18.apply(this, arguments);
     };
   }();
   var handleDeleteOilChange = /*#__PURE__*/function () {
-    var _ref14 = _asyncToGenerator(function* (oilId) {
+    var _ref19 = _asyncToGenerator(function* (oilId) {
       if (window.confirm("Are you sure you want to delete this oil change log?")) {
         try {
           yield axios/* default */.A.delete("".concat(apiConfig/* ENDPOINT_URL */.m, "/fleet/").concat(id, "/oilChanges/").concat(oilId));
@@ -1275,8 +1645,8 @@ function FleetFormUpdate() {
         }
       }
     });
-    return function handleDeleteOilChange(_x5) {
-      return _ref14.apply(this, arguments);
+    return function handleDeleteOilChange(_x9) {
+      return _ref19.apply(this, arguments);
     };
   }();
   if (!fleet) {
@@ -2200,6 +2570,491 @@ function FleetFormUpdate() {
         }
       }
     }
+  }))), /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      backgroundColor: 'white',
+      padding: '20px',
+      borderRadius: '8px',
+      mt: 3,
+      mb: 3,
+      boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+    }
+  }, /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'flex-start',
+      mb: 2,
+      flexWrap: 'wrap',
+      gap: 2
+    }
+  }, /*#__PURE__*/react.createElement(Box/* default */.A, null, /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    variant: "h6",
+    sx: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: 1,
+      fontWeight: 700,
+      color: '#1e293b'
+    }
+  }, /*#__PURE__*/react.createElement(Build/* default */.A, {
+    sx: {
+      color: '#202a5a',
+      fontSize: '22px'
+    }
+  }), /*#__PURE__*/react.createElement("span", null, "Maintenance & Repairs History")), /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    variant: "body2",
+    sx: {
+      color: '#64748b',
+      mt: 0.5
+    }
+  }, "Complete repair logs, parts used, mechanic work, and maintenance costs for this vehicle.")), /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: 1.5,
+      flexWrap: 'wrap'
+    }
+  }, /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      px: 1.8,
+      py: 0.8,
+      borderRadius: '8px',
+      backgroundColor: '#f0fdf4',
+      border: '1.5px solid #86efac',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'flex-start'
+    }
+  }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    variant: "caption",
+    sx: {
+      color: '#166534',
+      fontWeight: 600,
+      fontSize: '10.5px',
+      textTransform: 'uppercase'
+    }
+  }, "Lifetime Spend"), /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    sx: {
+      color: '#15803d',
+      fontWeight: 800,
+      fontSize: '1.05rem',
+      lineHeight: 1.2
+    }
+  }, "$", (maintenanceSummary.totalMaintenanceCost || 0).toLocaleString(undefined, {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  }))), /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      px: 1.8,
+      py: 0.8,
+      borderRadius: '8px',
+      backgroundColor: '#eff6ff',
+      border: '1.5px solid #bfdbfe',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'flex-start'
+    }
+  }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    variant: "caption",
+    sx: {
+      color: '#1e40af',
+      fontWeight: 600,
+      fontSize: '10.5px',
+      textTransform: 'uppercase'
+    }
+  }, "Total Orders"), /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    sx: {
+      color: '#1d4ed8',
+      fontWeight: 800,
+      fontSize: '1.05rem',
+      lineHeight: 1.2
+    }
+  }, maintenanceSummary.totalOrdersCount || 0, /*#__PURE__*/react.createElement("span", {
+    style: {
+      fontSize: '11px',
+      fontWeight: 500,
+      color: '#64748b',
+      marginLeft: '5px'
+    }
+  }, "(", maintenanceSummary.closedOrdersCount || 0, " Done)"))), suggestions.length > 0 && /*#__PURE__*/react.createElement(Button/* default */.A, {
+    variant: showSuggestions ? "contained" : "outlined",
+    size: "small",
+    disabled: !canAdd,
+    onClick: () => setShowSuggestions(prev => !prev),
+    startIcon: /*#__PURE__*/react.createElement(AutoAwesome, {
+      sx: {
+        color: showSuggestions ? 'white' : '#d97706'
+      }
+    }),
+    sx: {
+      fontSize: '11.5px',
+      py: 0.7,
+      px: 1.5,
+      color: showSuggestions ? 'white' : '#d97706',
+      backgroundColor: showSuggestions ? '#d97706' : 'white',
+      borderColor: '#d97706',
+      '&:hover': {
+        backgroundColor: showSuggestions ? '#b45309' : '#fffbeb',
+        borderColor: '#b45309'
+      },
+      textTransform: 'none',
+      fontWeight: 700
+    }
+  }, showSuggestions ? 'Hide Suggestions' : "Smart Match (".concat(suggestions.length, ")")), /*#__PURE__*/react.createElement(Button/* default */.A, {
+    variant: "contained",
+    size: "small",
+    disabled: !canAdd,
+    onClick: () => {
+      setOrderNumberInput('');
+      setLinkModalOpen(true);
+    },
+    startIcon: /*#__PURE__*/react.createElement(Link, null),
+    sx: {
+      backgroundColor: '#202a5a',
+      '&:hover': {
+        backgroundColor: '#161e42'
+      },
+      fontSize: '11.5px',
+      py: 0.7,
+      px: 1.5,
+      textTransform: 'none',
+      fontWeight: 600
+    }
+  }, "Link Order"))), showSuggestions && suggestions.length > 0 && /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      mb: 3,
+      p: 2,
+      borderRadius: '8px',
+      backgroundColor: '#fffbeb',
+      border: '1.5px dashed #f59e0b'
+    }
+  }, /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      mb: 1.5,
+      flexWrap: 'wrap',
+      gap: 1
+    }
+  }, /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: 1
+    }
+  }, /*#__PURE__*/react.createElement(AutoAwesome, {
+    sx: {
+      color: '#d97706'
+    }
+  }), /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    sx: {
+      fontWeight: 700,
+      fontSize: '0.95rem',
+      color: '#92400e'
+    }
+  }, "Found ", suggestions.length, " Historical Maintenance Order(s) Mentioning Plate \"", fleet.plateNumber, "\"")), /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      display: 'flex',
+      gap: 1
+    }
+  }, /*#__PURE__*/react.createElement(Button/* default */.A, {
+    size: "small",
+    variant: "contained",
+    disabled: linkingOrder || selectedSuggestionIds.length === 0,
+    onClick: () => handleLinkSuggestedOrders(selectedSuggestionIds),
+    sx: {
+      backgroundColor: '#d97706',
+      '&:hover': {
+        backgroundColor: '#b45309'
+      },
+      fontSize: '11px',
+      textTransform: 'none',
+      fontWeight: 700
+    }
+  }, "Link Selected (", selectedSuggestionIds.length, ")"), /*#__PURE__*/react.createElement(Button/* default */.A, {
+    size: "small",
+    variant: "outlined",
+    onClick: () => setShowSuggestions(false),
+    sx: {
+      fontSize: '11px',
+      textTransform: 'none',
+      color: '#78350f',
+      borderColor: '#d97706'
+    }
+  }, "Dismiss"))), /*#__PURE__*/react.createElement(TableContainer, {
+    component: Paper/* default */.A,
+    sx: {
+      maxHeight: 240,
+      boxShadow: 'none',
+      border: '1px solid #fde68a'
+    }
+  }, /*#__PURE__*/react.createElement(Table/* default */.A, {
+    size: "small",
+    stickyHeader: true
+  }, /*#__PURE__*/react.createElement(TableHead/* default */.A, null, /*#__PURE__*/react.createElement(TableRow/* default */.A, {
+    sx: {
+      backgroundColor: '#fef3c7'
+    }
+  }, /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+    padding: "checkbox"
+  }, /*#__PURE__*/react.createElement(Checkbox/* default */.A, {
+    size: "small",
+    checked: selectedSuggestionIds.length === suggestions.length && suggestions.length > 0,
+    indeterminate: selectedSuggestionIds.length > 0 && selectedSuggestionIds.length < suggestions.length,
+    onChange: e => {
+      if (e.target.checked) {
+        setSelectedSuggestionIds(suggestions.map(s => s._id));
+      } else {
+        setSelectedSuggestionIds([]);
+      }
+    }
+  })), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+    sx: {
+      fontWeight: 700,
+      fontSize: '11.5px'
+    }
+  }, "Service #"), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+    sx: {
+      fontWeight: 700,
+      fontSize: '11.5px'
+    }
+  }, "Date"), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+    sx: {
+      fontWeight: 700,
+      fontSize: '11.5px'
+    }
+  }, "Description / Car Mentioned"), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+    sx: {
+      fontWeight: 700,
+      fontSize: '11.5px'
+    }
+  }, "Defect / Work"), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+    sx: {
+      fontWeight: 700,
+      fontSize: '11.5px'
+    }
+  }, "Cost"), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+    sx: {
+      fontWeight: 700,
+      fontSize: '11.5px'
+    }
+  }, "Action"))), /*#__PURE__*/react.createElement(TableBody/* default */.A, null, suggestions.map(sug => {
+    var isChecked = selectedSuggestionIds.includes(sug._id);
+    return /*#__PURE__*/react.createElement(TableRow/* default */.A, {
+      key: sug._id,
+      hover: true,
+      selected: isChecked
+    }, /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+      padding: "checkbox"
+    }, /*#__PURE__*/react.createElement(Checkbox/* default */.A, {
+      size: "small",
+      checked: isChecked,
+      onChange: e => {
+        if (e.target.checked) {
+          setSelectedSuggestionIds(prev => [...prev, sug._id]);
+        } else {
+          setSelectedSuggestionIds(prev => prev.filter(id => id !== sug._id));
+        }
+      }
+    })), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+      sx: {
+        fontWeight: 700,
+        color: '#1e40af'
+      }
+    }, sug.serviceName), /*#__PURE__*/react.createElement(TableCell/* default */.A, null, sug.serviceDate ? dayjs_min_default()(sug.serviceDate).format('DD/MM/YYYY') : '—'), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+      sx: {
+        maxWidth: 220,
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        whiteSpace: 'nowrap'
+      }
+    }, sug.itemDescriptionInfo || sug.model || sug.brand || '—'), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+      sx: {
+        maxWidth: 220,
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        whiteSpace: 'nowrap'
+      }
+    }, sug.defectDescription || sug.actionTaken || '—'), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+      sx: {
+        fontWeight: 700,
+        color: '#0f766e'
+      }
+    }, "$", Number(sug.totalInvoice || sug.subTotal || 0).toLocaleString(undefined, {
+      minimumFractionDigits: 2
+    })), /*#__PURE__*/react.createElement(TableCell/* default */.A, null, /*#__PURE__*/react.createElement(Button/* default */.A, {
+      size: "small",
+      variant: "outlined",
+      disabled: linkingOrder,
+      onClick: () => handleLinkSuggestedOrders([sug._id]),
+      sx: {
+        fontSize: '10.5px',
+        py: 0.1,
+        px: 1,
+        textTransform: 'none',
+        color: '#d97706',
+        borderColor: '#d97706'
+      }
+    }, "Link")));
+  }))))), /*#__PURE__*/react.createElement("div", {
+    style: {
+      height: 480,
+      width: '100%'
+    }
+  }, /*#__PURE__*/react.createElement(DataGrid/* DataGrid */.zh, {
+    rows: maintenanceOrders,
+    getRowId: row => row._id,
+    columns: [{
+      field: 'serviceName',
+      headerName: 'Service #',
+      width: 130,
+      renderCell: params => /*#__PURE__*/react.createElement(Box/* default */.A, {
+        onClick: () => {
+          setSelectedSlipOrder(params.row);
+          setSlipModalOpen(true);
+        },
+        sx: {
+          fontWeight: 700,
+          color: '#1d4ed8',
+          cursor: 'pointer',
+          display: 'flex',
+          alignItems: 'center',
+          gap: 0.5,
+          '&:hover': {
+            textDecoration: 'underline',
+            color: '#1e40af'
+          }
+        }
+      }, /*#__PURE__*/react.createElement(ReceiptLong/* default */.A, {
+        sx: {
+          fontSize: 16
+        }
+      }), params.value)
+    }, {
+      field: 'serviceDate',
+      headerName: 'Date',
+      width: 120,
+      valueFormatter: params => params.value ? dayjs_min_default()(params.value).format('DD/MM/YYYY') : '—'
+    }, {
+      field: 'defectDescription',
+      headerName: 'Defect / Issue',
+      flex: 1.5,
+      minWidth: 160,
+      renderCell: params => /*#__PURE__*/react.createElement(Typography/* default */.A, {
+        variant: "body2",
+        sx: {
+          fontSize: '12.5px',
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+          whiteSpace: 'nowrap'
+        }
+      }, params.value || params.row.itemDescriptionInfo || '—')
+    }, {
+      field: 'actionTaken',
+      headerName: 'Action / Work Done',
+      flex: 1.5,
+      minWidth: 160,
+      renderCell: params => /*#__PURE__*/react.createElement(Typography/* default */.A, {
+        variant: "body2",
+        sx: {
+          fontSize: '12.5px',
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+          whiteSpace: 'nowrap'
+        }
+      }, params.value || params.row.note || '—')
+    }, {
+      field: 'technicianAssign',
+      headerName: 'Technician',
+      width: 150,
+      renderCell: params => /*#__PURE__*/react.createElement("span", {
+        style: {
+          fontWeight: 500,
+          fontSize: '12px',
+          color: '#334155'
+        }
+      }, params.value || 'GG Mechanic')
+    }, {
+      field: 'totalInvoice',
+      headerName: 'Total Cost',
+      width: 130,
+      renderCell: params => {
+        var val = Number(params.value || params.row.subTotal || 0);
+        return /*#__PURE__*/react.createElement("span", {
+          style: {
+            fontWeight: 700,
+            color: '#0f766e',
+            fontSize: '13px'
+          }
+        }, "$", val.toLocaleString(undefined, {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
+        }));
+      }
+    }, {
+      field: 'status',
+      headerName: 'Status',
+      width: 120,
+      renderCell: params => renderMaintStatusChip(params.value, params.row.Converted)
+    }, {
+      field: 'actions',
+      headerName: 'Actions',
+      width: 130,
+      sortable: false,
+      renderCell: params => /*#__PURE__*/react.createElement(Box/* default */.A, {
+        sx: {
+          display: 'flex',
+          alignItems: 'center',
+          gap: 0.5
+        }
+      }, /*#__PURE__*/react.createElement(Tooltip/* default */.A, {
+        title: "View Maintenance Slip",
+        placement: "top"
+      }, /*#__PURE__*/react.createElement(IconButton/* default */.A, {
+        size: "small",
+        color: "primary",
+        onClick: () => {
+          setSelectedSlipOrder(params.row);
+          setSlipModalOpen(true);
+        }
+      }, /*#__PURE__*/react.createElement(Visibility/* default */.A, {
+        fontSize: "small"
+      }))), /*#__PURE__*/react.createElement(Tooltip/* default */.A, {
+        title: "Open in Maintenance Module",
+        placement: "top"
+      }, /*#__PURE__*/react.createElement(IconButton/* default */.A, {
+        size: "small",
+        sx: {
+          color: '#6366f1'
+        },
+        onClick: () => window.open("#/MaintenanceViewInformation/".concat(params.row._id), '_blank')
+      }, /*#__PURE__*/react.createElement(OpenInNew, {
+        fontSize: "small"
+      }))), /*#__PURE__*/react.createElement(Tooltip/* default */.A, {
+        title: "Unlink from Vehicle",
+        placement: "top"
+      }, /*#__PURE__*/react.createElement(IconButton/* default */.A, {
+        size: "small",
+        color: "error",
+        disabled: !canDelete,
+        onClick: () => handleUnlinkOrder(params.row._id, params.row.serviceName)
+      }, /*#__PURE__*/react.createElement(LinkOff, {
+        fontSize: "small"
+      }))))
+    }],
+    slots: {
+      toolbar: GridToolbar/* GridToolbar */.O
+    },
+    slotProps: {
+      toolbar: {
+        showQuickFilter: true,
+        quickFilterProps: {
+          debounceMs: 500
+        }
+      }
+    }
   })))))), /*#__PURE__*/react.createElement(Modal/* default */.A, {
     open: carModal,
     onClose: () => setCarModal(false)
@@ -2498,7 +3353,410 @@ function FleetFormUpdate() {
       backgroundColor: '#202a5a'
     },
     onClick: handleAddOilChange
-  }, "Save Log"))));
+  }, "Save Log"))), /*#__PURE__*/react.createElement(Dialog/* default */.A, {
+    open: linkModalOpen,
+    onClose: () => setLinkModalOpen(false),
+    maxWidth: "xs",
+    fullWidth: true
+  }, /*#__PURE__*/react.createElement(DialogTitle/* default */.A, {
+    sx: {
+      fontWeight: 700,
+      color: '#202a5a',
+      display: 'flex',
+      alignItems: 'center',
+      gap: 1
+    }
+  }, /*#__PURE__*/react.createElement(Link, null), " Link Maintenance Order"), /*#__PURE__*/react.createElement("form", {
+    onSubmit: handleLinkSingleOrder
+  }, /*#__PURE__*/react.createElement(DialogContent/* default */.A, null, /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    variant: "body2",
+    sx: {
+      color: '#64748b',
+      mb: 2
+    }
+  }, "Enter the Maintenance Order Service Number (e.g. ", /*#__PURE__*/react.createElement("strong", null, "M-001349"), " or simply ", /*#__PURE__*/react.createElement("strong", null, "1349"), ") to attach it to ", /*#__PURE__*/react.createElement("strong", null, fleet === null || fleet === void 0 ? void 0 : fleet.plateNumber), "."), /*#__PURE__*/react.createElement(TextField/* default */.A, {
+    autoFocus: true,
+    fullWidth: true,
+    size: "small",
+    label: "Maintenance Order # (e.g. M-001349)",
+    placeholder: "M-001349",
+    value: orderNumberInput,
+    onChange: e => setOrderNumberInput(e.target.value),
+    disabled: linkingOrder
+  })), /*#__PURE__*/react.createElement(DialogActions/* default */.A, {
+    sx: {
+      px: 3,
+      pb: 2.5
+    }
+  }, /*#__PURE__*/react.createElement(Button/* default */.A, {
+    onClick: () => setLinkModalOpen(false),
+    disabled: linkingOrder,
+    color: "inherit"
+  }, "Cancel"), /*#__PURE__*/react.createElement(Button/* default */.A, {
+    type: "submit",
+    variant: "contained",
+    disabled: linkingOrder || !orderNumberInput.trim(),
+    sx: {
+      backgroundColor: '#202a5a',
+      '&:hover': {
+        backgroundColor: '#161e42'
+      }
+    }
+  }, linkingOrder ? 'Linking...' : 'Link to Vehicle')))), /*#__PURE__*/react.createElement(Dialog/* default */.A, {
+    open: slipModalOpen,
+    onClose: () => setSlipModalOpen(false),
+    maxWidth: "md",
+    fullWidth: true
+  }, /*#__PURE__*/react.createElement(DialogTitle/* default */.A, {
+    sx: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      borderBottom: '1px solid #e2e8f0',
+      pb: 1.5
+    }
+  }, /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: 1
+    }
+  }, /*#__PURE__*/react.createElement(ReceiptLong/* default */.A, {
+    sx: {
+      color: '#202a5a'
+    }
+  }), /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    variant: "h6",
+    sx: {
+      fontWeight: 700,
+      color: '#202a5a'
+    }
+  }, "Maintenance Slip: ", (selectedSlipOrder === null || selectedSlipOrder === void 0 ? void 0 : selectedSlipOrder.serviceName) || '—'), selectedSlipOrder && renderMaintStatusChip(selectedSlipOrder.status, selectedSlipOrder.Converted)), /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      display: 'flex',
+      gap: 1
+    }
+  }, /*#__PURE__*/react.createElement(Button/* default */.A, {
+    size: "small",
+    variant: "outlined",
+    startIcon: /*#__PURE__*/react.createElement(Print/* default */.A, null),
+    onClick: handlePrintSlip,
+    sx: {
+      textTransform: 'none'
+    }
+  }, "Print Slip"), /*#__PURE__*/react.createElement(IconButton/* default */.A, {
+    size: "small",
+    onClick: () => setSlipModalOpen(false)
+  }, /*#__PURE__*/react.createElement(Close/* default */.A, {
+    fontSize: "small"
+  })))), /*#__PURE__*/react.createElement(DialogContent/* default */.A, {
+    sx: {
+      pt: 2.5
+    }
+  }, selectedSlipOrder && /*#__PURE__*/react.createElement(Box/* default */.A, {
+    id: "printable-maintenance-slip"
+  }, /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      mb: 2,
+      pb: 1.5,
+      borderBottom: '1.5px solid #e2e8f0'
+    }
+  }, /*#__PURE__*/react.createElement(Box/* default */.A, null, /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    variant: "h6",
+    sx: {
+      fontWeight: 800,
+      color: '#202a5a'
+    }
+  }, "GLOBAL GATE S.A.R.L"), /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    variant: "caption",
+    sx: {
+      color: '#64748b',
+      display: 'block'
+    }
+  }, "Vehicle Maintenance & Mechanical Repair Voucher"), /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    variant: "body2",
+    sx: {
+      fontWeight: 600,
+      mt: 0.5,
+      color: '#0f172a'
+    }
+  }, "Vehicle: ", fleet === null || fleet === void 0 ? void 0 : fleet.carMake, " ", fleet === null || fleet === void 0 ? void 0 : fleet.carModel, " \u2022 Plate: ", fleet === null || fleet === void 0 ? void 0 : fleet.plateNumber, " ", fleet !== null && fleet !== void 0 && fleet.vehicleColor ? "(".concat(fleet.vehicleColor, ")") : '')), /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      textAlign: 'right'
+    }
+  }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    variant: "subtitle2",
+    sx: {
+      fontWeight: 700,
+      color: '#1e40af'
+    }
+  }, "Order: ", selectedSlipOrder.serviceName), /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    variant: "caption",
+    sx: {
+      color: '#64748b',
+      display: 'block'
+    }
+  }, "Date: ", selectedSlipOrder.serviceDate ? dayjs_min_default()(selectedSlipOrder.serviceDate).format('DD/MM/YYYY') : '—'), /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    variant: "caption",
+    sx: {
+      color: '#475569',
+      display: 'block'
+    }
+  }, "Mechanic: ", /*#__PURE__*/react.createElement("strong", null, selectedSlipOrder.technicianAssign || 'GG Mechanic')))), /*#__PURE__*/react.createElement(Grid/* default */.Ay, {
+    container: true,
+    spacing: 2,
+    sx: {
+      mb: 2
+    }
+  }, /*#__PURE__*/react.createElement(Grid/* default */.Ay, {
+    item: true,
+    xs: 12,
+    sm: 6
+  }, /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      p: 1.5,
+      borderRadius: '6px',
+      backgroundColor: '#f8fafc',
+      border: '1px solid #e2e8f0',
+      height: '100%'
+    }
+  }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    variant: "caption",
+    sx: {
+      fontWeight: 700,
+      color: '#64748b',
+      textTransform: 'uppercase'
+    }
+  }, "Defect Reported / Diagnosis"), /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    variant: "body2",
+    sx: {
+      mt: 0.5,
+      fontWeight: 500
+    }
+  }, selectedSlipOrder.defectDescription || selectedSlipOrder.itemDescriptionInfo || 'Standard maintenance and mechanical overhaul.'))), /*#__PURE__*/react.createElement(Grid/* default */.Ay, {
+    item: true,
+    xs: 12,
+    sm: 6
+  }, /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      p: 1.5,
+      borderRadius: '6px',
+      backgroundColor: '#f8fafc',
+      border: '1px solid #e2e8f0',
+      height: '100%'
+    }
+  }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    variant: "caption",
+    sx: {
+      fontWeight: 700,
+      color: '#64748b',
+      textTransform: 'uppercase'
+    }
+  }, "Action Taken / Resolution"), /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    variant: "body2",
+    sx: {
+      mt: 0.5,
+      fontWeight: 500
+    }
+  }, selectedSlipOrder.actionTaken || selectedSlipOrder.note || 'Repairs performed and tested in workshop.')))), /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    variant: "subtitle2",
+    sx: {
+      fontWeight: 700,
+      mb: 1,
+      color: '#1e293b'
+    }
+  }, "Spare Parts & Consumables Replaced"), /*#__PURE__*/react.createElement(TableContainer, {
+    component: Paper/* default */.A,
+    sx: {
+      mb: 2,
+      boxShadow: 'none',
+      border: '1px solid #e2e8f0'
+    }
+  }, /*#__PURE__*/react.createElement(Table/* default */.A, {
+    size: "small"
+  }, /*#__PURE__*/react.createElement(TableHead/* default */.A, {
+    sx: {
+      backgroundColor: '#f1f5f9'
+    }
+  }, /*#__PURE__*/react.createElement(TableRow/* default */.A, null, /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+    sx: {
+      fontWeight: 700,
+      width: 40
+    }
+  }, "#"), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+    sx: {
+      fontWeight: 700
+    }
+  }, "Part / Description"), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+    sx: {
+      fontWeight: 700,
+      width: 70,
+      textAlign: 'center'
+    }
+  }, "Qty"), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+    sx: {
+      fontWeight: 700,
+      width: 110,
+      textAlign: 'right'
+    }
+  }, "Rate"), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+    sx: {
+      fontWeight: 700,
+      width: 110,
+      textAlign: 'right'
+    }
+  }, "Amount"))), /*#__PURE__*/react.createElement(TableBody/* default */.A, null, selectedSlipOrder.items && selectedSlipOrder.items.length > 0 ? selectedSlipOrder.items.map((item, idx) => {
+    var _item$itemName, _item$itemName2;
+    return /*#__PURE__*/react.createElement(TableRow/* default */.A, {
+      key: idx
+    }, /*#__PURE__*/react.createElement(TableCell/* default */.A, null, idx + 1), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+      sx: {
+        fontWeight: 500
+      }
+    }, ((_item$itemName = item.itemName) === null || _item$itemName === void 0 ? void 0 : _item$itemName.itemName) || ((_item$itemName2 = item.itemName) === null || _item$itemName2 === void 0 ? void 0 : _item$itemName2.name) || item.itemName || item.itemDescription || item.description || 'Spare Part'), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+      sx: {
+        textAlign: 'center'
+      }
+    }, item.quantity || 1), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+      sx: {
+        textAlign: 'right'
+      }
+    }, "$", Number(item.rate || 0).toLocaleString(undefined, {
+      minimumFractionDigits: 2
+    })), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+      sx: {
+        textAlign: 'right',
+        fontWeight: 600
+      }
+    }, "$", Number(item.amount || (item.quantity || 1) * (item.rate || 0)).toLocaleString(undefined, {
+      minimumFractionDigits: 2
+    })));
+  }) : /*#__PURE__*/react.createElement(TableRow/* default */.A, null, /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+    colSpan: 5,
+    sx: {
+      textAlign: 'center',
+      color: '#94a3b8',
+      py: 2
+    }
+  }, "No individual parts logged (Labor-only service or package repair)"))))), /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      display: 'flex',
+      justifyContent: 'flex-end',
+      mb: 2
+    }
+  }, /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      minWidth: 260,
+      p: 1.5,
+      borderRadius: '8px',
+      backgroundColor: '#f8fafc',
+      border: '1px solid #e2e8f0'
+    }
+  }, /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      mb: 0.5
+    }
+  }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    variant: "caption",
+    sx: {
+      color: '#64748b'
+    }
+  }, "Parts Subtotal:"), /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    variant: "caption",
+    sx: {
+      fontWeight: 600
+    }
+  }, "$", Number(selectedSlipOrder.subTotal || 0).toLocaleString(undefined, {
+    minimumFractionDigits: 2
+  }))), Number(selectedSlipOrder.totalLaborFeesGenerale || selectedSlipOrder.totalLaborFees || 0) > 0 && /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      mb: 0.5
+    }
+  }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    variant: "caption",
+    sx: {
+      color: '#64748b'
+    }
+  }, "Labor Fees:"), /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    variant: "caption",
+    sx: {
+      fontWeight: 600
+    }
+  }, "+$", Number(selectedSlipOrder.totalLaborFeesGenerale || selectedSlipOrder.totalLaborFees || 0).toLocaleString(undefined, {
+    minimumFractionDigits: 2
+  }))), Number(selectedSlipOrder.totalDiscount || 0) > 0 && /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      mb: 0.5
+    }
+  }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    variant: "caption",
+    sx: {
+      color: '#dc2626'
+    }
+  }, "Discount:"), /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    variant: "caption",
+    sx: {
+      fontWeight: 600,
+      color: '#dc2626'
+    }
+  }, "-$", Number(selectedSlipOrder.totalDiscount || 0).toLocaleString(undefined, {
+    minimumFractionDigits: 2
+  }))), /*#__PURE__*/react.createElement(Divider/* default */.A, {
+    sx: {
+      my: 0.8
+    }
+  }), /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center'
+    }
+  }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    variant: "subtitle2",
+    sx: {
+      fontWeight: 700,
+      color: '#0f172a'
+    }
+  }, "Total Maintenance Cost:"), /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    variant: "subtitle1",
+    sx: {
+      fontWeight: 800,
+      color: '#15803d'
+    }
+  }, "$", Number(selectedSlipOrder.totalInvoice || selectedSlipOrder.subTotal || 0).toLocaleString(undefined, {
+    minimumFractionDigits: 2
+  }))))))), /*#__PURE__*/react.createElement(DialogActions/* default */.A, {
+    sx: {
+      px: 3,
+      pb: 2,
+      borderTop: '1px solid #e2e8f0'
+    }
+  }, /*#__PURE__*/react.createElement(Button/* default */.A, {
+    size: "small",
+    startIcon: /*#__PURE__*/react.createElement(OpenInNew, null),
+    onClick: () => window.open("#/MaintenanceViewInformation/".concat(selectedSlipOrder === null || selectedSlipOrder === void 0 ? void 0 : selectedSlipOrder._id), '_blank'),
+    sx: {
+      textTransform: 'none'
+    }
+  }, "Open in Maintenance Module"), /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      flexGrow: 1
+    }
+  }), /*#__PURE__*/react.createElement(Button/* default */.A, {
+    variant: "contained",
+    onClick: () => setSlipModalOpen(false),
+    sx: {
+      backgroundColor: '#202a5a'
+    }
+  }, "Close"))));
 }
 
 /***/ },

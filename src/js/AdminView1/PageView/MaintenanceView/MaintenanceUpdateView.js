@@ -223,6 +223,8 @@ function MaintenanceUpdateView() {
   const [converted, setConverted] = useState("");
   const [includeAssetControl, setIncludeAssetControl] = useState(false);
   const [assetControlReport, setAssetControlReport] = useState(DEFAULT_ASSET_CONTROL_REPORT);
+  const [fleetList, setFleetList] = useState([]);
+  const [selectedFleetVehicle, setSelectedFleetVehicle] = useState(null);
 
   useEffect(() => {
     const fetchGrant = async () => {
@@ -270,16 +272,34 @@ function MaintenanceUpdateView() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [resMaintenance, resItem, resCustomer, resEmployee, resRate] = await Promise.all([
+        const [resMaintenance, resItem, resCustomer, resEmployee, resRate, resFleet] = await Promise.all([
           axios.get(`${ENDPOINT_URL}/get-maintenance/${id}`),
           axios.get(`${ENDPOINT_URL}/item`),
           axios.get(`${ENDPOINT_URL}/customer`),
           axios.get(`${ENDPOINT_URL}/employee`),
-          axios.get(`${ENDPOINT_URL}/rate`)
+          axios.get(`${ENDPOINT_URL}/rate`),
+          axios.get(`${ENDPOINT_URL}/fleet/active-list`).catch(() => ({ data: { data: [] } }))
         ]);
+
+        if (resFleet?.data?.data) {
+          setFleetList(resFleet.data.data);
+        }
 
         const mData = resMaintenance.data.data;
         if (mData) {
+          if (mData.fleetId) {
+            const foundCar = (resFleet?.data?.data || []).find(f => f._id === mData.fleetId);
+            if (foundCar) {
+              setSelectedFleetVehicle(foundCar);
+            } else {
+              setSelectedFleetVehicle({
+                _id: mData.fleetId,
+                plateNumber: mData.fleetPlateNumber || '',
+                carMake: mData.fleetVehicleName || '',
+                carModel: ''
+              });
+            }
+          }
           setServiceDate(mData.serviceDate || "");
           setVisitDate(mData.visitDate || "");
           setItemDescriptionInfo(mData.itemDescriptionInfo || "");
@@ -899,7 +919,10 @@ function MaintenanceUpdateView() {
       status, action,
       items: itemsWithoutData, adjustmentNumber, totalInvoice, subTotal,
       note, totalLaborFees, laborPercentage, totalDiscount, laborDiscount, laborQty, totalLaborFeesGenerale, updateS: false,
-      includeAssetControl, assetControlReport
+      includeAssetControl, assetControlReport,
+      fleetId: selectedFleetVehicle?._id || null,
+      fleetPlateNumber: selectedFleetVehicle?.plateNumber || '',
+      fleetVehicleName: selectedFleetVehicle ? `${selectedFleetVehicle.carMake} ${selectedFleetVehicle.carModel} (${selectedFleetVehicle.plateNumber})`.trim() : ''
     };
 
     if (converted === true || converted === 'true') {
@@ -1093,6 +1116,42 @@ function MaintenanceUpdateView() {
               Appliance & Defect Info
             </Typography>
             <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <Autocomplete
+                  options={fleetList}
+                  getOptionLabel={(option) => option ? `[${option.plateNumber}] ${option.carMake} ${option.carModel} ${option.vehicleColor ? `• ${option.vehicleColor}` : ''}` : ''}
+                  value={selectedFleetVehicle}
+                  isOptionEqualToValue={(option, val) => option?._id === val?._id}
+                  onChange={(event, newValue) => {
+                    setSelectedFleetVehicle(newValue);
+                    if (newValue) {
+                      if (!brand || brand.trim() === '') setBrand(newValue.carMake || '');
+                      if (!model || model.trim() === '') setModel(newValue.carModel || '');
+                      if (!itemDescriptionInfo || itemDescriptionInfo.trim() === '') {
+                        setItemDescriptionInfo(`${newValue.carMake} ${newValue.carModel} ${newValue.plateNumber}`.trim());
+                      }
+                      if (!customerName || !customerName.customerName) {
+                        const ggCust = (customer || []).find(c => (c.Customer || c.customerName || '').toUpperCase().includes('GLOBAL GATE'));
+                        if (ggCust) {
+                          setCustomerName({
+                            _id: ggCust._id,
+                            customerName: ggCust.Customer || ggCust.customerName,
+                            Customer: ggCust.Customer || ggCust.customerName
+                          });
+                        }
+                      }
+                    }
+                  }}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      size="small"
+                      label="Company Fleet Vehicle (Optional - If Company Car)"
+                      placeholder="Select car by plate # or model..."
+                    />
+                  )}
+                />
+              </Grid>
               <Grid item xs={12}>
                 <SmartTextInput
                   fullWidth

@@ -170,6 +170,9 @@ const maintenanceSchema= new Schema(
          default: {}
        },
         branchId: { type: String, default: 'HQ' },
+        fleetId: { type: Schema.Types.ObjectId, ref: 'Fleet', default: null },
+        fleetPlateNumber: { type: String, trim: true, default: '' },
+        fleetVehicleName: { type: String, trim: true, default: '' },
 },
     {
       collection:"maintenance"
@@ -181,4 +184,6 @@ const maintenanceSchema= new Schema(
 maintenanceSchema.index({ branchId: 1, serviceName: 1 }, { unique: true });
 maintenanceSchema.index({ serviceDate: -1 });
 maintenanceSchema.index({ serviceNumber: -1 });
+maintenanceSchema.index({ fleetId: 1 });
+maintenanceSchema.index({ fleetPlateNumber: 1 });
 module.exports = mongoose.model("maintenanceSchema", maintenanceSchema);

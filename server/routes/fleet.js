@@ -3,12 +3,19 @@ const router = express.Router();
 const fleetController = require('../Controller/fleetController');
 
 // Fleet Routes
+router.get('/active-list', fleetController.getActiveFleets);
 router.post('/', fleetController.createFleet);
 router.get('/', fleetController.getAllFleets);
 router.get('/:id', fleetController.getFleetById);
 router.put('/:id', fleetController.updateFleet);
 router.delete('/:id', fleetController.deleteFleet);
 router.post('/deleteMultiple', fleetController.deleteMultipleFleets);
+
+// Fleet Maintenance Linkage Routes
+router.get('/:id/maintenance', fleetController.getFleetMaintenance);
+router.get('/:id/maintenance-suggestions', fleetController.getFleetMaintenanceSuggestions);
+router.post('/:id/link-maintenance', fleetController.linkMaintenanceToFleet);
+router.delete('/:id/maintenance/:maintenanceId', fleetController.unlinkMaintenanceFromFleet);
 
 // Document Routes
 router.post('/:id/documents', fleetController.addDocument);

@@ -1,4 +1,5 @@
 const Fleet = require('../model/fleetSchema');
+const maintenanceSchema = require('../model/maintenanceSchema');
 
 // Create a new car
 exports.createFleet = async (req, res) => {
@@ -123,8 +124,40 @@ exports.getAllFleets = async (req, res) => {
         }
         // ---------------------------
 
+        // --- Maintenance Aggregate Summary ---
+        let fleetsWithMaint = fleets;
+        try {
+            const fleetIds = fleets.map(f => f._id);
+            const maintAgg = await maintenanceSchema.aggregate([
+                { $match: { fleetId: { $in: fleetIds } } },
+                { $group: {
+                    _id: "$fleetId",
+                    totalCost: { $sum: { $ifNull: ["$totalInvoice", "$subTotal", 0] } },
+                    count: { $sum: 1 },
+                    lastDate: { $max: "$serviceDate" }
+                }}
+            ]);
+            const maintMap = {};
+            maintAgg.forEach(item => {
+                if (item && item._id) {
+                    maintMap[item._id.toString()] = item;
+                }
+            });
+
+            fleetsWithMaint = fleets.map(car => {
+                const carObj = car.toObject ? car.toObject() : { ...car };
+                const m = maintMap[car._id.toString()];
+                carObj.totalMaintenanceCost = m ? m.totalCost : 0;
+                carObj.maintenanceCount = m ? m.count : 0;
+                carObj.lastMaintenanceDate = m ? m.lastDate : null;
+                return carObj;
+            });
+        } catch (maintErr) {
+            console.error("Error aggregating fleet maintenance costs:", maintErr);
+        }
+
         res.status(200).json({
-            itemI: fleets,
+            itemI: fleetsWithMaint,
             totalItems: total,
             totalPages: Math.ceil(total / limit),
             currentPage: page
@@ -291,5 +324,212 @@ exports.deleteOilChange = async (req, res) => {
         res.status(200).json(fleet);
     } catch (error) {
         res.status(500).json({ message: error.message });
+    }
+};
+
+// --- Maintenance Linkage & History ---
+
+// Get active fleet vehicles for dropdowns in other modules (e.g. Maintenance)
+exports.getActiveFleets = async (req, res) => {
+    try {
+        const vehicles = await Fleet.find({})
+            .select('_id plateNumber carMake carModel vehicleColor status branchId')
+            .sort({ plateNumber: 1 })
+            .lean();
+        res.status(200).json({ success: true, data: vehicles });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+};
+
+// Get all maintenance orders linked to this vehicle
+exports.getFleetMaintenance = async (req, res) => {
+    try {
+        const fleet = await Fleet.findById(req.params.id);
+        if (!fleet) {
+            return res.status(404).json({ message: "Vehicle not found" });
+        }
+
+        // Find all maintenance orders linked by fleetId
+        const orders = await maintenanceSchema.find({ fleetId: fleet._id })
+            .sort({ serviceDate: -1, _id: -1 })
+            .lean();
+
+        let totalMaintenanceCost = 0;
+        let closedOrdersCount = 0;
+        let openOrdersCount = 0;
+
+        orders.forEach(order => {
+            const cost = Number(order.totalInvoice || order.subTotal || 0);
+            totalMaintenanceCost += isNaN(cost) ? 0 : cost;
+
+            const st = (order.status || '').toLowerCase();
+            if (st === 'close' || st === 'closed' || order.Converted === true || order.Converted === 'true') {
+                closedOrdersCount++;
+            } else {
+                openOrdersCount++;
+            }
+        });
+
+        res.status(200).json({
+            success: true,
+            fleet: {
+                _id: fleet._id,
+                plateNumber: fleet.plateNumber,
+                carMake: fleet.carMake,
+                carModel: fleet.carModel,
+                vehicleColor: fleet.vehicleColor,
+                status: fleet.status
+            },
+            orders,
+            summary: {
+                totalMaintenanceCost,
+                totalOrdersCount: orders.length,
+                closedOrdersCount,
+                openOrdersCount,
+                lastServiceDate: orders[0]?.serviceDate || null
+            }
+        });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+};
+
+// Get unlinked maintenance orders that likely belong to this vehicle (smart plate detection)
+exports.getFleetMaintenanceSuggestions = async (req, res) => {
+    try {
+        const fleet = await Fleet.findById(req.params.id);
+        if (!fleet) {
+            return res.status(404).json({ message: "Vehicle not found" });
+        }
+
+        const rawPlate = (fleet.plateNumber || '').trim();
+        const cleanPlate = rawPlate.replace(/[^a-zA-Z0-9]/g, '');
+
+        if (!cleanPlate || cleanPlate.length < 3) {
+            return res.status(200).json({ success: true, suggestions: [] });
+        }
+
+        // Build flexible regex that matches plate with or without spaces/dashes (e.g. "5370AE05" matches "5370 AE 05" or "5370-AE-05")
+        const flexPattern = cleanPlate.split('').map(c => c.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('[\\s\\-_]*');
+        const plateRegex = new RegExp(flexPattern, 'i');
+
+        // Search unlinked orders where plate is in itemDescriptionInfo, model, brand, or defectDescription
+        const suggestions = await maintenanceSchema.find({
+            $or: [
+                { fleetId: null },
+                { fleetId: { $exists: false } }
+            ],
+            $and: [
+                {
+                    $or: [
+                        { itemDescriptionInfo: { $regex: plateRegex } },
+                        { model: { $regex: plateRegex } },
+                        { brand: { $regex: plateRegex } },
+                        { defectDescription: { $regex: plateRegex } }
+                    ]
+                }
+            ]
+        })
+        .sort({ serviceDate: -1 })
+        .limit(30)
+        .lean();
+
+        res.status(200).json({ success: true, suggestions, matchPlate: cleanPlate });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+};
+
+// Link one or more maintenance orders to a vehicle
+exports.linkMaintenanceToFleet = async (req, res) => {
+    try {
+        const fleet = await Fleet.findById(req.params.id);
+        if (!fleet) {
+            return res.status(404).json({ message: "Vehicle not found" });
+        }
+
+        const { maintenanceId, maintenanceIds, serviceName } = req.body;
+        let queryFilter = null;
+
+        if (maintenanceIds && Array.isArray(maintenanceIds) && maintenanceIds.length > 0) {
+            queryFilter = { _id: { $in: maintenanceIds } };
+        } else if (maintenanceId) {
+            queryFilter = { _id: maintenanceId };
+        } else if (serviceName && String(serviceName).trim()) {
+            const raw = String(serviceName).trim();
+            const cleanNum = parseInt(raw.replace(/[^0-9]/g, ''), 10);
+            
+            const orConditions = [
+                { serviceName: { $regex: `^${raw.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`, $options: 'i' } }
+            ];
+            if (!isNaN(cleanNum)) {
+                orConditions.push({ serviceNumber: cleanNum });
+                orConditions.push({ serviceName: `M-${String(cleanNum).padStart(6, '0')}` });
+            }
+            queryFilter = { $or: orConditions };
+        } else {
+            return res.status(400).json({ message: "Please provide a maintenance order ID, IDs array, or Service Number." });
+        }
+
+        const vehicleLabel = `${fleet.carMake} ${fleet.carModel} (${fleet.plateNumber})`.trim();
+
+        const updateResult = await maintenanceSchema.updateMany(
+            queryFilter,
+            {
+                $set: {
+                    fleetId: fleet._id,
+                    fleetPlateNumber: fleet.plateNumber,
+                    fleetVehicleName: vehicleLabel
+                }
+            }
+        );
+
+        if (updateResult.matchedCount === 0) {
+            return res.status(404).json({ message: "No matching maintenance order found to link." });
+        }
+
+        res.status(200).json({
+            success: true,
+            message: `Successfully linked ${updateResult.modifiedCount} maintenance order(s) to ${fleet.plateNumber}`,
+            matchedCount: updateResult.matchedCount,
+            modifiedCount: updateResult.modifiedCount
+        });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+};
+
+// Unlink a maintenance order from a vehicle
+exports.unlinkMaintenanceFromFleet = async (req, res) => {
+    try {
+        const { id, maintenanceId } = req.params;
+        const fleet = await Fleet.findById(id);
+        if (!fleet) {
+            return res.status(404).json({ message: "Vehicle not found" });
+        }
+
+        const updated = await maintenanceSchema.findOneAndUpdate(
+            { _id: maintenanceId, fleetId: fleet._id },
+            {
+                $set: {
+                    fleetId: null,
+                    fleetPlateNumber: '',
+                    fleetVehicleName: ''
+                }
+            },
+            { new: true }
+        );
+
+        if (!updated) {
+            return res.status(404).json({ message: "Maintenance order not found or not linked to this vehicle." });
+        }
+
+        res.status(200).json({
+            success: true,
+            message: `Order ${updated.serviceName} unlinked from ${fleet.plateNumber}`
+        });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
     }
 };

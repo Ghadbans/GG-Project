@@ -425,7 +425,10 @@ Route.route("/create-maintenance").post(async (req, res, next) => {
       totalInvoice, subTotal, Create, Converted, ReferenceName,
       includeAssetControl: !!includeAssetControl,
       assetControlReport: assetControlReport || {},
-      branchId
+      branchId,
+      fleetId: req.body.fleetId || null,
+      fleetPlateNumber: req.body.fleetPlateNumber || '',
+      fleetVehicleName: req.body.fleetVehicleName || ''
     });
     res.json({ data: result, message: "Data successfully added.", status: 200 });
   } catch (error) {

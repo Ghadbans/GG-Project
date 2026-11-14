@@ -254,6 +254,28 @@ export default function FleetViewAdmin() {
       }
     },
     {
+      field: 'totalMaintenanceCost',
+      headerName: 'Maint. Spend',
+      width: 140,
+      renderCell: (params) => {
+        const cost = Number(params.row.totalMaintenanceCost || 0);
+        const count = params.row.maintenanceCount || 0;
+        if (count === 0) return <span style={{ color: '#94a3b8', fontSize: '12px' }}>—</span>;
+        return (
+          <ViewTooltip title={`${count} maintenance repair(s) logged`} placement="top">
+            <NavLink to={`/FleetFormUpdate/${params.row._id}`} style={{ textDecoration: 'none' }}>
+              <span style={{ fontWeight: 700, color: '#0f766e', fontSize: '12.5px' }}>
+                ${cost.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                <span style={{ fontSize: '10.5px', color: '#64748b', marginLeft: '5px', fontWeight: 600 }}>
+                  ({count})
+                </span>
+              </span>
+            </NavLink>
+          </ViewTooltip>
+        );
+      }
+    },
+    {
       field: 'action',
       headerName: 'Action',
       width: 80,

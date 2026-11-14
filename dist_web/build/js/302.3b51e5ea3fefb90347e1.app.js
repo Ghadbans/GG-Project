@@ -1,4 +1,4 @@
-(this["webpackChunkgg_management"] = this["webpackChunkgg_management"] || []).push([[7189],{
+(this["webpackChunkgg_management"] = this["webpackChunkgg_management"] || []).push([[302],{
 
 /***/ 99682
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
@@ -33,6 +33,26 @@
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("path", {
   d: "M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16m11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5M5 11l1.5-4.5h11L19 11z"
 }), 'DirectionsCar'));
+/* harmony export */ __webpack_require__.d(__webpack_exports__, [
+/* harmony export */   "A", 0, /* export default binding */ __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ ]);
+
+
+/***/ },
+
+/***/ 52653
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var _utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(20561);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(74848);
+"use client";
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("path", {
+  d: "M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5M12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5m0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3"
+}), 'Visibility'));
 /* harmony export */ __webpack_require__.d(__webpack_exports__, [
 /* harmony export */   "A", 0, /* export default binding */ __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ ]);
@@ -639,107 +659,55 @@ const GridToolbar = /*#__PURE__*/react.forwardRef(function GridToolbar(props, re
 
 /***/ },
 
-/***/ 17189
+/***/ 80302
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-// ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
-
-// EXPORTS
-__webpack_require__.d(__webpack_exports__, {
-  "default": () => (/* binding */ FleetViewAdmin)
-});
-
-// EXTERNAL MODULE: ./node_modules/react/index.js
-var react = __webpack_require__(96540);
-// EXTERNAL MODULE: ./src/js/AdminView1/view.css
-var view = __webpack_require__(68525);
-// EXTERNAL MODULE: ./src/js/AdminView1/PageView/Chartview.css
-var Chartview = __webpack_require__(55746);
-// EXTERNAL MODULE: ./src/js/component/SidebarDash.js
-var SidebarDash = __webpack_require__(4640);
-// EXTERNAL MODULE: ./node_modules/react-router/dist/index.js
-var dist = __webpack_require__(47767);
-// EXTERNAL MODULE: ./node_modules/react-router-dom/dist/index.js
-var react_router_dom_dist = __webpack_require__(84976);
-// EXTERNAL MODULE: ./node_modules/@mui/material/styles/styled.js
-var styled = __webpack_require__(11848);
-// EXTERNAL MODULE: ./node_modules/@mui/material/Avatar/Avatar.js + 2 modules
-var Avatar = __webpack_require__(81385);
-// EXTERNAL MODULE: ./node_modules/@mui/material/Box/Box.js + 2 modules
-var Box = __webpack_require__(69067);
-// EXTERNAL MODULE: ./node_modules/@mui/material/IconButton/IconButton.js + 1 modules
-var IconButton = __webpack_require__(11641);
-// EXTERNAL MODULE: ./node_modules/@mui/material/Typography/Typography.js + 1 modules
-var Typography = __webpack_require__(14073);
-// EXTERNAL MODULE: ./node_modules/@mui/material/Container/Container.js + 1 modules
-var Container = __webpack_require__(97834);
-// EXTERNAL MODULE: ./node_modules/@mui/material/Tooltip/Tooltip.js
-var Tooltip = __webpack_require__(56655);
-// EXTERNAL MODULE: ./node_modules/@mui/material/Tooltip/tooltipClasses.js
-var tooltipClasses = __webpack_require__(58331);
-// EXTERNAL MODULE: ./node_modules/@mui/material/AppBar/AppBar.js + 1 modules
-var AppBar = __webpack_require__(89828);
-// EXTERNAL MODULE: ./node_modules/@mui/material/Toolbar/Toolbar.js + 1 modules
-var Toolbar = __webpack_require__(8532);
-// EXTERNAL MODULE: ./node_modules/@mui/material/Drawer/Drawer.js + 1 modules
-var Drawer = __webpack_require__(88248);
-// EXTERNAL MODULE: ./node_modules/@mui/material/List/List.js + 1 modules
-var List = __webpack_require__(49799);
-// EXTERNAL MODULE: ./node_modules/@mui/material/Divider/Divider.js
-var Divider = __webpack_require__(71543);
-// EXTERNAL MODULE: ./node_modules/@mui/icons-material/Menu.js
-var Menu = __webpack_require__(62274);
-// EXTERNAL MODULE: ./node_modules/@mui/icons-material/ChevronLeft.js
-var ChevronLeft = __webpack_require__(8451);
-// EXTERNAL MODULE: ./node_modules/axios/lib/axios.js + 48 modules
-var axios = __webpack_require__(99380);
-// EXTERNAL MODULE: ./src/js/apiConfig.js
-var apiConfig = __webpack_require__(71510);
-// EXTERNAL MODULE: ./src/js/utils/formatUtils.js
-var formatUtils = __webpack_require__(37402);
-// EXTERNAL MODULE: ./node_modules/@mui/icons-material/esm/DirectionsCar.js
-var DirectionsCar = __webpack_require__(27341);
-// EXTERNAL MODULE: ./node_modules/@mui/material/utils/createSvgIcon.js
-var createSvgIcon = __webpack_require__(20561);
-// EXTERNAL MODULE: ./node_modules/react/jsx-runtime.js
-var jsx_runtime = __webpack_require__(74848);
-;// ./node_modules/@mui/icons-material/esm/Visibility.js
-"use client";
-
-
-
-/* harmony default export */ const Visibility = ((0,createSvgIcon/* default */.A)( /*#__PURE__*/(0,jsx_runtime.jsx)("path", {
-  d: "M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5M12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5m0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3"
-}), 'Visibility'));
-// EXTERNAL MODULE: ./node_modules/@mui/icons-material/esm/Add.js
-var Add = __webpack_require__(99682);
-// EXTERNAL MODULE: ./node_modules/dayjs/dayjs.min.js
-var dayjs_min = __webpack_require__(74353);
-// EXTERNAL MODULE: ./src/js/utils/fleetUtils.js
-var fleetUtils = __webpack_require__(95025);
-// EXTERNAL MODULE: ./src/js/component/Loader.js + 1 modules
-var Loader = __webpack_require__(65821);
-// EXTERNAL MODULE: ./node_modules/react-redux/es/index.js + 14 modules
-var es = __webpack_require__(13561);
-// EXTERNAL MODULE: ./src/js/features/auth/authSlice.js
-var authSlice = __webpack_require__(32005);
-// EXTERNAL MODULE: ./src/js/component/NetworkLogoutIcon.js
-var NetworkLogoutIcon = __webpack_require__(40301);
-// EXTERNAL MODULE: ./src/js/img/no-data.png
-var no_data = __webpack_require__(20453);
-// EXTERNAL MODULE: ./node_modules/@mui/material/CssBaseline/CssBaseline.js
-var CssBaseline = __webpack_require__(14519);
-// EXTERNAL MODULE: ./node_modules/@mui/x-data-grid/DataGrid/DataGrid.js + 185 modules
-var DataGrid = __webpack_require__(1835);
-// EXTERNAL MODULE: ./node_modules/@mui/x-data-grid/components/toolbar/GridToolbar.js + 5 modules
-var GridToolbar = __webpack_require__(53071);
-// EXTERNAL MODULE: ./src/js/AdminView1/MessageAdminView.js + 2 modules
-var MessageAdminView = __webpack_require__(83818);
-// EXTERNAL MODULE: ./src/js/AdminView1/NotificationVIewInfo.js
-var NotificationVIewInfo = __webpack_require__(95236);
-;// ./src/js/AdminView1/FleetViewAdmin.js
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ FleetViewAdmin)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(96540);
+/* harmony import */ var _view_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(68525);
+/* harmony import */ var _PageView_Chartview_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(55746);
+/* harmony import */ var _component_SidebarDash__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(4640);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(84976);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(47767);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(81385);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(69067);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(11641);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(14073);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(97834);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(11848);
+/* harmony import */ var _mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(56655);
+/* harmony import */ var _mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(58331);
+/* harmony import */ var _mui_material_AppBar__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(89828);
+/* harmony import */ var _mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(8532);
+/* harmony import */ var _mui_material_Drawer__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(88248);
+/* harmony import */ var _mui_material_List__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(49799);
+/* harmony import */ var _mui_material_Divider__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(71543);
+/* harmony import */ var _mui_icons_material_Menu__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(62274);
+/* harmony import */ var _mui_icons_material_ChevronLeft__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(8451);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(99380);
+/* harmony import */ var _apiConfig__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(71510);
+/* harmony import */ var _utils_formatUtils__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(37402);
+/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(99682);
+/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(27341);
+/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(52653);
+/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(74353);
+/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_27___default = /*#__PURE__*/__webpack_require__.n(dayjs__WEBPACK_IMPORTED_MODULE_27__);
+/* harmony import */ var _utils_fleetUtils__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(95025);
+/* harmony import */ var _component_Loader__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(65821);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(13561);
+/* harmony import */ var _features_auth_authSlice__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(32005);
+/* harmony import */ var _component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(40301);
+/* harmony import */ var _img_no_data_png__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(20453);
+/* harmony import */ var _img_no_data_png__WEBPACK_IMPORTED_MODULE_33___default = /*#__PURE__*/__webpack_require__.n(_img_no_data_png__WEBPACK_IMPORTED_MODULE_33__);
+/* harmony import */ var _mui_material_CssBaseline__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(14519);
+/* harmony import */ var _mui_x_data_grid__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(1835);
+/* harmony import */ var _mui_x_data_grid__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(53071);
+/* harmony import */ var _MessageAdminView__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(83818);
+/* harmony import */ var _NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(95236);
 var _excluded = ["className"];
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
 function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
@@ -787,10 +755,10 @@ function _objectWithoutPropertiesLoose(r, e) { if (null == r) return {}; var t =
 
 
 
-var ViewTooltip = (0,styled/* default */.Ay)(_ref => {
+var ViewTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .Ay)(_ref => {
   var className = _ref.className,
     props = _objectWithoutProperties(_ref, _excluded);
-  return /*#__PURE__*/react.createElement(Tooltip/* default */.A, _extends({}, props, {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, _extends({}, props, {
     classes: {
       popper: className
     }
@@ -798,7 +766,7 @@ var ViewTooltip = (0,styled/* default */.Ay)(_ref => {
 })(_ref2 => {
   var theme = _ref2.theme;
   return {
-    ["& .".concat(tooltipClasses/* default */.A.tooltip)]: {
+    ["& .".concat(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A.tooltip)]: {
       backgroundColor: '#202a5a',
       color: 'white',
       boxShadow: theme.shadows[1],
@@ -819,7 +787,7 @@ var style = (/* unused pure expression or super */ null && ({
   pb: 3
 }));
 var drawerWidth = 240;
-var FleetViewAdmin_AppBar = (0,styled/* default */.Ay)(AppBar/* default */.A, {
+var AppBar = (0,_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .Ay)(_mui_material_AppBar__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
   shouldForwardProp: prop => prop !== 'open'
 })(_ref3 => {
   var theme = _ref3.theme,
@@ -839,7 +807,7 @@ var FleetViewAdmin_AppBar = (0,styled/* default */.Ay)(AppBar/* default */.A, {
     })
   });
 });
-var FleetViewAdmin_Drawer = (0,styled/* default */.Ay)(Drawer/* default */.Ay, {
+var Drawer = (0,_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .Ay)(_mui_material_Drawer__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .Ay, {
   shouldForwardProp: prop => prop !== 'open'
 })(_ref4 => {
   var theme = _ref4.theme,
@@ -869,45 +837,45 @@ var FleetViewAdmin_Drawer = (0,styled/* default */.Ay)(Drawer/* default */.Ay, {
 });
 function FleetViewAdmin() {
   var _user$data, _user$data2;
-  var _useState = (0,react.useState)(false),
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState2 = _slicedToArray(_useState, 2),
     sideBar = _useState2[0],
     setSideBar = _useState2[1];
-  var _useState3 = (0,react.useState)([]),
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState4 = _slicedToArray(_useState3, 2),
     fleets = _useState4[0],
     setFleets = _useState4[1];
-  var _useState5 = (0,react.useState)(true),
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
     _useState6 = _slicedToArray(_useState5, 2),
     loadingData = _useState6[0],
     setLoadingData = _useState6[1];
-  var _useState7 = (0,react.useState)(0),
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
     _useState8 = _slicedToArray(_useState7, 2),
     page = _useState8[0],
     setPage = _useState8[1];
   var limit = 100;
-  var _useState9 = (0,react.useState)(1),
+  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(1),
     _useState0 = _slicedToArray(_useState9, 2),
     totalPage = _useState0[0],
     setTotalPage = _useState0[1];
-  var _useState1 = (0,react.useState)(""),
+  var _useState1 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
     _useState10 = _slicedToArray(_useState1, 2),
     searchTerm = _useState10[0],
     setSearchTerm = _useState10[1];
-  var _useState11 = (0,react.useState)(""),
+  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
     _useState12 = _slicedToArray(_useState11, 2),
     debouncedSearchTerm = _useState12[0],
     setDebouncedSearchTerm = _useState12[1];
-  var _useState13 = (0,react.useState)(0),
+  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
     _useState14 = _slicedToArray(_useState13, 2),
     totalItemCount = _useState14[0],
     setTotalItemCount = _useState14[1];
-  var user = (0,es/* useSelector */.d4)(authSlice/* selectCurrentUser */.xu);
-  var navigate = (0,dist/* useNavigate */.Zp)();
+  var user = (0,react_redux__WEBPACK_IMPORTED_MODULE_30__/* .useSelector */ .d4)(_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_31__/* .selectCurrentUser */ .xu);
+  var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_5__/* .useNavigate */ .Zp)();
   var toggleDrawer = () => {
     setSideBar(!sideBar);
   };
-  (0,react.useEffect)(() => {
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     var handler = setTimeout(() => {
       setDebouncedSearchTerm(searchTerm);
     }, 500);
@@ -919,7 +887,7 @@ function FleetViewAdmin() {
     var _ref5 = _asyncToGenerator(function* () {
       setLoadingData(true);
       try {
-        var res = yield axios/* default */.A.get("".concat(apiConfig/* ENDPOINT_URL */.m, "/fleet?page=").concat(page + 1, "&limit=").concat(limit, "&search=").concat(encodeURIComponent(debouncedSearchTerm)));
+        var res = yield axios__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_22__/* .ENDPOINT_URL */ .m, "/fleet?page=").concat(page + 1, "&limit=").concat(limit, "&search=").concat(encodeURIComponent(debouncedSearchTerm)));
         setFleets(res.data.itemI);
         setTotalItemCount(res.data.totalItems);
         setTotalPage(res.data.totalPages);
@@ -932,7 +900,7 @@ function FleetViewAdmin() {
       return _ref5.apply(this, arguments);
     };
   }();
-  (0,react.useEffect)(() => {
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     fetchData();
   }, [page, debouncedSearchTerm]);
   var handlePageChange = newPage => {
@@ -952,7 +920,7 @@ function FleetViewAdmin() {
     filterable: false,
     renderCell: params => {
       var img = params.row.vehicleImage;
-      return /*#__PURE__*/react.createElement(Avatar/* default */.A, {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
         variant: "rounded",
         src: img || undefined,
         sx: {
@@ -963,7 +931,7 @@ function FleetViewAdmin() {
           backgroundColor: '#f1f5f9',
           boxShadow: '0 1px 2px rgba(0,0,0,0.05)'
         }
-      }, !img && /*#__PURE__*/react.createElement(DirectionsCar/* default */.A, {
+      }, !img && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_25__/* ["default"] */ .A, {
         sx: {
           fontSize: 22,
           color: '#94a3b8'
@@ -982,30 +950,30 @@ function FleetViewAdmin() {
     field: 'plateNumber',
     headerName: 'Plate #',
     flex: 1,
-    renderCell: params => /*#__PURE__*/react.createElement("strong", null, params.value || 'N/A')
+    renderCell: params => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("strong", null, params.value || 'N/A')
   }, {
     field: 'vehicleColor',
     headerName: 'Vehicle Color',
     flex: 1,
     minWidth: 120,
-    valueGetter: params => (0,fleetUtils/* getEffectiveVehicleColor */.$y)(params.row),
+    valueGetter: params => (0,_utils_fleetUtils__WEBPACK_IMPORTED_MODULE_28__/* .getEffectiveVehicleColor */ .$y)(params.row),
     renderCell: params => {
-      var colorName = (0,fleetUtils/* getEffectiveVehicleColor */.$y)(params.row);
-      if (!colorName) return /*#__PURE__*/react.createElement("span", {
+      var colorName = (0,_utils_fleetUtils__WEBPACK_IMPORTED_MODULE_28__/* .getEffectiveVehicleColor */ .$y)(params.row);
+      if (!colorName) return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
         style: {
           color: '#94a3b8'
         }
       }, "\u2014");
-      var _resolveColorHex = (0,fleetUtils/* resolveColorHex */.bO)(colorName),
+      var _resolveColorHex = (0,_utils_fleetUtils__WEBPACK_IMPORTED_MODULE_28__/* .resolveColorHex */ .bO)(colorName),
         hex = _resolveColorHex.hex,
         border = _resolveColorHex.border;
-      return /*#__PURE__*/react.createElement("div", {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         style: {
           display: 'inline-flex',
           alignItems: 'center',
           gap: '6px'
         }
-      }, /*#__PURE__*/react.createElement("span", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
         style: {
           width: '12px',
           height: '12px',
@@ -1016,7 +984,7 @@ function FleetViewAdmin() {
           boxShadow: '0 1px 2px rgba(0,0,0,0.15)',
           flexShrink: 0
         }
-      }), /*#__PURE__*/react.createElement("span", {
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
         style: {
           fontWeight: 600,
           textTransform: 'uppercase',
@@ -1033,23 +1001,23 @@ function FleetViewAdmin() {
     field: 'status',
     headerName: 'Status',
     flex: 0.9,
-    renderCell: params => (0,formatUtils/* renderStatusBadge */.UM)(params.row.status)
+    renderCell: params => (0,_utils_formatUtils__WEBPACK_IMPORTED_MODULE_23__/* .renderStatusBadge */ .UM)(params.row.status)
   }, {
     field: 'documents',
     headerName: 'Expiring Soon',
     flex: 1.5,
     minWidth: 170,
     renderCell: params => {
-      var compliance = (0,fleetUtils/* evaluateFleetCompliance */.Hx)(params.row);
-      return /*#__PURE__*/react.createElement(ViewTooltip, {
+      var compliance = (0,_utils_fleetUtils__WEBPACK_IMPORTED_MODULE_28__/* .evaluateFleetCompliance */ .Hx)(params.row);
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(ViewTooltip, {
         title: compliance.tooltip,
         placement: "top"
-      }, /*#__PURE__*/react.createElement(react_router_dom_dist/* NavLink */.k2, {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__/* .NavLink */ .k2, {
         to: "/FleetFormUpdate/".concat(params.row._id),
         style: {
           textDecoration: 'none'
         }
-      }, /*#__PURE__*/react.createElement("span", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
         style: {
           color: compliance.color,
           backgroundColor: compliance.bgColor,
@@ -1070,23 +1038,62 @@ function FleetViewAdmin() {
       }, compliance.status)));
     }
   }, {
+    field: 'totalMaintenanceCost',
+    headerName: 'Maint. Spend',
+    width: 140,
+    renderCell: params => {
+      var cost = Number(params.row.totalMaintenanceCost || 0);
+      var count = params.row.maintenanceCount || 0;
+      if (count === 0) return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
+        style: {
+          color: '#94a3b8',
+          fontSize: '12px'
+        }
+      }, "\u2014");
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(ViewTooltip, {
+        title: "".concat(count, " maintenance repair(s) logged"),
+        placement: "top"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__/* .NavLink */ .k2, {
+        to: "/FleetFormUpdate/".concat(params.row._id),
+        style: {
+          textDecoration: 'none'
+        }
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
+        style: {
+          fontWeight: 700,
+          color: '#0f766e',
+          fontSize: '12.5px'
+        }
+      }, "$", cost.toLocaleString(undefined, {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
+        style: {
+          fontSize: '10.5px',
+          color: '#64748b',
+          marginLeft: '5px',
+          fontWeight: 600
+        }
+      }, "(", count, ")"))));
+    }
+  }, {
     field: 'action',
     headerName: 'Action',
     width: 80,
     renderCell: params => {
-      return /*#__PURE__*/react.createElement("div", {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "cellAction"
-      }, /*#__PURE__*/react.createElement(ViewTooltip, {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(ViewTooltip, {
         title: "View / Edit",
         placement: "top"
-      }, /*#__PURE__*/react.createElement(react_router_dom_dist/* NavLink */.k2, {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__/* .NavLink */ .k2, {
         to: "/FleetFormUpdate/".concat(params.row._id),
         style: {
           textDecoration: "none"
         }
-      }, /*#__PURE__*/react.createElement("div", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "viewButton"
-      }, /*#__PURE__*/react.createElement(Visibility, null)))));
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_26__/* ["default"] */ .A, null)))));
     }
   }];
   var handleLogout = () => {
@@ -1094,28 +1101,28 @@ function FleetViewAdmin() {
     localStorage.removeItem('expiration');
     navigate('/LoginSystem');
   };
-  return /*#__PURE__*/react.createElement("div", {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     style: {
       backgroundColor: '#f9f9f9',
       height: '100vh',
       width: '100%',
       overflowX: 'hidden'
     }
-  }, /*#__PURE__*/react.createElement(Box/* default */.A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
     sx: {
       display: 'flex'
     }
-  }, /*#__PURE__*/react.createElement(CssBaseline/* default */.Ay, null), /*#__PURE__*/react.createElement(FleetViewAdmin_AppBar, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_CssBaseline__WEBPACK_IMPORTED_MODULE_34__/* ["default"] */ .Ay, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(AppBar, {
     position: "absolute",
     open: sideBar,
     style: {
       backgroundColor: '#202a5a'
     }
-  }, /*#__PURE__*/react.createElement(Toolbar/* default */.A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, {
     sx: {
       pr: '24px'
     }
-  }, /*#__PURE__*/react.createElement(IconButton/* default */.A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
     edge: "start",
     color: "inherit",
     "aria-label": "open drawer",
@@ -1125,7 +1132,7 @@ function FleetViewAdmin() {
     }, sideBar && {
       display: 'none'
     })
-  }, /*#__PURE__*/react.createElement(Menu/* default */.A, null)), /*#__PURE__*/react.createElement(Typography/* default */.A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Menu__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
     component: "h1",
     variant: "h6",
     color: "inherit",
@@ -1133,35 +1140,35 @@ function FleetViewAdmin() {
     sx: {
       flexGrow: 1
     }
-  }, "Fleet Management"), /*#__PURE__*/react.createElement(NotificationVIewInfo/* default */.A, null), /*#__PURE__*/react.createElement(MessageAdminView/* default */.A, {
+  }, "Fleet Management"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_38__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_MessageAdminView__WEBPACK_IMPORTED_MODULE_37__/* ["default"] */ .A, {
     name: user === null || user === void 0 || (_user$data = user.data) === null || _user$data === void 0 ? void 0 : _user$data.userName,
     role: user === null || user === void 0 || (_user$data2 = user.data) === null || _user$data2 === void 0 ? void 0 : _user$data2.role
-  }), /*#__PURE__*/react.createElement(IconButton/* default */.A, {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
     color: "inherit",
     onClick: handleLogout
-  }, /*#__PURE__*/react.createElement(NetworkLogoutIcon/* default */.A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A, {
     style: {
       color: 'white'
     }
-  })))), /*#__PURE__*/react.createElement(FleetViewAdmin_Drawer, {
+  })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(Drawer, {
     variant: "permanent",
     open: sideBar,
     onMouseEnter: () => setSideBar(true),
     onMouseLeave: () => setSideBar(false)
-  }, /*#__PURE__*/react.createElement(Toolbar/* default */.A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, {
     sx: {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'flex-end',
       px: [1]
     }
-  }, /*#__PURE__*/react.createElement(IconButton/* default */.A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
     onClick: toggleDrawer
-  }, /*#__PURE__*/react.createElement(ChevronLeft/* default */.A, null))), /*#__PURE__*/react.createElement(Divider/* default */.A, null), /*#__PURE__*/react.createElement(List/* default */.A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_ChevronLeft__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Divider__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_List__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
     sx: {
       height: '700px'
     }
-  }, /*#__PURE__*/react.createElement(SidebarDash/* default */.A, null))), /*#__PURE__*/react.createElement(Box/* default */.A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_SidebarDash__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
     component: "main",
     sx: {
       backgroundColor: theme => theme.palette.mode === 'light' ? theme.palette.grey[100] : theme.palette.grey[900],
@@ -1170,23 +1177,23 @@ function FleetViewAdmin() {
       height: '100vh',
       overflow: 'auto'
     }
-  }, /*#__PURE__*/react.createElement(Toolbar/* default */.A, null), /*#__PURE__*/react.createElement(Container/* default */.A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
     maxWidth: "none",
     sx: {
       mt: 1
     }
-  }, /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement("section", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("section", {
     style: {
       position: 'relative',
       float: 'right',
       margin: '10px'
     }
-  }, /*#__PURE__*/react.createElement(ViewTooltip, null, /*#__PURE__*/react.createElement("span", null, /*#__PURE__*/react.createElement(IconButton/* default */.A, null, /*#__PURE__*/react.createElement(react_router_dom_dist/* NavLink */.k2, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(ViewTooltip, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__/* .NavLink */ .k2, {
     to: '/FleetFormView',
     className: "LinkName"
-  }, /*#__PURE__*/react.createElement("span", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
     className: "btnCustomerAdding"
-  }, /*#__PURE__*/react.createElement(Add/* default */.A, null))))))), /*#__PURE__*/react.createElement(Box/* default */.A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_24__/* ["default"] */ .A, null))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
     sx: {
       height: 600,
       width: '100%',
@@ -1203,11 +1210,11 @@ function FleetViewAdmin() {
         }
       }
     }
-  }, /*#__PURE__*/react.createElement(DataGrid/* DataGrid */.zh, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_x_data_grid__WEBPACK_IMPORTED_MODULE_35__/* .DataGrid */ .zh, {
     rowHeight: 52,
     getRowClassName: params => {
       if (params.row.status !== 'Running') return '';
-      var compliance = (0,fleetUtils/* evaluateFleetCompliance */.Hx)(params.row);
+      var compliance = (0,_utils_fleetUtils__WEBPACK_IMPORTED_MODULE_28__/* .evaluateFleetCompliance */ .Hx)(params.row);
       if (compliance.severity === 'error') return 'super-app-theme--Expiring';
       if (compliance.severity === 'warning') return 'row-expiring-soon';
       return '';
@@ -1223,7 +1230,7 @@ function FleetViewAdmin() {
     columns: columns,
     loading: loadingData,
     slots: {
-      toolbar: GridToolbar/* GridToolbar */.O
+      toolbar: _mui_x_data_grid__WEBPACK_IMPORTED_MODULE_36__/* .GridToolbar */ .O
     },
     getRowId: row => row._id,
     slotProps: {
