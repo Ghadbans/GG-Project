@@ -716,6 +716,8 @@ var InputLabel = __webpack_require__(29571);
 var Select = __webpack_require__(2071);
 // EXTERNAL MODULE: ./node_modules/@mui/material/MenuItem/MenuItem.js + 1 modules
 var MenuItem = __webpack_require__(73896);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Chip/Chip.js + 2 modules
+var Chip = __webpack_require__(82022);
 // EXTERNAL MODULE: ./node_modules/@mui/material/Modal/Modal.js + 3 modules
 var Modal = __webpack_require__(35406);
 // EXTERNAL MODULE: ./node_modules/@mui/material/TextField/TextField.js + 2 modules
@@ -774,10 +776,10 @@ var jsx_runtime = __webpack_require__(74848);
 /* harmony default export */ const DeleteOutline = ((0,createSvgIcon/* default */.A)( /*#__PURE__*/(0,jsx_runtime.jsx)("path", {
   d: "M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6zM8 9h8v10H8zm7.5-5-1-1h-5l-1 1H5v2h14V4z"
 }), 'DeleteOutline'));
-// EXTERNAL MODULE: ./node_modules/@mui/icons-material/esm/Print.js
-var Print = __webpack_require__(42758);
 // EXTERNAL MODULE: ./node_modules/@mui/icons-material/esm/Add.js
 var Add = __webpack_require__(99682);
+// EXTERNAL MODULE: ./node_modules/@mui/icons-material/esm/Print.js
+var Print = __webpack_require__(42758);
 // EXTERNAL MODULE: ./node_modules/react-redux/es/index.js + 14 modules
 var es = __webpack_require__(13561);
 // EXTERNAL MODULE: ./src/js/features/auth/authSlice.js
@@ -801,6 +803,8 @@ var GridToolbar = __webpack_require__(53071);
 // EXTERNAL MODULE: ./node_modules/dayjs/dayjs.min.js
 var dayjs_min = __webpack_require__(74353);
 var dayjs_min_default = /*#__PURE__*/__webpack_require__.n(dayjs_min);
+// EXTERNAL MODULE: ./src/js/utils/fleetUtils.js
+var fleetUtils = __webpack_require__(95025);
 ;// ./src/js/AdminView1/FleetFormUpdate.js
 var _excluded = ["_id"],
   _excluded2 = ["_id"];
@@ -821,6 +825,7 @@ function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == typeof i ? i : i + ""; }
 function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 ;
+
 
 
 
@@ -1493,12 +1498,13 @@ function FleetFormUpdate() {
     },
     disabled: !canEdit,
     onClick: () => {
+      var effectiveColor = (0,fleetUtils/* getEffectiveVehicleColor */.$y)(fleet);
       setCarData({
         carMake: fleet.carMake || '',
         carModel: fleet.carModel || '',
         plateNumber: fleet.plateNumber || '',
-        chassisNumber: fleet.chassisNumber || '',
-        vehicleColor: fleet.vehicleColor || '',
+        chassisNumber: fleet.chassisNumber && (0,fleetUtils/* isColorWord */.sb)(fleet.chassisNumber) && !fleet.vehicleColor ? '' : fleet.chassisNumber || '',
+        vehicleColor: effectiveColor || '',
         branchId: fleet.branchId || 'HQ'
       });
       setCarModal(true);
@@ -1632,12 +1638,42 @@ function FleetFormUpdate() {
   }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
     color: "textSecondary",
     variant: "body2"
-  }, "Vehicle Color"), /*#__PURE__*/react.createElement(Typography/* default */.A, {
-    sx: {
-      fontWeight: 600,
-      color: fleet.vehicleColor ? '#0f172a' : '#94a3b8'
-    }
-  }, fleet.vehicleColor || 'N/A')), /*#__PURE__*/react.createElement(Grid/* default */.Ay, {
+  }, "Vehicle Color"), (() => {
+    var effColor = (0,fleetUtils/* getEffectiveVehicleColor */.$y)(fleet);
+    if (!effColor) return /*#__PURE__*/react.createElement(Typography/* default */.A, {
+      sx: {
+        fontWeight: 600,
+        color: '#94a3b8'
+      }
+    }, "Not Set");
+    var matched = fleetUtils/* STANDARD_VEHICLE_COLORS */.Os.find(c => c.name.toLowerCase() === effColor.toLowerCase());
+    var hex = matched ? matched.hex : '#64748b';
+    var border = (matched === null || matched === void 0 ? void 0 : matched.border) || 'transparent';
+    return /*#__PURE__*/react.createElement(Box/* default */.A, {
+      sx: {
+        display: 'flex',
+        alignItems: 'center',
+        gap: 1,
+        mt: 0.2
+      }
+    }, /*#__PURE__*/react.createElement("span", {
+      style: {
+        width: '14px',
+        height: '14px',
+        borderRadius: '50%',
+        backgroundColor: hex,
+        border: "1.5px solid ".concat(border !== 'transparent' ? border : hex),
+        display: 'inline-block',
+        boxShadow: '0 1px 2px rgba(0,0,0,0.15)'
+      }
+    }), /*#__PURE__*/react.createElement(Typography/* default */.A, {
+      sx: {
+        fontWeight: 600,
+        textTransform: 'capitalize',
+        color: '#0f172a'
+      }
+    }, effColor));
+  })()), /*#__PURE__*/react.createElement(Grid/* default */.Ay, {
     item: true,
     xs: 6,
     sm: 4
@@ -1678,7 +1714,216 @@ function FleetFormUpdate() {
     value: "Sold"
   }, "Sold"), /*#__PURE__*/react.createElement(MenuItem/* default */.A, {
     value: "Damaged"
-  }, "Damaged"))))))), /*#__PURE__*/react.createElement(Box/* default */.A, {
+  }, "Damaged"))))))), (() => {
+    var compliance = (0,fleetUtils/* evaluateFleetCompliance */.Hx)(fleet);
+    return /*#__PURE__*/react.createElement(Box/* default */.A, {
+      sx: {
+        backgroundColor: 'white',
+        padding: '20px',
+        borderRadius: '8px',
+        mb: 3,
+        boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+        borderLeft: "6px solid ".concat(compliance.color)
+      }
+    }, /*#__PURE__*/react.createElement(Box/* default */.A, {
+      sx: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        mb: 2,
+        flexWrap: 'wrap',
+        gap: 1
+      }
+    }, /*#__PURE__*/react.createElement(Box/* default */.A, null, /*#__PURE__*/react.createElement(Typography/* default */.A, {
+      variant: "h6",
+      sx: {
+        display: 'flex',
+        alignItems: 'center',
+        gap: 1.5,
+        fontSize: '1.05rem',
+        fontWeight: 700
+      }
+    }, /*#__PURE__*/react.createElement("span", null, "Mandatory Document Compliance"), /*#__PURE__*/react.createElement(Chip/* default */.A, {
+      label: compliance.status,
+      size: "small",
+      sx: {
+        fontWeight: 'bold',
+        color: compliance.color,
+        backgroundColor: compliance.bgColor,
+        border: "1px solid ".concat(compliance.color, "40"),
+        fontSize: '11px'
+      }
+    })), /*#__PURE__*/react.createElement(Typography/* default */.A, {
+      variant: "body2",
+      sx: {
+        color: '#64748b',
+        mt: 0.5
+      }
+    }, compliance.tooltip)), /*#__PURE__*/react.createElement(Typography/* default */.A, {
+      variant: "caption",
+      sx: {
+        color: '#94a3b8',
+        fontWeight: 500
+      }
+    }, (0,fleetUtils/* isTruckVehicle */.u_)(fleet) ? 'Truck / Heavy Vehicle (6 Required Papers)' : 'Standard Vehicle (5 Required Papers)')), /*#__PURE__*/react.createElement(Grid/* default */.Ay, {
+      container: true,
+      spacing: 1.5
+    }, compliance.checklist.map(item => /*#__PURE__*/react.createElement(Grid/* default */.Ay, {
+      item: true,
+      xs: 12,
+      sm: 6,
+      md: 4,
+      key: item.key
+    }, /*#__PURE__*/react.createElement(Box/* default */.A, {
+      sx: {
+        p: 1.5,
+        borderRadius: '8px',
+        border: "1.5px solid ".concat(item.color, "35"),
+        backgroundColor: item.bgColor,
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        height: '100%',
+        minHeight: 110,
+        boxShadow: '0 1px 2px rgba(0,0,0,0.03)'
+      }
+    }, /*#__PURE__*/react.createElement(Box/* default */.A, null, /*#__PURE__*/react.createElement(Box/* default */.A, {
+      sx: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'flex-start',
+        mb: 0.8
+      }
+    }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
+      sx: {
+        fontWeight: 600,
+        fontSize: '0.85rem',
+        color: '#1e293b',
+        lineHeight: 1.2
+      }
+    }, item.label), /*#__PURE__*/react.createElement(Chip/* default */.A, {
+      label: item.badgeText,
+      size: "small",
+      sx: {
+        fontSize: '10px',
+        height: 20,
+        fontWeight: 700,
+        color: item.color,
+        backgroundColor: 'white',
+        border: "1px solid ".concat(item.color, "40")
+      }
+    })), /*#__PURE__*/react.createElement(Typography/* default */.A, {
+      variant: "caption",
+      sx: {
+        color: '#64748b',
+        display: 'block',
+        fontSize: '11px',
+        mb: 1
+      }
+    }, item.isPresent ? "Exp: ".concat(dayjs_min_default()(item.expiryDate).format('DD/MM/YYYY'), " \u2022 ").concat(item.isPaid ? 'Paid' : 'UNPAID') : 'Not logged in records')), /*#__PURE__*/react.createElement(Box/* default */.A, {
+      sx: {
+        display: 'flex',
+        justifyContent: 'flex-end',
+        mt: 'auto'
+      }
+    }, !item.isPresent && /*#__PURE__*/react.createElement(Button/* default */.A, {
+      size: "small",
+      variant: "contained",
+      disabled: !canAdd,
+      onClick: () => {
+        setIsEditDoc(false);
+        setDocData({
+          _id: '',
+          documentName: item.officialName,
+          year: dayjs_min_default()().format('YYYY'),
+          startDate: dayjs_min_default()().format('YYYY-MM-DD'),
+          expiryDate: dayjs_min_default()().add(1, 'year').format('YYYY-MM-DD'),
+          amountPaid: 0,
+          isPaid: true,
+          notes: ''
+        });
+        setDocModal(true);
+      },
+      sx: {
+        fontSize: '10.5px',
+        py: 0.2,
+        px: 1,
+        backgroundColor: '#d32f2f',
+        '&:hover': {
+          backgroundColor: '#b71c1c'
+        },
+        textTransform: 'none'
+      },
+      startIcon: /*#__PURE__*/react.createElement(Add/* default */.A, {
+        sx: {
+          fontSize: '14px !important'
+        }
+      })
+    }, "Add ", item.label), item.isPresent && (!item.isPaid || item.status === 'EXPIRED') && /*#__PURE__*/react.createElement(Button/* default */.A, {
+      size: "small",
+      variant: "outlined",
+      disabled: !canEdit,
+      onClick: () => {
+        setIsEditDoc(true);
+        setDocData(_objectSpread(_objectSpread({}, item.doc), {}, {
+          startDate: dayjs_min_default()(item.doc.startDate).format('YYYY-MM-DD'),
+          expiryDate: dayjs_min_default()(item.doc.expiryDate).format('YYYY-MM-DD')
+        }));
+        setDocModal(true);
+      },
+      sx: {
+        fontSize: '10.5px',
+        py: 0.2,
+        px: 1,
+        color: item.color,
+        borderColor: item.color,
+        '&:hover': {
+          backgroundColor: "".concat(item.color, "10"),
+          borderColor: item.color
+        },
+        textTransform: 'none'
+      }
+    }, !item.isPaid ? 'Mark as Paid' : 'Renew / Edit'), item.isPresent && item.status === 'EXPIRING_SOON' && /*#__PURE__*/react.createElement(Button/* default */.A, {
+      size: "small",
+      variant: "outlined",
+      disabled: !canAdd,
+      onClick: () => {
+        var _item$doc;
+        setIsEditDoc(false);
+        setDocData({
+          _id: '',
+          documentName: item.officialName,
+          year: dayjs_min_default()().format('YYYY'),
+          startDate: dayjs_min_default()().format('YYYY-MM-DD'),
+          expiryDate: dayjs_min_default()().add(1, 'year').format('YYYY-MM-DD'),
+          amountPaid: ((_item$doc = item.doc) === null || _item$doc === void 0 ? void 0 : _item$doc.amountPaid) || 0,
+          isPaid: true,
+          notes: "Renewal of ".concat(item.label)
+        });
+        setDocModal(true);
+      },
+      sx: {
+        fontSize: '10.5px',
+        py: 0.2,
+        px: 1,
+        color: '#ed6c02',
+        borderColor: '#ed6c02',
+        '&:hover': {
+          backgroundColor: '#fff3e0'
+        },
+        textTransform: 'none'
+      }
+    }, "Renew Document"), item.isPresent && item.status === 'VALID' && /*#__PURE__*/react.createElement(Typography/* default */.A, {
+      variant: "caption",
+      sx: {
+        color: '#2e7d32',
+        fontWeight: 600,
+        display: 'flex',
+        alignItems: 'center',
+        gap: 0.5
+      }
+    }, "\u2713 Valid & Paid")))))));
+  })(), /*#__PURE__*/react.createElement(Box/* default */.A, {
     sx: {
       backgroundColor: 'white',
       padding: '20px',
@@ -1989,16 +2234,47 @@ function FleetFormUpdate() {
     onChange: e => setCarData(_objectSpread(_objectSpread({}, carData), {}, {
       plateNumber: e.target.value
     }))
-  }), /*#__PURE__*/react.createElement(TextField/* default */.A, {
-    fullWidth: true,
-    label: "Vehicle Color",
-    size: "small",
-    sx: {
-      mb: 2
-    },
+  }), /*#__PURE__*/react.createElement(Autocomplete/* default */.A, {
+    freeSolo: true,
+    options: fleetUtils/* STANDARD_VEHICLE_COLORS */.Os.map(c => c.name),
     value: carData.vehicleColor || '',
-    onChange: e => setCarData(_objectSpread(_objectSpread({}, carData), {}, {
-      vehicleColor: e.target.value
+    onChange: (event, newValue) => {
+      setCarData(_objectSpread(_objectSpread({}, carData), {}, {
+        vehicleColor: newValue || ''
+      }));
+    },
+    onInputChange: (event, newInputValue) => {
+      setCarData(_objectSpread(_objectSpread({}, carData), {}, {
+        vehicleColor: newInputValue || ''
+      }));
+    },
+    renderOption: (props, option) => {
+      var matched = fleetUtils/* STANDARD_VEHICLE_COLORS */.Os.find(c => c.name.toLowerCase() === option.toLowerCase());
+      return /*#__PURE__*/react.createElement("li", _extends({}, props, {
+        style: {
+          display: 'flex',
+          alignItems: 'center',
+          gap: '8px'
+        }
+      }), matched && /*#__PURE__*/react.createElement("span", {
+        style: {
+          width: '12px',
+          height: '12px',
+          borderRadius: '50%',
+          backgroundColor: matched.hex,
+          border: "1px solid ".concat(matched.border || matched.hex),
+          display: 'inline-block'
+        }
+      }), option);
+    },
+    renderInput: params => /*#__PURE__*/react.createElement(TextField/* default */.A, _extends({}, params, {
+      label: "Vehicle Color",
+      size: "small",
+      sx: {
+        mb: 2
+      },
+      fullWidth: true,
+      placeholder: "e.g. Black, White, Silver"
     }))
   }), /*#__PURE__*/react.createElement(TextField/* default */.A, {
     fullWidth: true,
@@ -2195,6 +2471,320 @@ function FleetFormUpdate() {
     },
     onClick: handleAddOilChange
   }, "Save Log"))));
+}
+
+/***/ },
+
+/***/ 95025
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   $y: () => (/* binding */ getEffectiveVehicleColor),
+/* harmony export */   Hx: () => (/* binding */ evaluateFleetCompliance),
+/* harmony export */   Os: () => (/* binding */ STANDARD_VEHICLE_COLORS),
+/* harmony export */   sb: () => (/* binding */ isColorWord),
+/* harmony export */   u_: () => (/* binding */ isTruckVehicle)
+/* harmony export */ });
+/* unused harmony exports MANDATORY_DOCS_CAR, MANDATORY_DOCS_TRUCK */
+/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(74353);
+/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(dayjs__WEBPACK_IMPORTED_MODULE_0__);
+
+var STANDARD_VEHICLE_COLORS = [{
+  name: 'Black',
+  hex: '#1e293b'
+}, {
+  name: 'White',
+  hex: '#f8fafc',
+  border: '#cbd5e1'
+}, {
+  name: 'Silver',
+  hex: '#94a3b8'
+}, {
+  name: 'Grey',
+  hex: '#64748b'
+}, {
+  name: 'Blue',
+  hex: '#2563eb'
+}, {
+  name: 'Red',
+  hex: '#dc2626'
+}, {
+  name: 'Green',
+  hex: '#16a34a'
+}, {
+  name: 'Yellow',
+  hex: '#eab308'
+}, {
+  name: 'Brown',
+  hex: '#78350f'
+}, {
+  name: 'Gold',
+  hex: '#d97706'
+}, {
+  name: 'Orange',
+  hex: '#ea580c'
+}, {
+  name: 'Beige',
+  hex: '#d4c5b9'
+}];
+var KNOWN_COLOR_REGEX = /^(black|white|grey|gray|silver|red|blue|green|yellow|brown|gold|orange|beige|noir|blanc|gris|rouge|bleu|vert|jaune)$/i;
+function isColorWord(str) {
+  if (!str || typeof str !== 'string') return false;
+  var clean = str.trim();
+  return KNOWN_COLOR_REGEX.test(clean);
+}
+function getEffectiveVehicleColor(car) {
+  if (car !== null && car !== void 0 && car.vehicleColor && car.vehicleColor.trim() && car.vehicleColor.trim().toUpperCase() !== 'N/A') {
+    return car.vehicleColor.trim();
+  }
+  if (isColorWord(car === null || car === void 0 ? void 0 : car.chassisNumber)) {
+    return car.chassisNumber.trim();
+  }
+  return '';
+}
+var MANDATORY_DOCS_CAR = [{
+  key: 'CARTE_ROSE',
+  label: 'Carte Rose',
+  officialName: 'CARTE ROSE (VEHICLE REGISTRATION CARD)',
+  match: /carte\s*rose|registration/i
+}, {
+  key: 'CONTROLE_TECHNIQUE',
+  label: 'Contrôle Technique',
+  officialName: 'CONTRÔLE TECHNIQUE (ROADWORTHINESS CERTIFICATE)',
+  match: /contr[oô]le\s*technique|roadworthiness/i
+}, {
+  key: 'STATIONNEMENT',
+  label: 'Stationnement',
+  officialName: 'STATIONNEMENT',
+  match: /stationnement|parking/i
+}, {
+  key: 'VIGNETTE',
+  label: 'Vignette',
+  officialName: 'VIGNETTE',
+  match: /vignette|road\s*tax/i
+}, {
+  key: 'ASSURANCE',
+  label: 'Attestation d\'Assurance',
+  officialName: 'ATTESTATION D\'ASSURANCE (INSURANCE CERTIFICATE)',
+  match: /assurance|insurance/i
+}];
+var MANDATORY_DOCS_TRUCK = [...MANDATORY_DOCS_CAR, {
+  key: 'AUTORISATION_TRANSPORT',
+  label: 'Autorisation Transport',
+  officialName: 'AUTORISATION TRANSPORT (ONLY FOR TRUCKS)',
+  match: /autorisation\s*transport|transport\s*authorization/i
+}];
+
+/**
+ * Checks whether a vehicle is classified as a truck based on its make and model.
+ */
+function isTruckVehicle(car) {
+  var combined = "".concat((car === null || car === void 0 ? void 0 : car.carMake) || '', " ").concat((car === null || car === void 0 ? void 0 : car.carModel) || '').toUpperCase();
+  return /(TRUCK|CAMION|TRAILER|BENNE|TRACTEUR|SHACMAN|HOWO|ACTROS)/i.test(combined);
+}
+
+/**
+ * Evaluates the legal document compliance of a fleet vehicle.
+ * Rules:
+ * 1. If any mandatory document is missing -> MISSING DOCS (Red)
+ * 2. If any mandatory document is UNPAID (isPaid !== true) -> EXPIRED / UNPAID (Red)
+ * 3. If any mandatory document has expired (diff < 0) -> EXPIRED (Red)
+ * 4. If all exist and are paid, but any expires within 7 days -> EXPIRING SOON (Orange)
+ * 5. If all exist, are paid, and valid > 7 days -> OK (Green)
+ */
+function evaluateFleetCompliance(car) {
+  var docs = Array.isArray(car === null || car === void 0 ? void 0 : car.documents) ? car.documents : [];
+  var requiredList = isTruckVehicle(car) ? MANDATORY_DOCS_TRUCK : MANDATORY_DOCS_CAR;
+  var now = dayjs__WEBPACK_IMPORTED_MODULE_0___default()();
+  var missingDocs = [];
+  var unpaidDocs = [];
+  var expiredDocs = [];
+  var expiringSoonDocs = [];
+  var checklist = [];
+  var _loop = function _loop(req) {
+    var matches = docs.filter(d => req.match.test(d.documentName || ''));
+    if (matches.length === 0) {
+      missingDocs.push(req.label);
+      checklist.push({
+        key: req.key,
+        label: req.label,
+        officialName: req.officialName,
+        isPresent: false,
+        status: 'MISSING',
+        badgeText: 'MISSING',
+        color: '#d32f2f',
+        bgColor: '#ffebee',
+        doc: null,
+        isPaid: false,
+        diffDays: null,
+        expiryDate: null
+      });
+      return 1; // continue
+    }
+
+    // Find the latest document for this required paper by expiryDate
+    var latest = matches[0];
+    for (var i = 1; i < matches.length; i++) {
+      if (dayjs__WEBPACK_IMPORTED_MODULE_0___default()(matches[i].expiryDate).isAfter(dayjs__WEBPACK_IMPORTED_MODULE_0___default()(latest.expiryDate))) {
+        latest = matches[i];
+      }
+    }
+    var isPaid = latest.isPaid === true || String(latest.isPaid).toLowerCase() === 'true';
+    var expDate = dayjs__WEBPACK_IMPORTED_MODULE_0___default()(latest.expiryDate);
+    var diffDays = expDate.diff(now, 'day');
+    var itemStatus = 'VALID';
+    var badgeText = 'VALID & PAID';
+    var badgeColor = '#2e7d32';
+    var badgeBgColor = '#e8f5e9';
+    if (!isPaid) {
+      unpaidDocs.push(req.label);
+      itemStatus = 'UNPAID';
+      badgeText = 'UNPAID';
+      badgeColor = '#d32f2f';
+      badgeBgColor = '#ffebee';
+    } else if (diffDays < 0) {
+      expiredDocs.push(req.label);
+      itemStatus = 'EXPIRED';
+      badgeText = "EXPIRED (".concat(Math.abs(diffDays), "d ago)");
+      badgeColor = '#d32f2f';
+      badgeBgColor = '#ffebee';
+    } else if (diffDays <= 7) {
+      var dayText = diffDays <= 0 ? 'today' : "".concat(diffDays, "d");
+      expiringSoonDocs.push("".concat(req.label, " (").concat(dayText, ")"));
+      itemStatus = 'EXPIRING_SOON';
+      badgeText = "EXPIRING (".concat(dayText, ")");
+      badgeColor = '#ed6c02';
+      badgeBgColor = '#fff3e0';
+    }
+    checklist.push({
+      key: req.key,
+      label: req.label,
+      officialName: req.officialName,
+      isPresent: true,
+      status: itemStatus,
+      badgeText,
+      color: badgeColor,
+      bgColor: badgeBgColor,
+      doc: latest,
+      isPaid,
+      diffDays,
+      expiryDate: latest.expiryDate
+    });
+  };
+  for (var req of requiredList) {
+    if (_loop(req)) continue;
+  }
+
+  // Also check non-mandatory custom documents recorded on the vehicle
+  docs.forEach(doc => {
+    var isCovered = requiredList.some(r => r.match.test(doc.documentName || ''));
+    if (!isCovered) {
+      var expDate = dayjs__WEBPACK_IMPORTED_MODULE_0___default()(doc.expiryDate);
+      var diffDays = expDate.diff(now, 'day');
+      var isPaid = doc.isPaid === true || String(doc.isPaid).toLowerCase() === 'true';
+      if (!isPaid) {
+        if (!unpaidDocs.includes(doc.documentName)) unpaidDocs.push(doc.documentName);
+      } else if (diffDays < 0) {
+        if (!expiredDocs.includes(doc.documentName)) expiredDocs.push(doc.documentName);
+      } else if (diffDays <= 7) {
+        expiringSoonDocs.push("".concat(doc.documentName, " (").concat(diffDays <= 0 ? 'today' : diffDays + 'd', ")"));
+      }
+    }
+  });
+
+  // Calculate descriptive status for UI pill badges
+  if (docs.length === 0) {
+    return {
+      status: 'NO DOCS',
+      color: '#d32f2f',
+      bgColor: '#ffebee',
+      tooltip: "No documents recorded. Mandatory: ".concat(requiredList.map(r => r.label).join(', ')),
+      severity: 'error',
+      missingDocs,
+      unpaidDocs,
+      expiredDocs,
+      expiringSoonDocs,
+      checklist,
+      requiredList
+    };
+  }
+  if (missingDocs.length > 0) {
+    var statusText = missingDocs.length === 1 ? "MISSING: ".concat(missingDocs[0].toUpperCase()) : "MISSING: ".concat(missingDocs[0].toUpperCase(), " +").concat(missingDocs.length - 1);
+    return {
+      status: statusText,
+      color: '#d32f2f',
+      bgColor: '#ffebee',
+      tooltip: "Missing Mandatory Documents: ".concat(missingDocs.join(', ')),
+      severity: 'error',
+      missingDocs,
+      unpaidDocs,
+      expiredDocs,
+      expiringSoonDocs,
+      checklist,
+      requiredList
+    };
+  }
+  if (unpaidDocs.length > 0) {
+    var _statusText = unpaidDocs.length === 1 ? "UNPAID: ".concat(unpaidDocs[0].toUpperCase()) : "UNPAID (".concat(unpaidDocs.length, " DOCS)");
+    return {
+      status: _statusText,
+      color: '#d32f2f',
+      bgColor: '#ffebee',
+      tooltip: "Unpaid Documents: ".concat(unpaidDocs.join(', ')),
+      severity: 'error',
+      missingDocs,
+      unpaidDocs,
+      expiredDocs,
+      expiringSoonDocs,
+      checklist,
+      requiredList
+    };
+  }
+  if (expiredDocs.length > 0) {
+    var _statusText2 = expiredDocs.length === 1 ? "EXPIRED: ".concat(expiredDocs[0].toUpperCase()) : "EXPIRED (".concat(expiredDocs.length, " DOCS)");
+    return {
+      status: _statusText2,
+      color: '#d32f2f',
+      bgColor: '#ffebee',
+      tooltip: "Expired Documents: ".concat(expiredDocs.join(', ')),
+      severity: 'error',
+      missingDocs,
+      unpaidDocs,
+      expiredDocs,
+      expiringSoonDocs,
+      checklist,
+      requiredList
+    };
+  }
+  if (expiringSoonDocs.length > 0) {
+    var _statusText3 = expiringSoonDocs.length === 1 ? "EXPIRING: ".concat(expiringSoonDocs[0].toUpperCase()) : "EXPIRING (".concat(expiringSoonDocs.length, " DOCS)");
+    return {
+      status: _statusText3,
+      color: '#ed6c02',
+      bgColor: '#fff3e0',
+      tooltip: "Expiring Soon: ".concat(expiringSoonDocs.join(', ')),
+      severity: 'warning',
+      missingDocs,
+      unpaidDocs,
+      expiredDocs,
+      expiringSoonDocs,
+      checklist,
+      requiredList
+    };
+  }
+  return {
+    status: 'OK',
+    color: '#2e7d32',
+    bgColor: '#e8f5e9',
+    tooltip: 'All mandatory documents active & paid',
+    severity: 'success',
+    missingDocs,
+    unpaidDocs,
+    expiredDocs,
+    expiringSoonDocs,
+    checklist,
+    requiredList
+  };
 }
 
 /***/ }

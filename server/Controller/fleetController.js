@@ -33,14 +33,39 @@ exports.getAllFleets = async (req, res) => {
         
         let query = {};
         
-        if (search) {
-            query = {
-                $or: [
-                    { carMake: { $regex: search, $options: "i" } },
-                    { carModel: { $regex: search, $options: "i" } },
-                    { plateNumber: { $regex: search, $options: "i" } }
-                ]
-            };
+        if (search && search.trim()) {
+            const raw = search.trim();
+            const cleanAlphanumeric = raw.replace(/[^a-zA-Z0-9]/g, '');
+            const tokens = raw.split(/\s+/).filter(Boolean);
+
+            // Every token must match at least one field (AND of ORs) for multi-term searches like "ALPHARD BLACK"
+            const tokenConditions = tokens.map(t => {
+                const escaped = t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                return {
+                    $or: [
+                        { carMake: { $regex: escaped, $options: "i" } },
+                        { carModel: { $regex: escaped, $options: "i" } },
+                        { plateNumber: { $regex: escaped, $options: "i" } },
+                        { vehicleColor: { $regex: escaped, $options: "i" } },
+                        { chassisNumber: { $regex: escaped, $options: "i" } },
+                        { branchId: { $regex: escaped, $options: "i" } },
+                        { status: { $regex: escaped, $options: "i" } }
+                    ]
+                };
+            });
+
+            const orConditions = [
+                { $and: tokenConditions },
+                { plateNumber: { $regex: raw.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), $options: "i" } }
+            ];
+
+            if (cleanAlphanumeric.length >= 3) {
+                // Allows searching "6091AA24" to match "6091 AA 24" or searching "6091 AA 24" to match "6091AA24"
+                const flexPattern = cleanAlphanumeric.split('').map(c => c.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('[\\s\\-_]*');
+                orConditions.push({ plateNumber: { $regex: flexPattern, $options: "i" } });
+            }
+
+            query = { $or: orConditions };
         }
 
         const fleets = await Fleet.find(query)
@@ -49,6 +74,16 @@ exports.getAllFleets = async (req, res) => {
             .sort({ createdAt: -1 });
 
         const total = await Fleet.countDocuments(query);
+
+        // Auto-backfill vehicleColor if empty and chassisNumber contains a color word (e.g. historical data)
+        const COLOR_REGEX = /^(black|white|grey|gray|silver|red|blue|green|yellow|brown|gold|orange|beige|noir|blanc|gris|rouge|bleu|vert|jaune)$/i;
+        for (let car of fleets) {
+            if ((!car.vehicleColor || car.vehicleColor.trim() === '' || car.vehicleColor.trim().toUpperCase() === 'N/A') && car.chassisNumber && COLOR_REGEX.test(car.chassisNumber.trim())) {
+                const detectedColor = car.chassisNumber.trim();
+                car.vehicleColor = detectedColor;
+                Fleet.findByIdAndUpdate(car._id, { vehicleColor: detectedColor }).catch(err => console.error("Color backfill error:", err));
+            }
+        }
 
         // --- Notifications Check ---
         const Notification = require('../model/notificationSchema');
@@ -103,6 +138,13 @@ exports.getFleetById = async (req, res) => {
         if (!fleet) {
             return res.status(404).json({ message: "Car not found" });
         }
+
+        const COLOR_REGEX = /^(black|white|grey|gray|silver|red|blue|green|yellow|brown|gold|orange|beige|noir|blanc|gris|rouge|bleu|vert|jaune)$/i;
+        if ((!fleet.vehicleColor || fleet.vehicleColor.trim() === '' || fleet.vehicleColor.trim().toUpperCase() === 'N/A') && fleet.chassisNumber && COLOR_REGEX.test(fleet.chassisNumber.trim())) {
+            fleet.vehicleColor = fleet.chassisNumber.trim();
+            Fleet.findByIdAndUpdate(fleet._id, { vehicleColor: fleet.vehicleColor }).catch(err => console.error("Color backfill error:", err));
+        }
+
         res.status(200).json(fleet);
     } catch (error) {
         res.status(500).json({ message: error.message });

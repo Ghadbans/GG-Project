@@ -5529,4 +5529,34 @@ The standardized `renderStatusBadge` helper was seamlessly integrated into all 1
   - Compiled Android APK: `server/public/downloads/GlobalGate-v3.6.58.apk` and mirrored to `GlobalGate.apk`.
   - Pushed to GitHub `main` branch for automatic Railway backend API and Cloudflare Pages web portal deployment.
 
+---
+
+### Rule 78: Fleet Management Actionable Compliance Checklist, Color Auto-Backfill & Multi-Field Search (Ver 3.6.59)
+- **Problem & Requirement Reported by User**:
+  - In `FleetViewAdmin`, vehicles like `ALPHARD MINI BUS` showed `MISSING DOCS` in red, but when navigating to Vehicle Details, all 5 visible records in Document History were marked as paid with checkmarks. The user could not see why it was non-compliant or what was missing (in this case, `CARTE ROSE`).
+  - `VEHICLE COLOR` was added in v3.6.58, but showed `—` in the table for existing cars because users had previously entered colors like "BLACK" into the `Chassis #` field.
+  - Search by plate number (e.g. typing `705` or with spaces like `6091 AA 24`) or by color or branch failed because the backend `$or` query only searched exact `carMake`, `carModel`, and raw `plateNumber`, and DataGrid had `filterMode="server"` blocking client-side quick filtering.
+- **Architectural Implementation**:
+  1. **Compliance Checklist & Specific Statuses (`src/js/utils/fleetUtils.js`)**:
+     - `evaluateFleetCompliance` now returns exact status labels (e.g. `MISSING: CARTE ROSE`, `UNPAID: STATIONNEMENT`, `EXPIRED: VIGNETTE`, `EXPIRING (5d): ASSURANCE`).
+     - Returns a comprehensive `checklist` array containing every required document with its label, official name, presence, validity, payment status, expiry dates, and pre-configured action states.
+  2. **Vehicle Details Compliance Card (`src/js/AdminView1/FleetFormUpdate.js`)**:
+     - Added a prominent **Mandatory Document Compliance Checklist Card** above Document History with visual tiles for each required paper (5 for cars, 6 for trucks).
+     - Missing documents display a red `MISSING` chip with a direct `+ Add [Document Name]` button that automatically opens the Add Document modal pre-filled with the official document name, current year, and `isPaid: true`.
+     - Unpaid or expired papers display direct `Pay / Renew` action buttons.
+  3. **Color Auto-Backfill & Autocomplete**:
+     - In `server/Controller/fleetController.js`: Automatically detects when a vehicle has an empty `vehicleColor` but its `chassisNumber` contains a known color word (e.g., `BLACK`), backfilling and persisting `vehicleColor` to MongoDB.
+     - In `FleetViewAdmin.js`: Renders `Vehicle Color` with a styled color dot indicator, falling back to chassis color if empty.
+     - In `FleetFormView.js` and `FleetFormUpdate.js`: Implemented `Autocomplete` with `STANDARD_VEHICLE_COLORS` (Black, White, Silver, Grey, Blue, Red, Green, Yellow, Brown, Gold, Orange, Beige) + free text support.
+  4. **Multi-Field & Flexible Plate Search**:
+     - In `server/Controller/fleetController.js`: Normalized search strings, supporting multi-token terms (AND of ORs across make, model, plate, color, chassis, branch, status) and space-stripped flexible plate matching (`6091 AA 24` matches `6091AA24`).
+     - In `FleetViewAdmin.js`: Removed `filterMode="server"`, enabling DataGrid's QuickFilter to instantly search across all visible columns on the client while keeping debounced backend queries active.
+- **Universal Multi-Platform Production Artifacts**:
+  - Incremental version bump: **v3.6.59** across `package.json`, `server/package.json`, `server/routes/downloadRoutes.js`, and `server/index.js`.
+  - Recompiled desktop and web bundles (`npm run build`).
+  - Packaged Windows Installer: `dist/Global Gate Setup 3.6.59.exe` and mirrored to `server/public/downloads/Global Gate Setup 3.6.59.exe`, `GlobalGate-v3.6.59.exe`, and `GlobalGateSetup.exe`.
+  - Compiled Android APK: `dist_web/GlobalGate-v3.6.59.apk` and mirrored to `server/public/downloads/GlobalGate-v3.6.59.apk` & `GlobalGate.apk`.
+  - Pushed to GitHub `main` for Railway backend and Cloudflare Pages auto-deployment.
+
+
 

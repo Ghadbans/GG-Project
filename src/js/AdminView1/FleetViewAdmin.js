@@ -17,7 +17,7 @@ import { ENDPOINT_URL } from '../apiConfig';
 import { renderStatusBadge } from '../utils/formatUtils';
 import { Add, Delete, Edit, Visibility, DirectionsCar as DirectionsCarIcon } from '@mui/icons-material';
 import dayjs from 'dayjs';
-import { evaluateFleetCompliance } from '../utils/fleetUtils';
+import { evaluateFleetCompliance, getEffectiveVehicleColor, STANDARD_VEHICLE_COLORS } from '../utils/fleetUtils';
 import Loader from '../component/Loader';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { useDispatch, useSelector } from "react-redux"
@@ -182,34 +182,75 @@ export default function FleetViewAdmin() {
     { field: 'carMake', headerName: 'Make', flex: 1 },
     { field: 'carModel', headerName: 'Model', flex: 1 },
     { field: 'plateNumber', headerName: 'Plate #', flex: 1, renderCell: (params) => <strong>{params.value || 'N/A'}</strong> },
-    { field: 'vehicleColor', headerName: 'Vehicle Color', flex: 1, valueFormatter: (params) => params.value || '—' },
+    {
+      field: 'vehicleColor',
+      headerName: 'Vehicle Color',
+      flex: 1,
+      minWidth: 120,
+      valueGetter: (params) => getEffectiveVehicleColor(params.row),
+      renderCell: (params) => {
+        const colorName = getEffectiveVehicleColor(params.row);
+        if (!colorName) return <span style={{ color: '#94a3b8' }}>—</span>;
+
+        const matched = STANDARD_VEHICLE_COLORS.find(c => c.name.toLowerCase() === colorName.toLowerCase());
+        const hex = matched ? matched.hex : '#64748b';
+        const border = matched?.border || 'transparent';
+
+        return (
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+            <span
+              style={{
+                width: '12px',
+                height: '12px',
+                borderRadius: '50%',
+                backgroundColor: hex,
+                border: `1px solid ${border !== 'transparent' ? border : hex}`,
+                display: 'inline-block',
+                boxShadow: '0 1px 2px rgba(0,0,0,0.15)',
+                flexShrink: 0
+              }}
+            />
+            <span style={{ fontWeight: 500, textTransform: 'capitalize', color: '#1e293b' }}>
+              {colorName}
+            </span>
+          </div>
+        );
+      }
+    },
     { field: 'branchId', headerName: 'Branch', flex: 0.8, valueFormatter: (params) => params.value || 'HQ' },
     { field: 'status', headerName: 'Status', flex: 0.9, renderCell: (params) => renderStatusBadge(params.row.status) },
     {
       field: 'documents',
       headerName: 'Expiring Soon',
-      flex: 1.2,
+      flex: 1.5,
+      minWidth: 170,
       renderCell: (params) => {
         const compliance = evaluateFleetCompliance(params.row);
         return (
           <ViewTooltip title={compliance.tooltip} placement="top">
-            <span
-              style={{
-                color: compliance.color,
-                backgroundColor: compliance.bgColor,
-                padding: '4px 10px',
-                borderRadius: '6px',
-                fontWeight: 'bold',
-                fontSize: '11.5px',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '4px',
-                border: `1px solid ${compliance.color}40`,
-                cursor: 'pointer'
-              }}
-            >
-              {compliance.status}
-            </span>
+            <NavLink to={`/FleetFormUpdate/${params.row._id}`} style={{ textDecoration: 'none' }}>
+              <span
+                style={{
+                  color: compliance.color,
+                  backgroundColor: compliance.bgColor,
+                  padding: '4px 10px',
+                  borderRadius: '6px',
+                  fontWeight: 'bold',
+                  fontSize: '11px',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '4px',
+                  border: `1px solid ${compliance.color}40`,
+                  cursor: 'pointer',
+                  maxWidth: '100%',
+                  whiteSpace: 'nowrap',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis'
+                }}
+              >
+                {compliance.status}
+              </span>
+            </NavLink>
           </ViewTooltip>
         );
       }
@@ -300,12 +341,11 @@ export default function FleetViewAdmin() {
                       getRowClassName={(params) => {
                         if (params.row.status !== 'Running') return '';
                         const compliance = evaluateFleetCompliance(params.row);
-                        if (compliance.status === 'EXPIRED') return 'super-app-theme--Expiring';
-                        if (compliance.status === 'EXPIRING SOON') return 'row-expiring-soon';
+                        if (compliance.severity === 'error') return 'super-app-theme--Expiring';
+                        if (compliance.severity === 'warning') return 'row-expiring-soon';
                         return '';
                       }}
                       paginationMode="server"
-                          filterMode="server"
                       rowCount={totalItemCount}
                       paginationModel={{ page: page, pageSize: limit }}
                       onPaginationModelChange={(newModel) => handlePageChange(newModel.page)}

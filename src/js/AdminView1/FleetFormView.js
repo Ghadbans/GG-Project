@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './view.css';
 import SidebarDash from '../component/SidebarDash';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { IconButton, styled, Typography, Box, Container, TextField, Button, MenuItem, Select, FormControl, InputLabel } from '@mui/material';
+import { IconButton, styled, Typography, Box, Container, TextField, Button, MenuItem, Select, FormControl, InputLabel, Autocomplete } from '@mui/material';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import MuiDrawer from '@mui/material/Drawer';
@@ -12,6 +12,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import axios from 'axios';
 import { ENDPOINT_URL } from '../apiConfig';
+import { STANDARD_VEHICLE_COLORS } from '../utils/fleetUtils';
 import { Add, Close } from '@mui/icons-material';
 import { useSelector } from "react-redux"
 import { selectCurrentUser } from '../features/auth/authSlice';
@@ -163,7 +164,41 @@ export default function FleetFormView() {
                   <TextField label="Vehicle Make" variant="outlined" value={carMake} onChange={e => setCarMake(e.target.value)} required sx={{ flex: '1 1 45%' }} />
                   <TextField label="Vehicle Model" variant="outlined" value={carModel} onChange={e => setCarModel(e.target.value)} required sx={{ flex: '1 1 45%' }} />
                   <TextField label="Plate Number" variant="outlined" value={plateNumber} onChange={e => setPlateNumber(e.target.value)} required sx={{ flex: '1 1 45%' }} />
-                  <TextField label="Vehicle Color" variant="outlined" value={vehicleColor} onChange={e => setVehicleColor(e.target.value)} placeholder="e.g. White, Black, Silver..." sx={{ flex: '1 1 45%' }} />
+                  <Autocomplete
+                    freeSolo
+                    options={STANDARD_VEHICLE_COLORS.map(c => c.name)}
+                    value={vehicleColor}
+                    onChange={(event, newValue) => {
+                      setVehicleColor(newValue || '');
+                    }}
+                    onInputChange={(event, newInputValue) => {
+                      setVehicleColor(newInputValue || '');
+                    }}
+                    renderOption={(props, option) => {
+                      const matched = STANDARD_VEHICLE_COLORS.find(c => c.name.toLowerCase() === option.toLowerCase());
+                      return (
+                        <li {...props} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                          {matched && (
+                            <span
+                              style={{
+                                width: '12px',
+                                height: '12px',
+                                borderRadius: '50%',
+                                backgroundColor: matched.hex,
+                                border: `1px solid ${matched.border || matched.hex}`,
+                                display: 'inline-block'
+                              }}
+                            />
+                          )}
+                          {option}
+                        </li>
+                      );
+                    }}
+                    renderInput={(params) => (
+                      <TextField {...params} label="Vehicle Color" variant="outlined" placeholder="e.g. White, Black, Silver..." />
+                    )}
+                    sx={{ flex: '1 1 45%' }}
+                  />
                   <TextField label="Chassis Number" variant="outlined" value={chassisNumber} onChange={e => setChassisNumber(e.target.value)} sx={{ flex: '1 1 45%' }} />
                   <FormControl sx={{ flex: '1 1 45%' }}>
                     <InputLabel>Status</InputLabel>

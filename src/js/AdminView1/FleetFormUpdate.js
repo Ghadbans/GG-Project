@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './view.css';
 import SidebarDash from '../component/SidebarDash';
 import { NavLink, useNavigate, useParams } from 'react-router-dom';
-import { IconButton, styled, Typography, Box, Container, TextField, Button, MenuItem, Select, FormControl, InputLabel, Modal, Grid, Autocomplete } from '@mui/material';
+import { IconButton, styled, Typography, Box, Container, TextField, Button, MenuItem, Select, FormControl, InputLabel, Modal, Grid, Autocomplete, Chip } from '@mui/material';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import MuiDrawer from '@mui/material/Drawer';
@@ -24,6 +24,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import dayjs from 'dayjs';
+import { evaluateFleetCompliance, getEffectiveVehicleColor, STANDARD_VEHICLE_COLORS, isColorWord, isTruckVehicle } from '../utils/fleetUtils';
 
 const drawerWidth = 240;
 const AppBar = styled(MuiAppBar, { shouldForwardProp: (prop) => prop !== 'open' })(({ theme, open }) => ({
@@ -345,7 +346,27 @@ export default function FleetFormUpdate() {
               <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <Typography variant="h6">Overview</Typography>
                 <Box>
-                  <Button variant="outlined" size="small" startIcon={<Edit />} sx={{ mr: 1 }} disabled={!canEdit} onClick={() => { setCarData({ carMake: fleet.carMake || '', carModel: fleet.carModel || '', plateNumber: fleet.plateNumber || '', chassisNumber: fleet.chassisNumber || '', vehicleColor: fleet.vehicleColor || '', branchId: fleet.branchId || 'HQ' }); setCarModal(true); }}>Edit Details</Button>
+                  <Button
+                    variant="outlined"
+                    size="small"
+                    startIcon={<Edit />}
+                    sx={{ mr: 1 }}
+                    disabled={!canEdit}
+                    onClick={() => {
+                      const effectiveColor = getEffectiveVehicleColor(fleet);
+                      setCarData({
+                        carMake: fleet.carMake || '',
+                        carModel: fleet.carModel || '',
+                        plateNumber: fleet.plateNumber || '',
+                        chassisNumber: (fleet.chassisNumber && isColorWord(fleet.chassisNumber) && !fleet.vehicleColor) ? '' : (fleet.chassisNumber || ''),
+                        vehicleColor: effectiveColor || '',
+                        branchId: fleet.branchId || 'HQ'
+                      });
+                      setCarModal(true);
+                    }}
+                  >
+                    Edit Details
+                  </Button>
                   <Button variant="outlined" color="error" size="small" startIcon={<Delete />} disabled={!canDelete} onClick={handleDeleteCar}>Delete Vehicle</Button>
                 </Box>
               </Box>
@@ -412,7 +433,34 @@ export default function FleetFormUpdate() {
                 <Grid container spacing={2.5} sx={{ flex: 1 }}>
                   <Grid item xs={6} sm={4}><Typography color="textSecondary" variant="body2">Make/Model</Typography><Typography sx={{ fontWeight: 600 }}>{fleet.carMake} {fleet.carModel}</Typography></Grid>
                   <Grid item xs={6} sm={4}><Typography color="textSecondary" variant="body2">Plate #</Typography><Typography sx={{ fontWeight: 600 }}>{fleet.plateNumber}</Typography></Grid>
-                  <Grid item xs={6} sm={4}><Typography color="textSecondary" variant="body2">Vehicle Color</Typography><Typography sx={{ fontWeight: 600, color: fleet.vehicleColor ? '#0f172a' : '#94a3b8' }}>{fleet.vehicleColor || 'N/A'}</Typography></Grid>
+                  <Grid item xs={6} sm={4}>
+                    <Typography color="textSecondary" variant="body2">Vehicle Color</Typography>
+                    {(() => {
+                      const effColor = getEffectiveVehicleColor(fleet);
+                      if (!effColor) return <Typography sx={{ fontWeight: 600, color: '#94a3b8' }}>Not Set</Typography>;
+                      const matched = STANDARD_VEHICLE_COLORS.find(c => c.name.toLowerCase() === effColor.toLowerCase());
+                      const hex = matched ? matched.hex : '#64748b';
+                      const border = matched?.border || 'transparent';
+                      return (
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mt: 0.2 }}>
+                          <span
+                            style={{
+                              width: '14px',
+                              height: '14px',
+                              borderRadius: '50%',
+                              backgroundColor: hex,
+                              border: `1.5px solid ${border !== 'transparent' ? border : hex}`,
+                              display: 'inline-block',
+                              boxShadow: '0 1px 2px rgba(0,0,0,0.15)'
+                            }}
+                          />
+                          <Typography sx={{ fontWeight: 600, textTransform: 'capitalize', color: '#0f172a' }}>
+                            {effColor}
+                          </Typography>
+                        </Box>
+                      );
+                    })()}
+                  </Grid>
                   <Grid item xs={6} sm={4}><Typography color="textSecondary" variant="body2">Chassis #</Typography><Typography sx={{ fontWeight: 600 }}>{fleet.chassisNumber || 'N/A'}</Typography></Grid>
                   <Grid item xs={6} sm={4}><Typography color="textSecondary" variant="body2">Branch ID</Typography><Typography sx={{ fontWeight: 600 }}>{fleet.branchId || 'HQ'}</Typography></Grid>
                   <Grid item xs={6} sm={4}>
@@ -429,6 +477,198 @@ export default function FleetFormUpdate() {
                 </Grid>
               </Box>
             </Box>
+
+            {/* Mandatory Document Compliance Checklist Card */}
+            {(() => {
+              const compliance = evaluateFleetCompliance(fleet);
+              return (
+                <Box
+                  sx={{
+                    backgroundColor: 'white',
+                    padding: '20px',
+                    borderRadius: '8px',
+                    mb: 3,
+                    boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+                    borderLeft: `6px solid ${compliance.color}`
+                  }}
+                >
+                  <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2, flexWrap: 'wrap', gap: 1 }}>
+                    <Box>
+                      <Typography variant="h6" sx={{ display: 'flex', alignItems: 'center', gap: 1.5, fontSize: '1.05rem', fontWeight: 700 }}>
+                        <span>Mandatory Document Compliance</span>
+                        <Chip
+                          label={compliance.status}
+                          size="small"
+                          sx={{
+                            fontWeight: 'bold',
+                            color: compliance.color,
+                            backgroundColor: compliance.bgColor,
+                            border: `1px solid ${compliance.color}40`,
+                            fontSize: '11px'
+                          }}
+                        />
+                      </Typography>
+                      <Typography variant="body2" sx={{ color: '#64748b', mt: 0.5 }}>
+                        {compliance.tooltip}
+                      </Typography>
+                    </Box>
+                    <Typography variant="caption" sx={{ color: '#94a3b8', fontWeight: 500 }}>
+                      {isTruckVehicle(fleet) ? 'Truck / Heavy Vehicle (6 Required Papers)' : 'Standard Vehicle (5 Required Papers)'}
+                    </Typography>
+                  </Box>
+
+                  {/* Grid of Checklist Items */}
+                  <Grid container spacing={1.5}>
+                    {compliance.checklist.map((item) => (
+                      <Grid item xs={12} sm={6} md={4} key={item.key}>
+                        <Box
+                          sx={{
+                            p: 1.5,
+                            borderRadius: '8px',
+                            border: `1.5px solid ${item.color}35`,
+                            backgroundColor: item.bgColor,
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'space-between',
+                            height: '100%',
+                            minHeight: 110,
+                            boxShadow: '0 1px 2px rgba(0,0,0,0.03)'
+                          }}
+                        >
+                          <Box>
+                            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 0.8 }}>
+                              <Typography sx={{ fontWeight: 600, fontSize: '0.85rem', color: '#1e293b', lineHeight: 1.2 }}>
+                                {item.label}
+                              </Typography>
+                              <Chip
+                                label={item.badgeText}
+                                size="small"
+                                sx={{
+                                  fontSize: '10px',
+                                  height: 20,
+                                  fontWeight: 700,
+                                  color: item.color,
+                                  backgroundColor: 'white',
+                                  border: `1px solid ${item.color}40`
+                                }}
+                              />
+                            </Box>
+                            <Typography variant="caption" sx={{ color: '#64748b', display: 'block', fontSize: '11px', mb: 1 }}>
+                              {item.isPresent
+                                ? `Exp: ${dayjs(item.expiryDate).format('DD/MM/YYYY')} • ${item.isPaid ? 'Paid' : 'UNPAID'}`
+                                : 'Not logged in records'}
+                            </Typography>
+                          </Box>
+
+                          {/* Action Buttons */}
+                          <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 'auto' }}>
+                            {!item.isPresent && (
+                              <Button
+                                size="small"
+                                variant="contained"
+                                disabled={!canAdd}
+                                onClick={() => {
+                                  setIsEditDoc(false);
+                                  setDocData({
+                                    _id: '',
+                                    documentName: item.officialName,
+                                    year: dayjs().format('YYYY'),
+                                    startDate: dayjs().format('YYYY-MM-DD'),
+                                    expiryDate: dayjs().add(1, 'year').format('YYYY-MM-DD'),
+                                    amountPaid: 0,
+                                    isPaid: true,
+                                    notes: ''
+                                  });
+                                  setDocModal(true);
+                                }}
+                                sx={{
+                                  fontSize: '10.5px',
+                                  py: 0.2,
+                                  px: 1,
+                                  backgroundColor: '#d32f2f',
+                                  '&:hover': { backgroundColor: '#b71c1c' },
+                                  textTransform: 'none'
+                                }}
+                                startIcon={<Add sx={{ fontSize: '14px !important' }} />}
+                              >
+                                Add {item.label}
+                              </Button>
+                            )}
+
+                            {item.isPresent && (!item.isPaid || item.status === 'EXPIRED') && (
+                              <Button
+                                size="small"
+                                variant="outlined"
+                                disabled={!canEdit}
+                                onClick={() => {
+                                  setIsEditDoc(true);
+                                  setDocData({
+                                    ...item.doc,
+                                    startDate: dayjs(item.doc.startDate).format('YYYY-MM-DD'),
+                                    expiryDate: dayjs(item.doc.expiryDate).format('YYYY-MM-DD'),
+                                  });
+                                  setDocModal(true);
+                                }}
+                                sx={{
+                                  fontSize: '10.5px',
+                                  py: 0.2,
+                                  px: 1,
+                                  color: item.color,
+                                  borderColor: item.color,
+                                  '&:hover': { backgroundColor: `${item.color}10`, borderColor: item.color },
+                                  textTransform: 'none'
+                                }}
+                              >
+                                {!item.isPaid ? 'Mark as Paid' : 'Renew / Edit'}
+                              </Button>
+                            )}
+
+                            {item.isPresent && item.status === 'EXPIRING_SOON' && (
+                              <Button
+                                size="small"
+                                variant="outlined"
+                                disabled={!canAdd}
+                                onClick={() => {
+                                  setIsEditDoc(false);
+                                  setDocData({
+                                    _id: '',
+                                    documentName: item.officialName,
+                                    year: dayjs().format('YYYY'),
+                                    startDate: dayjs().format('YYYY-MM-DD'),
+                                    expiryDate: dayjs().add(1, 'year').format('YYYY-MM-DD'),
+                                    amountPaid: item.doc?.amountPaid || 0,
+                                    isPaid: true,
+                                    notes: `Renewal of ${item.label}`
+                                  });
+                                  setDocModal(true);
+                                }}
+                                sx={{
+                                  fontSize: '10.5px',
+                                  py: 0.2,
+                                  px: 1,
+                                  color: '#ed6c02',
+                                  borderColor: '#ed6c02',
+                                  '&:hover': { backgroundColor: '#fff3e0' },
+                                  textTransform: 'none'
+                                }}
+                              >
+                                Renew Document
+                              </Button>
+                            )}
+
+                            {item.isPresent && item.status === 'VALID' && (
+                              <Typography variant="caption" sx={{ color: '#2e7d32', fontWeight: 600, display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                                ✓ Valid & Paid
+                              </Typography>
+                            )}
+                          </Box>
+                        </Box>
+                      </Grid>
+                    ))}
+                  </Grid>
+                </Box>
+              );
+            })()}
 
             {/* Document History */}
             <Box sx={{ backgroundColor: 'white', padding: '20px', borderRadius: '8px', mb: 3, boxShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>
@@ -543,7 +783,40 @@ export default function FleetFormUpdate() {
           <TextField fullWidth label="Make" size="small" sx={{ mb: 2 }} value={carData.carMake} onChange={e => setCarData({...carData, carMake: e.target.value})} />
           <TextField fullWidth label="Model" size="small" sx={{ mb: 2 }} value={carData.carModel} onChange={e => setCarData({...carData, carModel: e.target.value})} />
           <TextField fullWidth label="Plate Number" size="small" sx={{ mb: 2 }} value={carData.plateNumber} onChange={e => setCarData({...carData, plateNumber: e.target.value})} />
-          <TextField fullWidth label="Vehicle Color" size="small" sx={{ mb: 2 }} value={carData.vehicleColor || ''} onChange={e => setCarData({...carData, vehicleColor: e.target.value})} />
+          <Autocomplete
+            freeSolo
+            options={STANDARD_VEHICLE_COLORS.map(c => c.name)}
+            value={carData.vehicleColor || ''}
+            onChange={(event, newValue) => {
+              setCarData({ ...carData, vehicleColor: newValue || '' });
+            }}
+            onInputChange={(event, newInputValue) => {
+              setCarData({ ...carData, vehicleColor: newInputValue || '' });
+            }}
+            renderOption={(props, option) => {
+              const matched = STANDARD_VEHICLE_COLORS.find(c => c.name.toLowerCase() === option.toLowerCase());
+              return (
+                <li {...props} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  {matched && (
+                    <span
+                      style={{
+                        width: '12px',
+                        height: '12px',
+                        borderRadius: '50%',
+                        backgroundColor: matched.hex,
+                        border: `1px solid ${matched.border || matched.hex}`,
+                        display: 'inline-block'
+                      }}
+                    />
+                  )}
+                  {option}
+                </li>
+              );
+            }}
+            renderInput={(params) => (
+              <TextField {...params} label="Vehicle Color" size="small" sx={{ mb: 2 }} fullWidth placeholder="e.g. Black, White, Silver" />
+            )}
+          />
           <TextField fullWidth label="Chassis Number" size="small" sx={{ mb: 2 }} value={carData.chassisNumber} onChange={e => setCarData({...carData, chassisNumber: e.target.value})} />
           <FormControl fullWidth size="small" sx={{ mb: 3 }}>
             <InputLabel>Branch</InputLabel>

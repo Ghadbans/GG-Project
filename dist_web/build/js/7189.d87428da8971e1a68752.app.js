@@ -1,4 +1,4 @@
-(this["webpackChunkgg_management"] = this["webpackChunkgg_management"] || []).push([[6396],{
+(this["webpackChunkgg_management"] = this["webpackChunkgg_management"] || []).push([[7189],{
 
 /***/ 99682
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
@@ -639,7 +639,7 @@ const GridToolbar = /*#__PURE__*/react.forwardRef(function GridToolbar(props, re
 
 /***/ },
 
-/***/ 96396
+/***/ 17189
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -717,151 +717,8 @@ var jsx_runtime = __webpack_require__(74848);
 var Add = __webpack_require__(99682);
 // EXTERNAL MODULE: ./node_modules/dayjs/dayjs.min.js
 var dayjs_min = __webpack_require__(74353);
-var dayjs_min_default = /*#__PURE__*/__webpack_require__.n(dayjs_min);
-;// ./src/js/utils/fleetUtils.js
-
-var MANDATORY_DOCS_CAR = [{
-  key: 'CARTE_ROSE',
-  label: 'Carte Rose',
-  match: /carte\s*rose|registration/i
-}, {
-  key: 'CONTROLE_TECHNIQUE',
-  label: 'Contrôle Technique',
-  match: /contr[oô]le\s*technique|roadworthiness/i
-}, {
-  key: 'STATIONNEMENT',
-  label: 'Stationnement',
-  match: /stationnement|parking/i
-}, {
-  key: 'VIGNETTE',
-  label: 'Vignette',
-  match: /vignette|road\s*tax/i
-}, {
-  key: 'ASSURANCE',
-  label: 'Attestation d\'Assurance',
-  match: /assurance|insurance/i
-}];
-var MANDATORY_DOCS_TRUCK = [...MANDATORY_DOCS_CAR, {
-  key: 'AUTORISATION_TRANSPORT',
-  label: 'Autorisation Transport',
-  match: /autorisation\s*transport|transport\s*authorization/i
-}];
-
-/**
- * Checks whether a vehicle is classified as a truck based on its make and model.
- */
-function isTruckVehicle(car) {
-  var combined = "".concat((car === null || car === void 0 ? void 0 : car.carMake) || '', " ").concat((car === null || car === void 0 ? void 0 : car.carModel) || '').toUpperCase();
-  return /(TRUCK|CAMION|TRAILER|BENNE|TRACTEUR|SHACMAN|HOWO|ACTROS)/i.test(combined);
-}
-
-/**
- * Evaluates the legal document compliance of a fleet vehicle.
- * Rules:
- * 1. If any mandatory document is missing -> MISSING DOCS (Red)
- * 2. If any mandatory document is UNPAID (isPaid !== true) -> EXPIRED (Red)
- * 3. If any mandatory document has expired (diff < 0) -> EXPIRED (Red)
- * 4. If all exist and are paid, but any expires within 7 days -> EXPIRING SOON (Orange)
- * 5. If all exist, are paid, and valid > 7 days -> OK (Green)
- */
-function evaluateFleetCompliance(car) {
-  var docs = Array.isArray(car === null || car === void 0 ? void 0 : car.documents) ? car.documents : [];
-  var requiredList = isTruckVehicle(car) ? MANDATORY_DOCS_TRUCK : MANDATORY_DOCS_CAR;
-  var now = dayjs_min_default()();
-  if (docs.length === 0) {
-    return {
-      status: 'NO DOCS',
-      color: '#d32f2f',
-      bgColor: '#ffebee',
-      tooltip: "No documents recorded. Mandatory: ".concat(requiredList.map(r => r.label).join(', ')),
-      severity: 'error'
-    };
-  }
-  var missingDocs = [];
-  var unpaidDocs = [];
-  var expiredDocs = [];
-  var expiringSoonDocs = [];
-  var _loop = function _loop(req) {
-    var matches = docs.filter(d => req.match.test(d.documentName || ''));
-    if (matches.length === 0) {
-      missingDocs.push(req.label);
-      return 1; // continue
-    }
-
-    // Find the latest document for this required paper by expiryDate
-    var latest = matches[0];
-    for (var i = 1; i < matches.length; i++) {
-      if (dayjs_min_default()(matches[i].expiryDate).isAfter(dayjs_min_default()(latest.expiryDate))) {
-        latest = matches[i];
-      }
-    }
-    var isPaid = latest.isPaid === true || String(latest.isPaid).toLowerCase() === 'true';
-    var expDate = dayjs_min_default()(latest.expiryDate);
-    var diffDays = expDate.diff(now, 'day');
-    if (!isPaid) {
-      unpaidDocs.push(req.label);
-    } else if (diffDays < 0) {
-      expiredDocs.push(req.label);
-    } else if (diffDays <= 7) {
-      expiringSoonDocs.push("".concat(req.label, " (").concat(diffDays <= 0 ? 'today' : diffDays + 'd', ")"));
-    }
-  };
-  for (var req of requiredList) {
-    if (_loop(req)) continue;
-  }
-
-  // Also verify any additional custom documents recorded on the vehicle
-  docs.forEach(doc => {
-    var isCovered = requiredList.some(r => r.match.test(doc.documentName || ''));
-    if (!isCovered) {
-      var expDate = dayjs_min_default()(doc.expiryDate);
-      var diffDays = expDate.diff(now, 'day');
-      var isPaid = doc.isPaid === true || String(doc.isPaid).toLowerCase() === 'true';
-      if (!isPaid) {
-        if (!unpaidDocs.includes(doc.documentName)) unpaidDocs.push(doc.documentName);
-      } else if (diffDays < 0) {
-        if (!expiredDocs.includes(doc.documentName)) expiredDocs.push(doc.documentName);
-      } else if (diffDays <= 7) {
-        expiringSoonDocs.push("".concat(doc.documentName, " (").concat(diffDays <= 0 ? 'today' : diffDays + 'd', ")"));
-      }
-    }
-  });
-  if (missingDocs.length > 0) {
-    return {
-      status: 'MISSING DOCS',
-      color: '#d32f2f',
-      bgColor: '#ffebee',
-      tooltip: "Missing: ".concat(missingDocs.join(', ')),
-      severity: 'error'
-    };
-  }
-  if (unpaidDocs.length > 0 || expiredDocs.length > 0) {
-    var reasons = [...(unpaidDocs.length > 0 ? ["Unpaid: ".concat(unpaidDocs.join(', '))] : []), ...(expiredDocs.length > 0 ? ["Expired: ".concat(expiredDocs.join(', '))] : [])];
-    return {
-      status: 'EXPIRED',
-      color: '#d32f2f',
-      bgColor: '#ffebee',
-      tooltip: reasons.join(' | '),
-      severity: 'error'
-    };
-  }
-  if (expiringSoonDocs.length > 0) {
-    return {
-      status: 'EXPIRING SOON',
-      color: '#ed6c02',
-      bgColor: '#fff3e0',
-      tooltip: "Expiring Soon: ".concat(expiringSoonDocs.join(', ')),
-      severity: 'warning'
-    };
-  }
-  return {
-    status: 'OK',
-    color: '#2e7d32',
-    bgColor: '#e8f5e9',
-    tooltip: 'All mandatory documents active & paid',
-    severity: 'success'
-  };
-}
+// EXTERNAL MODULE: ./src/js/utils/fleetUtils.js
+var fleetUtils = __webpack_require__(95025);
 // EXTERNAL MODULE: ./src/js/component/Loader.js + 1 modules
 var Loader = __webpack_require__(65821);
 // EXTERNAL MODULE: ./node_modules/react-redux/es/index.js + 14 modules
@@ -1130,7 +987,43 @@ function FleetViewAdmin() {
     field: 'vehicleColor',
     headerName: 'Vehicle Color',
     flex: 1,
-    valueFormatter: params => params.value || '—'
+    minWidth: 120,
+    valueGetter: params => (0,fleetUtils/* getEffectiveVehicleColor */.$y)(params.row),
+    renderCell: params => {
+      var colorName = (0,fleetUtils/* getEffectiveVehicleColor */.$y)(params.row);
+      if (!colorName) return /*#__PURE__*/react.createElement("span", {
+        style: {
+          color: '#94a3b8'
+        }
+      }, "\u2014");
+      var matched = fleetUtils/* STANDARD_VEHICLE_COLORS */.Os.find(c => c.name.toLowerCase() === colorName.toLowerCase());
+      var hex = matched ? matched.hex : '#64748b';
+      var border = (matched === null || matched === void 0 ? void 0 : matched.border) || 'transparent';
+      return /*#__PURE__*/react.createElement("div", {
+        style: {
+          display: 'inline-flex',
+          alignItems: 'center',
+          gap: '6px'
+        }
+      }, /*#__PURE__*/react.createElement("span", {
+        style: {
+          width: '12px',
+          height: '12px',
+          borderRadius: '50%',
+          backgroundColor: hex,
+          border: "1px solid ".concat(border !== 'transparent' ? border : hex),
+          display: 'inline-block',
+          boxShadow: '0 1px 2px rgba(0,0,0,0.15)',
+          flexShrink: 0
+        }
+      }), /*#__PURE__*/react.createElement("span", {
+        style: {
+          fontWeight: 500,
+          textTransform: 'capitalize',
+          color: '#1e293b'
+        }
+      }, colorName));
+    }
   }, {
     field: 'branchId',
     headerName: 'Branch',
@@ -1144,12 +1037,18 @@ function FleetViewAdmin() {
   }, {
     field: 'documents',
     headerName: 'Expiring Soon',
-    flex: 1.2,
+    flex: 1.5,
+    minWidth: 170,
     renderCell: params => {
-      var compliance = evaluateFleetCompliance(params.row);
+      var compliance = (0,fleetUtils/* evaluateFleetCompliance */.Hx)(params.row);
       return /*#__PURE__*/react.createElement(ViewTooltip, {
         title: compliance.tooltip,
         placement: "top"
+      }, /*#__PURE__*/react.createElement(react_router_dom_dist/* NavLink */.k2, {
+        to: "/FleetFormUpdate/".concat(params.row._id),
+        style: {
+          textDecoration: 'none'
+        }
       }, /*#__PURE__*/react.createElement("span", {
         style: {
           color: compliance.color,
@@ -1157,14 +1056,18 @@ function FleetViewAdmin() {
           padding: '4px 10px',
           borderRadius: '6px',
           fontWeight: 'bold',
-          fontSize: '11.5px',
+          fontSize: '11px',
           display: 'inline-flex',
           alignItems: 'center',
           gap: '4px',
           border: "1px solid ".concat(compliance.color, "40"),
-          cursor: 'pointer'
+          cursor: 'pointer',
+          maxWidth: '100%',
+          whiteSpace: 'nowrap',
+          overflow: 'hidden',
+          textOverflow: 'ellipsis'
         }
-      }, compliance.status));
+      }, compliance.status)));
     }
   }, {
     field: 'action',
@@ -1304,13 +1207,12 @@ function FleetViewAdmin() {
     rowHeight: 52,
     getRowClassName: params => {
       if (params.row.status !== 'Running') return '';
-      var compliance = evaluateFleetCompliance(params.row);
-      if (compliance.status === 'EXPIRED') return 'super-app-theme--Expiring';
-      if (compliance.status === 'EXPIRING SOON') return 'row-expiring-soon';
+      var compliance = (0,fleetUtils/* evaluateFleetCompliance */.Hx)(params.row);
+      if (compliance.severity === 'error') return 'super-app-theme--Expiring';
+      if (compliance.severity === 'warning') return 'row-expiring-soon';
       return '';
     },
     paginationMode: "server",
-    filterMode: "server",
     rowCount: totalItemCount,
     paginationModel: {
       page: page,
@@ -1350,6 +1252,321 @@ function FleetViewAdmin() {
       padding: '10px'
     }
   })))))));
+}
+
+/***/ },
+
+/***/ 95025
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   $y: () => (/* binding */ getEffectiveVehicleColor),
+/* harmony export */   Hx: () => (/* binding */ evaluateFleetCompliance),
+/* harmony export */   Os: () => (/* binding */ STANDARD_VEHICLE_COLORS),
+/* harmony export */   sb: () => (/* binding */ isColorWord),
+/* harmony export */   u_: () => (/* binding */ isTruckVehicle)
+/* harmony export */ });
+/* unused harmony exports MANDATORY_DOCS_CAR, MANDATORY_DOCS_TRUCK */
+/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(74353);
+/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(dayjs__WEBPACK_IMPORTED_MODULE_0__);
+
+var STANDARD_VEHICLE_COLORS = [{
+  name: 'Black',
+  hex: '#1e293b'
+}, {
+  name: 'White',
+  hex: '#f8fafc',
+  border: '#cbd5e1'
+}, {
+  name: 'Silver',
+  hex: '#94a3b8'
+}, {
+  name: 'Grey',
+  hex: '#64748b'
+}, {
+  name: 'Blue',
+  hex: '#2563eb'
+}, {
+  name: 'Red',
+  hex: '#dc2626'
+}, {
+  name: 'Green',
+  hex: '#16a34a'
+}, {
+  name: 'Yellow',
+  hex: '#eab308'
+}, {
+  name: 'Brown',
+  hex: '#78350f'
+}, {
+  name: 'Gold',
+  hex: '#d97706'
+}, {
+  name: 'Orange',
+  hex: '#ea580c'
+}, {
+  name: 'Beige',
+  hex: '#d4c5b9'
+}];
+var KNOWN_COLOR_REGEX = /^(black|white|grey|gray|silver|red|blue|green|yellow|brown|gold|orange|beige|noir|blanc|gris|rouge|bleu|vert|jaune)$/i;
+function isColorWord(str) {
+  if (!str || typeof str !== 'string') return false;
+  var clean = str.trim();
+  return KNOWN_COLOR_REGEX.test(clean);
+}
+function getEffectiveVehicleColor(car) {
+  if (car !== null && car !== void 0 && car.vehicleColor && car.vehicleColor.trim() && car.vehicleColor.trim().toUpperCase() !== 'N/A') {
+    return car.vehicleColor.trim();
+  }
+  if (isColorWord(car === null || car === void 0 ? void 0 : car.chassisNumber)) {
+    return car.chassisNumber.trim();
+  }
+  return '';
+}
+var MANDATORY_DOCS_CAR = [{
+  key: 'CARTE_ROSE',
+  label: 'Carte Rose',
+  officialName: 'CARTE ROSE (VEHICLE REGISTRATION CARD)',
+  match: /carte\s*rose|registration/i
+}, {
+  key: 'CONTROLE_TECHNIQUE',
+  label: 'Contrôle Technique',
+  officialName: 'CONTRÔLE TECHNIQUE (ROADWORTHINESS CERTIFICATE)',
+  match: /contr[oô]le\s*technique|roadworthiness/i
+}, {
+  key: 'STATIONNEMENT',
+  label: 'Stationnement',
+  officialName: 'STATIONNEMENT',
+  match: /stationnement|parking/i
+}, {
+  key: 'VIGNETTE',
+  label: 'Vignette',
+  officialName: 'VIGNETTE',
+  match: /vignette|road\s*tax/i
+}, {
+  key: 'ASSURANCE',
+  label: 'Attestation d\'Assurance',
+  officialName: 'ATTESTATION D\'ASSURANCE (INSURANCE CERTIFICATE)',
+  match: /assurance|insurance/i
+}];
+var MANDATORY_DOCS_TRUCK = [...MANDATORY_DOCS_CAR, {
+  key: 'AUTORISATION_TRANSPORT',
+  label: 'Autorisation Transport',
+  officialName: 'AUTORISATION TRANSPORT (ONLY FOR TRUCKS)',
+  match: /autorisation\s*transport|transport\s*authorization/i
+}];
+
+/**
+ * Checks whether a vehicle is classified as a truck based on its make and model.
+ */
+function isTruckVehicle(car) {
+  var combined = "".concat((car === null || car === void 0 ? void 0 : car.carMake) || '', " ").concat((car === null || car === void 0 ? void 0 : car.carModel) || '').toUpperCase();
+  return /(TRUCK|CAMION|TRAILER|BENNE|TRACTEUR|SHACMAN|HOWO|ACTROS)/i.test(combined);
+}
+
+/**
+ * Evaluates the legal document compliance of a fleet vehicle.
+ * Rules:
+ * 1. If any mandatory document is missing -> MISSING DOCS (Red)
+ * 2. If any mandatory document is UNPAID (isPaid !== true) -> EXPIRED / UNPAID (Red)
+ * 3. If any mandatory document has expired (diff < 0) -> EXPIRED (Red)
+ * 4. If all exist and are paid, but any expires within 7 days -> EXPIRING SOON (Orange)
+ * 5. If all exist, are paid, and valid > 7 days -> OK (Green)
+ */
+function evaluateFleetCompliance(car) {
+  var docs = Array.isArray(car === null || car === void 0 ? void 0 : car.documents) ? car.documents : [];
+  var requiredList = isTruckVehicle(car) ? MANDATORY_DOCS_TRUCK : MANDATORY_DOCS_CAR;
+  var now = dayjs__WEBPACK_IMPORTED_MODULE_0___default()();
+  var missingDocs = [];
+  var unpaidDocs = [];
+  var expiredDocs = [];
+  var expiringSoonDocs = [];
+  var checklist = [];
+  var _loop = function _loop(req) {
+    var matches = docs.filter(d => req.match.test(d.documentName || ''));
+    if (matches.length === 0) {
+      missingDocs.push(req.label);
+      checklist.push({
+        key: req.key,
+        label: req.label,
+        officialName: req.officialName,
+        isPresent: false,
+        status: 'MISSING',
+        badgeText: 'MISSING',
+        color: '#d32f2f',
+        bgColor: '#ffebee',
+        doc: null,
+        isPaid: false,
+        diffDays: null,
+        expiryDate: null
+      });
+      return 1; // continue
+    }
+
+    // Find the latest document for this required paper by expiryDate
+    var latest = matches[0];
+    for (var i = 1; i < matches.length; i++) {
+      if (dayjs__WEBPACK_IMPORTED_MODULE_0___default()(matches[i].expiryDate).isAfter(dayjs__WEBPACK_IMPORTED_MODULE_0___default()(latest.expiryDate))) {
+        latest = matches[i];
+      }
+    }
+    var isPaid = latest.isPaid === true || String(latest.isPaid).toLowerCase() === 'true';
+    var expDate = dayjs__WEBPACK_IMPORTED_MODULE_0___default()(latest.expiryDate);
+    var diffDays = expDate.diff(now, 'day');
+    var itemStatus = 'VALID';
+    var badgeText = 'VALID & PAID';
+    var badgeColor = '#2e7d32';
+    var badgeBgColor = '#e8f5e9';
+    if (!isPaid) {
+      unpaidDocs.push(req.label);
+      itemStatus = 'UNPAID';
+      badgeText = 'UNPAID';
+      badgeColor = '#d32f2f';
+      badgeBgColor = '#ffebee';
+    } else if (diffDays < 0) {
+      expiredDocs.push(req.label);
+      itemStatus = 'EXPIRED';
+      badgeText = "EXPIRED (".concat(Math.abs(diffDays), "d ago)");
+      badgeColor = '#d32f2f';
+      badgeBgColor = '#ffebee';
+    } else if (diffDays <= 7) {
+      var dayText = diffDays <= 0 ? 'today' : "".concat(diffDays, "d");
+      expiringSoonDocs.push("".concat(req.label, " (").concat(dayText, ")"));
+      itemStatus = 'EXPIRING_SOON';
+      badgeText = "EXPIRING (".concat(dayText, ")");
+      badgeColor = '#ed6c02';
+      badgeBgColor = '#fff3e0';
+    }
+    checklist.push({
+      key: req.key,
+      label: req.label,
+      officialName: req.officialName,
+      isPresent: true,
+      status: itemStatus,
+      badgeText,
+      color: badgeColor,
+      bgColor: badgeBgColor,
+      doc: latest,
+      isPaid,
+      diffDays,
+      expiryDate: latest.expiryDate
+    });
+  };
+  for (var req of requiredList) {
+    if (_loop(req)) continue;
+  }
+
+  // Also check non-mandatory custom documents recorded on the vehicle
+  docs.forEach(doc => {
+    var isCovered = requiredList.some(r => r.match.test(doc.documentName || ''));
+    if (!isCovered) {
+      var expDate = dayjs__WEBPACK_IMPORTED_MODULE_0___default()(doc.expiryDate);
+      var diffDays = expDate.diff(now, 'day');
+      var isPaid = doc.isPaid === true || String(doc.isPaid).toLowerCase() === 'true';
+      if (!isPaid) {
+        if (!unpaidDocs.includes(doc.documentName)) unpaidDocs.push(doc.documentName);
+      } else if (diffDays < 0) {
+        if (!expiredDocs.includes(doc.documentName)) expiredDocs.push(doc.documentName);
+      } else if (diffDays <= 7) {
+        expiringSoonDocs.push("".concat(doc.documentName, " (").concat(diffDays <= 0 ? 'today' : diffDays + 'd', ")"));
+      }
+    }
+  });
+
+  // Calculate descriptive status for UI pill badges
+  if (docs.length === 0) {
+    return {
+      status: 'NO DOCS',
+      color: '#d32f2f',
+      bgColor: '#ffebee',
+      tooltip: "No documents recorded. Mandatory: ".concat(requiredList.map(r => r.label).join(', ')),
+      severity: 'error',
+      missingDocs,
+      unpaidDocs,
+      expiredDocs,
+      expiringSoonDocs,
+      checklist,
+      requiredList
+    };
+  }
+  if (missingDocs.length > 0) {
+    var statusText = missingDocs.length === 1 ? "MISSING: ".concat(missingDocs[0].toUpperCase()) : "MISSING: ".concat(missingDocs[0].toUpperCase(), " +").concat(missingDocs.length - 1);
+    return {
+      status: statusText,
+      color: '#d32f2f',
+      bgColor: '#ffebee',
+      tooltip: "Missing Mandatory Documents: ".concat(missingDocs.join(', ')),
+      severity: 'error',
+      missingDocs,
+      unpaidDocs,
+      expiredDocs,
+      expiringSoonDocs,
+      checklist,
+      requiredList
+    };
+  }
+  if (unpaidDocs.length > 0) {
+    var _statusText = unpaidDocs.length === 1 ? "UNPAID: ".concat(unpaidDocs[0].toUpperCase()) : "UNPAID (".concat(unpaidDocs.length, " DOCS)");
+    return {
+      status: _statusText,
+      color: '#d32f2f',
+      bgColor: '#ffebee',
+      tooltip: "Unpaid Documents: ".concat(unpaidDocs.join(', ')),
+      severity: 'error',
+      missingDocs,
+      unpaidDocs,
+      expiredDocs,
+      expiringSoonDocs,
+      checklist,
+      requiredList
+    };
+  }
+  if (expiredDocs.length > 0) {
+    var _statusText2 = expiredDocs.length === 1 ? "EXPIRED: ".concat(expiredDocs[0].toUpperCase()) : "EXPIRED (".concat(expiredDocs.length, " DOCS)");
+    return {
+      status: _statusText2,
+      color: '#d32f2f',
+      bgColor: '#ffebee',
+      tooltip: "Expired Documents: ".concat(expiredDocs.join(', ')),
+      severity: 'error',
+      missingDocs,
+      unpaidDocs,
+      expiredDocs,
+      expiringSoonDocs,
+      checklist,
+      requiredList
+    };
+  }
+  if (expiringSoonDocs.length > 0) {
+    var _statusText3 = expiringSoonDocs.length === 1 ? "EXPIRING: ".concat(expiringSoonDocs[0].toUpperCase()) : "EXPIRING (".concat(expiringSoonDocs.length, " DOCS)");
+    return {
+      status: _statusText3,
+      color: '#ed6c02',
+      bgColor: '#fff3e0',
+      tooltip: "Expiring Soon: ".concat(expiringSoonDocs.join(', ')),
+      severity: 'warning',
+      missingDocs,
+      unpaidDocs,
+      expiredDocs,
+      expiringSoonDocs,
+      checklist,
+      requiredList
+    };
+  }
+  return {
+    status: 'OK',
+    color: '#2e7d32',
+    bgColor: '#e8f5e9',
+    tooltip: 'All mandatory documents active & paid',
+    severity: 'success',
+    missingDocs,
+    unpaidDocs,
+    expiredDocs,
+    expiringSoonDocs,
+    checklist,
+    requiredList
+  };
 }
 
 /***/ },
