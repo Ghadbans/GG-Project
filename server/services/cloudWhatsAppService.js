@@ -302,7 +302,7 @@ async function dispatchInvoicesCloud({ invoices = [], templateMessage = '', phon
  */
 async function dispatchMarketingFlyerCloud({ imageBuffer, caption, recipients = [], postToStatus = false }) {
   if (currentStatus !== 'CONNECTED' || !sock) {
-    throw new Error('Cloud WhatsApp Master is not connected. Please ensure session is linked in Invoice > Send Invoices via WhatsApp.');
+    throw new Error('Cloud WhatsApp Master is not connected. Please ensure session is linked in Invoice > Send Invoices via WhatsApp (+243 827 722 222).');
   }
 
   const rawList = Array.isArray(recipients)
@@ -319,22 +319,43 @@ async function dispatchMarketingFlyerCloud({ imageBuffer, caption, recipients = 
   };
 
   const selfPhone = connectedPhone ? normalizePhoneNumber(connectedPhone) : '243827722222';
+  const selfJid = sock.user?.id
+    ? (baileys.jidNormalizedUser ? baileys.jidNormalizedUser(sock.user.id) : sock.user.id.replace(/:.*@/, '@'))
+    : `${selfPhone}@s.whatsapp.net`;
+
+  const hasValidRasterImage = imageBuffer && Buffer.isBuffer(imageBuffer) && imageBuffer.length > 50;
 
   for (let idx = 0; idx < cleanList.length; idx++) {
     const phone = cleanList[idx];
     const isSelf = phone === selfPhone || phone.endsWith(selfPhone) || selfPhone.endsWith(phone);
-    const jid = `${phone}@s.whatsapp.net`;
+    let jid = isSelf ? selfJid : `${phone}@s.whatsapp.net`;
+
+    if (!isSelf) {
+      try {
+        const [onWa] = await sock.onWhatsApp(phone);
+        if (onWa && onWa.exists && onWa.jid) {
+          jid = onWa.jid;
+        }
+      } catch (_) {}
+    }
 
     if (idx > 0) {
-      // Gentle pause between recipients
+      // Gentle pause between recipients to respect rate limits
       await new Promise(r => setTimeout(r, 2000));
     }
 
     try {
-      await sock.sendMessage(jid, {
-        image: imageBuffer,
-        caption: caption
-      });
+      if (hasValidRasterImage) {
+        await sock.sendMessage(jid, {
+          image: imageBuffer,
+          caption: caption
+        });
+      } else {
+        // High-impact formatted text message if no raster image buffer was attached
+        await sock.sendMessage(jid, {
+          text: caption
+        });
+      }
 
       results.sent++;
       results.details.push({
@@ -342,7 +363,7 @@ async function dispatchMarketingFlyerCloud({ imageBuffer, caption, recipients = 
         status: 'sent',
         self: isSelf
       });
-      console.log(`✅ [CloudWhatsApp] Marketing flyer delivered to +${phone} (isSelf: ${isSelf})`);
+      console.log(`✅ [CloudWhatsApp] Marketing flyer delivered to +${phone} (jid: ${jid}, isSelf: ${isSelf})`);
     } catch (err) {
       console.error(`❌ [CloudWhatsApp] Failed to send flyer to +${phone}:`, err.message);
       results.failed++;
@@ -359,10 +380,16 @@ async function dispatchMarketingFlyerCloud({ imageBuffer, caption, recipients = 
   let statusSent = false;
   if (postToStatus) {
     try {
-      await sock.sendMessage('status@broadcast', {
-        image: imageBuffer,
-        caption: caption
-      });
+      if (hasValidRasterImage) {
+        await sock.sendMessage('status@broadcast', {
+          image: imageBuffer,
+          caption: caption
+        });
+      } else {
+        await sock.sendMessage('status@broadcast', {
+          text: caption
+        });
+      }
       statusSent = true;
       console.log('✅ [CloudWhatsApp] Marketing flyer posted to WhatsApp Status Story');
     } catch (stErr) {
@@ -377,7 +404,7 @@ async function dispatchMarketingFlyerCloud({ imageBuffer, caption, recipients = 
   let dmMessage = null;
   if (results.sent > 0) {
     if (isSelf && failedCount === 0) {
-      dmMessage = 'Delivered to "Message yourself" (Your own WhatsApp)';
+      dmMessage = 'Delivered to "Message yourself" (Official WhatsApp Line +243 827 722 222)';
     } else {
       dmMessage = `WhatsApp: ${sentCount} sent` + (failedCount ? `, ${failedCount} failed` : '');
     }

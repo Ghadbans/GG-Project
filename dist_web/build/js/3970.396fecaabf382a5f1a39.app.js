@@ -777,6 +777,8 @@ var InputLabel = __webpack_require__(29571);
 var Select = __webpack_require__(2071);
 // EXTERNAL MODULE: ./node_modules/@mui/material/MenuItem/MenuItem.js + 1 modules
 var MenuItem = __webpack_require__(73896);
+// EXTERNAL MODULE: ./node_modules/@mui/material/TableContainer/TableContainer.js + 1 modules
+var TableContainer = __webpack_require__(33198);
 // EXTERNAL MODULE: ./node_modules/@mui/material/Paper/Paper.js + 2 modules
 var Paper = __webpack_require__(60538);
 // EXTERNAL MODULE: ./node_modules/@mui/material/Table/Table.js + 1 modules
@@ -2783,7 +2785,7 @@ function FleetFormUpdate() {
       color: '#78350f',
       borderColor: '#d97706'
     }
-  }, "Dismiss"))), /*#__PURE__*/react.createElement(TableContainer, {
+  }, "Dismiss"))), /*#__PURE__*/react.createElement(TableContainer/* default */.A, {
     component: Paper/* default */.A,
     sx: {
       maxHeight: 240,
@@ -3567,7 +3569,7 @@ function FleetFormUpdate() {
       mb: 1,
       color: '#1e293b'
     }
-  }, "Spare Parts & Consumables Replaced"), /*#__PURE__*/react.createElement(TableContainer, {
+  }, "Spare Parts & Consumables Replaced"), /*#__PURE__*/react.createElement(TableContainer/* default */.A, {
     component: Paper/* default */.A,
     sx: {
       mb: 2,

@@ -862,7 +862,6 @@ function MarketingViewAdmin() {
       if (!dataUrl || typeof dataUrl !== 'string' || !dataUrl.startsWith('data:image/svg+xml')) return dataUrl;
       return new Promise(resolve => {
         var img = new Image();
-        img.crossOrigin = 'anonymous';
         img.onload = () => {
           try {
             var canvas = document.createElement('canvas');
@@ -873,7 +872,8 @@ function MarketingViewAdmin() {
             ctx.fillRect(0, 0, 1080, 1080);
             ctx.drawImage(img, 0, 0, 1080, 1080);
             resolve(canvas.toDataURL('image/png'));
-          } catch (_) {
+          } catch (err) {
+            console.warn('[Marketing] Canvas conversion note:', err);
             resolve(dataUrl);
           }
         };
@@ -1163,19 +1163,34 @@ function MarketingViewAdmin() {
       };
       try {
         var resData = null;
-        if (window.electron && typeof window.electron.runMarketing === 'function') {
+
+        // Primary Channel: Railway Cloud API (universal preview engine for all users and laptops)
+        try {
+          var res = yield axios__WEBPACK_IMPORTED_MODULE_45__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_50__/* .API_BASE_URL */ .J, "/api/marketing/publish"), payload, {
+            timeout: 35000
+          });
+          if (res.data && res.data.success) {
+            resData = res.data;
+          }
+        } catch (cloudErr) {
+          var _cloudErr$response;
+          console.warn('[Marketing] Cloud preview note, checking local fallback:', ((_cloudErr$response = cloudErr.response) === null || _cloudErr$response === void 0 || (_cloudErr$response = _cloudErr$response.data) === null || _cloudErr$response === void 0 ? void 0 : _cloudErr$response.error) || cloudErr.message);
+        }
+
+        // Secondary Fallback: Electron local IPC
+        if (!resData && window.electron && typeof window.electron.runMarketing === 'function') {
           try {
             console.log('[Marketing] Generating preview via Electron local IPC...');
             var ipcRes = yield window.electron.runMarketing(payload);
             if (ipcRes && ipcRes.success) {
               resData = ipcRes;
-            } else {
-              console.warn('[Marketing] Electron local IPC did not return success, trying fallbacks...', ipcRes === null || ipcRes === void 0 ? void 0 : ipcRes.error);
             }
           } catch (ipcErr) {
-            console.warn('[Marketing] Electron IPC error, falling back:', ipcErr);
+            console.warn('[Marketing] Electron IPC preview error:', ipcErr);
           }
         }
+
+        // Tertiary Fallback: Local daemon if active on port 5055
         if (!resData) {
           try {
             var localRes = yield axios__WEBPACK_IMPORTED_MODULE_45__/* ["default"] */ .A.post('http://127.0.0.1:5055/publish', payload, {
@@ -1185,10 +1200,6 @@ function MarketingViewAdmin() {
               resData = localRes.data;
             }
           } catch (_) {}
-        }
-        if (!resData) {
-          var res = yield axios__WEBPACK_IMPORTED_MODULE_45__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_50__/* .API_BASE_URL */ .J, "/api/marketing/publish"), payload);
-          resData = res.data;
         }
         if (resData && resData.success) {
           setResult(resData);
@@ -1264,8 +1275,8 @@ function MarketingViewAdmin() {
             resData = cloudRes.data;
           }
         } catch (cloudErr) {
-          var _cloudErr$response;
-          console.warn('[Marketing] Cloud dispatch attempt note:', ((_cloudErr$response = cloudErr.response) === null || _cloudErr$response === void 0 || (_cloudErr$response = _cloudErr$response.data) === null || _cloudErr$response === void 0 ? void 0 : _cloudErr$response.error) || cloudErr.message);
+          var _cloudErr$response2;
+          console.warn('[Marketing] Cloud dispatch attempt note:', ((_cloudErr$response2 = cloudErr.response) === null || _cloudErr$response2 === void 0 || (_cloudErr$response2 = _cloudErr$response2.data) === null || _cloudErr$response2 === void 0 ? void 0 : _cloudErr$response2.error) || cloudErr.message);
         }
 
         // Secondary Fallback: Electron local agent IPC if cloud request had network connection failure

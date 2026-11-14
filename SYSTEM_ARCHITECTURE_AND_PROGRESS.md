@@ -5687,12 +5687,37 @@ The standardized `renderStatusBadge` helper was seamlessly integrated into all 1
      - Built an integrated **Maintenance Slip View & Print Dialog** displaying parts used, quantities, unit prices, labor fees, technician, status, and printable repair voucher.
   5. **Master Fleet Table Cost Visibility (`src/js/AdminView1/FleetViewAdmin.js`)**:
      - Added **"Maint. Spend"** column displaying lifetime maintenance dollars and repair count per vehicle at a glance.
+### Version 3.6.64 (2026-11-14) - Fix Fleet TableContainer Import & Unified 24/7 Cloud WhatsApp Master Integration for All Users and Workstations
+
+- **Requirement & Problem**:
+  1. Fleet Management runtime error: Opening Vehicle Details (`FleetFormUpdate.js`) threw `ReferenceError: TableContainer is not defined at Oe (FleetFormUpdate.js:1582:16)`, causing a white screen due to missing `@mui/material` import.
+  2. Marketing Campaign & Flyer Publisher: WhatsApp dispatch failed with `"WhatsApp automated dispatch timed out or was not delivered"`. The user noted: *"the whatsapp is already connected in Send Invoices via WhatsApp !!! why need to make a new one !!! and not always will use the marketing from this laptop any user with the grant access from his laptop will join and make the marketing flyer !"*
+  3. The local client was falling back to a local `agent.js` script on one specific laptop (`C:\Users\GG\fb-whatsapp-agent`) which was unauthenticated, rather than routing through the centralized 24/7 Cloud WhatsApp Master (`+243 827 722 222`) running on Railway with MongoDB multi-device auth state.
+  4. WhatsApp was rejecting messages sent to the company's own number (`+243827722222` / "Message yourself") due to raw phone JID resolution instead of Baileys normalized user JID (`jidNormalizedUser(sock.user.id)`).
+  5. If an SVG flyer preview was submitted without client raster conversion, WhatsApp servers rejected the non-raster payload.
+
+- **Architectural Implementation**:
+  1. **Fleet Form TableContainer Import Fix (`src/js/AdminView1/FleetFormUpdate.js`)**:
+     - Added `TableContainer` directly to the destructured `@mui/material` named imports list on line 5.
+     - Resolved both line 1109 (Smart Match suggestions table) and line 1582 (Parts & Consumables replaced table in the Slip Dialog).
+  2. **Robust Cloud WhatsApp Master Dispatching (`server/services/cloudWhatsAppService.js`)**:
+     - In `dispatchMarketingFlyerCloud`:
+       - Added normalized self-JID resolution: `const selfJid = sock.user?.id ? (baileys.jidNormalizedUser ? baileys.jidNormalizedUser(sock.user.id) : sock.user.id.replace(/:.*@/, '@')) : '${selfPhone}@s.whatsapp.net';` so sending to `+243 827 722 222` ("Message yourself") routes directly to the bot's own self-chat chat without server rejection.
+       - For external numbers, query `sock.onWhatsApp(phone)` to resolve valid WhatsApp JIDs.
+       - If a raster buffer (`Buffer.isBuffer(imageBuffer)`) is present, dispatches image + caption; if no raster image is present, gracefully falls back to sending the promotional brief as high-impact formatted WhatsApp text rather than failing.
+  3. **Universal Access & Safe Raster Detection (`server/routes/marketingRoutes.js`)**:
+     - Updated `verifyMarketingAccess`: Allow GG, Admin, CEO, and any authenticated staff member with a grant profile to access marketing without false 403 authorization blocks.
+     - Implemented `isRasterDataUrl` validator: Ensures only true JPEG, PNG, or WEBP data URLs are decoded as `photoBuffer` for Facebook and WhatsApp, preventing raw SVG XML from being passed to media endpoints.
+  4. **Multi-User Client Flow (`src/js/AdminView1/PageView/MarketingView/MarketingViewAdmin.js` & `main.js`)**:
+     - `convertSvgToPngDataUrl`: Removed `crossOrigin = 'anonymous'` for `data:` URIs, eliminating canvas tainting issues and ensuring the generated SVG is cleanly rasterized to a PNG data URL.
+     - In both `handlePreview` and `handleApproveAndPublish`: Prioritize Railway Cloud API (`${API_BASE_URL}/api/marketing/publish`), guaranteeing that all authorized users from ANY laptop or web browser route through the same 24/7 Cloud WhatsApp Master.
+     - In `main.js`: When `agent.js` is not present on a staff machine, automatically forward marketing dispatch requests to `https://api.globalgate.sarl/api/marketing/publish`.
 - **Universal Multi-Platform Production Artifacts**:
-  - Incremental version bump: **v3.6.63** across `package.json`, `server/package.json`, `server/routes/downloadRoutes.js`, and `server/index.js`.
-  - Recompiled desktop and web bundles (`npm run build`).
-  - Packaged Windows Installer: `dist/Global Gate Setup 3.6.63.exe` (66.7 MB) and mirrored to `server/public/downloads/Global Gate Setup 3.6.63.exe` and `Global Gate Setup.exe`.
-  - Compiled Android APK: `android/app/build/outputs/apk/debug/app-debug.apk` (21.0 MB) and mirrored to `server/public/downloads/GlobalGate-v3.6.63.apk` and `GlobalGate.apk`.
-  - Pushed to GitHub `main` for Railway backend and Cloudflare Pages auto-deployment.
+  - Incremental version bump: **v3.6.64** across `package.json`, `server/package.json`, `server/routes/downloadRoutes.js`, and `server/index.js`.
+  - Compiled desktop bundle (`dist/build/js/app.js`) and web bundle (`dist_web/`).
+  - Packaged Windows Installer: `dist/Global Gate Setup 3.6.64.exe` and mirrored to `server/public/downloads/Global Gate Setup 3.6.64.exe` and `Global Gate Setup.exe`.
+  - Pushed to GitHub `main` for auto-deployment to Railway (`api.globalgate.sarl`) and Cloudflare Pages (`portal.globalgate.sarl`).
+
 
 
 

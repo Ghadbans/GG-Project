@@ -195,7 +195,6 @@ function MarketingViewAdmin() {
     if (!dataUrl || typeof dataUrl !== 'string' || !dataUrl.startsWith('data:image/svg+xml')) return dataUrl;
     return new Promise((resolve) => {
       const img = new Image();
-      img.crossOrigin = 'anonymous';
       img.onload = () => {
         try {
           const canvas = document.createElement('canvas');
@@ -206,7 +205,8 @@ function MarketingViewAdmin() {
           ctx.fillRect(0, 0, 1080, 1080);
           ctx.drawImage(img, 0, 0, 1080, 1080);
           resolve(canvas.toDataURL('image/png'));
-        } catch (_) {
+        } catch (err) {
+          console.warn('[Marketing] Canvas conversion note:', err);
           resolve(dataUrl);
         }
       };
@@ -494,20 +494,30 @@ function MarketingViewAdmin() {
     try {
       let resData = null;
 
-      if (window.electron && typeof window.electron.runMarketing === 'function') {
+      // Primary Channel: Railway Cloud API (universal preview engine for all users and laptops)
+      try {
+        const res = await axios.post(`${API_BASE_URL}/api/marketing/publish`, payload, { timeout: 35000 });
+        if (res.data && res.data.success) {
+          resData = res.data;
+        }
+      } catch (cloudErr) {
+        console.warn('[Marketing] Cloud preview note, checking local fallback:', cloudErr.response?.data?.error || cloudErr.message);
+      }
+
+      // Secondary Fallback: Electron local IPC
+      if (!resData && window.electron && typeof window.electron.runMarketing === 'function') {
         try {
           console.log('[Marketing] Generating preview via Electron local IPC...');
           const ipcRes = await window.electron.runMarketing(payload);
           if (ipcRes && ipcRes.success) {
             resData = ipcRes;
-          } else {
-            console.warn('[Marketing] Electron local IPC did not return success, trying fallbacks...', ipcRes?.error);
           }
         } catch (ipcErr) {
-          console.warn('[Marketing] Electron IPC error, falling back:', ipcErr);
+          console.warn('[Marketing] Electron IPC preview error:', ipcErr);
         }
       }
 
+      // Tertiary Fallback: Local daemon if active on port 5055
       if (!resData) {
         try {
           const localRes = await axios.post('http://127.0.0.1:5055/publish', payload, { timeout: 10000 });
@@ -515,11 +525,6 @@ function MarketingViewAdmin() {
             resData = localRes.data;
           }
         } catch (_) {}
-      }
-
-      if (!resData) {
-        const res = await axios.post(`${API_BASE_URL}/api/marketing/publish`, payload);
-        resData = res.data;
       }
 
       if (resData && resData.success) {

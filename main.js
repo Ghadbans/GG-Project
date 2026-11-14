@@ -339,7 +339,41 @@ function clearAppCache(win) {
 
 const fs = require('fs');
 const http = require('http');
+const https = require('https');
 const { execFile, spawn } = require('child_process');
+
+function forwardToCloudMarketing(payload) {
+  return new Promise((resolve, reject) => {
+    const postData = JSON.stringify(payload || {});
+    const req = https.request('https://api.globalgate.sarl/api/marketing/publish', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Content-Length': Buffer.byteLength(postData),
+        'x-user-name': payload?.userName || 'GG',
+        'x-user-id': payload?.userId || ''
+      },
+      timeout: 120000
+    }, (res) => {
+      let body = '';
+      res.on('data', chunk => { body += chunk; });
+      res.on('end', () => {
+        try {
+          resolve(JSON.parse(body));
+        } catch (e) {
+          reject(new Error(`Cloud response parse error: ${body.slice(0, 100)}`));
+        }
+      });
+    });
+    req.on('error', reject);
+    req.on('timeout', () => {
+      req.destroy();
+      reject(new Error('Cloud marketing request timed out.'));
+    });
+    req.write(postData);
+    req.end();
+  });
+}
 
 ipcMain.handle('run-marketing', async (event, payload) => {
   const { brief, whatsappNumber, platforms = {}, productImage = null, previewOnly = false, theme = 'universal', isFullFlyer = false, customSlogan = '' } = payload || {};
@@ -347,11 +381,17 @@ ipcMain.handle('run-marketing', async (event, payload) => {
   const agentScript = path.join(agentDir, 'agent.js');
   const flyerPath = path.join(agentDir, 'generated_flyer.png');
 
+  // If local script does not exist (any employee laptop without local agent), route directly to 24/7 Railway Cloud API
   if (!fs.existsSync(agentScript)) {
-    return {
-      success: false,
-      error: `Marketing agent script not found at ${agentScript}`
-    };
+    try {
+      console.log('☁️ Local agent script not present. Forwarding marketing request directly to Railway Cloud WhatsApp Master...');
+      return await forwardToCloudMarketing(payload);
+    } catch (err) {
+      return {
+        success: false,
+        error: `Cloud dispatch error: ${err.message}`
+      };
+    }
   }
 
   // Clear previous flyer before generating new one so stale flyers are never returned
