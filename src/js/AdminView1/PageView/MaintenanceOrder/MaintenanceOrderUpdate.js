@@ -1394,9 +1394,12 @@ function MaintenanceOrderUpdate() {
             </Box>
 
             {items.map((it, idx) => {
-              const name = it?.itemName?.itemName || it?.itemName?.name || it?.newDescription || `Part #${idx + 1}`;
-              const desc = it?.itemDescription || '';
+              const rawItemName = typeof it?.itemName === 'object' ? it?.itemName?.itemName : it?.itemName;
+              const isCustomEmpty = !rawItemName || String(rawItemName).trim().toLowerCase() === 'empty';
+              const name = isCustomEmpty ? (it?.itemDescription || `Custom Part #${idx + 1}`) : (rawItemName || `Part #${idx + 1}`);
+              const desc = (!isCustomEmpty && it?.itemDescription) ? it.itemDescription : '';
               const qty = Number(it?.itemQty || 1);
+
               return (
                 <Box key={it.idRow || idx} sx={{ py: 1.5, borderBottom: idx < items.length - 1 ? '1px solid #F1F5F9' : 'none' }}>
                   <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
@@ -1414,6 +1417,23 @@ function MaintenanceOrderUpdate() {
                       <DeleteIcon fontSize="small" />
                     </IconButton>
                   </Box>
+
+                  {/* Description Input for Custom / Empty parts */}
+                  {isCustomEmpty && (
+                    <TextField
+                      fullWidth
+                      size="small"
+                      label="Part / Service Description"
+                      placeholder="e.g. DEMARREUR 'STARTER', OIL FILTER..."
+                      value={it.itemDescription || ''}
+                      onChange={(e) => {
+                        const val = e.target.value;
+                        SetItems(prev => prev.map(itemRow => itemRow.idRow === it.idRow ? { ...itemRow, itemDescription: val } : itemRow));
+                      }}
+                      sx={{ mt: 1 }}
+                    />
+                  )}
+
                   <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mt: 1 }}>
                     <Typography variant="caption" sx={{ color: '#64748B', fontWeight: 600 }}>Quantity:</Typography>
                     <Box sx={{ display: 'flex', alignItems: 'center', backgroundColor: '#F1F5F9', borderRadius: 2, px: 1 }}>
@@ -1476,6 +1496,17 @@ function MaintenanceOrderUpdate() {
                   <TextField {...params} placeholder="+ Add Part from Inventory..." size="small" />
                 )}
               />
+
+              {/* Add Custom / Empty slot button for Technicians */}
+              <Button
+                fullWidth
+                variant="outlined"
+                size="small"
+                onClick={addItemWhite}
+                sx={{ mt: 1.5, borderRadius: 2, textTransform: 'none', fontWeight: 700, borderColor: '#30368a', color: '#30368a' }}
+              >
+                + Add Custom / Non-Inventory Part (Empty Slot)
+              </Button>
             </Box>
           </Card>
         </Box>

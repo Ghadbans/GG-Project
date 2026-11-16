@@ -5782,3 +5782,47 @@ The standardized `renderStatusBadge` helper was seamlessly integrated into all 1
 
 
 
+
+
+---
+
+### RULE 85: MOBILE DASHBOARD FINANCIAL SYNCHRONIZATION, MAINTENANCE "EMPTY" DESCRIPTION RESOLUTION, ADMIN PRICING VISIBILITY & CUSTOM PART CREATION (v3.6.66)
+
+#### Context & Objectives
+1. **Mobile Dashboard Discrepancy**: Fixed metric mismatch between `MobileDashboard.js` and `AdminHome.js`. `MobileDashboard` had omitted POS shop sales from Revenue and excluded Item Purchases and Payroll from Expenses, leading to skewed November 2026 numbers.
+2. **Recent Invoices Update Bug**: Fixed an ordering bug where `MobileDashboard.js` called `.slice(-5).reverse()` on an array returned newest-first by the server, which selected the 5 oldest invoices in the month and hardcoded the status chip to "SENT".
+3. **Maintenance "EMPTY" Part Description Bug**: When non-inventory or custom parts were used, their `itemName` was stored as `"empty"` while the actual description was saved in `itemDescription` (e.g., `DEMARREUR " STARTER "`). The mobile detail sheet and update views displayed literally `"empty"`, hiding the real description.
+4. **Admin Item Pricing & Labor Visibility**: Restored item pricing, unit rates, line totals, labor fees, and grand totals in `MobileDetailSheet.js` and `MaintenanceUpdateView.js` for authorized Admins (`canViewCosts`), while strictly enforcing **Rule 23** (Technician financial privacy) in `MaintenanceOrderUpdate.js`.
+5. **Mobile Custom / Non-Inventory Part Button**: Added a dedicated `+ Add Custom / Non-Inventory Part (Empty Slot)` button across mobile edit and creation views (`MaintenanceUpdateView.js`, `MaintenanceOrderUpdate.js`, `MaintenanceFormView.js`), allowing both Admins and Technicians to add empty slots and fill in custom descriptions.
+
+#### Implementation Details
+1. **`src/js/component/MobileDashboard.js`**:
+   - Expanded data fetching to include in parallel: `/invoice?summary=true`, `/pos?summary=true`, `/expense?summary=true`, `/itemPurchase?summary=true`, `/payRoll`, and `/payment`.
+   - Mirrored the exact mathematical formulas from `AdminHome.js`:
+     - **Revenue (Accrual)**: Regular invoices (excluding Draft, Decline, Void, Free of Charge) + POS invoices (status == Paid, converted via branch/system rate).
+     - **Expenses (Accrual)**: Daily Expenses + Item Purchases + Payroll.
+     - **Cash In**: Applied payments (excluding unapplied advance credit) + POS cash collections.
+     - **Cash Out**: Daily Expenses + Payroll + Paid Item Purchases (using payment records/dates).
+     - **Net Income**: `Revenue - Expenses`.
+     - **Receivables**: Calculated directly from invoices with `balance > 0.01` categorized into Current vs Overdue by `dueDate`.
+     - **Recent Invoices**: Sorted `rawData.invoices` by `invoiceNumber` (or date) descending, taking the top 5 newest invoices and rendering dynamic status badges (Paid, Sent, Partially-Paid, etc.).
+2. **`src/js/component/MobileDetailSheet.js`**:
+   - Evaluated `isCustomEmpty`: if `itemName` is missing or equals `"empty"`, displays `itemDescription` as the main title instead of the literal word `"empty"`.
+   - Defined `canViewCosts`: if non-technician with price visibility rights in the maintenance module, displays rate per unit and line total amount.
+   - Rendered **Cost & Financial Summary Card** for Admins showing Parts Subtotal, Labor Fees, Labor Discount, and Net Grand Total. Kept completely hidden from technicians to preserve Rule 23.
+3. **`src/js/AdminView1/PageView/MaintenanceView/MaintenanceUpdateView.js` & `MaintenanceFormView.js`**:
+   - For custom/empty parts, display description as title and render a `TextField` allowing inline editing of `itemDescription`.
+   - For Admins, added Rate input field and line total display per item row.
+   - Added `+ Add Custom / Non-Inventory Part (Empty Slot)` button calling `addItemWhite()`.
+   - Added Labor & Financial Breakdown card in mobile view displaying Labor Fees, Labor Hours, Labor Discount %, Net Labor, Parts Subtotal, and Grand Total.
+4. **`src/js/AdminView1/PageView/MaintenanceOrder/MaintenanceOrderUpdate.js` (Technicians Module)**:
+   - Fixed `"empty"` display bug: shows custom item description cleanly.
+   - Provided inline `TextField` for technicians to type/edit `itemDescription`.
+   - Added `+ Add Custom / Non-Inventory Part (Empty Slot)` button.
+   - Strictly preserved zero-price / zero-cost policy for technicians under Rule 23.
+5. **Universal Multi-Platform Release (v3.6.66)**:
+   - Version bumped across `package.json`, `server/package.json`, `server/index.js`, and `server/routes/downloadRoutes.js`.
+   - Desktop Webpack bundle compiled with 0 errors.
+   - Web Portal bundle compiled and assets synced to `dist_web/`.
+   - Android APK compiled via Gradle and mirrored to `server/public/downloads/GlobalGate-v3.6.66.apk` & `GlobalGate.apk` (17.9 MB).
+   - Windows Desktop Installer packaged via electron-builder and mirrored to `server/public/downloads/Global Gate Setup 3.6.66.exe` & `Global Gate Setup.exe` (99.9 MB).

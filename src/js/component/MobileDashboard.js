@@ -153,7 +153,7 @@ function MobileDashboardContent() {
   const [loading, setLoading] = useState(true);
   const [selectedMonth, setSelectedMonth] = useState(dayjs());
   const [viewMode, setViewMode] = useState('monthly'); // 'monthly' | 'yearly'
-  const [rawData, setRawData] = useState({ invoices: [], expenses: [], payments: [] });
+  const [rawData, setRawData] = useState({ invoices: [], expenses: [], payments: [], pos: [], itemPurchases: [], payroll: [] });
 
   const [systemRate, setSystemRate] = useState(() => {
     try {
@@ -278,7 +278,7 @@ function MobileDashboardContent() {
 
   const canCreate = (mod) => canAccessModule(user?.data, grantAccess, mod, 'create');
 
-  // ONLY fetch executive financial collections (invoices, expenses, payments) for CEO or Superuser!
+  // ONLY fetch executive financial collections (invoices, expenses, payments, pos, itemPurchases, payroll) for CEO or Superuser!
   useEffect(() => {
     if (!isSuperOrCEO) {
       setLoading(false);
@@ -288,9 +288,12 @@ function MobileDashboardContent() {
     let isMounted = true;
     const fetchDashboardData = async () => {
       try {
-        const [resInvoice, resExpense, resPayment] = await Promise.all([
+        const [resInvoice, resPos, resExpense, resPurchase, resPayroll, resPayment] = await Promise.all([
           cachedGet(`${ENDPOINT_URL}/invoice?summary=true`).catch(() => ({ data: { data: [] } })),
+          cachedGet(`${ENDPOINT_URL}/pos?summary=true`).catch(() => ({ data: { data: [] } })),
           cachedGet(`${ENDPOINT_URL}/expense?summary=true`).catch(() => ({ data: { data: [] } })),
+          cachedGet(`${ENDPOINT_URL}/itemPurchase?summary=true`).catch(() => ({ data: { data: [] } })),
+          cachedGet(`${ENDPOINT_URL}/payRoll`).catch(() => ({ data: { data: [] } })),
           cachedGet(`${ENDPOINT_URL}/payment`).catch(() => ({ data: { data: [] } }))
         ]);
 
@@ -298,14 +301,20 @@ function MobileDashboardContent() {
 
         const activeBranch = localStorage.getItem('selectedBranch') || 'HQ';
         const rawInvoices = Array.isArray(resInvoice?.data?.data) ? resInvoice.data.data : [];
+        const rawPos = Array.isArray(resPos?.data?.data) ? resPos.data.data : [];
         const rawExpenses = Array.isArray(resExpense?.data?.data) ? resExpense.data.data : [];
+        const rawPurchases = Array.isArray(resPurchase?.data?.data) ? resPurchase.data.data : [];
+        const rawPayroll = Array.isArray(resPayroll?.data?.data) ? resPayroll.data.data : [];
         const rawPayments = Array.isArray(resPayment?.data?.data) ? resPayment.data.data : [];
 
-        const invoices = rawInvoices.filter(inv => !inv?.branch || activeBranch === 'HQ' || inv.branch === activeBranch);
-        const expenses = rawExpenses.filter(exp => !exp?.branch || activeBranch === 'HQ' || exp.branch === activeBranch);
-        const payments = rawPayments.filter(p => !p?.branch || activeBranch === 'HQ' || p.branch === activeBranch);
+        const invoices = rawInvoices.filter(inv => !inv?.branchId && !inv?.branch || activeBranch === 'ALL' || activeBranch === 'HQ' || inv.branchId === activeBranch || inv.branch === activeBranch);
+        const pos = rawPos.filter(p => !p?.branchId && !p?.branch || activeBranch === 'ALL' || activeBranch === 'HQ' || p.branchId === activeBranch || p.branch === activeBranch);
+        const expenses = rawExpenses.filter(exp => !exp?.branchId && !exp?.branch || activeBranch === 'ALL' || activeBranch === 'HQ' || exp.branchId === activeBranch || exp.branch === activeBranch);
+        const itemPurchases = rawPurchases.filter(pur => !pur?.branchId && !pur?.branch || activeBranch === 'ALL' || activeBranch === 'HQ' || pur.branchId === activeBranch || pur.branch === activeBranch);
+        const payroll = rawPayroll.filter(pay => !pay?.branchId && !pay?.branch || activeBranch === 'ALL' || activeBranch === 'HQ' || pay.branchId === activeBranch || pay.branch === activeBranch);
+        const payments = rawPayments.filter(p => !p?.branchId && !p?.branch || activeBranch === 'ALL' || activeBranch === 'HQ' || p.branchId === activeBranch || p.branch === activeBranch);
 
-        setRawData({ invoices, expenses, payments });
+        setRawData({ invoices, pos, expenses, itemPurchases, payroll, payments });
       } catch (err) {
         console.error('Error in mobile dashboard fetch:', err);
       } finally {
@@ -320,31 +329,115 @@ function MobileDashboardContent() {
   useEffect(() => {
     const isCurrentPeriod = (item) => {
       const d = parseItemDate(item);
-      if (!d) return true;
+      if (!d) return false;
       if (viewMode === 'monthly') {
         return d.isSame(selectedMonth, 'month') && d.isSame(selectedMonth, 'year');
       }
       return d.isSame(selectedMonth, 'year');
     };
 
-    const invoices = rawData.invoices.filter(isCurrentPeriod);
-    const expenses = rawData.expenses.filter(isCurrentPeriod);
-    const payments = rawData.payments.filter(isCurrentPeriod);
+    const rateNum = (!isNaN(parseFloat(systemRate)) && parseFloat(systemRate) > 0) ? parseFloat(systemRate) : 1;
 
+    // 1. REVENUE (Accrual Basis - Total Invoice Amount + POS Shop Sales)
     let revenue = 0;
+    (rawData.invoices || []).forEach((inv) => {
+      if (!inv || !isCurrentPeriod(inv)) return;
+      if (inv.status && ['Draft', 'Decline', 'Void', 'Free of Charge'].includes(inv.status)) return;
+      revenue += parseFloat(inv.totalInvoice || inv.totalAmount || inv.total || 0);
+    });
+
+    (rawData.pos || []).forEach((p) => {
+      if (!p || !isCurrentPeriod(p)) return;
+      const posRate = parseFloat(p.rate) || rateNum;
+      const posTotal = parseFloat(p.totalInvoice || p.TotalAmountPaid || 0);
+      revenue += posTotal / posRate;
+    });
+
+    // 2. EXPENSES (Accrual Operating Expenses = Daily Expenses + Item Purchases + Payroll)
+    let totalDailyExpenses = 0;
+    (rawData.expenses || []).forEach((exp) => {
+      if (!exp || !isCurrentPeriod(exp)) return;
+      const expTotal = exp.total !== undefined && exp.total !== null && exp.total !== '' 
+        ? parseFloat(exp.total) 
+        : (exp.rate && exp.amount ? parseFloat(exp.amount) / parseFloat(exp.rate) : parseFloat(exp.amount || 0));
+      totalDailyExpenses += (isNaN(expTotal) ? 0 : expTotal);
+    });
+
+    let totalItemPurchases = 0;
+    (rawData.itemPurchases || []).forEach((pur) => {
+      if (!pur || !isCurrentPeriod(pur)) return;
+      const purTotal = parseFloat(pur.totalUSD !== undefined ? pur.totalUSD : (pur.total !== undefined ? pur.total : (pur.amount || 0)));
+      totalItemPurchases += (isNaN(purTotal) ? 0 : purTotal);
+    });
+
+    let totalPayroll = 0;
+    (rawData.payroll || []).forEach((pay) => {
+      if (!pay || !isCurrentPeriod(pay)) return;
+      totalPayroll += parseFloat(pay.totalPaidDollars || 0);
+    });
+
+    const totalExp = totalDailyExpenses + totalItemPurchases + totalPayroll;
+
+    // 3. CASH IN (Applied Payments + POS Cash Collections)
+    let totalCashIn = 0;
+    (rawData.payments || []).forEach((p) => {
+      if (!p || !isCurrentPeriod(p)) return;
+      if (p.status === 'Voided') return;
+
+      // Business Rule: Advanced Payment (Credit) does not count as Cash In until applied to an invoice
+      const isAdvancedPayment = (p.transactionType !== 'POS') && (p.TotalAmount?.length === 0 || !p.TotalAmount) && (parseFloat(p.remaining || p.credit || 0) > 0);
+      if (isAdvancedPayment) return false;
+
+      const appliedTotal = (Array.isArray(p.TotalAmount) && p.TotalAmount.length > 0)
+        ? p.TotalAmount.reduce((s, it) => s + parseFloat(it?.total || it?.amount || 0), 0)
+        : parseFloat(p.amount || 0);
+
+      const val = isFinite(appliedTotal) ? appliedTotal : 0;
+      totalCashIn += p.transactionType === 'Refund' ? -val : val;
+    });
+
+    (rawData.pos || []).forEach((p) => {
+      if (!p || !isCurrentPeriod(p)) return;
+      if (String(p.status || '').toLowerCase() !== 'paid') return;
+      const posRate = parseFloat(p.rate) || rateNum;
+      totalCashIn += parseFloat(p.TotalAmountPaid || 0) / posRate;
+    });
+
+    // 4. CASH OUT (Cash Basis = Daily Expenses + Payroll + Paid Item Purchases)
+    let totalPaidPurchases = 0;
+    (rawData.itemPurchases || []).forEach((pur) => {
+      if (!pur) return;
+      const hasPayments = (pur.payments || []).length > 0;
+      if (hasPayments) {
+        pur.payments.forEach(pay => {
+          if (!isCurrentPeriod(pay)) return;
+          const pRate = parseFloat(pay.rate || rateNum);
+          const pAmount = parseFloat(pay.totalUSD || (parseFloat(pay.amount || 0) + (parseFloat(pay.amountFC || 0) / pRate)) || 0);
+          totalPaidPurchases += (isNaN(pAmount) ? 0 : pAmount);
+        });
+      } else if (String(pur.status || '').toUpperCase() === 'PAID') {
+        if (isCurrentPeriod(pur)) {
+          totalPaidPurchases += parseFloat(pur.amount || pur.total || 0);
+        }
+      }
+    });
+
+    const totalCashOut = totalDailyExpenses + totalPayroll + totalPaidPurchases;
+
+    // 5. RECEIVABLES (Accrual Unpaid Balances)
     let currentRec = 0;
     let overdueRec = 0;
     const now = new Date();
 
-    invoices.forEach((inv) => {
+    (rawData.invoices || []).forEach((inv) => {
       if (!inv) return;
-      const total = Number(inv.totalAmount || inv.totalInvoice || inv.total || 0);
-      const paid = Number(inv.paidAmount || inv.total || 0);
-      const balance = total - paid;
-      revenue += total;
+      if (inv.status && ['Draft', 'Decline', 'Void', 'Free of Charge'].includes(inv.status)) return;
+      const invTotal = parseFloat(inv.totalAmount || inv.totalInvoice || inv.total || 0);
+      const invPaid = parseFloat(inv.paidAmount || inv.total || 0);
+      const balance = inv.balanceDue !== undefined && inv.balanceDue !== null ? parseFloat(inv.balanceDue) : (invTotal - invPaid);
 
-      if (balance > 0) {
-        const dueDate = inv.dueDate ? new Date(inv.dueDate) : null;
+      if (balance > 0.01) {
+        const dueDate = inv.dueDate || inv.invoiceDueDate ? new Date(inv.dueDate || inv.invoiceDueDate) : null;
         if (dueDate && !isNaN(dueDate.getTime()) && dueDate < now) {
           overdueRec += balance;
         } else {
@@ -353,34 +446,28 @@ function MobileDashboardContent() {
       }
     });
 
-    let totalExp = 0;
-    expenses.forEach((exp) => {
-      if (!exp) return;
-      const expTotal = exp.total !== undefined && exp.total !== null && exp.total !== '' 
-        ? Number(exp.total) 
-        : (exp.rate && exp.amount ? Number(exp.amount) / Number(exp.rate) : Number(exp.amount || 0));
-      totalExp += (isNaN(expTotal) ? 0 : expTotal);
+    // 6. RECENT INVOICES (Top 5 newest invoices in system by invoiceNumber descending)
+    const sortedInvoices = [...(rawData.invoices || [])].sort((a, b) => {
+      const numA = Number(a?.invoiceNumber || 0);
+      const numB = Number(b?.invoiceNumber || 0);
+      if (numA && numB && numA !== numB) return numB - numA;
+      const dateA = a?.invoiceDate ? new Date(a.invoiceDate).getTime() : (a?.createdAt ? new Date(a.createdAt).getTime() : 0);
+      const dateB = b?.invoiceDate ? new Date(b.invoiceDate).getTime() : (b?.createdAt ? new Date(b.createdAt).getTime() : 0);
+      return dateB - dateA;
     });
-
-    let totalPaid = 0;
-    payments.forEach((p) => {
-      if (!p) return;
-      totalPaid += Number(p.amount || p.total || 0);
-    });
-
-    const recent = invoices.slice(-5).reverse();
+    const recent = sortedInvoices.slice(0, 5);
 
     setMetrics({
       totalRevenue: revenue,
       totalExpenses: totalExp,
-      currentReceivables: currentRec > 0 ? currentRec : revenue * 0.35,
-      overdueReceivables: overdueRec > 0 ? overdueRec : revenue * 0.15,
-      cashIn: totalPaid > 0 ? totalPaid : revenue * 0.8,
-      cashOut: totalExp,
+      currentReceivables: currentRec,
+      overdueReceivables: overdueRec,
+      cashIn: totalCashIn,
+      cashOut: totalCashOut,
       netIncome: revenue - totalExp,
       recentInvoices: recent
     });
-  }, [rawData, selectedMonth, viewMode]);
+  }, [rawData, selectedMonth, viewMode, systemRate]);
 
   const [pickerOpen, setPickerOpen] = useState(false);
   const [pickerYear, setPickerYear] = useState(dayjs().year());
@@ -975,7 +1062,17 @@ function MobileDashboardContent() {
                     <Typography variant="subtitle2" sx={{ fontWeight: 800, color: '#1E293B' }}>
                       {formatCurrency(amount)}
                     </Typography>
-                    <Chip label="SENT" size="small" sx={{ height: 20, fontSize: '0.65rem', fontWeight: 700, backgroundColor: '#EFF6FF', color: '#2563EB', mt: 0.3 }} />
+                    {(() => {
+                      const st = String(inv.status || 'SENT').toUpperCase();
+                      let bg = '#EFF6FF';
+                      let col = '#2563EB';
+                      if (st === 'PAID') { bg = '#DCFCE7'; col = '#16A34A'; }
+                      else if (st === 'PARTIALLY-PAID' || st === 'PARTIALLY PAID') { bg = '#FEF3C7'; col = '#D97706'; }
+                      else if (st === 'OVERDUE' || st === 'VOID' || st === 'DECLINE') { bg = '#FEE2E2'; col = '#DC2626'; }
+                      return (
+                        <Chip label={st} size="small" sx={{ height: 20, fontSize: '0.65rem', fontWeight: 700, backgroundColor: bg, color: col, mt: 0.3 }} />
+                      );
+                    })()}
                   </Box>
                 </Box>
               );

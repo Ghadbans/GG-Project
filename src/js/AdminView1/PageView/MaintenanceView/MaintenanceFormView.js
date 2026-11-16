@@ -1193,7 +1193,7 @@ function MaintenanceFormView() {
           </Card>
 
           {/* Card 4: Parts / Items Used */}
-          <Card sx={{ borderRadius: 3.5, p: 2.5, mb: 3, backgroundColor: '#ffffff', boxShadow: '0 2px 10px rgba(0,0,0,0.04)' }}>
+          <Card sx={{ borderRadius: 3.5, p: 2.5, mb: 2, backgroundColor: '#ffffff', boxShadow: '0 2px 10px rgba(0,0,0,0.04)' }}>
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1.5 }}>
               <Typography variant="caption" sx={{ color: '#64748B', fontWeight: 700, textTransform: 'uppercase' }}>
                 Parts / Items Used ({items.length})
@@ -1201,10 +1201,13 @@ function MaintenanceFormView() {
             </Box>
 
             {items.map((it, idx) => {
-              const name = it?.itemName?.itemName || it?.itemName?.name || it?.newDescription || `Part #${idx + 1}`;
-              const desc = it?.itemDescription || '';
+              const rawItemName = typeof it?.itemName === 'object' ? it?.itemName?.itemName : it?.itemName;
+              const isCustomEmpty = !rawItemName || String(rawItemName).trim().toLowerCase() === 'empty';
+              const name = isCustomEmpty ? (it?.itemDescription || `Custom Part #${idx + 1}`) : (rawItemName || `Part #${idx + 1}`);
+              const desc = (!isCustomEmpty && it?.itemDescription) ? it.itemDescription : '';
               const qty = Number(it?.itemQty || 1);
               const rate = Number(it?.itemRate || 0);
+
               return (
                 <Box key={it.idRow || idx} sx={{ py: 1.5, borderBottom: idx < items.length - 1 ? '1px solid #F1F5F9' : 'none' }}>
                   <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
@@ -1217,53 +1220,92 @@ function MaintenanceFormView() {
                           {desc}
                         </Typography>
                       )}
-                      {rate > 0 && (
-                        <Typography variant="caption" sx={{ color: '#30368a', fontWeight: 700, display: 'block', mt: 0.2 }}>
-                          ${rate.toFixed(2)} each • Total: ${(qty * rate).toFixed(2)}
-                        </Typography>
-                      )}
                     </Box>
                     <IconButton size="small" onClick={() => deleteItem(it.idRow)} sx={{ color: '#EF4444' }}>
                       <DeleteIcon fontSize="small" />
                     </IconButton>
                   </Box>
-                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mt: 1 }}>
-                    <Typography variant="caption" sx={{ color: '#64748B', fontWeight: 600 }}>Quantity:</Typography>
-                    <Box sx={{ display: 'flex', alignItems: 'center', backgroundColor: '#F1F5F9', borderRadius: 2, px: 1 }}>
-                      <IconButton
-                        size="small"
-                        onClick={() => {
-                          SetItems(prev => prev.map(itemRow => {
-                            if (itemRow.idRow === it.idRow) {
-                              const newQty = Math.max(1, (Number(itemRow.itemQty) || 1) - 1);
-                              const r = Number(itemRow.itemRate || 0);
-                              return { ...itemRow, itemQty: newQty, itemAmount: newQty * r, totalAmount: newQty * r };
-                            }
-                            return itemRow;
-                          }));
-                        }}
-                      >
-                        -
-                      </IconButton>
-                      <Typography variant="body2" sx={{ fontWeight: 700, px: 1.5, minWidth: 20, textAlign: 'center' }}>
-                        {qty}
-                      </Typography>
-                      <IconButton
-                        size="small"
-                        onClick={() => {
-                          SetItems(prev => prev.map(itemRow => {
-                            if (itemRow.idRow === it.idRow) {
-                              const newQty = (Number(itemRow.itemQty) || 1) + 1;
-                              const r = Number(itemRow.itemRate || 0);
-                              return { ...itemRow, itemQty: newQty, itemAmount: newQty * r, totalAmount: newQty * r };
-                            }
-                            return itemRow;
-                          }));
-                        }}
-                      >
-                        +
-                      </IconButton>
+
+                  {/* Description Input for Custom / Empty parts */}
+                  {isCustomEmpty && (
+                    <TextField
+                      fullWidth
+                      size="small"
+                      label="Part / Service Description"
+                      placeholder="e.g. DEMARREUR 'STARTER', OIL FILTER..."
+                      value={it.itemDescription || ''}
+                      onChange={(e) => {
+                        const val = e.target.value;
+                        SetItems(prev => prev.map(itemRow => itemRow.idRow === it.idRow ? { ...itemRow, itemDescription: val } : itemRow));
+                      }}
+                      sx={{ mt: 1 }}
+                    />
+                  )}
+
+                  {/* Quantity and Price Inputs for Admins */}
+                  <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 1.5, mt: 1.5, alignItems: 'center' }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                      <Typography variant="caption" sx={{ color: '#64748B', fontWeight: 600 }}>Qty:</Typography>
+                      <Box sx={{ display: 'flex', alignItems: 'center', backgroundColor: '#F1F5F9', borderRadius: 2, px: 0.5 }}>
+                        <IconButton
+                          size="small"
+                          onClick={() => {
+                            SetItems(prev => prev.map(itemRow => {
+                              if (itemRow.idRow === it.idRow) {
+                                const newQty = Math.max(1, (Number(itemRow.itemQty) || 1) - 1);
+                                const r = Number(itemRow.itemRate || 0);
+                                return { ...itemRow, itemQty: newQty, itemAmount: newQty * r, totalAmount: newQty * r };
+                              }
+                              return itemRow;
+                            }));
+                          }}
+                        >
+                          -
+                        </IconButton>
+                        <Typography variant="body2" sx={{ fontWeight: 700, px: 1, minWidth: 20, textAlign: 'center' }}>
+                          {qty}
+                        </Typography>
+                        <IconButton
+                          size="small"
+                          onClick={() => {
+                            SetItems(prev => prev.map(itemRow => {
+                              if (itemRow.idRow === it.idRow) {
+                                const newQty = (Number(itemRow.itemQty) || 1) + 1;
+                                const r = Number(itemRow.itemRate || 0);
+                                return { ...itemRow, itemQty: newQty, itemAmount: newQty * r, totalAmount: newQty * r };
+                              }
+                              return itemRow;
+                            }));
+                          }}
+                        >
+                          +
+                        </IconButton>
+                      </Box>
                     </Box>
+
+                    <TextField
+                      size="small"
+                      type="number"
+                      label="Rate ($)"
+                      value={it.itemRate != null ? it.itemRate : 0}
+                      onChange={(e) => {
+                        const r = parseFloat(e.target.value) || 0;
+                        SetItems(prev => prev.map(itemRow => {
+                          if (itemRow.idRow === it.idRow) {
+                            const q = Number(itemRow.itemQty || 1);
+                            return { ...itemRow, itemRate: r, itemAmount: q * r, totalAmount: q * r };
+                          }
+                          return itemRow;
+                        }));
+                      }}
+                      InputProps={{ sx: { height: 36, fontSize: '0.85rem' } }}
+                    />
+                  </Box>
+
+                  <Box sx={{ textAlign: 'right', mt: 0.5 }}>
+                    <Typography variant="caption" sx={{ color: '#30368a', fontWeight: 700 }}>
+                      Line Total: ${(qty * rate).toFixed(2)}
+                    </Typography>
                   </Box>
                 </Box>
               );
@@ -1301,9 +1343,80 @@ function MaintenanceFormView() {
                   }
                 }}
                 renderInput={(params) => (
-                  <TextField {...params} placeholder="+ Add Part / Item from Inventory..." size="small" />
+                  <TextField {...params} placeholder="+ Add Part from Inventory..." size="small" />
                 )}
               />
+
+              {/* Add Custom / Empty slot button */}
+              <Button
+                fullWidth
+                variant="outlined"
+                size="small"
+                onClick={addItemWhite}
+                sx={{ mt: 1.5, borderRadius: 2, textTransform: 'none', fontWeight: 700, borderColor: '#30368a', color: '#30368a' }}
+              >
+                + Add Custom / Non-Inventory Part (Empty Slot)
+              </Button>
+            </Box>
+          </Card>
+
+          {/* Card 5: Labor Fees & Cost Summary (For Admins) */}
+          <Card sx={{ borderRadius: 3.5, p: 2.5, mb: 3, backgroundColor: '#ffffff', boxShadow: '0 2px 10px rgba(0,0,0,0.04)' }}>
+            <Typography variant="caption" sx={{ color: '#64748B', fontWeight: 700, textTransform: 'uppercase', mb: 1.5, display: 'block' }}>
+              Labor & Financial Breakdown
+            </Typography>
+            <Grid container spacing={2}>
+              <Grid item xs={6}>
+                <TextField
+                  fullWidth
+                  size="small"
+                  type="number"
+                  label="Labor Fees ($)"
+                  value={adjustmentNumber != null ? adjustmentNumber : 0}
+                  onChange={(e) => setAdjustmentNumber(parseFloat(e.target.value) || 0)}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  fullWidth
+                  size="small"
+                  type="number"
+                  label="Labor Hours/Qty"
+                  value={laborQty != null ? laborQty : 0}
+                  onChange={(e) => setLaborQty(parseFloat(e.target.value) || 0)}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  fullWidth
+                  size="small"
+                  type="number"
+                  label="Labor Discount (%)"
+                  value={laborDiscount != null ? laborDiscount : 0}
+                  onChange={(e) => setLaborDiscount(parseFloat(e.target.value) || 0)}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <Box sx={{ p: 1, backgroundColor: '#F8FAFC', borderRadius: 2, textAlign: 'right' }}>
+                  <Typography variant="caption" sx={{ color: '#64748B', display: 'block' }}>Net Labor</Typography>
+                  <Typography variant="subtitle2" sx={{ fontWeight: 800, color: '#30368a' }}>
+                    ${(parseFloat(totalLaborFeesGenerale) || 0).toFixed(2)}
+                  </Typography>
+                </Box>
+              </Grid>
+            </Grid>
+            <Divider sx={{ my: 1.5 }} />
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <Typography variant="subtitle2" sx={{ fontWeight: 800, color: '#1E293B' }}>Parts Subtotal</Typography>
+              <Typography variant="body1" sx={{ fontWeight: 700, color: '#1E293B' }}>
+                ${(parseFloat(subTotal) || 0).toFixed(2)}
+              </Typography>
+            </Box>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 0.5 }}>
+              <Typography variant="subtitle1" sx={{ fontWeight: 800, color: '#30368a' }}>Grand Total</Typography>
+              <Typography variant="h6" sx={{ fontWeight: 800, color: '#10B981' }}>
+                ${(parseFloat(subTotal || 0) + parseFloat(totalLaborFeesGenerale || 0)).toFixed(2)}
+              </Typography>
             </Box>
           </Card>
 

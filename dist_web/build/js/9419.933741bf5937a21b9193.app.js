@@ -1,4 +1,4 @@
-(this["webpackChunkgg_management"] = this["webpackChunkgg_management"] || []).push([[4444],{
+(this["webpackChunkgg_management"] = this["webpackChunkgg_management"] || []).push([[9419],{
 
 /***/ 40530
 (__unused_webpack_module, exports, __webpack_require__) {
@@ -413,6 +413,486 @@ var _default = exports.A = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRun
 
 /***/ },
 
+/***/ 17332
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var _utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(20561);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(74848);
+"use client";
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("path", {
+  d: "M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2m-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1m2 14H7v-2h7zm3-4H7v-2h10zm0-4H7V7h10z"
+}), 'Assignment'));
+/* harmony export */ __webpack_require__.d(__webpack_exports__, [
+/* harmony export */   "A", 0, /* export default binding */ __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ ]);
+
+
+/***/ },
+
+/***/ 8047
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var _utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(20561);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(74848);
+"use client";
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("path", {
+  d: "M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2m5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12z"
+}), 'Cancel'));
+/* harmony export */ __webpack_require__.d(__webpack_exports__, [
+/* harmony export */   "A", 0, /* export default binding */ __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ ]);
+
+
+/***/ },
+
+/***/ 81757
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var _utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(20561);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(74848);
+"use client";
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("path", {
+  d: "M3 10h11v2H3zm0-2h11V6H3zm0 8h7v-2H3zm15.01-3.13.71-.71c.39-.39 1.02-.39 1.41 0l.71.71c.39.39.39 1.02 0 1.41l-.71.71zm-.71.71-5.3 5.3V21h2.12l5.3-5.3z"
+}), 'EditNote'));
+/* harmony export */ __webpack_require__.d(__webpack_exports__, [
+/* harmony export */   "A", 0, /* export default binding */ __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ ]);
+
+
+/***/ },
+
+/***/ 62430
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var _utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(20561);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(74848);
+"use client";
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("path", {
+  d: "M6 2v6h.01L6 8.01 10 12l-4 4 .01.01H6V22h12v-5.99h-.01L18 16l-4-4 4-3.99-.01-.01H18V2zm10 14.5V20H8v-3.5l4-4zm-4-5-4-4V4h8v3.5z"
+}), 'HourglassEmpty'));
+/* harmony export */ __webpack_require__.d(__webpack_exports__, [
+/* harmony export */   "A", 0, /* export default binding */ __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ ]);
+
+
+/***/ },
+
+/***/ 7078
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var _utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(20561);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(74848);
+"use client";
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("path", {
+  d: "M18.39 14.56C16.71 13.7 14.53 13 12 13s-4.71.7-6.39 1.56C4.61 15.07 4 16.1 4 17.22V20h16v-2.78c0-1.12-.61-2.15-1.61-2.66M18 18H6v-.78c0-.38.2-.72.52-.88C7.71 15.73 9.63 15 12 15c2.37 0 4.29.73 5.48 1.34.32.16.52.5.52.88zm-8.22-6h4.44c1.21 0 2.14-1.06 1.98-2.26l-.32-2.45C15.57 5.39 13.92 4 12 4S8.43 5.39 8.12 7.29L7.8 9.74c-.16 1.2.77 2.26 1.98 2.26m.32-4.41C10.26 6.67 11.06 6 12 6s1.74.67 1.9 1.59l.32 2.41H9.78z"
+}), 'Person2Outlined'));
+/* harmony export */ __webpack_require__.d(__webpack_exports__, [
+/* harmony export */   "A", 0, /* export default binding */ __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ ]);
+
+
+/***/ },
+
+/***/ 79030
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var _utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(20561);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(74848);
+"use client";
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("path", {
+  d: "M8.65 5.82C9.36 4.72 10.6 4 12 4c2.21 0 4 1.79 4 4 0 1.4-.72 2.64-1.82 3.35zM20 17.17c-.02-1.1-.63-2.11-1.61-2.62-.54-.28-1.13-.54-1.77-.76zm.49 3.32L3.51 3.51a.9959.9959 0 0 0-1.41 0c-.39.39-.39 1.02 0 1.41l8.18 8.18c-1.82.23-3.41.8-4.7 1.46C4.6 15.08 4 16.11 4 17.22V20h13.17l1.9 1.9c.39.39 1.02.39 1.41 0 .4-.39.4-1.02.01-1.41"
+}), 'PersonOffRounded'));
+/* harmony export */ __webpack_require__.d(__webpack_exports__, [
+/* harmony export */   "A", 0, /* export default binding */ __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ ]);
+
+
+/***/ },
+
+/***/ 52751
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var _utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(20561);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(74848);
+"use client";
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("path", {
+  d: "M2.01 21 23 12 2.01 3 2 10l15 2-15 2z"
+}), 'Send'));
+/* harmony export */ __webpack_require__.d(__webpack_exports__, [
+/* harmony export */   "A", 0, /* export default binding */ __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ ]);
+
+
+/***/ },
+
+/***/ 36632
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+
+// EXPORTS
+__webpack_require__.d(__webpack_exports__, {
+  A: () => (/* binding */ Alert_Alert)
+});
+
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js
+var objectWithoutPropertiesLoose = __webpack_require__(98587);
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/extends.js
+var esm_extends = __webpack_require__(58168);
+// EXTERNAL MODULE: ./node_modules/react/index.js
+var react = __webpack_require__(96540);
+// EXTERNAL MODULE: ./node_modules/clsx/dist/clsx.mjs
+var clsx = __webpack_require__(34164);
+// EXTERNAL MODULE: ./node_modules/@mui/utils/esm/composeClasses/composeClasses.js
+var composeClasses = __webpack_require__(75659);
+// EXTERNAL MODULE: ./node_modules/@mui/system/colorManipulator.js
+var colorManipulator = __webpack_require__(771);
+// EXTERNAL MODULE: ./node_modules/@mui/material/styles/styled.js
+var styled = __webpack_require__(11848);
+// EXTERNAL MODULE: ./node_modules/@mui/material/DefaultPropsProvider/DefaultPropsProvider.js
+var DefaultPropsProvider = __webpack_require__(25669);
+// EXTERNAL MODULE: ./node_modules/@mui/material/utils/useSlot.js
+var useSlot = __webpack_require__(6025);
+// EXTERNAL MODULE: ./node_modules/@mui/material/utils/capitalize.js
+var capitalize = __webpack_require__(28466);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Paper/Paper.js + 2 modules
+var Paper = __webpack_require__(60538);
+// EXTERNAL MODULE: ./node_modules/@mui/utils/esm/generateUtilityClasses/generateUtilityClasses.js
+var generateUtilityClasses = __webpack_require__(38413);
+// EXTERNAL MODULE: ./node_modules/@mui/utils/esm/generateUtilityClass/generateUtilityClass.js
+var generateUtilityClass = __webpack_require__(31609);
+;// ./node_modules/@mui/material/Alert/alertClasses.js
+
+
+function getAlertUtilityClass(slot) {
+  return (0,generateUtilityClass/* default */.Ay)('MuiAlert', slot);
+}
+const alertClasses = (0,generateUtilityClasses/* default */.A)('MuiAlert', ['root', 'action', 'icon', 'message', 'filled', 'colorSuccess', 'colorInfo', 'colorWarning', 'colorError', 'filledSuccess', 'filledInfo', 'filledWarning', 'filledError', 'outlined', 'outlinedSuccess', 'outlinedInfo', 'outlinedWarning', 'outlinedError', 'standard', 'standardSuccess', 'standardInfo', 'standardWarning', 'standardError']);
+/* harmony default export */ const Alert_alertClasses = (alertClasses);
+// EXTERNAL MODULE: ./node_modules/@mui/material/IconButton/IconButton.js + 1 modules
+var IconButton = __webpack_require__(11641);
+// EXTERNAL MODULE: ./node_modules/@mui/material/utils/createSvgIcon.js
+var createSvgIcon = __webpack_require__(20561);
+// EXTERNAL MODULE: ./node_modules/react/jsx-runtime.js
+var jsx_runtime = __webpack_require__(74848);
+;// ./node_modules/@mui/material/internal/svg-icons/SuccessOutlined.js
+'use client';
+
+
+
+
+/**
+ * @ignore - internal component.
+ */
+
+/* harmony default export */ const SuccessOutlined = ((0,createSvgIcon/* default */.A)( /*#__PURE__*/(0,jsx_runtime.jsx)("path", {
+  d: "M20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4C12.76,4 13.5,4.11 14.2, 4.31L15.77,2.74C14.61,2.26 13.34,2 12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0, 0 22,12M7.91,10.08L6.5,11.5L11,16L21,6L19.59,4.58L11,13.17L7.91,10.08Z"
+}), 'SuccessOutlined'));
+;// ./node_modules/@mui/material/internal/svg-icons/ReportProblemOutlined.js
+'use client';
+
+
+
+
+/**
+ * @ignore - internal component.
+ */
+
+/* harmony default export */ const ReportProblemOutlined = ((0,createSvgIcon/* default */.A)( /*#__PURE__*/(0,jsx_runtime.jsx)("path", {
+  d: "M12 5.99L19.53 19H4.47L12 5.99M12 2L1 21h22L12 2zm1 14h-2v2h2v-2zm0-6h-2v4h2v-4z"
+}), 'ReportProblemOutlined'));
+;// ./node_modules/@mui/material/internal/svg-icons/ErrorOutline.js
+'use client';
+
+
+
+
+/**
+ * @ignore - internal component.
+ */
+
+/* harmony default export */ const ErrorOutline = ((0,createSvgIcon/* default */.A)( /*#__PURE__*/(0,jsx_runtime.jsx)("path", {
+  d: "M11 15h2v2h-2zm0-8h2v6h-2zm.99-5C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
+}), 'ErrorOutline'));
+;// ./node_modules/@mui/material/internal/svg-icons/InfoOutlined.js
+'use client';
+
+
+
+
+/**
+ * @ignore - internal component.
+ */
+
+/* harmony default export */ const InfoOutlined = ((0,createSvgIcon/* default */.A)( /*#__PURE__*/(0,jsx_runtime.jsx)("path", {
+  d: "M11,9H13V7H11M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20, 12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10, 10 0 0,0 12,2M11,17H13V11H11V17Z"
+}), 'InfoOutlined'));
+// EXTERNAL MODULE: ./node_modules/@mui/material/internal/svg-icons/Close.js
+var Close = __webpack_require__(49350);
+;// ./node_modules/@mui/material/Alert/Alert.js
+'use client';
+
+
+
+const _excluded = ["action", "children", "className", "closeText", "color", "components", "componentsProps", "icon", "iconMapping", "onClose", "role", "severity", "slotProps", "slots", "variant"];
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const useUtilityClasses = ownerState => {
+  const {
+    variant,
+    color,
+    severity,
+    classes
+  } = ownerState;
+  const slots = {
+    root: ['root', `color${(0,capitalize/* default */.A)(color || severity)}`, `${variant}${(0,capitalize/* default */.A)(color || severity)}`, `${variant}`],
+    icon: ['icon'],
+    message: ['message'],
+    action: ['action']
+  };
+  return (0,composeClasses/* default */.A)(slots, getAlertUtilityClass, classes);
+};
+const AlertRoot = (0,styled/* default */.Ay)(Paper/* default */.A, {
+  name: 'MuiAlert',
+  slot: 'Root',
+  overridesResolver: (props, styles) => {
+    const {
+      ownerState
+    } = props;
+    return [styles.root, styles[ownerState.variant], styles[`${ownerState.variant}${(0,capitalize/* default */.A)(ownerState.color || ownerState.severity)}`]];
+  }
+})(({
+  theme
+}) => {
+  const getColor = theme.palette.mode === 'light' ? colorManipulator/* darken */.e$ : colorManipulator/* lighten */.a;
+  const getBackgroundColor = theme.palette.mode === 'light' ? colorManipulator/* lighten */.a : colorManipulator/* darken */.e$;
+  return (0,esm_extends/* default */.A)({}, theme.typography.body2, {
+    backgroundColor: 'transparent',
+    display: 'flex',
+    padding: '6px 16px',
+    variants: [...Object.entries(theme.palette).filter(([, value]) => value.main && value.light).map(([color]) => ({
+      props: {
+        colorSeverity: color,
+        variant: 'standard'
+      },
+      style: {
+        color: theme.vars ? theme.vars.palette.Alert[`${color}Color`] : getColor(theme.palette[color].light, 0.6),
+        backgroundColor: theme.vars ? theme.vars.palette.Alert[`${color}StandardBg`] : getBackgroundColor(theme.palette[color].light, 0.9),
+        [`& .${Alert_alertClasses.icon}`]: theme.vars ? {
+          color: theme.vars.palette.Alert[`${color}IconColor`]
+        } : {
+          color: theme.palette[color].main
+        }
+      }
+    })), ...Object.entries(theme.palette).filter(([, value]) => value.main && value.light).map(([color]) => ({
+      props: {
+        colorSeverity: color,
+        variant: 'outlined'
+      },
+      style: {
+        color: theme.vars ? theme.vars.palette.Alert[`${color}Color`] : getColor(theme.palette[color].light, 0.6),
+        border: `1px solid ${(theme.vars || theme).palette[color].light}`,
+        [`& .${Alert_alertClasses.icon}`]: theme.vars ? {
+          color: theme.vars.palette.Alert[`${color}IconColor`]
+        } : {
+          color: theme.palette[color].main
+        }
+      }
+    })), ...Object.entries(theme.palette).filter(([, value]) => value.main && value.dark).map(([color]) => ({
+      props: {
+        colorSeverity: color,
+        variant: 'filled'
+      },
+      style: (0,esm_extends/* default */.A)({
+        fontWeight: theme.typography.fontWeightMedium
+      }, theme.vars ? {
+        color: theme.vars.palette.Alert[`${color}FilledColor`],
+        backgroundColor: theme.vars.palette.Alert[`${color}FilledBg`]
+      } : {
+        backgroundColor: theme.palette.mode === 'dark' ? theme.palette[color].dark : theme.palette[color].main,
+        color: theme.palette.getContrastText(theme.palette[color].main)
+      })
+    }))]
+  });
+});
+const AlertIcon = (0,styled/* default */.Ay)('div', {
+  name: 'MuiAlert',
+  slot: 'Icon',
+  overridesResolver: (props, styles) => styles.icon
+})({
+  marginRight: 12,
+  padding: '7px 0',
+  display: 'flex',
+  fontSize: 22,
+  opacity: 0.9
+});
+const AlertMessage = (0,styled/* default */.Ay)('div', {
+  name: 'MuiAlert',
+  slot: 'Message',
+  overridesResolver: (props, styles) => styles.message
+})({
+  padding: '8px 0',
+  minWidth: 0,
+  overflow: 'auto'
+});
+const AlertAction = (0,styled/* default */.Ay)('div', {
+  name: 'MuiAlert',
+  slot: 'Action',
+  overridesResolver: (props, styles) => styles.action
+})({
+  display: 'flex',
+  alignItems: 'flex-start',
+  padding: '4px 0 0 16px',
+  marginLeft: 'auto',
+  marginRight: -8
+});
+const defaultIconMapping = {
+  success: /*#__PURE__*/(0,jsx_runtime.jsx)(SuccessOutlined, {
+    fontSize: "inherit"
+  }),
+  warning: /*#__PURE__*/(0,jsx_runtime.jsx)(ReportProblemOutlined, {
+    fontSize: "inherit"
+  }),
+  error: /*#__PURE__*/(0,jsx_runtime.jsx)(ErrorOutline, {
+    fontSize: "inherit"
+  }),
+  info: /*#__PURE__*/(0,jsx_runtime.jsx)(InfoOutlined, {
+    fontSize: "inherit"
+  })
+};
+const Alert = /*#__PURE__*/react.forwardRef(function Alert(inProps, ref) {
+  const props = (0,DefaultPropsProvider/* useDefaultProps */.b)({
+    props: inProps,
+    name: 'MuiAlert'
+  });
+  const {
+      action,
+      children,
+      className,
+      closeText = 'Close',
+      color,
+      components = {},
+      componentsProps = {},
+      icon,
+      iconMapping = defaultIconMapping,
+      onClose,
+      role = 'alert',
+      severity = 'success',
+      slotProps = {},
+      slots = {},
+      variant = 'standard'
+    } = props,
+    other = (0,objectWithoutPropertiesLoose/* default */.A)(props, _excluded);
+  const ownerState = (0,esm_extends/* default */.A)({}, props, {
+    color,
+    severity,
+    variant,
+    colorSeverity: color || severity
+  });
+  const classes = useUtilityClasses(ownerState);
+  const externalForwardedProps = {
+    slots: (0,esm_extends/* default */.A)({
+      closeButton: components.CloseButton,
+      closeIcon: components.CloseIcon
+    }, slots),
+    slotProps: (0,esm_extends/* default */.A)({}, componentsProps, slotProps)
+  };
+  const [CloseButtonSlot, closeButtonProps] = (0,useSlot/* default */.A)('closeButton', {
+    elementType: IconButton/* default */.A,
+    externalForwardedProps,
+    ownerState
+  });
+  const [CloseIconSlot, closeIconProps] = (0,useSlot/* default */.A)('closeIcon', {
+    elementType: Close/* default */.A,
+    externalForwardedProps,
+    ownerState
+  });
+  return /*#__PURE__*/(0,jsx_runtime.jsxs)(AlertRoot, (0,esm_extends/* default */.A)({
+    role: role,
+    elevation: 0,
+    ownerState: ownerState,
+    className: (0,clsx/* default */.A)(classes.root, className),
+    ref: ref
+  }, other, {
+    children: [icon !== false ? /*#__PURE__*/(0,jsx_runtime.jsx)(AlertIcon, {
+      ownerState: ownerState,
+      className: classes.icon,
+      children: icon || iconMapping[severity] || defaultIconMapping[severity]
+    }) : null, /*#__PURE__*/(0,jsx_runtime.jsx)(AlertMessage, {
+      ownerState: ownerState,
+      className: classes.message,
+      children: children
+    }), action != null ? /*#__PURE__*/(0,jsx_runtime.jsx)(AlertAction, {
+      ownerState: ownerState,
+      className: classes.action,
+      children: action
+    }) : null, action == null && onClose ? /*#__PURE__*/(0,jsx_runtime.jsx)(AlertAction, {
+      ownerState: ownerState,
+      className: classes.action,
+      children: /*#__PURE__*/(0,jsx_runtime.jsx)(CloseButtonSlot, (0,esm_extends/* default */.A)({
+        size: "small",
+        "aria-label": closeText,
+        title: closeText,
+        color: "inherit",
+        onClick: onClose
+      }, closeButtonProps, {
+        children: /*#__PURE__*/(0,jsx_runtime.jsx)(CloseIconSlot, (0,esm_extends/* default */.A)({
+          fontSize: "small"
+        }, closeIconProps))
+      }))
+    }) : null]
+  }));
+});
+ false ? 0 : void 0;
+/* harmony default export */ const Alert_Alert = (Alert);
+
+/***/ },
+
 /***/ 87458
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
@@ -769,6 +1249,614 @@ const LinearProgress = /*#__PURE__*/react.forwardRef(function LinearProgress(inP
 });
  false ? 0 : void 0;
 /* harmony default export */ const LinearProgress_LinearProgress = (LinearProgress);
+
+/***/ },
+
+/***/ 69279
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+
+// EXPORTS
+__webpack_require__.d(__webpack_exports__, {
+  A: () => (/* binding */ Pagination_Pagination)
+});
+
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/extends.js
+var esm_extends = __webpack_require__(58168);
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js
+var objectWithoutPropertiesLoose = __webpack_require__(98587);
+// EXTERNAL MODULE: ./node_modules/react/index.js
+var react = __webpack_require__(96540);
+// EXTERNAL MODULE: ./node_modules/clsx/dist/clsx.mjs
+var clsx = __webpack_require__(34164);
+// EXTERNAL MODULE: ./node_modules/@mui/utils/esm/composeClasses/composeClasses.js
+var composeClasses = __webpack_require__(75659);
+// EXTERNAL MODULE: ./node_modules/@mui/material/DefaultPropsProvider/DefaultPropsProvider.js
+var DefaultPropsProvider = __webpack_require__(25669);
+// EXTERNAL MODULE: ./node_modules/@mui/utils/esm/generateUtilityClasses/generateUtilityClasses.js
+var generateUtilityClasses = __webpack_require__(38413);
+// EXTERNAL MODULE: ./node_modules/@mui/utils/esm/generateUtilityClass/generateUtilityClass.js
+var generateUtilityClass = __webpack_require__(31609);
+;// ./node_modules/@mui/material/Pagination/paginationClasses.js
+
+
+function getPaginationUtilityClass(slot) {
+  return (0,generateUtilityClass/* default */.Ay)('MuiPagination', slot);
+}
+const paginationClasses = (0,generateUtilityClasses/* default */.A)('MuiPagination', ['root', 'ul', 'outlined', 'text']);
+/* harmony default export */ const Pagination_paginationClasses = ((/* unused pure expression or super */ null && (paginationClasses)));
+// EXTERNAL MODULE: ./node_modules/@mui/utils/esm/useControlled/useControlled.js
+var useControlled = __webpack_require__(2501);
+;// ./node_modules/@mui/material/usePagination/usePagination.js
+'use client';
+
+
+
+const _excluded = ["boundaryCount", "componentName", "count", "defaultPage", "disabled", "hideNextButton", "hidePrevButton", "onChange", "page", "showFirstButton", "showLastButton", "siblingCount"];
+
+function usePagination(props = {}) {
+  // keep default values in sync with @default tags in Pagination.propTypes
+  const {
+      boundaryCount = 1,
+      componentName = 'usePagination',
+      count = 1,
+      defaultPage = 1,
+      disabled = false,
+      hideNextButton = false,
+      hidePrevButton = false,
+      onChange: handleChange,
+      page: pageProp,
+      showFirstButton = false,
+      showLastButton = false,
+      siblingCount = 1
+    } = props,
+    other = (0,objectWithoutPropertiesLoose/* default */.A)(props, _excluded);
+  const [page, setPageState] = (0,useControlled/* default */.A)({
+    controlled: pageProp,
+    default: defaultPage,
+    name: componentName,
+    state: 'page'
+  });
+  const handleClick = (event, value) => {
+    if (!pageProp) {
+      setPageState(value);
+    }
+    if (handleChange) {
+      handleChange(event, value);
+    }
+  };
+
+  // https://dev.to/namirsab/comment/2050
+  const range = (start, end) => {
+    const length = end - start + 1;
+    return Array.from({
+      length
+    }, (_, i) => start + i);
+  };
+  const startPages = range(1, Math.min(boundaryCount, count));
+  const endPages = range(Math.max(count - boundaryCount + 1, boundaryCount + 1), count);
+  const siblingsStart = Math.max(Math.min(
+  // Natural start
+  page - siblingCount,
+  // Lower boundary when page is high
+  count - boundaryCount - siblingCount * 2 - 1),
+  // Greater than startPages
+  boundaryCount + 2);
+  const siblingsEnd = Math.min(Math.max(
+  // Natural end
+  page + siblingCount,
+  // Upper boundary when page is low
+  boundaryCount + siblingCount * 2 + 2),
+  // Less than endPages
+  endPages.length > 0 ? endPages[0] - 2 : count - 1);
+
+  // Basic list of items to render
+  // for example itemList = ['first', 'previous', 1, 'ellipsis', 4, 5, 6, 'ellipsis', 10, 'next', 'last']
+  const itemList = [...(showFirstButton ? ['first'] : []), ...(hidePrevButton ? [] : ['previous']), ...startPages,
+  // Start ellipsis
+  // eslint-disable-next-line no-nested-ternary
+  ...(siblingsStart > boundaryCount + 2 ? ['start-ellipsis'] : boundaryCount + 1 < count - boundaryCount ? [boundaryCount + 1] : []),
+  // Sibling pages
+  ...range(siblingsStart, siblingsEnd),
+  // End ellipsis
+  // eslint-disable-next-line no-nested-ternary
+  ...(siblingsEnd < count - boundaryCount - 1 ? ['end-ellipsis'] : count - boundaryCount > boundaryCount ? [count - boundaryCount] : []), ...endPages, ...(hideNextButton ? [] : ['next']), ...(showLastButton ? ['last'] : [])];
+
+  // Map the button type to its page number
+  const buttonPage = type => {
+    switch (type) {
+      case 'first':
+        return 1;
+      case 'previous':
+        return page - 1;
+      case 'next':
+        return page + 1;
+      case 'last':
+        return count;
+      default:
+        return null;
+    }
+  };
+
+  // Convert the basic item list to PaginationItem props objects
+  const items = itemList.map(item => {
+    return typeof item === 'number' ? {
+      onClick: event => {
+        handleClick(event, item);
+      },
+      type: 'page',
+      page: item,
+      selected: item === page,
+      disabled,
+      'aria-current': item === page ? 'true' : undefined
+    } : {
+      onClick: event => {
+        handleClick(event, buttonPage(item));
+      },
+      type: item,
+      page: buttonPage(item),
+      selected: false,
+      disabled: disabled || item.indexOf('ellipsis') === -1 && (item === 'next' || item === 'last' ? page >= count : page <= 1)
+    };
+  });
+  return (0,esm_extends/* default */.A)({
+    items
+  }, other);
+}
+// EXTERNAL MODULE: ./node_modules/@mui/system/colorManipulator.js
+var colorManipulator = __webpack_require__(771);
+// EXTERNAL MODULE: ./node_modules/@mui/system/esm/RtlProvider/index.js
+var RtlProvider = __webpack_require__(73788);
+;// ./node_modules/@mui/material/PaginationItem/paginationItemClasses.js
+
+
+function getPaginationItemUtilityClass(slot) {
+  return (0,generateUtilityClass/* default */.Ay)('MuiPaginationItem', slot);
+}
+const paginationItemClasses = (0,generateUtilityClasses/* default */.A)('MuiPaginationItem', ['root', 'page', 'sizeSmall', 'sizeLarge', 'text', 'textPrimary', 'textSecondary', 'outlined', 'outlinedPrimary', 'outlinedSecondary', 'rounded', 'ellipsis', 'firstLast', 'previousNext', 'focusVisible', 'disabled', 'selected', 'icon', 'colorPrimary', 'colorSecondary']);
+/* harmony default export */ const PaginationItem_paginationItemClasses = (paginationItemClasses);
+// EXTERNAL MODULE: ./node_modules/@mui/material/ButtonBase/ButtonBase.js + 4 modules
+var ButtonBase = __webpack_require__(18850);
+// EXTERNAL MODULE: ./node_modules/@mui/material/utils/capitalize.js
+var capitalize = __webpack_require__(28466);
+// EXTERNAL MODULE: ./node_modules/@mui/material/internal/svg-icons/FirstPage.js
+var FirstPage = __webpack_require__(28775);
+// EXTERNAL MODULE: ./node_modules/@mui/material/internal/svg-icons/LastPage.js
+var LastPage = __webpack_require__(35067);
+// EXTERNAL MODULE: ./node_modules/@mui/material/utils/createSvgIcon.js
+var createSvgIcon = __webpack_require__(20561);
+// EXTERNAL MODULE: ./node_modules/react/jsx-runtime.js
+var jsx_runtime = __webpack_require__(74848);
+;// ./node_modules/@mui/material/internal/svg-icons/NavigateBefore.js
+'use client';
+
+
+
+
+/**
+ * @ignore - internal component.
+ */
+
+/* harmony default export */ const NavigateBefore = ((0,createSvgIcon/* default */.A)( /*#__PURE__*/(0,jsx_runtime.jsx)("path", {
+  d: "M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"
+}), 'NavigateBefore'));
+;// ./node_modules/@mui/material/internal/svg-icons/NavigateNext.js
+'use client';
+
+
+
+
+/**
+ * @ignore - internal component.
+ */
+
+/* harmony default export */ const NavigateNext = ((0,createSvgIcon/* default */.A)( /*#__PURE__*/(0,jsx_runtime.jsx)("path", {
+  d: "M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"
+}), 'NavigateNext'));
+// EXTERNAL MODULE: ./node_modules/@mui/material/styles/styled.js
+var styled = __webpack_require__(11848);
+;// ./node_modules/@mui/material/PaginationItem/PaginationItem.js
+'use client';
+
+
+
+const PaginationItem_excluded = ["className", "color", "component", "components", "disabled", "page", "selected", "shape", "size", "slots", "type", "variant"];
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const overridesResolver = (props, styles) => {
+  const {
+    ownerState
+  } = props;
+  return [styles.root, styles[ownerState.variant], styles[`size${(0,capitalize/* default */.A)(ownerState.size)}`], ownerState.variant === 'text' && styles[`text${(0,capitalize/* default */.A)(ownerState.color)}`], ownerState.variant === 'outlined' && styles[`outlined${(0,capitalize/* default */.A)(ownerState.color)}`], ownerState.shape === 'rounded' && styles.rounded, ownerState.type === 'page' && styles.page, (ownerState.type === 'start-ellipsis' || ownerState.type === 'end-ellipsis') && styles.ellipsis, (ownerState.type === 'previous' || ownerState.type === 'next') && styles.previousNext, (ownerState.type === 'first' || ownerState.type === 'last') && styles.firstLast];
+};
+const useUtilityClasses = ownerState => {
+  const {
+    classes,
+    color,
+    disabled,
+    selected,
+    size,
+    shape,
+    type,
+    variant
+  } = ownerState;
+  const slots = {
+    root: ['root', `size${(0,capitalize/* default */.A)(size)}`, variant, shape, color !== 'standard' && `color${(0,capitalize/* default */.A)(color)}`, color !== 'standard' && `${variant}${(0,capitalize/* default */.A)(color)}`, disabled && 'disabled', selected && 'selected', {
+      page: 'page',
+      first: 'firstLast',
+      last: 'firstLast',
+      'start-ellipsis': 'ellipsis',
+      'end-ellipsis': 'ellipsis',
+      previous: 'previousNext',
+      next: 'previousNext'
+    }[type]],
+    icon: ['icon']
+  };
+  return (0,composeClasses/* default */.A)(slots, getPaginationItemUtilityClass, classes);
+};
+const PaginationItemEllipsis = (0,styled/* default */.Ay)('div', {
+  name: 'MuiPaginationItem',
+  slot: 'Root',
+  overridesResolver
+})(({
+  theme,
+  ownerState
+}) => (0,esm_extends/* default */.A)({}, theme.typography.body2, {
+  borderRadius: 32 / 2,
+  textAlign: 'center',
+  boxSizing: 'border-box',
+  minWidth: 32,
+  padding: '0 6px',
+  margin: '0 3px',
+  color: (theme.vars || theme).palette.text.primary,
+  height: 'auto',
+  [`&.${PaginationItem_paginationItemClasses.disabled}`]: {
+    opacity: (theme.vars || theme).palette.action.disabledOpacity
+  }
+}, ownerState.size === 'small' && {
+  minWidth: 26,
+  borderRadius: 26 / 2,
+  margin: '0 1px',
+  padding: '0 4px'
+}, ownerState.size === 'large' && {
+  minWidth: 40,
+  borderRadius: 40 / 2,
+  padding: '0 10px',
+  fontSize: theme.typography.pxToRem(15)
+}));
+const PaginationItemPage = (0,styled/* default */.Ay)(ButtonBase/* default */.A, {
+  name: 'MuiPaginationItem',
+  slot: 'Root',
+  overridesResolver
+})(({
+  theme,
+  ownerState
+}) => (0,esm_extends/* default */.A)({}, theme.typography.body2, {
+  borderRadius: 32 / 2,
+  textAlign: 'center',
+  boxSizing: 'border-box',
+  minWidth: 32,
+  height: 32,
+  padding: '0 6px',
+  margin: '0 3px',
+  color: (theme.vars || theme).palette.text.primary,
+  [`&.${PaginationItem_paginationItemClasses.focusVisible}`]: {
+    backgroundColor: (theme.vars || theme).palette.action.focus
+  },
+  [`&.${PaginationItem_paginationItemClasses.disabled}`]: {
+    opacity: (theme.vars || theme).palette.action.disabledOpacity
+  },
+  transition: theme.transitions.create(['color', 'background-color'], {
+    duration: theme.transitions.duration.short
+  }),
+  '&:hover': {
+    backgroundColor: (theme.vars || theme).palette.action.hover,
+    // Reset on touch devices, it doesn't add specificity
+    '@media (hover: none)': {
+      backgroundColor: 'transparent'
+    }
+  },
+  [`&.${PaginationItem_paginationItemClasses.selected}`]: {
+    backgroundColor: (theme.vars || theme).palette.action.selected,
+    '&:hover': {
+      backgroundColor: theme.vars ? `rgba(${theme.vars.palette.action.selectedChannel} / calc(${theme.vars.palette.action.selectedOpacity} + ${theme.vars.palette.action.hoverOpacity}))` : (0,colorManipulator/* alpha */.X4)(theme.palette.action.selected, theme.palette.action.selectedOpacity + theme.palette.action.hoverOpacity),
+      // Reset on touch devices, it doesn't add specificity
+      '@media (hover: none)': {
+        backgroundColor: (theme.vars || theme).palette.action.selected
+      }
+    },
+    [`&.${PaginationItem_paginationItemClasses.focusVisible}`]: {
+      backgroundColor: theme.vars ? `rgba(${theme.vars.palette.action.selectedChannel} / calc(${theme.vars.palette.action.selectedOpacity} + ${theme.vars.palette.action.focusOpacity}))` : (0,colorManipulator/* alpha */.X4)(theme.palette.action.selected, theme.palette.action.selectedOpacity + theme.palette.action.focusOpacity)
+    },
+    [`&.${PaginationItem_paginationItemClasses.disabled}`]: {
+      opacity: 1,
+      color: (theme.vars || theme).palette.action.disabled,
+      backgroundColor: (theme.vars || theme).palette.action.selected
+    }
+  }
+}, ownerState.size === 'small' && {
+  minWidth: 26,
+  height: 26,
+  borderRadius: 26 / 2,
+  margin: '0 1px',
+  padding: '0 4px'
+}, ownerState.size === 'large' && {
+  minWidth: 40,
+  height: 40,
+  borderRadius: 40 / 2,
+  padding: '0 10px',
+  fontSize: theme.typography.pxToRem(15)
+}, ownerState.shape === 'rounded' && {
+  borderRadius: (theme.vars || theme).shape.borderRadius
+}), ({
+  theme,
+  ownerState
+}) => (0,esm_extends/* default */.A)({}, ownerState.variant === 'text' && {
+  [`&.${PaginationItem_paginationItemClasses.selected}`]: (0,esm_extends/* default */.A)({}, ownerState.color !== 'standard' && {
+    color: (theme.vars || theme).palette[ownerState.color].contrastText,
+    backgroundColor: (theme.vars || theme).palette[ownerState.color].main,
+    '&:hover': {
+      backgroundColor: (theme.vars || theme).palette[ownerState.color].dark,
+      // Reset on touch devices, it doesn't add specificity
+      '@media (hover: none)': {
+        backgroundColor: (theme.vars || theme).palette[ownerState.color].main
+      }
+    },
+    [`&.${PaginationItem_paginationItemClasses.focusVisible}`]: {
+      backgroundColor: (theme.vars || theme).palette[ownerState.color].dark
+    }
+  }, {
+    [`&.${PaginationItem_paginationItemClasses.disabled}`]: {
+      color: (theme.vars || theme).palette.action.disabled
+    }
+  })
+}, ownerState.variant === 'outlined' && {
+  border: theme.vars ? `1px solid rgba(${theme.vars.palette.common.onBackgroundChannel} / 0.23)` : `1px solid ${theme.palette.mode === 'light' ? 'rgba(0, 0, 0, 0.23)' : 'rgba(255, 255, 255, 0.23)'}`,
+  [`&.${PaginationItem_paginationItemClasses.selected}`]: (0,esm_extends/* default */.A)({}, ownerState.color !== 'standard' && {
+    color: (theme.vars || theme).palette[ownerState.color].main,
+    border: `1px solid ${theme.vars ? `rgba(${theme.vars.palette[ownerState.color].mainChannel} / 0.5)` : (0,colorManipulator/* alpha */.X4)(theme.palette[ownerState.color].main, 0.5)}`,
+    backgroundColor: theme.vars ? `rgba(${theme.vars.palette[ownerState.color].mainChannel} / ${theme.vars.palette.action.activatedOpacity})` : (0,colorManipulator/* alpha */.X4)(theme.palette[ownerState.color].main, theme.palette.action.activatedOpacity),
+    '&:hover': {
+      backgroundColor: theme.vars ? `rgba(${theme.vars.palette[ownerState.color].mainChannel} / calc(${theme.vars.palette.action.activatedOpacity} + ${theme.vars.palette.action.focusOpacity}))` : (0,colorManipulator/* alpha */.X4)(theme.palette[ownerState.color].main, theme.palette.action.activatedOpacity + theme.palette.action.focusOpacity),
+      // Reset on touch devices, it doesn't add specificity
+      '@media (hover: none)': {
+        backgroundColor: 'transparent'
+      }
+    },
+    [`&.${PaginationItem_paginationItemClasses.focusVisible}`]: {
+      backgroundColor: theme.vars ? `rgba(${theme.vars.palette[ownerState.color].mainChannel} / calc(${theme.vars.palette.action.activatedOpacity} + ${theme.vars.palette.action.focusOpacity}))` : (0,colorManipulator/* alpha */.X4)(theme.palette[ownerState.color].main, theme.palette.action.activatedOpacity + theme.palette.action.focusOpacity)
+    }
+  }, {
+    [`&.${PaginationItem_paginationItemClasses.disabled}`]: {
+      borderColor: (theme.vars || theme).palette.action.disabledBackground,
+      color: (theme.vars || theme).palette.action.disabled
+    }
+  })
+}));
+const PaginationItemPageIcon = (0,styled/* default */.Ay)('div', {
+  name: 'MuiPaginationItem',
+  slot: 'Icon',
+  overridesResolver: (props, styles) => styles.icon
+})(({
+  theme,
+  ownerState
+}) => (0,esm_extends/* default */.A)({
+  fontSize: theme.typography.pxToRem(20),
+  margin: '0 -8px'
+}, ownerState.size === 'small' && {
+  fontSize: theme.typography.pxToRem(18)
+}, ownerState.size === 'large' && {
+  fontSize: theme.typography.pxToRem(22)
+}));
+const PaginationItem = /*#__PURE__*/react.forwardRef(function PaginationItem(inProps, ref) {
+  const props = (0,DefaultPropsProvider/* useDefaultProps */.b)({
+    props: inProps,
+    name: 'MuiPaginationItem'
+  });
+  const {
+      className,
+      color = 'standard',
+      component,
+      components = {},
+      disabled = false,
+      page,
+      selected = false,
+      shape = 'circular',
+      size = 'medium',
+      slots = {},
+      type = 'page',
+      variant = 'text'
+    } = props,
+    other = (0,objectWithoutPropertiesLoose/* default */.A)(props, PaginationItem_excluded);
+  const ownerState = (0,esm_extends/* default */.A)({}, props, {
+    color,
+    disabled,
+    selected,
+    shape,
+    size,
+    type,
+    variant
+  });
+  const isRtl = (0,RtlProvider/* useRtl */.I)();
+  const classes = useUtilityClasses(ownerState);
+  const normalizedIcons = isRtl ? {
+    previous: slots.next || components.next || NavigateNext,
+    next: slots.previous || components.previous || NavigateBefore,
+    last: slots.first || components.first || FirstPage/* default */.A,
+    first: slots.last || components.last || LastPage/* default */.A
+  } : {
+    previous: slots.previous || components.previous || NavigateBefore,
+    next: slots.next || components.next || NavigateNext,
+    first: slots.first || components.first || FirstPage/* default */.A,
+    last: slots.last || components.last || LastPage/* default */.A
+  };
+  const Icon = normalizedIcons[type];
+  return type === 'start-ellipsis' || type === 'end-ellipsis' ? /*#__PURE__*/(0,jsx_runtime.jsx)(PaginationItemEllipsis, {
+    ref: ref,
+    ownerState: ownerState,
+    className: (0,clsx/* default */.A)(classes.root, className),
+    children: "\u2026"
+  }) : /*#__PURE__*/(0,jsx_runtime.jsxs)(PaginationItemPage, (0,esm_extends/* default */.A)({
+    ref: ref,
+    ownerState: ownerState,
+    component: component,
+    disabled: disabled,
+    className: (0,clsx/* default */.A)(classes.root, className)
+  }, other, {
+    children: [type === 'page' && page, Icon ? /*#__PURE__*/(0,jsx_runtime.jsx)(PaginationItemPageIcon, {
+      as: Icon,
+      ownerState: ownerState,
+      className: classes.icon
+    }) : null]
+  }));
+});
+ false ? 0 : void 0;
+/* harmony default export */ const PaginationItem_PaginationItem = (PaginationItem);
+;// ./node_modules/@mui/material/Pagination/Pagination.js
+'use client';
+
+
+
+const Pagination_excluded = ["boundaryCount", "className", "color", "count", "defaultPage", "disabled", "getItemAriaLabel", "hideNextButton", "hidePrevButton", "onChange", "page", "renderItem", "shape", "showFirstButton", "showLastButton", "siblingCount", "size", "variant"];
+
+
+
+
+
+
+
+
+
+
+
+const Pagination_useUtilityClasses = ownerState => {
+  const {
+    classes,
+    variant
+  } = ownerState;
+  const slots = {
+    root: ['root', variant],
+    ul: ['ul']
+  };
+  return (0,composeClasses/* default */.A)(slots, getPaginationUtilityClass, classes);
+};
+const PaginationRoot = (0,styled/* default */.Ay)('nav', {
+  name: 'MuiPagination',
+  slot: 'Root',
+  overridesResolver: (props, styles) => {
+    const {
+      ownerState
+    } = props;
+    return [styles.root, styles[ownerState.variant]];
+  }
+})({});
+const PaginationUl = (0,styled/* default */.Ay)('ul', {
+  name: 'MuiPagination',
+  slot: 'Ul',
+  overridesResolver: (props, styles) => styles.ul
+})({
+  display: 'flex',
+  flexWrap: 'wrap',
+  alignItems: 'center',
+  padding: 0,
+  margin: 0,
+  listStyle: 'none'
+});
+function defaultGetAriaLabel(type, page, selected) {
+  if (type === 'page') {
+    return `${selected ? '' : 'Go to '}page ${page}`;
+  }
+  return `Go to ${type} page`;
+}
+const Pagination = /*#__PURE__*/react.forwardRef(function Pagination(inProps, ref) {
+  const props = (0,DefaultPropsProvider/* useDefaultProps */.b)({
+    props: inProps,
+    name: 'MuiPagination'
+  });
+  const {
+      boundaryCount = 1,
+      className,
+      color = 'standard',
+      count = 1,
+      defaultPage = 1,
+      disabled = false,
+      getItemAriaLabel = defaultGetAriaLabel,
+      hideNextButton = false,
+      hidePrevButton = false,
+      renderItem = item => /*#__PURE__*/(0,jsx_runtime.jsx)(PaginationItem_PaginationItem, (0,esm_extends/* default */.A)({}, item)),
+      shape = 'circular',
+      showFirstButton = false,
+      showLastButton = false,
+      siblingCount = 1,
+      size = 'medium',
+      variant = 'text'
+    } = props,
+    other = (0,objectWithoutPropertiesLoose/* default */.A)(props, Pagination_excluded);
+  const {
+    items
+  } = usePagination((0,esm_extends/* default */.A)({}, props, {
+    componentName: 'Pagination'
+  }));
+  const ownerState = (0,esm_extends/* default */.A)({}, props, {
+    boundaryCount,
+    color,
+    count,
+    defaultPage,
+    disabled,
+    getItemAriaLabel,
+    hideNextButton,
+    hidePrevButton,
+    renderItem,
+    shape,
+    showFirstButton,
+    showLastButton,
+    siblingCount,
+    size,
+    variant
+  });
+  const classes = Pagination_useUtilityClasses(ownerState);
+  return /*#__PURE__*/(0,jsx_runtime.jsx)(PaginationRoot, (0,esm_extends/* default */.A)({
+    "aria-label": "pagination navigation",
+    className: (0,clsx/* default */.A)(classes.root, className),
+    ownerState: ownerState,
+    ref: ref
+  }, other, {
+    children: /*#__PURE__*/(0,jsx_runtime.jsx)(PaginationUl, {
+      className: classes.ul,
+      ownerState: ownerState,
+      children: items.map((item, index) => /*#__PURE__*/(0,jsx_runtime.jsx)("li", {
+        children: renderItem((0,esm_extends/* default */.A)({}, item, {
+          color,
+          'aria-label': getItemAriaLabel(item.type, item.page, item.selected),
+          shape,
+          size,
+          variant
+        }))
+      }, index))
+    })
+  }));
+});
+
+// @default tags synced with default values from usePagination
+
+ false ? 0 : void 0;
+/* harmony default export */ const Pagination_Pagination = (Pagination);
 
 /***/ },
 
@@ -1371,57 +2459,223 @@ const GridToolbar = /*#__PURE__*/react.forwardRef(function GridToolbar(props, re
 
 /***/ },
 
-/***/ 34444
+/***/ 69419
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+// ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(96540);
-/* harmony import */ var _view_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(68525);
-/* harmony import */ var _component_SidebarDash__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(4640);
-/* harmony import */ var _PageView_Chartview_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(55746);
-/* harmony import */ var _mui_icons_material_Visibility__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(5673);
-/* harmony import */ var _mui_icons_material_Edit__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(28597);
-/* harmony import */ var _mui_icons_material_Delete__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(67034);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(84976);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(47767);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(11641);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(69067);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(14073);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(47419);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(8239);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(844);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(35406);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(11848);
-/* harmony import */ var _mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(56655);
-/* harmony import */ var _mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(58331);
-/* harmony import */ var _mui_material_AppBar__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(89828);
-/* harmony import */ var _mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(8532);
-/* harmony import */ var _mui_material_CssBaseline__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(14519);
-/* harmony import */ var _mui_material_Drawer__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(88248);
-/* harmony import */ var _mui_material_List__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(49799);
-/* harmony import */ var _mui_material_Divider__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(71543);
-/* harmony import */ var _mui_material_Container__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(97834);
-/* harmony import */ var _mui_icons_material_Menu__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(62274);
-/* harmony import */ var _mui_icons_material_ChevronLeft__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(8451);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(99380);
-/* harmony import */ var _utils_apiCache__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(46986);
-/* harmony import */ var _apiConfig__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(71510);
-/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(17809);
-/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(99682);
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(13561);
-/* harmony import */ var _features_auth_authSlice__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(32005);
-/* harmony import */ var _component_Loader__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(65821);
-/* harmony import */ var _mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(20889);
-/* harmony import */ var _component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(40301);
-/* harmony import */ var _img_no_data_png__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(20453);
-/* harmony import */ var _img_no_data_png__WEBPACK_IMPORTED_MODULE_38___default = /*#__PURE__*/__webpack_require__.n(_img_no_data_png__WEBPACK_IMPORTED_MODULE_38__);
-/* harmony import */ var _mui_x_data_grid__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(1835);
-/* harmony import */ var _mui_x_data_grid__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(53071);
-/* harmony import */ var _MessageAdminView__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(83818);
-/* harmony import */ var _NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(95236);
-/* harmony import */ var _utils_isMobile__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(2650);
-/* harmony import */ var _component_MobileCardList__WEBPACK_IMPORTED_MODULE_44__ = __webpack_require__(353);
+
+// EXPORTS
+__webpack_require__.d(__webpack_exports__, {
+  "default": () => (/* binding */ AdminView1_InvoiceViewAdmin)
+});
+
+// EXTERNAL MODULE: ./node_modules/react/index.js
+var react = __webpack_require__(96540);
+// EXTERNAL MODULE: ./node_modules/react-toastify/dist/react-toastify.esm.mjs
+var react_toastify_esm = __webpack_require__(99571);
+// EXTERNAL MODULE: ./src/js/AdminView1/view.css
+var view = __webpack_require__(68525);
+// EXTERNAL MODULE: ./src/js/AdminView1/PageView/Chartview.css
+var Chartview = __webpack_require__(55746);
+// EXTERNAL MODULE: ./src/js/component/SidebarDash.js
+var SidebarDash = __webpack_require__(4640);
+// EXTERNAL MODULE: ./node_modules/@mui/icons-material/Search.js
+var Search = __webpack_require__(64745);
+// EXTERNAL MODULE: ./node_modules/@mui/icons-material/Visibility.js
+var Visibility = __webpack_require__(5673);
+// EXTERNAL MODULE: ./node_modules/@mui/icons-material/Edit.js
+var Edit = __webpack_require__(28597);
+// EXTERNAL MODULE: ./node_modules/@mui/icons-material/Delete.js
+var Delete = __webpack_require__(67034);
+// EXTERNAL MODULE: ./node_modules/react-router/dist/index.js
+var dist = __webpack_require__(47767);
+// EXTERNAL MODULE: ./node_modules/react-router-dom/dist/index.js
+var react_router_dom_dist = __webpack_require__(84976);
+// EXTERNAL MODULE: ./node_modules/@mui/material/styles/styled.js
+var styled = __webpack_require__(11848);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Chip/Chip.js + 2 modules
+var Chip = __webpack_require__(82022);
+// EXTERNAL MODULE: ./node_modules/@mui/material/IconButton/IconButton.js + 1 modules
+var IconButton = __webpack_require__(11641);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Box/Box.js + 2 modules
+var Box = __webpack_require__(69067);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Typography/Typography.js + 1 modules
+var Typography = __webpack_require__(14073);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Button/Button.js + 3 modules
+var Button = __webpack_require__(86990);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Pagination/Pagination.js + 6 modules
+var Pagination = __webpack_require__(69279);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Modal/Modal.js + 3 modules
+var Modal = __webpack_require__(35406);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Grid/Grid.js + 2 modules
+var Grid = __webpack_require__(8239);
+// EXTERNAL MODULE: ./node_modules/@mui/material/TextField/TextField.js + 2 modules
+var TextField = __webpack_require__(844);
+// EXTERNAL MODULE: ./node_modules/@mui/material/FormControl/FormControl.js + 1 modules
+var FormControl = __webpack_require__(50779);
+// EXTERNAL MODULE: ./node_modules/@mui/material/InputLabel/InputLabel.js + 1 modules
+var InputLabel = __webpack_require__(29571);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Select/Select.js + 4 modules
+var Select = __webpack_require__(2071);
+// EXTERNAL MODULE: ./node_modules/@mui/material/MenuItem/MenuItem.js + 1 modules
+var MenuItem = __webpack_require__(73896);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Dialog/Dialog.js
+var Dialog = __webpack_require__(77037);
+// EXTERNAL MODULE: ./node_modules/@mui/material/DialogTitle/DialogTitle.js
+var DialogTitle = __webpack_require__(46831);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Tabs/Tabs.js + 6 modules
+var Tabs = __webpack_require__(17532);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Tab/Tab.js + 1 modules
+var Tab = __webpack_require__(10423);
+// EXTERNAL MODULE: ./node_modules/@mui/material/DialogContent/DialogContent.js + 1 modules
+var DialogContent = __webpack_require__(22477);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Alert/Alert.js + 5 modules
+var Alert = __webpack_require__(36632);
+// EXTERNAL MODULE: ./node_modules/@mui/material/InputAdornment/InputAdornment.js + 1 modules
+var InputAdornment = __webpack_require__(25239);
+// EXTERNAL MODULE: ./node_modules/@mui/material/TableContainer/TableContainer.js + 1 modules
+var TableContainer = __webpack_require__(33198);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Paper/Paper.js + 2 modules
+var Paper = __webpack_require__(60538);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Table/Table.js + 1 modules
+var Table = __webpack_require__(64137);
+// EXTERNAL MODULE: ./node_modules/@mui/material/TableHead/TableHead.js + 1 modules
+var TableHead = __webpack_require__(96627);
+// EXTERNAL MODULE: ./node_modules/@mui/material/TableRow/TableRow.js + 1 modules
+var TableRow = __webpack_require__(86798);
+// EXTERNAL MODULE: ./node_modules/@mui/material/TableCell/TableCell.js
+var TableCell = __webpack_require__(70691);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Checkbox/Checkbox.js + 4 modules
+var Checkbox = __webpack_require__(27558);
+// EXTERNAL MODULE: ./node_modules/@mui/material/TableBody/TableBody.js + 1 modules
+var TableBody = __webpack_require__(43884);
+// EXTERNAL MODULE: ./node_modules/@mui/material/LinearProgress/LinearProgress.js + 1 modules
+var LinearProgress = __webpack_require__(87458);
+// EXTERNAL MODULE: ./node_modules/@mui/material/DialogActions/DialogActions.js + 1 modules
+var DialogActions = __webpack_require__(58763);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Tooltip/Tooltip.js
+var Tooltip = __webpack_require__(56655);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Tooltip/tooltipClasses.js
+var tooltipClasses = __webpack_require__(58331);
+// EXTERNAL MODULE: ./node_modules/@mui/material/AppBar/AppBar.js + 1 modules
+var AppBar = __webpack_require__(89828);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Toolbar/Toolbar.js + 1 modules
+var Toolbar = __webpack_require__(8532);
+// EXTERNAL MODULE: ./node_modules/@mui/material/CssBaseline/CssBaseline.js
+var CssBaseline = __webpack_require__(14519);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Drawer/Drawer.js + 1 modules
+var Drawer = __webpack_require__(88248);
+// EXTERNAL MODULE: ./node_modules/@mui/material/List/List.js + 1 modules
+var List = __webpack_require__(49799);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Divider/Divider.js
+var Divider = __webpack_require__(71543);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Container/Container.js + 1 modules
+var Container = __webpack_require__(97834);
+// EXTERNAL MODULE: ./node_modules/@mui/icons-material/Menu.js
+var Menu = __webpack_require__(62274);
+// EXTERNAL MODULE: ./node_modules/@mui/icons-material/ChevronLeft.js
+var ChevronLeft = __webpack_require__(8451);
+// EXTERNAL MODULE: ./node_modules/axios/lib/axios.js + 48 modules
+var axios = __webpack_require__(99380);
+// EXTERNAL MODULE: ./src/js/utils/apiCache.js
+var apiCache = __webpack_require__(46986);
+// EXTERNAL MODULE: ./src/js/apiConfig.js
+var apiConfig = __webpack_require__(71510);
+// EXTERNAL MODULE: ./node_modules/@mui/material/utils/createSvgIcon.js
+var createSvgIcon = __webpack_require__(20561);
+// EXTERNAL MODULE: ./node_modules/react/jsx-runtime.js
+var jsx_runtime = __webpack_require__(74848);
+;// ./node_modules/@mui/icons-material/esm/WhatsApp.js
+'use client';
+
+
+
+
+/* harmony default export */ const WhatsApp = ((0,createSvgIcon/* default */.A)( /*#__PURE__*/(0,jsx_runtime.jsx)("path", {
+  d: "M16.75 13.96c.25.13.41.2.46.3.06.11.04.61-.21 1.18-.2.56-1.24 1.1-1.7 1.12-.46.02-.47.36-2.96-.73-2.49-1.09-3.99-3.75-4.11-3.92-.12-.17-.96-1.38-.92-2.61.05-1.22.69-1.8.95-2.04.24-.26.51-.29.68-.26h.47c.15 0 .36-.06.55.45l.69 1.87c.06.13.1.28.01.44l-.27.41-.39.42c-.12.12-.26.25-.12.5.12.26.62 1.09 1.32 1.78.91.88 1.71 1.17 1.95 1.3.24.14.39.12.54-.04l.81-.94c.19-.25.35-.19.58-.11l1.67.88M12 2a10 10 0 0 1 10 10 10 10 0 0 1-10 10c-1.97 0-3.8-.57-5.35-1.55L2 22l1.55-4.65A9.969 9.969 0 0 1 2 12 10 10 0 0 1 12 2m0 2a8 8 0 0 0-8 8c0 1.72.54 3.31 1.46 4.61L4.5 19.5l2.89-.96A7.95 7.95 0 0 0 12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8z"
+}), 'WhatsApp'));
+// EXTERNAL MODULE: ./node_modules/@mui/icons-material/esm/PersonOffRounded.js
+var PersonOffRounded = __webpack_require__(79030);
+// EXTERNAL MODULE: ./node_modules/@mui/icons-material/esm/Person2Outlined.js
+var Person2Outlined = __webpack_require__(7078);
+// EXTERNAL MODULE: ./node_modules/@mui/icons-material/esm/Assignment.js
+var Assignment = __webpack_require__(17332);
+;// ./node_modules/@mui/icons-material/esm/Payments.js
+"use client";
+
+
+
+/* harmony default export */ const Payments = ((0,createSvgIcon/* default */.A)( /*#__PURE__*/(0,jsx_runtime.jsx)("path", {
+  d: "M19 14V6c0-1.1-.9-2-2-2H3c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2m-9-1c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3m13-6v11c0 1.1-.9 2-2 2H4v-2h17V7z"
+}), 'Payments'));
+// EXTERNAL MODULE: ./node_modules/@mui/icons-material/esm/EditNote.js
+var EditNote = __webpack_require__(81757);
+// EXTERNAL MODULE: ./node_modules/@mui/icons-material/esm/Send.js
+var Send = __webpack_require__(52751);
+// EXTERNAL MODULE: ./node_modules/@mui/icons-material/esm/HourglassEmpty.js
+var HourglassEmpty = __webpack_require__(62430);
+// EXTERNAL MODULE: ./node_modules/@mui/icons-material/esm/Cancel.js
+var Cancel = __webpack_require__(8047);
+;// ./node_modules/@mui/icons-material/esm/CardGiftcard.js
+"use client";
+
+
+
+/* harmony default export */ const CardGiftcard = ((0,createSvgIcon/* default */.A)( /*#__PURE__*/(0,jsx_runtime.jsx)("path", {
+  d: "M20 6h-2.18c.11-.31.18-.65.18-1 0-1.66-1.34-3-3-3-1.05 0-1.96.54-2.5 1.35l-.5.67-.5-.68C10.96 2.54 10.05 2 9 2 7.34 2 6 3.34 6 5c0 .35.07.69.18 1H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2m-5-2c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1M9 4c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1m11 15H4v-2h16zm0-5H4V8h5.08L7 10.83 8.62 12 11 8.76l1-1.36 1 1.36L15.38 12 17 10.83 14.92 8H20z"
+}), 'CardGiftcard'));
+// EXTERNAL MODULE: ./node_modules/@mui/icons-material/esm/Add.js
+var Add = __webpack_require__(99682);
+// EXTERNAL MODULE: ./node_modules/@mui/icons-material/esm/Close.js
+var Close = __webpack_require__(17809);
+;// ./node_modules/@mui/icons-material/esm/History.js
+"use client";
+
+
+
+/* harmony default export */ const History = ((0,createSvgIcon/* default */.A)( /*#__PURE__*/(0,jsx_runtime.jsx)("path", {
+  d: "M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9m-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8z"
+}), 'History'));
+;// ./node_modules/@mui/icons-material/esm/Save.js
+"use client";
+
+
+
+/* harmony default export */ const Save = ((0,createSvgIcon/* default */.A)( /*#__PURE__*/(0,jsx_runtime.jsx)("path", {
+  d: "M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3m3-10H5V5h10z"
+}), 'Save'));
+// EXTERNAL MODULE: ./node_modules/dayjs/dayjs.min.js
+var dayjs_min = __webpack_require__(74353);
+var dayjs_min_default = /*#__PURE__*/__webpack_require__.n(dayjs_min);
+// EXTERNAL MODULE: ./src/js/component/Loader.js + 1 modules
+var Loader = __webpack_require__(65821);
+// EXTERNAL MODULE: ./node_modules/@mui/icons-material/CheckCircle.js
+var CheckCircle = __webpack_require__(20889);
+// EXTERNAL MODULE: ./node_modules/react-redux/es/index.js + 14 modules
+var es = __webpack_require__(13561);
+// EXTERNAL MODULE: ./src/js/features/auth/authSlice.js
+var authSlice = __webpack_require__(32005);
+// EXTERNAL MODULE: ./src/js/component/NetworkLogoutIcon.js
+var NetworkLogoutIcon = __webpack_require__(40301);
+// EXTERNAL MODULE: ./src/js/img/no-data.png
+var no_data = __webpack_require__(20453);
+// EXTERNAL MODULE: ./node_modules/@mui/x-data-grid/DataGrid/DataGrid.js + 185 modules
+var DataGrid = __webpack_require__(1835);
+// EXTERNAL MODULE: ./node_modules/@mui/x-data-grid/components/toolbar/GridToolbar.js + 5 modules
+var GridToolbar = __webpack_require__(53071);
+// EXTERNAL MODULE: ./src/js/AdminView1/MessageAdminView.js + 2 modules
+var MessageAdminView = __webpack_require__(83818);
+// EXTERNAL MODULE: ./src/js/AdminView1/NotificationVIewInfo.js
+var NotificationVIewInfo = __webpack_require__(95236);
+// EXTERNAL MODULE: ./src/js/utils/isMobile.js
+var utils_isMobile = __webpack_require__(2650);
+// EXTERNAL MODULE: ./src/js/component/MobileCardList.js + 2 modules
+var MobileCardList = __webpack_require__(353);
+// EXTERNAL MODULE: ./src/js/utils/formatUtils.js
+var formatUtils = __webpack_require__(37402);
+;// ./src/js/AdminView1/InvoiceViewAdmin.js
 var _excluded = ["className"],
   _excluded2 = ["className"],
   _excluded3 = ["className"];
@@ -1481,10 +2735,12 @@ function _objectWithoutPropertiesLoose(r, e) { if (null == r) return {}; var t =
 
 
 
-var DeleteTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .Ay)(_ref => {
+
+
+var DeleteTooltip = (0,styled/* default */.Ay)(_ref => {
   var className = _ref.className,
     props = _objectWithoutProperties(_ref, _excluded);
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, _extends({}, props, {
+  return /*#__PURE__*/react.createElement(Tooltip/* default */.A, _extends({}, props, {
     classes: {
       popper: className
     }
@@ -1492,7 +2748,7 @@ var DeleteTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"]
 })(_ref2 => {
   var theme = _ref2.theme;
   return {
-    ["& .".concat(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A.tooltip)]: {
+    ["& .".concat(tooltipClasses/* default */.A.tooltip)]: {
       backgroundColor: 'red',
       color: 'white',
       boxShadow: theme.shadows[1],
@@ -1500,10 +2756,10 @@ var DeleteTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"]
     }
   };
 });
-var EditTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .Ay)(_ref3 => {
+var EditTooltip = (0,styled/* default */.Ay)(_ref3 => {
   var className = _ref3.className,
     props = _objectWithoutProperties(_ref3, _excluded2);
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, _extends({}, props, {
+  return /*#__PURE__*/react.createElement(Tooltip/* default */.A, _extends({}, props, {
     classes: {
       popper: className
     }
@@ -1511,7 +2767,7 @@ var EditTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] *
 })(_ref4 => {
   var theme = _ref4.theme;
   return {
-    ["& .".concat(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A.tooltip)]: {
+    ["& .".concat(tooltipClasses/* default */.A.tooltip)]: {
       backgroundColor: 'gray',
       color: 'white',
       boxShadow: theme.shadows[1],
@@ -1519,10 +2775,10 @@ var EditTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] *
     }
   };
 });
-var ViewTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .Ay)(_ref5 => {
+var ViewTooltip = (0,styled/* default */.Ay)(_ref5 => {
   var className = _ref5.className,
     props = _objectWithoutProperties(_ref5, _excluded3);
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, _extends({}, props, {
+  return /*#__PURE__*/react.createElement(Tooltip/* default */.A, _extends({}, props, {
     classes: {
       popper: className
     }
@@ -1530,7 +2786,7 @@ var ViewTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] *
 })(_ref6 => {
   var theme = _ref6.theme;
   return {
-    ["& .".concat(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A.tooltip)]: {
+    ["& .".concat(tooltipClasses/* default */.A.tooltip)]: {
       backgroundColor: '#202a5a',
       color: 'white',
       boxShadow: theme.shadows[1],
@@ -1551,7 +2807,7 @@ var style = {
   pb: 3
 };
 var drawerWidth = 240;
-var AppBar = (0,_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .Ay)(_mui_material_AppBar__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
+var InvoiceViewAdmin_AppBar = (0,styled/* default */.Ay)(AppBar/* default */.A, {
   shouldForwardProp: prop => prop !== 'open'
 })(_ref7 => {
   var theme = _ref7.theme,
@@ -1571,7 +2827,7 @@ var AppBar = (0,_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .Ay
     })
   });
 });
-var Drawer = (0,_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .Ay)(_mui_material_Drawer__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .Ay, {
+var InvoiceViewAdmin_Drawer = (0,styled/* default */.Ay)(Drawer/* default */.Ay, {
   shouldForwardProp: prop => prop !== 'open'
 })(_ref8 => {
   var theme = _ref8.theme,
@@ -1599,30 +2855,30 @@ var Drawer = (0,_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .Ay
     })
   };
 });
-function CustomerViewAdmin() {
-  var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_8__/* .useNavigate */ .Zp)();
-  var isMobile = (0,_utils_isMobile__WEBPACK_IMPORTED_MODULE_43__/* .useIsMobile */ .al)();
-  var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_33__/* .useDispatch */ .wA)();
-  var user = (0,react_redux__WEBPACK_IMPORTED_MODULE_33__/* .useSelector */ .d4)(_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_34__/* .selectCurrentUser */ .xu);
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+function InvoiceViewAdmin() {
+  var _user$data, _dispatchResult$repor, _dispatchResult$repor2, _dispatchResult$repor3, _dispatchResult$repor4, _dispatchResult$repor5, _dispatchResult$repor6;
+  var navigate = (0,dist/* useNavigate */.Zp)();
+  var isMobile = (0,utils_isMobile/* useIsMobile */.al)();
+  var dispatch = (0,es/* useDispatch */.wA)();
+  var user = (0,es/* useSelector */.d4)(authSlice/* selectCurrentUser */.xu);
+  (0,react.useEffect)(() => {
     var storesUserId = localStorage.getItem('user');
     var fetchUser = /*#__PURE__*/function () {
       var _ref9 = _asyncToGenerator(function* () {
-        if (storesUserId) {
+        if (storesUserId && storesUserId !== 'null') {
           try {
-            var res = yield axios__WEBPACK_IMPORTED_MODULE_28__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_30__/* .ENDPOINT_URL */ .m, "/get-employeeuser/").concat(storesUserId));
+            var res = yield axios/* default */.A.get("".concat(apiConfig/* ENDPOINT_URL */.m, "/get-employeeuser/").concat(storesUserId));
             var Name = res.data.data.employeeName;
             var Role = res.data.data.role;
-            dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_34__/* .setUser */ .gV)({
+            dispatch((0,authSlice/* setUser */.gV)({
               userName: Name,
               role: Role,
               id: res.data.data._id
             }));
           } catch (error) {
             console.error('Error fetching data:', error);
+            react_toastify_esm/* toast */.oR.error('Failed to fetch user data.');
           }
-        } else {
-          navigate('/');
         }
       });
       return function fetchUser() {
@@ -1631,19 +2887,33 @@ function CustomerViewAdmin() {
     }();
     fetchUser();
   }, [dispatch]);
-  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+  var handleLogout = () => {
+    localStorage.removeItem('user');
+    dispatch((0,authSlice/* logOut */.je)());
+    navigate('/');
+  };
+  var _useState = (0,react.useState)([]),
     _useState2 = _slicedToArray(_useState, 2),
     grantAccess = _useState2[0],
     setGrantAccess = _useState2[1];
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+  var _useState3 = (0,react.useState)(null),
+    _useState4 = _slicedToArray(_useState3, 2),
+    grantAccessRecord = _useState4[0],
+    setGrantAccessRecord = _useState4[1];
+  (0,react.useEffect)(() => {
     var fetchNumber = /*#__PURE__*/function () {
       var _ref0 = _asyncToGenerator(function* () {
         try {
           var _res$data;
-          var res = yield (0,_utils_apiCache__WEBPACK_IMPORTED_MODULE_29__/* .cachedGet */ .Fe)("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_30__/* .ENDPOINT_URL */ .m, "/grantAccess"));
-          (_res$data = res.data) === null || _res$data === void 0 || (_res$data = _res$data.data) === null || _res$data === void 0 || _res$data.filter(row => row.userID === user.data.id).map(row => setGrantAccess(row.modules));
+          var res = yield (0,apiCache/* cachedGet */.Fe)("".concat(apiConfig/* ENDPOINT_URL */.m, "/grantAccess"));
+          var userAccess = (_res$data = res.data) === null || _res$data === void 0 || (_res$data = _res$data.data) === null || _res$data === void 0 ? void 0 : _res$data.find(row => row.userID === user.data.id);
+          if (userAccess) {
+            setGrantAccess(userAccess.modules || []);
+            setGrantAccessRecord(userAccess);
+          }
         } catch (error) {
           console.error('Error fetching data:', error);
+          react_toastify_esm/* toast */.oR.error('Failed to fetch permissions.');
         }
       });
       return function fetchNumber() {
@@ -1652,111 +2922,800 @@ function CustomerViewAdmin() {
     }();
     fetchNumber();
   }, [user]);
-  var customerInfoC = grantAccess.filter(row => row.moduleName === "Customer" && row.access.createM === true);
-  var customerInfoV = grantAccess.filter(row => row.moduleName === "Customer" && row.access.viewM === true);
-  var customerInfoU = grantAccess.filter(row => row.moduleName === "Customer" && row.access.editM === true);
-  var customerInfoD = grantAccess.filter(row => row.moduleName === "Customer" && row.access.deleteM === true);
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
-    _useState4 = _slicedToArray(_useState3, 2),
-    loadingData = _useState4[0],
-    setLoadingData = _useState4[1];
-  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+  var canSendWhatsAppInvoice = (user === null || user === void 0 || (_user$data = user.data) === null || _user$data === void 0 ? void 0 : _user$data.userName) === 'GG' || (grantAccessRecord === null || grantAccessRecord === void 0 ? void 0 : grantAccessRecord.whatsappInvoice) === true;
+
+  // console.log(grantAccess)
+
+  var InvoiceInfoC = grantAccess.filter(row => row.moduleName === "Invoice" && row.access.createM === true);
+  var InvoiceInfoV = grantAccess.filter(row => row.moduleName === "Invoice" && row.access.viewM === true);
+  var InvoiceInfoU = grantAccess.filter(row => row.moduleName === "Invoice" && row.access.editM === true);
+  var InvoiceInfoD = grantAccess.filter(row => row.moduleName === "Invoice" && row.access.deleteM === true);
+  {/** Get Invoice */}
+  var _useState5 = (0,react.useState)([]),
     _useState6 = _slicedToArray(_useState5, 2),
-    customer = _useState6[0],
-    setCustomer = _useState6[1];
-  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
+    invoice = _useState6[0],
+    setInvoice = _useState6[1];
+  var _useState7 = (0,react.useState)([]),
     _useState8 = _slicedToArray(_useState7, 2),
-    searchCustomer = _useState8[0],
-    setSearchCustomer = _useState8[1];
-  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
+    hiddenRow = _useState8[0],
+    setHiddenRow = _useState8[1];
+  var _useState9 = (0,react.useState)([]),
     _useState0 = _slicedToArray(_useState9, 2),
-    page = _useState0[0],
-    setPage = _useState0[1];
-  var limit = 100;
-  var _useState1 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+    hidden = _useState0[0],
+    setHidden = _useState0[1];
+  var _useState1 = (0,react.useState)([]),
     _useState10 = _slicedToArray(_useState1, 2),
-    searchTerm = _useState10[0],
-    setSearchTerm = _useState10[1];
-  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+    selectedRows = _useState10[0],
+    setSelectedRows = _useState10[1];
+  var _useState11 = (0,react.useState)(true),
     _useState12 = _slicedToArray(_useState11, 2),
-    filterField = _useState12[0],
-    setFilterField = _useState12[1];
-  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+    loadingData = _useState12[0],
+    setLoadingData = _useState12[1];
+  var _useState13 = (0,react.useState)(""),
     _useState14 = _slicedToArray(_useState13, 2),
-    filterValue = _useState14[0],
-    setFilterValue = _useState14[1];
-  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
+    reason = _useState14[0],
+    setReason = _useState14[1];
+  var _useState15 = (0,react.useState)([]),
     _useState16 = _slicedToArray(_useState15, 2),
-    totalPage = _useState16[0],
-    SetTotalPage = _useState16[1];
-  var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
+    newPurchase = _useState16[0],
+    setNewPurchase = _useState16[1];
+  var _useState17 = (0,react.useState)('ALL'),
     _useState18 = _slicedToArray(_useState17, 2),
-    totalItemCount = _useState18[0],
-    setTotalItemCount = _useState18[1];
-  var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(searchTerm),
+    statusFilter = _useState18[0],
+    setStatusFilter = _useState18[1];
+  var _useState19 = (0,react.useState)({
+      all: 0,
+      draft: 0,
+      sent: 0,
+      pending: 0,
+      decline: 0,
+      freeOfCharge: 0,
+      paid: 0,
+      partiallyPaid: 0
+    }),
     _useState20 = _slicedToArray(_useState19, 2),
-    debouncedSearchTerm = _useState20[0],
-    setDebouncedSearchTerm = _useState20[1];
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    statusCounts = _useState20[0],
+    setStatusCounts = _useState20[1];
+  var _useState21 = (0,react.useState)(0),
+    _useState22 = _slicedToArray(_useState21, 2),
+    page = _useState22[0],
+    setPage = _useState22[1]; // Initialize page state to 0 (0-based index)
+  var limit = isMobile ? 30 : 100;
+  var _useState23 = (0,react.useState)(''),
+    _useState24 = _slicedToArray(_useState23, 2),
+    searchTerm = _useState24[0],
+    setSearchTerm = _useState24[1]; // Initialize search term state
+  var _useState25 = (0,react.useState)(''),
+    _useState26 = _slicedToArray(_useState25, 2),
+    filterField = _useState26[0],
+    setFilterField = _useState26[1]; // Initialize filter field state
+  var _useState27 = (0,react.useState)(''),
+    _useState28 = _slicedToArray(_useState27, 2),
+    filterValue = _useState28[0],
+    setFilterValue = _useState28[1]; // Initialize filter value state
+  var _useState29 = (0,react.useState)(0),
+    _useState30 = _slicedToArray(_useState29, 2),
+    totalPage = _useState30[0],
+    SetTotalPage = _useState30[1];
+  var _useState31 = (0,react.useState)(0),
+    _useState32 = _slicedToArray(_useState31, 2),
+    totalItemCount = _useState32[0],
+    setTotalItemCount = _useState32[1];
+  var _useState33 = (0,react.useState)(searchTerm),
+    _useState34 = _slicedToArray(_useState33, 2),
+    debouncedSearchTerm = _useState34[0],
+    setDebouncedSearchTerm = _useState34[1];
+  (0,react.useEffect)(() => {
     var handler = setTimeout(() => {
       setDebouncedSearchTerm(searchTerm);
-    }, 500);
+    }, 250); // 250ms debounce delay
+
     return () => {
       clearTimeout(handler);
     };
   }, [searchTerm]);
-  var _useState21 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
-    _useState22 = _slicedToArray(_useState21, 2),
-    selectedRows = _useState22[0],
-    setSelectedRows = _useState22[1];
-  var _useState23 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
-    _useState24 = _slicedToArray(_useState23, 2),
-    reason = _useState24[0],
-    setReason = _useState24[1];
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(() => {
-    var storedValue = localStorage.getItem('QuickFilterCustomer');
-    if (storedValue) {
-      setSearchCustomer(storedValue);
-    }
-  });
   var fetchItems = /*#__PURE__*/function () {
-    var _ref1 = _asyncToGenerator(function* (page, searchTerm, filterField, filterValue) {
+    var _ref1 = _asyncToGenerator(function* (page, searchTerm, filterField, filterValue, statusFilter) {
       try {
-        var res = yield axios__WEBPACK_IMPORTED_MODULE_28__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_30__/* .ENDPOINT_URL */ .m, "/customer-Information?page=").concat(page + 1, "&limit=").concat(limit, "&search=").concat(encodeURIComponent(searchTerm.trim()), "&filterField=").concat(encodeURIComponent(filterField.trim()), "&filterValue=").concat(encodeURIComponent(filterValue.trim())));
-        var formatDate = res.data.itemI.map(item => _objectSpread(_objectSpread({}, item), {}, {
-          id: item._id
+        var statusParam = statusFilter && statusFilter !== 'ALL' ? "&status=".concat(encodeURIComponent(statusFilter)) : '';
+        var res = yield axios/* default */.A.get("".concat(apiConfig/* ENDPOINT_URL */.m, "/invoice-Information?page=").concat(page + 1, "&limit=").concat(limit, "&search=").concat(encodeURIComponent((searchTerm || '').trim()), "&filterField=").concat(encodeURIComponent((filterField || '').trim()), "&filterValue=").concat(encodeURIComponent((filterValue || '').trim())).concat(statusParam));
+        var formatDate = res.data.itemI.map(row => _objectSpread(_objectSpread({}, row), {}, {
+          id: row._id,
+          invoiceNumber: row.invoiceNumber,
+          dateField: row.invoiceDate !== null ? dayjs_min_default()(row.invoiceDate).format('DD/MM/YYYY') : '',
+          dueDateField: dayjs_min_default()(row.invoiceDueDate).format('DD/MM/YYYY')
         }));
-        setCustomer(formatDate);
-        SetTotalPage(res.data.totalPages);
-        setTotalItemCount(res.data.totalItem || 0);
+        var invoices = formatDate;
+        SetTotalPage(res.data.totalPages); // Ensure totalPage is correctly calculated
+        setTotalItemCount(res.data.totalItem);
+        if (res.data.statusCounts) {
+          setStatusCounts(res.data.statusCounts);
+        }
+        setInvoice(invoices);
         setLoadingData(false);
+
+        // Auto-repair status mismatch for zero-balance invoices
+        var mismatchedInvoices = invoices.filter(inv => (inv.status === 'Partially-Paid' || inv.status === 'Sent' || inv.status === 'Draft' || inv.status === 'Pending') && parseFloat(inv.balanceDue) <= 0 && parseFloat(inv.totalInvoice) > 0);
+        if (mismatchedInvoices.length > 0) {
+          console.log("Repairing status for ".concat(mismatchedInvoices.length, " invoices sequentially..."));
+          _asyncToGenerator(function* () {
+            for (var inv of mismatchedInvoices) {
+              try {
+                yield axios/* default */.A.put("".concat(apiConfig/* ENDPOINT_URL */.m, "/update-invoice/").concat(inv._id), {
+                  status: 'Paid'
+                });
+                // Small delay to prevent rate limiting
+                yield new Promise(resolve => setTimeout(resolve, 100));
+              } catch (err) {
+                console.error("Failed to repair invoice ".concat(inv.invoiceNumber, ":"), err);
+              }
+            }
+          })();
+        }
       } catch (error) {
         console.error('Error fetching data:', error);
+        react_toastify_esm/* toast */.oR.error('Failed to fetch invoices.');
         setLoadingData(false);
       }
     });
-    return function fetchItems(_x, _x2, _x3, _x4) {
+    return function fetchItems(_x, _x2, _x3, _x4, _x5) {
       return _ref1.apply(this, arguments);
     };
   }();
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    fetchItems(page, debouncedSearchTerm, filterField, filterValue);
-  }, [page, debouncedSearchTerm, filterField, filterValue]);
-  var handlePageChange = newPage => {
-    setPage(newPage);
+  var FilterInvoiceWith = invoice.filter(row => Array.isArray(row.items) && row.items.every(item => parseFloat(item.itemOut) === parseFloat(item.itemQty)));
+  (0,react.useEffect)(() => {
+    fetchItems(page, debouncedSearchTerm, filterField, filterValue, statusFilter);
+  }, [page, debouncedSearchTerm, filterField, filterValue, statusFilter]);
+  var handleStatusClick = statusKey => {
+    if (statusFilter.toLowerCase() === statusKey.toLowerCase() && statusKey !== 'ALL') {
+      setStatusFilter('ALL');
+    } else {
+      setStatusFilter(statusKey);
+    }
+    setPage(0);
   };
-  var _useState25 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState26 = _slicedToArray(_useState25, 2),
-    loading = _useState26[0],
-    setLoading = _useState26[1];
-  var _useState27 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState28 = _slicedToArray(_useState27, 2),
-    loadingOpenModal = _useState28[0],
-    setLoadingOpenModal = _useState28[1];
-  var _useState29 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState30 = _slicedToArray(_useState29, 2),
-    ErrorOpenModal = _useState30[0],
-    setErrorOpenModal = _useState30[1];
+  var handlePageChange = newPage => {
+    setPage(newPage); // Update page state (convert to 0-based index)
+  };
+  var handleRefreshSearch = () => {
+    setSearchTerm('');
+    setDebouncedSearchTerm('');
+    setFilterModel({
+      items: [],
+      quickFilterExcludeHiddenColumns: true,
+      quickFilterValues: []
+    });
+    setPage(0);
+    fetchItems(0, '', filterField, filterValue, statusFilter);
+  };
+
+  // --- WhatsApp Invoice Dispatch Pipeline ---
+  var DEFAULT_WA_MESSAGE = 'Dear Valued Customer, please find attached your official invoice from Global Gate SARL. Thank you for your business!';
+  var _useState35 = (0,react.useState)({}),
+    _useState36 = _slicedToArray(_useState35, 2),
+    customerPhoneMap = _useState36[0],
+    setCustomerPhoneMap = _useState36[1];
+  var _useState37 = (0,react.useState)(false),
+    _useState38 = _slicedToArray(_useState37, 2),
+    openWhatsAppModal = _useState38[0],
+    setOpenWhatsAppModal = _useState38[1];
+  var _useState39 = (0,react.useState)({
+      status: 'DISCONNECTED',
+      phone: '+243 827 722 222',
+      name: 'Global Gate S.A.R.L',
+      qrCode: null,
+      isReady: false
+    }),
+    _useState40 = _slicedToArray(_useState39, 2),
+    cloudWaStatus = _useState40[0],
+    setCloudWaStatus = _useState40[1];
+  var _useState41 = (0,react.useState)(false),
+    _useState42 = _slicedToArray(_useState41, 2),
+    openQrDialog = _useState42[0],
+    setOpenQrDialog = _useState42[1];
+  var _useState43 = (0,react.useState)(false),
+    _useState44 = _slicedToArray(_useState43, 2),
+    refreshingQr = _useState44[0],
+    setRefreshingQr = _useState44[1];
+  var fetchCloudStatus = /*#__PURE__*/function () {
+    var _ref11 = _asyncToGenerator(function* () {
+      try {
+        var _res$data2;
+        var res = yield axios/* default */.A.get("".concat(apiConfig/* ENDPOINT_URL */.m, "/invoice-whatsapp/cloud-status"));
+        if (res !== null && res !== void 0 && (_res$data2 = res.data) !== null && _res$data2 !== void 0 && _res$data2.success) {
+          setCloudWaStatus(res.data);
+        }
+      } catch (err) {
+        console.warn('[InvoiceWhatsApp] Status fetch warning:', err);
+      }
+    });
+    return function fetchCloudStatus() {
+      return _ref11.apply(this, arguments);
+    };
+  }();
+  var handleReconnectCloud = /*#__PURE__*/function () {
+    var _ref12 = _asyncToGenerator(function* () {
+      setRefreshingQr(true);
+      try {
+        var _res$data3;
+        var res = yield axios/* default */.A.post("".concat(apiConfig/* ENDPOINT_URL */.m, "/invoice-whatsapp/cloud-reconnect"));
+        if (res !== null && res !== void 0 && (_res$data3 = res.data) !== null && _res$data3 !== void 0 && _res$data3.success) {
+          setCloudWaStatus(res.data);
+          react_toastify_esm/* toast */.oR.info('Cloud WhatsApp reconnect requested. If QR code appears, scan it with your phone.');
+        }
+      } catch (err) {
+        react_toastify_esm/* toast */.oR.error('Failed to reconnect Cloud WhatsApp: ' + err.message);
+      } finally {
+        setRefreshingQr(false);
+      }
+    });
+    return function handleReconnectCloud() {
+      return _ref12.apply(this, arguments);
+    };
+  }();
+  (0,react.useEffect)(() => {
+    var interval = null;
+    if (openWhatsAppModal) {
+      fetchCloudStatus();
+      interval = setInterval(fetchCloudStatus, 5000);
+    }
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, [openWhatsAppModal]);
+  var _useState45 = (0,react.useState)([]),
+    _useState46 = _slicedToArray(_useState45, 2),
+    whatsAppInvoicesList = _useState46[0],
+    setWhatsAppInvoicesList = _useState46[1];
+  var _useState47 = (0,react.useState)(new Set()),
+    _useState48 = _slicedToArray(_useState47, 2),
+    selectedWhatsAppInvoiceIds = _useState48[0],
+    setSelectedWhatsAppInvoiceIds = _useState48[1];
+  var _useState49 = (0,react.useState)(DEFAULT_WA_MESSAGE),
+    _useState50 = _slicedToArray(_useState49, 2),
+    whatsAppMessage = _useState50[0],
+    setWhatsAppMessage = _useState50[1];
+  var _useState51 = (0,react.useState)(false),
+    _useState52 = _slicedToArray(_useState51, 2),
+    savingTemplate = _useState52[0],
+    setSavingTemplate = _useState52[1];
+  var _useState53 = (0,react.useState)({}),
+    _useState54 = _slicedToArray(_useState53, 2),
+    phoneOverrides = _useState54[0],
+    setPhoneOverrides = _useState54[1];
+  var _useState55 = (0,react.useState)(false),
+    _useState56 = _slicedToArray(_useState55, 2),
+    dispatchingWhatsApp = _useState56[0],
+    setDispatchingWhatsApp = _useState56[1];
+  var _useState57 = (0,react.useState)(null),
+    _useState58 = _slicedToArray(_useState57, 2),
+    dispatchResult = _useState58[0],
+    setDispatchResult = _useState58[1];
+  var _useState59 = (0,react.useState)(false),
+    _useState60 = _slicedToArray(_useState59, 2),
+    loadingSentInvoices = _useState60[0],
+    setLoadingSentInvoices = _useState60[1];
+  var _useState61 = (0,react.useState)(0),
+    _useState62 = _slicedToArray(_useState61, 2),
+    modalTab = _useState62[0],
+    setModalTab = _useState62[1]; // 0: Send Queue, 1: Sent History
+  var _useState63 = (0,react.useState)(''),
+    _useState64 = _slicedToArray(_useState63, 2),
+    queueSearchTerm = _useState64[0],
+    setQueueSearchTerm = _useState64[1];
+  var _useState65 = (0,react.useState)([]),
+    _useState66 = _slicedToArray(_useState65, 2),
+    historyList = _useState66[0],
+    setHistoryList = _useState66[1];
+  var _useState67 = (0,react.useState)(false),
+    _useState68 = _slicedToArray(_useState67, 2),
+    loadingHistory = _useState68[0],
+    setLoadingHistory = _useState68[1];
+  var _useState69 = (0,react.useState)(''),
+    _useState70 = _slicedToArray(_useState69, 2),
+    historySearchTerm = _useState70[0],
+    setHistorySearchTerm = _useState70[1];
+  var isEligibleInvoiceStatus = st => {
+    var s = String(st || '').toUpperCase().trim();
+    return s === 'SENT' || s === 'PARTIALLY-PAID' || s === 'PARTIALLY PAID' || s === 'PARTIALLY_PAID' || s === 'FREE OF CHARGE' || s === 'FREE-OF-CHARGE';
+  };
+  var renderInvoiceStatusChip = status => {
+    var s = String(status || '').toUpperCase().trim();
+    if (s === 'SENT') {
+      return /*#__PURE__*/react.createElement(Chip/* default */.A, {
+        label: "SENT",
+        size: "small",
+        sx: {
+          bgcolor: '#e0f2fe',
+          color: '#0369a1',
+          fontWeight: 700,
+          height: 20,
+          fontSize: '0.7rem'
+        }
+      });
+    }
+    if (s === 'PARTIALLY-PAID' || s === 'PARTIALLY PAID' || s === 'PARTIALLY_PAID') {
+      return /*#__PURE__*/react.createElement(Chip/* default */.A, {
+        label: "PARTIALLY-PAID",
+        size: "small",
+        sx: {
+          bgcolor: '#ffedd5',
+          color: '#c2410c',
+          fontWeight: 700,
+          height: 20,
+          fontSize: '0.7rem'
+        }
+      });
+    }
+    if (s === 'FREE OF CHARGE' || s === 'FREE-OF-CHARGE') {
+      return /*#__PURE__*/react.createElement(Chip/* default */.A, {
+        label: "FREE OF CHARGE",
+        size: "small",
+        sx: {
+          bgcolor: '#f3e8ff',
+          color: '#7e22ce',
+          fontWeight: 700,
+          height: 20,
+          fontSize: '0.7rem'
+        }
+      });
+    }
+    return /*#__PURE__*/react.createElement(Chip/* default */.A, {
+      label: s || 'UNKNOWN',
+      size: "small",
+      sx: {
+        bgcolor: '#f1f5f9',
+        color: '#475569',
+        fontWeight: 700,
+        height: 20,
+        fontSize: '0.7rem'
+      }
+    });
+  };
+  var getInvoicePhone = function getInvoicePhone(inv) {
+    var phoneMap = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    if (!inv) return '';
+    var cust = inv.customerName || {};
+    if (typeof cust === 'object' && cust !== null) {
+      var direct = cust.customerCompanyPhone || cust.customerPhone || cust.phone || cust.mobile;
+      if (direct && String(direct).trim()) return String(direct).trim();
+      if (cust._id && phoneMap[cust._id]) return String(phoneMap[cust._id]).trim();
+      var name = cust.Customer || cust.customerName || cust.customerFullName;
+      if (name && phoneMap[String(name).toUpperCase()]) return String(phoneMap[String(name).toUpperCase()]).trim();
+    } else if (typeof cust === 'string' && phoneMap[cust.toUpperCase()]) {
+      return String(phoneMap[cust.toUpperCase()]).trim();
+    }
+    return '';
+  };
+  var fetchSentHistory = /*#__PURE__*/function () {
+    var _ref13 = _asyncToGenerator(function* () {
+      try {
+        var _res$data4;
+        setLoadingHistory(true);
+        var res = yield axios/* default */.A.get("".concat(apiConfig/* ENDPOINT_URL */.m, "/invoice-whatsapp/history"));
+        if ((_res$data4 = res.data) !== null && _res$data4 !== void 0 && _res$data4.success && Array.isArray(res.data.history)) {
+          setHistoryList(res.data.history);
+        }
+      } catch (err) {
+        console.warn('Failed to fetch WhatsApp sent history:', err);
+      } finally {
+        setLoadingHistory(false);
+      }
+    });
+    return function fetchSentHistory() {
+      return _ref13.apply(this, arguments);
+    };
+  }();
+  var sentHistoryMap = (0,react.useMemo)(() => {
+    var map = {};
+    (historyList || []).forEach(h => {
+      var num = Number(h.invoiceNumber);
+      if (num && !map[num]) {
+        map[num] = h;
+      }
+    });
+    return map;
+  }, [historyList]);
+  var filteredQueueInvoices = (0,react.useMemo)(() => {
+    if (!queueSearchTerm.trim()) return whatsAppInvoicesList;
+    var q = queueSearchTerm.toLowerCase().trim();
+    return whatsAppInvoicesList.filter(inv => {
+      var invNum = String(inv.invoiceNumber || '').toLowerCase();
+      var invFormatted = "inv-".concat(String(inv.invoiceNumber || '').padStart(6, '0')).toLowerCase();
+      var cust = inv.customerName || {};
+      var clientName = String(typeof cust === 'string' ? cust : cust.Customer || cust.customerName || cust.customerFullName || '').toLowerCase();
+      var rawPhone = phoneOverrides[inv._id || inv.id] !== undefined ? phoneOverrides[inv._id || inv.id] : getInvoicePhone(inv, customerPhoneMap);
+      var phone = String(rawPhone || '').toLowerCase();
+      var st = String(inv.status || '').toLowerCase();
+      return invNum.includes(q) || invFormatted.includes(q) || clientName.includes(q) || phone.includes(q) || st.includes(q);
+    });
+  }, [whatsAppInvoicesList, queueSearchTerm, phoneOverrides, customerPhoneMap]);
+  var handleSelectFiltered = () => {
+    setSelectedWhatsAppInvoiceIds(prev => {
+      var next = new Set(prev);
+      filteredQueueInvoices.forEach(inv => next.add(inv._id || inv.id));
+      return next;
+    });
+  };
+  var handleUncheckFiltered = () => {
+    setSelectedWhatsAppInvoiceIds(prev => {
+      var next = new Set(prev);
+      filteredQueueInvoices.forEach(inv => next.delete(inv._id || inv.id));
+      return next;
+    });
+  };
+  var filteredHistoryList = (0,react.useMemo)(() => {
+    if (!historySearchTerm.trim()) return historyList;
+    var q = historySearchTerm.toLowerCase().trim();
+    return historyList.filter(h => {
+      var invNum = String(h.invoiceNumber || '').toLowerCase();
+      var invFormatted = "inv-".concat(String(h.invoiceNumber || '').padStart(6, '0')).toLowerCase();
+      var client = String(h.customerName || '').toLowerCase();
+      var phone = String(h.phone || '').toLowerCase();
+      var user = String(h.sentBy || '').toLowerCase();
+      return invNum.includes(q) || invFormatted.includes(q) || client.includes(q) || phone.includes(q) || user.includes(q);
+    });
+  }, [historyList, historySearchTerm]);
+  (0,react.useEffect)(() => {
+    var fetchCustomers = /*#__PURE__*/function () {
+      var _ref14 = _asyncToGenerator(function* () {
+        try {
+          var _res$data5;
+          var res = yield (0,apiCache/* cachedGet */.Fe)("".concat(apiConfig/* ENDPOINT_URL */.m, "/customer"));
+          if ((_res$data5 = res.data) !== null && _res$data5 !== void 0 && _res$data5.data) {
+            var map = {};
+            res.data.data.forEach(c => {
+              var p = (c.customerCompanyPhone || c.customerPhone || c.phone || c.mobile || '').trim();
+              if (p) {
+                if (c._id) map[c._id] = p;
+                if (c.Customer) map[c.Customer.toUpperCase()] = p;
+                if (c.customerName) map[c.customerName.toUpperCase()] = p;
+                if (c.customerFullName) map[c.customerFullName.toUpperCase()] = p;
+              }
+            });
+            setCustomerPhoneMap(map);
+          }
+        } catch (_) {}
+      });
+      return function fetchCustomers() {
+        return _ref14.apply(this, arguments);
+      };
+    }();
+    fetchCustomers();
+  }, []);
+  (0,react.useEffect)(() => {
+    var fetchTemplate = /*#__PURE__*/function () {
+      var _ref15 = _asyncToGenerator(function* () {
+        try {
+          var _res$data6, _res$data7;
+          var res = yield axios/* default */.A.get("".concat(apiConfig/* ENDPOINT_URL */.m, "/invoice-whatsapp/template"));
+          if ((_res$data6 = res.data) !== null && _res$data6 !== void 0 && _res$data6.success && (_res$data7 = res.data) !== null && _res$data7 !== void 0 && _res$data7.templateMessage) {
+            setWhatsAppMessage(res.data.templateMessage);
+          }
+        } catch (_) {}
+      });
+      return function fetchTemplate() {
+        return _ref15.apply(this, arguments);
+      };
+    }();
+    fetchTemplate();
+  }, []);
+  var handleSaveTemplateAsDefault = /*#__PURE__*/function () {
+    var _ref16 = _asyncToGenerator(function* () {
+      if (!whatsAppMessage.trim()) {
+        react_toastify_esm/* toast */.oR.warn('Message cannot be empty');
+        return;
+      }
+      setSavingTemplate(true);
+      try {
+        var _user$data2, _res$data8;
+        var res = yield axios/* default */.A.post("".concat(apiConfig/* ENDPOINT_URL */.m, "/invoice-whatsapp/template"), {
+          templateMessage: whatsAppMessage.trim(),
+          updatedBy: (user === null || user === void 0 || (_user$data2 = user.data) === null || _user$data2 === void 0 ? void 0 : _user$data2.userName) || 'GG'
+        });
+        if ((_res$data8 = res.data) !== null && _res$data8 !== void 0 && _res$data8.success) {
+          react_toastify_esm/* toast */.oR.success('Default WhatsApp message saved successfully!');
+        }
+      } catch (err) {
+        react_toastify_esm/* toast */.oR.error('Failed to save default message: ' + (err.message || ''));
+      } finally {
+        setSavingTemplate(false);
+      }
+    });
+    return function handleSaveTemplateAsDefault() {
+      return _ref16.apply(this, arguments);
+    };
+  }();
+  var handleOpenWhatsAppBatchModal = /*#__PURE__*/function () {
+    var _ref17 = _asyncToGenerator(function* () {
+      if (!canSendWhatsAppInvoice) {
+        react_toastify_esm/* toast */.oR.error('Permission denied. WhatsApp Invoice Dispatch is restricted in Grant Access.');
+        return;
+      }
+      setDispatchResult(null);
+      setLoadingSentInvoices(true);
+      setQueueSearchTerm('');
+      setModalTab(0);
+      setOpenWhatsAppModal(true);
+      fetchSentHistory();
+      try {
+        var _yield$Promise$allSet = yield Promise.allSettled([axios/* default */.A.get("".concat(apiConfig/* ENDPOINT_URL */.m, "/invoice-Information?page=1&limit=200&status=SENT")), axios/* default */.A.get("".concat(apiConfig/* ENDPOINT_URL */.m, "/invoice-Information?page=1&limit=200&status=PARTIALLY-PAID")), axios/* default */.A.get("".concat(apiConfig/* ENDPOINT_URL */.m, "/invoice-Information?page=1&limit=200&status=FREE OF CHARGE"))]),
+          _yield$Promise$allSet2 = _slicedToArray(_yield$Promise$allSet, 3),
+          resSent = _yield$Promise$allSet2[0],
+          resPartial = _yield$Promise$allSet2[1],
+          resFoc = _yield$Promise$allSet2[2];
+        var pool = [];
+        [resSent, resPartial, resFoc].forEach(r => {
+          var _r$value;
+          if (r.status === 'fulfilled' && Array.isArray((_r$value = r.value) === null || _r$value === void 0 || (_r$value = _r$value.data) === null || _r$value === void 0 ? void 0 : _r$value.itemI)) {
+            pool.push(...r.value.data.itemI);
+          }
+        });
+        var seen = new Set();
+        var combined = pool.filter(r => {
+          var id = r._id || r.id;
+          if (!id || seen.has(id)) return false;
+          seen.add(id);
+          return isEligibleInvoiceStatus(r.status);
+        }).map(r => _objectSpread(_objectSpread({}, r), {}, {
+          id: r._id,
+          dateField: r.invoiceDate ? dayjs_min_default()(r.invoiceDate).format('DD/MM/YYYY') : ''
+        }));
+        if (combined.length === 0) {
+          combined = invoice.filter(inv => isEligibleInvoiceStatus(inv.status));
+        }
+        setWhatsAppInvoicesList(combined);
+        setSelectedWhatsAppInvoiceIds(new Set()); // Default to 0 checked on open
+
+        var initPhones = {};
+        combined.forEach(inv => {
+          var id = inv._id || inv.id;
+          initPhones[id] = getInvoicePhone(inv, customerPhoneMap);
+        });
+        setPhoneOverrides(initPhones);
+      } catch (err) {
+        console.error('Error fetching eligible invoices:', err);
+        var localEligible = invoice.filter(inv => isEligibleInvoiceStatus(inv.status));
+        setWhatsAppInvoicesList(localEligible);
+        setSelectedWhatsAppInvoiceIds(new Set()); // Default to 0 checked on open
+        var _initPhones = {};
+        localEligible.forEach(inv => {
+          var id = inv._id || inv.id;
+          _initPhones[id] = getInvoicePhone(inv, customerPhoneMap);
+        });
+        setPhoneOverrides(_initPhones);
+      } finally {
+        setLoadingSentInvoices(false);
+      }
+    });
+    return function handleOpenWhatsAppBatchModal() {
+      return _ref17.apply(this, arguments);
+    };
+  }();
+  var handleOpenWhatsAppSingleModal = row => {
+    if (!canSendWhatsAppInvoice) {
+      react_toastify_esm/* toast */.oR.error('Permission denied. WhatsApp Invoice Dispatch is restricted in Grant Access.');
+      return;
+    }
+    if (!isEligibleInvoiceStatus(row.status)) {
+      react_toastify_esm/* toast */.oR.warn('Only invoices with status SENT, PARTIALLY-PAID, or FREE OF CHARGE can be sent via WhatsApp.');
+      return;
+    }
+    setDispatchResult(null);
+    setQueueSearchTerm('');
+    setModalTab(0);
+    setWhatsAppInvoicesList([row]);
+    setSelectedWhatsAppInvoiceIds(new Set([row._id || row.id]));
+    var initialPhone = getInvoicePhone(row, customerPhoneMap);
+    setPhoneOverrides({
+      [row._id || row.id]: initialPhone
+    });
+    fetchSentHistory();
+    setOpenWhatsAppModal(true);
+  };
+  var handleToggleWhatsAppInvoice = id => {
+    setSelectedWhatsAppInvoiceIds(prev => {
+      var next = new Set(prev);
+      if (next.has(id)) next.delete(id);else next.add(id);
+      return next;
+    });
+  };
+  var handleToggleSelectAllWhatsApp = () => {
+    if (selectedWhatsAppInvoiceIds.size === whatsAppInvoicesList.length) {
+      setSelectedWhatsAppInvoiceIds(new Set());
+    } else {
+      setSelectedWhatsAppInvoiceIds(new Set(whatsAppInvoicesList.map(inv => inv._id || inv.id)));
+    }
+  };
+  var handleExecuteWhatsAppDispatch = /*#__PURE__*/function () {
+    var _ref18 = _asyncToGenerator(function* () {
+      var selectedInvoices = whatsAppInvoicesList.filter(inv => selectedWhatsAppInvoiceIds.has(inv._id || inv.id)).map(inv => {
+        var totalAmount = Number(inv.totalInvoice || inv.total || 0).toFixed(2);
+        var hasValidBalance = inv.balanceDue !== undefined && inv.balanceDue !== null && !isNaN(parseFloat(inv.balanceDue));
+        var balanceDueAmount = hasValidBalance ? parseFloat(inv.balanceDue).toFixed(2) : totalAmount;
+        return _objectSpread(_objectSpread({}, inv), {}, {
+          balanceDue: balanceDueAmount
+        });
+      });
+      if (selectedInvoices.length === 0) {
+        react_toastify_esm/* toast */.oR.warn('Please select at least one invoice to send.');
+        return;
+      }
+      setDispatchingWhatsApp(true);
+      setDispatchResult(null);
+      var payload = {
+        invoices: selectedInvoices,
+        templateMessage: whatsAppMessage.trim(),
+        phoneOverrides
+      };
+      try {
+        var _ref19, _result$sent, _result, _result2, _ref20, _result$failed, _result3, _result4, _ref21, _result$total, _result5, _result6, _result7, _result8;
+        var result = null;
+
+        // 1. Primary Master: Railway 24/7 Cloud WhatsApp Engine
+        var cloudSuccess = false;
+        try {
+          var res = yield axios/* default */.A.post("".concat(apiConfig/* ENDPOINT_URL */.m, "/invoice-whatsapp/send"), payload);
+          if (res !== null && res !== void 0 && res.data) {
+            result = res.data;
+            cloudSuccess = true;
+          }
+        } catch (cloudErr) {
+          var _cloudErr$response, _cloudErr$response2;
+          console.warn('[InvoiceWhatsApp] Cloud dispatch attempt note:', (cloudErr === null || cloudErr === void 0 || (_cloudErr$response = cloudErr.response) === null || _cloudErr$response === void 0 ? void 0 : _cloudErr$response.data) || cloudErr.message);
+          if (cloudErr !== null && cloudErr !== void 0 && (_cloudErr$response2 = cloudErr.response) !== null && _cloudErr$response2 !== void 0 && (_cloudErr$response2 = _cloudErr$response2.data) !== null && _cloudErr$response2 !== void 0 && _cloudErr$response2.cloudStatus) {
+            setCloudWaStatus(prev => _objectSpread(_objectSpread({}, prev), {}, {
+              status: cloudErr.response.data.cloudStatus,
+              qrCode: cloudErr.response.data.qrCode || prev.qrCode
+            }));
+          }
+        }
+
+        // 2. Secondary Fallback: Local HTTP daemon if active on this PC
+        if (!cloudSuccess) {
+          try {
+            var localCheck = yield axios/* default */.A.get('http://127.0.0.1:5055/status', {
+              timeout: 1500
+            });
+            if (localCheck.status === 200) {
+              var localRes = yield axios/* default */.A.post('http://127.0.0.1:5055/send-invoices', payload, {
+                timeout: 180000
+              });
+              if (localRes !== null && localRes !== void 0 && localRes.data) {
+                result = localRes.data;
+              }
+            }
+          } catch (_) {}
+        }
+
+        // 3. Tertiary Fallback: Desktop Electron IPC
+        if (!result) {
+          if (typeof window !== 'undefined' && window.electron && typeof window.electron.sendInvoiceWhatsApp === 'function') {
+            result = yield window.electron.sendInvoiceWhatsApp(payload);
+          }
+        }
+        if (!result) {
+          throw new Error('Cloud WhatsApp Master is not connected. Please click the status badge to link the company phone via QR code.');
+        }
+        setDispatchResult(result);
+
+        // Support BOTH top-level format and nested report format
+        var sentCount = Number((_ref19 = (_result$sent = (_result = result) === null || _result === void 0 ? void 0 : _result.sent) !== null && _result$sent !== void 0 ? _result$sent : (_result2 = result) === null || _result2 === void 0 || (_result2 = _result2.report) === null || _result2 === void 0 ? void 0 : _result2.sent) !== null && _ref19 !== void 0 ? _ref19 : 0);
+        var failedCount = Number((_ref20 = (_result$failed = (_result3 = result) === null || _result3 === void 0 ? void 0 : _result3.failed) !== null && _result$failed !== void 0 ? _result$failed : (_result4 = result) === null || _result4 === void 0 || (_result4 = _result4.report) === null || _result4 === void 0 ? void 0 : _result4.failed) !== null && _ref20 !== void 0 ? _ref20 : Math.max(0, selectedInvoices.length - sentCount));
+        var totalCount = Number((_ref21 = (_result$total = (_result5 = result) === null || _result5 === void 0 ? void 0 : _result5.total) !== null && _result$total !== void 0 ? _result$total : (_result6 = result) === null || _result6 === void 0 || (_result6 = _result6.report) === null || _result6 === void 0 ? void 0 : _result6.total) !== null && _ref21 !== void 0 ? _ref21 : selectedInvoices.length);
+
+        // Determine the exact invoices that actually succeeded
+        var detailsList = Array.isArray((_result7 = result) === null || _result7 === void 0 ? void 0 : _result7.details) ? result.details : Array.isArray((_result8 = result) === null || _result8 === void 0 || (_result8 = _result8.report) === null || _result8 === void 0 ? void 0 : _result8.details) ? result.report.details : [];
+        var sentDetails = detailsList.filter(d => d.status === 'sent');
+        var actuallySentInvoices = [];
+        if (sentDetails.length > 0) {
+          actuallySentInvoices = selectedInvoices.filter(inv => {
+            var invNum = String(inv.invoiceNumber);
+            var invId = String(inv._id || inv.id);
+            return sentDetails.some(d => String(d.invoiceNumber) === invNum || String(d.invoiceId) === invId);
+          });
+        } else if (sentCount > 0 && sentCount === selectedInvoices.length) {
+          actuallySentInvoices = selectedInvoices;
+        } else if (sentCount > 0) {
+          actuallySentInvoices = selectedInvoices.slice(0, sentCount);
+        }
+
+        // ALWAYS record history in MongoDB for any invoice that actually delivered!
+        if (actuallySentInvoices.length > 0) {
+          try {
+            var _user$data3;
+            yield axios/* default */.A.post("".concat(apiConfig/* ENDPOINT_URL */.m, "/invoice-whatsapp/record-history"), {
+              records: actuallySentInvoices.map(inv => {
+                var _inv$customerName, _inv$customerName2;
+                return {
+                  invoiceId: inv._id || inv.id,
+                  invoiceNumber: inv.invoiceNumber,
+                  customerName: typeof inv.customerName === 'object' ? ((_inv$customerName = inv.customerName) === null || _inv$customerName === void 0 ? void 0 : _inv$customerName.Customer) || ((_inv$customerName2 = inv.customerName) === null || _inv$customerName2 === void 0 ? void 0 : _inv$customerName2.customerName) || '' : inv.customerName,
+                  phone: phoneOverrides[inv._id || inv.id] || getInvoicePhone(inv, customerPhoneMap),
+                  amount: Number(inv.balanceDue !== undefined ? inv.balanceDue : inv.totalInvoice || inv.total || 0),
+                  caption: whatsAppMessage.trim(),
+                  status: 'sent'
+                };
+              }),
+              sentBy: (user === null || user === void 0 || (_user$data3 = user.data) === null || _user$data3 === void 0 ? void 0 : _user$data3.userName) || 'GG'
+            });
+            fetchSentHistory();
+          } catch (histErr) {
+            console.warn('[InvoiceWhatsApp] History record warning:', histErr);
+          }
+        }
+        if (sentCount > 0 && failedCount === 0) {
+          react_toastify_esm/* toast */.oR.success("WhatsApp dispatch complete: ".concat(sentCount, " of ").concat(totalCount, " invoice(s) sent!"));
+          fetchItems(page, debouncedSearchTerm, filterField, filterValue, statusFilter);
+        } else if (sentCount > 0 && failedCount > 0) {
+          react_toastify_esm/* toast */.oR.warn("WhatsApp dispatch partial: ".concat(sentCount, " sent, ").concat(failedCount, " failed. Recorded in Sent History."));
+          fetchItems(page, debouncedSearchTerm, filterField, filterValue, statusFilter);
+        } else {
+          var _result9;
+          react_toastify_esm/* toast */.oR.error(((_result9 = result) === null || _result9 === void 0 ? void 0 : _result9.error) || "Failed to dispatch WhatsApp invoices (0 of ".concat(totalCount, " sent)."));
+        }
+      } catch (err) {
+        var _err$response;
+        console.error('WhatsApp dispatch error:', err);
+        var errMsg = (err === null || err === void 0 || (_err$response = err.response) === null || _err$response === void 0 || (_err$response = _err$response.data) === null || _err$response === void 0 ? void 0 : _err$response.error) || err.message;
+        setDispatchResult({
+          success: false,
+          error: errMsg
+        });
+        react_toastify_esm/* toast */.oR.error('Dispatch failed: ' + errMsg);
+      } finally {
+        setDispatchingWhatsApp(false);
+      }
+    });
+    return function handleExecuteWhatsAppDispatch() {
+      return _ref18.apply(this, arguments);
+    };
+  }();
+  var _useState71 = (0,react.useState)(false),
+    _useState72 = _slicedToArray(_useState71, 2),
+    loading = _useState72[0],
+    setLoading = _useState72[1];
+  var _useState73 = (0,react.useState)(false),
+    _useState74 = _slicedToArray(_useState73, 2),
+    ErrorOpenModal = _useState74[0],
+    setErrorOpenModal = _useState74[1];
+  var _useState75 = (0,react.useState)(false),
+    _useState76 = _slicedToArray(_useState75, 2),
+    loadingOpenModal = _useState76[0],
+    setLoadingOpenModal = _useState76[1];
+  var _useState77 = (0,react.useState)(false),
+    _useState78 = _slicedToArray(_useState77, 2),
+    modalDeleteOpenLoading = _useState78[0],
+    setModalDeleteOpenLoading = _useState78[1];
+  {/** Loading Update View Start */}
+  var handleOpenLoading = () => {
+    setLoadingOpenModal(true);
+    setLoading(true);
+    handleCloseUpdate();
+    setTimeout(() => {
+      setLoading(false);
+    }, 500);
+  };
+  var handleCloseLoading = () => {
+    setLoadingOpenModal(false);
+    setLoading(false);
+    fetchItems(page, searchTerm, filterField, filterValue);
+  };
+  {/** Loading Update View End */}
+  {/** Loading Delete View Start */}
+  var handleDeleteOpenLoading = () => {
+    setModalDeleteOpenLoading(true);
+    setLoading(true);
+    handleClose();
+    setTimeout(() => {
+      setLoading(false);
+    }, 500);
+  };
+  var handleDeleteCloseLoading = () => {
+    setModalDeleteOpenLoading(false);
+    setLoading(false);
+    fetchItems(page, searchTerm, filterField, filterValue);
+  };
   var handleOpenOffline = () => {
     setLoadingOpenModal(true);
     setLoading(true);
@@ -1771,53 +3730,29 @@ function CustomerViewAdmin() {
       setLoading(false);
     }, 500);
   };
-  var handleCreateNotificationOffline = /*#__PURE__*/function () {
-    var _ref10 = _asyncToGenerator(function* (ReferenceInfo, ReferenceInfoCustomer) {
-      var data = {
-        idInfo: ReferenceInfo,
-        person: user.data.userName + ' Created ',
-        reason: ReferenceInfoCustomer,
-        dateNotification: new Date()
+  (0,react.useEffect)(() => {
+    var fetchDataHidden = /*#__PURE__*/function () {
+      var _ref22 = _asyncToGenerator(function* () {
+        try {
+          var res = yield axios/* default */.A.get("".concat(apiConfig/* ENDPOINT_URL */.m, "/hidden"));
+          setHiddenRow(res.data.data.map(row => row.idRow));
+          setHidden(res.data.data);
+          localStorage.removeItem('Hidden');
+        } catch (error) {
+          console.error('Error fetching data:', error);
+          react_toastify_esm/* toast */.oR.error('Failed to fetch hidden rows.');
+        }
+      });
+      return function fetchDataHidden() {
+        return _ref22.apply(this, arguments);
       };
-      try {
-        yield axios__WEBPACK_IMPORTED_MODULE_28__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_30__/* .ENDPOINT_URL */ .m, "/create-notification"), data);
-      } catch (error) {
-        console.log(error);
-      }
-    });
-    return function handleCreateNotificationOffline(_x5, _x6) {
-      return _ref10.apply(this, arguments);
-    };
-  }();
-  var _useState31 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState32 = _slicedToArray(_useState31, 2),
-    open = _useState32[0],
-    setOpen = _useState32[1];
-  var _useState33 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState34 = _slicedToArray(_useState33, 2),
-    openDeleteMultiple = _useState34[0],
-    setOpenDeleteMultiple = _useState34[1];
-  var handleOpenMultiple = () => {
-    setOpenDeleteMultiple(true);
-  };
-  var handleCloseMultiple = () => {
-    setOpenDeleteMultiple(false);
-  };
-  var _useState35 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState36 = _slicedToArray(_useState35, 2),
-    openDeleteAll = _useState36[0],
-    setOpenDeleteAll = _useState36[1];
-  var handleOpenAll = () => {
-    setOpenDeleteAll(true);
-  };
-  var handleCloseAll = () => {
-    setOpenDeleteAll(false);
-    setSelectedRows([]);
-  };
-  var _useState37 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState38 = _slicedToArray(_useState37, 2),
-    openReasonDelete = _useState38[0],
-    setOpenReasonDelete = _useState38[1];
+    }();
+    fetchDataHidden();
+  }, []);
+  var _useState79 = (0,react.useState)(false),
+    _useState80 = _slicedToArray(_useState79, 2),
+    openReasonDelete = _useState80[0],
+    setOpenReasonDelete = _useState80[1];
   var handleOpenReasonDelete = e => {
     e.preventDefault();
     setOpenReasonDelete(true);
@@ -1825,235 +3760,438 @@ function CustomerViewAdmin() {
   var handleCloseReasonDelete = () => {
     setOpenReasonDelete(false);
   };
-  var _useState39 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
-    _useState40 = _slicedToArray(_useState39, 2),
-    DeleteId = _useState40[0],
-    setDeleteId = _useState40[1];
-  var _useState41 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState42 = _slicedToArray(_useState41, 2),
-    modalOpenLoading = _useState42[0],
-    setModalOpenLoading = _useState42[1];
+  {/** End Get Invoice */}
+  var _useState81 = (0,react.useState)(false),
+    _useState82 = _slicedToArray(_useState81, 2),
+    open = _useState82[0],
+    setOpen = _useState82[1];
+  var _useState83 = (0,react.useState)(null),
+    _useState84 = _slicedToArray(_useState83, 2),
+    DeleteId = _useState84[0],
+    setDeleteId = _useState84[1];
   var handleOpen = id => {
     setOpen(true);
-    setSelectedRows([id]);
-  };
-  var handleOpenModal = () => {
-    setModalOpenLoading(true);
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-    }, 500);
+    setDeleteId(id);
   };
   var handleClose = () => {
     setLoadingOpenModal(false);
     setOpen(false);
-    setSelectedRows([]);
   };
-  var handleCloseModal = () => {
-    setLoadingOpenModal(false);
-    setModalOpenLoading(false);
-    setOpenDeleteAll(false);
+  var _useState85 = (0,react.useState)(false),
+    _useState86 = _slicedToArray(_useState85, 2),
+    open1 = _useState86[0],
+    setOpen1 = _useState86[1];
+  var _useState87 = (0,react.useState)(null),
+    _useState88 = _slicedToArray(_useState87, 2),
+    updateId = _useState88[0],
+    setUpdateId = _useState88[1];
+  var _useState89 = (0,react.useState)(""),
+    _useState90 = _slicedToArray(_useState89, 2),
+    status = _useState90[0],
+    setStatus = _useState90[1];
+  var handleOpenUpdate = id => {
+    setOpen1(true);
+    setUpdateId(id);
+  };
+  var handleCloseUpdate = () => {
+    setOpen1(false);
+    setUpdateId(null);
+  };
+  {/** delete multiple && all modal start */}
+  var _useState91 = (0,react.useState)(false),
+    _useState92 = _slicedToArray(_useState91, 2),
+    openDeleteMultiple = _useState92[0],
+    setOpenDeleteMultiple = _useState92[1];
+  var handleOpenMultiple = () => {
+    setOpenDeleteMultiple(true);
+  };
+  var handleCloseMultiple = () => {
     setOpenDeleteMultiple(false);
-    setOpen(false);
-    fetchItems(page, searchTerm, filterField, filterValue);
   };
-  var _useState43 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
-    _useState44 = _slicedToArray(_useState43, 2),
-    CustomerDeleted = _useState44[0],
-    setCustomerDeleted = _useState44[1];
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+  var _useState93 = (0,react.useState)(false),
+    _useState94 = _slicedToArray(_useState93, 2),
+    openDeleteAll = _useState94[0],
+    setOpenDeleteAll = _useState94[1];
+  var handleOpenAll = () => {
+    setOpenDeleteAll(true);
+  };
+  var handleCloseAll = () => {
+    setOpenDeleteAll(false);
+  };
+  {/** Delete Function */}
+  var handleDelete = /*#__PURE__*/function () {
+    var _ref23 = _asyncToGenerator(function* () {
+      setLoading(true);
+      setModalDeleteOpenLoading(true);
+      handleClose();
+      try {
+        var invToDelete = invoice.find(inv => inv._id === DeleteId);
+        if (invToDelete && invToDelete.ReferenceName && invToDelete.Position === 'Maintenance') {
+          try {
+            yield axios/* default */.A.put("".concat(apiConfig/* ENDPOINT_URL */.m, "/update-maintenance/").concat(invToDelete.ReferenceName), {
+              Converted: false,
+              ReferenceName: '',
+              status: 'Close'
+            });
+          } catch (e) {
+            console.error('Failed to update maintenance order', e);
+          }
+        }
+        var res = yield axios/* default */.A.delete("".concat(apiConfig/* ENDPOINT_URL */.m, "/delete-invoice/").concat(DeleteId));
+        if (res) {
+          setLoading(false);
+        }
+      } catch (error) {
+        console.error(error);
+        setLoading(false);
+        react_toastify_esm/* toast */.oR.error('Failed to delete invoice.');
+        handleError();
+      }
+    });
+    return function handleDelete() {
+      return _ref23.apply(this, arguments);
+    };
+  }();
+  var _useState95 = (0,react.useState)([]),
+    _useState96 = _slicedToArray(_useState95, 2),
+    InvoiceDeleted = _useState96[0],
+    setInvoiceDeleted = _useState96[1];
+  (0,react.useEffect)(() => {
     var fetchFunction = /*#__PURE__*/function () {
-      var _ref11 = _asyncToGenerator(function* () {
+      var _ref24 = _asyncToGenerator(function* () {
         var deletePromises = selectedRows.map(/*#__PURE__*/function () {
-          var _ref12 = _asyncToGenerator(function* (idToDelete) {
-            return axios__WEBPACK_IMPORTED_MODULE_28__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_30__/* .ENDPOINT_URL */ .m, "/get-customer/").concat(idToDelete));
+          var _ref25 = _asyncToGenerator(function* (idToDelete) {
+            return axios/* default */.A.get("".concat(apiConfig/* ENDPOINT_URL */.m, "/get-invoice/").concat(idToDelete));
           });
-          return function (_x7) {
-            return _ref12.apply(this, arguments);
+          return function (_x6) {
+            return _ref25.apply(this, arguments);
           };
         }());
         try {
           var res = yield Promise.all(deletePromises);
-          setCustomerDeleted(res.map(row => row.data.data.Customer));
+          setInvoiceDeleted(res.map(row => 'INV-' + String(row.data.data.invoiceNumber).padStart(6, '0')));
         } catch (error) {
-          console.log(error);
+          console.error('Fetch error:', error);
         }
       });
       return function fetchFunction() {
-        return _ref11.apply(this, arguments);
+        return _ref24.apply(this, arguments);
       };
     }();
-    if (selectedRows && selectedRows.length > 0) {
-      fetchFunction();
-    } else {
-      setCustomerDeleted([]);
-    }
+    fetchFunction();
   }, [selectedRows]);
-  var infoFromState = (selectedRows || []).map(id => {
-    var found = customer.find(c => c._id === id || c.id === id);
-    return (found === null || found === void 0 ? void 0 : found.Customer) || (found === null || found === void 0 ? void 0 : found.customerName) || '';
-  }).filter(Boolean);
-  var info = infoFromState.length > 0 ? infoFromState.join(', ') : CustomerDeleted.length > 0 ? CustomerDeleted.join(', ') : selectedRows.length > 0 ? "".concat(selectedRows.length, " record(s)") : '';
+  var related = InvoiceDeleted.map(row => row);
+  var info = related.toString();
   var handleCreateNotification = /*#__PURE__*/function () {
-    var _ref13 = _asyncToGenerator(function* () {
+    var _ref26 = _asyncToGenerator(function* () {
       var data = {
         idInfo: '',
-        person: user.data.userName + ' Deleted ' + (info || 'Customer record(s)'),
+        person: user.data.userName + ' Deleted ' + info,
         reason,
         dateNotification: new Date()
       };
       try {
-        yield axios__WEBPACK_IMPORTED_MODULE_28__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_30__/* .ENDPOINT_URL */ .m, "/create-notification"), data);
+        yield axios/* default */.A.post("".concat(apiConfig/* ENDPOINT_URL */.m, "/create-notification"), data);
       } catch (error) {
-        console.log(error);
+        console.error('Notification error:', error);
       }
     });
     return function handleCreateNotification() {
-      return _ref13.apply(this, arguments);
+      return _ref26.apply(this, arguments);
     };
   }();
   var handleDeleteMany = /*#__PURE__*/function () {
-    var _ref14 = _asyncToGenerator(function* (e) {
-      if (e && e.preventDefault) e.preventDefault();
+    var _ref27 = _asyncToGenerator(function* (e) {
+      e.preventDefault();
+      setLoading(true);
+      setModalDeleteOpenLoading(true);
+      handleCloseMultiple();
+      handleCloseAll();
+      handleCloseReasonDelete();
       var deletePromises = selectedRows.map(/*#__PURE__*/function () {
-        var _ref15 = _asyncToGenerator(function* (idToDelete) {
-          return axios__WEBPACK_IMPORTED_MODULE_28__/* ["default"] */ .A.delete("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_30__/* .ENDPOINT_URL */ .m, "/remove-customer/").concat(idToDelete));
+        var _ref28 = _asyncToGenerator(function* (idToDelete) {
+          var invToDelete = invoice.find(inv => inv._id === idToDelete);
+          if (invToDelete && invToDelete.ReferenceName && invToDelete.Position === 'Maintenance') {
+            try {
+              yield axios/* default */.A.put("".concat(apiConfig/* ENDPOINT_URL */.m, "/update-maintenance/").concat(invToDelete.ReferenceName), {
+                Converted: false,
+                ReferenceName: '',
+                status: 'Close'
+              });
+            } catch (e) {
+              console.error('Failed to update maintenance order', e);
+            }
+          }
+          return axios/* default */.A.delete("".concat(apiConfig/* ENDPOINT_URL */.m, "/delete-invoice/").concat(idToDelete));
         });
-        return function (_x9) {
-          return _ref15.apply(this, arguments);
+        return function (_x8) {
+          return _ref28.apply(this, arguments);
         };
       }());
       try {
         var res = yield Promise.all(deletePromises);
         if (res) {
           handleCreateNotification();
-          setOpenReasonDelete(false);
-          setOpenDeleteAll(false);
-          setOpenDeleteMultiple(false);
+          setLoading(false);
           setSelectedRows([]);
-          setReason('');
-          handleOpenModal();
         }
       } catch (error) {
-        console.log(error);
-        alert("Error deleting customers. Please try again.");
+        console.error('Delete Many error:', error);
+        setLoading(false);
+        react_toastify_esm/* toast */.oR.error('Failed to delete multiple invoices.');
+        handleError();
       }
     });
-    return function handleDeleteMany(_x8) {
-      return _ref14.apply(this, arguments);
+    return function handleDeleteMany(_x7) {
+      return _ref27.apply(this, arguments);
     };
   }();
-  var handleLogout = () => {
-    localStorage.removeItem('user');
-    dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_34__/* .logOut */ .je)());
-    navigate('/');
+  {/** End Delete Function */}
+  {/** Update Invoice Status start */}
+  var _useState97 = (0,react.useState)(0),
+    _useState98 = _slicedToArray(_useState97, 2),
+    invoiceN = _useState98[0],
+    setInvoiceN = _useState98[1];
+  (0,react.useEffect)(() => {
+    var fetchId = /*#__PURE__*/function () {
+      var _ref29 = _asyncToGenerator(function* () {
+        if (updateId !== null) {
+          try {
+            var res = yield axios/* default */.A.get("".concat(apiConfig/* ENDPOINT_URL */.m, "/get-invoice/").concat(updateId));
+            setStatus(res.data.data.status);
+            setInvoiceN(res.data.data.invoiceNumber);
+          } catch (error) {
+            console.error('Error fetching data:', error);
+            react_toastify_esm/* toast */.oR.error('Failed to fetch invoice detail.');
+          }
+        }
+      });
+      return function fetchId() {
+        return _ref29.apply(this, arguments);
+      };
+    }();
+    fetchId();
+  }, [updateId]);
+  var handleCreateComment = /*#__PURE__*/function () {
+    var _ref30 = _asyncToGenerator(function* () {
+      var data = {
+        idInfo: updateId,
+        person: user.data.userName,
+        reason: status + ' INV-' + String(invoiceN).padStart(6, '0'),
+        dateNotification: new Date()
+      };
+      try {
+        yield axios/* default */.A.post("".concat(apiConfig/* ENDPOINT_URL */.m, "/create-notification/"), data);
+      } catch (error) {
+        console.error('Notification error:', error);
+      }
+    });
+    return function handleCreateComment() {
+      return _ref30.apply(this, arguments);
+    };
+  }();
+  var handleSubmitUpdateStatus = /*#__PURE__*/function () {
+    var _ref31 = _asyncToGenerator(function* (e) {
+      e.preventDefault();
+      var data = {
+        status
+      };
+      try {
+        var res = yield axios/* default */.A.put("".concat(apiConfig/* ENDPOINT_URL */.m, "/update-invoice/").concat(updateId), data);
+        if (res) {
+          handleCreateComment();
+          handleOpenLoading();
+        }
+      } catch (error) {
+        console.error('Error making PUT request:', error);
+        react_toastify_esm/* toast */.oR.error('Failed to update invoice status.');
+      }
+    });
+    return function handleSubmitUpdateStatus(_x9) {
+      return _ref31.apply(this, arguments);
+    };
+  }();
+  {/** Update Invoice Status End */}
+  var handleHideRow = /*#__PURE__*/function () {
+    var _ref32 = _asyncToGenerator(function* (id) {
+      if (user.data.role === 'CEO') {
+        try {
+          if (hiddenRow.includes(id)) {
+            setHiddenRow(hiddenRow.filter(row => row !== id));
+            var result = hidden.filter(row => row.idRow === id).map(row => row._id);
+            var hiddenId = result.toString();
+            yield axios/* default */.A.delete("".concat(apiConfig/* ENDPOINT_URL */.m, "/delete-hidden/").concat(hiddenId));
+          } else {
+            setHiddenRow([...hiddenRow, id]);
+            yield axios/* default */.A.post("".concat(apiConfig/* ENDPOINT_URL */.m, "/create-hidden"), {
+              idRow: id,
+              hiddenByCEO: true
+            });
+          }
+        } catch (error) {
+          console.error('Hide error:', error);
+          react_toastify_esm/* toast */.oR.error('Failed to update row visibility.');
+        }
+      }
+    });
+    return function handleHideRow(_x0) {
+      return _ref32.apply(this, arguments);
+    };
+  }();
+  var rowRenderer = params => {
+    if (hiddenRow.includes(params.row._id)) {
+      return null;
+    }
+    return /*#__PURE__*/react.createElement("div", null, params.row[params.field]);
   };
-  var _React$useState = react__WEBPACK_IMPORTED_MODULE_0__.useState({
+  var _useState99 = (0,react.useState)([]),
+    _useState100 = _slicedToArray(_useState99, 2),
+    filteredRows = _useState100[0],
+    setFilteredRows = _useState100[1];
+  (0,react.useEffect)(() => {
+    var Inv = invoice.filter(row => !hiddenRow.includes(row._id));
+    setFilteredRows(Inv);
+  }, [invoice, hiddenRow]);
+  {/** search start */}
+  var _useState101 = (0,react.useState)(""),
+    _useState102 = _slicedToArray(_useState101, 2),
+    searchInvoice = _useState102[0],
+    setSearchInvoice = _useState102[1];
+  (0,react.useEffect)(() => {
+    var storedValue = localStorage.getItem('QuickFilterInvoice');
+    if (storedValue) {
+      setSearchInvoice(storedValue);
+    }
+  }, []);
+  var _React$useState = react.useState({
       items: [],
-      quickFilterExcludeHiddenColumns: false,
+      quickFilterExcludeHiddenColumns: true,
       quickFilterValues: []
     }),
     _React$useState2 = _slicedToArray(_React$useState, 2),
     filterModel = _React$useState2[0],
     setFilterModel = _React$useState2[1];
-  var _useState45 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({}),
-    _useState46 = _slicedToArray(_useState45, 2),
-    columnVisibilityModel = _useState46[0],
-    setColumnVisibilityModel = _useState46[1];
+  var _useState103 = (0,react.useState)({}),
+    _useState104 = _slicedToArray(_useState103, 2),
+    columnVisibilityModel = _useState104[0],
+    setColumnVisibilityModel = _useState104[1];
   var handelHiddenColumn = newHidden => {
     setColumnVisibilityModel(newHidden);
-    localStorage.setItem('HiddenColumnsCustomer', JSON.stringify(newHidden));
+    localStorage.setItem('HiddenColumnsInvoice', JSON.stringify(newHidden));
   };
   var handleFilter = newModel => {
+    var _newModel$quickFilter;
+    var searchTerm = ((_newModel$quickFilter = newModel.quickFilterValues) === null || _newModel$quickFilter === void 0 ? void 0 : _newModel$quickFilter.join(' ')) || '';
+    setSearchTerm(searchTerm);
     setFilterModel(newModel);
-    if (newModel.quickFilterValues && newModel.quickFilterValues.length > 0) {
-      setSearchTerm(newModel.quickFilterValues.join(' '));
-    } else {
-      setSearchTerm('');
-    }
-    if (newModel.items && newModel.items.length > 0) {
-      setFilterField(newModel.items[0].field);
-      setFilterValue(newModel.items[0].value || '');
-    } else {
-      setFilterField('');
-      setFilterValue('');
-    }
+    setPage(0);
   };
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    var storedQuick = JSON.parse(localStorage.getItem('QuickFilterCustomerTst'));
+  (0,react.useEffect)(() => {
+    var storedQuick = JSON.parse(localStorage.getItem('QuickFilterInvoiceTst'));
     if (storedQuick) {
+      var _storedQuick$quickFil;
+      var _searchTerm = ((_storedQuick$quickFil = storedQuick.quickFilterValues) === null || _storedQuick$quickFil === void 0 ? void 0 : _storedQuick$quickFil.join(' ')) || '';
+      setSearchTerm(_searchTerm);
       setFilterModel(storedQuick);
     }
-    var storedColumns = JSON.parse(localStorage.getItem('HiddenColumnsCustomer'));
+    var storedColumns = JSON.parse(localStorage.getItem('HiddenColumnsInvoice'));
     if (storedColumns) {
       setColumnVisibilityModel(storedColumns);
     }
-  }, [searchCustomer]);
-  var _React$useState3 = react__WEBPACK_IMPORTED_MODULE_0__.useState(true),
+  }, [searchInvoice]);
+  var _React$useState3 = react.useState(true),
     _React$useState4 = _slicedToArray(_React$useState3, 2),
-    open1 = _React$useState4[0],
-    setOpen1 = _React$useState4[1];
+    sideBar = _React$useState4[0],
+    setSideBar = _React$useState4[1];
   var toggleDrawer = () => {
-    setOpen1(!open1);
+    setSideBar(!sideBar);
   };
+  {/** search end */}
   var columns = [{
-    field: 'customerType',
-    headerName: 'Type',
-    minWidth: 80,
-    flex: 0.8
-  }, {
-    field: 'customerFullName',
-    headerName: 'Customer Name',
-    minWidth: 150,
-    flex: 1.5
-  }, {
-    field: 'companyName',
-    headerName: 'Company Name',
-    minWidth: 150,
-    flex: 1.5
+    field: 'invoiceNumber',
+    headerName: 'Invoice#',
+    minWidth: 100,
+    flex: 1,
+    renderCell: params => /*#__PURE__*/react.createElement("div", null, " ", /*#__PURE__*/react.createElement("span", null, "INV-", String(params.row.invoiceNumber).padStart(6, '0')), " ")
   }, {
     field: 'customer',
-    headerName: 'Invoice Name',
-    minWidth: 150,
-    flex: 1.5,
-    valueGetter: params => {
-      var _params$row$Customer;
-      return (_params$row$Customer = params.row.Customer) === null || _params$row$Customer === void 0 ? void 0 : _params$row$Customer.toUpperCase();
-    }
-  }, {
-    field: 'customerEmail',
-    headerName: 'Email',
-    minWidth: 100,
-    flex: 1
-  }, {
-    field: 'customerCompanyPhone',
-    headerName: 'Phone N',
-    minWidth: 100,
-    flex: 1
-  }, {
-    field: 'customerPhone',
-    headerName: 'Phone N 2',
-    minWidth: 100,
-    flex: 1
-  }, {
-    field: 'billingAddress',
-    headerName: 'Address',
+    headerName: 'Customer Name',
     minWidth: 200,
     flex: 2,
-    valueGetter: params => params.row.billingAddress.toUpperCase()
+    valueGetter: params => {
+      var _params$row, _params$row2, _params$row3;
+      var raw = ((_params$row = params.row) === null || _params$row === void 0 ? void 0 : _params$row.customerName) || ((_params$row2 = params.row) === null || _params$row2 === void 0 ? void 0 : _params$row2.Customer) || ((_params$row3 = params.row) === null || _params$row3 === void 0 ? void 0 : _params$row3.customer);
+      if (!raw) return '';
+      if (typeof raw === 'string') return raw.toUpperCase();
+      var fullName = [raw.customerFirstName, raw.customerLastName].filter(Boolean).join(' ');
+      var name = raw.Customer || raw.customerName || raw.customerFullName || raw.companyName || fullName || raw.name || raw.clientName || '';
+      return String(name).toUpperCase();
+    }
+  }, {
+    field: 'status',
+    headerName: 'Status',
+    minWidth: 100,
+    flex: 1,
+    renderCell: params => {
+      var isActuallyPaid = parseFloat(params.row.balanceDue) <= 0 && parseFloat(params.row.totalInvoice) > 0;
+      var fallbackStatus = parseFloat(params.row.total) > 0 && parseFloat(params.row.balanceDue) > 0 ? 'Partially-Paid' : 'Sent';
+      var displayStatus = isActuallyPaid ? "Paid" : params.row.status || fallbackStatus;
+      return (0,formatUtils/* renderStatusBadge */.UM)(displayStatus);
+    }
+  }, {
+    field: 'invoiceSubject',
+    headerName: 'Subject',
+    minWidth: 150,
+    flex: 1,
+    valueGetter: params => {
+      var _params$row4, _params$row5;
+      return ((_params$row4 = params.row) === null || _params$row4 === void 0 ? void 0 : _params$row4.invoiceSubject) || (((_params$row5 = params.row) === null || _params$row5 === void 0 ? void 0 : _params$row5.invoiceNumber) === 2673 ? 'CCTV & POS INSTALLATION' : '');
+    }
+  }, {
+    field: 'dateField',
+    headerName: 'Date',
+    minWidth: 100,
+    flex: 1
+  }, {
+    field: 'totalInvoice',
+    headerName: 'I-Amount',
+    minWidth: 100,
+    flex: 1,
+    renderCell: params => {
+      var _params$row$totalInvo;
+      return "$".concat((_params$row$totalInvo = params.row.totalInvoice) === null || _params$row$totalInvo === void 0 ? void 0 : _params$row$totalInvo.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+    }
+  }, {
+    field: 'total',
+    headerName: 'A-Paid',
+    minWidth: 100,
+    flex: 1,
+    renderCell: params => {
+      var _params$row$total;
+      return "$".concat((_params$row$total = params.row.total) === null || _params$row$total === void 0 ? void 0 : _params$row$total.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+    }
+  }, {
+    field: 'balanceDue',
+    headerName: 'B-Due',
+    minWidth: 100,
+    flex: 1,
+    renderCell: params => {
+      var _params$row$balanceDu;
+      return "$".concat((_params$row$balanceDu = params.row.balanceDue) === null || _params$row$balanceDu === void 0 ? void 0 : _params$row$balanceDu.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+    }
   }, {
     field: 'view',
     headerName: 'View',
     width: 60,
     minWidth: 60,
-    renderCell: params => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(ViewTooltip, {
+    renderCell: params => /*#__PURE__*/react.createElement(ViewTooltip, {
       title: "View"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
-      disabled: customerInfoV.length === 0
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_7__/* .NavLink */ .k2, {
-      to: "/CustomerInformationView/".concat(params.row._id),
+    }, /*#__PURE__*/react.createElement("span", null, /*#__PURE__*/react.createElement(IconButton/* default */.A, {
+      disabled: InvoiceInfoV.length === 0
+    }, /*#__PURE__*/react.createElement(react_router_dom_dist/* NavLink */.k2, {
+      to: "/InvoiceViewAdminAll/".concat(params.row._id),
       className: "LinkName"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Visibility__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react.createElement(Visibility/* default */.A, {
       style: {
         color: '#202a5a'
       }
@@ -2061,88 +4199,155 @@ function CustomerViewAdmin() {
   }, {
     field: 'edit',
     headerName: 'Edit',
-    width: 60,
-    minWidth: 60,
-    renderCell: params => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(EditTooltip, {
+    width: 50,
+    renderCell: params => /*#__PURE__*/react.createElement(EditTooltip, {
       title: "Edit"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
-      disabled: customerInfoU.length === 0
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_7__/* .NavLink */ .k2, {
-      to: "/CustomerFormUpdate/".concat(params.row._id),
-      className: "LinkName"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Edit__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react.createElement("span", null, /*#__PURE__*/react.createElement(IconButton/* default */.A, {
+      onClick: () => handleOpenUpdate(params.row._id),
+      disabled: params.row.status !== 'Draft' && InvoiceInfoU.length === 0
+    }, /*#__PURE__*/react.createElement(Edit/* default */.A, {
       style: {
         color: 'gray'
       }
-    })))))
+    }))))
   }, {
     field: 'Delete',
     headerName: 'Delete',
-    width: 60,
-    minWidth: 60,
-    renderCell: params => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(DeleteTooltip, {
+    width: 50,
+    renderCell: params => /*#__PURE__*/react.createElement(DeleteTooltip, {
       title: "Delete"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, "                                ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react.createElement("span", null, "                                ", /*#__PURE__*/react.createElement(IconButton/* default */.A, {
       onClick: () => handleOpen(params.row._id),
-      disabled: customerInfoD.length === 0
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Delete__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+      disabled: InvoiceInfoD.length === 0
+    }, /*#__PURE__*/react.createElement(Delete/* default */.A, {
       style: {
         cursor: 'pointer',
         color: 'red'
       }
     }))))
+  }, {
+    field: 'whatsapp',
+    headerName: 'WhatsApp',
+    width: 60,
+    sortable: false,
+    renderCell: params => {
+      var isEligible = isEligibleInvoiceStatus(params.row.status);
+      if (!canSendWhatsAppInvoice) return null;
+      if (!isEligible) {
+        return /*#__PURE__*/react.createElement(Tooltip/* default */.A, {
+          title: "Only invoices with status SENT, PARTIALLY-PAID, or FREE OF CHARGE can be sent via WhatsApp"
+        }, /*#__PURE__*/react.createElement("span", null, /*#__PURE__*/react.createElement(IconButton/* default */.A, {
+          size: "small",
+          disabled: true,
+          sx: {
+            color: '#cbd5e1'
+          }
+        }, /*#__PURE__*/react.createElement(WhatsApp, {
+          sx: {
+            fontSize: 18
+          }
+        }))));
+      }
+      return /*#__PURE__*/react.createElement(Tooltip/* default */.A, {
+        title: "Send ".concat(params.row.invoiceName || 'invoice', " via WhatsApp")
+      }, /*#__PURE__*/react.createElement("span", null, /*#__PURE__*/react.createElement(IconButton/* default */.A, {
+        size: "small",
+        onClick: () => handleOpenWhatsAppSingleModal(params.row),
+        sx: {
+          color: '#25D366',
+          '&:hover': {
+            color: '#1ebe5d',
+            backgroundColor: '#f0fdf4'
+          }
+        }
+      }, /*#__PURE__*/react.createElement(WhatsApp, {
+        sx: {
+          fontSize: 20
+        }
+      }))));
+    }
+  }, {
+    field: 'hide',
+    headerName: 'Action',
+    sortable: false,
+    width: 40,
+    renderCell: params => {
+      if (user.data.role === 'CEO') {
+        return /*#__PURE__*/react.createElement("div", null, hiddenRow.includes(params.row._id) ? /*#__PURE__*/react.createElement(ViewTooltip, {
+          title: "UnHide"
+        }, /*#__PURE__*/react.createElement("span", null, /*#__PURE__*/react.createElement(IconButton/* default */.A, {
+          onClick: () => handleHideRow(params.row._id)
+        }, /*#__PURE__*/react.createElement(PersonOffRounded/* default */.A, {
+          style: {
+            color: '#202a5a'
+          }
+        })))) : /*#__PURE__*/react.createElement(ViewTooltip, {
+          title: "Hide"
+        }, /*#__PURE__*/react.createElement("span", null, /*#__PURE__*/react.createElement(IconButton/* default */.A, {
+          onClick: () => handleHideRow(params.row._id)
+        }, /*#__PURE__*/react.createElement(Person2Outlined/* default */.A, {
+          style: {
+            color: '#202a5a'
+          }
+        })))));
+      }
+    }
   }];
+  {/** Search View End */}
   if (isMobile) {
-    return loadingData ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    return loadingData ? /*#__PURE__*/react.createElement("div", {
       style: {
         position: 'relative',
         top: '120px',
         textAlign: 'center'
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A, null)) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react.createElement(Loader/* default */.A, null)) : /*#__PURE__*/react.createElement(Box/* default */.A, {
       sx: {
         width: '100%',
         py: 1
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_MobileCardList__WEBPACK_IMPORTED_MODULE_44__/* ["default"] */ .A, {
-      type: "customers",
-      data: customer,
-      searchPlaceholder: "Search customers by name, phone, email, company...",
+    }, /*#__PURE__*/react.createElement(MobileCardList/* default */.A, {
+      type: "invoices",
+      data: invoice,
+      searchPlaceholder: "Search invoices, clients, items, amounts...",
       searchValue: searchTerm,
       onSearchChange: setSearchTerm,
       page: page,
       totalCount: totalItemCount,
       onPageChange: setPage,
-      loading: loadingData
+      loading: loadingData,
+      statusFilter: statusFilter,
+      onStatusFilterChange: handleStatusClick,
+      statusCounts: statusCounts
     }));
   }
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+  return /*#__PURE__*/react.createElement("div", {
     className: "Homeemployee"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react.createElement(Box/* default */.A, {
     sx: {
       display: 'flex'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_CssBaseline__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .Ay, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(AppBar, {
+  }, /*#__PURE__*/react.createElement(CssBaseline/* default */.Ay, null), /*#__PURE__*/react.createElement(InvoiceViewAdmin_AppBar, {
     position: "absolute",
-    open: open1,
+    open: sideBar,
     sx: {
       backgroundColor: '#30368a'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react.createElement(Toolbar/* default */.A, {
     sx: {
       pr: '24px' // keep right padding when drawer closed
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react.createElement(IconButton/* default */.A, {
     edge: "start",
     color: "inherit",
     "aria-label": "open drawer",
     onClick: toggleDrawer,
     sx: _objectSpread({
       marginRight: '36px'
-    }, open1 && {
+    }, sideBar && {
       display: 'none'
     })
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Menu__WEBPACK_IMPORTED_MODULE_26__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react.createElement(Menu/* default */.A, null)), /*#__PURE__*/react.createElement(Typography/* default */.A, {
     component: "h1",
     variant: "h6",
     color: "inherit",
@@ -2150,35 +4355,35 @@ function CustomerViewAdmin() {
     sx: {
       flexGrow: 1
     }
-  }, "Customer"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_42__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_MessageAdminView__WEBPACK_IMPORTED_MODULE_41__/* ["default"] */ .A, {
+  }, "Invoice"), /*#__PURE__*/react.createElement(NotificationVIewInfo/* default */.A, null), /*#__PURE__*/react.createElement(MessageAdminView/* default */.A, {
     name: user.data.userName,
     role: user.data.role
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
+  }), /*#__PURE__*/react.createElement(IconButton/* default */.A, {
     color: "inherit",
     onClick: handleLogout
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_37__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react.createElement(NetworkLogoutIcon/* default */.A, {
     style: {
       color: 'white'
     }
-  })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(Drawer, {
+  })))), /*#__PURE__*/react.createElement(InvoiceViewAdmin_Drawer, {
     variant: "permanent",
-    open: open1,
-    onMouseEnter: () => setOpen1(true),
-    onMouseLeave: () => setOpen1(false)
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+    open: sideBar,
+    onMouseEnter: () => setSideBar(true),
+    onMouseLeave: () => setSideBar(false)
+  }, /*#__PURE__*/react.createElement(Toolbar/* default */.A, {
     sx: {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'flex-end',
       px: [1]
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react.createElement(IconButton/* default */.A, {
     onClick: toggleDrawer
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_ChevronLeft__WEBPACK_IMPORTED_MODULE_27__/* ["default"] */ .A, null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Divider__WEBPACK_IMPORTED_MODULE_24__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_List__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react.createElement(ChevronLeft/* default */.A, null))), /*#__PURE__*/react.createElement(Divider/* default */.A, null), /*#__PURE__*/react.createElement(List/* default */.A, {
     sx: {
       height: '700px'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_SidebarDash__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react.createElement(SidebarDash/* default */.A, null))), /*#__PURE__*/react.createElement(Box/* default */.A, {
     component: "main",
     sx: {
       backgroundColor: theme => theme.palette.mode === 'light' ? theme.palette.grey[100] : theme.palette.grey[900],
@@ -2187,63 +4392,285 @@ function CustomerViewAdmin() {
       height: '100vh',
       overflow: 'auto'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Container__WEBPACK_IMPORTED_MODULE_25__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react.createElement(Toolbar/* default */.A, null), /*#__PURE__*/react.createElement(Container/* default */.A, {
     maxWidth: "none",
     sx: {
-      mt: 1
+      mt: 0.5,
+      px: {
+        xs: 1,
+        sm: 2
+      }
     }
-  }, loadingData ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+  }, /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      display: 'grid',
+      gridTemplateColumns: {
+        xs: 'repeat(2, 1fr)',
+        sm: 'repeat(4, 1fr)',
+        md: 'repeat(8, 1fr)'
+      },
+      gap: 1,
+      mb: 0.75,
+      mt: 0.25
+    }
+  }, [{
+    key: 'ALL',
+    label: 'ALL ORDERS',
+    count: statusCounts.all,
+    color: '#30368a',
+    bgLight: '#eef2ff',
+    icon: /*#__PURE__*/react.createElement(Assignment/* default */.A, {
+      sx: {
+        fontSize: 15,
+        color: '#30368a'
+      }
+    })
+  }, {
+    key: 'Paid',
+    label: 'PAID',
+    count: statusCounts.paid,
+    color: '#16a34a',
+    bgLight: '#dcfce7',
+    icon: /*#__PURE__*/react.createElement(CheckCircle/* default */.A, {
+      sx: {
+        fontSize: 15,
+        color: '#16a34a'
+      }
+    })
+  }, {
+    key: 'Partially-Paid',
+    label: 'PARTIALLY-PAID',
+    count: statusCounts.partiallyPaid,
+    color: '#d97706',
+    bgLight: '#fef3c7',
+    icon: /*#__PURE__*/react.createElement(Payments, {
+      sx: {
+        fontSize: 15,
+        color: '#d97706'
+      }
+    })
+  }, {
+    key: 'Draft',
+    label: 'DRAFT',
+    count: statusCounts.draft,
+    color: '#78909c',
+    bgLight: '#eceff1',
+    icon: /*#__PURE__*/react.createElement(EditNote/* default */.A, {
+      sx: {
+        fontSize: 15,
+        color: '#78909c'
+      }
+    })
+  }, {
+    key: 'Sent',
+    label: 'SENT',
+    count: statusCounts.sent,
+    color: '#1976d2',
+    bgLight: '#e3f2fd',
+    icon: /*#__PURE__*/react.createElement(Send/* default */.A, {
+      sx: {
+        fontSize: 15,
+        color: '#1976d2'
+      }
+    })
+  }, {
+    key: 'Pending',
+    label: 'PENDING',
+    count: statusCounts.pending,
+    color: '#801313',
+    bgLight: '#fbe9e7',
+    icon: /*#__PURE__*/react.createElement(HourglassEmpty/* default */.A, {
+      sx: {
+        fontSize: 15,
+        color: '#801313'
+      }
+    })
+  }, {
+    key: 'Decline',
+    label: 'DECLINE',
+    count: statusCounts.decline,
+    color: '#d32f2f',
+    bgLight: '#ffebee',
+    icon: /*#__PURE__*/react.createElement(Cancel/* default */.A, {
+      sx: {
+        fontSize: 15,
+        color: '#d32f2f'
+      }
+    })
+  }, {
+    key: 'Free of Charge',
+    label: 'FREE OF CHARGE',
+    count: statusCounts.freeOfCharge,
+    color: '#9c27b0',
+    bgLight: '#f3e5f5',
+    icon: /*#__PURE__*/react.createElement(CardGiftcard, {
+      sx: {
+        fontSize: 15,
+        color: '#9c27b0'
+      }
+    })
+  }].map(card => {
+    var isSelected = statusFilter.toLowerCase() === card.key.toLowerCase();
+    return /*#__PURE__*/react.createElement(Box/* default */.A, {
+      key: card.key,
+      onClick: () => handleStatusClick(card.key),
+      sx: {
+        backgroundColor: '#ffffff',
+        borderRadius: '8px',
+        p: '6px 10px',
+        cursor: 'pointer',
+        position: 'relative',
+        overflow: 'hidden',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        border: isSelected ? "2px solid ".concat(card.color) : '1px solid #e2e8f0',
+        boxShadow: isSelected ? "0 4px 12px -2px ".concat(card.color, "33, 0 2px 4px -1px rgba(0, 0, 0, 0.06)") : '0 1px 2px 0 rgba(0, 0, 0, 0.04)',
+        transform: isSelected ? 'translateY(-1px)' : 'none',
+        transition: 'all 0.15s ease-in-out',
+        '&:hover': {
+          boxShadow: "0 4px 10px -2px ".concat(card.color, "25, 0 2px 4px -1px rgba(0, 0, 0, 0.06)"),
+          transform: 'translateY(-1px)',
+          borderColor: card.color
+        }
+      }
+    }, isSelected && /*#__PURE__*/react.createElement(Box/* default */.A, {
+      sx: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        height: '3px',
+        backgroundColor: card.color
+      }
+    }), /*#__PURE__*/react.createElement(Box/* default */.A, {
+      sx: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        mb: 0.25
+      }
+    }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
+      sx: {
+        fontSize: '9.5px',
+        fontWeight: 700,
+        letterSpacing: '0.4px',
+        color: isSelected ? card.color : '#64748b',
+        textTransform: 'uppercase'
+      }
+    }, card.label), /*#__PURE__*/react.createElement(Box/* default */.A, {
+      sx: {
+        width: 22,
+        height: 22,
+        borderRadius: '50%',
+        backgroundColor: card.bgLight,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
+      }
+    }, card.icon)), /*#__PURE__*/react.createElement(Box/* default */.A, {
+      sx: {
+        display: 'flex',
+        alignItems: 'baseline',
+        gap: 1
+      }
+    }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
+      sx: {
+        fontSize: '16px',
+        fontWeight: 800,
+        color: isSelected ? card.color : '#1e293b',
+        lineHeight: 1.1
+      }
+    }, (card.count || 0).toLocaleString())));
+  })), loadingData ? /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement("div", {
     style: {
       position: 'relative',
       top: '120px'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A, null))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("section", {
-    style: {
-      position: 'relative',
-      float: 'right',
-      margin: '10px'
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(ViewTooltip, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
-    disabled: customerInfoC.length === 0
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_7__/* .NavLink */ .k2, {
-    to: '/CustomerForm',
-    className: "LinkName"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
-    className: "btnCustomerAdding"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A, null))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react.createElement(Loader/* default */.A, null))) : /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement(Box/* default */.A, {
     sx: {
-      height: (0,_utils_isMobile__WEBPACK_IMPORTED_MODULE_43__/* .isNativeMobile */ .g1)() ? 'auto' : 600,
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      mb: 0.5,
+      mt: 0.25
+    }
+  }, /*#__PURE__*/react.createElement(Box/* default */.A, null, invoice.length > 0 && selectedRows.length > 1 && selectedRows.length < invoice.length && /*#__PURE__*/react.createElement("button", {
+    disabled: user.data.role !== 'CEO',
+    onClick: handleOpenAll,
+    className: "btnCustomer2"
+  }, "Delete multiple"), invoice.length > 0 && selectedRows.length === invoice.length && /*#__PURE__*/react.createElement("button", {
+    onClick: handleOpenAll,
+    disabled: user.data.role !== 'CEO',
+    className: "btnCustomer2"
+  }, "Delete all")), !(0,utils_isMobile/* isNativeMobile */.g1)() && /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: 1
+    }
+  }, /*#__PURE__*/react.createElement(ViewTooltip, null, /*#__PURE__*/react.createElement("span", null, /*#__PURE__*/react.createElement(IconButton/* default */.A, {
+    disabled: InvoiceInfoC.length === 0,
+    size: "small"
+  }, /*#__PURE__*/react.createElement(react_router_dom_dist/* NavLink */.k2, {
+    to: '/InvoiceForm',
+    className: "LinkName"
+  }, /*#__PURE__*/react.createElement("span", {
+    className: "btnCustomerAdding"
+  }, /*#__PURE__*/react.createElement(Add/* default */.A, {
+    sx: {
+      fontSize: 18
+    }
+  })))))), /*#__PURE__*/react.createElement("button", {
+    onClick: handleRefreshSearch,
+    className: "btnCustomer2",
+    style: {
+      height: '32px',
+      lineHeight: '32px',
+      padding: '0 12px'
+    }
+  }, "Refresh Search"), canSendWhatsAppInvoice && /*#__PURE__*/react.createElement(Button/* default */.A, {
+    variant: "contained",
+    size: "small",
+    startIcon: /*#__PURE__*/react.createElement(WhatsApp, {
+      sx: {
+        fontSize: 18
+      }
+    }),
+    onClick: handleOpenWhatsAppBatchModal,
+    sx: {
+      backgroundColor: '#25D366',
+      '&:hover': {
+        backgroundColor: '#1ebe5d'
+      },
+      color: '#fff',
+      fontWeight: 700,
+      textTransform: 'none',
+      height: '32px',
+      px: 1.5,
+      borderRadius: '4px',
+      boxShadow: '0 2px 4px rgba(37,211,102,0.25)'
+    }
+  }, "Send WhatsApp Invoices"))), /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      height: (0,utils_isMobile/* isNativeMobile */.g1)() ? 'auto' : 'calc(100vh - 200px)',
+      minHeight: 380,
       width: '100%'
     }
-  }, (0,_utils_isMobile__WEBPACK_IMPORTED_MODULE_43__/* .isNativeMobile */ .g1)() ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_MobileCardList__WEBPACK_IMPORTED_MODULE_44__/* ["default"] */ .A, {
-    type: "customers",
-    data: customer,
-    searchPlaceholder: "Search customers by name, phone, email, company...",
+  }, (0,utils_isMobile/* isNativeMobile */.g1)() ? /*#__PURE__*/react.createElement(MobileCardList/* default */.A, {
+    type: "invoices",
+    data: invoice,
+    searchPlaceholder: "Search invoices, clients, items, amounts...",
     searchValue: searchTerm,
     onSearchChange: setSearchTerm,
     page: page,
     totalCount: totalItemCount,
     onPageChange: setPage,
-    loading: loadingData
-  }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, customer.length > 0 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("section", {
-    style: {
-      position: 'relative',
-      float: 'left',
-      margin: '10px'
-    }
-  }, selectedRows.length > 1 && selectedRows.length < customer.length && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
-    disabled: user.data.role !== 'CEO',
-    onClick: handleOpenAll,
-    className: "btnCustomer2"
-  }, "Delete multiple"), selectedRows.length === customer.length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
-    onClick: handleOpenAll,
-    disabled: user.data.role !== 'CEO',
-    className: "btnCustomer2"
-  }, "Delete all") : '') : '', /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_x_data_grid__WEBPACK_IMPORTED_MODULE_39__/* .DataGrid */ .zh, {
-    rows: customer,
-    columns: columns,
-    checkboxSelection: true,
-    disableDensitySelector: true,
+    loading: loadingData,
+    statusFilter: statusFilter,
+    onStatusFilterChange: handleStatusClick,
+    statusCounts: statusCounts
+  }) : user.data.role === 'CEO' ? /*#__PURE__*/react.createElement(react.Fragment, null, /*#__PURE__*/react.createElement(DataGrid/* DataGrid */.zh, {
     paginationMode: "server",
     filterMode: "server",
     rowCount: totalItemCount,
@@ -2252,9 +4679,10 @@ function CustomerViewAdmin() {
       pageSize: limit
     },
     onPaginationModelChange: newModel => handlePageChange(newModel.page),
-    onRowSelectionModelChange: newSelection => setSelectedRows(newSelection),
+    rows: invoice,
+    columns: columns,
     slots: {
-      toolbar: _mui_x_data_grid__WEBPACK_IMPORTED_MODULE_40__/* .GridToolbar */ .O
+      toolbar: GridToolbar/* GridToolbar */.O
     },
     slotProps: {
       toolbar: {
@@ -2267,6 +4695,12 @@ function CustomerViewAdmin() {
         }
       }
     },
+    getRowClassName: params => FilterInvoiceWith.some(filteredRow => filteredRow.id === params.row.id) ? 'new-Purchase' : '',
+    onRowSelectionModelChange: newSelection => setSelectedRows(newSelection),
+    rowRenderer: rowRenderer,
+    checkboxSelection: true,
+    disableColumnFilter: true,
+    disableDensitySelector: true,
     rowSelectionModel: selectedRows,
     filterModel: filterModel,
     onFilterModelChange: newModel => handleFilter(newModel),
@@ -2275,212 +4709,217 @@ function CustomerViewAdmin() {
     sx: {
       width: '100%',
       backgroundColor: 'white',
-      padding: '10px'
+      padding: '10px',
+      '& .new-Purchase': {
+        backgroundColor: '#e3f2fd'
+      }
     }
-  })))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, {
+  }), /*#__PURE__*/react.createElement(Pagination/* default */.A, {
+    count: totalPage,
+    page: page + 1,
+    onChange: (e, value) => setPage(value - 1),
+    color: "primary",
+    sx: {
+      position: 'relative',
+      top: '-52px',
+      zIndex: 1000,
+      display: 'flex',
+      justifyContent: 'center',
+      width: 'fit-content',
+      margin: '0 auto'
+    }
+  })) : /*#__PURE__*/react.createElement(react.Fragment, null, /*#__PURE__*/react.createElement(DataGrid/* DataGrid */.zh, {
+    paginationMode: "server",
+    filterMode: "server",
+    rowCount: totalItemCount,
+    paginationModel: {
+      page: page,
+      pageSize: limit
+    },
+    onPaginationModelChange: newModel => handlePageChange(newModel.page),
+    rows: filteredRows,
+    columns: columns,
+    slots: {
+      toolbar: GridToolbar/* GridToolbar */.O
+    },
+    slotProps: {
+      toolbar: {
+        showQuickFilter: true,
+        quickFilterProps: {
+          debounceMs: 500
+        },
+        printOptions: {
+          disableToolbarButton: true
+        }
+      }
+    },
+    getRowClassName: params => FilterInvoiceWith.some(filteredRow => filteredRow.id === params.row.id) ? 'new-Purchase' : '',
+    onRowSelectionModelChange: newSelection => setSelectedRows(newSelection),
+    checkboxSelection: true,
+    disableColumnFilter: true,
+    disableDensitySelector: true,
+    rowSelectionModel: selectedRows,
+    filterModel: filterModel,
+    onFilterModelChange: newModel => handleFilter(newModel),
+    columnVisibilityModel: columnVisibilityModel,
+    onColumnVisibilityModelChange: handelHiddenColumn,
+    sx: {
+      width: '100%',
+      backgroundColor: 'white',
+      padding: '10px',
+      '& .new-Purchase': {
+        backgroundColor: '#e3f2fd'
+      }
+    }
+  }), /*#__PURE__*/react.createElement(Pagination/* default */.A, {
+    count: totalPage,
+    page: page + 1,
+    onChange: (e, value) => setPage(value - 1),
+    color: "primary",
+    sx: {
+      position: 'relative',
+      top: '-52px',
+      zIndex: 1000,
+      display: 'flex',
+      justifyContent: 'center',
+      width: 'fit-content',
+      margin: '0 auto'
+    }
+  }))), /*#__PURE__*/react.createElement(Modal/* default */.A, {
     open: open,
     onClose: handleClose,
     "aria-labelledby": "modal-modal-title",
     "aria-describedby": "modal-modal-description"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react.createElement(Box/* default */.A, {
     sx: _objectSpread(_objectSpread({}, style), {}, {
       width: 500
     })
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+  }, /*#__PURE__*/react.createElement("div", {
     style: {
       justifyContent: 'center',
       textAlign: 'center'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", null, "Do you want to Delete ?"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+  }, /*#__PURE__*/react.createElement("h2", null, "Do you want to Delete ?"), /*#__PURE__*/react.createElement("div", {
     style: {
       display: 'flex',
       gap: '60px',
       justifyContent: 'center'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+  }, /*#__PURE__*/react.createElement("button", {
     className: "btnCustomer2",
-    onClick: handleOpenReasonDelete
-  }, "Delete"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+    onClick: handleDelete
+  }, "Delete"), /*#__PURE__*/react.createElement("button", {
     className: "btnCustomer",
     onClick: handleClose
-  }, "Cancel"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, {
-    open: openDeleteMultiple,
-    onClose: handleCloseMultiple,
+  }, "Cancel"))))), /*#__PURE__*/react.createElement(Modal/* default */.A, {
+    open: modalDeleteOpenLoading,
+    onClose: handleDeleteCloseLoading,
     "aria-labelledby": "modal-modal-title",
     "aria-describedby": "modal-modal-description"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react.createElement(Box/* default */.A, {
     sx: _objectSpread(_objectSpread({}, style), {}, {
       width: 500
     })
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+  }, /*#__PURE__*/react.createElement("div", {
     style: {
       justifyContent: 'center',
       textAlign: 'center'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", null, "Do you want to Delete ?"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
-    className: "txt2",
+  }, loading ? /*#__PURE__*/react.createElement(Loader/* default */.A, null) : /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement("p", null, /*#__PURE__*/react.createElement(CheckCircle/* default */.A, {
     style: {
-      color: 'red'
+      color: 'green',
+      height: '40px',
+      width: '40px'
     }
-  }, "Note:"), " All selected rows will be deleted"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+  })), /*#__PURE__*/react.createElement("h2", null, " Done Successfully"), /*#__PURE__*/react.createElement("div", {
     style: {
       display: 'flex',
       gap: '60px',
       justifyContent: 'center'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
-    className: "btnCustomer2",
-    onClick: handleOpenReasonDelete
-  }, "Delete"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
-    className: "btnCustomer",
-    onClick: handleCloseMultiple
-  }, "Cancel"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react.createElement("button", {
+    onClick: handleDeleteCloseLoading,
+    className: "btnCustomer"
+  }, "Close")))))), /*#__PURE__*/react.createElement(Modal/* default */.A, {
     open: openDeleteAll,
     onClose: handleCloseAll,
     "aria-labelledby": "modal-modal-title",
     "aria-describedby": "modal-modal-description"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react.createElement(Box/* default */.A, {
     sx: _objectSpread(_objectSpread({}, style), {}, {
       width: 500
     })
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+  }, /*#__PURE__*/react.createElement("div", {
     style: {
       justifyContent: 'center',
       textAlign: 'center'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", null, "Do you want to Delete ?"), selectedRows.length === 1 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
+  }, /*#__PURE__*/react.createElement("h2", null, "Do you want to Delete ?"), selectedRows.length === 1 && /*#__PURE__*/react.createElement("p", null, /*#__PURE__*/react.createElement("span", {
     className: "txt2",
     style: {
       color: 'red'
     }
-  }, "Note:"), " Selected rows will be deleted"), selectedRows.length > 1 && selectedRows.length < customer.length && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
+  }, "Note:"), " Selected rows will be deleted"), selectedRows.length > 1 && selectedRows.length < invoice.length && /*#__PURE__*/react.createElement("p", null, /*#__PURE__*/react.createElement("span", {
     className: "txt2",
     style: {
       color: 'red'
     }
-  }, "Note:"), " All selected rows will be deleted"), selectedRows.length === customer.length && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
+  }, "Note:"), " All selected rows will be deleted"), selectedRows.length === invoice.length && /*#__PURE__*/react.createElement("p", null, /*#__PURE__*/react.createElement("span", {
     className: "txt2",
     style: {
       color: 'red'
     }
-  }, "Note:"), " All rows will be deleted"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+  }, "Note:"), " All rows will be deleted"), /*#__PURE__*/react.createElement("div", {
     style: {
       display: 'flex',
       gap: '60px',
       justifyContent: 'center'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+  }, /*#__PURE__*/react.createElement("button", {
     className: "btnCustomer2",
     onClick: handleOpenReasonDelete
-  }, "Delete"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+  }, "Delete"), /*#__PURE__*/react.createElement("button", {
     className: "btnCustomer",
     onClick: handleCloseAll
-  }, "Cancel"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, {
-    open: loadingOpenModal,
-    onClose: handleCloseModal,
-    closeAfterTransition: true,
-    BackdropComponent: _mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A,
-    BackdropProps: {
-      timeout: 500
-    },
-    "aria-labelledby": "modal-modal-title",
-    "aria-describedby": "modal-modal-description"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
-    sx: _objectSpread(_objectSpread({}, style), {}, {
-      width: 500
-    })
-  }, loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-    style: {
-      justifyContent: 'center',
-      textAlign: 'center'
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_36__/* ["default"] */ .A, {
-    style: {
-      color: 'green',
-      height: '40px',
-      width: '40px'
-    }
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", null, " Data Saved successfully"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-    style: {
-      display: 'flex',
-      gap: '60px',
-      justifyContent: 'center'
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
-    onClick: handleCloseModal,
-    className: "btnCustomer"
-  }, "Close"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, {
-    open: modalOpenLoading,
-    onClose: handleCloseModal,
-    BackdropComponent: _mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A,
-    BackdropProps: {
-      timeout: 500
-    },
-    "aria-labelledby": "modal-modal-title",
-    "aria-describedby": "modal-modal-description"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
-    sx: _objectSpread(_objectSpread({}, style), {}, {
-      width: 500
-    })
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-    style: {
-      justifyContent: 'center',
-      textAlign: 'center'
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_36__/* ["default"] */ .A, {
-    style: {
-      color: 'green',
-      height: '40px',
-      width: '40px'
-    }
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", null, " Data successfully deleted"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-    style: {
-      display: 'flex',
-      gap: '60px',
-      justifyContent: 'center'
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
-    onClick: handleCloseModal,
-    className: "btnCustomer"
-  }, "Close")))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, {
+  }, "Cancel"))))), /*#__PURE__*/react.createElement(Modal/* default */.A, {
     open: openReasonDelete,
     onClose: handleCloseReasonDelete,
     "aria-labelledby": "modal-modal-title",
     "aria-describedby": "modal-modal-description"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react.createElement(Box/* default */.A, {
     sx: _objectSpread(_objectSpread({}, style), {}, {
       width: 500
     })
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(ViewTooltip, {
+  }, /*#__PURE__*/react.createElement(ViewTooltip, {
     title: "Close",
     placement: "left"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react.createElement(IconButton/* default */.A, {
     onClick: handleCloseReasonDelete,
     style: {
       position: 'relative',
       float: 'right'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_31__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react.createElement(Close/* default */.A, {
     style: {
       color: '#202a5a'
     }
-  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+  }))), /*#__PURE__*/react.createElement(Typography/* default */.A, {
     id: "modal-modal-title",
     variant: "h6",
     component: "h2"
-  }, "Why do you want to delete: ", info || (selectedRows.length > 1 ? "".concat(selectedRows.length, " selected customers") : 'this customer'), "?"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("form", {
+  }, "Why do you want to delete: ", info, "?"), /*#__PURE__*/react.createElement("form", {
     onSubmit: handleDeleteMany
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .Ay, {
+  }, /*#__PURE__*/react.createElement(Grid/* default */.Ay, {
     container: true,
     style: {
       alignItems: 'center',
       padding: '15px'
     },
     spacing: 2
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .Ay, {
+  }, /*#__PURE__*/react.createElement(Grid/* default */.Ay, {
     item: true,
     xs: 12
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react.createElement(TextField/* default */.A, {
     required: true,
     id: "reason",
     name: "reason",
@@ -2494,22 +4933,885 @@ function CustomerViewAdmin() {
       width: '100%',
       backgroundColor: 'white'
     }
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .Ay, {
+  })), /*#__PURE__*/react.createElement("br", null), /*#__PURE__*/react.createElement(Grid/* default */.Ay, {
     item: true,
     xs: 12
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+  }, /*#__PURE__*/react.createElement("button", {
     type: "submit",
     className: "btnCustomer",
     style: {
       width: '100%'
     }
-  }, "Save")))))));
+  }, "Save")))))), /*#__PURE__*/react.createElement(Modal/* default */.A, {
+    open: open1,
+    onClose: handleCloseUpdate,
+    "aria-labelledby": "modal-modal-title",
+    "aria-describedby": "modal-modal-description"
+  }, /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: style
+  }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    id: "modal-modal-title",
+    variant: "h6",
+    component: "h2"
+  }, "Update Invoice Status"), /*#__PURE__*/react.createElement("br", null), /*#__PURE__*/react.createElement("form", {
+    onSubmit: handleSubmitUpdateStatus
+  }, /*#__PURE__*/react.createElement(FormControl/* default */.A, {
+    fullWidth: true
+  }, /*#__PURE__*/react.createElement(InputLabel/* default */.A, {
+    id: "demo-simple-select-label"
+  }, "Status"), /*#__PURE__*/react.createElement(Select/* default */.A, {
+    labelId: "demo-simple-select-label",
+    id: "demo-simple-select",
+    value: status,
+    label: "Status",
+    onChange: e => setStatus(e.target.value)
+  }, /*#__PURE__*/react.createElement(MenuItem/* default */.A, {
+    value: 'Draft'
+  }, "Draft"), /*#__PURE__*/react.createElement(MenuItem/* default */.A, {
+    value: 'Sent'
+  }, "Sent"), /*#__PURE__*/react.createElement(MenuItem/* default */.A, {
+    value: 'Pending'
+  }, "Pending"), /*#__PURE__*/react.createElement(MenuItem/* default */.A, {
+    value: 'Decline'
+  }, "Decline"), /*#__PURE__*/react.createElement(MenuItem/* default */.A, {
+    value: 'Free of Charge'
+  }, "Free of Charge"))), /*#__PURE__*/react.createElement("br", null), /*#__PURE__*/react.createElement("br", null), /*#__PURE__*/react.createElement("button", {
+    type: "submit",
+    className: "btnCustomer6",
+    style: {
+      width: '100%'
+    }
+  }, "Update")))), /*#__PURE__*/react.createElement(Modal/* default */.A, {
+    open: loadingOpenModal,
+    onClose: handleCloseLoading,
+    "aria-labelledby": "modal-modal-title",
+    "aria-describedby": "modal-modal-description"
+  }, /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: _objectSpread(_objectSpread({}, style), {}, {
+      width: 500
+    })
+  }, /*#__PURE__*/react.createElement("div", {
+    style: {
+      justifyContent: 'center',
+      textAlign: 'center'
+    }
+  }, loading ? /*#__PURE__*/react.createElement(Loader/* default */.A, null) : /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement("p", null, /*#__PURE__*/react.createElement(CheckCircle/* default */.A, {
+    style: {
+      color: 'green',
+      height: '40px',
+      width: '40px'
+    }
+  })), /*#__PURE__*/react.createElement("h2", null, " Done Successfully"), /*#__PURE__*/react.createElement("div", {
+    style: {
+      display: 'flex',
+      gap: '60px',
+      justifyContent: 'center'
+    }
+  }, /*#__PURE__*/react.createElement("button", {
+    onClick: handleCloseLoading,
+    className: "btnCustomer"
+  }, "Close")))))), /*#__PURE__*/react.createElement(Modal/* default */.A, {
+    open: ErrorOpenModal,
+    onClose: () => setErrorOpenModal(false),
+    "aria-labelledby": "modal-modal-title",
+    "aria-describedby": "modal-modal-description"
+  }, /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: _objectSpread(_objectSpread({}, style), {}, {
+      width: 500
+    })
+  }, /*#__PURE__*/react.createElement("div", {
+    style: {
+      justifyContent: 'center',
+      textAlign: 'center'
+    }
+  }, /*#__PURE__*/react.createElement("h2", null, " Error Occured"), /*#__PURE__*/react.createElement("p", null, "Please try again later"), /*#__PURE__*/react.createElement("div", {
+    style: {
+      display: 'flex',
+      gap: '60px',
+      justifyContent: 'center'
+    }
+  }, /*#__PURE__*/react.createElement("button", {
+    onClick: () => setErrorOpenModal(false),
+    className: "btnCustomer"
+  }, "Close"))))), /*#__PURE__*/react.createElement(Dialog/* default */.A, {
+    open: openWhatsAppModal,
+    onClose: () => !dispatchingWhatsApp && setOpenWhatsAppModal(false),
+    maxWidth: "lg",
+    fullWidth: true,
+    PaperProps: {
+      sx: {
+        borderRadius: 2,
+        p: 1,
+        maxWidth: 980,
+        width: '100%'
+      }
+    }
+  }, /*#__PURE__*/react.createElement(DialogTitle/* default */.A, {
+    sx: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      pb: 0.5,
+      flexWrap: 'wrap',
+      gap: 1
+    }
+  }, /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: 1.2,
+      flexWrap: 'wrap'
+    }
+  }, /*#__PURE__*/react.createElement(WhatsApp, {
+    sx: {
+      color: '#25D366',
+      fontSize: 28
+    }
+  }), /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    variant: "h6",
+    sx: {
+      fontWeight: 800,
+      color: '#0f172a'
+    }
+  }, "Send Invoices via WhatsApp (+243 827 722 222)"), /*#__PURE__*/react.createElement(Chip/* default */.A, {
+    size: "small",
+    clickable: true,
+    onClick: () => setOpenQrDialog(true),
+    label: cloudWaStatus.isReady ? "\u25CF Cloud Master: Connected" : cloudWaStatus.status === 'QR_READY' ? "\u25CF Cloud Master: Scan QR to Link" : cloudWaStatus.status === 'CONNECTING' ? "\u25CF Cloud Master: Connecting..." : "\u25CF Cloud Master: Offline (Click to Link)",
+    sx: {
+      fontWeight: 700,
+      fontSize: '0.72rem',
+      cursor: 'pointer',
+      bgcolor: cloudWaStatus.isReady ? '#dcfce7' : cloudWaStatus.status === 'QR_READY' ? '#fef3c7' : '#fee2e2',
+      color: cloudWaStatus.isReady ? '#15803d' : cloudWaStatus.status === 'QR_READY' ? '#b45309' : '#b91c1c',
+      border: '1px solid',
+      borderColor: cloudWaStatus.isReady ? '#86efac' : cloudWaStatus.status === 'QR_READY' ? '#fcd34d' : '#fca5a5'
+    }
+  })), /*#__PURE__*/react.createElement(IconButton/* default */.A, {
+    size: "small",
+    onClick: () => !dispatchingWhatsApp && setOpenWhatsAppModal(false),
+    disabled: dispatchingWhatsApp
+  }, /*#__PURE__*/react.createElement(Close/* default */.A, null))), /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      px: 3,
+      pt: 1,
+      borderBottom: 1,
+      borderColor: 'divider'
+    }
+  }, /*#__PURE__*/react.createElement(Tabs/* default */.A, {
+    value: modalTab,
+    onChange: (e, val) => setModalTab(val),
+    textColor: "primary",
+    indicatorColor: "primary"
+  }, /*#__PURE__*/react.createElement(Tab/* default */.A, {
+    icon: /*#__PURE__*/react.createElement(WhatsApp, {
+      sx: {
+        fontSize: 18
+      }
+    }),
+    iconPosition: "start",
+    label: "Send Queue (".concat(whatsAppInvoicesList.length, ")"),
+    sx: {
+      textTransform: 'none',
+      fontWeight: 700
+    }
+  }), /*#__PURE__*/react.createElement(Tab/* default */.A, {
+    icon: /*#__PURE__*/react.createElement(History, {
+      sx: {
+        fontSize: 18
+      }
+    }),
+    iconPosition: "start",
+    label: "Sent History (".concat(historyList.length, ")"),
+    sx: {
+      textTransform: 'none',
+      fontWeight: 700
+    }
+  }))), /*#__PURE__*/react.createElement(DialogContent/* default */.A, {
+    dividers: true,
+    sx: {
+      pt: 1.5,
+      pb: 2
+    }
+  }, modalTab === 0 ? /*#__PURE__*/react.createElement(react.Fragment, null, /*#__PURE__*/react.createElement(Alert/* default */.A, {
+    severity: "info",
+    sx: {
+      mb: 2,
+      fontSize: '0.85rem'
+    }
+  }, /*#__PURE__*/react.createElement("strong", null, "Eligible Invoices:"), " Invoices with status ", /*#__PURE__*/react.createElement("strong", null, "SENT"), ", ", /*#__PURE__*/react.createElement("strong", null, "PARTIALLY-PAID"), ", or ", /*#__PURE__*/react.createElement("strong", null, "FREE OF CHARGE"), " are listed and eligible for WhatsApp dispatch. Dispatches are sent one-by-one from official company line ", /*#__PURE__*/react.createElement("strong", null, "+243 827 722 222"), "."), /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      mb: 2,
+      p: 2,
+      border: '1px solid #e2e8f0',
+      borderRadius: 1.5,
+      backgroundColor: '#f8fafc'
+    }
+  }, /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      mb: 1
+    }
+  }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    variant: "subtitle2",
+    sx: {
+      fontWeight: 700,
+      color: '#1e293b'
+    }
+  }, "Customizable Short Message (English)"), /*#__PURE__*/react.createElement(Button/* default */.A, {
+    size: "small",
+    variant: "outlined",
+    startIcon: /*#__PURE__*/react.createElement(Save, null),
+    onClick: handleSaveTemplateAsDefault,
+    disabled: savingTemplate || dispatchingWhatsApp,
+    sx: {
+      textTransform: 'none',
+      py: 0.25,
+      fontSize: '0.78rem'
+    }
+  }, savingTemplate ? 'Saving...' : 'Save as Default')), /*#__PURE__*/react.createElement(TextField/* default */.A, {
+    fullWidth: true,
+    multiline: true,
+    rows: 4.5,
+    value: whatsAppMessage,
+    onChange: e => setWhatsAppMessage(e.target.value),
+    placeholder: "Type short message in English...",
+    disabled: dispatchingWhatsApp,
+    sx: {
+      backgroundColor: '#fff',
+      '& .MuiInputBase-root': {
+        fontSize: '0.92rem',
+        lineHeight: 1.6,
+        p: 1.5
+      }
+    }
+  }), /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    variant: "caption",
+    sx: {
+      color: '#64748b',
+      mt: 0.5,
+      display: 'block'
+    }
+  }, "* When a client has multiple invoices, this short message is attached to the first invoice PDF, followed sequentially by subsequent invoices.")), /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      mb: 1.5,
+      display: 'flex',
+      flexWrap: 'wrap',
+      gap: 1,
+      alignItems: 'center',
+      justifyContent: 'space-between'
+    }
+  }, /*#__PURE__*/react.createElement(TextField/* default */.A, {
+    size: "small",
+    placeholder: "Search by customer, invoice #, phone...",
+    value: queueSearchTerm,
+    onChange: e => setQueueSearchTerm(e.target.value),
+    disabled: dispatchingWhatsApp,
+    InputProps: {
+      startAdornment: /*#__PURE__*/react.createElement(InputAdornment/* default */.A, {
+        position: "start"
+      }, /*#__PURE__*/react.createElement(Search/* default */.A, {
+        sx: {
+          color: '#94a3b8',
+          fontSize: 20
+        }
+      })),
+      endAdornment: queueSearchTerm ? /*#__PURE__*/react.createElement(InputAdornment/* default */.A, {
+        position: "end"
+      }, /*#__PURE__*/react.createElement(IconButton/* default */.A, {
+        size: "small",
+        onClick: () => setQueueSearchTerm('')
+      }, /*#__PURE__*/react.createElement(Close/* default */.A, {
+        sx: {
+          fontSize: 16
+        }
+      }))) : null
+    },
+    sx: {
+      minWidth: 280,
+      flex: 1,
+      backgroundColor: '#fff'
+    }
+  }), /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      display: 'flex',
+      gap: 0.5,
+      alignItems: 'center'
+    }
+  }, queueSearchTerm.trim() && /*#__PURE__*/react.createElement(react.Fragment, null, /*#__PURE__*/react.createElement(Button/* default */.A, {
+    size: "small",
+    variant: "outlined",
+    onClick: handleSelectFiltered,
+    disabled: dispatchingWhatsApp || filteredQueueInvoices.length === 0,
+    sx: {
+      textTransform: 'none',
+      fontSize: '0.75rem',
+      py: 0.3
+    }
+  }, "Select Filtered (", filteredQueueInvoices.length, ")"), /*#__PURE__*/react.createElement(Button/* default */.A, {
+    size: "small",
+    variant: "outlined",
+    onClick: handleUncheckFiltered,
+    disabled: dispatchingWhatsApp || filteredQueueInvoices.length === 0,
+    sx: {
+      textTransform: 'none',
+      fontSize: '0.75rem',
+      py: 0.3
+    }
+  }, "Uncheck Filtered")), /*#__PURE__*/react.createElement(Button/* default */.A, {
+    size: "small",
+    onClick: handleToggleSelectAllWhatsApp,
+    disabled: dispatchingWhatsApp || whatsAppInvoicesList.length === 0,
+    sx: {
+      textTransform: 'none',
+      fontSize: '0.78rem'
+    }
+  }, selectedWhatsAppInvoiceIds.size === whatsAppInvoicesList.length ? 'Uncheck All' : 'Select All'))), /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      mb: 1
+    }
+  }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    variant: "caption",
+    sx: {
+      fontWeight: 700,
+      color: '#475569'
+    }
+  }, "Showing ", filteredQueueInvoices.length, " of ", whatsAppInvoicesList.length, " Invoices (", selectedWhatsAppInvoiceIds.size, " Selected to Send)")), loadingSentInvoices ? /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      py: 4,
+      textAlign: 'center'
+    }
+  }, /*#__PURE__*/react.createElement(Loader/* default */.A, null), /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    variant: "caption",
+    sx: {
+      color: '#64748b',
+      mt: 1,
+      display: 'block'
+    }
+  }, "Loading eligible invoices (SENT, PARTIALLY-PAID, FREE OF CHARGE)...")) : whatsAppInvoicesList.length === 0 ? /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      py: 4,
+      textAlign: 'center',
+      color: '#64748b'
+    }
+  }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    variant: "body2"
+  }, "No invoices with status SENT, PARTIALLY-PAID, or FREE OF CHARGE found.")) : filteredQueueInvoices.length === 0 ? /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      py: 3,
+      textAlign: 'center',
+      color: '#64748b'
+    }
+  }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    variant: "body2"
+  }, "No invoices match your search term \"", queueSearchTerm, "\".")) : /*#__PURE__*/react.createElement(TableContainer/* default */.A, {
+    component: Paper/* default */.A,
+    variant: "outlined",
+    sx: {
+      maxHeight: 310,
+      borderRadius: 1.5
+    }
+  }, /*#__PURE__*/react.createElement(Table/* default */.A, {
+    size: "small",
+    stickyHeader: true
+  }, /*#__PURE__*/react.createElement(TableHead/* default */.A, null, /*#__PURE__*/react.createElement(TableRow/* default */.A, {
+    sx: {
+      '& th': {
+        fontWeight: 700,
+        backgroundColor: '#f1f5f9'
+      }
+    }
+  }, /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+    padding: "checkbox",
+    sx: {
+      width: 40
+    }
+  }, /*#__PURE__*/react.createElement(Checkbox/* default */.A, {
+    size: "small",
+    checked: filteredQueueInvoices.length > 0 && filteredQueueInvoices.every(inv => selectedWhatsAppInvoiceIds.has(inv._id || inv.id)),
+    indeterminate: filteredQueueInvoices.some(inv => selectedWhatsAppInvoiceIds.has(inv._id || inv.id)) && !filteredQueueInvoices.every(inv => selectedWhatsAppInvoiceIds.has(inv._id || inv.id)),
+    onChange: () => {
+      var allFilteredSelected = filteredQueueInvoices.every(inv => selectedWhatsAppInvoiceIds.has(inv._id || inv.id));
+      if (allFilteredSelected) {
+        handleUncheckFiltered();
+      } else {
+        handleSelectFiltered();
+      }
+    },
+    disabled: dispatchingWhatsApp
+  })), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+    sx: {
+      width: 110
+    }
+  }, "Invoice #"), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+    sx: {
+      width: 95
+    }
+  }, "Date"), /*#__PURE__*/react.createElement(TableCell/* default */.A, null, "Customer Name"), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+    sx: {
+      width: 165
+    }
+  }, "WhatsApp Phone (Editable)"), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+    sx: {
+      width: 125,
+      textAlign: 'right'
+    }
+  }, "Balance Due"), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+    sx: {
+      width: 110,
+      textAlign: 'center'
+    }
+  }, "Status"), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+    sx: {
+      width: 110,
+      textAlign: 'center'
+    }
+  }, "Sent History"))), /*#__PURE__*/react.createElement(TableBody/* default */.A, null, filteredQueueInvoices.map(inv => {
+    var id = inv._id || inv.id;
+    var isChecked = selectedWhatsAppInvoiceIds.has(id);
+    var cust = inv.customerName || {};
+    var clientName = (typeof cust === 'string' ? cust : cust.Customer || cust.customerName || cust.customerFullName || 'Customer').toUpperCase();
+    var phoneVal = phoneOverrides[id] !== undefined ? phoneOverrides[id] : getInvoicePhone(inv, customerPhoneMap);
+    var totalAmount = Number(inv.totalInvoice || inv.total || 0).toFixed(2);
+    var hasValidBalance = inv.balanceDue !== undefined && inv.balanceDue !== null && !isNaN(parseFloat(inv.balanceDue));
+    var balanceDueAmount = hasValidBalance ? parseFloat(inv.balanceDue).toFixed(2) : totalAmount;
+    var isPartial = String(inv.status || '').toUpperCase().includes('PARTIAL');
+    var isFree = String(inv.status || '').toUpperCase().includes('FREE');
+    var amount = isFree ? '0.00' : balanceDueAmount;
+    var prevSent = sentHistoryMap[Number(inv.invoiceNumber)];
+    return /*#__PURE__*/react.createElement(TableRow/* default */.A, {
+      key: id,
+      hover: true,
+      selected: isChecked,
+      sx: {
+        '&.Mui-selected': {
+          backgroundColor: 'rgba(37,211,102,0.06)'
+        }
+      }
+    }, /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+      padding: "checkbox"
+    }, /*#__PURE__*/react.createElement(Checkbox/* default */.A, {
+      size: "small",
+      checked: isChecked,
+      onChange: () => handleToggleWhatsAppInvoice(id),
+      disabled: dispatchingWhatsApp
+    })), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+      sx: {
+        fontWeight: 700,
+        color: '#0f172a'
+      }
+    }, "INV-", String(inv.invoiceNumber).padStart(6, '0')), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+      sx: {
+        fontSize: '0.8rem',
+        color: '#64748b'
+      }
+    }, inv.dateField || (inv.invoiceDate ? dayjs_min_default()(inv.invoiceDate).format('DD/MM/YYYY') : '')), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+      sx: {
+        fontWeight: 600
+      }
+    }, clientName), /*#__PURE__*/react.createElement(TableCell/* default */.A, null, /*#__PURE__*/react.createElement(TextField/* default */.A, {
+      size: "small",
+      value: phoneVal,
+      onChange: e => setPhoneOverrides(prev => _objectSpread(_objectSpread({}, prev), {}, {
+        [id]: e.target.value
+      })),
+      placeholder: "+243 xxx xxx xxx",
+      disabled: dispatchingWhatsApp,
+      sx: {
+        '& input': {
+          py: 0.5,
+          px: 1,
+          fontSize: '0.8rem'
+        },
+        width: '100%'
+      }
+    })), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+      sx: {
+        textAlign: 'right'
+      }
+    }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
+      variant: "body2",
+      sx: {
+        fontWeight: 700,
+        color: isPartial ? '#b45309' : isFree ? '#15803d' : '#0f172a'
+      }
+    }, "$", amount), isPartial && Number(totalAmount) > Number(balanceDueAmount) && /*#__PURE__*/react.createElement(Typography/* default */.A, {
+      variant: "caption",
+      sx: {
+        color: '#64748b',
+        fontSize: '0.72rem',
+        display: 'block'
+      }
+    }, "Total: $", totalAmount)), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+      sx: {
+        textAlign: 'center'
+      }
+    }, renderInvoiceStatusChip(inv.status)), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+      sx: {
+        textAlign: 'center'
+      }
+    }, prevSent ? /*#__PURE__*/react.createElement(Tooltip/* default */.A, {
+      title: "Previously sent on ".concat(dayjs_min_default()(prevSent.sentAt).format('DD/MM/YYYY HH:mm'), " by ").concat(prevSent.sentBy || 'GG')
+    }, /*#__PURE__*/react.createElement(Chip/* default */.A, {
+      size: "small",
+      icon: /*#__PURE__*/react.createElement(History, {
+        sx: {
+          fontSize: '12px !important'
+        }
+      }),
+      label: "Sent ".concat(dayjs_min_default()(prevSent.sentAt).format('DD/MM HH:mm')),
+      sx: {
+        bgcolor: '#ecfdf5',
+        color: '#047857',
+        fontWeight: 600,
+        fontSize: '0.68rem',
+        height: 20
+      }
+    })) : /*#__PURE__*/react.createElement(Typography/* default */.A, {
+      variant: "caption",
+      sx: {
+        color: '#94a3b8'
+      }
+    }, "-")));
+  })))), dispatchingWhatsApp && /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      mt: 2
+    }
+  }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    variant: "body2",
+    sx: {
+      fontWeight: 600,
+      color: '#166534',
+      mb: 0.5
+    }
+  }, "\u23F3 Dispatching invoice PDFs via WhatsApp Web client... Please wait (do not close this window)."), /*#__PURE__*/react.createElement(LinearProgress/* default */.A, {
+    color: "success"
+  })), dispatchResult && /*#__PURE__*/react.createElement(Alert/* default */.A, {
+    severity: dispatchResult.success && (!((_dispatchResult$repor = dispatchResult.report) !== null && _dispatchResult$repor !== void 0 && _dispatchResult$repor.failed) || dispatchResult.report.failed === 0) ? 'success' : ((_dispatchResult$repor2 = dispatchResult.report) === null || _dispatchResult$repor2 === void 0 ? void 0 : _dispatchResult$repor2.sent) > 0 ? 'warning' : 'error',
+    sx: {
+      mt: 2,
+      fontSize: '0.85rem'
+    }
+  }, /*#__PURE__*/react.createElement("strong", null, dispatchResult.success && (!((_dispatchResult$repor3 = dispatchResult.report) !== null && _dispatchResult$repor3 !== void 0 && _dispatchResult$repor3.failed) || dispatchResult.report.failed === 0) ? '✅ Dispatch Completed:' : ((_dispatchResult$repor4 = dispatchResult.report) === null || _dispatchResult$repor4 === void 0 ? void 0 : _dispatchResult$repor4.sent) > 0 ? '⚠️ Partial Dispatch Result:' : '❌ Dispatch Failed:'), ' ', ((_dispatchResult$repor5 = dispatchResult.report) === null || _dispatchResult$repor5 === void 0 ? void 0 : _dispatchResult$repor5.sent) !== undefined ? "".concat(dispatchResult.report.sent, " sent, ").concat(dispatchResult.report.failed || 0, " failed.") : dispatchResult.error || 'Finished processing.', Array.isArray((_dispatchResult$repor6 = dispatchResult.report) === null || _dispatchResult$repor6 === void 0 ? void 0 : _dispatchResult$repor6.details) && dispatchResult.report.details.length > 0 && /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      mt: 1,
+      display: 'flex',
+      flexWrap: 'wrap',
+      gap: 0.5
+    }
+  }, dispatchResult.report.details.map((d, i) => /*#__PURE__*/react.createElement(Chip/* default */.A, {
+    key: i,
+    size: "small",
+    label: "#".concat(d.invoiceNumber, ": ").concat(d.status).concat(d.error ? " (".concat(d.error, ")") : ''),
+    color: d.status === 'sent' ? 'success' : 'error',
+    variant: "outlined",
+    sx: {
+      fontSize: '0.72rem'
+    }
+  }))))) :
+  /*#__PURE__*/
+  /* Modal Tab 1: Sent History (3-Month Retention) */
+  react.createElement(react.Fragment, null, /*#__PURE__*/react.createElement(Alert/* default */.A, {
+    severity: "success",
+    sx: {
+      mb: 2,
+      fontSize: '0.85rem'
+    }
+  }, /*#__PURE__*/react.createElement("strong", null, "3-Month Auto-Retention:"), " Dispatched invoices are tracked here with the exact date and time sent. Records are automatically purged after 3 months (90 days) via MongoDB TTL."), /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      mb: 1.5,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between'
+    }
+  }, /*#__PURE__*/react.createElement(TextField/* default */.A, {
+    size: "small",
+    placeholder: "Search history by invoice #, customer name, phone, sent by...",
+    value: historySearchTerm,
+    onChange: e => setHistorySearchTerm(e.target.value),
+    InputProps: {
+      startAdornment: /*#__PURE__*/react.createElement(InputAdornment/* default */.A, {
+        position: "start"
+      }, /*#__PURE__*/react.createElement(Search/* default */.A, {
+        sx: {
+          color: '#94a3b8',
+          fontSize: 20
+        }
+      })),
+      endAdornment: historySearchTerm ? /*#__PURE__*/react.createElement(InputAdornment/* default */.A, {
+        position: "end"
+      }, /*#__PURE__*/react.createElement(IconButton/* default */.A, {
+        size: "small",
+        onClick: () => setHistorySearchTerm('')
+      }, /*#__PURE__*/react.createElement(Close/* default */.A, {
+        sx: {
+          fontSize: 16
+        }
+      }))) : null
+    },
+    sx: {
+      minWidth: 320,
+      flex: 1,
+      backgroundColor: '#fff'
+    }
+  }), /*#__PURE__*/react.createElement(Button/* default */.A, {
+    size: "small",
+    onClick: fetchSentHistory,
+    disabled: loadingHistory,
+    sx: {
+      textTransform: 'none',
+      ml: 1.5
+    }
+  }, "Refresh History")), loadingHistory ? /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      py: 4,
+      textAlign: 'center'
+    }
+  }, /*#__PURE__*/react.createElement(Loader/* default */.A, null), /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    variant: "caption",
+    sx: {
+      color: '#64748b',
+      mt: 1,
+      display: 'block'
+    }
+  }, "Loading dispatched history...")) : historyList.length === 0 ? /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      py: 4,
+      textAlign: 'center',
+      color: '#64748b'
+    }
+  }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    variant: "body2"
+  }, "No WhatsApp invoices have been dispatched in the last 3 months.")) : filteredHistoryList.length === 0 ? /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      py: 3,
+      textAlign: 'center',
+      color: '#64748b'
+    }
+  }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    variant: "body2"
+  }, "No sent records match your search term \"", historySearchTerm, "\".")) : /*#__PURE__*/react.createElement(TableContainer/* default */.A, {
+    component: Paper/* default */.A,
+    variant: "outlined",
+    sx: {
+      maxHeight: 360,
+      borderRadius: 1.5
+    }
+  }, /*#__PURE__*/react.createElement(Table/* default */.A, {
+    size: "small",
+    stickyHeader: true
+  }, /*#__PURE__*/react.createElement(TableHead/* default */.A, null, /*#__PURE__*/react.createElement(TableRow/* default */.A, {
+    sx: {
+      '& th': {
+        fontWeight: 700,
+        backgroundColor: '#f1f5f9'
+      }
+    }
+  }, /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+    sx: {
+      width: 140
+    }
+  }, "Date & Time Sent"), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+    sx: {
+      width: 110
+    }
+  }, "Invoice #"), /*#__PURE__*/react.createElement(TableCell/* default */.A, null, "Customer Name"), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+    sx: {
+      width: 150
+    }
+  }, "WhatsApp Phone"), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+    sx: {
+      width: 100,
+      textAlign: 'right'
+    }
+  }, "Amount"), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+    sx: {
+      width: 100,
+      textAlign: 'center'
+    }
+  }, "Sent By"), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+    sx: {
+      width: 80,
+      textAlign: 'center'
+    }
+  }, "Status"))), /*#__PURE__*/react.createElement(TableBody/* default */.A, null, filteredHistoryList.map((h, idx) => /*#__PURE__*/react.createElement(TableRow/* default */.A, {
+    key: h._id || idx,
+    hover: true
+  }, /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+    sx: {
+      fontSize: '0.8rem',
+      color: '#334155',
+      fontWeight: 600
+    }
+  }, dayjs_min_default()(h.sentAt).format('DD/MM/YYYY HH:mm')), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+    sx: {
+      fontWeight: 700,
+      color: '#0f172a'
+    }
+  }, "INV-", String(h.invoiceNumber).padStart(6, '0')), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+    sx: {
+      fontWeight: 600,
+      color: '#1e293b'
+    }
+  }, h.customerName), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+    sx: {
+      fontSize: '0.82rem',
+      color: '#475569'
+    }
+  }, h.phone), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+    sx: {
+      textAlign: 'right',
+      fontWeight: 700,
+      color: '#0f172a'
+    }
+  }, "$", Number(h.amount || 0).toFixed(2)), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+    sx: {
+      textAlign: 'center',
+      fontSize: '0.8rem',
+      color: '#64748b'
+    }
+  }, h.sentBy || 'GG'), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+    sx: {
+      textAlign: 'center'
+    }
+  }, /*#__PURE__*/react.createElement(Chip/* default */.A, {
+    label: "SENT",
+    size: "small",
+    sx: {
+      bgcolor: '#ecfdf5',
+      color: '#047857',
+      fontWeight: 700,
+      height: 20,
+      fontSize: '0.7rem'
+    }
+  }))))))))), /*#__PURE__*/react.createElement(DialogActions/* default */.A, {
+    sx: {
+      px: 2,
+      py: 1.5
+    }
+  }, /*#__PURE__*/react.createElement(Button/* default */.A, {
+    onClick: () => setOpenWhatsAppModal(false),
+    disabled: dispatchingWhatsApp,
+    color: "inherit",
+    sx: {
+      textTransform: 'none'
+    }
+  }, dispatchResult || modalTab === 1 ? 'Close' : 'Cancel'), modalTab === 0 && /*#__PURE__*/react.createElement(Button/* default */.A, {
+    variant: "contained",
+    onClick: handleExecuteWhatsAppDispatch,
+    disabled: dispatchingWhatsApp || selectedWhatsAppInvoiceIds.size === 0,
+    startIcon: /*#__PURE__*/react.createElement(WhatsApp, null),
+    sx: {
+      backgroundColor: '#25D366',
+      '&:hover': {
+        backgroundColor: '#1ebe5d'
+      },
+      color: '#fff',
+      fontWeight: 700,
+      textTransform: 'none',
+      px: 2.5
+    }
+  }, dispatchingWhatsApp ? 'Dispatching...' : "Send ".concat(selectedWhatsAppInvoiceIds.size, " Invoice(s) via WhatsApp")))), /*#__PURE__*/react.createElement(Dialog/* default */.A, {
+    open: openQrDialog,
+    onClose: () => setOpenQrDialog(false),
+    maxWidth: "xs",
+    fullWidth: true,
+    PaperProps: {
+      sx: {
+        borderRadius: 2,
+        p: 2,
+        textAlign: 'center'
+      }
+    }
+  }, /*#__PURE__*/react.createElement(DialogTitle/* default */.A, {
+    sx: {
+      fontWeight: 800,
+      pb: 1
+    }
+  }, "WhatsApp Cloud Master Pairing"), /*#__PURE__*/react.createElement(DialogContent/* default */.A, {
+    sx: {
+      pt: 1
+    }
+  }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    variant: "body2",
+    color: "text.secondary",
+    sx: {
+      mb: 2
+    }
+  }, "Official Company WhatsApp Line: ", /*#__PURE__*/react.createElement("strong", null, "+243 827 722 222")), cloudWaStatus.isReady ? /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      p: 2,
+      bgcolor: '#f0fdf4',
+      borderRadius: 2,
+      border: '1px solid #86efac',
+      mb: 2
+    }
+  }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    variant: "subtitle1",
+    sx: {
+      color: '#16a34a',
+      fontWeight: 800
+    }
+  }, "\u2705 Cloud Master is Online & Connected!"), /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    variant: "caption",
+    sx: {
+      color: '#15803d'
+    }
+  }, "Linked Device: ", cloudWaStatus.name || 'Global Gate SARL', " (", cloudWaStatus.phone, ")")) : cloudWaStatus.qrCode ? /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      mb: 2
+    }
+  }, /*#__PURE__*/react.createElement("img", {
+    src: cloudWaStatus.qrCode,
+    alt: "WhatsApp QR Code",
+    style: {
+      width: 240,
+      height: 240,
+      borderRadius: 8,
+      border: '1px solid #cbd5e1'
+    }
+  }), /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    variant: "caption",
+    sx: {
+      mt: 1.5,
+      color: '#475569',
+      fontWeight: 600
+    }
+  }, "1. Open WhatsApp on +243 827 722 222", /*#__PURE__*/react.createElement("br", null), "2. Tap ", /*#__PURE__*/react.createElement("strong", null, "Linked Devices"), " > ", /*#__PURE__*/react.createElement("strong", null, "Link a Device"), /*#__PURE__*/react.createElement("br", null), "3. Point your camera at this QR code")) : /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      p: 3,
+      bgcolor: '#f8fafc',
+      borderRadius: 2,
+      mb: 2
+    }
+  }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    variant: "body2",
+    color: "text.secondary"
+  }, cloudWaStatus.status === 'CONNECTING' ? 'Connecting to WhatsApp Cloud Master...' : 'Ready to link device.'))), /*#__PURE__*/react.createElement(DialogActions/* default */.A, {
+    sx: {
+      justifyContent: 'space-between',
+      px: 2
+    }
+  }, /*#__PURE__*/react.createElement(Button/* default */.A, {
+    size: "small",
+    variant: "outlined",
+    onClick: handleReconnectCloud,
+    disabled: refreshingQr
+  }, refreshingQr ? 'Refreshing...' : 'Refresh QR / Reconnect'), /*#__PURE__*/react.createElement(Button/* default */.A, {
+    size: "small",
+    variant: "contained",
+    onClick: () => setOpenQrDialog(false)
+  }, "Close"))))))));
 }
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (CustomerViewAdmin);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, [
-/* harmony export */   "default", 0, /* export default binding */ __WEBPACK_DEFAULT_EXPORT__
-/* harmony export */ ]);
-
+/* harmony default export */ const AdminView1_InvoiceViewAdmin = (InvoiceViewAdmin);
 
 /***/ },
 
@@ -5109,6 +8411,7 @@ function MobileDetailSheet(_ref) {
   var userRole = (user === null || user === void 0 || (_user$data6 = user.data) === null || _user$data6 === void 0 ? void 0 : _user$data6.role) || '';
   var userDepartment = (user === null || user === void 0 || (_user$data7 = user.data) === null || _user$data7 === void 0 ? void 0 : _user$data7.department) || '';
   var isSuperUser = userName === 'GG';
+  var canViewCosts = (userRole === null || userRole === void 0 ? void 0 : userRole.toUpperCase()) !== 'TECHNICIAN' && (userRole === null || userRole === void 0 ? void 0 : userRole.toUpperCase()) !== 'TECHNICIEN' && (userDepartment === null || userDepartment === void 0 ? void 0 : userDepartment.toUpperCase()) !== 'TECHNICIAN' && (userDepartment === null || userDepartment === void 0 ? void 0 : userDepartment.toUpperCase()) !== 'TECHNICIEN';
   var isTechnician = (userRole === null || userRole === void 0 ? void 0 : userRole.toUpperCase()) === 'TECHNICIAN' || (userRole === null || userRole === void 0 ? void 0 : userRole.toUpperCase()) === 'TECHNICIEN' || (userDepartment === null || userDepartment === void 0 ? void 0 : userDepartment.toUpperCase()) === 'TECHNICIAN' || (userDepartment === null || userDepartment === void 0 ? void 0 : userDepartment.toUpperCase()) === 'TECHNICIEN';
   var canEdit = t => {
     var typeToModule = {
@@ -5130,7 +8433,7 @@ function MobileDetailSheet(_ref) {
   };
   if (!record) return null;
   try {
-    var _record$customerName, _ref0, _ref1, _ref10, _ref11, _record$totalInvoice, _record$balanceDue, _record$itemUpc, _ref12, _ref13, _record$itemQuantity, _ref14, _ref15, _record$itemSellingPr, _record$createdAt, _record$expenseCatego2, _record$createdAt2, _record$customerName2, _record$customerName3, _record$customerName4, _record$customerName5, _ref24, _record$subTotal, _record$discount, _ref25, _record$shippingFee, _record$shippingFee2;
+    var _record$customerName, _ref0, _ref1, _ref10, _ref11, _record$totalInvoice, _record$balanceDue, _record$itemUpc, _ref12, _ref13, _record$itemQuantity, _ref14, _ref15, _record$itemSellingPr, _record$createdAt, _record$expenseCatego2, _record$createdAt2, _record$customerName2, _record$customerName3, _record$customerName4, _record$customerName5, _ref27, _record$subTotal, _record$discount, _ref28, _record$shippingFee, _record$shippingFee2;
     var id = (record === null || record === void 0 ? void 0 : record._id) || (record === null || record === void 0 ? void 0 : record.id);
     var isTechStore = type === 'tech_store' || isTechnician;
     var isItem = type === 'items' || isTechStore;
@@ -5692,17 +8995,30 @@ function MobileDetailSheet(_ref) {
         display: 'block'
       }
     }, "Parts / Items Used (", lineItems.length, ")"), lineItems.map((it, idx) => {
-      var _ref16, _ref17, _it$itemQty2;
-      var itName = MobileDetailSheet_safeText((it === null || it === void 0 ? void 0 : it.itemName) || (it === null || it === void 0 ? void 0 : it.description), "Item #".concat(idx + 1));
+      var _it$itemName, _ref16, _ref17, _it$itemQty2, _ref18, _ref19, _ref20, _it$itemRate2, _it$itemAmount;
+      var rawItemName = typeof (it === null || it === void 0 ? void 0 : it.itemName) === 'object' ? it === null || it === void 0 || (_it$itemName = it.itemName) === null || _it$itemName === void 0 ? void 0 : _it$itemName.itemName : it === null || it === void 0 ? void 0 : it.itemName;
+      var rawDesc = (it === null || it === void 0 ? void 0 : it.itemDescription) || (it === null || it === void 0 ? void 0 : it.description) || '';
+      var isCustomEmpty = !rawItemName || String(rawItemName).trim().toLowerCase() === 'empty';
+      var itName = isCustomEmpty ? rawDesc || "Custom Part #".concat(idx + 1) : rawItemName || rawDesc || "Item #".concat(idx + 1);
+      var itSubDesc = !isCustomEmpty && rawDesc && rawDesc !== rawItemName ? rawDesc : '';
       var qty = Number((_ref16 = (_ref17 = (_it$itemQty2 = it === null || it === void 0 ? void 0 : it.itemQty) !== null && _it$itemQty2 !== void 0 ? _it$itemQty2 : it === null || it === void 0 ? void 0 : it.itemQuantity) !== null && _ref17 !== void 0 ? _ref17 : it === null || it === void 0 ? void 0 : it.quantity) !== null && _ref16 !== void 0 ? _ref16 : 1);
+      var rate = Number((_ref18 = (_ref19 = (_ref20 = (_it$itemRate2 = it === null || it === void 0 ? void 0 : it.itemRate) !== null && _it$itemRate2 !== void 0 ? _it$itemRate2 : it === null || it === void 0 ? void 0 : it.itemSellingPrice) !== null && _ref20 !== void 0 ? _ref20 : it === null || it === void 0 ? void 0 : it.rate) !== null && _ref19 !== void 0 ? _ref19 : it === null || it === void 0 ? void 0 : it.price) !== null && _ref18 !== void 0 ? _ref18 : 0);
+      var lineAmount = Number((_it$itemAmount = it === null || it === void 0 ? void 0 : it.itemAmount) !== null && _it$itemAmount !== void 0 ? _it$itemAmount : qty * rate);
+      var showPrices = canViewCosts && type === 'maintenance';
       return /*#__PURE__*/react.createElement(Box/* default */.A, {
         key: idx,
         sx: {
-          py: 1,
+          py: 1.2,
           borderBottom: idx < lineItems.length - 1 ? '1px solid #F1F5F9' : 'none',
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center'
+        }
+      }, /*#__PURE__*/react.createElement(Box/* default */.A, {
+        sx: {
+          minWidth: 0,
+          flex: 1,
+          pr: 1.5
         }
       }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
         variant: "body2",
@@ -5710,7 +9026,32 @@ function MobileDetailSheet(_ref) {
           fontWeight: 700,
           color: '#1E293B'
         }
-      }, itName), /*#__PURE__*/react.createElement(Chip/* default */.A, {
+      }, itName), itSubDesc && /*#__PURE__*/react.createElement(Typography/* default */.A, {
+        variant: "caption",
+        sx: {
+          color: '#64748B',
+          display: 'block'
+        }
+      }, itSubDesc), showPrices && rate > 0 && /*#__PURE__*/react.createElement(Typography/* default */.A, {
+        variant: "caption",
+        sx: {
+          color: '#30368a',
+          fontWeight: 600,
+          display: 'block',
+          mt: 0.2
+        }
+      }, "Qty: ", qty, " \xD7 ", MobileDetailSheet_formatMoney(rate))), /*#__PURE__*/react.createElement(Box/* default */.A, {
+        sx: {
+          textAlign: 'right',
+          flexShrink: 0
+        }
+      }, showPrices ? /*#__PURE__*/react.createElement(Typography/* default */.A, {
+        variant: "body2",
+        sx: {
+          fontWeight: 800,
+          color: '#30368a'
+        }
+      }, MobileDetailSheet_formatMoney(lineAmount)) : /*#__PURE__*/react.createElement(Chip/* default */.A, {
         label: "Qty: ".concat(qty),
         size: "small",
         sx: {
@@ -5719,8 +9060,104 @@ function MobileDetailSheet(_ref) {
           fontWeight: 700,
           height: 22
         }
-      }));
-    }))) : type === 'suppliers' ?
+      })));
+    })), canViewCosts && type === 'maintenance' && /*#__PURE__*/react.createElement(Card/* default */.A, {
+      sx: {
+        borderRadius: 3.5,
+        p: 2,
+        mb: 2,
+        backgroundColor: '#ffffff',
+        boxShadow: '0 2px 10px rgba(0,0,0,0.04)'
+      }
+    }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
+      variant: "caption",
+      sx: {
+        color: '#64748B',
+        fontWeight: 700,
+        textTransform: 'uppercase',
+        mb: 1.5,
+        display: 'block'
+      }
+    }, "Cost & Financial Summary"), /*#__PURE__*/react.createElement(Box/* default */.A, {
+      sx: {
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 1
+      }
+    }, /*#__PURE__*/react.createElement(Box/* default */.A, {
+      sx: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center'
+      }
+    }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
+      variant: "body2",
+      sx: {
+        color: '#64748B'
+      }
+    }, "Parts Subtotal"), /*#__PURE__*/react.createElement(Typography/* default */.A, {
+      variant: "body2",
+      sx: {
+        fontWeight: 700,
+        color: '#1E293B'
+      }
+    }, MobileDetailSheet_formatMoney(calcLineTotal > 0 ? calcLineTotal : (record === null || record === void 0 ? void 0 : record.subTotal) || 0))), Number((record === null || record === void 0 ? void 0 : record.adjustmentNumber) || (record === null || record === void 0 ? void 0 : record.laborFees) || 0) > 0 && /*#__PURE__*/react.createElement(Box/* default */.A, {
+      sx: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center'
+      }
+    }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
+      variant: "body2",
+      sx: {
+        color: '#64748B'
+      }
+    }, "Labor Fees ", Number((record === null || record === void 0 ? void 0 : record.laborQty) || 0) > 1 ? "(".concat(record.laborQty, " hrs)") : ''), /*#__PURE__*/react.createElement(Typography/* default */.A, {
+      variant: "body2",
+      sx: {
+        fontWeight: 700,
+        color: '#1E293B'
+      }
+    }, MobileDetailSheet_formatMoney(Number((record === null || record === void 0 ? void 0 : record.totalLaborFeesGenerale) || (record === null || record === void 0 ? void 0 : record.adjustmentNumber) || (record === null || record === void 0 ? void 0 : record.laborFees) || 0)))), Number((record === null || record === void 0 ? void 0 : record.laborDiscount) || 0) > 0 && /*#__PURE__*/react.createElement(Box/* default */.A, {
+      sx: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center'
+      }
+    }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
+      variant: "body2",
+      sx: {
+        color: '#10B981'
+      }
+    }, "Labor Discount (", record.laborDiscount, "%)"), /*#__PURE__*/react.createElement(Typography/* default */.A, {
+      variant: "body2",
+      sx: {
+        fontWeight: 700,
+        color: '#10B981'
+      }
+    }, "-", MobileDetailSheet_formatMoney(Number((record === null || record === void 0 ? void 0 : record.totalDiscount) || 0)))), /*#__PURE__*/react.createElement(Divider/* default */.A, {
+      sx: {
+        my: 0.5
+      }
+    }), /*#__PURE__*/react.createElement(Box/* default */.A, {
+      sx: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center'
+      }
+    }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
+      variant: "subtitle2",
+      sx: {
+        fontWeight: 800,
+        color: '#30368a'
+      }
+    }, "Grand Total"), /*#__PURE__*/react.createElement(Typography/* default */.A, {
+      variant: "h6",
+      sx: {
+        fontWeight: 800,
+        color: '#30368a'
+      }
+    }, MobileDetailSheet_formatMoney(Number((record === null || record === void 0 ? void 0 : record.totalInvoice) || (record === null || record === void 0 ? void 0 : record.totalAmount) || (record === null || record === void 0 ? void 0 : record.grandTotal) || calcLineTotal + Number((record === null || record === void 0 ? void 0 : record.totalLaborFeesGenerale) || (record === null || record === void 0 ? void 0 : record.adjustmentNumber) || 0)))))))) : type === 'suppliers' ?
     /*#__PURE__*/
     /* ── SUPPLIER PROFILE VIEW (WITH COMPLETE PHONE DETAILS) ── */
     react.createElement(Box/* default */.A, {
@@ -6477,11 +9914,11 @@ function MobileDetailSheet(_ref) {
         display: 'block'
       }
     }, "Items & Services (", lineItems.length, ")"), lineItems.map((it, idx) => {
-      var _it$itemName, _it$itemName2, _ref18, _ref19, _it$itemQty3, _ref20, _ref21, _ref22, _it$itemRate2, _ref23, _it$itemAmount;
-      var itName = MobileDetailSheet_safeText((it === null || it === void 0 || (_it$itemName = it.itemName) === null || _it$itemName === void 0 ? void 0 : _it$itemName.itemName) || (it === null || it === void 0 || (_it$itemName2 = it.itemName) === null || _it$itemName2 === void 0 ? void 0 : _it$itemName2.name) || (it === null || it === void 0 ? void 0 : it.itemName) || (it === null || it === void 0 ? void 0 : it.description), "Item #".concat(idx + 1));
-      var qty = Number((_ref18 = (_ref19 = (_it$itemQty3 = it === null || it === void 0 ? void 0 : it.itemQty) !== null && _it$itemQty3 !== void 0 ? _it$itemQty3 : it === null || it === void 0 ? void 0 : it.itemQuantity) !== null && _ref19 !== void 0 ? _ref19 : it === null || it === void 0 ? void 0 : it.quantity) !== null && _ref18 !== void 0 ? _ref18 : 1);
-      var rate = Number((_ref20 = (_ref21 = (_ref22 = (_it$itemRate2 = it === null || it === void 0 ? void 0 : it.itemRate) !== null && _it$itemRate2 !== void 0 ? _it$itemRate2 : it === null || it === void 0 ? void 0 : it.itemSellingPrice) !== null && _ref22 !== void 0 ? _ref22 : it === null || it === void 0 ? void 0 : it.rate) !== null && _ref21 !== void 0 ? _ref21 : it === null || it === void 0 ? void 0 : it.price) !== null && _ref20 !== void 0 ? _ref20 : 0);
-      var itTotal = Number((_ref23 = (_it$itemAmount = it === null || it === void 0 ? void 0 : it.itemAmount) !== null && _it$itemAmount !== void 0 ? _it$itemAmount : it === null || it === void 0 ? void 0 : it.itemTotal) !== null && _ref23 !== void 0 ? _ref23 : 0);
+      var _it$itemName2, _it$itemName3, _ref21, _ref22, _it$itemQty3, _ref23, _ref24, _ref25, _it$itemRate3, _ref26, _it$itemAmount2;
+      var itName = MobileDetailSheet_safeText((it === null || it === void 0 || (_it$itemName2 = it.itemName) === null || _it$itemName2 === void 0 ? void 0 : _it$itemName2.itemName) || (it === null || it === void 0 || (_it$itemName3 = it.itemName) === null || _it$itemName3 === void 0 ? void 0 : _it$itemName3.name) || (it === null || it === void 0 ? void 0 : it.itemName) || (it === null || it === void 0 ? void 0 : it.description), "Item #".concat(idx + 1));
+      var qty = Number((_ref21 = (_ref22 = (_it$itemQty3 = it === null || it === void 0 ? void 0 : it.itemQty) !== null && _it$itemQty3 !== void 0 ? _it$itemQty3 : it === null || it === void 0 ? void 0 : it.itemQuantity) !== null && _ref22 !== void 0 ? _ref22 : it === null || it === void 0 ? void 0 : it.quantity) !== null && _ref21 !== void 0 ? _ref21 : 1);
+      var rate = Number((_ref23 = (_ref24 = (_ref25 = (_it$itemRate3 = it === null || it === void 0 ? void 0 : it.itemRate) !== null && _it$itemRate3 !== void 0 ? _it$itemRate3 : it === null || it === void 0 ? void 0 : it.itemSellingPrice) !== null && _ref25 !== void 0 ? _ref25 : it === null || it === void 0 ? void 0 : it.rate) !== null && _ref24 !== void 0 ? _ref24 : it === null || it === void 0 ? void 0 : it.price) !== null && _ref23 !== void 0 ? _ref23 : 0);
+      var itTotal = Number((_ref26 = (_it$itemAmount2 = it === null || it === void 0 ? void 0 : it.itemAmount) !== null && _it$itemAmount2 !== void 0 ? _it$itemAmount2 : it === null || it === void 0 ? void 0 : it.itemTotal) !== null && _ref26 !== void 0 ? _ref26 : 0);
       if (!itTotal && rate > 0) itTotal = qty * rate;
       if (!itTotal && !rate && lineItems.length === 1 && totalAmount > 0) {
         itTotal = totalAmount;
@@ -6555,7 +9992,7 @@ function MobileDetailSheet(_ref) {
         fontWeight: 700,
         color: '#1E293B'
       }
-    }, MobileDetailSheet_formatMoney((_ref24 = (_record$subTotal = record === null || record === void 0 ? void 0 : record.subTotal) !== null && _record$subTotal !== void 0 ? _record$subTotal : record === null || record === void 0 ? void 0 : record.subtotal) !== null && _ref24 !== void 0 ? _ref24 : totalAmount))), Number((_record$discount = record === null || record === void 0 ? void 0 : record.discount) !== null && _record$discount !== void 0 ? _record$discount : 0) > 0 && /*#__PURE__*/react.createElement(Box/* default */.A, {
+    }, MobileDetailSheet_formatMoney((_ref27 = (_record$subTotal = record === null || record === void 0 ? void 0 : record.subTotal) !== null && _record$subTotal !== void 0 ? _record$subTotal : record === null || record === void 0 ? void 0 : record.subtotal) !== null && _ref27 !== void 0 ? _ref27 : totalAmount))), Number((_record$discount = record === null || record === void 0 ? void 0 : record.discount) !== null && _record$discount !== void 0 ? _record$discount : 0) > 0 && /*#__PURE__*/react.createElement(Box/* default */.A, {
       sx: {
         display: 'flex',
         justifyContent: 'space-between',
@@ -6572,7 +10009,7 @@ function MobileDetailSheet(_ref) {
         fontWeight: 700,
         color: '#EF4444'
       }
-    }, "-", MobileDetailSheet_formatMoney(record === null || record === void 0 ? void 0 : record.discount))), Number((_ref25 = (_record$shippingFee = record === null || record === void 0 ? void 0 : record.shippingFee) !== null && _record$shippingFee !== void 0 ? _record$shippingFee : record === null || record === void 0 ? void 0 : record.shipping) !== null && _ref25 !== void 0 ? _ref25 : 0) > 0 && /*#__PURE__*/react.createElement(Box/* default */.A, {
+    }, "-", MobileDetailSheet_formatMoney(record === null || record === void 0 ? void 0 : record.discount))), Number((_ref28 = (_record$shippingFee = record === null || record === void 0 ? void 0 : record.shippingFee) !== null && _record$shippingFee !== void 0 ? _record$shippingFee : record === null || record === void 0 ? void 0 : record.shipping) !== null && _ref28 !== void 0 ? _ref28 : 0) > 0 && /*#__PURE__*/react.createElement(Box/* default */.A, {
       sx: {
         display: 'flex',
         justifyContent: 'space-between',

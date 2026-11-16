@@ -6697,7 +6697,7 @@ function MaintenanceFormView() {
       sx: {
         borderRadius: 3.5,
         p: 2.5,
-        mb: 3,
+        mb: 2,
         backgroundColor: '#ffffff',
         boxShadow: '0 2px 10px rgba(0,0,0,0.04)'
       }
@@ -6716,9 +6716,11 @@ function MaintenanceFormView() {
         textTransform: 'uppercase'
       }
     }, "Parts / Items Used (", items.length, ")")), items.map((it, idx) => {
-      var _it$itemName, _it$itemName2;
-      var name = (it === null || it === void 0 || (_it$itemName = it.itemName) === null || _it$itemName === void 0 ? void 0 : _it$itemName.itemName) || (it === null || it === void 0 || (_it$itemName2 = it.itemName) === null || _it$itemName2 === void 0 ? void 0 : _it$itemName2.name) || (it === null || it === void 0 ? void 0 : it.newDescription) || "Part #".concat(idx + 1);
-      var desc = (it === null || it === void 0 ? void 0 : it.itemDescription) || '';
+      var _it$itemName;
+      var rawItemName = typeof (it === null || it === void 0 ? void 0 : it.itemName) === 'object' ? it === null || it === void 0 || (_it$itemName = it.itemName) === null || _it$itemName === void 0 ? void 0 : _it$itemName.itemName : it === null || it === void 0 ? void 0 : it.itemName;
+      var isCustomEmpty = !rawItemName || String(rawItemName).trim().toLowerCase() === 'empty';
+      var name = isCustomEmpty ? (it === null || it === void 0 ? void 0 : it.itemDescription) || "Custom Part #".concat(idx + 1) : rawItemName || "Part #".concat(idx + 1);
+      var desc = !isCustomEmpty && it !== null && it !== void 0 && it.itemDescription ? it.itemDescription : '';
       var qty = Number((it === null || it === void 0 ? void 0 : it.itemQty) || 1);
       var rate = Number((it === null || it === void 0 ? void 0 : it.itemRate) || 0);
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
@@ -6750,15 +6752,7 @@ function MaintenanceFormView() {
           color: '#64748B',
           display: 'block'
         }
-      }, desc), rate > 0 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
-        variant: "caption",
-        sx: {
-          color: '#30368a',
-          fontWeight: 700,
-          display: 'block',
-          mt: 0.2
-        }
-      }, "$", rate.toFixed(2), " each \u2022 Total: $", (qty * rate).toFixed(2))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+      }, desc)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
         size: "small",
         onClick: () => deleteItem(it.idRow),
         sx: {
@@ -6766,12 +6760,34 @@ function MaintenanceFormView() {
         }
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Delete__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
         fontSize: "small"
-      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+      }))), isCustomEmpty && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
+        fullWidth: true,
+        size: "small",
+        label: "Part / Service Description",
+        placeholder: "e.g. DEMARREUR 'STARTER', OIL FILTER...",
+        value: it.itemDescription || '',
+        onChange: e => {
+          var val = e.target.value;
+          SetItems(prev => prev.map(itemRow => itemRow.idRow === it.idRow ? _objectSpread(_objectSpread({}, itemRow), {}, {
+            itemDescription: val
+          }) : itemRow));
+        },
+        sx: {
+          mt: 1
+        }
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+        sx: {
+          display: 'grid',
+          gridTemplateColumns: '1fr 1fr',
+          gap: 1.5,
+          mt: 1.5,
+          alignItems: 'center'
+        }
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
         sx: {
           display: 'flex',
           alignItems: 'center',
-          gap: 1.5,
-          mt: 1
+          gap: 1
         }
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
         variant: "caption",
@@ -6779,13 +6795,13 @@ function MaintenanceFormView() {
           color: '#64748B',
           fontWeight: 600
         }
-      }, "Quantity:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+      }, "Qty:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
         sx: {
           display: 'flex',
           alignItems: 'center',
           backgroundColor: '#F1F5F9',
           borderRadius: 2,
-          px: 1
+          px: 0.5
         }
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
         size: "small",
@@ -6807,7 +6823,7 @@ function MaintenanceFormView() {
         variant: "body2",
         sx: {
           fontWeight: 700,
-          px: 1.5,
+          px: 1,
           minWidth: 20,
           textAlign: 'center'
         }
@@ -6827,7 +6843,43 @@ function MaintenanceFormView() {
             return itemRow;
           }));
         }
-      }, "+"))));
+      }, "+"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
+        size: "small",
+        type: "number",
+        label: "Rate ($)",
+        value: it.itemRate != null ? it.itemRate : 0,
+        onChange: e => {
+          var r = parseFloat(e.target.value) || 0;
+          SetItems(prev => prev.map(itemRow => {
+            if (itemRow.idRow === it.idRow) {
+              var q = Number(itemRow.itemQty || 1);
+              return _objectSpread(_objectSpread({}, itemRow), {}, {
+                itemRate: r,
+                itemAmount: q * r,
+                totalAmount: q * r
+              });
+            }
+            return itemRow;
+          }));
+        },
+        InputProps: {
+          sx: {
+            height: 36,
+            fontSize: '0.85rem'
+          }
+        }
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+        sx: {
+          textAlign: 'right',
+          mt: 0.5
+        }
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
+        variant: "caption",
+        sx: {
+          color: '#30368a',
+          fontWeight: 700
+        }
+      }, "Line Total: $", (qty * rate).toFixed(2))));
     }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
       sx: {
         mt: 2,
@@ -6867,10 +6919,136 @@ function MaintenanceFormView() {
         }
       },
       renderInput: params => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, _extends({}, params, {
-        placeholder: "+ Add Part / Item from Inventory...",
+        placeholder: "+ Add Part from Inventory...",
         size: "small"
       }))
-    }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
+    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
+      fullWidth: true,
+      variant: "outlined",
+      size: "small",
+      onClick: addItemWhite,
+      sx: {
+        mt: 1.5,
+        borderRadius: 2,
+        textTransform: 'none',
+        fontWeight: 700,
+        borderColor: '#30368a',
+        color: '#30368a'
+      }
+    }, "+ Add Custom / Non-Inventory Part (Empty Slot)"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+      sx: {
+        borderRadius: 3.5,
+        p: 2.5,
+        mb: 3,
+        backgroundColor: '#ffffff',
+        boxShadow: '0 2px 10px rgba(0,0,0,0.04)'
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
+      variant: "caption",
+      sx: {
+        color: '#64748B',
+        fontWeight: 700,
+        textTransform: 'uppercase',
+        mb: 1.5,
+        display: 'block'
+      }
+    }, "Labor & Financial Breakdown"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .Ay, {
+      container: true,
+      spacing: 2
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .Ay, {
+      item: true,
+      xs: 6
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
+      fullWidth: true,
+      size: "small",
+      type: "number",
+      label: "Labor Fees ($)",
+      value: adjustmentNumber != null ? adjustmentNumber : 0,
+      onChange: e => setAdjustmentNumber(parseFloat(e.target.value) || 0)
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .Ay, {
+      item: true,
+      xs: 6
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
+      fullWidth: true,
+      size: "small",
+      type: "number",
+      label: "Labor Hours/Qty",
+      value: laborQty != null ? laborQty : 0,
+      onChange: e => setLaborQty(parseFloat(e.target.value) || 0)
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .Ay, {
+      item: true,
+      xs: 6
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
+      fullWidth: true,
+      size: "small",
+      type: "number",
+      label: "Labor Discount (%)",
+      value: laborDiscount != null ? laborDiscount : 0,
+      onChange: e => setLaborDiscount(parseFloat(e.target.value) || 0)
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .Ay, {
+      item: true,
+      xs: 6
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+      sx: {
+        p: 1,
+        backgroundColor: '#F8FAFC',
+        borderRadius: 2,
+        textAlign: 'right'
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
+      variant: "caption",
+      sx: {
+        color: '#64748B',
+        display: 'block'
+      }
+    }, "Net Labor"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
+      variant: "subtitle2",
+      sx: {
+        fontWeight: 800,
+        color: '#30368a'
+      }
+    }, "$", (parseFloat(totalLaborFeesGenerale) || 0).toFixed(2))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+      sx: {
+        my: 1.5
+      }
+    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+      sx: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center'
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
+      variant: "subtitle2",
+      sx: {
+        fontWeight: 800,
+        color: '#1E293B'
+      }
+    }, "Parts Subtotal"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
+      variant: "body1",
+      sx: {
+        fontWeight: 700,
+        color: '#1E293B'
+      }
+    }, "$", (parseFloat(subTotal) || 0).toFixed(2))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+      sx: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        mt: 0.5
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
+      variant: "subtitle1",
+      sx: {
+        fontWeight: 800,
+        color: '#30368a'
+      }
+    }, "Grand Total"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
+      variant: "h6",
+      sx: {
+        fontWeight: 800,
+        color: '#10B981'
+      }
+    }, "$", (parseFloat(subTotal || 0) + parseFloat(totalLaborFeesGenerale || 0)).toFixed(2)))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
       fullWidth: true,
       variant: "contained",
       size: "large",

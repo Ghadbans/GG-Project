@@ -6801,6 +6801,7 @@ function MobileDetailSheet(_ref) {
   var userRole = (user === null || user === void 0 || (_user$data6 = user.data) === null || _user$data6 === void 0 ? void 0 : _user$data6.role) || '';
   var userDepartment = (user === null || user === void 0 || (_user$data7 = user.data) === null || _user$data7 === void 0 ? void 0 : _user$data7.department) || '';
   var isSuperUser = userName === 'GG';
+  var canViewCosts = (userRole === null || userRole === void 0 ? void 0 : userRole.toUpperCase()) !== 'TECHNICIAN' && (userRole === null || userRole === void 0 ? void 0 : userRole.toUpperCase()) !== 'TECHNICIEN' && (userDepartment === null || userDepartment === void 0 ? void 0 : userDepartment.toUpperCase()) !== 'TECHNICIAN' && (userDepartment === null || userDepartment === void 0 ? void 0 : userDepartment.toUpperCase()) !== 'TECHNICIEN';
   var isTechnician = (userRole === null || userRole === void 0 ? void 0 : userRole.toUpperCase()) === 'TECHNICIAN' || (userRole === null || userRole === void 0 ? void 0 : userRole.toUpperCase()) === 'TECHNICIEN' || (userDepartment === null || userDepartment === void 0 ? void 0 : userDepartment.toUpperCase()) === 'TECHNICIAN' || (userDepartment === null || userDepartment === void 0 ? void 0 : userDepartment.toUpperCase()) === 'TECHNICIEN';
   var canEdit = t => {
     var typeToModule = {
@@ -6822,7 +6823,7 @@ function MobileDetailSheet(_ref) {
   };
   if (!record) return null;
   try {
-    var _record$customerName, _ref0, _ref1, _ref10, _ref11, _record$totalInvoice, _record$balanceDue, _record$itemUpc, _ref12, _ref13, _record$itemQuantity, _ref14, _ref15, _record$itemSellingPr, _record$createdAt, _record$expenseCatego2, _record$createdAt2, _record$customerName2, _record$customerName3, _record$customerName4, _record$customerName5, _ref24, _record$subTotal, _record$discount, _ref25, _record$shippingFee, _record$shippingFee2;
+    var _record$customerName, _ref0, _ref1, _ref10, _ref11, _record$totalInvoice, _record$balanceDue, _record$itemUpc, _ref12, _ref13, _record$itemQuantity, _ref14, _ref15, _record$itemSellingPr, _record$createdAt, _record$expenseCatego2, _record$createdAt2, _record$customerName2, _record$customerName3, _record$customerName4, _record$customerName5, _ref27, _record$subTotal, _record$discount, _ref28, _record$shippingFee, _record$shippingFee2;
     var id = (record === null || record === void 0 ? void 0 : record._id) || (record === null || record === void 0 ? void 0 : record.id);
     var isTechStore = type === 'tech_store' || isTechnician;
     var isItem = type === 'items' || isTechStore;
@@ -7384,17 +7385,30 @@ function MobileDetailSheet(_ref) {
         display: 'block'
       }
     }, "Parts / Items Used (", lineItems.length, ")"), lineItems.map((it, idx) => {
-      var _ref16, _ref17, _it$itemQty2;
-      var itName = MobileDetailSheet_safeText((it === null || it === void 0 ? void 0 : it.itemName) || (it === null || it === void 0 ? void 0 : it.description), "Item #".concat(idx + 1));
+      var _it$itemName, _ref16, _ref17, _it$itemQty2, _ref18, _ref19, _ref20, _it$itemRate2, _it$itemAmount;
+      var rawItemName = typeof (it === null || it === void 0 ? void 0 : it.itemName) === 'object' ? it === null || it === void 0 || (_it$itemName = it.itemName) === null || _it$itemName === void 0 ? void 0 : _it$itemName.itemName : it === null || it === void 0 ? void 0 : it.itemName;
+      var rawDesc = (it === null || it === void 0 ? void 0 : it.itemDescription) || (it === null || it === void 0 ? void 0 : it.description) || '';
+      var isCustomEmpty = !rawItemName || String(rawItemName).trim().toLowerCase() === 'empty';
+      var itName = isCustomEmpty ? rawDesc || "Custom Part #".concat(idx + 1) : rawItemName || rawDesc || "Item #".concat(idx + 1);
+      var itSubDesc = !isCustomEmpty && rawDesc && rawDesc !== rawItemName ? rawDesc : '';
       var qty = Number((_ref16 = (_ref17 = (_it$itemQty2 = it === null || it === void 0 ? void 0 : it.itemQty) !== null && _it$itemQty2 !== void 0 ? _it$itemQty2 : it === null || it === void 0 ? void 0 : it.itemQuantity) !== null && _ref17 !== void 0 ? _ref17 : it === null || it === void 0 ? void 0 : it.quantity) !== null && _ref16 !== void 0 ? _ref16 : 1);
+      var rate = Number((_ref18 = (_ref19 = (_ref20 = (_it$itemRate2 = it === null || it === void 0 ? void 0 : it.itemRate) !== null && _it$itemRate2 !== void 0 ? _it$itemRate2 : it === null || it === void 0 ? void 0 : it.itemSellingPrice) !== null && _ref20 !== void 0 ? _ref20 : it === null || it === void 0 ? void 0 : it.rate) !== null && _ref19 !== void 0 ? _ref19 : it === null || it === void 0 ? void 0 : it.price) !== null && _ref18 !== void 0 ? _ref18 : 0);
+      var lineAmount = Number((_it$itemAmount = it === null || it === void 0 ? void 0 : it.itemAmount) !== null && _it$itemAmount !== void 0 ? _it$itemAmount : qty * rate);
+      var showPrices = canViewCosts && type === 'maintenance';
       return /*#__PURE__*/react.createElement(Box/* default */.A, {
         key: idx,
         sx: {
-          py: 1,
+          py: 1.2,
           borderBottom: idx < lineItems.length - 1 ? '1px solid #F1F5F9' : 'none',
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center'
+        }
+      }, /*#__PURE__*/react.createElement(Box/* default */.A, {
+        sx: {
+          minWidth: 0,
+          flex: 1,
+          pr: 1.5
         }
       }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
         variant: "body2",
@@ -7402,7 +7416,32 @@ function MobileDetailSheet(_ref) {
           fontWeight: 700,
           color: '#1E293B'
         }
-      }, itName), /*#__PURE__*/react.createElement(Chip/* default */.A, {
+      }, itName), itSubDesc && /*#__PURE__*/react.createElement(Typography/* default */.A, {
+        variant: "caption",
+        sx: {
+          color: '#64748B',
+          display: 'block'
+        }
+      }, itSubDesc), showPrices && rate > 0 && /*#__PURE__*/react.createElement(Typography/* default */.A, {
+        variant: "caption",
+        sx: {
+          color: '#30368a',
+          fontWeight: 600,
+          display: 'block',
+          mt: 0.2
+        }
+      }, "Qty: ", qty, " \xD7 ", MobileDetailSheet_formatMoney(rate))), /*#__PURE__*/react.createElement(Box/* default */.A, {
+        sx: {
+          textAlign: 'right',
+          flexShrink: 0
+        }
+      }, showPrices ? /*#__PURE__*/react.createElement(Typography/* default */.A, {
+        variant: "body2",
+        sx: {
+          fontWeight: 800,
+          color: '#30368a'
+        }
+      }, MobileDetailSheet_formatMoney(lineAmount)) : /*#__PURE__*/react.createElement(Chip/* default */.A, {
         label: "Qty: ".concat(qty),
         size: "small",
         sx: {
@@ -7411,8 +7450,104 @@ function MobileDetailSheet(_ref) {
           fontWeight: 700,
           height: 22
         }
-      }));
-    }))) : type === 'suppliers' ?
+      })));
+    })), canViewCosts && type === 'maintenance' && /*#__PURE__*/react.createElement(Card/* default */.A, {
+      sx: {
+        borderRadius: 3.5,
+        p: 2,
+        mb: 2,
+        backgroundColor: '#ffffff',
+        boxShadow: '0 2px 10px rgba(0,0,0,0.04)'
+      }
+    }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
+      variant: "caption",
+      sx: {
+        color: '#64748B',
+        fontWeight: 700,
+        textTransform: 'uppercase',
+        mb: 1.5,
+        display: 'block'
+      }
+    }, "Cost & Financial Summary"), /*#__PURE__*/react.createElement(Box/* default */.A, {
+      sx: {
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 1
+      }
+    }, /*#__PURE__*/react.createElement(Box/* default */.A, {
+      sx: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center'
+      }
+    }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
+      variant: "body2",
+      sx: {
+        color: '#64748B'
+      }
+    }, "Parts Subtotal"), /*#__PURE__*/react.createElement(Typography/* default */.A, {
+      variant: "body2",
+      sx: {
+        fontWeight: 700,
+        color: '#1E293B'
+      }
+    }, MobileDetailSheet_formatMoney(calcLineTotal > 0 ? calcLineTotal : (record === null || record === void 0 ? void 0 : record.subTotal) || 0))), Number((record === null || record === void 0 ? void 0 : record.adjustmentNumber) || (record === null || record === void 0 ? void 0 : record.laborFees) || 0) > 0 && /*#__PURE__*/react.createElement(Box/* default */.A, {
+      sx: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center'
+      }
+    }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
+      variant: "body2",
+      sx: {
+        color: '#64748B'
+      }
+    }, "Labor Fees ", Number((record === null || record === void 0 ? void 0 : record.laborQty) || 0) > 1 ? "(".concat(record.laborQty, " hrs)") : ''), /*#__PURE__*/react.createElement(Typography/* default */.A, {
+      variant: "body2",
+      sx: {
+        fontWeight: 700,
+        color: '#1E293B'
+      }
+    }, MobileDetailSheet_formatMoney(Number((record === null || record === void 0 ? void 0 : record.totalLaborFeesGenerale) || (record === null || record === void 0 ? void 0 : record.adjustmentNumber) || (record === null || record === void 0 ? void 0 : record.laborFees) || 0)))), Number((record === null || record === void 0 ? void 0 : record.laborDiscount) || 0) > 0 && /*#__PURE__*/react.createElement(Box/* default */.A, {
+      sx: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center'
+      }
+    }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
+      variant: "body2",
+      sx: {
+        color: '#10B981'
+      }
+    }, "Labor Discount (", record.laborDiscount, "%)"), /*#__PURE__*/react.createElement(Typography/* default */.A, {
+      variant: "body2",
+      sx: {
+        fontWeight: 700,
+        color: '#10B981'
+      }
+    }, "-", MobileDetailSheet_formatMoney(Number((record === null || record === void 0 ? void 0 : record.totalDiscount) || 0)))), /*#__PURE__*/react.createElement(Divider/* default */.A, {
+      sx: {
+        my: 0.5
+      }
+    }), /*#__PURE__*/react.createElement(Box/* default */.A, {
+      sx: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center'
+      }
+    }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
+      variant: "subtitle2",
+      sx: {
+        fontWeight: 800,
+        color: '#30368a'
+      }
+    }, "Grand Total"), /*#__PURE__*/react.createElement(Typography/* default */.A, {
+      variant: "h6",
+      sx: {
+        fontWeight: 800,
+        color: '#30368a'
+      }
+    }, MobileDetailSheet_formatMoney(Number((record === null || record === void 0 ? void 0 : record.totalInvoice) || (record === null || record === void 0 ? void 0 : record.totalAmount) || (record === null || record === void 0 ? void 0 : record.grandTotal) || calcLineTotal + Number((record === null || record === void 0 ? void 0 : record.totalLaborFeesGenerale) || (record === null || record === void 0 ? void 0 : record.adjustmentNumber) || 0)))))))) : type === 'suppliers' ?
     /*#__PURE__*/
     /* ── SUPPLIER PROFILE VIEW (WITH COMPLETE PHONE DETAILS) ── */
     react.createElement(Box/* default */.A, {
@@ -8169,11 +8304,11 @@ function MobileDetailSheet(_ref) {
         display: 'block'
       }
     }, "Items & Services (", lineItems.length, ")"), lineItems.map((it, idx) => {
-      var _it$itemName, _it$itemName2, _ref18, _ref19, _it$itemQty3, _ref20, _ref21, _ref22, _it$itemRate2, _ref23, _it$itemAmount;
-      var itName = MobileDetailSheet_safeText((it === null || it === void 0 || (_it$itemName = it.itemName) === null || _it$itemName === void 0 ? void 0 : _it$itemName.itemName) || (it === null || it === void 0 || (_it$itemName2 = it.itemName) === null || _it$itemName2 === void 0 ? void 0 : _it$itemName2.name) || (it === null || it === void 0 ? void 0 : it.itemName) || (it === null || it === void 0 ? void 0 : it.description), "Item #".concat(idx + 1));
-      var qty = Number((_ref18 = (_ref19 = (_it$itemQty3 = it === null || it === void 0 ? void 0 : it.itemQty) !== null && _it$itemQty3 !== void 0 ? _it$itemQty3 : it === null || it === void 0 ? void 0 : it.itemQuantity) !== null && _ref19 !== void 0 ? _ref19 : it === null || it === void 0 ? void 0 : it.quantity) !== null && _ref18 !== void 0 ? _ref18 : 1);
-      var rate = Number((_ref20 = (_ref21 = (_ref22 = (_it$itemRate2 = it === null || it === void 0 ? void 0 : it.itemRate) !== null && _it$itemRate2 !== void 0 ? _it$itemRate2 : it === null || it === void 0 ? void 0 : it.itemSellingPrice) !== null && _ref22 !== void 0 ? _ref22 : it === null || it === void 0 ? void 0 : it.rate) !== null && _ref21 !== void 0 ? _ref21 : it === null || it === void 0 ? void 0 : it.price) !== null && _ref20 !== void 0 ? _ref20 : 0);
-      var itTotal = Number((_ref23 = (_it$itemAmount = it === null || it === void 0 ? void 0 : it.itemAmount) !== null && _it$itemAmount !== void 0 ? _it$itemAmount : it === null || it === void 0 ? void 0 : it.itemTotal) !== null && _ref23 !== void 0 ? _ref23 : 0);
+      var _it$itemName2, _it$itemName3, _ref21, _ref22, _it$itemQty3, _ref23, _ref24, _ref25, _it$itemRate3, _ref26, _it$itemAmount2;
+      var itName = MobileDetailSheet_safeText((it === null || it === void 0 || (_it$itemName2 = it.itemName) === null || _it$itemName2 === void 0 ? void 0 : _it$itemName2.itemName) || (it === null || it === void 0 || (_it$itemName3 = it.itemName) === null || _it$itemName3 === void 0 ? void 0 : _it$itemName3.name) || (it === null || it === void 0 ? void 0 : it.itemName) || (it === null || it === void 0 ? void 0 : it.description), "Item #".concat(idx + 1));
+      var qty = Number((_ref21 = (_ref22 = (_it$itemQty3 = it === null || it === void 0 ? void 0 : it.itemQty) !== null && _it$itemQty3 !== void 0 ? _it$itemQty3 : it === null || it === void 0 ? void 0 : it.itemQuantity) !== null && _ref22 !== void 0 ? _ref22 : it === null || it === void 0 ? void 0 : it.quantity) !== null && _ref21 !== void 0 ? _ref21 : 1);
+      var rate = Number((_ref23 = (_ref24 = (_ref25 = (_it$itemRate3 = it === null || it === void 0 ? void 0 : it.itemRate) !== null && _it$itemRate3 !== void 0 ? _it$itemRate3 : it === null || it === void 0 ? void 0 : it.itemSellingPrice) !== null && _ref25 !== void 0 ? _ref25 : it === null || it === void 0 ? void 0 : it.rate) !== null && _ref24 !== void 0 ? _ref24 : it === null || it === void 0 ? void 0 : it.price) !== null && _ref23 !== void 0 ? _ref23 : 0);
+      var itTotal = Number((_ref26 = (_it$itemAmount2 = it === null || it === void 0 ? void 0 : it.itemAmount) !== null && _it$itemAmount2 !== void 0 ? _it$itemAmount2 : it === null || it === void 0 ? void 0 : it.itemTotal) !== null && _ref26 !== void 0 ? _ref26 : 0);
       if (!itTotal && rate > 0) itTotal = qty * rate;
       if (!itTotal && !rate && lineItems.length === 1 && totalAmount > 0) {
         itTotal = totalAmount;
@@ -8247,7 +8382,7 @@ function MobileDetailSheet(_ref) {
         fontWeight: 700,
         color: '#1E293B'
       }
-    }, MobileDetailSheet_formatMoney((_ref24 = (_record$subTotal = record === null || record === void 0 ? void 0 : record.subTotal) !== null && _record$subTotal !== void 0 ? _record$subTotal : record === null || record === void 0 ? void 0 : record.subtotal) !== null && _ref24 !== void 0 ? _ref24 : totalAmount))), Number((_record$discount = record === null || record === void 0 ? void 0 : record.discount) !== null && _record$discount !== void 0 ? _record$discount : 0) > 0 && /*#__PURE__*/react.createElement(Box/* default */.A, {
+    }, MobileDetailSheet_formatMoney((_ref27 = (_record$subTotal = record === null || record === void 0 ? void 0 : record.subTotal) !== null && _record$subTotal !== void 0 ? _record$subTotal : record === null || record === void 0 ? void 0 : record.subtotal) !== null && _ref27 !== void 0 ? _ref27 : totalAmount))), Number((_record$discount = record === null || record === void 0 ? void 0 : record.discount) !== null && _record$discount !== void 0 ? _record$discount : 0) > 0 && /*#__PURE__*/react.createElement(Box/* default */.A, {
       sx: {
         display: 'flex',
         justifyContent: 'space-between',
@@ -8264,7 +8399,7 @@ function MobileDetailSheet(_ref) {
         fontWeight: 700,
         color: '#EF4444'
       }
-    }, "-", MobileDetailSheet_formatMoney(record === null || record === void 0 ? void 0 : record.discount))), Number((_ref25 = (_record$shippingFee = record === null || record === void 0 ? void 0 : record.shippingFee) !== null && _record$shippingFee !== void 0 ? _record$shippingFee : record === null || record === void 0 ? void 0 : record.shipping) !== null && _ref25 !== void 0 ? _ref25 : 0) > 0 && /*#__PURE__*/react.createElement(Box/* default */.A, {
+    }, "-", MobileDetailSheet_formatMoney(record === null || record === void 0 ? void 0 : record.discount))), Number((_ref28 = (_record$shippingFee = record === null || record === void 0 ? void 0 : record.shippingFee) !== null && _record$shippingFee !== void 0 ? _record$shippingFee : record === null || record === void 0 ? void 0 : record.shipping) !== null && _ref28 !== void 0 ? _ref28 : 0) > 0 && /*#__PURE__*/react.createElement(Box/* default */.A, {
       sx: {
         display: 'flex',
         justifyContent: 'space-between',

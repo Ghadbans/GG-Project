@@ -123444,7 +123444,7 @@ Object.assign(esm_lookup, {
 (module) {
 
 "use strict";
-module.exports = {"rE":"3.6.65"};
+module.exports = {"rE":"3.6.66"};
 
 /***/ },
 
@@ -123576,7 +123576,7 @@ module.exports = /*#__PURE__*/JSON.parse('{"--header-logo-width":"240px","--glob
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames based on template
-/******/ 			return "" + chunkId + "." + {"100":"aa63db6838f5d1a5faf7","116":"47fa8762f753762d291d","118":"67282ee0f46830583293","223":"11c50fcf642acaf01578","296":"f29e824f38522a627939","302":"3b51e5ea3fefb90347e1","327":"c88df084641bfac45cdc","441":"5c4f7a9f1b4cd60f0438","457":"02ec9c105b957dbbd9db","483":"6fdf7d28f4a344461077","590":"28953f61605420ae99a4","614":"aa1a4baa485591a45a5d","712":"c343443ce7a1887d14b2","742":"3c7280819fde965ae055","778":"f8950b7fd584414ccde4","806":"3bcd7864f8576942aad7","808":"d395eb1e252309375036","864":"ac9193b4bf40eb4964a0","885":"cc8a4df32b65323e1a80","956":"1824448f5e358187a171","1019":"1d406482e04e60bb652f","1096":"cb8119cdaa351f0e4cf8","1168":"b2f690e1d5399977dcaf","1195":"670e1119bfc1e7614a79","1223":"7aa1f69e403b594d5336","1251":"9da50dc8470bc764d3b6","1364":"fdfc76afc243ce14e56a","1390":"a28f1a9c7193c75a2232","1500":"5a4f44c7307068ea961b","1624":"1e1d88c032094f247d47","1645":"17b0beaf74bf8b3cb5b6","1679":"6fad6afa1ba97ccbdd34","1722":"5aacfbdbf20395aae3a9","1853":"d87ffdbd183011dc2319","1861":"b7634fa92c4aa00d7ec7","1919":"02ba73fbcb08f6b43e75","1985":"c372e67729f897b94140","2120":"260136f37f71dde36ba1","2122":"89773bbe7a6bb157934a","2153":"dfaa809d81b011fe402a","2400":"a9b22dd012a855732973","2410":"4cbe992de581122751d7","2495":"76a26795d4033aa439a4","2517":"956f7558989fb2a45d33","2529":"4184ea0b2e089c7b1cb8","2533":"19eb2da5d7015e61eb3c","2605":"6da45bf0a374acc6b637","2608":"a86e0ce81d9f46c9b9e6","2611":"21b2cd175be9359600da","2756":"2e4d9a6b9a21c6a4e68d","2757":"68776b517befffb1bc05","2778":"cdd44eceb38686d06a9b","2821":"d40aee3e8cd86fb5bbff","2835":"cb586f1aed058e586821","2982":"6235f420820c22b564aa","2992":"e2ce4fd5d1911fd7a1db","3009":"567b00944880ad958271","3058":"20dac6c948603b7bc621","3094":"9608277b9f1b21b145b5","3229":"f61da12dafbdb6c066d3","3426":"6243f43fc911e7c95f41","3502":"38861f26dae3c79e1f31","3547":"1e2de2721983f1041975","3697":"28cee7f495153986eb4d","3741":"37d03a8a510f8bda1f4a","3808":"037272c6170c89b409a4","3970":"396fecaabf382a5f1a39","3976":"c6c4d900d8043e884ea2","4001":"46e65a3580442b90df56","4006":"fca8e7aa1bfbea49786a","4107":"78bb8e93491e33a3e285","4184":"7b249b747702470ec69b","4237":"ae9e77c6d4f5a70c297a","4270":"d6c06725f29411f5539c","4444":"b7a62dcaddc742236807","4783":"f419a9163eb350212f2e","5059":"628654fd8f024ff22adb","5117":"2eb054ea4f2bc653fb1e","5194":"d116fb1164b0c3887dc1","5391":"34dde71001f603b0deba","5394":"1677062b64e75bb2cec6","5646":"6a57c318facfce5b2863","5669":"7dd77c65e44c3dc05cd9","5754":"8e63db711cee747f1391","5824":"00be3ef2515b3d5a318a","5881":"1b229fbf1b0bff87b387","5910":"0aa1b84089d2b2145046","5919":"2ebbeceef8b03aefddce","5934":"2c8f6180504c7442626c","6155":"25803bf72f57df4b3658","6226":"74b7c7db0abf1a090d6c","6619":"da19331cff7f3dfae6d4","6671":"ce0a7da7b2eb95699d4a","6685":"1ef5575a72b652f74b7d","6725":"a646dcc64b6e6c9d3c0c","6744":"c01d52eb99441e4e3afa","7120":"fbec0e4401c2f3946a30","7171":"918e19a0ed17fcdfa115","7269":"1013f38f7f1116bbdbb2","7270":"aef71d036742a212ea6b","7384":"78a1f59ffc7924fc8f70","7405":"53dd5e5077e4f953ad70","7444":"b53c12d6ba889fd7ff49","7445":"010bd7fdfac8f9c3017b","7539":"a814c7e2536f3a2ded57","7592":"b2cbea05232b51c85f6d","7612":"35e9dd6b31a3f5d1d6b5","7645":"8d59712268ea3994cd6e","7757":"ecb81b44321b25999962","7801":"31435af205e48581d2b3","7897":"d1edb5acef6e6f3f505c","7941":"4b662ebdde2043ad0d85","7997":"2e21126ab3301ab4a2fa","8011":"6e467f8105662710240b","8017":"cc1a3f74e55f56cc9fd6","8027":"697b9c2fe3ecff9f4978","8060":"ba0cc5c0a1ee61f986b1","8117":"25756ad53d0d4449d1f8","8282":"65d85f7cb5c9b37e0642","8354":"176023e85ee8d67dc8c1","8442":"4dc34606f2dc199c6158","8520":"bd678456cc879023807e","8646":"9051fd6297c5d3d0292e","8685":"2e4858ba3af14fde840a","8838":"43934310530795354dca","8849":"7aa8da37935a32e20a20","8970":"110c16bdc91946671e41","8979":"4805158afa23d0486340","9220":"861c86c07129ab78a89d","9246":"fd679f999ba78c4ee858","9250":"739e41027b099328904d","9260":"ebf3b7b938e195a708ee","9419":"c2b84e9998ffbf06d945","9528":"4dd9c43eb666c40b578c","9564":"746623511c55650ec60b","9573":"2605ed88ad0261c5aab8","9575":"e9bf1fcbb360227bdd13","9670":"012e43f63f6fefe161c8","9762":"2b4c7cd7446953ac1c72","9773":"99770709b81ba7424a4d","9846":"305acfa47d491e196677","9971":"b8cd2845d2a3543a5e11"}[chunkId] + ".app.js";
+/******/ 			return "" + chunkId + "." + {"100":"aa63db6838f5d1a5faf7","116":"47fa8762f753762d291d","118":"67282ee0f46830583293","223":"11c50fcf642acaf01578","296":"f29e824f38522a627939","302":"3b51e5ea3fefb90347e1","327":"c88df084641bfac45cdc","441":"8b8b0c21d0b0ba268348","457":"02ec9c105b957dbbd9db","483":"6fdf7d28f4a344461077","590":"28953f61605420ae99a4","614":"aa1a4baa485591a45a5d","712":"c343443ce7a1887d14b2","742":"3c7280819fde965ae055","778":"f8950b7fd584414ccde4","806":"a25f9f0c19a359e42014","808":"d395eb1e252309375036","864":"ac9193b4bf40eb4964a0","885":"cc8a4df32b65323e1a80","956":"1824448f5e358187a171","1019":"1d406482e04e60bb652f","1096":"cb8119cdaa351f0e4cf8","1168":"b2f690e1d5399977dcaf","1195":"50fc37d4906b4c24cff2","1223":"7aa1f69e403b594d5336","1251":"9da50dc8470bc764d3b6","1364":"fdfc76afc243ce14e56a","1390":"a28f1a9c7193c75a2232","1500":"5a4f44c7307068ea961b","1624":"1e1d88c032094f247d47","1645":"e8a397536c144e0b3014","1679":"6fad6afa1ba97ccbdd34","1722":"5aacfbdbf20395aae3a9","1853":"d87ffdbd183011dc2319","1861":"b7634fa92c4aa00d7ec7","1919":"02ba73fbcb08f6b43e75","1985":"c372e67729f897b94140","2120":"260136f37f71dde36ba1","2122":"89773bbe7a6bb157934a","2153":"dfaa809d81b011fe402a","2400":"a9b22dd012a855732973","2410":"a20be7b9254287f170e3","2495":"76a26795d4033aa439a4","2517":"956f7558989fb2a45d33","2529":"4184ea0b2e089c7b1cb8","2533":"19eb2da5d7015e61eb3c","2605":"6da45bf0a374acc6b637","2608":"a86e0ce81d9f46c9b9e6","2611":"21b2cd175be9359600da","2756":"2e4d9a6b9a21c6a4e68d","2757":"68776b517befffb1bc05","2778":"cdd44eceb38686d06a9b","2821":"d40aee3e8cd86fb5bbff","2835":"cb586f1aed058e586821","2982":"50cb8e5b42cad8be4068","2992":"e2ce4fd5d1911fd7a1db","3009":"567b00944880ad958271","3058":"a0336a828344c2551844","3094":"9608277b9f1b21b145b5","3229":"f61da12dafbdb6c066d3","3426":"6243f43fc911e7c95f41","3502":"38861f26dae3c79e1f31","3547":"1e2de2721983f1041975","3697":"28cee7f495153986eb4d","3741":"37d03a8a510f8bda1f4a","3808":"727c6a81d08cb124346f","3970":"396fecaabf382a5f1a39","3976":"c6c4d900d8043e884ea2","4001":"46e65a3580442b90df56","4006":"fca8e7aa1bfbea49786a","4107":"78bb8e93491e33a3e285","4184":"7b249b747702470ec69b","4237":"ae9e77c6d4f5a70c297a","4270":"526b256cc0d391d1ae4e","4444":"e04e701dc6ae008b162c","4783":"f419a9163eb350212f2e","5059":"628654fd8f024ff22adb","5117":"2eb054ea4f2bc653fb1e","5194":"d116fb1164b0c3887dc1","5391":"97df895f96e106e1d0f5","5394":"1677062b64e75bb2cec6","5646":"6a57c318facfce5b2863","5669":"7dd77c65e44c3dc05cd9","5754":"8e63db711cee747f1391","5824":"00be3ef2515b3d5a318a","5881":"1b229fbf1b0bff87b387","5910":"0aa1b84089d2b2145046","5919":"2ebbeceef8b03aefddce","5934":"2c8f6180504c7442626c","6155":"25803bf72f57df4b3658","6226":"74b7c7db0abf1a090d6c","6619":"da19331cff7f3dfae6d4","6671":"ce0a7da7b2eb95699d4a","6685":"1ef5575a72b652f74b7d","6725":"a646dcc64b6e6c9d3c0c","6744":"c01d52eb99441e4e3afa","7120":"fbec0e4401c2f3946a30","7171":"918e19a0ed17fcdfa115","7269":"1013f38f7f1116bbdbb2","7270":"aef71d036742a212ea6b","7384":"78a1f59ffc7924fc8f70","7405":"53dd5e5077e4f953ad70","7444":"b53c12d6ba889fd7ff49","7445":"a0a6abb27bf95fa03770","7539":"a814c7e2536f3a2ded57","7592":"b2cbea05232b51c85f6d","7612":"35e9dd6b31a3f5d1d6b5","7645":"8d59712268ea3994cd6e","7757":"ecb81b44321b25999962","7801":"31435af205e48581d2b3","7897":"315e93cdef98f58e81b3","7941":"bcfca37d69249c324194","7997":"2e21126ab3301ab4a2fa","8011":"6e467f8105662710240b","8017":"cc1a3f74e55f56cc9fd6","8027":"697b9c2fe3ecff9f4978","8060":"ba0cc5c0a1ee61f986b1","8117":"25756ad53d0d4449d1f8","8282":"65d85f7cb5c9b37e0642","8354":"176023e85ee8d67dc8c1","8442":"4dc34606f2dc199c6158","8520":"bd678456cc879023807e","8646":"9051fd6297c5d3d0292e","8685":"2e4858ba3af14fde840a","8838":"43934310530795354dca","8849":"7aa8da37935a32e20a20","8970":"110c16bdc91946671e41","8979":"4805158afa23d0486340","9220":"861c86c07129ab78a89d","9246":"fd679f999ba78c4ee858","9250":"739e41027b099328904d","9260":"ebf3b7b938e195a708ee","9419":"933741bf5937a21b9193","9528":"4dd9c43eb666c40b578c","9564":"746623511c55650ec60b","9573":"98ad0378c1f863c2fb23","9575":"e9bf1fcbb360227bdd13","9670":"012e43f63f6fefe161c8","9762":"2b4c7cd7446953ac1c72","9773":"a2b5504566d2cc233450","9846":"305acfa47d491e196677","9971":"b8cd2845d2a3543a5e11"}[chunkId] + ".app.js";
 /******/ 		};
 /******/ 	})();
 /******/ 	
@@ -128140,7 +128140,10 @@ function MobileDashboardContent() {
   var _useState7 = (0,react.useState)({
       invoices: [],
       expenses: [],
-      payments: []
+      payments: [],
+      pos: [],
+      itemPurchases: [],
+      payroll: []
     }),
     _useState8 = MobileDashboard_slicedToArray(_useState7, 2),
     rawData = _useState8[0],
@@ -128306,7 +128309,7 @@ function MobileDashboardContent() {
   }, [isSuperOrCEO, userName]);
   var canCreate = mod => (0,permissionUtils/* canAccessModule */.jI)(user === null || user === void 0 ? void 0 : user.data, grantAccess, mod, 'create');
 
-  // ONLY fetch executive financial collections (invoices, expenses, payments) for CEO or Superuser!
+  // ONLY fetch executive financial collections (invoices, expenses, payments, pos, itemPurchases, payroll) for CEO or Superuser!
   (0,react.useEffect)(() => {
     if (!isSuperOrCEO) {
       setLoading(false);
@@ -128316,12 +128319,24 @@ function MobileDashboardContent() {
     var fetchDashboardData = /*#__PURE__*/function () {
       var _ref5 = MobileDashboard_asyncToGenerator(function* () {
         try {
-          var _resInvoice$data, _resExpense$data, _resPayment$data;
+          var _resInvoice$data, _resPos$data, _resExpense$data, _resPurchase$data, _resPayroll$data, _resPayment$data;
           var _yield$Promise$all = yield Promise.all([(0,apiCache/* cachedGet */.Fe)("".concat(apiConfig/* ENDPOINT_URL */.m, "/invoice?summary=true")).catch(() => ({
               data: {
                 data: []
               }
+            })), (0,apiCache/* cachedGet */.Fe)("".concat(apiConfig/* ENDPOINT_URL */.m, "/pos?summary=true")).catch(() => ({
+              data: {
+                data: []
+              }
             })), (0,apiCache/* cachedGet */.Fe)("".concat(apiConfig/* ENDPOINT_URL */.m, "/expense?summary=true")).catch(() => ({
+              data: {
+                data: []
+              }
+            })), (0,apiCache/* cachedGet */.Fe)("".concat(apiConfig/* ENDPOINT_URL */.m, "/itemPurchase?summary=true")).catch(() => ({
+              data: {
+                data: []
+              }
+            })), (0,apiCache/* cachedGet */.Fe)("".concat(apiConfig/* ENDPOINT_URL */.m, "/payRoll")).catch(() => ({
               data: {
                 data: []
               }
@@ -128330,21 +128345,33 @@ function MobileDashboardContent() {
                 data: []
               }
             }))]),
-            _yield$Promise$all2 = MobileDashboard_slicedToArray(_yield$Promise$all, 3),
+            _yield$Promise$all2 = MobileDashboard_slicedToArray(_yield$Promise$all, 6),
             resInvoice = _yield$Promise$all2[0],
-            resExpense = _yield$Promise$all2[1],
-            resPayment = _yield$Promise$all2[2];
+            resPos = _yield$Promise$all2[1],
+            resExpense = _yield$Promise$all2[2],
+            resPurchase = _yield$Promise$all2[3],
+            resPayroll = _yield$Promise$all2[4],
+            resPayment = _yield$Promise$all2[5];
           if (!isMounted) return;
           var activeBranch = localStorage.getItem('selectedBranch') || 'HQ';
           var rawInvoices = Array.isArray(resInvoice === null || resInvoice === void 0 || (_resInvoice$data = resInvoice.data) === null || _resInvoice$data === void 0 ? void 0 : _resInvoice$data.data) ? resInvoice.data.data : [];
+          var rawPos = Array.isArray(resPos === null || resPos === void 0 || (_resPos$data = resPos.data) === null || _resPos$data === void 0 ? void 0 : _resPos$data.data) ? resPos.data.data : [];
           var rawExpenses = Array.isArray(resExpense === null || resExpense === void 0 || (_resExpense$data = resExpense.data) === null || _resExpense$data === void 0 ? void 0 : _resExpense$data.data) ? resExpense.data.data : [];
+          var rawPurchases = Array.isArray(resPurchase === null || resPurchase === void 0 || (_resPurchase$data = resPurchase.data) === null || _resPurchase$data === void 0 ? void 0 : _resPurchase$data.data) ? resPurchase.data.data : [];
+          var rawPayroll = Array.isArray(resPayroll === null || resPayroll === void 0 || (_resPayroll$data = resPayroll.data) === null || _resPayroll$data === void 0 ? void 0 : _resPayroll$data.data) ? resPayroll.data.data : [];
           var rawPayments = Array.isArray(resPayment === null || resPayment === void 0 || (_resPayment$data = resPayment.data) === null || _resPayment$data === void 0 ? void 0 : _resPayment$data.data) ? resPayment.data.data : [];
-          var invoices = rawInvoices.filter(inv => !(inv !== null && inv !== void 0 && inv.branch) || activeBranch === 'HQ' || inv.branch === activeBranch);
-          var expenses = rawExpenses.filter(exp => !(exp !== null && exp !== void 0 && exp.branch) || activeBranch === 'HQ' || exp.branch === activeBranch);
-          var payments = rawPayments.filter(p => !(p !== null && p !== void 0 && p.branch) || activeBranch === 'HQ' || p.branch === activeBranch);
+          var invoices = rawInvoices.filter(inv => !(inv !== null && inv !== void 0 && inv.branchId) && !(inv !== null && inv !== void 0 && inv.branch) || activeBranch === 'ALL' || activeBranch === 'HQ' || inv.branchId === activeBranch || inv.branch === activeBranch);
+          var pos = rawPos.filter(p => !(p !== null && p !== void 0 && p.branchId) && !(p !== null && p !== void 0 && p.branch) || activeBranch === 'ALL' || activeBranch === 'HQ' || p.branchId === activeBranch || p.branch === activeBranch);
+          var expenses = rawExpenses.filter(exp => !(exp !== null && exp !== void 0 && exp.branchId) && !(exp !== null && exp !== void 0 && exp.branch) || activeBranch === 'ALL' || activeBranch === 'HQ' || exp.branchId === activeBranch || exp.branch === activeBranch);
+          var itemPurchases = rawPurchases.filter(pur => !(pur !== null && pur !== void 0 && pur.branchId) && !(pur !== null && pur !== void 0 && pur.branch) || activeBranch === 'ALL' || activeBranch === 'HQ' || pur.branchId === activeBranch || pur.branch === activeBranch);
+          var payroll = rawPayroll.filter(pay => !(pay !== null && pay !== void 0 && pay.branchId) && !(pay !== null && pay !== void 0 && pay.branch) || activeBranch === 'ALL' || activeBranch === 'HQ' || pay.branchId === activeBranch || pay.branch === activeBranch);
+          var payments = rawPayments.filter(p => !(p !== null && p !== void 0 && p.branchId) && !(p !== null && p !== void 0 && p.branch) || activeBranch === 'ALL' || activeBranch === 'HQ' || p.branchId === activeBranch || p.branch === activeBranch);
           setRawData({
             invoices,
+            pos,
             expenses,
+            itemPurchases,
+            payroll,
             payments
           });
         } catch (err) {
@@ -128365,27 +128392,101 @@ function MobileDashboardContent() {
   (0,react.useEffect)(() => {
     var isCurrentPeriod = item => {
       var d = parseItemDate(item);
-      if (!d) return true;
+      if (!d) return false;
       if (viewMode === 'monthly') {
         return d.isSame(selectedMonth, 'month') && d.isSame(selectedMonth, 'year');
       }
       return d.isSame(selectedMonth, 'year');
     };
-    var invoices = rawData.invoices.filter(isCurrentPeriod);
-    var expenses = rawData.expenses.filter(isCurrentPeriod);
-    var payments = rawData.payments.filter(isCurrentPeriod);
+    var rateNum = !isNaN(parseFloat(systemRate)) && parseFloat(systemRate) > 0 ? parseFloat(systemRate) : 1;
+
+    // 1. REVENUE (Accrual Basis - Total Invoice Amount + POS Shop Sales)
     var revenue = 0;
+    (rawData.invoices || []).forEach(inv => {
+      if (!inv || !isCurrentPeriod(inv)) return;
+      if (inv.status && ['Draft', 'Decline', 'Void', 'Free of Charge'].includes(inv.status)) return;
+      revenue += parseFloat(inv.totalInvoice || inv.totalAmount || inv.total || 0);
+    });
+    (rawData.pos || []).forEach(p => {
+      if (!p || !isCurrentPeriod(p)) return;
+      var posRate = parseFloat(p.rate) || rateNum;
+      var posTotal = parseFloat(p.totalInvoice || p.TotalAmountPaid || 0);
+      revenue += posTotal / posRate;
+    });
+
+    // 2. EXPENSES (Accrual Operating Expenses = Daily Expenses + Item Purchases + Payroll)
+    var totalDailyExpenses = 0;
+    (rawData.expenses || []).forEach(exp => {
+      if (!exp || !isCurrentPeriod(exp)) return;
+      var expTotal = exp.total !== undefined && exp.total !== null && exp.total !== '' ? parseFloat(exp.total) : exp.rate && exp.amount ? parseFloat(exp.amount) / parseFloat(exp.rate) : parseFloat(exp.amount || 0);
+      totalDailyExpenses += isNaN(expTotal) ? 0 : expTotal;
+    });
+    var totalItemPurchases = 0;
+    (rawData.itemPurchases || []).forEach(pur => {
+      if (!pur || !isCurrentPeriod(pur)) return;
+      var purTotal = parseFloat(pur.totalUSD !== undefined ? pur.totalUSD : pur.total !== undefined ? pur.total : pur.amount || 0);
+      totalItemPurchases += isNaN(purTotal) ? 0 : purTotal;
+    });
+    var totalPayroll = 0;
+    (rawData.payroll || []).forEach(pay => {
+      if (!pay || !isCurrentPeriod(pay)) return;
+      totalPayroll += parseFloat(pay.totalPaidDollars || 0);
+    });
+    var totalExp = totalDailyExpenses + totalItemPurchases + totalPayroll;
+
+    // 3. CASH IN (Applied Payments + POS Cash Collections)
+    var totalCashIn = 0;
+    (rawData.payments || []).forEach(p => {
+      var _p$TotalAmount;
+      if (!p || !isCurrentPeriod(p)) return;
+      if (p.status === 'Voided') return;
+
+      // Business Rule: Advanced Payment (Credit) does not count as Cash In until applied to an invoice
+      var isAdvancedPayment = p.transactionType !== 'POS' && (((_p$TotalAmount = p.TotalAmount) === null || _p$TotalAmount === void 0 ? void 0 : _p$TotalAmount.length) === 0 || !p.TotalAmount) && parseFloat(p.remaining || p.credit || 0) > 0;
+      if (isAdvancedPayment) return false;
+      var appliedTotal = Array.isArray(p.TotalAmount) && p.TotalAmount.length > 0 ? p.TotalAmount.reduce((s, it) => s + parseFloat((it === null || it === void 0 ? void 0 : it.total) || (it === null || it === void 0 ? void 0 : it.amount) || 0), 0) : parseFloat(p.amount || 0);
+      var val = isFinite(appliedTotal) ? appliedTotal : 0;
+      totalCashIn += p.transactionType === 'Refund' ? -val : val;
+    });
+    (rawData.pos || []).forEach(p => {
+      if (!p || !isCurrentPeriod(p)) return;
+      if (String(p.status || '').toLowerCase() !== 'paid') return;
+      var posRate = parseFloat(p.rate) || rateNum;
+      totalCashIn += parseFloat(p.TotalAmountPaid || 0) / posRate;
+    });
+
+    // 4. CASH OUT (Cash Basis = Daily Expenses + Payroll + Paid Item Purchases)
+    var totalPaidPurchases = 0;
+    (rawData.itemPurchases || []).forEach(pur => {
+      if (!pur) return;
+      var hasPayments = (pur.payments || []).length > 0;
+      if (hasPayments) {
+        pur.payments.forEach(pay => {
+          if (!isCurrentPeriod(pay)) return;
+          var pRate = parseFloat(pay.rate || rateNum);
+          var pAmount = parseFloat(pay.totalUSD || parseFloat(pay.amount || 0) + parseFloat(pay.amountFC || 0) / pRate || 0);
+          totalPaidPurchases += isNaN(pAmount) ? 0 : pAmount;
+        });
+      } else if (String(pur.status || '').toUpperCase() === 'PAID') {
+        if (isCurrentPeriod(pur)) {
+          totalPaidPurchases += parseFloat(pur.amount || pur.total || 0);
+        }
+      }
+    });
+    var totalCashOut = totalDailyExpenses + totalPayroll + totalPaidPurchases;
+
+    // 5. RECEIVABLES (Accrual Unpaid Balances)
     var currentRec = 0;
     var overdueRec = 0;
     var now = new Date();
-    invoices.forEach(inv => {
+    (rawData.invoices || []).forEach(inv => {
       if (!inv) return;
-      var total = Number(inv.totalAmount || inv.totalInvoice || inv.total || 0);
-      var paid = Number(inv.paidAmount || inv.total || 0);
-      var balance = total - paid;
-      revenue += total;
-      if (balance > 0) {
-        var dueDate = inv.dueDate ? new Date(inv.dueDate) : null;
+      if (inv.status && ['Draft', 'Decline', 'Void', 'Free of Charge'].includes(inv.status)) return;
+      var invTotal = parseFloat(inv.totalAmount || inv.totalInvoice || inv.total || 0);
+      var invPaid = parseFloat(inv.paidAmount || inv.total || 0);
+      var balance = inv.balanceDue !== undefined && inv.balanceDue !== null ? parseFloat(inv.balanceDue) : invTotal - invPaid;
+      if (balance > 0.01) {
+        var dueDate = inv.dueDate || inv.invoiceDueDate ? new Date(inv.dueDate || inv.invoiceDueDate) : null;
         if (dueDate && !isNaN(dueDate.getTime()) && dueDate < now) {
           overdueRec += balance;
         } else {
@@ -128393,29 +128494,28 @@ function MobileDashboardContent() {
         }
       }
     });
-    var totalExp = 0;
-    expenses.forEach(exp => {
-      if (!exp) return;
-      var expTotal = exp.total !== undefined && exp.total !== null && exp.total !== '' ? Number(exp.total) : exp.rate && exp.amount ? Number(exp.amount) / Number(exp.rate) : Number(exp.amount || 0);
-      totalExp += isNaN(expTotal) ? 0 : expTotal;
+
+    // 6. RECENT INVOICES (Top 5 newest invoices in system by invoiceNumber descending)
+    var sortedInvoices = [...(rawData.invoices || [])].sort((a, b) => {
+      var numA = Number((a === null || a === void 0 ? void 0 : a.invoiceNumber) || 0);
+      var numB = Number((b === null || b === void 0 ? void 0 : b.invoiceNumber) || 0);
+      if (numA && numB && numA !== numB) return numB - numA;
+      var dateA = a !== null && a !== void 0 && a.invoiceDate ? new Date(a.invoiceDate).getTime() : a !== null && a !== void 0 && a.createdAt ? new Date(a.createdAt).getTime() : 0;
+      var dateB = b !== null && b !== void 0 && b.invoiceDate ? new Date(b.invoiceDate).getTime() : b !== null && b !== void 0 && b.createdAt ? new Date(b.createdAt).getTime() : 0;
+      return dateB - dateA;
     });
-    var totalPaid = 0;
-    payments.forEach(p => {
-      if (!p) return;
-      totalPaid += Number(p.amount || p.total || 0);
-    });
-    var recent = invoices.slice(-5).reverse();
+    var recent = sortedInvoices.slice(0, 5);
     setMetrics({
       totalRevenue: revenue,
       totalExpenses: totalExp,
-      currentReceivables: currentRec > 0 ? currentRec : revenue * 0.35,
-      overdueReceivables: overdueRec > 0 ? overdueRec : revenue * 0.15,
-      cashIn: totalPaid > 0 ? totalPaid : revenue * 0.8,
-      cashOut: totalExp,
+      currentReceivables: currentRec,
+      overdueReceivables: overdueRec,
+      cashIn: totalCashIn,
+      cashOut: totalCashOut,
       netIncome: revenue - totalExp,
       recentInvoices: recent
     });
-  }, [rawData, selectedMonth, viewMode]);
+  }, [rawData, selectedMonth, viewMode, systemRate]);
   var _useState17 = (0,react.useState)(false),
     _useState18 = MobileDashboard_slicedToArray(_useState17, 2),
     pickerOpen = _useState18[0],
@@ -129438,18 +129538,33 @@ function MobileDashboardContent() {
         fontWeight: 800,
         color: '#1E293B'
       }
-    }, formatCurrency(amount)), /*#__PURE__*/react.createElement(Chip/* default */.A, {
-      label: "SENT",
-      size: "small",
-      sx: {
-        height: 20,
-        fontSize: '0.65rem',
-        fontWeight: 700,
-        backgroundColor: '#EFF6FF',
-        color: '#2563EB',
-        mt: 0.3
+    }, formatCurrency(amount)), (() => {
+      var st = String(inv.status || 'SENT').toUpperCase();
+      var bg = '#EFF6FF';
+      var col = '#2563EB';
+      if (st === 'PAID') {
+        bg = '#DCFCE7';
+        col = '#16A34A';
+      } else if (st === 'PARTIALLY-PAID' || st === 'PARTIALLY PAID') {
+        bg = '#FEF3C7';
+        col = '#D97706';
+      } else if (st === 'OVERDUE' || st === 'VOID' || st === 'DECLINE') {
+        bg = '#FEE2E2';
+        col = '#DC2626';
       }
-    })));
+      return /*#__PURE__*/react.createElement(Chip/* default */.A, {
+        label: st,
+        size: "small",
+        sx: {
+          height: 20,
+          fontSize: '0.65rem',
+          fontWeight: 700,
+          backgroundColor: bg,
+          color: col,
+          mt: 0.3
+        }
+      });
+    })()));
   }) : /*#__PURE__*/react.createElement(Box/* default */.A, {
     sx: {
       p: 3,

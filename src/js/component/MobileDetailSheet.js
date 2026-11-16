@@ -425,6 +425,10 @@ function MobileDetailSheet({ open, onClose, record, type }) {
   const userRole = user?.data?.role || '';
   const userDepartment = user?.data?.department || '';
   const isSuperUser = userName === 'GG';
+  const canViewCosts = userRole?.toUpperCase() !== 'TECHNICIAN' && 
+                       userRole?.toUpperCase() !== 'TECHNICIEN' && 
+                       userDepartment?.toUpperCase() !== 'TECHNICIAN' && 
+                       userDepartment?.toUpperCase() !== 'TECHNICIEN';
   const isTechnician = userRole?.toUpperCase() === 'TECHNICIAN' || 
                        userRole?.toUpperCase() === 'TECHNICIEN' || 
                        userDepartment?.toUpperCase() === 'TECHNICIAN' || 
@@ -872,17 +876,93 @@ function MobileDetailSheet({ open, onClose, record, type }) {
                     Parts / Items Used ({lineItems.length})
                   </Typography>
                   {lineItems.map((it, idx) => {
-                    const itName = safeText(it?.itemName || it?.description, `Item #${idx + 1}`);
+                    const rawItemName = typeof it?.itemName === 'object' ? it?.itemName?.itemName : it?.itemName;
+                    const rawDesc = it?.itemDescription || it?.description || '';
+                    const isCustomEmpty = !rawItemName || String(rawItemName).trim().toLowerCase() === 'empty';
+
+                    const itName = isCustomEmpty 
+                      ? (rawDesc || `Custom Part #${idx + 1}`) 
+                      : (rawItemName || rawDesc || `Item #${idx + 1}`);
+
+                    const itSubDesc = (!isCustomEmpty && rawDesc && rawDesc !== rawItemName) ? rawDesc : '';
                     const qty = Number(it?.itemQty ?? it?.itemQuantity ?? it?.quantity ?? 1);
+                    const rate = Number(it?.itemRate ?? it?.itemSellingPrice ?? it?.rate ?? it?.price ?? 0);
+                    const lineAmount = Number(it?.itemAmount ?? (qty * rate));
+                    const showPrices = canViewCosts && (type === 'maintenance');
+
                     return (
-                      <Box key={idx} sx={{ py: 1, borderBottom: idx < lineItems.length - 1 ? '1px solid #F1F5F9' : 'none', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <Typography variant="body2" sx={{ fontWeight: 700, color: '#1E293B' }}>
-                          {itName}
-                        </Typography>
-                        <Chip label={`Qty: ${qty}`} size="small" sx={{ backgroundColor: '#EEF2FF', color: '#30368a', fontWeight: 700, height: 22 }} />
+                      <Box key={idx} sx={{ py: 1.2, borderBottom: idx < lineItems.length - 1 ? '1px solid #F1F5F9' : 'none', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <Box sx={{ minWidth: 0, flex: 1, pr: 1.5 }}>
+                          <Typography variant="body2" sx={{ fontWeight: 700, color: '#1E293B' }}>
+                            {itName}
+                          </Typography>
+                          {itSubDesc && (
+                            <Typography variant="caption" sx={{ color: '#64748B', display: 'block' }}>
+                              {itSubDesc}
+                            </Typography>
+                          )}
+                          {showPrices && rate > 0 && (
+                            <Typography variant="caption" sx={{ color: '#30368a', fontWeight: 600, display: 'block', mt: 0.2 }}>
+                              Qty: {qty} × {formatMoney(rate)}
+                            </Typography>
+                          )}
+                        </Box>
+                        <Box sx={{ textAlign: 'right', flexShrink: 0 }}>
+                          {showPrices ? (
+                            <Typography variant="body2" sx={{ fontWeight: 800, color: '#30368a' }}>
+                              {formatMoney(lineAmount)}
+                            </Typography>
+                          ) : (
+                            <Chip label={`Qty: ${qty}`} size="small" sx={{ backgroundColor: '#EEF2FF', color: '#30368a', fontWeight: 700, height: 22 }} />
+                          )}
+                        </Box>
                       </Box>
                     );
                   })}
+                </Card>
+              )}
+
+              {/* Financial Breakdown (For Admins in Maintenance Module) */}
+              {canViewCosts && (type === 'maintenance') && (
+                <Card sx={{ borderRadius: 3.5, p: 2, mb: 2, backgroundColor: '#ffffff', boxShadow: '0 2px 10px rgba(0,0,0,0.04)' }}>
+                  <Typography variant="caption" sx={{ color: '#64748B', fontWeight: 700, textTransform: 'uppercase', mb: 1.5, display: 'block' }}>
+                    Cost & Financial Summary
+                  </Typography>
+                  <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <Typography variant="body2" sx={{ color: '#64748B' }}>Parts Subtotal</Typography>
+                      <Typography variant="body2" sx={{ fontWeight: 700, color: '#1E293B' }}>
+                        {formatMoney(calcLineTotal > 0 ? calcLineTotal : (record?.subTotal || 0))}
+                      </Typography>
+                    </Box>
+                    {Number(record?.adjustmentNumber || record?.laborFees || 0) > 0 && (
+                      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <Typography variant="body2" sx={{ color: '#64748B' }}>
+                          Labor Fees {Number(record?.laborQty || 0) > 1 ? `(${record.laborQty} hrs)` : ''}
+                        </Typography>
+                        <Typography variant="body2" sx={{ fontWeight: 700, color: '#1E293B' }}>
+                          {formatMoney(Number(record?.totalLaborFeesGenerale || record?.adjustmentNumber || record?.laborFees || 0))}
+                        </Typography>
+                      </Box>
+                    )}
+                    {Number(record?.laborDiscount || 0) > 0 && (
+                      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <Typography variant="body2" sx={{ color: '#10B981' }}>
+                          Labor Discount ({record.laborDiscount}%)
+                        </Typography>
+                        <Typography variant="body2" sx={{ fontWeight: 700, color: '#10B981' }}>
+                          -{formatMoney(Number(record?.totalDiscount || 0))}
+                        </Typography>
+                      </Box>
+                    )}
+                    <Divider sx={{ my: 0.5 }} />
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <Typography variant="subtitle2" sx={{ fontWeight: 800, color: '#30368a' }}>Grand Total</Typography>
+                      <Typography variant="h6" sx={{ fontWeight: 800, color: '#30368a' }}>
+                        {formatMoney(Number(record?.totalInvoice || record?.totalAmount || record?.grandTotal || (calcLineTotal + Number(record?.totalLaborFeesGenerale || record?.adjustmentNumber || 0))))}
+                      </Typography>
+                    </Box>
+                  </Box>
                 </Card>
               )}
             </Box>
