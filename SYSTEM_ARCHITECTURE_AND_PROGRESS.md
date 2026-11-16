@@ -5735,6 +5735,46 @@ The standardized `renderStatusBadge` helper was seamlessly integrated into all 1
     - `server/public/downloads/Global Gate Setup.exe`
   - Committed and pushed to GitHub `main` (`commit efa94486`) for automatic cloud deployment to Railway (`api.globalgate.sarl`) and Cloudflare Pages (`portal.globalgate.sarl`).
 
+---
+
+### Rule 84: Cross-Platform Universal Version Synchronization for Android APK, Web Portal & Windows Desktop (Ver 3.6.65)
+- **Requirement & Problem**:
+  - Following the `v3.6.64` release, the Web Portal (`portal.globalgate.sarl`) and Windows Desktop application (.exe) displayed **Version: 3.6.64**, but the Android Mobile Application (`GlobalGate.apk`) displayed **v3.6.63** in the navigation drawer next to Logout after the user downloaded and installed it.
+  - **Root Cause**: During the `v3.6.64` packaging cycle, desktop (`webpack.prod.js`), web portal (`webpack.web.prod.js`), and electron-builder (`make:win`) were compiled, but the Android APK compilation pipeline (`scripts/build-apk.ps1` / Gradle `assembleDebug`) was omitted. Consequently, `server/public/downloads/GlobalGate.apk` remained at `v3.6.63`. In `src/js/component/MobileDrawer.js`, the drawer displays `v{pkg.version}` from `package.json`, which was frozen at `3.6.63` when the APK was previously compiled.
+- **Architectural Implementation**:
+  1. **Strict Multi-Platform Release Rule**:
+     - Whenever a version bump is initiated, ALL client deployment artifacts must be compiled and synchronized in lockstep:
+       - Desktop Webpack: `npx webpack --config webpack.prod.js` -> `dist/build/js/app.js`
+       - Web Portal Webpack: `npx webpack --config webpack.web.prod.js; node scripts/copy-web.js` -> `dist_web/`
+       - Android APK via Gradle: `powershell -ExecutionPolicy Bypass -File scripts/build-apk.ps1` -> `server/public/downloads/GlobalGate.apk` & `GlobalGate-vX.X.X.apk`
+       - Windows Desktop Installer: `npm run make:win` -> `server/public/downloads/Global Gate Setup.exe` & `Global Gate Setup X.X.X.exe`
+  2. **Incremental Version Bump (v3.6.65)**:
+     - Updated version across:
+       - `package.json`: `"version": "3.6.65"`
+       - `server/package.json`: `"version": "3.6.65"`
+       - `server/index.js`: `version: '3.6.65'` (in `/`, `/status`, and `/test` endpoints)
+       - `server/routes/downloadRoutes.js`: `APP_VERSION = '3.6.65'`
+  3. **Android APK Compilation & Mirroring**:
+     - Synced compiled web assets to Capacitor Android (`android/app/src/main/assets/public/`).
+     - Executed Gradle `clean assembleDebug` with `$env:JAVA_HOME` pointing to Android Studio JBR.
+     - Generated and verified `android/app/build/outputs/apk/debug/app-debug.apk` (17.08 MB).
+     - Mirrored binary to:
+       - `server/public/downloads/GlobalGate-v3.6.65.apk`
+       - `server/public/downloads/GlobalGate.apk`
+  4. **Desktop Windows Installer Packaging**:
+     - Packaged NSIS installer via electron-builder: `dist/Global Gate Setup 3.6.65.exe` (99,838,007 bytes / ~99.8 MB).
+     - Mirrored binary to:
+       - `server/public/downloads/Global Gate Setup 3.6.65.exe`
+       - `server/public/downloads/Global Gate Setup.exe`
+     - Removed `dist/win-unpacked` to maintain disk headroom on Drive D.
+- **Universal Multi-Platform Production Artifacts**:
+  - Incremental version bump: **v3.6.65** across all platforms and servers.
+  - Web Portal: Compiled to `dist_web/` with cache-busted assets.
+  - Android APK: `GlobalGate.apk` (17.08 MB) and `GlobalGate-v3.6.65.apk`.
+  - Windows Desktop: `Global Gate Setup.exe` (~99.8 MB) and `Global Gate Setup 3.6.65.exe`.
+  - Ready for GitHub `main` commit and push to trigger automated deployment to Railway (`api.globalgate.sarl`) and Cloudflare Pages (`portal.globalgate.sarl`).
+
+
 
 
 
