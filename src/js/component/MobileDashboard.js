@@ -129,7 +129,7 @@ class DashboardErrorBoundary extends React.Component {
 
 function parseItemDate(item) {
   if (!item) return null;
-  const raw = item.invoiceDate || item.expenseDate || item.paymentDate || item.date || item.dateField || item.createdAt;
+  const raw = item.invoiceDate || item.expenseDate || item.itemPurchaseDate || item.month || item.paymentDate || item.date || item.dateField || item.purchaseDate || item.createdAt;
   if (!raw) return null;
   if (typeof raw === 'string') {
     const trimmed = raw.trim();
@@ -430,7 +430,7 @@ function MobileDashboardContent() {
     const now = new Date();
 
     (rawData.invoices || []).forEach((inv) => {
-      if (!inv) return;
+      if (!inv || !isCurrentPeriod(inv)) return;
       if (inv.status && ['Draft', 'Decline', 'Void', 'Free of Charge'].includes(inv.status)) return;
       const invTotal = parseFloat(inv.totalAmount || inv.totalInvoice || inv.total || 0);
       const invPaid = parseFloat(inv.paidAmount || inv.total || 0);

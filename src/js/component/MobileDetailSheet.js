@@ -891,29 +891,73 @@ function MobileDetailSheet({ open, onClose, record, type }) {
                     const showPrices = canViewCosts && (type === 'maintenance');
 
                     return (
-                      <Box key={idx} sx={{ py: 1.2, borderBottom: idx < lineItems.length - 1 ? '1px solid #F1F5F9' : 'none', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <Box sx={{ minWidth: 0, flex: 1, pr: 1.5 }}>
-                          <Typography variant="body2" sx={{ fontWeight: 700, color: '#1E293B' }}>
-                            {itName}
+                      <Box
+                        key={idx}
+                        sx={{
+                          p: 1.5,
+                          mb: idx < lineItems.length - 1 ? 1.5 : 0,
+                          borderRadius: 2.5,
+                          backgroundColor: '#F8FAFC',
+                          border: '1px solid #E2E8F0',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          gap: 0.8
+                        }}
+                      >
+                        {/* Part Name / Description - Full Width, No Squish */}
+                        <Typography
+                          variant="subtitle2"
+                          sx={{
+                            fontWeight: 800,
+                            color: '#1E293B',
+                            fontSize: '0.92rem',
+                            lineHeight: 1.4,
+                            wordBreak: 'break-word'
+                          }}
+                        >
+                          {itName}
+                        </Typography>
+
+                        {itSubDesc && (
+                          <Typography variant="caption" sx={{ color: '#64748B', display: 'block', mt: -0.2 }}>
+                            {itSubDesc}
                           </Typography>
-                          {itSubDesc && (
-                            <Typography variant="caption" sx={{ color: '#64748B', display: 'block' }}>
-                              {itSubDesc}
-                            </Typography>
-                          )}
-                          {showPrices && rate > 0 && (
-                            <Typography variant="caption" sx={{ color: '#30368a', fontWeight: 600, display: 'block', mt: 0.2 }}>
-                              Qty: {qty} × {formatMoney(rate)}
-                            </Typography>
-                          )}
-                        </Box>
-                        <Box sx={{ textAlign: 'right', flexShrink: 0 }}>
-                          {showPrices ? (
-                            <Typography variant="body2" sx={{ fontWeight: 800, color: '#30368a' }}>
-                              {formatMoney(lineAmount)}
-                            </Typography>
-                          ) : (
-                            <Chip label={`Qty: ${qty}`} size="small" sx={{ backgroundColor: '#EEF2FF', color: '#30368a', fontWeight: 700, height: 22 }} />
+                        )}
+
+                        {/* Metrics Bar */}
+                        <Box
+                          sx={{
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            alignItems: 'center',
+                            pt: 0.75,
+                            borderTop: '1px dashed #E2E8F0',
+                            flexWrap: 'wrap',
+                            gap: 1
+                          }}
+                        >
+                          <Chip
+                            label={`Qty: ${qty}`}
+                            size="small"
+                            sx={{
+                              backgroundColor: '#EEF2FF',
+                              color: '#30368a',
+                              fontWeight: 800,
+                              height: 24,
+                              fontSize: '0.75rem'
+                            }}
+                          />
+                          {showPrices && (
+                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, ml: 'auto' }}>
+                              {rate > 0 && (
+                                <Typography variant="caption" sx={{ color: '#64748B', fontWeight: 600, whiteSpace: 'nowrap' }}>
+                                  Rate: {formatMoney(rate)}
+                                </Typography>
+                              )}
+                              <Typography variant="body2" sx={{ fontWeight: 800, color: '#10B981', fontSize: '0.95rem', whiteSpace: 'nowrap' }}>
+                                {formatMoney(lineAmount)}
+                              </Typography>
+                            </Box>
                           )}
                         </Box>
                       </Box>

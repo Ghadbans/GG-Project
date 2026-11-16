@@ -6399,59 +6399,74 @@ function MobileDetailSheet(_ref) {
       return /*#__PURE__*/react.createElement(Box/* default */.A, {
         key: idx,
         sx: {
-          py: 1.2,
-          borderBottom: idx < lineItems.length - 1 ? '1px solid #F1F5F9' : 'none',
+          p: 1.5,
+          mb: idx < lineItems.length - 1 ? 1.5 : 0,
+          borderRadius: 2.5,
+          backgroundColor: '#F8FAFC',
+          border: '1px solid #E2E8F0',
           display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center'
-        }
-      }, /*#__PURE__*/react.createElement(Box/* default */.A, {
-        sx: {
-          minWidth: 0,
-          flex: 1,
-          pr: 1.5
+          flexDirection: 'column',
+          gap: 0.8
         }
       }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
-        variant: "body2",
+        variant: "subtitle2",
         sx: {
-          fontWeight: 700,
-          color: '#1E293B'
+          fontWeight: 800,
+          color: '#1E293B',
+          fontSize: '0.92rem',
+          lineHeight: 1.4,
+          wordBreak: 'break-word'
         }
       }, itName), itSubDesc && /*#__PURE__*/react.createElement(Typography/* default */.A, {
         variant: "caption",
         sx: {
           color: '#64748B',
-          display: 'block'
-        }
-      }, itSubDesc), showPrices && rate > 0 && /*#__PURE__*/react.createElement(Typography/* default */.A, {
-        variant: "caption",
-        sx: {
-          color: '#30368a',
-          fontWeight: 600,
           display: 'block',
-          mt: 0.2
+          mt: -0.2
         }
-      }, "Qty: ", qty, " \xD7 ", MobileDetailSheet_formatMoney(rate))), /*#__PURE__*/react.createElement(Box/* default */.A, {
+      }, itSubDesc), /*#__PURE__*/react.createElement(Box/* default */.A, {
         sx: {
-          textAlign: 'right',
-          flexShrink: 0
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          pt: 0.75,
+          borderTop: '1px dashed #E2E8F0',
+          flexWrap: 'wrap',
+          gap: 1
         }
-      }, showPrices ? /*#__PURE__*/react.createElement(Typography/* default */.A, {
-        variant: "body2",
-        sx: {
-          fontWeight: 800,
-          color: '#30368a'
-        }
-      }, MobileDetailSheet_formatMoney(lineAmount)) : /*#__PURE__*/react.createElement(Chip/* default */.A, {
+      }, /*#__PURE__*/react.createElement(Chip/* default */.A, {
         label: "Qty: ".concat(qty),
         size: "small",
         sx: {
           backgroundColor: '#EEF2FF',
           color: '#30368a',
-          fontWeight: 700,
-          height: 22
+          fontWeight: 800,
+          height: 24,
+          fontSize: '0.75rem'
         }
-      })));
+      }), showPrices && /*#__PURE__*/react.createElement(Box/* default */.A, {
+        sx: {
+          display: 'flex',
+          alignItems: 'center',
+          gap: 1.5,
+          ml: 'auto'
+        }
+      }, rate > 0 && /*#__PURE__*/react.createElement(Typography/* default */.A, {
+        variant: "caption",
+        sx: {
+          color: '#64748B',
+          fontWeight: 600,
+          whiteSpace: 'nowrap'
+        }
+      }, "Rate: ", MobileDetailSheet_formatMoney(rate)), /*#__PURE__*/react.createElement(Typography/* default */.A, {
+        variant: "body2",
+        sx: {
+          fontWeight: 800,
+          color: '#10B981',
+          fontSize: '0.95rem',
+          whiteSpace: 'nowrap'
+        }
+      }, MobileDetailSheet_formatMoney(lineAmount)))));
     })), canViewCosts && type === 'maintenance' && /*#__PURE__*/react.createElement(Card/* default */.A, {
       sx: {
         borderRadius: 3.5,

@@ -5826,3 +5826,34 @@ The standardized `renderStatusBadge` helper was seamlessly integrated into all 1
    - Web Portal bundle compiled and assets synced to `dist_web/`.
    - Android APK compiled via Gradle and mirrored to `server/public/downloads/GlobalGate-v3.6.66.apk` & `GlobalGate.apk` (17.9 MB).
    - Windows Desktop Installer packaged via electron-builder and mirrored to `server/public/downloads/Global Gate Setup 3.6.66.exe` & `Global Gate Setup.exe` (99.9 MB).
+
+### Rule 87: Mobile Dashboard Period Scoping & Executive Parts Display Cardlet Architecture (Ver 3.6.67)
+
+#### Architectural Background & Motivation
+In **v3.6.66**, two financial calculation discrepancies and a layout squash bug were detected during mobile field testing:
+1. **Total Receivables Discrepancy ($674,595.79 vs Expected $6,799.38 for November 2026)**:
+   - In `MobileDashboard.js`, the receivables calculation iterated through every invoice across all years in the database without applying `isCurrentPeriod(inv)`.
+   - Consequently, lifetime historical receivables ($674,595.79) was rendered in the November 2026 donut chart and summary cards instead of the monthly total ($6,799.38).
+2. **Total Expenses Mismatch on Mobile ($12,617.10 on Mobile vs $20,100.71 on Desktop)**:
+   - On Desktop (`AdminHome.js`), Total Expenses for any selected month is the sum of Daily Expenses + Item Purchases + Payroll ($12,617.10 + $7,483.61 = $20,100.71).
+   - In `MobileDashboard.js`, `parseItemDate(item)` did not check `item.itemPurchaseDate` or `item.month`. Thus, item purchases and payroll failed the `isCurrentPeriod(item)` check and were excluded from monthly accrual expenses and cash out.
+3. **Maintenance Order Parts Display Formatting Bug ("Vertical Single-Word Squash")**:
+   - In `MobileDetailSheet.js`, using a single horizontal flex row (`justifyContent: 'space-between'`) with nested boxes caused the left item text column to squash into a ~40px sliver on narrow mobile screens. Long strings (e.g. `CAPACITOR 243-292UF 250V.AC 50/60HZ`) and `Qty: 1 * $ 12.00` wrapped vertically one word per line.
+
+#### Implementation Details (v3.6.67)
+1. **`src/js/component/MobileDashboard.js`**:
+   - **Enhanced `parseItemDate(item)`**: Added `item.itemPurchaseDate || item.month || item.purchaseDate` to the date field check. This ensures Item Purchases and Payroll are properly parsed by `dayjs` and included in the selected month's expenses ($20,100.71) and Net Income (-$8,486.19).
+   - **Scoped Receivables to Selected Period**: Added `if (!isCurrentPeriod(inv)) return;` inside the receivables calculation loop. Scopes current and overdue receivables strictly to the selected period ($6,799.38 total, $5,254.07 current, $1,545.31 overdue).
+2. **`src/js/component/MobileDetailSheet.js`**:
+   - **Redesigned Parts / Items Used Layout**: Replaced cramped flex row with modern, full-width itemized cardlets (`backgroundColor: '#F8FAFC'`, `border: '1px solid #E2E8F0'`, `borderRadius: 2.5`).
+   - The part name / description has 100% full width across the card with bold typography (`#1E293B`, `fontWeight: 800`) and `wordBreak: 'break-word'`, eliminating any vertical text squashing.
+   - Secondary description rendered as a clean muted subtitle.
+   - Dedicated metrics bar at the bottom with an indigo badge (`Qty: 1`), unit rate (`Rate: $12.00`), and emerald green subtotal (`$12.00`, `fontWeight: 800`).
+   - Strict preservation of **Rule 23**: Technicians see only the item title and quantity badge; prices, rates, and subtotals are visible only to Admins in the maintenance module.
+3. **Multi-Platform Incremental Release (v3.6.67)**:
+   - Version bumped across `package.json`, `server/package.json`, `server/index.js`, and `server/routes/downloadRoutes.js`.
+   - Web Portal bundle compiled via Webpack and synced to `dist_web/` and `build/`.
+   - Desktop Electron bundle compiled via `webpack.prod.js` with 0 errors.
+   - Android APK compiled via Gradle and mirrored to `server/public/downloads/GlobalGate-v3.6.67.apk` & `GlobalGate.apk` (17.9 MB).
+   - Windows Desktop Installer packaged via electron-builder and mirrored to `server/public/downloads/Global Gate Setup 3.6.67.exe` & `Global Gate Setup.exe` (99.9 MB).
+   - Cleaned `dist/win-unpacked` to preserve disk headroom.
