@@ -81388,7 +81388,18 @@ function MessageAdminView(_ref) {
       setBadgeNumber(0);
       return;
     }
-    var socket = (0,esm.io)("".concat(apiConfig/* API_BASE_URL */.J));
+    var socket = (0,esm.io)("".concat(apiConfig/* API_BASE_URL */.J), {
+      auth: {
+        token: localStorage.getItem('token') || ''
+      },
+      reconnection: true,
+      reconnectionAttempts: 3,
+      timeout: 5000,
+      transports: ['websocket']
+    });
+    socket.on('connect_error', () => {
+      socket.disconnect();
+    });
     socket.on('newMessage', newMessage => {
       setMessageInfo(prev => [newMessage, ...prev]);
       setBadgeNumber(prev => prev + 1);
@@ -81405,6 +81416,8 @@ function MessageAdminView(_ref) {
     });
     return () => {
       socket.off('newMessage');
+      socket.off('connect_error');
+      socket.disconnect();
     };
   }, [canViewMessage, badgeNumber]);
   var _useState15 = (0,react.useState)(false),
@@ -82132,6 +82145,9 @@ function NotificationVIewInfo() {
     }
     // Limit reconnection attempts to stop 30-second "Not Found" spam on Railway
     var socket = (0,socket_io_client__WEBPACK_IMPORTED_MODULE_11__.io)("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_15__/* .API_BASE_URL */ .J), {
+      auth: {
+        token: localStorage.getItem('token') || ''
+      },
       reconnection: true,
       reconnectionAttempts: 3,
       timeout: 5000,
@@ -94582,6 +94598,8 @@ var userSlice = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_0__/* .createSlice 
       };
       state.loading = true;
       try {
+        localStorage.removeItem('user');
+        localStorage.removeItem('token');
         localStorage.removeItem('currentUserName');
       } catch (e) {}
     }
@@ -94821,9 +94839,10 @@ function useLayoutConfig() {
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   Fe: () => (/* binding */ cachedGet),
-/* harmony export */   gm: () => (/* binding */ invalidateCache)
+/* harmony export */   gm: () => (/* binding */ invalidateCache),
+/* harmony export */   pc: () => (/* binding */ clearAllCache)
 /* harmony export */ });
-/* unused harmony exports clearAllCache, getCacheStats */
+/* unused harmony export getCacheStats */
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(99380);
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -123444,7 +123463,7 @@ Object.assign(esm_lookup, {
 (module) {
 
 "use strict";
-module.exports = {"rE":"3.6.69"};
+module.exports = {"rE":"3.7.0"};
 
 /***/ },
 
@@ -123576,7 +123595,7 @@ module.exports = /*#__PURE__*/JSON.parse('{"--header-logo-width":"240px","--glob
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames based on template
-/******/ 			return "" + chunkId + "." + {"100":"aa63db6838f5d1a5faf7","116":"47fa8762f753762d291d","118":"67282ee0f46830583293","223":"11c50fcf642acaf01578","296":"f29e824f38522a627939","302":"3b51e5ea3fefb90347e1","327":"c88df084641bfac45cdc","441":"8b8b0c21d0b0ba268348","457":"02ec9c105b957dbbd9db","483":"6fdf7d28f4a344461077","590":"28953f61605420ae99a4","614":"aa1a4baa485591a45a5d","712":"c343443ce7a1887d14b2","742":"3c7280819fde965ae055","778":"f8950b7fd584414ccde4","806":"8e0576a7a73fa4ee016d","808":"d395eb1e252309375036","864":"ac9193b4bf40eb4964a0","885":"cc8a4df32b65323e1a80","956":"1824448f5e358187a171","1019":"1d406482e04e60bb652f","1096":"cb8119cdaa351f0e4cf8","1168":"b2f690e1d5399977dcaf","1195":"26dc0cc62d5d30b559ea","1223":"7aa1f69e403b594d5336","1251":"9da50dc8470bc764d3b6","1364":"fdfc76afc243ce14e56a","1390":"a28f1a9c7193c75a2232","1500":"5a4f44c7307068ea961b","1624":"1e1d88c032094f247d47","1645":"f52c40a0aff2f2ced9fe","1679":"6fad6afa1ba97ccbdd34","1722":"5aacfbdbf20395aae3a9","1853":"d87ffdbd183011dc2319","1861":"b7634fa92c4aa00d7ec7","1919":"02ba73fbcb08f6b43e75","1985":"c372e67729f897b94140","2120":"260136f37f71dde36ba1","2122":"89773bbe7a6bb157934a","2153":"dfaa809d81b011fe402a","2400":"a9b22dd012a855732973","2410":"274a86779d6085bf4ca3","2495":"76a26795d4033aa439a4","2517":"956f7558989fb2a45d33","2529":"4184ea0b2e089c7b1cb8","2533":"19eb2da5d7015e61eb3c","2605":"6da45bf0a374acc6b637","2608":"a86e0ce81d9f46c9b9e6","2611":"21b2cd175be9359600da","2756":"2e4d9a6b9a21c6a4e68d","2757":"68776b517befffb1bc05","2778":"cdd44eceb38686d06a9b","2821":"d40aee3e8cd86fb5bbff","2835":"cb586f1aed058e586821","2982":"50cb8e5b42cad8be4068","2992":"e2ce4fd5d1911fd7a1db","3009":"567b00944880ad958271","3058":"2d07788923183328bab1","3094":"9608277b9f1b21b145b5","3229":"f61da12dafbdb6c066d3","3426":"6243f43fc911e7c95f41","3502":"38861f26dae3c79e1f31","3547":"1e2de2721983f1041975","3697":"28cee7f495153986eb4d","3741":"37d03a8a510f8bda1f4a","3808":"b2300a689225acc6a8b7","3970":"396fecaabf382a5f1a39","3976":"c6c4d900d8043e884ea2","4001":"46e65a3580442b90df56","4006":"fca8e7aa1bfbea49786a","4107":"78bb8e93491e33a3e285","4184":"7b249b747702470ec69b","4237":"ae9e77c6d4f5a70c297a","4270":"51543c81ece53ce931fa","4444":"b7c9020fe2df877250d5","4783":"f419a9163eb350212f2e","5059":"0c82fc8853d0143df171","5117":"2eb054ea4f2bc653fb1e","5194":"d116fb1164b0c3887dc1","5391":"a5b5756f1c98448334c2","5394":"ad4202a3fd9200a1970a","5646":"6a57c318facfce5b2863","5669":"7dd77c65e44c3dc05cd9","5754":"8e63db711cee747f1391","5824":"00be3ef2515b3d5a318a","5881":"1b229fbf1b0bff87b387","5910":"0aa1b84089d2b2145046","5919":"2ebbeceef8b03aefddce","5934":"2c8f6180504c7442626c","6155":"25803bf72f57df4b3658","6226":"74b7c7db0abf1a090d6c","6619":"da19331cff7f3dfae6d4","6671":"2e719458442168f6397a","6685":"1ef5575a72b652f74b7d","6725":"a646dcc64b6e6c9d3c0c","6744":"c01d52eb99441e4e3afa","7120":"fbec0e4401c2f3946a30","7171":"918e19a0ed17fcdfa115","7269":"1013f38f7f1116bbdbb2","7270":"aef71d036742a212ea6b","7384":"78a1f59ffc7924fc8f70","7405":"53dd5e5077e4f953ad70","7444":"b53c12d6ba889fd7ff49","7445":"9db57fcdb13eaf1acf9a","7539":"a814c7e2536f3a2ded57","7592":"b2cbea05232b51c85f6d","7612":"16ec27e931aa4bc3bb94","7645":"8d59712268ea3994cd6e","7757":"107a5a4b8116d5d6f3a3","7801":"31435af205e48581d2b3","7897":"4954d9a47d68f2a2b7f6","7941":"bcfca37d69249c324194","7997":"2e21126ab3301ab4a2fa","8011":"6e467f8105662710240b","8017":"cc1a3f74e55f56cc9fd6","8027":"697b9c2fe3ecff9f4978","8060":"86eaded4526b7845d179","8117":"25756ad53d0d4449d1f8","8282":"65d85f7cb5c9b37e0642","8354":"176023e85ee8d67dc8c1","8442":"4dc34606f2dc199c6158","8520":"bd678456cc879023807e","8646":"9051fd6297c5d3d0292e","8685":"2e4858ba3af14fde840a","8838":"43934310530795354dca","8849":"7aa8da37935a32e20a20","8970":"110c16bdc91946671e41","8979":"4805158afa23d0486340","9220":"861c86c07129ab78a89d","9246":"b46d76330431170b4b44","9250":"739e41027b099328904d","9260":"ebf3b7b938e195a708ee","9419":"453c1d55c1c2d750b7c1","9528":"4dd9c43eb666c40b578c","9564":"746623511c55650ec60b","9573":"1f0c590b03fb2f747473","9575":"e9bf1fcbb360227bdd13","9670":"012e43f63f6fefe161c8","9762":"2b4c7cd7446953ac1c72","9773":"0c8893376429c1d01d90","9846":"305acfa47d491e196677","9971":"b8cd2845d2a3543a5e11"}[chunkId] + ".app.js";
+/******/ 			return "" + chunkId + "." + {"100":"aa63db6838f5d1a5faf7","116":"47fa8762f753762d291d","118":"67282ee0f46830583293","223":"11c50fcf642acaf01578","296":"f29e824f38522a627939","302":"3b51e5ea3fefb90347e1","327":"c88df084641bfac45cdc","441":"8b8b0c21d0b0ba268348","457":"02ec9c105b957dbbd9db","483":"6fdf7d28f4a344461077","590":"28953f61605420ae99a4","614":"aa1a4baa485591a45a5d","712":"c343443ce7a1887d14b2","742":"3c7280819fde965ae055","778":"f8950b7fd584414ccde4","806":"da0d5537a0ce2d9902c5","808":"d395eb1e252309375036","864":"ac9193b4bf40eb4964a0","885":"cc8a4df32b65323e1a80","956":"1824448f5e358187a171","1019":"1d406482e04e60bb652f","1096":"cb8119cdaa351f0e4cf8","1168":"b2f690e1d5399977dcaf","1195":"4e320567bf4b2f2e2ce2","1223":"7aa1f69e403b594d5336","1251":"9da50dc8470bc764d3b6","1364":"fdfc76afc243ce14e56a","1390":"a28f1a9c7193c75a2232","1500":"5a4f44c7307068ea961b","1624":"1e1d88c032094f247d47","1645":"91425e2d595129e29cca","1679":"6fad6afa1ba97ccbdd34","1722":"5aacfbdbf20395aae3a9","1853":"d87ffdbd183011dc2319","1861":"b7634fa92c4aa00d7ec7","1919":"02ba73fbcb08f6b43e75","1985":"c372e67729f897b94140","2120":"260136f37f71dde36ba1","2122":"89773bbe7a6bb157934a","2153":"dfaa809d81b011fe402a","2400":"a9b22dd012a855732973","2410":"4cafc6ed1377bd0877a8","2495":"76a26795d4033aa439a4","2517":"956f7558989fb2a45d33","2529":"4184ea0b2e089c7b1cb8","2533":"19eb2da5d7015e61eb3c","2605":"6da45bf0a374acc6b637","2608":"a86e0ce81d9f46c9b9e6","2611":"21b2cd175be9359600da","2756":"2e4d9a6b9a21c6a4e68d","2757":"68776b517befffb1bc05","2778":"cdd44eceb38686d06a9b","2821":"d40aee3e8cd86fb5bbff","2835":"cb586f1aed058e586821","2982":"50cb8e5b42cad8be4068","2992":"e2ce4fd5d1911fd7a1db","3009":"567b00944880ad958271","3058":"8731c40b91fb7e88e761","3094":"9608277b9f1b21b145b5","3229":"f61da12dafbdb6c066d3","3426":"6243f43fc911e7c95f41","3502":"38861f26dae3c79e1f31","3547":"1e2de2721983f1041975","3697":"28cee7f495153986eb4d","3741":"37d03a8a510f8bda1f4a","3808":"136bd52e344be0b35997","3970":"396fecaabf382a5f1a39","3976":"c6c4d900d8043e884ea2","4001":"46e65a3580442b90df56","4006":"fca8e7aa1bfbea49786a","4107":"78bb8e93491e33a3e285","4184":"7b249b747702470ec69b","4237":"ae9e77c6d4f5a70c297a","4270":"8a1f4d5a2122aa062681","4444":"c82ca57a4e743e20a326","4783":"f419a9163eb350212f2e","5059":"0c82fc8853d0143df171","5117":"2eb054ea4f2bc653fb1e","5194":"d116fb1164b0c3887dc1","5391":"e988f4900e7424bc4682","5394":"a0a7cb02ad75cdae6762","5646":"6a57c318facfce5b2863","5669":"7dd77c65e44c3dc05cd9","5754":"8e63db711cee747f1391","5824":"00be3ef2515b3d5a318a","5881":"1b229fbf1b0bff87b387","5910":"0aa1b84089d2b2145046","5919":"2ebbeceef8b03aefddce","5934":"2c8f6180504c7442626c","6155":"25803bf72f57df4b3658","6226":"74b7c7db0abf1a090d6c","6619":"da19331cff7f3dfae6d4","6671":"08024645a54e509e6ab8","6685":"1ef5575a72b652f74b7d","6725":"a646dcc64b6e6c9d3c0c","6744":"c01d52eb99441e4e3afa","7120":"fbec0e4401c2f3946a30","7171":"918e19a0ed17fcdfa115","7269":"1013f38f7f1116bbdbb2","7270":"aef71d036742a212ea6b","7384":"78a1f59ffc7924fc8f70","7405":"53dd5e5077e4f953ad70","7444":"b53c12d6ba889fd7ff49","7445":"8abb73a89b2923f90e9e","7539":"a814c7e2536f3a2ded57","7592":"b2cbea05232b51c85f6d","7612":"93854a3af389527677ee","7645":"8d59712268ea3994cd6e","7757":"a975138d681a2a9b3a0c","7801":"31435af205e48581d2b3","7897":"a38b6def5b5e496d5051","7941":"bcfca37d69249c324194","7997":"2e21126ab3301ab4a2fa","8011":"6e467f8105662710240b","8017":"cc1a3f74e55f56cc9fd6","8027":"697b9c2fe3ecff9f4978","8060":"4aa5b748815f03e5410c","8117":"25756ad53d0d4449d1f8","8282":"65d85f7cb5c9b37e0642","8354":"176023e85ee8d67dc8c1","8442":"4dc34606f2dc199c6158","8520":"bd678456cc879023807e","8646":"9051fd6297c5d3d0292e","8685":"2e4858ba3af14fde840a","8838":"43934310530795354dca","8849":"7aa8da37935a32e20a20","8970":"110c16bdc91946671e41","8979":"4805158afa23d0486340","9220":"861c86c07129ab78a89d","9246":"b46d76330431170b4b44","9250":"739e41027b099328904d","9260":"ebf3b7b938e195a708ee","9419":"28f8dff176ca425ca595","9528":"4dd9c43eb666c40b578c","9564":"746623511c55650ec60b","9573":"68b312b970dd10a49f39","9575":"e9bf1fcbb360227bdd13","9670":"012e43f63f6fefe161c8","9762":"2b4c7cd7446953ac1c72","9773":"2279481f7cc6a7e19ef6","9846":"305acfa47d491e196677","9971":"b8cd2845d2a3543a5e11"}[chunkId] + ".app.js";
 /******/ 		};
 /******/ 	})();
 /******/ 	
@@ -127119,6 +127138,9 @@ function Loginadmin() {
           employeeName,
           password
         }).unwrap();
+        if (userData && userData.token) {
+          localStorage.setItem('token', userData.token);
+        }
         yield new Promise(resolve => setTimeout(resolve, 500));
         var user = jwtDecode(userData.token);
         setTempUserData({
@@ -127166,11 +127188,13 @@ function Loginadmin() {
                 setAvailableBranches(myBranches);
                 setSelectedBranch(myBranches[0].branchId);
               } else {
+                localStorage.removeItem('token');
                 setIsErrorLoading(true);
                 setErrorMsg('Your account has not been assigned to any branch. Please contact your administrator.');
                 return;
               }
             } else {
+              localStorage.removeItem('token');
               setIsErrorLoading(true);
               setErrorMsg('Your account has not been assigned to any branch. Please contact your administrator.');
               return;
@@ -127476,6 +127500,9 @@ function Loginemployee() {
           employeeName,
           password
         }).unwrap();
+        if (userData && userData.token) {
+          localStorage.setItem('token', userData.token);
+        }
         yield new Promise(resolve => setTimeout(resolve, 500));
         var user = jwtDecode(userData.token);
         setTempUserData({
@@ -127511,11 +127538,13 @@ function Loginemployee() {
                 setAvailableBranches(myBranches);
                 setSelectedBranch(myBranches[0].branchId);
               } else {
+                localStorage.removeItem('token');
                 setIsErrorLoading(true);
                 setErrorMsg('Your account has not been assigned to any branch. Please contact your administrator.');
                 return;
               }
             } else {
+              localStorage.removeItem('token');
               setIsErrorLoading(true);
               setErrorMsg('Your account has not been assigned to any branch. Please contact your administrator.');
               return;
@@ -138088,6 +138117,20 @@ function RequireAuth_arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 
+
+function isStoredTokenValid() {
+  try {
+    var token = localStorage.getItem("token");
+    if (!token) return false;
+    var decoded = jwtDecode(token);
+    if (decoded && typeof decoded.exp === "number") {
+      return decoded.exp * 1000 > Date.now();
+    }
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
 var RequireAuth = () => {
   var _user$data, _user$data2, _user$data3, _user$data4;
   var user = (0,react_redux_es/* useSelector */.d4)(authSlice/* selectCurrentUser */.xu);
@@ -138108,8 +138151,19 @@ var RequireAuth = () => {
   var reduxUserName = (user === null || user === void 0 || (_user$data = user.data) === null || _user$data === void 0 ? void 0 : _user$data.userName) || "";
   var reduxUserRole = (user === null || user === void 0 || (_user$data2 = user.data) === null || _user$data2 === void 0 ? void 0 : _user$data2.role) || "";
   var reduxUserId = (user === null || user === void 0 || (_user$data3 = user.data) === null || _user$data3 === void 0 ? void 0 : _user$data3.id) || (user === null || user === void 0 || (_user$data4 = user.data) === null || _user$data4 === void 0 ? void 0 : _user$data4._id) || "";
+  var validToken = isStoredTokenValid();
   (0,react.useEffect)(() => {
     var isMounted = true;
+    if (!validToken) {
+      try {
+        localStorage.removeItem("user");
+        localStorage.removeItem("token");
+        localStorage.removeItem("currentUserName");
+      } catch (_) {}
+      dispatch((0,authSlice/* logOut */.je)());
+      if (isMounted) setChecking(false);
+      return;
+    }
     var checkPermissions = /*#__PURE__*/function () {
       var _ref = RequireAuth_asyncToGenerator(function* () {
         var currentId = reduxUserId;
@@ -138189,16 +138243,16 @@ var RequireAuth = () => {
     return () => {
       isMounted = false;
     };
-  }, [reduxUserId, reduxUserName, reduxUserRole, dispatch]);
+  }, [reduxUserId, reduxUserName, reduxUserRole, validToken, dispatch]);
   var effectiveUser = (reduxUserName ? user === null || user === void 0 ? void 0 : user.data : resolvedUser) || {};
   var effectiveUserName = (effectiveUser === null || effectiveUser === void 0 ? void 0 : effectiveUser.userName) || "";
   var effectiveUserRole = (effectiveUser === null || effectiveUser === void 0 ? void 0 : effectiveUser.role) || "";
   var storedUserId = localStorage.getItem("user");
 
-  // Authentication check: if no user session at all, redirect to login
-  if (!effectiveUserName && !storedUserId && !reduxUserId) {
+  // Authentication check: if no valid JWT token or no user session at all, redirect to login
+  if (!validToken || !effectiveUserName && !storedUserId && !reduxUserId) {
     return /*#__PURE__*/react.createElement(react_router_dist/* Navigate */.C5, {
-      to: "/",
+      to: "/Loginadmin",
       state: {
         from: location
       },
@@ -140317,10 +140371,24 @@ var store = (0,redux_toolkit_esm/* configureStore */.U1)({
 
 
 
-// --- Axios Request Interceptor for Branch Prefixing ---
+
+
+var isHandling401 = false;
+
+// --- Axios Request Interceptor for JWT Token Attachment & Branch Prefixing ---
 axios/* default */.A.interceptors.request.use(config => {
   var selectedBranch = localStorage.getItem('selectedBranch') || 'ALL';
   var url = config.url || '';
+
+  // 1. Automatically attach JWT Bearer token to outbound API requests (v3.7.0)
+  var token = localStorage.getItem('token');
+  var isLocalAgentDaemon = url.includes('127.0.0.1:5055') || url.includes(':5055');
+  if (token && !isLocalAgentDaemon) {
+    config.headers = config.headers || {};
+    if (!config.headers.Authorization && !config.headers.authorization) {
+      config.headers.Authorization = "Bearer ".concat(token);
+    }
+  }
   if (selectedBranch && selectedBranch !== 'ALL') {
     var bypassEndpoints = ['/create-notification', '/login', '/grantAccess', '/companyProfile', '/employeeuser', '/rename-branch', '/transfer-item', '/expensesCategory', '/itemTransferHistory', '127.0.0.1', ':5055', '/status'];
     var shouldBypass = bypassEndpoints.some(endpoint => url.includes(endpoint));
@@ -140421,7 +140489,43 @@ axios/* default */.A.interceptors.response.use(response => {
     }
   }
   return response;
-}, error => Promise.reject(error));
+}, error => {
+  var _error$response;
+  // --- Global 401 Token-Expiry / Invalid Session Interceptor (v3.7.0) ---
+  if ((error === null || error === void 0 || (_error$response = error.response) === null || _error$response === void 0 ? void 0 : _error$response.status) === 401) {
+    var _error$config;
+    var reqUrl = String((error === null || error === void 0 || (_error$config = error.config) === null || _error$config === void 0 ? void 0 : _error$config.url) || '').toLowerCase();
+    var isAuthAttempt = reqUrl.includes('/auth/login') || reqUrl.includes('/auth/passwordreset') || reqUrl.includes('/auth/requestpasswordreset') || reqUrl.includes('/auth/logout');
+    var currentHash = (typeof window !== 'undefined' && window.location ? window.location.hash : '') || '';
+    var isAlreadyOnLoginScreen = currentHash === '' || currentHash === '#' || currentHash === '#/' || /^#\/login/i.test(currentHash);
+    if (!isAuthAttempt && !isAlreadyOnLoginScreen && !isHandling401) {
+      isHandling401 = true;
+      try {
+        localStorage.removeItem('user');
+        localStorage.removeItem('token');
+        localStorage.removeItem('currentUserName');
+      } catch (_) {}
+      try {
+        ;(0,apiCache/* clearAllCache */.pc)();
+      } catch (_) {}
+      try {
+        store.dispatch((0,authSlice/* logOut */.je)());
+      } catch (_) {}
+      try {
+        react_toastify_esm/* toast */.oR.info('Your session has expired. Please log in again.', {
+          toastId: 'session-expired-401'
+        });
+      } catch (_) {}
+      if (typeof window !== 'undefined' && window.location) {
+        window.location.hash = '#/Loginadmin';
+      }
+      setTimeout(() => {
+        isHandling401 = false;
+      }, 3000);
+    }
+  }
+  return Promise.reject(error);
+});
 
 // Self-healing page interaction lock & keyboard focus watcher
 if (typeof window !== 'undefined') {

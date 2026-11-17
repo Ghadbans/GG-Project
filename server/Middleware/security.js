@@ -132,7 +132,18 @@ const corsOptions = {
     return callback(null, false); // no CORS headers => browser blocks; no crash, no 500
   },
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS', 'HEAD'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'X-Admin-Setup-Key'],
+  allowedHeaders: [
+    'Content-Type',
+    'Authorization',
+    'X-Requested-With',
+    'Accept',
+    'X-Admin-Setup-Key',
+    'X-Lock-User',
+    'X-System-Bypass',
+    'X-User-Id',
+    'X-User-Name',
+    'X-Origin-Verify'
+  ],
   maxAge: 600
 };
 
@@ -164,13 +175,15 @@ function bodyParsers(express) {
 const sanitizeNoSql = mongoSanitize({ allowDots: true, replaceWith: '_' });
 
 const MAX_QUERY_STRING = 200;
+const MAX_TOKEN_QUERY_STRING = 2048;
 function clampQuery(req, res, next) {
   const q = req.query;
   if (q && typeof q === 'object') {
     for (const key of Object.keys(q)) {
       const v = q[key];
-      if (typeof v === 'string' && v.length > MAX_QUERY_STRING) {
-        q[key] = v.slice(0, MAX_QUERY_STRING);
+      const maxLen = key === 'token' ? MAX_TOKEN_QUERY_STRING : MAX_QUERY_STRING;
+      if (typeof v === 'string' && v.length > maxLen) {
+        q[key] = v.slice(0, maxLen);
       }
     }
   }

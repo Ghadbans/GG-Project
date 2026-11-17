@@ -152,9 +152,17 @@ export default function DocumentAttachmentsModal({
     }
   };
 
+  const getAttachmentFileUrl = (attId, download = false) => {
+    const authToken = typeof localStorage !== 'undefined' ? (localStorage.getItem('token') || '') : '';
+    const params = [];
+    if (download) params.push('download=true');
+    if (authToken) params.push(`token=${encodeURIComponent(authToken)}`);
+    return `${ENDPOINT_URL}/attachment-file/${attId}${params.length ? `?${params.join('&')}` : ''}`;
+  };
+
   // Direct print handler for item
   const handleDirectPrint = (att) => {
-    const fileUrl = `${ENDPOINT_URL}/attachment-file/${att._id}`;
+    const fileUrl = getAttachmentFileUrl(att._id, false);
     const contentType = (att.contentType || '').toLowerCase();
     const isPdf = contentType.includes('pdf') || (att.fileName || '').toLowerCase().endsWith('.pdf');
 
@@ -192,7 +200,7 @@ export default function DocumentAttachmentsModal({
 
   // Direct download handler
   const handleDownload = (att) => {
-    const downloadUrl = `${ENDPOINT_URL}/attachment-file/${att._id}?download=true`;
+    const downloadUrl = getAttachmentFileUrl(att._id, true);
     const link = document.createElement('a');
     link.href = downloadUrl;
     link.download = att.fileName;
@@ -353,7 +361,7 @@ export default function DocumentAttachmentsModal({
                           >
                             {isImage ? (
                               <img
-                                src={`${ENDPOINT_URL}/attachment-file/${att._id}`}
+                                src={getAttachmentFileUrl(att._id, false)}
                                 alt={att.fileName}
                                 style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                                 onError={(e) => {

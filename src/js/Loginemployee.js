@@ -43,6 +43,9 @@ function Loginemployee() {
 		try {
 			setIsLoading(true);
 			const userData = await login({ employeeName, password }).unwrap()
+			if (userData && userData.token) {
+				localStorage.setItem('token', userData.token);
+			}
 			await new Promise((resolve) => setTimeout(resolve, 500));
 			const user = jwtDecode(userData.token);
 			setTempUserData({ user, userData });
@@ -73,11 +76,13 @@ function Loginemployee() {
 							setAvailableBranches(myBranches);
 							setSelectedBranch(myBranches[0].branchId);
 						} else {
+							localStorage.removeItem('token');
 							setIsErrorLoading(true);
 							setErrorMsg('Your account has not been assigned to any branch. Please contact your administrator.');
 							return;
 						}
 					} else {
+						localStorage.removeItem('token');
 						setIsErrorLoading(true);
 						setErrorMsg('Your account has not been assigned to any branch. Please contact your administrator.');
 						return;

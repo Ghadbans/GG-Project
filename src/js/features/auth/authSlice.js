@@ -30,7 +30,11 @@ const userSlice = createSlice({
                 selectedBranch: null
             };
             state.loading = true;
-            try { localStorage.removeItem('currentUserName'); } catch (e) {}
+            try {
+                localStorage.removeItem('user');
+                localStorage.removeItem('token');
+                localStorage.removeItem('currentUserName');
+            } catch (e) {}
         }
     },
 })

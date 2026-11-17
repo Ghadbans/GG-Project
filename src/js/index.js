@@ -4,11 +4,26 @@ import App from './App'
 import { Provider } from "react-redux";
 import { store } from "./app/store";
 import axios from 'axios';
+import { logOut } from './features/auth/authSlice';
+import { clearAllCache } from './utils/apiCache';
+import { toast } from 'react-toastify';
 
-// --- Axios Request Interceptor for Branch Prefixing ---
+let isHandling401 = false;
+
+// --- Axios Request Interceptor for JWT Token Attachment & Branch Prefixing ---
 axios.interceptors.request.use((config) => {
   const selectedBranch = localStorage.getItem('selectedBranch') || 'ALL';
   const url = config.url || '';
+
+  // 1. Automatically attach JWT Bearer token to outbound API requests (v3.7.0)
+  const token = localStorage.getItem('token');
+  const isLocalAgentDaemon = url.includes('127.0.0.1:5055') || url.includes(':5055');
+  if (token && !isLocalAgentDaemon) {
+    config.headers = config.headers || {};
+    if (!config.headers.Authorization && !config.headers.authorization) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+  }
   
   if (selectedBranch && selectedBranch !== 'ALL') {
     const bypassEndpoints = ['/create-notification', '/login', '/grantAccess', '/companyProfile', '/employeeuser', '/rename-branch', '/transfer-item', '/expensesCategory', '/itemTransferHistory', '127.0.0.1', ':5055', '/status'];
@@ -106,7 +121,48 @@ axios.interceptors.response.use((response) => {
     }
   }
   return response;
-}, (error) => Promise.reject(error));
+}, (error) => {
+  // --- Global 401 Token-Expiry / Invalid Session Interceptor (v3.7.0) ---
+  if (error?.response?.status === 401) {
+    const reqUrl = String(error?.config?.url || '').toLowerCase();
+    const isAuthAttempt =
+      reqUrl.includes('/auth/login') ||
+      reqUrl.includes('/auth/passwordreset') ||
+      reqUrl.includes('/auth/requestpasswordreset') ||
+      reqUrl.includes('/auth/logout');
+    const currentHash = (typeof window !== 'undefined' && window.location ? window.location.hash : '') || '';
+    const isAlreadyOnLoginScreen =
+      currentHash === '' ||
+      currentHash === '#' ||
+      currentHash === '#/' ||
+      /^#\/login/i.test(currentHash);
+
+    if (!isAuthAttempt && !isAlreadyOnLoginScreen && !isHandling401) {
+      isHandling401 = true;
+      try {
+        localStorage.removeItem('user');
+        localStorage.removeItem('token');
+        localStorage.removeItem('currentUserName');
+      } catch (_) {}
+      try {
+        clearAllCache();
+      } catch (_) {}
+      try {
+        store.dispatch(logOut());
+      } catch (_) {}
+      try {
+        toast.info('Your session has expired. Please log in again.', { toastId: 'session-expired-401' });
+      } catch (_) {}
+      if (typeof window !== 'undefined' && window.location) {
+        window.location.hash = '#/Loginadmin';
+      }
+      setTimeout(() => {
+        isHandling401 = false;
+      }, 3000);
+    }
+  }
+  return Promise.reject(error);
+});
 
 // Self-healing page interaction lock & keyboard focus watcher
 if (typeof window !== 'undefined') {

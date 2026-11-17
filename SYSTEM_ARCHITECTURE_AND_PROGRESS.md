@@ -5941,3 +5941,35 @@ To safeguard the distributed multi-platform architecture (Node.js/Express backen
    - Android APK compiled via Gradle and copied to `server/public/downloads/GlobalGate-v3.6.69.apk` & `GlobalGate.apk` (17.11 MB).
    - Windows Desktop Installer packaged via electron-builder and synced to `server/public/downloads/Global Gate Setup 3.6.69.exe` & `Global Gate Setup.exe` (99.99 MB).
    - Cleaned `dist/win-unpacked` to preserve disk headroom.
+
+
+### Rule 90: Full JWT Authentication Enforcement & Session Lifecycle Architecture (Ver 3.7.0)
+
+#### Architectural Background & Motivation
+Following the defensive infrastructure hardening in **v3.6.69**, **v3.7.0** completes end-to-end **JWT Authentication Enforcement** across the Railway API backend, Cloudflare Pages web portal, Electron Windows desktop client, and Capacitor Android APK:
+1. **Server-Side JWT Enforcement (`authenticate` Middleware)**:
+   - Previously, `authenticate` was imported in route files but not mounted, leaving `/endpoint/*` and `/api/*` data endpoints accessible without a token.
+   - Now mounted globally across `/endpoint/*`, `/api/*`, and `POST /auth/register`, requiring a valid signed JWT (`Authorization: Bearer <token>` or `?token=<jwt>` query parameter for embedded browser media/iframe previews).
+   - Added a 60-second TTL in-memory user verification cache in `server/Middleware/auth.js` so concurrent dashboard requests do not trigger redundant `User.findById` lookups on MongoDB, and omitted the password hash (`select('-password')`).
+   - Extended token lifetime from `'1 hour'` to `process.env.JWT_EXPIRES_IN || '7d'` so staff are not logged out mid-shift while creating invoices or inspection reports.
+   - Public routes remain accessible without a token: `/auth/login`, `/auth/logout`, `/auth/requestpasswordreset`, `/auth/passwordreset`, `/`, `/status`, `/test`, `/download/*`, `/downloads/*`, and `GET /api/marketing/flyer` (required by Meta's Instagram Graph API ingestion).
+2. **Client-Side Token Attachment & Session Hygiene**:
+   - **Immediate Token Persistence on Login (`Loginadmin.js` & `Loginemployee.js`)**: Stored `localStorage.setItem('token', userData.token)` immediately after `login(...).unwrap()` so the post-login branch and permission bootstrap requests (`/companyProfile`, `/get-employeeuser/:id`, `/grantAccess`) carry `Authorization: Bearer <token>`.
+   - **Global Axios Request Interceptor (`src/js/index.js`)**: Automatically attaches `Authorization: Bearer <token>` from `localStorage` to all outbound API requests.
+   - **Debounced Global `401` Response Interceptor (`src/js/index.js`) & Proactive Check (`RequireAuth.js`)**: Validates token presence and `exp` timestamp in `RequireAuth.js` and intercepts `401 Unauthorized` responses globally (excluding login/password-reset attempts), clearing `user`, `token`, `currentUserName`, and `apiCache`, dispatching `logOut()`, and redirecting cleanly via `window.location.hash = '#/Loginadmin'` across Web, Electron (`file://`), and Capacitor Android.
+   - **Inline Attachment Previews & Downloads (`AttachmentPreviewDialog.js`, `DocumentAttachmentsModal.js`, `MobileDetailSheet.js`)**: Appended `?token=<jwt>` query parameter to `/endpoint/attachment-file/:id` URLs used inside `<img src>`, `<iframe src>`, `<a href>`, and `window.open`, and exempted `token` from the 200-char query clamp in `server/Middleware/security.js`.
+   - **Socket.IO Handshake Auth**: Attached `auth: { token }` in `NotificationVIewInfo.js` and `MessageAdminView.js` and verified handshake tokens in `server/index.js`.
+3. **Desktop Sidebar Version Synchronization Fix (`3.7.0`)**:
+   - Updated `"make:win"` in `package.json` to `"npm run build:electron && electron-builder --win"` so `build/js/app.js` is always compiled with the latest `package.json` version before `electron-builder` packages the Windows `.exe` installer.
+
+#### Implementation & Verification Details (v3.7.0)
+1. **Backend Files Updated**:
+   - `server/Middleware/auth.js`, `server/Controller/auth.js`, `server/routes/AuthRoutes.js`, `server/Middleware/security.js`, `server/index.js`, `server/routes/downloadRoutes.js`, `server/package.json`.
+2. **Frontend Files Updated**:
+   - `src/js/index.js`, `src/js/RequireAuth.js`, `src/js/Loginadmin.js`, `src/js/Loginemployee.js`, `src/js/features/auth/authSlice.js`, `src/js/component/AttachmentPreviewDialog.js`, `src/js/component/DocumentAttachmentsModal.js`, `src/js/component/MobileDetailSheet.js`, `src/js/AdminView1/NotificationVIewInfo.js`, `src/js/AdminView1/MessageAdminView.js`, `package.json`.
+3. **Security & AST Verification (`scripts/security-check.js` & `scripts/pre-build-check.js`)**:
+   - Added **Test Group 8 (JWT Authentication Enforcement)** to `scripts/security-check.js`.
+   - Verified **21 PASSED, 0 FAILED** across all 8 security test groups and **0 AST errors** across all 245 source files.
+4. **Universal Multi-Platform Release (v3.7.0)**:
+   - Synchronized version **`3.7.0`** across `package.json`, `server/package.json`, `server/index.js`, `server/routes/downloadRoutes.js`, and frontend UI (`SidebarDash.js` / `MobileDrawer.js`).
+   - Built Web Portal (`dist_web/`), Electron Desktop (`build/` & `dist/Global Gate Setup 3.7.0.exe`), and Capacitor Android APK (`GlobalGate-v3.7.0.apk`), and synced installers to `server/public/downloads/`.

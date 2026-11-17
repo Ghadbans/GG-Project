@@ -393,9 +393,11 @@ const projectRoutes = require("./routes/projectRoutes");
 const attachmentRoutes = require("./routes/attachmentRoutes");
 
 
-// ---- Security hardening (v3.6.69) ----
+// ---- Security hardening & JWT enforcement (v3.7.0) ----
+const jwt = require("jsonwebtoken");
 const security = require("./Middleware/security");
 const limiters = require("./Middleware/rateLimiter");
+const { authenticate, getJwtSecret } = require("./Middleware/auth");
 
 const app = express();
 // Railway reverse proxy = 1 hop. Real client IP behind Cloudflare is resolved (spoof-proof) in
@@ -413,6 +415,26 @@ const io = new Server(server, {
     methods: ["GET", "POST"]
   },
   maxHttpBufferSize: 1e6
+});
+
+// Socket.IO handshake authentication
+io.use((socket, next) => {
+  const token =
+    socket.handshake?.auth?.token ||
+    (socket.handshake?.headers?.authorization || '').replace(/^Bearer\s+/i, '').trim() ||
+    socket.handshake?.query?.token;
+  if (!token) {
+    return next();
+  }
+  try {
+    const secret = getJwtSecret();
+    if (secret) {
+      socket.user = jwt.verify(token, secret);
+    }
+    return next();
+  } catch (err) {
+    return next(new Error('Authentication error: Invalid or expired token'));
+  }
 });
 
 // 1. Origin lock (no-op until ORIGIN_VERIFY_SECRET is set in Railway)
@@ -450,6 +472,17 @@ app.use((req, res, next) => {
 
 // RESTful API root
 app.use('/auth', authRoutes);
+
+// 6. JWT Authentication Enforcement across all /endpoint/* and /api/* routes (v3.7.0)
+// Exempts only OPTIONS preflights and public promotional flyer image GETs (fetched by Meta Instagram Graph API)
+const PUBLIC_API_GETS = new Set(['/api/marketing/flyer', '/endpoint/marketing/flyer', '/api/marketing/status', '/endpoint/marketing/status']);
+app.use(['/endpoint', '/api'], (req, res, next) => {
+  if (req.method === 'OPTIONS') return next();
+  if (req.method === 'GET' && PUBLIC_API_GETS.has(req.baseUrl + req.path.replace(/\/$/, ''))) {
+    return next();
+  }
+  return authenticate(req, res, next);
+});
 
 app.use('/api/locks', lockRoutes);
 
@@ -491,14 +524,14 @@ const inspectionReportRoutes = require('./routes/inspectionReportRoutes');
 app.use('/api/inspection-reports', inspectionReportRoutes);
 app.use('/endpoint/inspection-reports', inspectionReportRoutes);
 
-app.get('/', (req, res) => res.json({ name: 'Global Gate API', version: '3.6.69', status: 'online', uptime: process.uptime(), cloudWhatsApp: true }));
+app.get('/', (req, res) => res.json({ name: 'Global Gate API', version: '3.7.0', status: 'online', uptime: process.uptime(), cloudWhatsApp: true }));
 app.get('/robots.txt', (req, res) => {
   res.type('text/plain');
   res.send("User-agent: *\nDisallow: /\n");
 });
 app.get('/favicon.ico', (req, res) => res.status(204).end());
-app.get('/test', (req, res) => res.send('Backend is LIVE and UPDATED! [v3.6.69-security-hardening]'));
-app.get('/status', (req, res) => res.json({ status: 'ok', version: '3.6.69', attachments: true, cloudWhatsApp: true, uptime: process.uptime() })); // health check
+app.get('/test', (req, res) => res.send('Backend is LIVE and UPDATED! [v3.7.0-jwt-auth-enforcement]'));
+app.get('/status', (req, res) => res.json({ status: 'ok', version: '3.7.0', attachments: true, cloudWhatsApp: true, uptime: process.uptime() })); // health check
 
 // SECURITY GUARD FOR INTERNAL INIT & DEBUG ROUTES
 // Key comes ONLY from env (ADMIN_SETUP_KEY, else SECRET_KEY). No hardcoded fallback; timing-safe compare.

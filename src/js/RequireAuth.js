@@ -1,12 +1,27 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, Navigate, Outlet } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { selectCurrentUser, setUser } from "./features/auth/authSlice";
+import { selectCurrentUser, setUser, logOut } from "./features/auth/authSlice";
 import { getRoutePermission, canAccessModule, fetchUserGrantAccess } from "./utils/permissionUtils";
+import { jwtDecode } from "jwt-decode";
 import axios from "axios";
 import { ENDPOINT_URL } from "./apiConfig";
 import { toast } from "react-toastify";
 import Loader from "./component/Loader";
+
+function isStoredTokenValid() {
+  try {
+    const token = localStorage.getItem("token");
+    if (!token) return false;
+    const decoded = jwtDecode(token);
+    if (decoded && typeof decoded.exp === "number") {
+      return decoded.exp * 1000 > Date.now();
+    }
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
 
 const RequireAuth = () => {
   const user = useSelector(selectCurrentUser);
@@ -20,9 +35,21 @@ const RequireAuth = () => {
   const reduxUserName = user?.data?.userName || "";
   const reduxUserRole = user?.data?.role || "";
   const reduxUserId = user?.data?.id || user?.data?._id || "";
+  const validToken = isStoredTokenValid();
 
   useEffect(() => {
     let isMounted = true;
+
+    if (!validToken) {
+      try {
+        localStorage.removeItem("user");
+        localStorage.removeItem("token");
+        localStorage.removeItem("currentUserName");
+      } catch (_) {}
+      dispatch(logOut());
+      if (isMounted) setChecking(false);
+      return;
+    }
 
     const checkPermissions = async () => {
       let currentId = reduxUserId;
@@ -100,16 +127,16 @@ const RequireAuth = () => {
     return () => {
       isMounted = false;
     };
-  }, [reduxUserId, reduxUserName, reduxUserRole, dispatch]);
+  }, [reduxUserId, reduxUserName, reduxUserRole, validToken, dispatch]);
 
   const effectiveUser = (reduxUserName ? user?.data : resolvedUser) || {};
   const effectiveUserName = effectiveUser?.userName || "";
   const effectiveUserRole = effectiveUser?.role || "";
   const storedUserId = localStorage.getItem("user");
 
-  // Authentication check: if no user session at all, redirect to login
-  if (!effectiveUserName && !storedUserId && !reduxUserId) {
-    return <Navigate to="/" state={{ from: location }} replace />;
+  // Authentication check: if no valid JWT token or no user session at all, redirect to login
+  if (!validToken || (!effectiveUserName && !storedUserId && !reduxUserId)) {
+    return <Navigate to="/Loginadmin" state={{ from: location }} replace />;
   }
 
   // While checking / hydrating permissions for non-GG users, display Loader

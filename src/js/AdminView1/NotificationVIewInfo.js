@@ -98,6 +98,7 @@ function NotificationVIewInfo() {
     }
     // Limit reconnection attempts to stop 30-second "Not Found" spam on Railway
     const socket = io(`${API_BASE_URL}`, {
+      auth: { token: localStorage.getItem('token') || '' },
       reconnection: true,
       reconnectionAttempts: 3,
       timeout: 5000,

@@ -40,7 +40,9 @@ export default function AttachmentPreviewDialog({ open, onClose, attachment }) {
   const contentType = (attachment.contentType || '').toLowerCase();
   const isPdf = contentType.includes('pdf') || fileName.toLowerCase().endsWith('.pdf');
   const isImage = contentType.startsWith('image/') || /\.(png|jpe?g|webp|gif|bmp|svg)$/i.test(fileName);
-  const fileUrl = `${ENDPOINT_URL}/attachment-file/${attachment._id}`;
+  const authToken = typeof localStorage !== 'undefined' ? (localStorage.getItem('token') || '') : '';
+  const tokenQuery = authToken ? `token=${encodeURIComponent(authToken)}` : '';
+  const fileUrl = `${ENDPOINT_URL}/attachment-file/${attachment._id}${tokenQuery ? `?${tokenQuery}` : ''}`;
 
   const handleZoomIn = () => setZoom(prev => Math.min(prev + 0.25, 3));
   const handleZoomOut = () => setZoom(prev => Math.max(prev - 0.25, 0.5));
@@ -91,7 +93,7 @@ export default function AttachmentPreviewDialog({ open, onClose, attachment }) {
   };
 
   const handleDownload = () => {
-    const downloadUrl = `${ENDPOINT_URL}/attachment-file/${attachment._id}?download=true`;
+    const downloadUrl = `${ENDPOINT_URL}/attachment-file/${attachment._id}?download=true${tokenQuery ? `&${tokenQuery}` : ''}`;
     const link = document.createElement('a');
     link.href = downloadUrl;
     link.download = fileName;

@@ -5,6 +5,7 @@ const crypto =require("crypto");
 const nodemailer=require("nodemailer");
 const User = require("../model/employeeUserSchema");
 const notificationSchema = require("../model/notificationSchema");
+const { getJwtSecret } = require("../Middleware/auth");
 const { setgroups } = require('process');
 
 
@@ -69,9 +70,13 @@ const register = async (req, res, next) => {
       if (!passwordMatch) {   
         return res.status(401).json({ message: 'Incorrect password' });
       }
-      const token = jwt.sign({ userId: user._id }, process.env.SECRET_KEY, {
-        expiresIn: '1 hour'
-      });
+      const token = jwt.sign(
+        { userId: user._id, employeeName: user.employeeName, role: user.role },
+        getJwtSecret(),
+        {
+          expiresIn: process.env.JWT_EXPIRES_IN || '7d'
+        }
+      );
 
       // Automatically record Login Notification in database and emit real-time event
       try {

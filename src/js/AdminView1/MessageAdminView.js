@@ -113,7 +113,16 @@ function MessageAdminView({ name, role }) {
       setBadgeNumber(0);
       return;
     }
-    const socket = io(`${API_BASE_URL}`)
+    const socket = io(`${API_BASE_URL}`, {
+      auth: { token: localStorage.getItem('token') || '' },
+      reconnection: true,
+      reconnectionAttempts: 3,
+      timeout: 5000,
+      transports: ['websocket']
+    })
+    socket.on('connect_error', () => {
+      socket.disconnect();
+    })
     socket.on('newMessage', (newMessage) => {
       setMessageInfo((prev) => [newMessage, ...prev])
       setBadgeNumber((prev) => prev + 1)
@@ -128,6 +137,8 @@ function MessageAdminView({ name, role }) {
     });
     return () => {
       socket.off('newMessage')
+      socket.off('connect_error')
+      socket.disconnect()
     }
   }, [canViewMessage, badgeNumber])
 

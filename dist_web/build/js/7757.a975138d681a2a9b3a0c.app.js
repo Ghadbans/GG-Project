@@ -5462,7 +5462,9 @@ function AttachmentPreviewDialog(_ref) {
   var contentType = (attachment.contentType || '').toLowerCase();
   var isPdf = contentType.includes('pdf') || fileName.toLowerCase().endsWith('.pdf');
   var isImage = contentType.startsWith('image/') || /\.(png|jpe?g|webp|gif|bmp|svg)$/i.test(fileName);
-  var fileUrl = "".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_20__/* .ENDPOINT_URL */ .m, "/attachment-file/").concat(attachment._id);
+  var authToken = typeof localStorage !== 'undefined' ? localStorage.getItem('token') || '' : '';
+  var tokenQuery = authToken ? "token=".concat(encodeURIComponent(authToken)) : '';
+  var fileUrl = "".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_20__/* .ENDPOINT_URL */ .m, "/attachment-file/").concat(attachment._id).concat(tokenQuery ? "?".concat(tokenQuery) : '');
   var handleZoomIn = () => setZoom(prev => Math.min(prev + 0.25, 3));
   var handleZoomOut = () => setZoom(prev => Math.max(prev - 0.25, 0.5));
   var handleResetZoom = () => setZoom(1);
@@ -5495,7 +5497,7 @@ function AttachmentPreviewDialog(_ref) {
     }
   };
   var handleDownload = () => {
-    var downloadUrl = "".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_20__/* .ENDPOINT_URL */ .m, "/attachment-file/").concat(attachment._id, "?download=true");
+    var downloadUrl = "".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_20__/* .ENDPOINT_URL */ .m, "/attachment-file/").concat(attachment._id, "?download=true").concat(tokenQuery ? "&".concat(tokenQuery) : '');
     var link = document.createElement('a');
     link.href = downloadUrl;
     link.download = fileName;
@@ -6048,10 +6050,18 @@ function DocumentAttachmentsModal(_ref) {
       handleFilesUpload(e.dataTransfer.files);
     }
   };
+  var getAttachmentFileUrl = function getAttachmentFileUrl(attId) {
+    var download = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+    var authToken = typeof localStorage !== 'undefined' ? localStorage.getItem('token') || '' : '';
+    var params = [];
+    if (download) params.push('download=true');
+    if (authToken) params.push("token=".concat(encodeURIComponent(authToken)));
+    return "".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_27__/* .ENDPOINT_URL */ .m, "/attachment-file/").concat(attId).concat(params.length ? "?".concat(params.join('&')) : '');
+  };
 
   // Direct print handler for item
   var handleDirectPrint = att => {
-    var fileUrl = "".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_27__/* .ENDPOINT_URL */ .m, "/attachment-file/").concat(att._id);
+    var fileUrl = getAttachmentFileUrl(att._id, false);
     var contentType = (att.contentType || '').toLowerCase();
     var isPdf = contentType.includes('pdf') || (att.fileName || '').toLowerCase().endsWith('.pdf');
     if (isPdf) {
@@ -6073,7 +6083,7 @@ function DocumentAttachmentsModal(_ref) {
 
   // Direct download handler
   var handleDownload = att => {
-    var downloadUrl = "".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_27__/* .ENDPOINT_URL */ .m, "/attachment-file/").concat(att._id, "?download=true");
+    var downloadUrl = getAttachmentFileUrl(att._id, true);
     var link = document.createElement('a');
     link.href = downloadUrl;
     link.download = att.fileName;
@@ -6262,7 +6272,7 @@ function DocumentAttachmentsModal(_ref) {
         border: '1px solid #e2e8f0'
       }
     }, isImage ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
-      src: "".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_27__/* .ENDPOINT_URL */ .m, "/attachment-file/").concat(att._id),
+      src: getAttachmentFileUrl(att._id, false),
       alt: att.fileName,
       style: {
         width: '100%',

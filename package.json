@@ -1,6 +1,6 @@
 {
   "name": "gg-management",
-  "version": "3.6.69",
+  "version": "3.7.0",
   "private": true,
   "description": "",
   "main": "main.js",
@@ -20,7 +20,7 @@
     "cap:open:ios": "npx cap open ios",
     "pack": "electron-builder --dir",
     "dist": "electron-builder",
-    "make:win": "electron-builder --win",
+    "make:win": "npm run build:electron && electron-builder --win",
     "make:macos": "electron-builder --mac"
   },
   "author": "GG SARL(KASONGA MBAYI DANIEL)",

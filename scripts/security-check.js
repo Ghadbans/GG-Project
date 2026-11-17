@@ -140,7 +140,7 @@ function assert(condition, testName, details = '') {
 async function runTests() {
   console.log(`=======================================================`);
   console.log(`  GLOBAL GATE SECURITY & RATE LIMIT VERIFICATION SUITE `);
-  console.log(`  Target: ${targetBase} (Version 3.6.69)`);
+  console.log(`  Target: ${targetBase} (Version 3.7.0)`);
   console.log(`=======================================================\n`);
 
   // 1. Security Headers Check
@@ -330,6 +330,92 @@ async function runTests() {
     );
   } catch (err) {
     assert(false, 'Rate limiter test failed', err.message);
+  }
+
+  // 8. JWT Authentication Enforcement Check (v3.7.0)
+  console.log(`\n[Test Group 8: JWT Authentication Enforcement (v3.7.0)]`);
+  try {
+    // 8a. Unauthenticated GET /endpoint/invoice -> 401
+    const unauthEndpointRes = await request({
+      path: '/endpoint/invoice',
+      method: 'GET'
+    });
+    assert(
+      unauthEndpointRes.statusCode === 401,
+      `Unauthenticated GET /endpoint/invoice returns 401 Unauthorized (got ${unauthEndpointRes.statusCode})`
+    );
+
+    // 8b. Unauthenticated GET /api/inspection-reports -> 401
+    const unauthApiRes = await request({
+      path: '/api/inspection-reports',
+      method: 'GET'
+    });
+    assert(
+      unauthApiRes.statusCode === 401,
+      `Unauthenticated GET /api/inspection-reports returns 401 Unauthorized (got ${unauthApiRes.statusCode})`
+    );
+
+    // 8c. Unauthenticated POST /auth/register -> 401
+    const unauthRegisterRes = await request({
+      path: '/auth/register',
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' }
+    }, JSON.stringify({ employeeName: 'unauthorized', password: 'password123', role: 'Staff' }));
+    assert(
+      unauthRegisterRes.statusCode === 401,
+      `Unauthenticated POST /auth/register returns 401 Unauthorized (got ${unauthRegisterRes.statusCode})`
+    );
+
+    // 8d. Invalid / tampered Bearer token -> 401
+    const badTokenRes = await request({
+      path: '/endpoint/customer',
+      method: 'GET',
+      headers: { Authorization: 'Bearer invalid.tampered.token' }
+    });
+    assert(
+      badTokenRes.statusCode === 401,
+      `Tampered Bearer token on GET /endpoint/customer returns 401 Unauthorized (got ${badTokenRes.statusCode})`
+    );
+
+    // 8e. Valid signed JWT Bearer token passes authenticate middleware (returns 404 on probe route, not 401)
+    const jwt = require('../server/node_modules/jsonwebtoken');
+    const { getJwtSecret } = require('../server/Middleware/auth');
+    const validToken = jwt.sign(
+      { userId: '507f1f77bcf86cd799439011', employeeName: 'GG', role: 'CEO' },
+      getJwtSecret(),
+      { expiresIn: '1h' }
+    );
+    const validTokenRes = await request({
+      path: '/endpoint/auth-verified-probe-route',
+      method: 'GET',
+      headers: { Authorization: `Bearer ${validToken}` }
+    });
+    assert(
+      validTokenRes.statusCode === 404,
+      `Valid signed Bearer JWT passes authenticate middleware (status ${validTokenRes.statusCode} != 401)`
+    );
+
+    // 8f. Query token fallback (?token=...) passes authenticate middleware (for <img src> / <iframe src> attachments)
+    const queryTokenRes = await request({
+      path: `/endpoint/auth-verified-probe-route?token=${encodeURIComponent(validToken)}`,
+      method: 'GET'
+    });
+    assert(
+      queryTokenRes.statusCode === 404,
+      `Query-param token (?token=<jwt>) passes authenticate middleware for attachment previews (status ${queryTokenRes.statusCode} != 401)`
+    );
+
+    // 8g. Public marketing status/flyer & health endpoints remain accessible without token
+    const pubStatusRes = await request({
+      path: '/api/marketing/status',
+      method: 'GET'
+    });
+    assert(
+      pubStatusRes.statusCode === 200,
+      `Public endpoint GET /api/marketing/status remains accessible without token (got ${pubStatusRes.statusCode})`
+    );
+  } catch (err) {
+    assert(false, 'JWT authentication enforcement test failed', err.message);
   }
 
   // Summary

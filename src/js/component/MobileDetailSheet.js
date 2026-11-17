@@ -378,7 +378,7 @@ function MobileDetailSheet({ open, onClose, record, type }) {
                 >
                   {isImg ? (
                     <img
-                      src={`${ENDPOINT_URL}/attachment-file/${att._id}`}
+                      src={`${ENDPOINT_URL}/attachment-file/${att._id}?token=${encodeURIComponent((typeof localStorage !== 'undefined' && localStorage.getItem('token')) || '')}`}
                       alt={att.fileName}
                       style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                     />
