@@ -1,4 +1,4 @@
-(this["webpackChunkgg_management"] = this["webpackChunkgg_management"] || []).push([[806],{
+(this["webpackChunkgg_management"] = this["webpackChunkgg_management"] || []).push([[1195],{
 
 /***/ 40530
 (__unused_webpack_module, exports, __webpack_require__) {
@@ -433,6 +433,26 @@ var _default = exports.A = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRun
 
 /***/ },
 
+/***/ 34485
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var _utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(20561);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(74848);
+"use client";
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("path", {
+  d: "m22.7 19-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.4 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.5-.4.5-1.1.1-1.4"
+}), 'Build'));
+/* harmony export */ __webpack_require__.d(__webpack_exports__, [
+/* harmony export */   "A", 0, /* export default binding */ __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ ]);
+
+
+/***/ },
+
 /***/ 8047
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
@@ -453,7 +473,7 @@ var _default = exports.A = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRun
 
 /***/ },
 
-/***/ 81757
+/***/ 55002
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -464,8 +484,8 @@ var _default = exports.A = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRun
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("path", {
-  d: "M3 10h11v2H3zm0-2h11V6H3zm0 8h7v-2H3zm15.01-3.13.71-.71c.39-.39 1.02-.39 1.41 0l.71.71c.39.39.39 1.02 0 1.41l-.71.71zm-.71.71-5.3 5.3V21h2.12l5.3-5.3z"
-}), 'EditNote'));
+  d: "M21 12V6c0-1.1-.9-2-2-2h-1V2h-2v2H8V2H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h7v-2H5V10h14v2zm-5.36 8c.43 1.45 1.77 2.5 3.36 2.5 1.93 0 3.5-1.57 3.5-3.5s-1.57-3.5-3.5-3.5c-.95 0-1.82.38-2.45 1H18V18h-4v-4h1.5v1.43c.9-.88 2.14-1.43 3.5-1.43 2.76 0 5 2.24 5 5s-2.24 5-5 5c-2.42 0-4.44-1.72-4.9-4z"
+}), 'EventRepeat'));
 /* harmony export */ __webpack_require__.d(__webpack_exports__, [
 /* harmony export */   "A", 0, /* export default binding */ __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ ]);
@@ -473,7 +493,7 @@ var _default = exports.A = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRun
 
 /***/ },
 
-/***/ 7078
+/***/ 62430
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -484,8 +504,8 @@ var _default = exports.A = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRun
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("path", {
-  d: "M18.39 14.56C16.71 13.7 14.53 13 12 13s-4.71.7-6.39 1.56C4.61 15.07 4 16.1 4 17.22V20h16v-2.78c0-1.12-.61-2.15-1.61-2.66M18 18H6v-.78c0-.38.2-.72.52-.88C7.71 15.73 9.63 15 12 15c2.37 0 4.29.73 5.48 1.34.32.16.52.5.52.88zm-8.22-6h4.44c1.21 0 2.14-1.06 1.98-2.26l-.32-2.45C15.57 5.39 13.92 4 12 4S8.43 5.39 8.12 7.29L7.8 9.74c-.16 1.2.77 2.26 1.98 2.26m.32-4.41C10.26 6.67 11.06 6 12 6s1.74.67 1.9 1.59l.32 2.41H9.78z"
-}), 'Person2Outlined'));
+  d: "M6 2v6h.01L6 8.01 10 12l-4 4 .01.01H6V22h12v-5.99h-.01L18 16l-4-4 4-3.99-.01-.01H18V2zm10 14.5V20H8v-3.5l4-4zm-4-5-4-4V4h8v3.5z"
+}), 'HourglassEmpty'));
 /* harmony export */ __webpack_require__.d(__webpack_exports__, [
 /* harmony export */   "A", 0, /* export default binding */ __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ ]);
@@ -493,7 +513,7 @@ var _default = exports.A = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRun
 
 /***/ },
 
-/***/ 79030
+/***/ 48083
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -503,29 +523,11 @@ var _default = exports.A = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRun
 
 
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("path", {
-  d: "M8.65 5.82C9.36 4.72 10.6 4 12 4c2.21 0 4 1.79 4 4 0 1.4-.72 2.64-1.82 3.35zM20 17.17c-.02-1.1-.63-2.11-1.61-2.62-.54-.28-1.13-.54-1.77-.76zm.49 3.32L3.51 3.51a.9959.9959 0 0 0-1.41 0c-.39.39-.39 1.02 0 1.41l8.18 8.18c-1.82.23-3.41.8-4.7 1.46C4.6 15.08 4 16.11 4 17.22V20h13.17l1.9 1.9c.39.39 1.02.39 1.41 0 .4-.39.4-1.02.01-1.41"
-}), 'PersonOffRounded'));
-/* harmony export */ __webpack_require__.d(__webpack_exports__, [
-/* harmony export */   "A", 0, /* export default binding */ __WEBPACK_DEFAULT_EXPORT__
-/* harmony export */ ]);
-
-
-/***/ },
-
-/***/ 52751
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var _utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(20561);
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(74848);
-"use client";
-
-
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("path", {
-  d: "M2.01 21 23 12 2.01 3 2 10l15 2-15 2z"
-}), 'Send'));
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)([/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("path", {
+  d: "M19.5 3.5 18 2l-1.5 1.5L15 2l-1.5 1.5L12 2l-1.5 1.5L9 2 7.5 3.5 6 2v14H3v3c0 1.66 1.34 3 3 3h12c1.66 0 3-1.34 3-3V2zM19 19c0 .55-.45 1-1 1s-1-.45-1-1v-3H8V5h11z"
+}, "0"), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("path", {
+  d: "M9 7h6v2H9zm7 0h2v2h-2zm-7 3h6v2H9zm7 0h2v2h-2z"
+}, "1")], 'ReceiptLong'));
 /* harmony export */ __webpack_require__.d(__webpack_exports__, [
 /* harmony export */   "A", 0, /* export default binding */ __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ ]);
@@ -889,6 +891,614 @@ const LinearProgress = /*#__PURE__*/react.forwardRef(function LinearProgress(inP
 });
  false ? 0 : void 0;
 /* harmony default export */ const LinearProgress_LinearProgress = (LinearProgress);
+
+/***/ },
+
+/***/ 69279
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+
+// EXPORTS
+__webpack_require__.d(__webpack_exports__, {
+  A: () => (/* binding */ Pagination_Pagination)
+});
+
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/extends.js
+var esm_extends = __webpack_require__(58168);
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js
+var objectWithoutPropertiesLoose = __webpack_require__(98587);
+// EXTERNAL MODULE: ./node_modules/react/index.js
+var react = __webpack_require__(96540);
+// EXTERNAL MODULE: ./node_modules/clsx/dist/clsx.mjs
+var clsx = __webpack_require__(34164);
+// EXTERNAL MODULE: ./node_modules/@mui/utils/esm/composeClasses/composeClasses.js
+var composeClasses = __webpack_require__(75659);
+// EXTERNAL MODULE: ./node_modules/@mui/material/DefaultPropsProvider/DefaultPropsProvider.js
+var DefaultPropsProvider = __webpack_require__(25669);
+// EXTERNAL MODULE: ./node_modules/@mui/utils/esm/generateUtilityClasses/generateUtilityClasses.js
+var generateUtilityClasses = __webpack_require__(38413);
+// EXTERNAL MODULE: ./node_modules/@mui/utils/esm/generateUtilityClass/generateUtilityClass.js
+var generateUtilityClass = __webpack_require__(31609);
+;// ./node_modules/@mui/material/Pagination/paginationClasses.js
+
+
+function getPaginationUtilityClass(slot) {
+  return (0,generateUtilityClass/* default */.Ay)('MuiPagination', slot);
+}
+const paginationClasses = (0,generateUtilityClasses/* default */.A)('MuiPagination', ['root', 'ul', 'outlined', 'text']);
+/* harmony default export */ const Pagination_paginationClasses = ((/* unused pure expression or super */ null && (paginationClasses)));
+// EXTERNAL MODULE: ./node_modules/@mui/utils/esm/useControlled/useControlled.js
+var useControlled = __webpack_require__(2501);
+;// ./node_modules/@mui/material/usePagination/usePagination.js
+'use client';
+
+
+
+const _excluded = ["boundaryCount", "componentName", "count", "defaultPage", "disabled", "hideNextButton", "hidePrevButton", "onChange", "page", "showFirstButton", "showLastButton", "siblingCount"];
+
+function usePagination(props = {}) {
+  // keep default values in sync with @default tags in Pagination.propTypes
+  const {
+      boundaryCount = 1,
+      componentName = 'usePagination',
+      count = 1,
+      defaultPage = 1,
+      disabled = false,
+      hideNextButton = false,
+      hidePrevButton = false,
+      onChange: handleChange,
+      page: pageProp,
+      showFirstButton = false,
+      showLastButton = false,
+      siblingCount = 1
+    } = props,
+    other = (0,objectWithoutPropertiesLoose/* default */.A)(props, _excluded);
+  const [page, setPageState] = (0,useControlled/* default */.A)({
+    controlled: pageProp,
+    default: defaultPage,
+    name: componentName,
+    state: 'page'
+  });
+  const handleClick = (event, value) => {
+    if (!pageProp) {
+      setPageState(value);
+    }
+    if (handleChange) {
+      handleChange(event, value);
+    }
+  };
+
+  // https://dev.to/namirsab/comment/2050
+  const range = (start, end) => {
+    const length = end - start + 1;
+    return Array.from({
+      length
+    }, (_, i) => start + i);
+  };
+  const startPages = range(1, Math.min(boundaryCount, count));
+  const endPages = range(Math.max(count - boundaryCount + 1, boundaryCount + 1), count);
+  const siblingsStart = Math.max(Math.min(
+  // Natural start
+  page - siblingCount,
+  // Lower boundary when page is high
+  count - boundaryCount - siblingCount * 2 - 1),
+  // Greater than startPages
+  boundaryCount + 2);
+  const siblingsEnd = Math.min(Math.max(
+  // Natural end
+  page + siblingCount,
+  // Upper boundary when page is low
+  boundaryCount + siblingCount * 2 + 2),
+  // Less than endPages
+  endPages.length > 0 ? endPages[0] - 2 : count - 1);
+
+  // Basic list of items to render
+  // for example itemList = ['first', 'previous', 1, 'ellipsis', 4, 5, 6, 'ellipsis', 10, 'next', 'last']
+  const itemList = [...(showFirstButton ? ['first'] : []), ...(hidePrevButton ? [] : ['previous']), ...startPages,
+  // Start ellipsis
+  // eslint-disable-next-line no-nested-ternary
+  ...(siblingsStart > boundaryCount + 2 ? ['start-ellipsis'] : boundaryCount + 1 < count - boundaryCount ? [boundaryCount + 1] : []),
+  // Sibling pages
+  ...range(siblingsStart, siblingsEnd),
+  // End ellipsis
+  // eslint-disable-next-line no-nested-ternary
+  ...(siblingsEnd < count - boundaryCount - 1 ? ['end-ellipsis'] : count - boundaryCount > boundaryCount ? [count - boundaryCount] : []), ...endPages, ...(hideNextButton ? [] : ['next']), ...(showLastButton ? ['last'] : [])];
+
+  // Map the button type to its page number
+  const buttonPage = type => {
+    switch (type) {
+      case 'first':
+        return 1;
+      case 'previous':
+        return page - 1;
+      case 'next':
+        return page + 1;
+      case 'last':
+        return count;
+      default:
+        return null;
+    }
+  };
+
+  // Convert the basic item list to PaginationItem props objects
+  const items = itemList.map(item => {
+    return typeof item === 'number' ? {
+      onClick: event => {
+        handleClick(event, item);
+      },
+      type: 'page',
+      page: item,
+      selected: item === page,
+      disabled,
+      'aria-current': item === page ? 'true' : undefined
+    } : {
+      onClick: event => {
+        handleClick(event, buttonPage(item));
+      },
+      type: item,
+      page: buttonPage(item),
+      selected: false,
+      disabled: disabled || item.indexOf('ellipsis') === -1 && (item === 'next' || item === 'last' ? page >= count : page <= 1)
+    };
+  });
+  return (0,esm_extends/* default */.A)({
+    items
+  }, other);
+}
+// EXTERNAL MODULE: ./node_modules/@mui/system/colorManipulator.js
+var colorManipulator = __webpack_require__(771);
+// EXTERNAL MODULE: ./node_modules/@mui/system/esm/RtlProvider/index.js
+var RtlProvider = __webpack_require__(73788);
+;// ./node_modules/@mui/material/PaginationItem/paginationItemClasses.js
+
+
+function getPaginationItemUtilityClass(slot) {
+  return (0,generateUtilityClass/* default */.Ay)('MuiPaginationItem', slot);
+}
+const paginationItemClasses = (0,generateUtilityClasses/* default */.A)('MuiPaginationItem', ['root', 'page', 'sizeSmall', 'sizeLarge', 'text', 'textPrimary', 'textSecondary', 'outlined', 'outlinedPrimary', 'outlinedSecondary', 'rounded', 'ellipsis', 'firstLast', 'previousNext', 'focusVisible', 'disabled', 'selected', 'icon', 'colorPrimary', 'colorSecondary']);
+/* harmony default export */ const PaginationItem_paginationItemClasses = (paginationItemClasses);
+// EXTERNAL MODULE: ./node_modules/@mui/material/ButtonBase/ButtonBase.js + 4 modules
+var ButtonBase = __webpack_require__(18850);
+// EXTERNAL MODULE: ./node_modules/@mui/material/utils/capitalize.js
+var capitalize = __webpack_require__(28466);
+// EXTERNAL MODULE: ./node_modules/@mui/material/internal/svg-icons/FirstPage.js
+var FirstPage = __webpack_require__(28775);
+// EXTERNAL MODULE: ./node_modules/@mui/material/internal/svg-icons/LastPage.js
+var LastPage = __webpack_require__(35067);
+// EXTERNAL MODULE: ./node_modules/@mui/material/utils/createSvgIcon.js
+var createSvgIcon = __webpack_require__(20561);
+// EXTERNAL MODULE: ./node_modules/react/jsx-runtime.js
+var jsx_runtime = __webpack_require__(74848);
+;// ./node_modules/@mui/material/internal/svg-icons/NavigateBefore.js
+'use client';
+
+
+
+
+/**
+ * @ignore - internal component.
+ */
+
+/* harmony default export */ const NavigateBefore = ((0,createSvgIcon/* default */.A)( /*#__PURE__*/(0,jsx_runtime.jsx)("path", {
+  d: "M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"
+}), 'NavigateBefore'));
+;// ./node_modules/@mui/material/internal/svg-icons/NavigateNext.js
+'use client';
+
+
+
+
+/**
+ * @ignore - internal component.
+ */
+
+/* harmony default export */ const NavigateNext = ((0,createSvgIcon/* default */.A)( /*#__PURE__*/(0,jsx_runtime.jsx)("path", {
+  d: "M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"
+}), 'NavigateNext'));
+// EXTERNAL MODULE: ./node_modules/@mui/material/styles/styled.js
+var styled = __webpack_require__(11848);
+;// ./node_modules/@mui/material/PaginationItem/PaginationItem.js
+'use client';
+
+
+
+const PaginationItem_excluded = ["className", "color", "component", "components", "disabled", "page", "selected", "shape", "size", "slots", "type", "variant"];
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const overridesResolver = (props, styles) => {
+  const {
+    ownerState
+  } = props;
+  return [styles.root, styles[ownerState.variant], styles[`size${(0,capitalize/* default */.A)(ownerState.size)}`], ownerState.variant === 'text' && styles[`text${(0,capitalize/* default */.A)(ownerState.color)}`], ownerState.variant === 'outlined' && styles[`outlined${(0,capitalize/* default */.A)(ownerState.color)}`], ownerState.shape === 'rounded' && styles.rounded, ownerState.type === 'page' && styles.page, (ownerState.type === 'start-ellipsis' || ownerState.type === 'end-ellipsis') && styles.ellipsis, (ownerState.type === 'previous' || ownerState.type === 'next') && styles.previousNext, (ownerState.type === 'first' || ownerState.type === 'last') && styles.firstLast];
+};
+const useUtilityClasses = ownerState => {
+  const {
+    classes,
+    color,
+    disabled,
+    selected,
+    size,
+    shape,
+    type,
+    variant
+  } = ownerState;
+  const slots = {
+    root: ['root', `size${(0,capitalize/* default */.A)(size)}`, variant, shape, color !== 'standard' && `color${(0,capitalize/* default */.A)(color)}`, color !== 'standard' && `${variant}${(0,capitalize/* default */.A)(color)}`, disabled && 'disabled', selected && 'selected', {
+      page: 'page',
+      first: 'firstLast',
+      last: 'firstLast',
+      'start-ellipsis': 'ellipsis',
+      'end-ellipsis': 'ellipsis',
+      previous: 'previousNext',
+      next: 'previousNext'
+    }[type]],
+    icon: ['icon']
+  };
+  return (0,composeClasses/* default */.A)(slots, getPaginationItemUtilityClass, classes);
+};
+const PaginationItemEllipsis = (0,styled/* default */.Ay)('div', {
+  name: 'MuiPaginationItem',
+  slot: 'Root',
+  overridesResolver
+})(({
+  theme,
+  ownerState
+}) => (0,esm_extends/* default */.A)({}, theme.typography.body2, {
+  borderRadius: 32 / 2,
+  textAlign: 'center',
+  boxSizing: 'border-box',
+  minWidth: 32,
+  padding: '0 6px',
+  margin: '0 3px',
+  color: (theme.vars || theme).palette.text.primary,
+  height: 'auto',
+  [`&.${PaginationItem_paginationItemClasses.disabled}`]: {
+    opacity: (theme.vars || theme).palette.action.disabledOpacity
+  }
+}, ownerState.size === 'small' && {
+  minWidth: 26,
+  borderRadius: 26 / 2,
+  margin: '0 1px',
+  padding: '0 4px'
+}, ownerState.size === 'large' && {
+  minWidth: 40,
+  borderRadius: 40 / 2,
+  padding: '0 10px',
+  fontSize: theme.typography.pxToRem(15)
+}));
+const PaginationItemPage = (0,styled/* default */.Ay)(ButtonBase/* default */.A, {
+  name: 'MuiPaginationItem',
+  slot: 'Root',
+  overridesResolver
+})(({
+  theme,
+  ownerState
+}) => (0,esm_extends/* default */.A)({}, theme.typography.body2, {
+  borderRadius: 32 / 2,
+  textAlign: 'center',
+  boxSizing: 'border-box',
+  minWidth: 32,
+  height: 32,
+  padding: '0 6px',
+  margin: '0 3px',
+  color: (theme.vars || theme).palette.text.primary,
+  [`&.${PaginationItem_paginationItemClasses.focusVisible}`]: {
+    backgroundColor: (theme.vars || theme).palette.action.focus
+  },
+  [`&.${PaginationItem_paginationItemClasses.disabled}`]: {
+    opacity: (theme.vars || theme).palette.action.disabledOpacity
+  },
+  transition: theme.transitions.create(['color', 'background-color'], {
+    duration: theme.transitions.duration.short
+  }),
+  '&:hover': {
+    backgroundColor: (theme.vars || theme).palette.action.hover,
+    // Reset on touch devices, it doesn't add specificity
+    '@media (hover: none)': {
+      backgroundColor: 'transparent'
+    }
+  },
+  [`&.${PaginationItem_paginationItemClasses.selected}`]: {
+    backgroundColor: (theme.vars || theme).palette.action.selected,
+    '&:hover': {
+      backgroundColor: theme.vars ? `rgba(${theme.vars.palette.action.selectedChannel} / calc(${theme.vars.palette.action.selectedOpacity} + ${theme.vars.palette.action.hoverOpacity}))` : (0,colorManipulator/* alpha */.X4)(theme.palette.action.selected, theme.palette.action.selectedOpacity + theme.palette.action.hoverOpacity),
+      // Reset on touch devices, it doesn't add specificity
+      '@media (hover: none)': {
+        backgroundColor: (theme.vars || theme).palette.action.selected
+      }
+    },
+    [`&.${PaginationItem_paginationItemClasses.focusVisible}`]: {
+      backgroundColor: theme.vars ? `rgba(${theme.vars.palette.action.selectedChannel} / calc(${theme.vars.palette.action.selectedOpacity} + ${theme.vars.palette.action.focusOpacity}))` : (0,colorManipulator/* alpha */.X4)(theme.palette.action.selected, theme.palette.action.selectedOpacity + theme.palette.action.focusOpacity)
+    },
+    [`&.${PaginationItem_paginationItemClasses.disabled}`]: {
+      opacity: 1,
+      color: (theme.vars || theme).palette.action.disabled,
+      backgroundColor: (theme.vars || theme).palette.action.selected
+    }
+  }
+}, ownerState.size === 'small' && {
+  minWidth: 26,
+  height: 26,
+  borderRadius: 26 / 2,
+  margin: '0 1px',
+  padding: '0 4px'
+}, ownerState.size === 'large' && {
+  minWidth: 40,
+  height: 40,
+  borderRadius: 40 / 2,
+  padding: '0 10px',
+  fontSize: theme.typography.pxToRem(15)
+}, ownerState.shape === 'rounded' && {
+  borderRadius: (theme.vars || theme).shape.borderRadius
+}), ({
+  theme,
+  ownerState
+}) => (0,esm_extends/* default */.A)({}, ownerState.variant === 'text' && {
+  [`&.${PaginationItem_paginationItemClasses.selected}`]: (0,esm_extends/* default */.A)({}, ownerState.color !== 'standard' && {
+    color: (theme.vars || theme).palette[ownerState.color].contrastText,
+    backgroundColor: (theme.vars || theme).palette[ownerState.color].main,
+    '&:hover': {
+      backgroundColor: (theme.vars || theme).palette[ownerState.color].dark,
+      // Reset on touch devices, it doesn't add specificity
+      '@media (hover: none)': {
+        backgroundColor: (theme.vars || theme).palette[ownerState.color].main
+      }
+    },
+    [`&.${PaginationItem_paginationItemClasses.focusVisible}`]: {
+      backgroundColor: (theme.vars || theme).palette[ownerState.color].dark
+    }
+  }, {
+    [`&.${PaginationItem_paginationItemClasses.disabled}`]: {
+      color: (theme.vars || theme).palette.action.disabled
+    }
+  })
+}, ownerState.variant === 'outlined' && {
+  border: theme.vars ? `1px solid rgba(${theme.vars.palette.common.onBackgroundChannel} / 0.23)` : `1px solid ${theme.palette.mode === 'light' ? 'rgba(0, 0, 0, 0.23)' : 'rgba(255, 255, 255, 0.23)'}`,
+  [`&.${PaginationItem_paginationItemClasses.selected}`]: (0,esm_extends/* default */.A)({}, ownerState.color !== 'standard' && {
+    color: (theme.vars || theme).palette[ownerState.color].main,
+    border: `1px solid ${theme.vars ? `rgba(${theme.vars.palette[ownerState.color].mainChannel} / 0.5)` : (0,colorManipulator/* alpha */.X4)(theme.palette[ownerState.color].main, 0.5)}`,
+    backgroundColor: theme.vars ? `rgba(${theme.vars.palette[ownerState.color].mainChannel} / ${theme.vars.palette.action.activatedOpacity})` : (0,colorManipulator/* alpha */.X4)(theme.palette[ownerState.color].main, theme.palette.action.activatedOpacity),
+    '&:hover': {
+      backgroundColor: theme.vars ? `rgba(${theme.vars.palette[ownerState.color].mainChannel} / calc(${theme.vars.palette.action.activatedOpacity} + ${theme.vars.palette.action.focusOpacity}))` : (0,colorManipulator/* alpha */.X4)(theme.palette[ownerState.color].main, theme.palette.action.activatedOpacity + theme.palette.action.focusOpacity),
+      // Reset on touch devices, it doesn't add specificity
+      '@media (hover: none)': {
+        backgroundColor: 'transparent'
+      }
+    },
+    [`&.${PaginationItem_paginationItemClasses.focusVisible}`]: {
+      backgroundColor: theme.vars ? `rgba(${theme.vars.palette[ownerState.color].mainChannel} / calc(${theme.vars.palette.action.activatedOpacity} + ${theme.vars.palette.action.focusOpacity}))` : (0,colorManipulator/* alpha */.X4)(theme.palette[ownerState.color].main, theme.palette.action.activatedOpacity + theme.palette.action.focusOpacity)
+    }
+  }, {
+    [`&.${PaginationItem_paginationItemClasses.disabled}`]: {
+      borderColor: (theme.vars || theme).palette.action.disabledBackground,
+      color: (theme.vars || theme).palette.action.disabled
+    }
+  })
+}));
+const PaginationItemPageIcon = (0,styled/* default */.Ay)('div', {
+  name: 'MuiPaginationItem',
+  slot: 'Icon',
+  overridesResolver: (props, styles) => styles.icon
+})(({
+  theme,
+  ownerState
+}) => (0,esm_extends/* default */.A)({
+  fontSize: theme.typography.pxToRem(20),
+  margin: '0 -8px'
+}, ownerState.size === 'small' && {
+  fontSize: theme.typography.pxToRem(18)
+}, ownerState.size === 'large' && {
+  fontSize: theme.typography.pxToRem(22)
+}));
+const PaginationItem = /*#__PURE__*/react.forwardRef(function PaginationItem(inProps, ref) {
+  const props = (0,DefaultPropsProvider/* useDefaultProps */.b)({
+    props: inProps,
+    name: 'MuiPaginationItem'
+  });
+  const {
+      className,
+      color = 'standard',
+      component,
+      components = {},
+      disabled = false,
+      page,
+      selected = false,
+      shape = 'circular',
+      size = 'medium',
+      slots = {},
+      type = 'page',
+      variant = 'text'
+    } = props,
+    other = (0,objectWithoutPropertiesLoose/* default */.A)(props, PaginationItem_excluded);
+  const ownerState = (0,esm_extends/* default */.A)({}, props, {
+    color,
+    disabled,
+    selected,
+    shape,
+    size,
+    type,
+    variant
+  });
+  const isRtl = (0,RtlProvider/* useRtl */.I)();
+  const classes = useUtilityClasses(ownerState);
+  const normalizedIcons = isRtl ? {
+    previous: slots.next || components.next || NavigateNext,
+    next: slots.previous || components.previous || NavigateBefore,
+    last: slots.first || components.first || FirstPage/* default */.A,
+    first: slots.last || components.last || LastPage/* default */.A
+  } : {
+    previous: slots.previous || components.previous || NavigateBefore,
+    next: slots.next || components.next || NavigateNext,
+    first: slots.first || components.first || FirstPage/* default */.A,
+    last: slots.last || components.last || LastPage/* default */.A
+  };
+  const Icon = normalizedIcons[type];
+  return type === 'start-ellipsis' || type === 'end-ellipsis' ? /*#__PURE__*/(0,jsx_runtime.jsx)(PaginationItemEllipsis, {
+    ref: ref,
+    ownerState: ownerState,
+    className: (0,clsx/* default */.A)(classes.root, className),
+    children: "\u2026"
+  }) : /*#__PURE__*/(0,jsx_runtime.jsxs)(PaginationItemPage, (0,esm_extends/* default */.A)({
+    ref: ref,
+    ownerState: ownerState,
+    component: component,
+    disabled: disabled,
+    className: (0,clsx/* default */.A)(classes.root, className)
+  }, other, {
+    children: [type === 'page' && page, Icon ? /*#__PURE__*/(0,jsx_runtime.jsx)(PaginationItemPageIcon, {
+      as: Icon,
+      ownerState: ownerState,
+      className: classes.icon
+    }) : null]
+  }));
+});
+ false ? 0 : void 0;
+/* harmony default export */ const PaginationItem_PaginationItem = (PaginationItem);
+;// ./node_modules/@mui/material/Pagination/Pagination.js
+'use client';
+
+
+
+const Pagination_excluded = ["boundaryCount", "className", "color", "count", "defaultPage", "disabled", "getItemAriaLabel", "hideNextButton", "hidePrevButton", "onChange", "page", "renderItem", "shape", "showFirstButton", "showLastButton", "siblingCount", "size", "variant"];
+
+
+
+
+
+
+
+
+
+
+
+const Pagination_useUtilityClasses = ownerState => {
+  const {
+    classes,
+    variant
+  } = ownerState;
+  const slots = {
+    root: ['root', variant],
+    ul: ['ul']
+  };
+  return (0,composeClasses/* default */.A)(slots, getPaginationUtilityClass, classes);
+};
+const PaginationRoot = (0,styled/* default */.Ay)('nav', {
+  name: 'MuiPagination',
+  slot: 'Root',
+  overridesResolver: (props, styles) => {
+    const {
+      ownerState
+    } = props;
+    return [styles.root, styles[ownerState.variant]];
+  }
+})({});
+const PaginationUl = (0,styled/* default */.Ay)('ul', {
+  name: 'MuiPagination',
+  slot: 'Ul',
+  overridesResolver: (props, styles) => styles.ul
+})({
+  display: 'flex',
+  flexWrap: 'wrap',
+  alignItems: 'center',
+  padding: 0,
+  margin: 0,
+  listStyle: 'none'
+});
+function defaultGetAriaLabel(type, page, selected) {
+  if (type === 'page') {
+    return `${selected ? '' : 'Go to '}page ${page}`;
+  }
+  return `Go to ${type} page`;
+}
+const Pagination = /*#__PURE__*/react.forwardRef(function Pagination(inProps, ref) {
+  const props = (0,DefaultPropsProvider/* useDefaultProps */.b)({
+    props: inProps,
+    name: 'MuiPagination'
+  });
+  const {
+      boundaryCount = 1,
+      className,
+      color = 'standard',
+      count = 1,
+      defaultPage = 1,
+      disabled = false,
+      getItemAriaLabel = defaultGetAriaLabel,
+      hideNextButton = false,
+      hidePrevButton = false,
+      renderItem = item => /*#__PURE__*/(0,jsx_runtime.jsx)(PaginationItem_PaginationItem, (0,esm_extends/* default */.A)({}, item)),
+      shape = 'circular',
+      showFirstButton = false,
+      showLastButton = false,
+      siblingCount = 1,
+      size = 'medium',
+      variant = 'text'
+    } = props,
+    other = (0,objectWithoutPropertiesLoose/* default */.A)(props, Pagination_excluded);
+  const {
+    items
+  } = usePagination((0,esm_extends/* default */.A)({}, props, {
+    componentName: 'Pagination'
+  }));
+  const ownerState = (0,esm_extends/* default */.A)({}, props, {
+    boundaryCount,
+    color,
+    count,
+    defaultPage,
+    disabled,
+    getItemAriaLabel,
+    hideNextButton,
+    hidePrevButton,
+    renderItem,
+    shape,
+    showFirstButton,
+    showLastButton,
+    siblingCount,
+    size,
+    variant
+  });
+  const classes = Pagination_useUtilityClasses(ownerState);
+  return /*#__PURE__*/(0,jsx_runtime.jsx)(PaginationRoot, (0,esm_extends/* default */.A)({
+    "aria-label": "pagination navigation",
+    className: (0,clsx/* default */.A)(classes.root, className),
+    ownerState: ownerState,
+    ref: ref
+  }, other, {
+    children: /*#__PURE__*/(0,jsx_runtime.jsx)(PaginationUl, {
+      className: classes.ul,
+      ownerState: ownerState,
+      children: items.map((item, index) => /*#__PURE__*/(0,jsx_runtime.jsx)("li", {
+        children: renderItem((0,esm_extends/* default */.A)({}, item, {
+          color,
+          'aria-label': getItemAriaLabel(item.type, item.page, item.selected),
+          shape,
+          size,
+          variant
+        }))
+      }, index))
+    })
+  }));
+});
+
+// @default tags synced with default values from usePagination
+
+ false ? 0 : void 0;
+/* harmony default export */ const Pagination_Pagination = (Pagination);
 
 /***/ },
 
@@ -1491,70 +2101,73 @@ const GridToolbar = /*#__PURE__*/react.forwardRef(function GridToolbar(props, re
 
 /***/ },
 
-/***/ 40806
+/***/ 91195
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(96540);
-/* harmony import */ var _view_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(68525);
-/* harmony import */ var _component_SidebarDash__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(4640);
+/* harmony import */ var _component_ConfirmDeleteModal__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(80542);
+/* harmony import */ var _view_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(68525);
 /* harmony import */ var _PageView_Chartview_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(55746);
-/* harmony import */ var _mui_icons_material_Visibility__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(5673);
-/* harmony import */ var _mui_icons_material_Edit__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(28597);
-/* harmony import */ var _mui_icons_material_Delete__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(67034);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(84976);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(47767);
-/* harmony import */ var _mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(56655);
-/* harmony import */ var _mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(58331);
-/* harmony import */ var _mui_material_AppBar__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(89828);
-/* harmony import */ var _mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(8532);
-/* harmony import */ var _mui_material_CssBaseline__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(14519);
-/* harmony import */ var _mui_material_Drawer__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(88248);
-/* harmony import */ var _mui_material_List__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(49799);
-/* harmony import */ var _mui_material_Divider__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(71543);
-/* harmony import */ var _mui_material_Container__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(97834);
-/* harmony import */ var _mui_icons_material_Menu__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(62274);
-/* harmony import */ var _mui_icons_material_ChevronLeft__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(8451);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(11641);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(69067);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(14073);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(8239);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(50779);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(29571);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(2071);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(73896);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(47419);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(844);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(35406);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(11848);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(99380);
-/* harmony import */ var _utils_apiCache__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(46986);
-/* harmony import */ var _utils_formatUtils__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(37402);
-/* harmony import */ var _apiConfig__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(71510);
-/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(99682);
-/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(17332);
-/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(8047);
-/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(17809);
-/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(81757);
-/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(7078);
-/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(79030);
-/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(52751);
-/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_44__ = __webpack_require__(74353);
-/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_44___default = /*#__PURE__*/__webpack_require__.n(dayjs__WEBPACK_IMPORTED_MODULE_44__);
-/* harmony import */ var _component_Loader__WEBPACK_IMPORTED_MODULE_45__ = __webpack_require__(65821);
-/* harmony import */ var _mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_46__ = __webpack_require__(20889);
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_47__ = __webpack_require__(13561);
-/* harmony import */ var _features_auth_authSlice__WEBPACK_IMPORTED_MODULE_48__ = __webpack_require__(32005);
-/* harmony import */ var _component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_49__ = __webpack_require__(40301);
-/* harmony import */ var _img_no_data_png__WEBPACK_IMPORTED_MODULE_50__ = __webpack_require__(20453);
-/* harmony import */ var _img_no_data_png__WEBPACK_IMPORTED_MODULE_50___default = /*#__PURE__*/__webpack_require__.n(_img_no_data_png__WEBPACK_IMPORTED_MODULE_50__);
-/* harmony import */ var _mui_x_data_grid__WEBPACK_IMPORTED_MODULE_51__ = __webpack_require__(1835);
-/* harmony import */ var _mui_x_data_grid__WEBPACK_IMPORTED_MODULE_52__ = __webpack_require__(53071);
-/* harmony import */ var _MessageAdminView__WEBPACK_IMPORTED_MODULE_53__ = __webpack_require__(83818);
-/* harmony import */ var _NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_54__ = __webpack_require__(95236);
-/* harmony import */ var _utils_isMobile__WEBPACK_IMPORTED_MODULE_55__ = __webpack_require__(2650);
-/* harmony import */ var _component_MobileCardList__WEBPACK_IMPORTED_MODULE_56__ = __webpack_require__(353);
+/* harmony import */ var _component_SidebarDash__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(4640);
+/* harmony import */ var _mui_icons_material_Visibility__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(5673);
+/* harmony import */ var _mui_icons_material_Edit__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(28597);
+/* harmony import */ var _mui_icons_material_Delete__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(67034);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(84976);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(47767);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(11641);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(69067);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(14073);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(69279);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(8239);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(50779);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(29571);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(2071);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(73896);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(47419);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(844);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(35406);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(11848);
+/* harmony import */ var _mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(56655);
+/* harmony import */ var _mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(58331);
+/* harmony import */ var _mui_material_AppBar__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(89828);
+/* harmony import */ var _mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(8532);
+/* harmony import */ var _mui_material_CssBaseline__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(14519);
+/* harmony import */ var _mui_material_Drawer__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(88248);
+/* harmony import */ var _mui_material_List__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(49799);
+/* harmony import */ var _mui_material_Divider__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(71543);
+/* harmony import */ var _mui_material_Container__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(97834);
+/* harmony import */ var _mui_icons_material_Menu__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(62274);
+/* harmony import */ var _mui_icons_material_ChevronLeft__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(8451);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(99380);
+/* harmony import */ var _utils_apiCache__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(46986);
+/* harmony import */ var _apiConfig__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(71510);
+/* harmony import */ var _hooks_useModuleSearchState__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(80099);
+/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(99682);
+/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(17332);
+/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(34485);
+/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(8047);
+/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(17809);
+/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(55002);
+/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_44__ = __webpack_require__(62430);
+/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_45__ = __webpack_require__(48083);
+/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_46__ = __webpack_require__(74353);
+/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_46___default = /*#__PURE__*/__webpack_require__.n(dayjs__WEBPACK_IMPORTED_MODULE_46__);
+/* harmony import */ var _component_Loader__WEBPACK_IMPORTED_MODULE_47__ = __webpack_require__(65821);
+/* harmony import */ var _mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_48__ = __webpack_require__(20889);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_49__ = __webpack_require__(13561);
+/* harmony import */ var _features_auth_authSlice__WEBPACK_IMPORTED_MODULE_50__ = __webpack_require__(32005);
+/* harmony import */ var _component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_51__ = __webpack_require__(40301);
+/* harmony import */ var _img_no_data_png__WEBPACK_IMPORTED_MODULE_52__ = __webpack_require__(20453);
+/* harmony import */ var _img_no_data_png__WEBPACK_IMPORTED_MODULE_52___default = /*#__PURE__*/__webpack_require__.n(_img_no_data_png__WEBPACK_IMPORTED_MODULE_52__);
+/* harmony import */ var _mui_x_data_grid__WEBPACK_IMPORTED_MODULE_53__ = __webpack_require__(1835);
+/* harmony import */ var _mui_x_data_grid__WEBPACK_IMPORTED_MODULE_54__ = __webpack_require__(53071);
+/* harmony import */ var _MessageAdminView__WEBPACK_IMPORTED_MODULE_55__ = __webpack_require__(83818);
+/* harmony import */ var _NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_56__ = __webpack_require__(95236);
+/* harmony import */ var _utils_isMobile__WEBPACK_IMPORTED_MODULE_57__ = __webpack_require__(2650);
+/* harmony import */ var _component_MobileCardList__WEBPACK_IMPORTED_MODULE_58__ = __webpack_require__(353);
+/* harmony import */ var _utils_formatUtils__WEBPACK_IMPORTED_MODULE_59__ = __webpack_require__(37402);
 var _excluded = ["className"],
   _excluded2 = ["className"],
   _excluded3 = ["className"];
@@ -1615,10 +2228,12 @@ function _objectWithoutPropertiesLoose(r, e) { if (null == r) return {}; var t =
 
 
 
-var DeleteTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_31__/* ["default"] */ .Ay)(_ref => {
+
+
+var DeleteTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .Ay)(_ref => {
   var className = _ref.className,
     props = _objectWithoutProperties(_ref, _excluded);
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, _extends({}, props, {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .A, _extends({}, props, {
     classes: {
       popper: className
     }
@@ -1626,7 +2241,7 @@ var DeleteTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_31__/* ["default"]
 })(_ref2 => {
   var theme = _ref2.theme;
   return {
-    ["& .".concat(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A.tooltip)]: {
+    ["& .".concat(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_24__/* ["default"] */ .A.tooltip)]: {
       backgroundColor: 'red',
       color: 'white',
       boxShadow: theme.shadows[1],
@@ -1634,10 +2249,10 @@ var DeleteTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_31__/* ["default"]
     }
   };
 });
-var EditTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_31__/* ["default"] */ .Ay)(_ref3 => {
+var EditTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .Ay)(_ref3 => {
   var className = _ref3.className,
     props = _objectWithoutProperties(_ref3, _excluded2);
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, _extends({}, props, {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .A, _extends({}, props, {
     classes: {
       popper: className
     }
@@ -1645,7 +2260,7 @@ var EditTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_31__/* ["default"] *
 })(_ref4 => {
   var theme = _ref4.theme;
   return {
-    ["& .".concat(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A.tooltip)]: {
+    ["& .".concat(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_24__/* ["default"] */ .A.tooltip)]: {
       backgroundColor: 'gray',
       color: 'white',
       boxShadow: theme.shadows[1],
@@ -1653,10 +2268,10 @@ var EditTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_31__/* ["default"] *
     }
   };
 });
-var ViewTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_31__/* ["default"] */ .Ay)(_ref5 => {
+var ViewTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .Ay)(_ref5 => {
   var className = _ref5.className,
     props = _objectWithoutProperties(_ref5, _excluded3);
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, _extends({}, props, {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .A, _extends({}, props, {
     classes: {
       popper: className
     }
@@ -1664,7 +2279,7 @@ var ViewTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_31__/* ["default"] *
 })(_ref6 => {
   var theme = _ref6.theme;
   return {
-    ["& .".concat(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A.tooltip)]: {
+    ["& .".concat(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_24__/* ["default"] */ .A.tooltip)]: {
       backgroundColor: '#202a5a',
       color: 'white',
       boxShadow: theme.shadows[1],
@@ -1685,7 +2300,7 @@ var style = {
   pb: 3
 };
 var drawerWidth = 240;
-var AppBar = (0,_mui_material__WEBPACK_IMPORTED_MODULE_31__/* ["default"] */ .Ay)(_mui_material_AppBar__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+var AppBar = (0,_mui_material__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .Ay)(_mui_material_AppBar__WEBPACK_IMPORTED_MODULE_25__/* ["default"] */ .A, {
   shouldForwardProp: prop => prop !== 'open'
 })(_ref7 => {
   var theme = _ref7.theme,
@@ -1705,7 +2320,7 @@ var AppBar = (0,_mui_material__WEBPACK_IMPORTED_MODULE_31__/* ["default"] */ .Ay
     })
   });
 });
-var Drawer = (0,_mui_material__WEBPACK_IMPORTED_MODULE_31__/* ["default"] */ .Ay)(_mui_material_Drawer__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .Ay, {
+var Drawer = (0,_mui_material__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .Ay)(_mui_material_Drawer__WEBPACK_IMPORTED_MODULE_28__/* ["default"] */ .Ay, {
   shouldForwardProp: prop => prop !== 'open'
 })(_ref8 => {
   var theme = _ref8.theme,
@@ -1733,21 +2348,22 @@ var Drawer = (0,_mui_material__WEBPACK_IMPORTED_MODULE_31__/* ["default"] */ .Ay
     })
   };
 });
-function EstimateViewAdmin() {
-  var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_8__/* .useNavigate */ .Zp)();
-  var isMobile = (0,_utils_isMobile__WEBPACK_IMPORTED_MODULE_55__/* .useIsMobile */ .al)();
-  var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_47__/* .useDispatch */ .wA)();
-  var user = (0,react_redux__WEBPACK_IMPORTED_MODULE_47__/* .useSelector */ .d4)(_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_48__/* .selectCurrentUser */ .xu);
+function MaintenanceViewAdmin() {
+  var _user$data, _maintenance$find;
+  var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_9__/* .useNavigate */ .Zp)();
+  var isMobile = (0,_utils_isMobile__WEBPACK_IMPORTED_MODULE_57__/* .useIsMobile */ .al)();
+  var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_49__/* .useDispatch */ .wA)();
+  var user = (0,react_redux__WEBPACK_IMPORTED_MODULE_49__/* .useSelector */ .d4)(_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_50__/* .selectCurrentUser */ .xu);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     var storesUserId = localStorage.getItem('user');
     var fetchUser = /*#__PURE__*/function () {
       var _ref9 = _asyncToGenerator(function* () {
         if (storesUserId) {
           try {
-            var res = yield axios__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_35__/* .ENDPOINT_URL */ .m, "/get-employeeuser/").concat(storesUserId));
+            var res = yield axios__WEBPACK_IMPORTED_MODULE_34__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_36__/* .ENDPOINT_URL */ .m, "/get-employeeuser/").concat(storesUserId));
             var Name = res.data.data.employeeName;
             var Role = res.data.data.role;
-            dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_48__/* .setUser */ .gV)({
+            dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_50__/* .setUser */ .gV)({
               userName: Name,
               role: Role,
               id: res.data.data._id
@@ -1765,11 +2381,6 @@ function EstimateViewAdmin() {
     }();
     fetchUser();
   }, [dispatch]);
-  var handleLogout = () => {
-    localStorage.removeItem('user');
-    dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_48__/* .logOut */ .je)());
-    navigate('/');
-  };
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState2 = _slicedToArray(_useState, 2),
     grantAccess = _useState2[0],
@@ -1779,7 +2390,7 @@ function EstimateViewAdmin() {
       var _ref0 = _asyncToGenerator(function* () {
         try {
           var _res$data;
-          var res = yield (0,_utils_apiCache__WEBPACK_IMPORTED_MODULE_33__/* .cachedGet */ .Fe)("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_35__/* .ENDPOINT_URL */ .m, "/grantAccess"));
+          var res = yield (0,_utils_apiCache__WEBPACK_IMPORTED_MODULE_35__/* .cachedGet */ .Fe)("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_36__/* .ENDPOINT_URL */ .m, "/grantAccess"));
           (_res$data = res.data) === null || _res$data === void 0 || (_res$data = _res$data.data) === null || _res$data === void 0 || _res$data.filter(row => row.userID === user.data.id).map(row => setGrantAccess(row.modules));
         } catch (error) {
           console.error('Error fetching data:', error);
@@ -1791,93 +2402,82 @@ function EstimateViewAdmin() {
     }();
     fetchNumber();
   }, [user]);
-  var estimationInfoC = grantAccess.filter(row => row.moduleName === "Estimate" && row.access.createM === true);
-  var estimationInfoV = grantAccess.filter(row => row.moduleName === "Estimate" && row.access.viewM === true);
-  var estimationInfoU = grantAccess.filter(row => row.moduleName === "Estimate" && row.access.editM === true);
-  var estimationInfoD = grantAccess.filter(row => row.moduleName === "Estimate" && row.access.deleteM === true);
+  var isOwner = (user === null || user === void 0 || (_user$data = user.data) === null || _user$data === void 0 ? void 0 : _user$data.userName) === 'GG';
+  var MaintenanceInfoC = grantAccess.filter(row => (row.moduleName === "Maintenance" || row.moduleName === "Maintenance-Order") && row.access.createM === true);
+  var MaintenanceInfoV = grantAccess.filter(row => (row.moduleName === "Maintenance" || row.moduleName === "Maintenance-Order") && row.access.viewM === true);
+  var MaintenanceInfoU = grantAccess.filter(row => (row.moduleName === "Maintenance" || row.moduleName === "Maintenance-Order") && row.access.editM === true);
+  var MaintenanceInfoD = grantAccess.filter(row => (row.moduleName === "Maintenance" || row.moduleName === "Maintenance-Order") && row.access.deleteM === true);
+  var handleLogout = () => {
+    localStorage.removeItem('user');
+    dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_50__/* .logOut */ .je)());
+    navigate('/');
+  };
   var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState4 = _slicedToArray(_useState3, 2),
-    estimate = _useState4[0],
-    setEstimate = _useState4[1];
-  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
+    maintenance = _useState4[0],
+    setMaintenance = _useState4[1];
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState6 = _slicedToArray(_useState5, 2),
-    loadingData = _useState6[0],
-    setLoadingData = _useState6[1];
-  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    newPurchase = _useState6[0],
+    setNewPurchase = _useState6[1];
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
     _useState8 = _slicedToArray(_useState7, 2),
-    hiddenRow = _useState8[0],
-    setHiddenRow = _useState8[1];
-  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
-    _useState0 = _slicedToArray(_useState9, 2),
-    hidden = _useState0[0],
-    setHidden = _useState0[1];
-  var _useState1 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('ALL'),
-    _useState10 = _slicedToArray(_useState1, 2),
-    statusFilter = _useState10[0],
-    setStatusFilter = _useState10[1];
-  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
+    loadingData = _useState8[0],
+    setLoadingData = _useState8[1];
+  var _useModuleSearchState = (0,_hooks_useModuleSearchState__WEBPACK_IMPORTED_MODULE_37__/* .useModuleSearchState */ .pi)('maintenance'),
+    searchTerm = _useModuleSearchState.searchTerm,
+    setSearchTerm = _useModuleSearchState.setSearchTerm,
+    filterField = _useModuleSearchState.filterField,
+    setFilterField = _useModuleSearchState.setFilterField,
+    filterValue = _useModuleSearchState.filterValue,
+    setFilterValue = _useModuleSearchState.setFilterValue,
+    statusFilter = _useModuleSearchState.statusFilter,
+    setStatusFilter = _useModuleSearchState.setStatusFilter,
+    page = _useModuleSearchState.page,
+    setPage = _useModuleSearchState.setPage;
+  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
       all: 0,
-      draft: 0,
-      sent: 0,
-      decline: 0,
-      approved: 0
+      open: 0,
+      pending: 0,
+      close: 0,
+      converted: 0,
+      reschedule: 0,
+      cancel: 0
     }),
-    _useState12 = _slicedToArray(_useState11, 2),
-    statusCounts = _useState12[0],
-    setStatusCounts = _useState12[1];
-  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
-    _useState14 = _slicedToArray(_useState13, 2),
-    page = _useState14[0],
-    setPage = _useState14[1];
+    _useState0 = _slicedToArray(_useState9, 2),
+    statusCounts = _useState0[0],
+    setStatusCounts = _useState0[1];
   var limit = isMobile ? 30 : 100;
-  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
-    _useState16 = _slicedToArray(_useState15, 2),
-    searchTerm = _useState16[0],
-    setSearchTerm = _useState16[1];
-  var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
-    _useState18 = _slicedToArray(_useState17, 2),
-    debouncedSearchTerm = _useState18[0],
-    setDebouncedSearchTerm = _useState18[1];
-  var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
-    _useState20 = _slicedToArray(_useState19, 2),
-    filterField = _useState20[0],
-    setFilterField = _useState20[1];
-  var _useState21 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
-    _useState22 = _slicedToArray(_useState21, 2),
-    filterValue = _useState22[0],
-    setFilterValue = _useState22[1];
-  var _useState23 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
-    _useState24 = _slicedToArray(_useState23, 2),
-    totalPage = _useState24[0],
-    SetTotalPage = _useState24[1];
-  var _useState25 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
-    _useState26 = _slicedToArray(_useState25, 2),
-    totalItemCount = _useState26[0],
-    setTotalItemCount = _useState26[1];
-  var _useState27 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
-    _useState28 = _slicedToArray(_useState27, 2),
-    selectedRows = _useState28[0],
-    setSelectedRows = _useState28[1];
-  var _useState29 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
-    _useState30 = _slicedToArray(_useState29, 2),
-    reason = _useState30[0],
-    setReason = _useState30[1];
+  var _useState1 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
+    _useState10 = _slicedToArray(_useState1, 2),
+    totalPage = _useState10[0],
+    SetTotalPage = _useState10[1];
+  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
+    _useState12 = _slicedToArray(_useState11, 2),
+    totalItemCount = _useState12[0],
+    setTotalItemCount = _useState12[1];
   var fetchItems = /*#__PURE__*/function () {
     var _ref1 = _asyncToGenerator(function* (page, searchTerm, filterField, filterValue, statusFilter) {
       try {
         var statusParam = statusFilter && statusFilter !== 'ALL' ? "&status=".concat(encodeURIComponent(statusFilter)) : '';
-        var res = yield axios__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_35__/* .ENDPOINT_URL */ .m, "/estimation-Information?page=").concat(page + 1, "&limit=").concat(limit, "&search=").concat(encodeURIComponent((searchTerm || '').trim()), "&filterField=").concat(encodeURIComponent((filterField || '').trim()), "&filterValue=").concat(encodeURIComponent((filterValue || '').trim())).concat(statusParam));
-        var formatDate = res.data.itemI.map(item => _objectSpread(_objectSpread({}, item), {}, {
-          id: item._id,
-          dateField: item.estimateDate !== null ? dayjs__WEBPACK_IMPORTED_MODULE_44___default()(item.estimateDate).format('DD/MM/YYYY') : '',
-          dueDateField: dayjs__WEBPACK_IMPORTED_MODULE_44___default()(item.estimateDueDate).format('DD/MM/YYYY')
-        }));
-        setEstimate(formatDate);
-        SetTotalPage(res.data.totalPages);
-        setTotalItemCount(res.data.totalItem || 0);
+        var res = yield axios__WEBPACK_IMPORTED_MODULE_34__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_36__/* .ENDPOINT_URL */ .m, "/maintenance-Information?page=").concat(page + 1, "&limit=").concat(limit, "&search=").concat(encodeURIComponent((searchTerm || '').trim()), "&filterField=").concat(encodeURIComponent((filterField || '').trim()), "&filterValue=").concat(encodeURIComponent((filterValue || '').trim())).concat(statusParam));
+        var formatDate = (res.data.itemI || []).map(item => {
+          var isConverted = item.status === 'Close' && (item.Converted === true || item.Converted === 'true') || item.status === 'Converted' || item.Converted === true || item.Converted === 'true';
+          var rawNum = String(item.serviceNumber || '').replace(/^M-0*/i, '');
+          return _objectSpread(_objectSpread({}, item), {}, {
+            id: item._id,
+            status: isConverted ? 'Converted' : item.status,
+            serviceNumber: "M-00" + rawNum,
+            dateField: dayjs__WEBPACK_IMPORTED_MODULE_46___default()(item.serviceDate).format('DD/MM/YYYY'),
+            visit: dayjs__WEBPACK_IMPORTED_MODULE_46___default()(item.visitDate).format('DD/MM/YYYY')
+          });
+        });
+        SetTotalPage(Math.ceil(res.data.totalItem / limit));
+        setTotalItemCount(res.data.totalItem || 0); // Ensure totalPage is correctly calculated
         if (res.data.statusCounts) {
           setStatusCounts(res.data.statusCounts);
         }
+        setMaintenance(formatDate);
         setLoadingData(false);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -1888,16 +2488,12 @@ function EstimateViewAdmin() {
       return _ref1.apply(this, arguments);
     };
   }();
+  var handleRefreshSearch = () => {
+    fetchItems(page, searchTerm, filterField, filterValue, statusFilter);
+  };
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    fetchItems(page, debouncedSearchTerm, filterField, filterValue, statusFilter);
-  }, [page, debouncedSearchTerm, filterField, filterValue, statusFilter]);
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    var timer = setTimeout(() => {
-      setDebouncedSearchTerm(searchTerm);
-      setPage(0);
-    }, 400);
-    return () => clearTimeout(timer);
-  }, [searchTerm]);
+    fetchItems(page, searchTerm, filterField, filterValue, statusFilter);
+  }, [page, searchTerm, filterField, filterValue, statusFilter]);
   var handleStatusClick = statusKey => {
     if (statusFilter.toLowerCase() === statusKey.toLowerCase() && statusKey !== 'ALL') {
       setStatusFilter('ALL');
@@ -1906,28 +2502,25 @@ function EstimateViewAdmin() {
     }
     setPage(0);
   };
-  var handleRefreshSearch = () => {
-    fetchItems(page, searchTerm, filterField, filterValue, statusFilter);
-  };
   var handlePageChange = newPage => {
-    setPage(newPage);
+    setPage(newPage); // Update page state (convert to 0-based index)
   };
-  var _useState31 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState32 = _slicedToArray(_useState31, 2),
-    loading = _useState32[0],
-    setLoading = _useState32[1];
-  var _useState33 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState34 = _slicedToArray(_useState33, 2),
-    ErrorOpenModal = _useState34[0],
-    setErrorOpenModal = _useState34[1];
-  var _useState35 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState36 = _slicedToArray(_useState35, 2),
-    loadingOpenModal = _useState36[0],
-    setLoadingOpenModal = _useState36[1];
-  var _useState37 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState38 = _slicedToArray(_useState37, 2),
-    modalDeleteOpenLoading = _useState38[0],
-    setModalDeleteOpenLoading = _useState38[1];
+  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState14 = _slicedToArray(_useState13, 2),
+    loading = _useState14[0],
+    setLoading = _useState14[1];
+  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState16 = _slicedToArray(_useState15, 2),
+    ErrorOpenModal = _useState16[0],
+    setErrorOpenModal = _useState16[1];
+  var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState18 = _slicedToArray(_useState17, 2),
+    loadingOpenModal = _useState18[0],
+    setLoadingOpenModal = _useState18[1];
+  var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState20 = _slicedToArray(_useState19, 2),
+    modalDeleteOpenLoading = _useState20[0],
+    setModalDeleteOpenLoading = _useState20[1];
   {/** Loading Update View Start */}
   var handleOpenLoading = () => {
     setLoadingOpenModal(true);
@@ -1940,7 +2533,7 @@ function EstimateViewAdmin() {
   var handleCloseLoading = () => {
     setLoadingOpenModal(false);
     setLoading(false);
-    fetchItems(page, searchTerm, filterField, filterValue);
+    fetchItems(page, searchTerm, filterField, filterValue, statusFilter);
   };
   {/** Loading Update View End */}
   {/** Loading Delete View Start */}
@@ -1955,7 +2548,7 @@ function EstimateViewAdmin() {
   var handleDeleteCloseLoading = () => {
     setModalDeleteOpenLoading(false);
     setLoading(false);
-    fetchItems(page, searchTerm, filterField, filterValue);
+    fetchItems(page, searchTerm, filterField, filterValue, statusFilter);
   };
   var handleOpenOffline = () => {
     setLoadingOpenModal(true);
@@ -1971,68 +2564,14 @@ function EstimateViewAdmin() {
       setLoading(false);
     }, 500);
   };
-  var handleCreateNotificationOffline = /*#__PURE__*/function () {
-    var _ref10 = _asyncToGenerator(function* (ReferenceInfo, ReferenceInfoNumber, ReferenceInfoCustomer) {
-      var data = {
-        idInfo: ReferenceInfo,
-        person: user.data.userName + ' Created ',
-        reason: 'Q-' + String(ReferenceInfoNumber).padStart(6, '0') + ' For ' + ReferenceInfoCustomer,
-        dateNotification: new Date()
-      };
-      try {
-        yield axios__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_35__/* .ENDPOINT_URL */ .m, "/create-notification"), data);
-      } catch (error) {
-        console.log(error);
-      }
-    });
-    return function handleCreateNotificationOffline(_x6, _x7, _x8) {
-      return _ref10.apply(this, arguments);
-    };
-  }();
-  var syncOff = /*#__PURE__*/function () {
-    var _ref11 = _asyncToGenerator(function* () {
-      fetchItems(page, debouncedSearchTerm, filterField, filterValue, statusFilter);
-    });
-    return function syncOff() {
-      return _ref11.apply(this, arguments);
-    };
-  }();
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    var fetchDataHidden = /*#__PURE__*/function () {
-      var _ref12 = _asyncToGenerator(function* () {
-        try {
-          var res = yield axios__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_35__/* .ENDPOINT_URL */ .m, "/hidden"));
-          setHiddenRow(res.data.data.map(row => row.idRow));
-          setHidden(res.data.data);
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        }
-      });
-      return function fetchDataHidden() {
-        return _ref12.apply(this, arguments);
-      };
-    }();
-    fetchDataHidden();
-  }, []);
-  var _useState39 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState40 = _slicedToArray(_useState39, 2),
-    openReasonDelete = _useState40[0],
-    setOpenReasonDelete = _useState40[1];
-  var handleOpenReasonDelete = e => {
-    e.preventDefault();
-    setOpenReasonDelete(true);
-  };
-  var handleCloseReasonDelete = () => {
-    setOpenReasonDelete(false);
-  };
-  var _useState41 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState42 = _slicedToArray(_useState41, 2),
-    open = _useState42[0],
-    setOpen = _useState42[1];
-  var _useState43 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
-    _useState44 = _slicedToArray(_useState43, 2),
-    DeleteId = _useState44[0],
-    setDeleteId = _useState44[1];
+  var _useState21 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState22 = _slicedToArray(_useState21, 2),
+    open = _useState22[0],
+    setOpen = _useState22[1];
+  var _useState23 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    _useState24 = _slicedToArray(_useState23, 2),
+    DeleteId = _useState24[0],
+    setDeleteId = _useState24[1];
   var handleOpen = id => {
     setOpen(true);
     setDeleteId(id);
@@ -2041,19 +2580,91 @@ function EstimateViewAdmin() {
     setLoadingOpenModal(false);
     setOpen(false);
   };
-  var _useState45 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState46 = _slicedToArray(_useState45, 2),
-    open1 = _useState46[0],
-    setOpen1 = _useState46[1];
-  var _useState47 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
-    _useState48 = _slicedToArray(_useState47, 2),
-    updateId = _useState48[0],
-    setUpdateId = _useState48[1];
-  var _useState49 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
-    _useState50 = _slicedToArray(_useState49, 2),
-    status = _useState50[0],
-    setStatus = _useState50[1];
+  var _useState25 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState26 = _slicedToArray(_useState25, 2),
+    open1 = _useState26[0],
+    setOpen1 = _useState26[1];
+  var _useState27 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    _useState28 = _slicedToArray(_useState27, 2),
+    updateId = _useState28[0],
+    setUpdateId = _useState28[1];
+  var _useState29 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
+    _useState30 = _slicedToArray(_useState29, 2),
+    status = _useState30[0],
+    setStatus = _useState30[1];
+  var _useState31 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
+    _useState32 = _slicedToArray(_useState31, 2),
+    action = _useState32[0],
+    setAction = _useState32[1];
+  var _useState33 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
+    _useState34 = _slicedToArray(_useState33, 2),
+    reason = _useState34[0],
+    setReason = _useState34[1];
+  var _useState35 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
+    _useState36 = _slicedToArray(_useState35, 2),
+    invoiceN = _useState36[0],
+    setInvoiceN = _useState36[1];
+  {/** Update Invoice Status start */}
+  ;(0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    if (updateId !== null) {
+      axios__WEBPACK_IMPORTED_MODULE_34__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_36__/* .ENDPOINT_URL */ .m, "/get-maintenance/").concat(updateId)).then(res => {
+        // get the response data here
+        setStatus(res.data.data.status);
+        setAction(res.data.data.action);
+        setInvoiceN(res.data.data.serviceNumber);
+      }).catch(error => {
+        // Handle errors
+        console.error('Error fetching data:', error);
+      });
+    }
+  }, [updateId]);
+  var handleCreateComment = /*#__PURE__*/function () {
+    var _ref10 = _asyncToGenerator(function* () {
+      var data = {
+        idInfo: updateId,
+        person: user.data.userName,
+        reason: status + ' M-' + invoiceN,
+        dateNotification: new Date()
+      };
+      try {
+        yield axios__WEBPACK_IMPORTED_MODULE_34__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_36__/* .ENDPOINT_URL */ .m, "/create-notification/"), data);
+      } catch (error) {
+        console.log(error);
+      }
+    });
+    return function handleCreateComment() {
+      return _ref10.apply(this, arguments);
+    };
+  }();
+  var handleSubmitUpdateStatus = /*#__PURE__*/function () {
+    var _ref11 = _asyncToGenerator(function* (e) {
+      e.preventDefault();
+      var data = {
+        status
+      };
+      try {
+        var res = yield axios__WEBPACK_IMPORTED_MODULE_34__/* ["default"] */ .A.put("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_36__/* .ENDPOINT_URL */ .m, "/update-maintenance/").concat(updateId), data);
+        if (res) {
+          handleOpenLoading();
+          handleCreateComment();
+        }
+      } catch (error) {
+        console.error('Error making POST request:', error);
+      }
+    });
+    return function handleSubmitUpdateStatus(_x6) {
+      return _ref11.apply(this, arguments);
+    };
+  }();
+  {/** Update Invoice Status End */}
   var handleOpenUpdate = id => {
+    var target = maintenance.find(m => m._id === id);
+    if (target) {
+      var isConverted = target.status === 'Close' && (target.Converted === true || target.Converted === 'true') || target.status === 'Converted' || target.Converted === true || target.Converted === 'true';
+      if (isConverted) {
+        return;
+      }
+    }
     setOpen1(true);
     setUpdateId(id);
   };
@@ -2061,120 +2672,131 @@ function EstimateViewAdmin() {
     setOpen1(false);
     setUpdateId(null);
   };
-  {/** delete multiple && all modal start */}
-  var _useState51 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState52 = _slicedToArray(_useState51, 2),
-    openDeleteMultiple = _useState52[0],
-    setOpenDeleteMultiple = _useState52[1];
+  var _useState37 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    _useState38 = _slicedToArray(_useState37, 2),
+    selectedRows = _useState38[0],
+    setSelectedRows = _useState38[1];
+  var _useState39 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState40 = _slicedToArray(_useState39, 2),
+    openDeleteMultiple = _useState40[0],
+    setOpenDeleteMultiple = _useState40[1];
   var handleOpenMultiple = () => {
     setOpenDeleteMultiple(true);
   };
   var handleCloseMultiple = () => {
     setOpenDeleteMultiple(false);
   };
-  var _useState53 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState54 = _slicedToArray(_useState53, 2),
-    openDeleteAll = _useState54[0],
-    setOpenDeleteAll = _useState54[1];
+  var _useState41 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState42 = _slicedToArray(_useState41, 2),
+    openDeleteAll = _useState42[0],
+    setOpenDeleteAll = _useState42[1];
   var handleOpenAll = () => {
     setOpenDeleteAll(true);
   };
   var handleCloseAll = () => {
     setOpenDeleteAll(false);
-    setSelectedRows([]);
   };
-  {/** delete multiple && all modal end */}
-  {/** Loading Delete View End */}
+  var _useState43 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState44 = _slicedToArray(_useState43, 2),
+    openReasonDelete = _useState44[0],
+    setOpenReasonDelete = _useState44[1];
+  var handleOpenReasonDelete = e => {
+    e.preventDefault();
+    setOpenReasonDelete(true);
+  };
+  var handleCloseReasonDelete = () => {
+    setOpenReasonDelete(false);
+  };
   var handleDelete = /*#__PURE__*/function () {
-    var _ref13 = _asyncToGenerator(function* () {
+    var _ref12 = _asyncToGenerator(function* () {
       try {
-        var res = yield axios__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A.delete("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_35__/* .ENDPOINT_URL */ .m, "/delete-estimation/").concat(DeleteId));
+        var res = yield axios__WEBPACK_IMPORTED_MODULE_34__/* ["default"] */ .A.delete("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_36__/* .ENDPOINT_URL */ .m, "/delete-maintenance/").concat(DeleteId));
         if (res) {
-          setEstimate(prevEstimate => prevEstimate.filter(item => item._id !== DeleteId));
+          setOpen(false);
           handleDeleteOpenLoading();
         }
       } catch (error) {
-        if (error.response && error.response.data && error.response.data.error) {
-          alert(error.response.data.error);
-        } else {
-          alert('An error as Occur');
-        }
+        alert("try again");
       }
     });
     return function handleDelete() {
-      return _ref13.apply(this, arguments);
+      return _ref12.apply(this, arguments);
     };
   }();
-  var _useState55 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
-    _useState56 = _slicedToArray(_useState55, 2),
-    EstimateDeleted = _useState56[0],
-    setEstimateDeleted = _useState56[1];
+  var _useState45 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    _useState46 = _slicedToArray(_useState45, 2),
+    MaintenanceDeleted = _useState46[0],
+    setMaintenanceDeleted = _useState46[1];
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     var fetchFunction = /*#__PURE__*/function () {
-      var _ref14 = _asyncToGenerator(function* () {
+      var _ref13 = _asyncToGenerator(function* () {
         var deletePromises = selectedRows.map(/*#__PURE__*/function () {
-          var _ref15 = _asyncToGenerator(function* (idToDelete) {
-            return axios__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_35__/* .ENDPOINT_URL */ .m, "/get-estimation/").concat(idToDelete));
+          var _ref14 = _asyncToGenerator(function* (idToDelete) {
+            return axios__WEBPACK_IMPORTED_MODULE_34__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_36__/* .ENDPOINT_URL */ .m, "/get-maintenance/").concat(idToDelete));
           });
-          return function (_x9) {
-            return _ref15.apply(this, arguments);
+          return function (_x7) {
+            return _ref14.apply(this, arguments);
           };
         }());
         try {
           var res = yield Promise.all(deletePromises);
-          setEstimateDeleted(res.map(row => 'Q-' + row.data.data.estimateNumber));
+          setMaintenanceDeleted(res.map(row => 'M-' + row.data.data.serviceNumber));
         } catch (error) {
           console.log(error);
         }
       });
       return function fetchFunction() {
-        return _ref14.apply(this, arguments);
+        return _ref13.apply(this, arguments);
       };
     }();
     if (selectedRows && selectedRows.length > 0) {
       fetchFunction();
     } else {
-      setEstimateDeleted([]);
+      setMaintenanceDeleted([]);
     }
   }, [selectedRows]);
   var infoFromState = (selectedRows || []).map(id => {
-    var found = (estimate || []).find(e => e._id === id || e.id === id);
-    return found !== null && found !== void 0 && found.estimateNumber ? "Q-".concat(found.estimateNumber) : '';
+    var found = maintenance.find(m => m._id === id || m.id === id);
+    return (found === null || found === void 0 ? void 0 : found.serviceNumber) || '';
   }).filter(Boolean);
-  var info = infoFromState.length > 0 ? infoFromState.join(', ') : EstimateDeleted.length > 0 ? EstimateDeleted.join(', ') : selectedRows.length > 0 ? "".concat(selectedRows.length, " quotation(s)") : '';
+  var info = infoFromState.length > 0 ? infoFromState.join(', ') : MaintenanceDeleted.length > 0 ? MaintenanceDeleted.join(', ') : selectedRows.length > 0 ? "".concat(selectedRows.length, " record(s)") : '';
   var handleCreateNotification = /*#__PURE__*/function () {
-    var _ref16 = _asyncToGenerator(function* () {
+    var _ref15 = _asyncToGenerator(function* () {
       var data = {
         idInfo: '',
-        person: user.data.userName + ' Deleted ' + (info || 'Quotation(s)'),
+        person: user.data.userName + ' Deleted ' + (info || 'Maintenance record(s)'),
         reason,
         dateNotification: new Date()
       };
       try {
-        yield axios__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_35__/* .ENDPOINT_URL */ .m, "/create-notification"), data);
+        yield axios__WEBPACK_IMPORTED_MODULE_34__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_36__/* .ENDPOINT_URL */ .m, "/create-notification"), data);
       } catch (error) {
         console.log(error);
       }
     });
     return function handleCreateNotification() {
-      return _ref16.apply(this, arguments);
+      return _ref15.apply(this, arguments);
     };
   }();
   var handleDeleteMany = /*#__PURE__*/function () {
-    var _ref17 = _asyncToGenerator(function* (e) {
+    var _ref16 = _asyncToGenerator(function* (e) {
       if (e && e.preventDefault) e.preventDefault();
+      var input = document.getElementById("confirmDeleteBulk");
+      if (input && input.value !== "DELETE") {
+        alert("Please type DELETE to confirm");
+        return;
+      }
       var deletePromises = selectedRows.map(/*#__PURE__*/function () {
-        var _ref18 = _asyncToGenerator(function* (idToDelete) {
-          return axios__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A.delete("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_35__/* .ENDPOINT_URL */ .m, "/delete-estimation/").concat(idToDelete));
+        var _ref17 = _asyncToGenerator(function* (idToDelete) {
+          return axios__WEBPACK_IMPORTED_MODULE_34__/* ["default"] */ .A.delete("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_36__/* .ENDPOINT_URL */ .m, "/delete-maintenance/").concat(idToDelete));
         });
-        return function (_x1) {
-          return _ref18.apply(this, arguments);
+        return function (_x9) {
+          return _ref17.apply(this, arguments);
         };
       }());
       try {
         var res = yield Promise.all(deletePromises);
         if (res) {
-          setEstimate(prevEstimate => prevEstimate.filter(item => !selectedRows.includes(item._id)));
           handleCreateNotification();
           setOpenReasonDelete(false);
           setOpenDeleteAll(false);
@@ -2184,164 +2806,61 @@ function EstimateViewAdmin() {
           handleDeleteOpenLoading();
         }
       } catch (error) {
-        console.error('Error deleting items:', error);
-        alert("Error deleting quotations. Please try again.");
-      }
-    });
-    return function handleDeleteMany(_x0) {
-      return _ref17.apply(this, arguments);
-    };
-  }();
-  {/** DElete End */}
-  var _useState57 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
-    _useState58 = _slicedToArray(_useState57, 2),
-    estimateN = _useState58[0],
-    setEstimateN = _useState58[1];
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    if (updateId !== null) {
-      axios__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_35__/* .ENDPOINT_URL */ .m, "/get-estimation/").concat(updateId)).then(res => {
-        // get the response data here
-        setStatus(res.data.data.status);
-        setEstimateN(res.data.data.estimateNumber);
-      }).catch(error => {
-        // Handle errors
-        console.error('Error fetching data:', error);
-      });
-    }
-  }, [updateId]);
-  var handleCreateComment = /*#__PURE__*/function () {
-    var _ref19 = _asyncToGenerator(function* () {
-      var data = {
-        idInfo: updateId,
-        person: user.data.userName,
-        reason: status + ' Q-' + estimateN,
-        dateNotification: new Date()
-      };
-      try {
-        yield axios__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_35__/* .ENDPOINT_URL */ .m, "/create-notification/"), data);
-      } catch (error) {
         console.log(error);
+        alert("Error deleting records. Please try again.");
       }
     });
-    return function handleCreateComment() {
-      return _ref19.apply(this, arguments);
+    return function handleDeleteMany(_x8) {
+      return _ref16.apply(this, arguments);
     };
   }();
-  var handleSubmitUpdateStatus = /*#__PURE__*/function () {
-    var _ref20 = _asyncToGenerator(function* (e) {
-      e.preventDefault();
-      var data = {
-        status
-      };
-      try {
-        var res = yield axios__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A.put("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_35__/* .ENDPOINT_URL */ .m, "/update-estimation/").concat(updateId), data);
-        if (res) {
-          setEstimate(prevEstimate => prevEstimate.map(item => item._id === updateId ? _objectSpread(_objectSpread({}, item), {}, {
-            status: status
-          }) : item));
-          handleCreateComment();
-          handleOpenLoading();
-        }
-      } catch (error) {
-        console.error('Error making POST request:', error);
-      }
-    });
-    return function handleSubmitUpdateStatus(_x10) {
-      return _ref20.apply(this, arguments);
-    };
-  }();
-  {/** hide Start */}
-  var handleHideRow = /*#__PURE__*/function () {
-    var _ref21 = _asyncToGenerator(function* (id) {
-      if (user.data.role === 'CEO') {
-        try {
-          if (hiddenRow.includes(id)) {
-            setHiddenRow(hiddenRow.filter(row => row !== id));
-            var result = hidden.filter(row => row.idRow === id).map(row => row._id);
-            var hiddenId = result.toString();
-            yield axios__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A.delete("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_35__/* .ENDPOINT_URL */ .m, "/delete-hidden/").concat(hiddenId));
-          } else {
-            setHiddenRow([...hiddenRow, id]);
-            yield axios__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_35__/* .ENDPOINT_URL */ .m, "/create-hidden"), {
-              idRow: id,
-              hiddenByCEO: true
-            });
-          }
-        } catch (error) {
-          console.log(error);
-        }
-      }
-    });
-    return function handleHideRow(_x11) {
-      return _ref21.apply(this, arguments);
-    };
-  }();
-  var rowRenderer = params => {
-    if (hiddenRow.includes(params.row._id && !user.data.role === 'CEO')) {
-      return null;
-    }
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, params.row[params.field]);
-  };
-  var _useState59 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
-    _useState60 = _slicedToArray(_useState59, 2),
-    filteredRows = _useState60[0],
-    setFilteredRows = _useState60[1];
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    var Est = estimate.filter(row => !hiddenRow.includes(row._id));
-    setFilteredRows(Est);
-  }, [estimate]);
-  {/** hide End */}
-  var _useState61 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
-    _useState62 = _slicedToArray(_useState61, 2),
-    searchEstimate = _useState62[0],
-    setSearchEstimate = _useState62[1];
+  {/** search start */}
+  var _useState47 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
+    _useState48 = _slicedToArray(_useState47, 2),
+    searchMaintenance = _useState48[0],
+    setSearchMaintenance = _useState48[1];
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(() => {
-    var storedValue = localStorage.getItem('QuickFilterEstimate');
+    var storedValue = localStorage.getItem('QuickFilterMaintenance');
     if (storedValue) {
-      setSearchEstimate(storedValue);
+      setSearchMaintenance(storedValue);
     }
   });
   var _React$useState = react__WEBPACK_IMPORTED_MODULE_0__.useState({
       items: [],
       quickFilterExcludeHiddenColumns: true,
-      quickFilterValues: []
+      quickFilterValues: searchTerm ? searchTerm.split(/\s+/).filter(Boolean) : []
     }),
     _React$useState2 = _slicedToArray(_React$useState, 2),
     filterModel = _React$useState2[0],
     setFilterModel = _React$useState2[1];
-  var _useState63 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({}),
-    _useState64 = _slicedToArray(_useState63, 2),
-    columnVisibilityModel = _useState64[0],
-    setColumnVisibilityModel = _useState64[1];
+  var _useState49 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({}),
+    _useState50 = _slicedToArray(_useState49, 2),
+    columnVisibilityModel = _useState50[0],
+    setColumnVisibilityModel = _useState50[1];
   var handelHiddenColumn = newHidden => {
     setColumnVisibilityModel(newHidden);
-    localStorage.setItem('HiddenColumnsEstimate', JSON.stringify(newHidden));
+    localStorage.setItem('HiddenColumnsMaintenance', JSON.stringify(newHidden));
   };
   var handleFilter = newModel => {
+    var _newModel$quickFilter;
+    var searchTerm = ((_newModel$quickFilter = newModel.quickFilterValues) === null || _newModel$quickFilter === void 0 ? void 0 : _newModel$quickFilter.join(' ')) || '';
+    setSearchTerm(searchTerm);
     setFilterModel(newModel);
-    if (newModel.quickFilterValues && newModel.quickFilterValues.length > 0) {
-      setSearchTerm(newModel.quickFilterValues.join(' '));
-    } else {
-      setSearchTerm('');
-    }
-    if (newModel.items && newModel.items.length > 0) {
-      setFilterField(newModel.items[0].field);
-      setFilterValue(newModel.items[0].value || '');
-    } else {
-      setFilterField('');
-      setFilterValue('');
-    }
   };
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    var storedQuick = JSON.parse(localStorage.getItem('QuickFilterEstimateTst'));
+    var storedQuick = JSON.parse(localStorage.getItem('QuickFilterMaintenanceTst'));
     if (storedQuick) {
+      var _storedQuick$quickFil;
+      var _searchTerm = ((_storedQuick$quickFil = storedQuick.quickFilterValues) === null || _storedQuick$quickFil === void 0 ? void 0 : _storedQuick$quickFil.join(' ')) || '';
+      setSearchTerm(_searchTerm);
       setFilterModel(storedQuick);
     }
-    var storedColumns = JSON.parse(localStorage.getItem('HiddenColumnsEstimate'));
+    var storedColumns = JSON.parse(localStorage.getItem('HiddenColumnsMaintenance'));
     if (storedColumns) {
       setColumnVisibilityModel(storedColumns);
     }
-  }, [searchEstimate]);
+  }, [searchMaintenance]);
+  {/** search end */}
   var _React$useState3 = react__WEBPACK_IMPORTED_MODULE_0__.useState(true),
     _React$useState4 = _slicedToArray(_React$useState3, 2),
     sideBar = _React$useState4[0],
@@ -2350,61 +2869,69 @@ function EstimateViewAdmin() {
     setSideBar(!sideBar);
   };
   var columns = [{
-    field: 'estimateDate',
-    headerName: 'Date',
-    minWidth: 100,
-    flex: 1,
-    type: 'date',
-    valueGetter: params => new Date(params.row.estimateDate),
-    renderCell: params => dayjs__WEBPACK_IMPORTED_MODULE_44___default()(params.row.estimateDate).format('DD/MM/YYYY')
+    field: 'serviceNumber',
+    headerName: 'Service#',
+    width: 110
   }, {
     field: 'customer',
     headerName: 'Customer Name',
-    minWidth: 200,
-    flex: 2,
+    width: sideBar ? 180 : 220,
     valueGetter: params => {
       var _params$row, _params$row2, _params$row3;
-      return (((_params$row = params.row) === null || _params$row === void 0 || (_params$row = _params$row.customerName) === null || _params$row === void 0 ? void 0 : _params$row.Customer) || ((_params$row2 = params.row) === null || _params$row2 === void 0 || (_params$row2 = _params$row2.customerName) === null || _params$row2 === void 0 ? void 0 : _params$row2.customerName) || (typeof ((_params$row3 = params.row) === null || _params$row3 === void 0 ? void 0 : _params$row3.customerName) === 'string' ? params.row.customerName : '') || '').toUpperCase();
+      return ((_params$row = params.row) === null || _params$row === void 0 || (_params$row = _params$row.customerName) === null || _params$row === void 0 ? void 0 : _params$row.Customer) || ((_params$row2 = params.row) === null || _params$row2 === void 0 || (_params$row2 = _params$row2.customerName) === null || _params$row2 === void 0 ? void 0 : _params$row2.customerName) || (typeof ((_params$row3 = params.row) === null || _params$row3 === void 0 ? void 0 : _params$row3.customerName) === 'string' ? params.row.customerName : '') || '';
     }
   }, {
-    field: 'estimateNumber',
-    headerName: 'Quotation#',
-    minWidth: 100,
-    flex: 1,
-    valueFormatter: params => 'Q-' + String((params === null || params === void 0 ? void 0 : params.value) || '').padStart(6, '0')
-  }, {
-    field: 'estimateSubject',
-    headerName: 'Subject',
-    minWidth: 150,
-    flex: 1.5
+    field: 'brand',
+    headerName: 'Item Brand',
+    width: sideBar ? 100 : 140
   }, {
     field: 'status',
     headerName: 'Status',
-    minWidth: 110,
-    flex: 1,
-    renderCell: params => (0,_utils_formatUtils__WEBPACK_IMPORTED_MODULE_34__/* .renderStatusBadge */ .UM)(params.row.status)
-  }, {
-    field: 'subTotal',
-    headerName: 'Amount',
-    minWidth: 90,
-    flex: 1,
+    width: 100,
     renderCell: params => {
-      var _params$row$totalInvo;
-      return "$".concat((_params$row$totalInvo = params.row.totalInvoice) === null || _params$row$totalInvo === void 0 ? void 0 : _params$row$totalInvo.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+      var isConverted = params.row.status === 'Close' && (params.row.Converted === true || params.row.Converted === 'true') || params.row.status === 'Converted' || params.row.Converted === true || params.row.Converted === 'true';
+      return (0,_utils_formatUtils__WEBPACK_IMPORTED_MODULE_59__/* .renderStatusBadge */ .UM)(isConverted ? 'Converted' : params.row.status);
+    }
+  }, {
+    field: 'defectDescription',
+    headerName: 'Defect',
+    width: sideBar ? 130 : 150
+  }, {
+    field: 'itemDescriptionInfo',
+    headerName: 'I-Description',
+    width: sideBar ? 130 : 150,
+    renderCell: params => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
+      style: {
+        textTransform: 'uppercase'
+      }
+    }, String(Array.isArray(params.value) ? params.value.join(', ') : params.value || '').toUpperCase())
+  }, {
+    field: 'technicianAssign',
+    headerName: 'Technician',
+    width: 130
+  }, {
+    field: 'dateField',
+    headerName: 'Service Date',
+    width: 120
+  }, {
+    field: 'action',
+    headerName: 'Action',
+    width: 70,
+    renderCell: params => {
+      params.row.action !== undefined ? params.row.action : '';
     }
   }, {
     field: 'view',
     headerName: 'View',
-    width: 60,
-    minWidth: 60,
+    width: 40,
     renderCell: params => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(ViewTooltip, {
       title: "View"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
-      disabled: estimationInfoV.length === 0
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_7__/* .NavLink */ .k2, {
-      to: "/EstimateViewAdminAll/".concat(params.row._id),
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+      disabled: MaintenanceInfoV.length === 0
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_8__/* .NavLink */ .k2, {
+      to: "/MaintenanceViewInformation/".concat(params.row._id),
       className: "LinkName"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Visibility__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Visibility__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
       style: {
         color: '#202a5a'
       }
@@ -2412,61 +2939,35 @@ function EstimateViewAdmin() {
   }, {
     field: 'edit',
     headerName: 'Edit',
-    width: 60,
-    minWidth: 60,
-    renderCell: params => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(EditTooltip, {
-      title: "Edit"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
-      onClick: () => handleOpenUpdate(params.row._id),
-      disabled: params.row.status !== 'Draft' && estimationInfoU.length === 0
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Edit__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
-      style: {
-        color: 'gray'
-      }
-    }))))
+    width: 40,
+    renderCell: params => {
+      var isConverted = params.row.status === 'Close' && (params.row.Converted === true || params.row.Converted === 'true') || params.row.status === 'Converted' || params.row.Converted === true || params.row.Converted === 'true';
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(EditTooltip, {
+        title: isConverted ? "Cannot edit or change status of converted maintenance order until linked invoice is deleted" : "Edit"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+        onClick: () => handleOpenUpdate(params.row._id),
+        disabled: isConverted || !isOwner && MaintenanceInfoU.length === 0
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Edit__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+        style: {
+          color: isConverted || !isOwner && MaintenanceInfoU.length === 0 ? 'lightgray' : 'gray'
+        }
+      }))));
+    }
   }, {
     field: 'Delete',
     headerName: 'Delete',
-    width: 60,
-    minWidth: 60,
+    width: 40,
     renderCell: params => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(DeleteTooltip, {
       title: "Delete"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, "                                ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
-      onClick: () => handleOpen(params.row._id),
-      disabled: estimationInfoD.length === 0
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Delete__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, "                                ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+      onClick: handleOpenAll,
+      disabled: !isOwner && MaintenanceInfoD.length === 0
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Delete__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       style: {
         cursor: 'pointer',
         color: 'red'
       }
     }))))
-  }, {
-    field: 'hide',
-    headerName: 'Action',
-    sortable: false,
-    width: 60,
-    minWidth: 60,
-    renderCell: params => {
-      if (user.data.role === 'CEO') {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, hiddenRow.includes(params.row._id) ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(ViewTooltip, {
-          title: "UnHide"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
-          onClick: () => handleHideRow(params.row._id)
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_42__/* ["default"] */ .A, {
-          style: {
-            color: '#202a5a'
-          }
-        })))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(ViewTooltip, {
-          title: "Hide"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
-          onClick: () => handleHideRow(params.row._id)
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_41__/* ["default"] */ .A, {
-          style: {
-            color: '#202a5a'
-          }
-        })))));
-      }
-    }
   }];
   if (isMobile) {
     return loadingData ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
@@ -2475,15 +2976,15 @@ function EstimateViewAdmin() {
         top: '120px',
         textAlign: 'center'
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_45__/* ["default"] */ .A, null)) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_47__/* ["default"] */ .A, null)) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
       sx: {
         width: '100%',
         py: 1
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_MobileCardList__WEBPACK_IMPORTED_MODULE_56__/* ["default"] */ .A, {
-      type: "quotations",
-      data: estimate,
-      searchPlaceholder: "Search quotations, clients, items, amounts...",
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_MobileCardList__WEBPACK_IMPORTED_MODULE_58__/* ["default"] */ .A, {
+      type: "maintenance",
+      data: maintenance,
+      searchPlaceholder: "Search job cards, clients, brands, defects...",
       searchValue: searchTerm,
       onSearchChange: setSearchTerm,
       page: page,
@@ -2497,21 +2998,21 @@ function EstimateViewAdmin() {
   }
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "Homeemployee"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
     sx: {
       display: 'flex'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_CssBaseline__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .Ay, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(AppBar, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_CssBaseline__WEBPACK_IMPORTED_MODULE_27__/* ["default"] */ .Ay, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(AppBar, {
     position: "absolute",
     open: sideBar,
     sx: {
       backgroundColor: '#30368a'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_26__/* ["default"] */ .A, {
     sx: {
       pr: '24px' // keep right padding when drawer closed
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
     edge: "start",
     color: "inherit",
     "aria-label": "open drawer",
@@ -2521,7 +3022,7 @@ function EstimateViewAdmin() {
     }, sideBar && {
       display: 'none'
     })
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Menu__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Menu__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
     component: "h1",
     variant: "h6",
     color: "inherit",
@@ -2529,13 +3030,13 @@ function EstimateViewAdmin() {
     sx: {
       flexGrow: 1
     }
-  }, "Quotation"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_54__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_MessageAdminView__WEBPACK_IMPORTED_MODULE_53__/* ["default"] */ .A, {
+  }, "Maintenance"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_56__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_MessageAdminView__WEBPACK_IMPORTED_MODULE_55__/* ["default"] */ .A, {
     name: user.data.userName,
     role: user.data.role
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
     color: "inherit",
     onClick: handleLogout
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_49__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_51__/* ["default"] */ .A, {
     style: {
       color: 'white'
     }
@@ -2544,20 +3045,20 @@ function EstimateViewAdmin() {
     open: sideBar,
     onMouseEnter: () => setSideBar(true),
     onMouseLeave: () => setSideBar(false)
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_26__/* ["default"] */ .A, {
     sx: {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'flex-end',
       px: [1]
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
     onClick: toggleDrawer
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_ChevronLeft__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Divider__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_List__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_ChevronLeft__WEBPACK_IMPORTED_MODULE_33__/* ["default"] */ .A, null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Divider__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_List__WEBPACK_IMPORTED_MODULE_29__/* ["default"] */ .A, {
     sx: {
       height: '700px'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_SidebarDash__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_SidebarDash__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
     component: "main",
     sx: {
       backgroundColor: theme => theme.palette.mode === 'light' ? theme.palette.grey[100] : theme.palette.grey[900],
@@ -2566,7 +3067,7 @@ function EstimateViewAdmin() {
       height: '100vh',
       overflow: 'auto'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Container__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_26__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Container__WEBPACK_IMPORTED_MODULE_31__/* ["default"] */ .A, {
     maxWidth: "none",
     sx: {
       mt: 0.5,
@@ -2575,13 +3076,14 @@ function EstimateViewAdmin() {
         sm: 2
       }
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
     sx: {
       display: 'grid',
       gridTemplateColumns: {
         xs: 'repeat(2, 1fr)',
         sm: 'repeat(3, 1fr)',
-        md: 'repeat(5, 1fr)'
+        md: 'repeat(4, 1fr)',
+        lg: 'repeat(7, 1fr)'
       },
       gap: 1,
       mb: 0.75,
@@ -2589,67 +3091,91 @@ function EstimateViewAdmin() {
     }
   }, [{
     key: 'ALL',
-    label: 'ALL QUOTATIONS',
+    label: 'ALL ORDERS',
     count: statusCounts.all,
     color: '#30368a',
     bgLight: '#eef2ff',
-    icon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_37__/* ["default"] */ .A, {
+    icon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_39__/* ["default"] */ .A, {
       sx: {
         fontSize: 15,
         color: '#30368a'
       }
     })
   }, {
-    key: 'Draft',
-    label: 'DRAFT',
-    count: statusCounts.draft,
-    color: '#78909c',
-    bgLight: '#eceff1',
-    icon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_40__/* ["default"] */ .A, {
-      sx: {
-        fontSize: 15,
-        color: '#78909c'
-      }
-    })
-  }, {
-    key: 'Sent',
-    label: 'SENT',
-    count: statusCounts.sent,
+    key: 'Open',
+    label: 'OPEN',
+    count: statusCounts.open,
     color: '#1976d2',
     bgLight: '#e3f2fd',
-    icon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_43__/* ["default"] */ .A, {
+    icon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_40__/* ["default"] */ .A, {
       sx: {
         fontSize: 15,
         color: '#1976d2'
       }
     })
   }, {
-    key: 'Decline',
-    label: 'DECLINE',
-    count: statusCounts.decline,
-    color: '#d32f2f',
-    bgLight: '#ffebee',
-    icon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_38__/* ["default"] */ .A, {
+    key: 'Pending',
+    label: 'PENDING',
+    count: statusCounts.pending,
+    color: '#ed6c02',
+    bgLight: '#fff3e0',
+    icon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_44__/* ["default"] */ .A, {
       sx: {
         fontSize: 15,
-        color: '#d32f2f'
+        color: '#ed6c02'
       }
     })
   }, {
-    key: 'Approved',
-    label: 'APPROVED',
-    count: statusCounts.approved,
+    key: 'Close',
+    label: 'CLOSED',
+    count: statusCounts.close,
     color: '#2e7d32',
     bgLight: '#e8f5e9',
-    icon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_46__/* ["default"] */ .A, {
+    icon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_48__/* ["default"] */ .A, {
       sx: {
         fontSize: 15,
         color: '#2e7d32'
       }
     })
+  }, {
+    key: 'Converted',
+    label: 'CONVERTED',
+    count: statusCounts.converted,
+    color: '#00838f',
+    bgLight: '#e0f7fa',
+    icon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_45__/* ["default"] */ .A, {
+      sx: {
+        fontSize: 15,
+        color: '#00838f'
+      }
+    })
+  }, {
+    key: 'Reschedule',
+    label: 'RESCHEDULE',
+    count: statusCounts.reschedule,
+    color: '#9c27b0',
+    bgLight: '#f3e5f5',
+    icon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_43__/* ["default"] */ .A, {
+      sx: {
+        fontSize: 15,
+        color: '#9c27b0'
+      }
+    })
+  }, {
+    key: 'Cancel',
+    label: 'CANCEL',
+    count: statusCounts.cancel,
+    color: '#d32f2f',
+    bgLight: '#ffebee',
+    icon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_41__/* ["default"] */ .A, {
+      sx: {
+        fontSize: 15,
+        color: '#d32f2f'
+      }
+    })
   }].map(card => {
     var isSelected = statusFilter.toLowerCase() === card.key.toLowerCase();
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
       key: card.key,
       onClick: () => handleStatusClick(card.key),
       sx: {
@@ -2672,7 +3198,7 @@ function EstimateViewAdmin() {
           borderColor: card.color
         }
       }
-    }, isSelected && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
+    }, isSelected && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
       sx: {
         position: 'absolute',
         top: 0,
@@ -2681,14 +3207,14 @@ function EstimateViewAdmin() {
         height: '3px',
         backgroundColor: card.color
       }
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
+    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
       sx: {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
         mb: 0.25
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
       sx: {
         fontSize: '9.5px',
         fontWeight: 700,
@@ -2696,7 +3222,7 @@ function EstimateViewAdmin() {
         color: isSelected ? card.color : '#64748b',
         textTransform: 'uppercase'
       }
-    }, card.label), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
+    }, card.label), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
       sx: {
         width: 22,
         height: 22,
@@ -2706,13 +3232,13 @@ function EstimateViewAdmin() {
         alignItems: 'center',
         justifyContent: 'center'
       }
-    }, card.icon)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
+    }, card.icon)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
       sx: {
         display: 'flex',
         alignItems: 'baseline',
         gap: 1
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
       sx: {
         fontSize: '16px',
         fontWeight: 800,
@@ -2725,7 +3251,7 @@ function EstimateViewAdmin() {
       position: 'relative',
       top: '120px'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_45__/* ["default"] */ .A, null))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_47__/* ["default"] */ .A, null))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
     sx: {
       display: 'flex',
       justifyContent: 'space-between',
@@ -2733,29 +3259,29 @@ function EstimateViewAdmin() {
       mb: 0.5,
       mt: 0.25
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, null, estimate.length > 0 && selectedRows.length > 1 && selectedRows.length < estimate.length && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, null, maintenance.length > 0 && selectedRows.length > 1 && selectedRows.length < maintenance.length && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
     disabled: user.data.role !== 'CEO',
     onClick: handleOpenAll,
     className: "btnCustomer2"
-  }, "Delete multiple"), estimate.length > 0 && selectedRows.length === estimate.length && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+  }, "Delete multiple"), maintenance.length > 0 && selectedRows.length === maintenance.length && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
     onClick: handleOpenAll,
     disabled: user.data.role !== 'CEO',
     className: "btnCustomer2"
-  }, "Delete all")), !(0,_utils_isMobile__WEBPACK_IMPORTED_MODULE_55__/* .isNativeMobile */ .g1)() && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
+  }, "Delete all")), !(0,_utils_isMobile__WEBPACK_IMPORTED_MODULE_57__/* .isNativeMobile */ .g1)() && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
     sx: {
       display: 'flex',
       alignItems: 'center',
       gap: 1
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(ViewTooltip, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
-    disabled: estimationInfoC.length === 0,
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(ViewTooltip, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+    disabled: !isOwner && MaintenanceInfoC.length === 0,
     size: "small"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_7__/* .NavLink */ .k2, {
-    to: '/EstimateInvoiceForm',
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_8__/* .NavLink */ .k2, {
+    to: '/MaintenanceFormView',
     className: "LinkName"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
     className: "btnCustomerAdding"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_36__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_38__/* ["default"] */ .A, {
     sx: {
       fontSize: 18
     }
@@ -2767,16 +3293,16 @@ function EstimateViewAdmin() {
       lineHeight: '32px',
       padding: '0 12px'
     }
-  }, "Refresh Search"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
+  }, "Refresh Search"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
     sx: {
-      height: (0,_utils_isMobile__WEBPACK_IMPORTED_MODULE_55__/* .isNativeMobile */ .g1)() ? 'auto' : 'calc(100vh - 200px)',
+      height: (0,_utils_isMobile__WEBPACK_IMPORTED_MODULE_57__/* .isNativeMobile */ .g1)() ? 'auto' : 'calc(100vh - 200px)',
       minHeight: 380,
       width: '100%'
     }
-  }, (0,_utils_isMobile__WEBPACK_IMPORTED_MODULE_55__/* .isNativeMobile */ .g1)() ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_MobileCardList__WEBPACK_IMPORTED_MODULE_56__/* ["default"] */ .A, {
-    type: "quotations",
-    data: estimate,
-    searchPlaceholder: "Search quotations, clients, items, amounts...",
+  }, (0,_utils_isMobile__WEBPACK_IMPORTED_MODULE_57__/* .isNativeMobile */ .g1)() ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_MobileCardList__WEBPACK_IMPORTED_MODULE_58__/* ["default"] */ .A, {
+    type: "maintenance",
+    data: maintenance,
+    searchPlaceholder: "Search job cards, clients, brands, defects...",
     searchValue: searchTerm,
     onSearchChange: setSearchTerm,
     page: page,
@@ -2786,7 +3312,7 @@ function EstimateViewAdmin() {
     statusFilter: statusFilter,
     onStatusFilterChange: handleStatusClick,
     statusCounts: statusCounts
-  }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, user.data.role === 'CEO' ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_x_data_grid__WEBPACK_IMPORTED_MODULE_51__/* .DataGrid */ .zh, {
+  }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_x_data_grid__WEBPACK_IMPORTED_MODULE_53__/* .DataGrid */ .zh, {
     paginationMode: "server",
     filterMode: "server",
     rowCount: totalItemCount,
@@ -2795,11 +3321,12 @@ function EstimateViewAdmin() {
       pageSize: limit
     },
     onPaginationModelChange: newModel => handlePageChange(newModel.page),
-    rows: estimate,
+    rows: maintenance,
     columns: columns,
     slots: {
-      toolbar: _mui_x_data_grid__WEBPACK_IMPORTED_MODULE_52__/* .GridToolbar */ .O
+      toolbar: _mui_x_data_grid__WEBPACK_IMPORTED_MODULE_54__/* .GridToolbar */ .O
     },
+    onRowSelectionModelChange: newSelection => setSelectedRows(newSelection),
     slotProps: {
       toolbar: {
         showQuickFilter: true,
@@ -2811,11 +3338,12 @@ function EstimateViewAdmin() {
         }
       }
     },
-    rowSelectionModel: selectedRows,
-    onRowSelectionModelChange: newSelection => setSelectedRows(newSelection),
-    rowRenderer: rowRenderer,
+    getRowClassName: params => {
+      return newPurchase.includes(params.row._id) ? 'new-Purchase' : '';
+    },
     checkboxSelection: true,
     disableDensitySelector: true,
+    rowSelectionModel: selectedRows,
     filterModel: filterModel,
     onFilterModelChange: newModel => handleFilter(newModel),
     columnVisibilityModel: columnVisibilityModel,
@@ -2823,185 +3351,32 @@ function EstimateViewAdmin() {
     sx: {
       width: '100%',
       backgroundColor: 'white',
-      padding: '10px',
-      '& .MuiDataGrid-footerContainer': {
-        justifyContent: 'flex-start'
-      },
-      '& .MuiTablePagination-root': {
-        flex: 'none'
-      },
-      '& .MuiTablePagination-spacer': {
-        display: 'none'
-      }
+      padding: '10px'
     }
-  }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_x_data_grid__WEBPACK_IMPORTED_MODULE_51__/* .DataGrid */ .zh, {
-    paginationMode: "server",
-    filterMode: "server",
-    rowCount: totalItemCount,
-    paginationModel: {
-      page: page,
-      pageSize: limit
-    },
-    onPaginationModelChange: newModel => handlePageChange(newModel.page),
-    rows: filteredRows,
-    columns: columns,
-    slots: {
-      toolbar: _mui_x_data_grid__WEBPACK_IMPORTED_MODULE_52__/* .GridToolbar */ .O
-    },
-    slotProps: {
-      toolbar: {
-        showQuickFilter: true,
-        quickFilterProps: {
-          debounceMs: 500
-        },
-        printOptions: {
-          disableToolbarButton: true
-        }
-      }
-    },
-    onRowSelectionModelChange: newSelection => setSelectedRows(newSelection),
-    rowRenderer: rowRenderer,
-    checkboxSelection: true,
-    rowSelectionModel: selectedRows,
-    disableDensitySelector: true,
-    filterModel: filterModel,
-    onFilterModelChange: newModel => handleFilter(newModel),
-    columnVisibilityModel: columnVisibilityModel,
-    onColumnVisibilityModelChange: handelHiddenColumn,
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
+    count: totalPage,
+    page: page + 1,
+    onChange: (e, value) => setPage(value - 1),
+    color: "primary",
     sx: {
-      width: '100%',
-      backgroundColor: 'white',
-      padding: '10px',
-      '& .MuiDataGrid-footerContainer': {
-        justifyContent: 'flex-start'
-      },
-      '& .MuiTablePagination-root': {
-        flex: 'none'
-      },
-      '& .MuiTablePagination-spacer': {
-        display: 'none'
-      }
-    }
-  }))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .A, {
-    open: open,
-    onClose: handleClose,
-    "aria-labelledby": "modal-modal-title",
-    "aria-describedby": "modal-modal-description"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
-    sx: _objectSpread(_objectSpread({}, style), {}, {
-      width: 500
-    })
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .Ay, {
-    container: true,
-    style: {
-      alignItems: 'center',
-      padding: '15px'
-    },
-    spacing: 2
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .Ay, {
-    item: true,
-    xs: 12,
-    style: {
-      width: '100%',
-      textAlign: 'center'
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .A, {
-    id: "modal-modal-title",
-    variant: "h6",
-    component: "h2"
-  }, "Do you Want to delete?")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .Ay, {
-    item: true,
-    xs: 6
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
-    type: "button",
-    onClick: handleClose,
-    className: "btnCustomer",
-    style: {
-      width: '100%'
-    }
-  }, "Cancel")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .Ay, {
-    item: true,
-    xs: 6
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
-    onClick: handleDelete,
-    className: "btnCustomer2",
-    style: {
-      width: '100%'
-    }
-  }, "Delete"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .A, {
-    open: open1,
-    onClose: handleCloseUpdate,
-    "aria-labelledby": "modal-modal-title",
-    "aria-describedby": "modal-modal-description"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
-    sx: _objectSpread(_objectSpread({}, style), {}, {
-      width: 500
-    })
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(ViewTooltip, {
-    title: "Close",
-    placement: "left"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
-    onClick: handleCloseUpdate,
-    style: {
       position: 'relative',
-      float: 'right'
+      top: '-52px',
+      display: 'flex',
+      justifyContent: 'center',
+      width: 'fit-content',
+      margin: '0 auto'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_39__/* ["default"] */ .A, {
-    style: {
-      color: '#202a5a'
-    }
-  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .A, {
-    id: "modal-modal-title",
-    variant: "h6",
-    component: "h2"
-  }, "Update Quotation Status"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("form", {
-    onSubmit: handleSubmitUpdateStatus
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .Ay, {
-    container: true,
-    style: {
-      alignItems: 'center',
-      padding: '15px'
-    },
-    spacing: 2
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .Ay, {
-    item: true,
-    xs: 12
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_24__/* ["default"] */ .A, {
-    sx: {
-      width: '100%'
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_25__/* ["default"] */ .A, {
-    id: "status"
-  }, "Status"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_26__/* ["default"] */ .A, {
-    required: true,
-    id: "status",
-    value: status,
-    onChange: e => setStatus(e.target.value),
-    name: "status",
-    label: "status",
-    defaultValue: "Draft"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_27__/* ["default"] */ .A, {
-    value: "Draft"
-  }, "Draft"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_27__/* ["default"] */ .A, {
-    value: "Sent"
-  }, "Sent"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_27__/* ["default"] */ .A, {
-    value: "Decline"
-  }, "Decline"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_27__/* ["default"] */ .A, {
-    value: "Approved"
-  }, "Approved")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .Ay, {
-    item: true,
-    xs: 12
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
-    className: "btnCustomer",
-    style: {
-      width: '100%'
-    }
-  }, "Update")))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .A, {
+  }))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_ConfirmDeleteModal__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A, {
+    open: open,
+    handleClose: handleClose,
+    handleDelete: handleDelete,
+    itemName: ((_maintenance$find = maintenance.find(m => m._id === DeleteId)) === null || _maintenance$find === void 0 ? void 0 : _maintenance$find.serviceNumber) || "this maintenance record"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
     open: openDeleteMultiple,
     onClose: handleCloseMultiple,
     "aria-labelledby": "modal-modal-title",
     "aria-describedby": "modal-modal-description"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
     sx: _objectSpread(_objectSpread({}, style), {}, {
       width: 500
     })
@@ -3027,12 +3402,12 @@ function EstimateViewAdmin() {
   }, "Delete"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
     className: "btnCustomer",
     onClick: handleCloseMultiple
-  }, "Cancel"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .A, {
+  }, "Cancel"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
     open: openDeleteAll,
     onClose: handleCloseAll,
     "aria-labelledby": "modal-modal-title",
     "aria-describedby": "modal-modal-description"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
     sx: _objectSpread(_objectSpread({}, style), {}, {
       width: 500
     })
@@ -3046,12 +3421,12 @@ function EstimateViewAdmin() {
     style: {
       color: 'red'
     }
-  }, "Note:"), " Selected rows will be deleted"), selectedRows.length > 1 && selectedRows.length < estimate.length && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
+  }, "Note:"), " Selected rows will be deleted"), selectedRows.length > 1 && selectedRows.length < maintenance.length && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
     className: "txt2",
     style: {
       color: 'red'
     }
-  }, "Note:"), " All selected rows will be deleted"), selectedRows.length === estimate.length && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
+  }, "Note:"), " All selected rows will be deleted"), selectedRows.length === maintenance.length && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
     className: "txt2",
     style: {
       color: 'red'
@@ -3068,26 +3443,97 @@ function EstimateViewAdmin() {
   }, "Delete"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
     className: "btnCustomer",
     onClick: handleCloseAll
-  }, "Cancel"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .A, {
+  }, "Cancel"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
+    open: open1,
+    onClose: handleCloseUpdate,
+    "aria-labelledby": "modal-modal-title",
+    "aria-describedby": "modal-modal-description"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+    sx: _objectSpread(_objectSpread({}, style), {}, {
+      width: 500
+    })
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(ViewTooltip, {
+    title: "Close",
+    placement: "left"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+    onClick: handleCloseUpdate,
+    style: {
+      position: 'relative',
+      float: 'right'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_42__/* ["default"] */ .A, {
+    style: {
+      color: '#202a5a'
+    }
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+    id: "modal-modal-title",
+    variant: "h6",
+    component: "h2"
+  }, "Update Estimate Status"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("form", {
+    onSubmit: handleSubmitUpdateStatus
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .Ay, {
+    container: true,
+    style: {
+      alignItems: 'center',
+      padding: '15px'
+    },
+    spacing: 2
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .Ay, {
+    item: true,
+    xs: 12
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, {
+    sx: {
+      width: '100%'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, {
+    id: "status"
+  }, "Status"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
+    required: true,
+    id: "status",
+    value: status,
+    onChange: e => setStatus(e.target.value),
+    name: "status",
+    label: "status",
+    defaultValue: "Open"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
+    value: "Open"
+  }, "Open"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
+    value: "Reschedule"
+  }, "Reschedule"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
+    value: "Pending"
+  }, "Pending"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
+    value: "Cancel"
+  }, "Cancel"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
+    disabled: action === undefined || action === 'Carry-In',
+    value: "Close"
+  }, "Close")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .Ay, {
+    item: true,
+    xs: 12
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+    className: "btnCustomer",
+    style: {
+      width: '100%'
+    }
+  }, "Update")))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
     open: loadingOpenModal,
     onClose: handleCloseLoading,
     closeAfterTransition: true,
-    BackdropComponent: _mui_material__WEBPACK_IMPORTED_MODULE_28__/* ["default"] */ .A,
+    BackdropComponent: _mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A,
     BackdropProps: {
       timeout: 500
     },
     "aria-labelledby": "modal-modal-title",
     "aria-describedby": "modal-modal-description"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
     sx: _objectSpread(_objectSpread({}, style), {}, {
       width: 500
     })
-  }, loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_45__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+  }, loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_47__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     style: {
       justifyContent: 'center',
       textAlign: 'center'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_46__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_48__/* ["default"] */ .A, {
     style: {
       color: 'green',
       height: '40px',
@@ -3102,25 +3548,25 @@ function EstimateViewAdmin() {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
     onClick: handleCloseLoading,
     className: "btnCustomer"
-  }, "Close"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .A, {
+  }, "Close"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
     open: modalDeleteOpenLoading,
     onClose: handleDeleteCloseLoading,
-    BackdropComponent: _mui_material__WEBPACK_IMPORTED_MODULE_28__/* ["default"] */ .A,
+    BackdropComponent: _mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A,
     BackdropProps: {
       timeout: 500
     },
     "aria-labelledby": "modal-modal-title",
     "aria-describedby": "modal-modal-description"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
     sx: _objectSpread(_objectSpread({}, style), {}, {
       width: 500
     })
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_45__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_47__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     style: {
       justifyContent: 'center',
       textAlign: 'center'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_46__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_48__/* ["default"] */ .A, {
     style: {
       color: 'green',
       height: '40px',
@@ -3135,70 +3581,97 @@ function EstimateViewAdmin() {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
     onClick: handleDeleteCloseLoading,
     className: "btnCustomer"
-  }, "Close")))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .A, {
+  }, "Close")))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
     open: openReasonDelete,
     onClose: handleCloseReasonDelete,
     "aria-labelledby": "modal-modal-title",
     "aria-describedby": "modal-modal-description"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
     sx: _objectSpread(_objectSpread({}, style), {}, {
       width: 500
     })
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(ViewTooltip, {
     title: "Close",
     placement: "left"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
     onClick: handleCloseReasonDelete,
     style: {
-      position: 'relative',
-      float: 'right'
+      position: "relative",
+      float: "right"
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_39__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_42__/* ["default"] */ .A, {
     style: {
-      color: '#202a5a'
+      color: "#202a5a"
     }
-  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .A, {
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
     id: "modal-modal-title",
     variant: "h6",
     component: "h2"
-  }, "Why do you want to delete: ", info || (selectedRows.length > 1 ? "".concat(selectedRows.length, " selected quotations") : 'this quotation'), "?"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("form", {
+  }, "Why do you want to delete: ", info || (selectedRows.length > 1 ? "".concat(selectedRows.length, " selected orders") : 'this maintenance order'), "?"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("form", {
     onSubmit: handleDeleteMany
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .Ay, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .Ay, {
     container: true,
     style: {
-      alignItems: 'center',
-      padding: '15px'
+      alignItems: "center",
+      padding: "15px"
     },
     spacing: 2
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .Ay, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .Ay, {
     item: true,
     xs: 12
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_29__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
     required: true,
     id: "reason",
     name: "reason",
     multiline: true,
-    rows: 4,
+    rows: 2,
     value: reason,
     placeholder: "Reason",
     onChange: e => setReason(e.target.value),
     label: "Reason",
     sx: {
-      width: '100%',
-      backgroundColor: 'white'
+      width: "100%",
+      backgroundColor: "white"
     }
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .Ay, {
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .Ay, {
+    item: true,
+    xs: 12
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+    variant: "body2",
+    sx: {
+      mb: 1,
+      mt: 1
+    }
+  }, "Type ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
+    style: {
+      color: "red",
+      fontWeight: "bold"
+    }
+  }, "DELETE"), " to confirm bulk action:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+    fullWidth: true,
+    size: "small",
+    placeholder: "Type DELETE here",
+    id: "confirmDeleteBulk",
+    autoFocus: true
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .Ay, {
     item: true,
     xs: 12
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
     type: "submit",
     className: "btnCustomer",
     style: {
-      width: '100%'
+      width: "100%"
+    },
+    onClick: e => {
+      var input = document.getElementById("confirmDeleteBulk");
+      if (input && input.value !== "DELETE") {
+        e.preventDefault();
+        alert("Please type DELETE to confirm");
+      }
     }
-  }, "Save")))))));
+  }, "Confirm Bulk Delete")))))));
 }
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (EstimateViewAdmin);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (MaintenanceViewAdmin);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, [
 /* harmony export */   "default", 0, /* export default binding */ __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ ]);
@@ -3650,6 +4123,190 @@ function AttachmentPreviewDialog(_ref) {
     fontSize: "small"
   }))))));
 }
+
+/***/ },
+
+/***/ 80542
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(96540);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(69067);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(8239);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(14073);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(11641);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(844);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(86990);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(35406);
+/* harmony import */ var _mui_icons_material_WarningAmber__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(15542);
+/* harmony import */ var _mui_icons_material_Close__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(39781);
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+;
+
+
+
+var style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 450,
+  bgcolor: 'background.paper',
+  boxShadow: 24,
+  p: 4,
+  borderRadius: '8px',
+  borderTop: '8px solid #d32f2f' // Red warning border
+};
+var ConfirmDeleteModal = _ref => {
+  var open = _ref.open,
+    handleClose = _ref.handleClose,
+    handleDelete = _ref.handleDelete,
+    itemName = _ref.itemName;
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+    _useState2 = _slicedToArray(_useState, 2),
+    confirmText = _useState2[0],
+    setConfirmText = _useState2[1];
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
+    _useState4 = _slicedToArray(_useState3, 2),
+    isDisabled = _useState4[0],
+    setIsDisabled = _useState4[1];
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    if (confirmText === 'DELETE') {
+      setIsDisabled(false);
+    } else {
+      setIsDisabled(true);
+    }
+  }, [confirmText]);
+  var onConfirm = () => {
+    handleDelete();
+    setConfirmText('');
+    handleClose();
+  };
+  var onClose = () => {
+    setConfirmText('');
+    handleClose();
+    handleClose();
+  };
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+    open: open,
+    onClose: onClose,
+    "aria-labelledby": "confirm-delete-title",
+    "aria-describedby": "confirm-delete-description"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A, {
+    sx: style
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .Ay, {
+    container: true,
+    spacing: 2
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .Ay, {
+    item: true,
+    xs: 10
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, {
+    id: "confirm-delete-title",
+    variant: "h5",
+    component: "h2",
+    sx: {
+      display: 'flex',
+      alignItems: 'center',
+      color: '#d32f2f',
+      fontWeight: 'bold'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_WarningAmber__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
+    sx: {
+      mr: 1
+    }
+  }), " Confirm Deletion")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .Ay, {
+    item: true,
+    xs: 2,
+    sx: {
+      textAlign: 'right'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
+    onClick: onClose,
+    size: "small"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Close__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .Ay, {
+    item: true,
+    xs: 12
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, {
+    variant: "body1",
+    sx: {
+      mt: 2,
+      mb: 1
+    }
+  }, "Are you sure you want to delete ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("strong", null, itemName || 'this record'), "?"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, {
+    variant: "body2",
+    color: "text.secondary",
+    sx: {
+      mb: 3
+    }
+  }, "This action is irreversible and may affect linked data.")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .Ay, {
+    item: true,
+    xs: 12
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, {
+    variant: "body2",
+    sx: {
+      mb: 1,
+      fontWeight: 'medium'
+    }
+  }, "Please type ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
+    style: {
+      color: '#d32f2f',
+      fontWeight: 'bold'
+    }
+  }, "DELETE"), " to confirm:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+    fullWidth: true,
+    size: "small",
+    variant: "outlined",
+    placeholder: "Type DELETE here",
+    value: confirmText,
+    onChange: e => setConfirmText(e.target.value),
+    autoFocus: true,
+    error: confirmText !== '' && confirmText !== 'DELETE'
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .Ay, {
+    item: true,
+    xs: 12,
+    sx: {
+      mt: 3,
+      display: 'flex',
+      gap: 2,
+      justifyContent: 'flex-end'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+    onClick: onClose,
+    variant: "outlined",
+    sx: {
+      color: 'gray',
+      borderColor: 'gray',
+      '&:hover': {
+        borderColor: '#202a5a',
+        color: '#202a5a'
+      }
+    }
+  }, "Cancel"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+    onClick: onConfirm,
+    variant: "contained",
+    disabled: isDisabled,
+    sx: {
+      bgcolor: '#d32f2f',
+      '&:hover': {
+        bgcolor: '#b71c1c'
+      },
+      '&:disabled': {
+        bgcolor: '#ef9a9a',
+        color: 'white'
+      }
+    }
+  }, "Delete Irreversibly")))));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ConfirmDeleteModal);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, [
+/* harmony export */   "A", 0, /* export default binding */ __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ ]);
+
 
 /***/ },
 

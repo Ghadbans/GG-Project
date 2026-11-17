@@ -6,6 +6,7 @@ function branchFilter(req) {
   return branchId && branchId !== 'ALL' ? { branchId } : {};
 }
 const { authenticate } = require("../Middleware/auth");
+const { toSafeObjectId, cleanParamString } = require("../utils/objectIdUtils");
 const cors = require("cors");
 const multer = require("multer");
 let customerSchema = require("../model/Model");
@@ -216,21 +217,23 @@ Route.route("/purchase", cors(corsOptionsDelegate)).get(
           filter.branchId = req.query.branchId;
         }
       }
-      if (req.query.projectId || req.query.projectName || req.query.projectNumber) {
+      const cleanProjectId = cleanParamString(req.query.projectId);
+      const cleanProjectName = cleanParamString(req.query.projectName);
+      const cleanProjectNumber = cleanParamString(req.query.projectNumber);
+
+      if (cleanProjectId || cleanProjectName || cleanProjectNumber) {
         let pConditions = [];
-        if (req.query.projectId) {
-          let objectId = null;
-          try { objectId = new require('mongoose').Types.ObjectId(req.query.projectId); } catch (e) {}
-          const pIds = objectId ? [req.query.projectId, objectId] : [req.query.projectId];
+        if (cleanProjectId) {
+          const objectId = toSafeObjectId(cleanProjectId);
+          const pIds = objectId ? [cleanProjectId, objectId] : [cleanProjectId];
           pConditions.push(
             { 'projectName._id': { $in: pIds } },
             { 'ReferenceName2': { $in: pIds } },
             { 'projectName': { $in: pIds } }
           );
         }
-        if (req.query.projectName) {
-          const rawName = req.query.projectName.trim();
-          const escapedName = rawName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        if (cleanProjectName) {
+          const escapedName = cleanProjectName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
           pConditions.push(
             { 'projectName.projectName': new RegExp('^' + escapedName + '$', 'i') },
             { 'projectName.name': new RegExp('^' + escapedName + '$', 'i') },
@@ -238,8 +241,8 @@ Route.route("/purchase", cors(corsOptionsDelegate)).get(
             { 'ReferenceName': new RegExp('^' + escapedName + '$', 'i') }
           );
         }
-        if (req.query.projectNumber) {
-          const pNum = Number(req.query.projectNumber);
+        if (cleanProjectNumber) {
+          const pNum = Number(cleanProjectNumber);
           if (!isNaN(pNum)) {
             pConditions.push(
               { 'ReferenceName': 'P-' + String(pNum).padStart(6, '0') },

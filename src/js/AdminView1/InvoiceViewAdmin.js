@@ -38,6 +38,7 @@ import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import MessageAdminView from './MessageAdminView';
 import NotificationVIewInfo from './NotificationVIewInfo';
 import { isNativeMobile, useIsMobile } from '../utils/isMobile';
+import { useModuleSearchState } from '../hooks/useModuleSearchState';
 import MobileCardList from '../component/MobileCardList';
 import { renderStatusBadge } from '../utils/formatUtils';
 
@@ -192,7 +193,18 @@ function InvoiceViewAdmin() {
   const [reason, setReason] = useState("");
   const [newPurchase, setNewPurchase] = useState([]);
 
-  const [statusFilter, setStatusFilter] = useState('ALL');
+  const {
+    searchTerm,
+    setSearchTerm,
+    filterField,
+    setFilterField,
+    filterValue,
+    setFilterValue,
+    statusFilter,
+    setStatusFilter,
+    page,
+    setPage,
+  } = useModuleSearchState('invoice');
   const [statusCounts, setStatusCounts] = useState({
     all: 0,
     draft: 0,
@@ -204,11 +216,7 @@ function InvoiceViewAdmin() {
     partiallyPaid: 0,
   });
 
-  const [page, setPage] = useState(0); // Initialize page state to 0 (0-based index)
   const limit = isMobile ? 30 : 100;
-  const [searchTerm, setSearchTerm] = useState(''); // Initialize search term state
-  const [filterField, setFilterField] = useState(''); // Initialize filter field state
-  const [filterValue, setFilterValue] = useState(''); // Initialize filter value state
   const [totalPage, SetTotalPage] = useState(0);
   const [totalItemCount, setTotalItemCount] = useState(0);
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState(searchTerm);
@@ -1076,7 +1084,7 @@ function InvoiceViewAdmin() {
   const [filterModel, setFilterModel] = React.useState({
     items: [],
     quickFilterExcludeHiddenColumns: true,
-    quickFilterValues: [],
+    quickFilterValues: searchTerm ? searchTerm.split(/\s+/).filter(Boolean) : [],
   });
   const [columnVisibilityModel, setColumnVisibilityModel] = useState({});
   const handelHiddenColumn = (newHidden) => {
@@ -1136,7 +1144,7 @@ function InvoiceViewAdmin() {
       headerName: 'Subject', 
       minWidth: 150, 
       flex: 1,
-      valueGetter: (params) => params.row?.invoiceSubject || (params.row?.invoiceNumber === 2673 ? 'CCTV & POS INSTALLATION' : '')
+      valueGetter: (params) => params.row?.invoiceSubject || ''
     },
     { field: 'dateField', headerName: 'Date', minWidth: 100, flex: 1 },
     { field: 'totalInvoice', headerName: 'I-Amount', minWidth: 100, flex: 1, renderCell: (params) => `$${params.row.totalInvoice?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` },

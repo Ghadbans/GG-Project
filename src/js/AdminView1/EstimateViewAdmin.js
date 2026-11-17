@@ -26,6 +26,7 @@ import axios from 'axios';
 import { cachedGet } from '../utils/apiCache';
 import { renderStatusBadge } from '../utils/formatUtils';
 import { ENDPOINT_URL } from '../apiConfig';
+import { useModuleSearchState } from '../hooks/useModuleSearchState';
 import { Add, Close, MailOutline, Person2Outlined, PersonOffRounded, Assignment as AssignmentIcon, EditNote as EditNoteIcon, Send as SendIcon, Cancel as CancelIcon } from '@mui/icons-material';
 import dayjs from 'dayjs';
 import Loader from '../component/Loader';
@@ -179,7 +180,18 @@ function EstimateViewAdmin() {
   const [loadingData, setLoadingData] = useState(true);
   const [hiddenRow, setHiddenRow] = useState([]);
   const [hidden, setHidden] = useState([]);
-  const [statusFilter, setStatusFilter] = useState('ALL');
+  const {
+    searchTerm,
+    setSearchTerm,
+    filterField,
+    setFilterField,
+    filterValue,
+    setFilterValue,
+    statusFilter,
+    setStatusFilter,
+    page,
+    setPage,
+  } = useModuleSearchState('estimate');
   const [statusCounts, setStatusCounts] = useState({
     all: 0,
     draft: 0,
@@ -188,12 +200,8 @@ function EstimateViewAdmin() {
     approved: 0
   });
 
-  const [page, setPage] = useState(0);
   const limit = isMobile ? 30 : 100;
-  const [searchTerm, setSearchTerm] = useState("");
-  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
-  const [filterField, setFilterField] = useState("");
-  const [filterValue, setFilterValue] = useState("");
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState(searchTerm);
   const [totalPage, SetTotalPage] = useState(0);
   const [totalItemCount, setTotalItemCount] = useState(0);
   const [selectedRows, setSelectedRows] = useState([]);
@@ -549,7 +557,7 @@ function EstimateViewAdmin() {
   const [filterModel, setFilterModel] = React.useState({
     items: [],
     quickFilterExcludeHiddenColumns: true,
-    quickFilterValues: [],
+    quickFilterValues: searchTerm ? searchTerm.split(/\s+/).filter(Boolean) : [],
   });
   const [columnVisibilityModel, setColumnVisibilityModel] = useState({});
   const handelHiddenColumn = (newHidden) => {

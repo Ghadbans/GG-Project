@@ -1,4 +1,4 @@
-(this["webpackChunkgg_management"] = this["webpackChunkgg_management"] || []).push([[7445],{
+(this["webpackChunkgg_management"] = this["webpackChunkgg_management"] || []).push([[806],{
 
 /***/ 40530
 (__unused_webpack_module, exports, __webpack_require__) {
@@ -433,7 +433,7 @@ var _default = exports.A = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRun
 
 /***/ },
 
-/***/ 41737
+/***/ 8047
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -444,8 +444,8 @@ var _default = exports.A = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRun
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("path", {
-  d: "M12 6v3l4-4-4-4v3c-4.42 0-8 3.58-8 8 0 1.57.46 3.03 1.24 4.26L6.7 14.8c-.45-.83-.7-1.79-.7-2.8 0-3.31 2.69-6 6-6m6.76 1.74L17.3 9.2c.44.84.7 1.79.7 2.8 0 3.31-2.69 6-6 6v-3l-4 4 4 4v-3c4.42 0 8-3.58 8-8 0-1.57-.46-3.03-1.24-4.26"
-}), 'Autorenew'));
+  d: "M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2m5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12z"
+}), 'Cancel'));
 /* harmony export */ __webpack_require__.d(__webpack_exports__, [
 /* harmony export */   "A", 0, /* export default binding */ __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ ]);
@@ -453,7 +453,7 @@ var _default = exports.A = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRun
 
 /***/ },
 
-/***/ 53540
+/***/ 81757
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -464,28 +464,8 @@ var _default = exports.A = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRun
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("path", {
-  d: "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2M4 12c0-4.42 3.58-8 8-8 1.85 0 3.55.63 4.9 1.69L5.69 16.9C4.63 15.55 4 13.85 4 12m8 8c-1.85 0-3.55-.63-4.9-1.69L18.31 7.1C19.37 8.45 20 10.15 20 12c0 4.42-3.58 8-8 8"
-}), 'Block'));
-/* harmony export */ __webpack_require__.d(__webpack_exports__, [
-/* harmony export */   "A", 0, /* export default binding */ __WEBPACK_DEFAULT_EXPORT__
-/* harmony export */ ]);
-
-
-/***/ },
-
-/***/ 62430
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var _utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(20561);
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(74848);
-"use client";
-
-
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("path", {
-  d: "M6 2v6h.01L6 8.01 10 12l-4 4 .01.01H6V22h12v-5.99h-.01L18 16l-4-4 4-3.99-.01-.01H18V2zm10 14.5V20H8v-3.5l4-4zm-4-5-4-4V4h8v3.5z"
-}), 'HourglassEmpty'));
+  d: "M3 10h11v2H3zm0-2h11V6H3zm0 8h7v-2H3zm15.01-3.13.71-.71c.39-.39 1.02-.39 1.41 0l.71.71c.39.39.39 1.02 0 1.41l-.71.71zm-.71.71-5.3 5.3V21h2.12l5.3-5.3z"
+}), 'EditNote'));
 /* harmony export */ __webpack_require__.d(__webpack_exports__, [
 /* harmony export */   "A", 0, /* export default binding */ __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ ]);
@@ -526,6 +506,26 @@ var _default = exports.A = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRun
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("path", {
   d: "M8.65 5.82C9.36 4.72 10.6 4 12 4c2.21 0 4 1.79 4 4 0 1.4-.72 2.64-1.82 3.35zM20 17.17c-.02-1.1-.63-2.11-1.61-2.62-.54-.28-1.13-.54-1.77-.76zm.49 3.32L3.51 3.51a.9959.9959 0 0 0-1.41 0c-.39.39-.39 1.02 0 1.41l8.18 8.18c-1.82.23-3.41.8-4.7 1.46C4.6 15.08 4 16.11 4 17.22V20h13.17l1.9 1.9c.39.39 1.02.39 1.41 0 .4-.39.4-1.02.01-1.41"
 }), 'PersonOffRounded'));
+/* harmony export */ __webpack_require__.d(__webpack_exports__, [
+/* harmony export */   "A", 0, /* export default binding */ __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ ]);
+
+
+/***/ },
+
+/***/ 52751
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var _utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(20561);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(74848);
+"use client";
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("path", {
+  d: "M2.01 21 23 12 2.01 3 2 10l15 2-15 2z"
+}), 'Send'));
 /* harmony export */ __webpack_require__.d(__webpack_exports__, [
 /* harmony export */   "A", 0, /* export default binding */ __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ ]);
@@ -1491,7 +1491,7 @@ const GridToolbar = /*#__PURE__*/react.forwardRef(function GridToolbar(props, re
 
 /***/ },
 
-/***/ 27445
+/***/ 40806
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1505,52 +1505,57 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mui_icons_material_Delete__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(67034);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(84976);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(47767);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(11641);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(69067);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(14073);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(47419);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(8239);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(844);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(35406);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(11848);
-/* harmony import */ var _mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(56655);
-/* harmony import */ var _mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(58331);
-/* harmony import */ var _mui_material_AppBar__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(89828);
-/* harmony import */ var _mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(8532);
-/* harmony import */ var _mui_material_CssBaseline__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(14519);
-/* harmony import */ var _mui_material_Drawer__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(88248);
-/* harmony import */ var _mui_material_List__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(49799);
-/* harmony import */ var _mui_material_Divider__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(71543);
-/* harmony import */ var _mui_material_Container__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(97834);
-/* harmony import */ var _mui_icons_material_Menu__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(62274);
-/* harmony import */ var _mui_icons_material_ChevronLeft__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(8451);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(99380);
-/* harmony import */ var _utils_apiCache__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(46986);
-/* harmony import */ var _utils_formatUtils__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(37402);
-/* harmony import */ var _apiConfig__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(71510);
-/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(99682);
-/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(17332);
-/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(41737);
-/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(53540);
-/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(17809);
-/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(62430);
-/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(7078);
-/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(79030);
-/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(74353);
-/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_40___default = /*#__PURE__*/__webpack_require__.n(dayjs__WEBPACK_IMPORTED_MODULE_40__);
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(13561);
-/* harmony import */ var _features_auth_authSlice__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(32005);
-/* harmony import */ var _component_Loader__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(65821);
-/* harmony import */ var _mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_44__ = __webpack_require__(20889);
-/* harmony import */ var _component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_45__ = __webpack_require__(40301);
-/* harmony import */ var _img_no_data_png__WEBPACK_IMPORTED_MODULE_46__ = __webpack_require__(20453);
-/* harmony import */ var _img_no_data_png__WEBPACK_IMPORTED_MODULE_46___default = /*#__PURE__*/__webpack_require__.n(_img_no_data_png__WEBPACK_IMPORTED_MODULE_46__);
-/* harmony import */ var _mui_x_data_grid__WEBPACK_IMPORTED_MODULE_47__ = __webpack_require__(1835);
-/* harmony import */ var _mui_x_data_grid__WEBPACK_IMPORTED_MODULE_48__ = __webpack_require__(53071);
-/* harmony import */ var _MessageAdminView__WEBPACK_IMPORTED_MODULE_49__ = __webpack_require__(83818);
-/* harmony import */ var _NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_50__ = __webpack_require__(95236);
-/* harmony import */ var _utils_isMobile__WEBPACK_IMPORTED_MODULE_51__ = __webpack_require__(2650);
-/* harmony import */ var _component_MobileCardList__WEBPACK_IMPORTED_MODULE_52__ = __webpack_require__(353);
+/* harmony import */ var _mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(56655);
+/* harmony import */ var _mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(58331);
+/* harmony import */ var _mui_material_AppBar__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(89828);
+/* harmony import */ var _mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(8532);
+/* harmony import */ var _mui_material_CssBaseline__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(14519);
+/* harmony import */ var _mui_material_Drawer__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(88248);
+/* harmony import */ var _mui_material_List__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(49799);
+/* harmony import */ var _mui_material_Divider__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(71543);
+/* harmony import */ var _mui_material_Container__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(97834);
+/* harmony import */ var _mui_icons_material_Menu__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(62274);
+/* harmony import */ var _mui_icons_material_ChevronLeft__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(8451);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(11641);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(69067);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(14073);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(8239);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(50779);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(29571);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(2071);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(73896);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(47419);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(844);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(35406);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(11848);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(99380);
+/* harmony import */ var _utils_apiCache__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(46986);
+/* harmony import */ var _utils_formatUtils__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(37402);
+/* harmony import */ var _apiConfig__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(71510);
+/* harmony import */ var _hooks_useModuleSearchState__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(80099);
+/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(99682);
+/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(17332);
+/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(8047);
+/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(17809);
+/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(81757);
+/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(7078);
+/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(79030);
+/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_44__ = __webpack_require__(52751);
+/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_45__ = __webpack_require__(74353);
+/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_45___default = /*#__PURE__*/__webpack_require__.n(dayjs__WEBPACK_IMPORTED_MODULE_45__);
+/* harmony import */ var _component_Loader__WEBPACK_IMPORTED_MODULE_46__ = __webpack_require__(65821);
+/* harmony import */ var _mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_47__ = __webpack_require__(20889);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_48__ = __webpack_require__(13561);
+/* harmony import */ var _features_auth_authSlice__WEBPACK_IMPORTED_MODULE_49__ = __webpack_require__(32005);
+/* harmony import */ var _component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_50__ = __webpack_require__(40301);
+/* harmony import */ var _img_no_data_png__WEBPACK_IMPORTED_MODULE_51__ = __webpack_require__(20453);
+/* harmony import */ var _img_no_data_png__WEBPACK_IMPORTED_MODULE_51___default = /*#__PURE__*/__webpack_require__.n(_img_no_data_png__WEBPACK_IMPORTED_MODULE_51__);
+/* harmony import */ var _mui_x_data_grid__WEBPACK_IMPORTED_MODULE_52__ = __webpack_require__(1835);
+/* harmony import */ var _mui_x_data_grid__WEBPACK_IMPORTED_MODULE_53__ = __webpack_require__(53071);
+/* harmony import */ var _MessageAdminView__WEBPACK_IMPORTED_MODULE_54__ = __webpack_require__(83818);
+/* harmony import */ var _NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_55__ = __webpack_require__(95236);
+/* harmony import */ var _utils_isMobile__WEBPACK_IMPORTED_MODULE_56__ = __webpack_require__(2650);
+/* harmony import */ var _component_MobileCardList__WEBPACK_IMPORTED_MODULE_57__ = __webpack_require__(353);
 var _excluded = ["className"],
   _excluded2 = ["className"],
   _excluded3 = ["className"];
@@ -1611,10 +1616,11 @@ function _objectWithoutPropertiesLoose(r, e) { if (null == r) return {}; var t =
 
 
 
-var DeleteTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .Ay)(_ref => {
+
+var DeleteTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_31__/* ["default"] */ .Ay)(_ref => {
   var className = _ref.className,
     props = _objectWithoutProperties(_ref, _excluded);
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, _extends({}, props, {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, _extends({}, props, {
     classes: {
       popper: className
     }
@@ -1622,7 +1628,7 @@ var DeleteTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"]
 })(_ref2 => {
   var theme = _ref2.theme;
   return {
-    ["& .".concat(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A.tooltip)]: {
+    ["& .".concat(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A.tooltip)]: {
       backgroundColor: 'red',
       color: 'white',
       boxShadow: theme.shadows[1],
@@ -1630,10 +1636,10 @@ var DeleteTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"]
     }
   };
 });
-var EditTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .Ay)(_ref3 => {
+var EditTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_31__/* ["default"] */ .Ay)(_ref3 => {
   var className = _ref3.className,
     props = _objectWithoutProperties(_ref3, _excluded2);
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, _extends({}, props, {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, _extends({}, props, {
     classes: {
       popper: className
     }
@@ -1641,7 +1647,7 @@ var EditTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] *
 })(_ref4 => {
   var theme = _ref4.theme;
   return {
-    ["& .".concat(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A.tooltip)]: {
+    ["& .".concat(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A.tooltip)]: {
       backgroundColor: 'gray',
       color: 'white',
       boxShadow: theme.shadows[1],
@@ -1649,10 +1655,10 @@ var EditTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] *
     }
   };
 });
-var ViewTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .Ay)(_ref5 => {
+var ViewTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_31__/* ["default"] */ .Ay)(_ref5 => {
   var className = _ref5.className,
     props = _objectWithoutProperties(_ref5, _excluded3);
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, _extends({}, props, {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, _extends({}, props, {
     classes: {
       popper: className
     }
@@ -1660,7 +1666,7 @@ var ViewTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] *
 })(_ref6 => {
   var theme = _ref6.theme;
   return {
-    ["& .".concat(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A.tooltip)]: {
+    ["& .".concat(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A.tooltip)]: {
       backgroundColor: '#202a5a',
       color: 'white',
       boxShadow: theme.shadows[1],
@@ -1681,7 +1687,7 @@ var style = {
   pb: 3
 };
 var drawerWidth = 240;
-var AppBar = (0,_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .Ay)(_mui_material_AppBar__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
+var AppBar = (0,_mui_material__WEBPACK_IMPORTED_MODULE_31__/* ["default"] */ .Ay)(_mui_material_AppBar__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
   shouldForwardProp: prop => prop !== 'open'
 })(_ref7 => {
   var theme = _ref7.theme,
@@ -1701,7 +1707,7 @@ var AppBar = (0,_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .Ay
     })
   });
 });
-var Drawer = (0,_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .Ay)(_mui_material_Drawer__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .Ay, {
+var Drawer = (0,_mui_material__WEBPACK_IMPORTED_MODULE_31__/* ["default"] */ .Ay)(_mui_material_Drawer__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .Ay, {
   shouldForwardProp: prop => prop !== 'open'
 })(_ref8 => {
   var theme = _ref8.theme,
@@ -1729,21 +1735,21 @@ var Drawer = (0,_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .Ay
     })
   };
 });
-function ProjectViewAdmin() {
+function EstimateViewAdmin() {
   var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_8__/* .useNavigate */ .Zp)();
-  var isMobile = (0,_utils_isMobile__WEBPACK_IMPORTED_MODULE_51__/* .useIsMobile */ .al)();
-  var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_41__/* .useDispatch */ .wA)();
-  var user = (0,react_redux__WEBPACK_IMPORTED_MODULE_41__/* .useSelector */ .d4)(_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_42__/* .selectCurrentUser */ .xu);
+  var isMobile = (0,_utils_isMobile__WEBPACK_IMPORTED_MODULE_56__/* .useIsMobile */ .al)();
+  var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_48__/* .useDispatch */ .wA)();
+  var user = (0,react_redux__WEBPACK_IMPORTED_MODULE_48__/* .useSelector */ .d4)(_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_49__/* .selectCurrentUser */ .xu);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     var storesUserId = localStorage.getItem('user');
     var fetchUser = /*#__PURE__*/function () {
       var _ref9 = _asyncToGenerator(function* () {
         if (storesUserId) {
           try {
-            var res = yield axios__WEBPACK_IMPORTED_MODULE_28__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_31__/* .ENDPOINT_URL */ .m, "/get-employeeuser/").concat(storesUserId));
+            var res = yield axios__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_35__/* .ENDPOINT_URL */ .m, "/get-employeeuser/").concat(storesUserId));
             var Name = res.data.data.employeeName;
             var Role = res.data.data.role;
-            dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_42__/* .setUser */ .gV)({
+            dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_49__/* .setUser */ .gV)({
               userName: Name,
               role: Role,
               id: res.data.data._id
@@ -1761,6 +1767,11 @@ function ProjectViewAdmin() {
     }();
     fetchUser();
   }, [dispatch]);
+  var handleLogout = () => {
+    localStorage.removeItem('user');
+    dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_49__/* .logOut */ .je)());
+    navigate('/');
+  };
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState2 = _slicedToArray(_useState, 2),
     grantAccess = _useState2[0],
@@ -1770,7 +1781,7 @@ function ProjectViewAdmin() {
       var _ref0 = _asyncToGenerator(function* () {
         try {
           var _res$data;
-          var res = yield (0,_utils_apiCache__WEBPACK_IMPORTED_MODULE_29__/* .cachedGet */ .Fe)("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_31__/* .ENDPOINT_URL */ .m, "/grantAccess"));
+          var res = yield (0,_utils_apiCache__WEBPACK_IMPORTED_MODULE_33__/* .cachedGet */ .Fe)("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_35__/* .ENDPOINT_URL */ .m, "/grantAccess"));
           (_res$data = res.data) === null || _res$data === void 0 || (_res$data = _res$data.data) === null || _res$data === void 0 || _res$data.filter(row => row.userID === user.data.id).map(row => setGrantAccess(row.modules));
         } catch (error) {
           console.error('Error fetching data:', error);
@@ -1782,87 +1793,79 @@ function ProjectViewAdmin() {
     }();
     fetchNumber();
   }, [user]);
-  var ProjectInfoC = grantAccess.filter(row => row.moduleName === "Project" && row.access.createM === true);
-  var ProjectInfoV = grantAccess.filter(row => row.moduleName === "Project" && row.access.viewM === true);
-  var ProjectInfoU = grantAccess.filter(row => row.moduleName === "Project" && row.access.editM === true);
-  var ProjectInfoD = grantAccess.filter(row => row.moduleName === "Project" && row.access.deleteM === true);
-  var handleLogout = () => {
-    localStorage.removeItem('user');
-    dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_42__/* .logOut */ .je)());
-    navigate('/');
-  };
+  var estimationInfoC = grantAccess.filter(row => row.moduleName === "Estimate" && row.access.createM === true);
+  var estimationInfoV = grantAccess.filter(row => row.moduleName === "Estimate" && row.access.viewM === true);
+  var estimationInfoU = grantAccess.filter(row => row.moduleName === "Estimate" && row.access.editM === true);
+  var estimationInfoD = grantAccess.filter(row => row.moduleName === "Estimate" && row.access.deleteM === true);
   var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState4 = _slicedToArray(_useState3, 2),
-    project = _useState4[0],
-    setProject = _useState4[1];
-  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    estimate = _useState4[0],
+    setEstimate = _useState4[1];
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
     _useState6 = _slicedToArray(_useState5, 2),
-    hiddenRow = _useState6[0],
-    setHiddenRow = _useState6[1];
+    loadingData = _useState6[0],
+    setLoadingData = _useState6[1];
   var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState8 = _slicedToArray(_useState7, 2),
-    hidden = _useState8[0],
-    setHidden = _useState8[1];
-  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('ALL'),
+    hiddenRow = _useState8[0],
+    setHiddenRow = _useState8[1];
+  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState0 = _slicedToArray(_useState9, 2),
-    statusFilter = _useState0[0],
-    setStatusFilter = _useState0[1];
+    hidden = _useState0[0],
+    setHidden = _useState0[1];
+  var _useModuleSearchState = (0,_hooks_useModuleSearchState__WEBPACK_IMPORTED_MODULE_36__/* .useModuleSearchState */ .pi)('estimate'),
+    searchTerm = _useModuleSearchState.searchTerm,
+    setSearchTerm = _useModuleSearchState.setSearchTerm,
+    filterField = _useModuleSearchState.filterField,
+    setFilterField = _useModuleSearchState.setFilterField,
+    filterValue = _useModuleSearchState.filterValue,
+    setFilterValue = _useModuleSearchState.setFilterValue,
+    statusFilter = _useModuleSearchState.statusFilter,
+    setStatusFilter = _useModuleSearchState.setStatusFilter,
+    page = _useModuleSearchState.page,
+    setPage = _useModuleSearchState.setPage;
   var _useState1 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
       all: 0,
-      pending: 0,
-      ongoing: 0,
-      stopped: 0,
-      completed: 0
+      draft: 0,
+      sent: 0,
+      decline: 0,
+      approved: 0
     }),
     _useState10 = _slicedToArray(_useState1, 2),
     statusCounts = _useState10[0],
     setStatusCounts = _useState10[1];
-  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
+  var limit = isMobile ? 30 : 100;
+  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(searchTerm),
     _useState12 = _slicedToArray(_useState11, 2),
-    page = _useState12[0],
-    setPage = _useState12[1];
-  var limit = 100;
-  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
+    debouncedSearchTerm = _useState12[0],
+    setDebouncedSearchTerm = _useState12[1];
+  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
     _useState14 = _slicedToArray(_useState13, 2),
-    searchTerm = _useState14[0],
-    setSearchTerm = _useState14[1];
-  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
+    totalPage = _useState14[0],
+    SetTotalPage = _useState14[1];
+  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
     _useState16 = _slicedToArray(_useState15, 2),
-    debouncedSearchTerm = _useState16[0],
-    setDebouncedSearchTerm = _useState16[1];
-  var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
+    totalItemCount = _useState16[0],
+    setTotalItemCount = _useState16[1];
+  var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState18 = _slicedToArray(_useState17, 2),
-    filterField = _useState18[0],
-    setFilterField = _useState18[1];
+    selectedRows = _useState18[0],
+    setSelectedRows = _useState18[1];
   var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
     _useState20 = _slicedToArray(_useState19, 2),
-    filterValue = _useState20[0],
-    setFilterValue = _useState20[1];
-  var _useState21 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
-    _useState22 = _slicedToArray(_useState21, 2),
-    totalPage = _useState22[0],
-    SetTotalPage = _useState22[1];
-  var _useState23 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
-    _useState24 = _slicedToArray(_useState23, 2),
-    totalItemCount = _useState24[0],
-    setTotalItemCount = _useState24[1];
-  var _useState25 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
-    _useState26 = _slicedToArray(_useState25, 2),
-    loadingData = _useState26[0],
-    setLoadingData = _useState26[1];
-  var _useState27 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
-    _useState28 = _slicedToArray(_useState27, 2),
-    reason = _useState28[0],
-    setReason = _useState28[1];
+    reason = _useState20[0],
+    setReason = _useState20[1];
   var fetchItems = /*#__PURE__*/function () {
     var _ref1 = _asyncToGenerator(function* (page, searchTerm, filterField, filterValue, statusFilter) {
       try {
         var statusParam = statusFilter && statusFilter !== 'ALL' ? "&status=".concat(encodeURIComponent(statusFilter)) : '';
-        var res = yield axios__WEBPACK_IMPORTED_MODULE_28__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_31__/* .ENDPOINT_URL */ .m, "/project-Information?page=").concat(page + 1, "&limit=").concat(limit, "&search=").concat(encodeURIComponent((searchTerm || '').trim()), "&filterField=").concat(encodeURIComponent((filterField || '').trim()), "&filterValue=").concat(encodeURIComponent((filterValue || '').trim())).concat(statusParam));
+        var res = yield axios__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_35__/* .ENDPOINT_URL */ .m, "/estimation-Information?page=").concat(page + 1, "&limit=").concat(limit, "&search=").concat(encodeURIComponent((searchTerm || '').trim()), "&filterField=").concat(encodeURIComponent((filterField || '').trim()), "&filterValue=").concat(encodeURIComponent((filterValue || '').trim())).concat(statusParam));
         var formatDate = res.data.itemI.map(item => _objectSpread(_objectSpread({}, item), {}, {
-          id: item._id
+          id: item._id,
+          dateField: item.estimateDate !== null ? dayjs__WEBPACK_IMPORTED_MODULE_45___default()(item.estimateDate).format('DD/MM/YYYY') : '',
+          dueDateField: dayjs__WEBPACK_IMPORTED_MODULE_45___default()(item.estimateDueDate).format('DD/MM/YYYY')
         }));
-        setProject(formatDate);
+        setEstimate(formatDate);
         SetTotalPage(res.data.totalPages);
         setTotalItemCount(res.data.totalItem || 0);
         if (res.data.statusCounts) {
@@ -1902,18 +1905,51 @@ function ProjectViewAdmin() {
   var handlePageChange = newPage => {
     setPage(newPage);
   };
-  var _useState29 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState30 = _slicedToArray(_useState29, 2),
-    loading = _useState30[0],
-    setLoading = _useState30[1];
-  var _useState31 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState32 = _slicedToArray(_useState31, 2),
-    loadingOpenModal = _useState32[0],
-    setLoadingOpenModal = _useState32[1];
-  var _useState33 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState34 = _slicedToArray(_useState33, 2),
-    ErrorOpenModal = _useState34[0],
-    setErrorOpenModal = _useState34[1];
+  var _useState21 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState22 = _slicedToArray(_useState21, 2),
+    loading = _useState22[0],
+    setLoading = _useState22[1];
+  var _useState23 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState24 = _slicedToArray(_useState23, 2),
+    ErrorOpenModal = _useState24[0],
+    setErrorOpenModal = _useState24[1];
+  var _useState25 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState26 = _slicedToArray(_useState25, 2),
+    loadingOpenModal = _useState26[0],
+    setLoadingOpenModal = _useState26[1];
+  var _useState27 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState28 = _slicedToArray(_useState27, 2),
+    modalDeleteOpenLoading = _useState28[0],
+    setModalDeleteOpenLoading = _useState28[1];
+  {/** Loading Update View Start */}
+  var handleOpenLoading = () => {
+    setLoadingOpenModal(true);
+    setLoading(true);
+    handleCloseUpdate();
+    setTimeout(() => {
+      setLoading(false);
+    }, 500);
+  };
+  var handleCloseLoading = () => {
+    setLoadingOpenModal(false);
+    setLoading(false);
+    fetchItems(page, searchTerm, filterField, filterValue);
+  };
+  {/** Loading Update View End */}
+  {/** Loading Delete View Start */}
+  var handleDeleteOpenLoading = () => {
+    setModalDeleteOpenLoading(true);
+    setLoading(true);
+    handleClose();
+    setTimeout(() => {
+      setLoading(false);
+    }, 500);
+  };
+  var handleDeleteCloseLoading = () => {
+    setModalDeleteOpenLoading(false);
+    setLoading(false);
+    fetchItems(page, searchTerm, filterField, filterValue);
+  };
   var handleOpenOffline = () => {
     setLoadingOpenModal(true);
     setLoading(true);
@@ -1929,15 +1965,15 @@ function ProjectViewAdmin() {
     }, 500);
   };
   var handleCreateNotificationOffline = /*#__PURE__*/function () {
-    var _ref10 = _asyncToGenerator(function* (ReferenceInfo, ReferenceInfoProject, ReferenceInfoName) {
+    var _ref10 = _asyncToGenerator(function* (ReferenceInfo, ReferenceInfoNumber, ReferenceInfoCustomer) {
       var data = {
         idInfo: ReferenceInfo,
         person: user.data.userName + ' Created ',
-        reason: ReferenceInfoProject + 'For' + ReferenceInfoName,
+        reason: 'Q-' + String(ReferenceInfoNumber).padStart(6, '0') + ' For ' + ReferenceInfoCustomer,
         dateNotification: new Date()
       };
       try {
-        yield axios__WEBPACK_IMPORTED_MODULE_28__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_31__/* .ENDPOINT_URL */ .m, "/create-notification"), data);
+        yield axios__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_35__/* .ENDPOINT_URL */ .m, "/create-notification"), data);
       } catch (error) {
         console.log(error);
       }
@@ -1946,51 +1982,35 @@ function ProjectViewAdmin() {
       return _ref10.apply(this, arguments);
     };
   }();
-  /* const syncOff = async () => {
-  } */
-
+  var syncOff = /*#__PURE__*/function () {
+    var _ref11 = _asyncToGenerator(function* () {
+      fetchItems(page, debouncedSearchTerm, filterField, filterValue, statusFilter);
+    });
+    return function syncOff() {
+      return _ref11.apply(this, arguments);
+    };
+  }();
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     var fetchDataHidden = /*#__PURE__*/function () {
-      var _ref11 = _asyncToGenerator(function* () {
+      var _ref12 = _asyncToGenerator(function* () {
         try {
-          var res = yield axios__WEBPACK_IMPORTED_MODULE_28__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_31__/* .ENDPOINT_URL */ .m, "/hidden"));
+          var res = yield axios__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_35__/* .ENDPOINT_URL */ .m, "/hidden"));
           setHiddenRow(res.data.data.map(row => row.idRow));
           setHidden(res.data.data);
-          localStorage.removeItem('Hidden');
         } catch (error) {
           console.error('Error fetching data:', error);
         }
       });
       return function fetchDataHidden() {
-        return _ref11.apply(this, arguments);
+        return _ref12.apply(this, arguments);
       };
     }();
     fetchDataHidden();
   }, []);
-  var _useState35 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState36 = _slicedToArray(_useState35, 2),
-    open = _useState36[0],
-    setOpen = _useState36[1];
-  var _useState37 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
-    _useState38 = _slicedToArray(_useState37, 2),
-    DeleteId = _useState38[0],
-    setDeleteId = _useState38[1];
-  var _useState39 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState40 = _slicedToArray(_useState39, 2),
-    modalOpenLoading = _useState40[0],
-    setModalOpenLoading = _useState40[1];
-  var _useState41 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
-    _useState42 = _slicedToArray(_useState41, 2),
-    selectedRows = _useState42[0],
-    setSelectedRows = _useState42[1];
-  var _useState43 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState44 = _slicedToArray(_useState43, 2),
-    openDeleteMultiple = _useState44[0],
-    setOpenDeleteMultiple = _useState44[1];
-  var _useState45 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState46 = _slicedToArray(_useState45, 2),
-    openReasonDelete = _useState46[0],
-    setOpenReasonDelete = _useState46[1];
+  var _useState29 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState30 = _slicedToArray(_useState29, 2),
+    openReasonDelete = _useState30[0],
+    setOpenReasonDelete = _useState30[1];
   var handleOpenReasonDelete = e => {
     e.preventDefault();
     setOpenReasonDelete(true);
@@ -1998,31 +2018,244 @@ function ProjectViewAdmin() {
   var handleCloseReasonDelete = () => {
     setOpenReasonDelete(false);
   };
+  var _useState31 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState32 = _slicedToArray(_useState31, 2),
+    open = _useState32[0],
+    setOpen = _useState32[1];
+  var _useState33 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    _useState34 = _slicedToArray(_useState33, 2),
+    DeleteId = _useState34[0],
+    setDeleteId = _useState34[1];
+  var handleOpen = id => {
+    setOpen(true);
+    setDeleteId(id);
+  };
+  var handleClose = () => {
+    setLoadingOpenModal(false);
+    setOpen(false);
+  };
+  var _useState35 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState36 = _slicedToArray(_useState35, 2),
+    open1 = _useState36[0],
+    setOpen1 = _useState36[1];
+  var _useState37 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    _useState38 = _slicedToArray(_useState37, 2),
+    updateId = _useState38[0],
+    setUpdateId = _useState38[1];
+  var _useState39 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
+    _useState40 = _slicedToArray(_useState39, 2),
+    status = _useState40[0],
+    setStatus = _useState40[1];
+  var handleOpenUpdate = id => {
+    setOpen1(true);
+    setUpdateId(id);
+  };
+  var handleCloseUpdate = () => {
+    setOpen1(false);
+    setUpdateId(null);
+  };
+  {/** delete multiple && all modal start */}
+  var _useState41 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState42 = _slicedToArray(_useState41, 2),
+    openDeleteMultiple = _useState42[0],
+    setOpenDeleteMultiple = _useState42[1];
   var handleOpenMultiple = () => {
     setOpenDeleteMultiple(true);
   };
   var handleCloseMultiple = () => {
     setOpenDeleteMultiple(false);
   };
-  var _useState47 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
-    _useState48 = _slicedToArray(_useState47, 2),
-    sideBar = _useState48[0],
-    setSideBar = _useState48[1];
-  var toggleDrawer = () => {
-    setSideBar(!sideBar);
+  var _useState43 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState44 = _slicedToArray(_useState43, 2),
+    openDeleteAll = _useState44[0],
+    setOpenDeleteAll = _useState44[1];
+  var handleOpenAll = () => {
+    setOpenDeleteAll(true);
   };
+  var handleCloseAll = () => {
+    setOpenDeleteAll(false);
+    setSelectedRows([]);
+  };
+  {/** delete multiple && all modal end */}
+  {/** Loading Delete View End */}
+  var handleDelete = /*#__PURE__*/function () {
+    var _ref13 = _asyncToGenerator(function* () {
+      try {
+        var res = yield axios__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A.delete("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_35__/* .ENDPOINT_URL */ .m, "/delete-estimation/").concat(DeleteId));
+        if (res) {
+          setEstimate(prevEstimate => prevEstimate.filter(item => item._id !== DeleteId));
+          handleDeleteOpenLoading();
+        }
+      } catch (error) {
+        if (error.response && error.response.data && error.response.data.error) {
+          alert(error.response.data.error);
+        } else {
+          alert('An error as Occur');
+        }
+      }
+    });
+    return function handleDelete() {
+      return _ref13.apply(this, arguments);
+    };
+  }();
+  var _useState45 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    _useState46 = _slicedToArray(_useState45, 2),
+    EstimateDeleted = _useState46[0],
+    setEstimateDeleted = _useState46[1];
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    var fetchFunction = /*#__PURE__*/function () {
+      var _ref14 = _asyncToGenerator(function* () {
+        var deletePromises = selectedRows.map(/*#__PURE__*/function () {
+          var _ref15 = _asyncToGenerator(function* (idToDelete) {
+            return axios__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_35__/* .ENDPOINT_URL */ .m, "/get-estimation/").concat(idToDelete));
+          });
+          return function (_x9) {
+            return _ref15.apply(this, arguments);
+          };
+        }());
+        try {
+          var res = yield Promise.all(deletePromises);
+          setEstimateDeleted(res.map(row => 'Q-' + row.data.data.estimateNumber));
+        } catch (error) {
+          console.log(error);
+        }
+      });
+      return function fetchFunction() {
+        return _ref14.apply(this, arguments);
+      };
+    }();
+    if (selectedRows && selectedRows.length > 0) {
+      fetchFunction();
+    } else {
+      setEstimateDeleted([]);
+    }
+  }, [selectedRows]);
+  var infoFromState = (selectedRows || []).map(id => {
+    var found = (estimate || []).find(e => e._id === id || e.id === id);
+    return found !== null && found !== void 0 && found.estimateNumber ? "Q-".concat(found.estimateNumber) : '';
+  }).filter(Boolean);
+  var info = infoFromState.length > 0 ? infoFromState.join(', ') : EstimateDeleted.length > 0 ? EstimateDeleted.join(', ') : selectedRows.length > 0 ? "".concat(selectedRows.length, " quotation(s)") : '';
+  var handleCreateNotification = /*#__PURE__*/function () {
+    var _ref16 = _asyncToGenerator(function* () {
+      var data = {
+        idInfo: '',
+        person: user.data.userName + ' Deleted ' + (info || 'Quotation(s)'),
+        reason,
+        dateNotification: new Date()
+      };
+      try {
+        yield axios__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_35__/* .ENDPOINT_URL */ .m, "/create-notification"), data);
+      } catch (error) {
+        console.log(error);
+      }
+    });
+    return function handleCreateNotification() {
+      return _ref16.apply(this, arguments);
+    };
+  }();
+  var handleDeleteMany = /*#__PURE__*/function () {
+    var _ref17 = _asyncToGenerator(function* (e) {
+      if (e && e.preventDefault) e.preventDefault();
+      var deletePromises = selectedRows.map(/*#__PURE__*/function () {
+        var _ref18 = _asyncToGenerator(function* (idToDelete) {
+          return axios__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A.delete("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_35__/* .ENDPOINT_URL */ .m, "/delete-estimation/").concat(idToDelete));
+        });
+        return function (_x1) {
+          return _ref18.apply(this, arguments);
+        };
+      }());
+      try {
+        var res = yield Promise.all(deletePromises);
+        if (res) {
+          setEstimate(prevEstimate => prevEstimate.filter(item => !selectedRows.includes(item._id)));
+          handleCreateNotification();
+          setOpenReasonDelete(false);
+          setOpenDeleteAll(false);
+          setOpenDeleteMultiple(false);
+          setSelectedRows([]);
+          setReason('');
+          handleDeleteOpenLoading();
+        }
+      } catch (error) {
+        console.error('Error deleting items:', error);
+        alert("Error deleting quotations. Please try again.");
+      }
+    });
+    return function handleDeleteMany(_x0) {
+      return _ref17.apply(this, arguments);
+    };
+  }();
+  {/** DElete End */}
+  var _useState47 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
+    _useState48 = _slicedToArray(_useState47, 2),
+    estimateN = _useState48[0],
+    setEstimateN = _useState48[1];
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    if (updateId !== null) {
+      axios__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_35__/* .ENDPOINT_URL */ .m, "/get-estimation/").concat(updateId)).then(res => {
+        // get the response data here
+        setStatus(res.data.data.status);
+        setEstimateN(res.data.data.estimateNumber);
+      }).catch(error => {
+        // Handle errors
+        console.error('Error fetching data:', error);
+      });
+    }
+  }, [updateId]);
+  var handleCreateComment = /*#__PURE__*/function () {
+    var _ref19 = _asyncToGenerator(function* () {
+      var data = {
+        idInfo: updateId,
+        person: user.data.userName,
+        reason: status + ' Q-' + estimateN,
+        dateNotification: new Date()
+      };
+      try {
+        yield axios__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_35__/* .ENDPOINT_URL */ .m, "/create-notification/"), data);
+      } catch (error) {
+        console.log(error);
+      }
+    });
+    return function handleCreateComment() {
+      return _ref19.apply(this, arguments);
+    };
+  }();
+  var handleSubmitUpdateStatus = /*#__PURE__*/function () {
+    var _ref20 = _asyncToGenerator(function* (e) {
+      e.preventDefault();
+      var data = {
+        status
+      };
+      try {
+        var res = yield axios__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A.put("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_35__/* .ENDPOINT_URL */ .m, "/update-estimation/").concat(updateId), data);
+        if (res) {
+          setEstimate(prevEstimate => prevEstimate.map(item => item._id === updateId ? _objectSpread(_objectSpread({}, item), {}, {
+            status: status
+          }) : item));
+          handleCreateComment();
+          handleOpenLoading();
+        }
+      } catch (error) {
+        console.error('Error making POST request:', error);
+      }
+    });
+    return function handleSubmitUpdateStatus(_x10) {
+      return _ref20.apply(this, arguments);
+    };
+  }();
+  {/** hide Start */}
   var handleHideRow = /*#__PURE__*/function () {
-    var _ref12 = _asyncToGenerator(function* (id) {
+    var _ref21 = _asyncToGenerator(function* (id) {
       if (user.data.role === 'CEO') {
         try {
           if (hiddenRow.includes(id)) {
             setHiddenRow(hiddenRow.filter(row => row !== id));
             var result = hidden.filter(row => row.idRow === id).map(row => row._id);
             var hiddenId = result.toString();
-            yield axios__WEBPACK_IMPORTED_MODULE_28__/* ["default"] */ .A.delete("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_31__/* .ENDPOINT_URL */ .m, "/delete-hidden/").concat(hiddenId));
+            yield axios__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A.delete("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_35__/* .ENDPOINT_URL */ .m, "/delete-hidden/").concat(hiddenId));
           } else {
             setHiddenRow([...hiddenRow, id]);
-            yield axios__WEBPACK_IMPORTED_MODULE_28__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_31__/* .ENDPOINT_URL */ .m, "/create-hidden"), {
+            yield axios__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_35__/* .ENDPOINT_URL */ .m, "/create-hidden"), {
               idRow: id,
               hiddenByCEO: true
             });
@@ -2032,12 +2265,12 @@ function ProjectViewAdmin() {
         }
       }
     });
-    return function handleHideRow(_x9) {
-      return _ref12.apply(this, arguments);
+    return function handleHideRow(_x11) {
+      return _ref21.apply(this, arguments);
     };
   }();
   var rowRenderer = params => {
-    if (hiddenRow.includes(params.row._id)) {
+    if (hiddenRow.includes(params.row._id && !user.data.role === 'CEO')) {
       return null;
     }
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, params.row[params.field]);
@@ -2047,24 +2280,35 @@ function ProjectViewAdmin() {
     filteredRows = _useState50[0],
     setFilteredRows = _useState50[1];
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    var proj = project.filter(row => !hiddenRow.includes(row._id));
-    setFilteredRows(proj);
-  }, [project, hiddenRow]);
-  var _useState51 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
+    var Est = estimate.filter(row => !hiddenRow.includes(row._id));
+    setFilteredRows(Est);
+  }, [estimate]);
+  {/** hide End */}
+  var _useState51 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
+    _useState52 = _slicedToArray(_useState51, 2),
+    searchEstimate = _useState52[0],
+    setSearchEstimate = _useState52[1];
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(() => {
+    var storedValue = localStorage.getItem('QuickFilterEstimate');
+    if (storedValue) {
+      setSearchEstimate(storedValue);
+    }
+  });
+  var _React$useState = react__WEBPACK_IMPORTED_MODULE_0__.useState({
       items: [],
       quickFilterExcludeHiddenColumns: true,
-      quickFilterValues: []
+      quickFilterValues: searchTerm ? searchTerm.split(/\s+/).filter(Boolean) : []
     }),
-    _useState52 = _slicedToArray(_useState51, 2),
-    filterModel = _useState52[0],
-    setFilterModel = _useState52[1];
+    _React$useState2 = _slicedToArray(_React$useState, 2),
+    filterModel = _React$useState2[0],
+    setFilterModel = _React$useState2[1];
   var _useState53 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({}),
     _useState54 = _slicedToArray(_useState53, 2),
     columnVisibilityModel = _useState54[0],
     setColumnVisibilityModel = _useState54[1];
   var handelHiddenColumn = newHidden => {
     setColumnVisibilityModel(newHidden);
-    localStorage.setItem('HiddenColumnsProject', JSON.stringify(newHidden));
+    localStorage.setItem('HiddenColumnsEstimate', JSON.stringify(newHidden));
   };
   var handleFilter = newModel => {
     setFilterModel(newModel);
@@ -2082,187 +2326,65 @@ function ProjectViewAdmin() {
     }
   };
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    var storedQuick = JSON.parse(localStorage.getItem('QuickFilterProjectTst'));
+    var storedQuick = JSON.parse(localStorage.getItem('QuickFilterEstimateTst'));
     if (storedQuick) {
       setFilterModel(storedQuick);
     }
-    var storedColumns = JSON.parse(localStorage.getItem('HiddenColumnsProject'));
+    var storedColumns = JSON.parse(localStorage.getItem('HiddenColumnsEstimate'));
     if (storedColumns) {
       setColumnVisibilityModel(storedColumns);
     }
-  }, []);
-  var _useState55 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState56 = _slicedToArray(_useState55, 2),
-    openDeleteAll = _useState56[0],
-    setOpenDeleteAll = _useState56[1];
-  var handleOpenAll = () => {
-    setOpenDeleteAll(true);
+  }, [searchEstimate]);
+  var _React$useState3 = react__WEBPACK_IMPORTED_MODULE_0__.useState(true),
+    _React$useState4 = _slicedToArray(_React$useState3, 2),
+    sideBar = _React$useState4[0],
+    setSideBar = _React$useState4[1];
+  var toggleDrawer = () => {
+    setSideBar(!sideBar);
   };
-  var handleCloseAll = () => {
-    setOpenDeleteAll(false);
-    setSelectedRows([]);
-  };
-  var handleOpen = id => {
-    setOpen(true);
-    setDeleteId(id);
-  };
-  var handleOpenModal = () => {
-    setModalOpenLoading(true);
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-    }, 500);
-  };
-  var handleClose = () => {
-    setLoadingOpenModal(false);
-    setOpen(false);
-  };
-  var handleCloseModal = () => {
-    setOpen(false);
-    setOpenDeleteMultiple(false);
-    setOpenDeleteAll(false);
-    setModalOpenLoading(false);
-    setLoading(false);
-    setSelectedRows([]);
-    fetchItems(page, debouncedSearchTerm, filterField, filterValue, statusFilter);
-  };
-  var _useState57 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
-    _useState58 = _slicedToArray(_useState57, 2),
-    ProjectDeleted = _useState58[0],
-    setProjectDeleted = _useState58[1];
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    var fetchFunction = /*#__PURE__*/function () {
-      var _ref13 = _asyncToGenerator(function* () {
-        var deletePromises = selectedRows.map(/*#__PURE__*/function () {
-          var _ref14 = _asyncToGenerator(function* (idToDelete) {
-            return axios__WEBPACK_IMPORTED_MODULE_28__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_31__/* .ENDPOINT_URL */ .m, "/get-projects/").concat(idToDelete));
-          });
-          return function (_x0) {
-            return _ref14.apply(this, arguments);
-          };
-        }());
-        try {
-          var res = yield Promise.all(deletePromises);
-          setProjectDeleted(res.map(row => 'P-' + row.data.data.projectNumber));
-        } catch (error) {
-          console.log(error);
-        }
-      });
-      return function fetchFunction() {
-        return _ref13.apply(this, arguments);
-      };
-    }();
-    if (selectedRows && selectedRows.length > 0) {
-      fetchFunction();
-    } else {
-      setProjectDeleted([]);
-    }
-  }, [selectedRows]);
-  var infoFromState = (selectedRows || []).map(id => {
-    var found = (project || []).find(p => p._id === id || p.id === id);
-    return found !== null && found !== void 0 && found.projectNumber ? "P-".concat(found.projectNumber) : '';
-  }).filter(Boolean);
-  var info = infoFromState.length > 0 ? infoFromState.join(', ') : ProjectDeleted.length > 0 ? ProjectDeleted.join(', ') : selectedRows.length > 0 ? "".concat(selectedRows.length, " project(s)") : '';
-  var handleCreateNotification = /*#__PURE__*/function () {
-    var _ref15 = _asyncToGenerator(function* () {
-      var data = {
-        idInfo: '',
-        person: user.data.userName + ' Deleted ' + (info || 'Project(s)'),
-        reason,
-        dateNotification: new Date()
-      };
-      try {
-        yield axios__WEBPACK_IMPORTED_MODULE_28__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_31__/* .ENDPOINT_URL */ .m, "/create-notification"), data);
-      } catch (error) {
-        console.log(error);
-      }
-    });
-    return function handleCreateNotification() {
-      return _ref15.apply(this, arguments);
-    };
-  }();
-  var handleDeleteMany = /*#__PURE__*/function () {
-    var _ref16 = _asyncToGenerator(function* (e) {
-      if (e && e.preventDefault) e.preventDefault();
-      var deletePromises = selectedRows.map(/*#__PURE__*/function () {
-        var _ref17 = _asyncToGenerator(function* (idToDelete) {
-          return axios__WEBPACK_IMPORTED_MODULE_28__/* ["default"] */ .A.delete("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_31__/* .ENDPOINT_URL */ .m, "/delete-projects/").concat(idToDelete));
-        });
-        return function (_x10) {
-          return _ref17.apply(this, arguments);
-        };
-      }());
-      try {
-        var res = yield Promise.all(deletePromises);
-        if (res) {
-          handleCreateNotification();
-          setOpenReasonDelete(false);
-          setOpenDeleteAll(false);
-          setOpenDeleteMultiple(false);
-          setSelectedRows([]);
-          setReason('');
-          handleOpenModal();
-        }
-      } catch (error) {
-        console.log('an error as occur ', error);
-        alert("Error deleting projects. Please try again.");
-      }
-    });
-    return function handleDeleteMany(_x1) {
-      return _ref16.apply(this, arguments);
-    };
-  }();
-  var handleDelete = /*#__PURE__*/function () {
-    var _ref18 = _asyncToGenerator(function* () {
-      setLoading(true);
-      setModalOpenLoading(true);
-      handleClose();
-      try {
-        var res = yield axios__WEBPACK_IMPORTED_MODULE_28__/* ["default"] */ .A.delete("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_31__/* .ENDPOINT_URL */ .m, "/delete-projects/").concat(DeleteId));
-        if (res) {
-          handleOpenModal();
-        }
-      } catch (error) {
-        console.log(error);
-        setLoading(false);
-        setModalOpenLoading(false);
-      }
-    });
-    return function handleDelete() {
-      return _ref18.apply(this, arguments);
-    };
-  }();
   var columns = [{
-    field: 'projectNumber',
-    headerName: 'Project Number',
-    minWidth: 80,
-    flex: 0.8,
-    valueFormatter: params => 'P-' + String((params === null || params === void 0 ? void 0 : params.value) || '').padStart(6, '0')
+    field: 'estimateDate',
+    headerName: 'Date',
+    minWidth: 100,
+    flex: 1,
+    type: 'date',
+    valueGetter: params => new Date(params.row.estimateDate),
+    renderCell: params => dayjs__WEBPACK_IMPORTED_MODULE_45___default()(params.row.estimateDate).format('DD/MM/YYYY')
   }, {
     field: 'customer',
     headerName: 'Customer Name',
-    minWidth: 150,
-    flex: 1.5,
+    minWidth: 200,
+    flex: 2,
     valueGetter: params => {
-      var _params$row$customerN;
-      return ((_params$row$customerN = params.row.customerName) === null || _params$row$customerN === void 0 ? void 0 : _params$row$customerN.customerName) || 'No Customer';
+      var _params$row, _params$row2, _params$row3;
+      return (((_params$row = params.row) === null || _params$row === void 0 || (_params$row = _params$row.customerName) === null || _params$row === void 0 ? void 0 : _params$row.Customer) || ((_params$row2 = params.row) === null || _params$row2 === void 0 || (_params$row2 = _params$row2.customerName) === null || _params$row2 === void 0 ? void 0 : _params$row2.customerName) || (typeof ((_params$row3 = params.row) === null || _params$row3 === void 0 ? void 0 : _params$row3.customerName) === 'string' ? params.row.customerName : '') || '').toUpperCase();
     }
   }, {
-    field: 'projectName',
-    headerName: 'Project Name',
-    minWidth: 200,
-    flex: 2
+    field: 'estimateNumber',
+    headerName: 'Quotation#',
+    minWidth: 100,
+    flex: 1,
+    valueFormatter: params => 'Q-' + String((params === null || params === void 0 ? void 0 : params.value) || '').padStart(6, '0')
   }, {
-    field: 'description',
-    headerName: 'Description',
+    field: 'estimateSubject',
+    headerName: 'Subject',
     minWidth: 150,
     flex: 1.5
   }, {
     field: 'status',
     headerName: 'Status',
-    minWidth: 100,
+    minWidth: 110,
     flex: 1,
-    renderCell: params => (0,_utils_formatUtils__WEBPACK_IMPORTED_MODULE_30__/* .renderStatusBadge */ .UM)(params.row.status)
+    renderCell: params => (0,_utils_formatUtils__WEBPACK_IMPORTED_MODULE_34__/* .renderStatusBadge */ .UM)(params.row.status)
+  }, {
+    field: 'subTotal',
+    headerName: 'Amount',
+    minWidth: 90,
+    flex: 1,
+    renderCell: params => {
+      var _params$row$totalInvo;
+      return "$".concat((_params$row$totalInvo = params.row.totalInvoice) === null || _params$row$totalInvo === void 0 ? void 0 : _params$row$totalInvo.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+    }
   }, {
     field: 'view',
     headerName: 'View',
@@ -2270,10 +2392,10 @@ function ProjectViewAdmin() {
     minWidth: 60,
     renderCell: params => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(ViewTooltip, {
       title: "View"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
-      disabled: ProjectInfoV.length === 0
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+      disabled: estimationInfoV.length === 0
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_7__/* .NavLink */ .k2, {
-      to: "/ProjectInfo/".concat(params.row._id),
+      to: "/EstimateViewAdminAll/".concat(params.row._id),
       className: "LinkName"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Visibility__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
       style: {
@@ -2287,16 +2409,14 @@ function ProjectViewAdmin() {
     minWidth: 60,
     renderCell: params => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(EditTooltip, {
       title: "Edit"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
-      disabled: ProjectInfoU.length === 0
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_7__/* .NavLink */ .k2, {
-      to: "/ProjectUpdateView/".concat(params.row._id),
-      className: "LinkName"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+      onClick: () => handleOpenUpdate(params.row._id),
+      disabled: params.row.status !== 'Draft' && estimationInfoU.length === 0
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Edit__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
       style: {
         color: 'gray'
       }
-    })))))
+    }))))
   }, {
     field: 'Delete',
     headerName: 'Delete',
@@ -2304,9 +2424,9 @@ function ProjectViewAdmin() {
     minWidth: 60,
     renderCell: params => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(DeleteTooltip, {
       title: "Delete"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, "                           ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, "                                ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
       onClick: () => handleOpen(params.row._id),
-      disabled: ProjectInfoD.length === 0
+      disabled: estimationInfoD.length === 0
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Delete__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
       style: {
         cursor: 'pointer',
@@ -2323,17 +2443,17 @@ function ProjectViewAdmin() {
       if (user.data.role === 'CEO') {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, hiddenRow.includes(params.row._id) ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(ViewTooltip, {
           title: "UnHide"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
           onClick: () => handleHideRow(params.row._id)
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_39__/* ["default"] */ .A, {
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_43__/* ["default"] */ .A, {
           style: {
             color: '#202a5a'
           }
         })))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(ViewTooltip, {
           title: "Hide"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
           onClick: () => handleHideRow(params.row._id)
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_38__/* ["default"] */ .A, {
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_42__/* ["default"] */ .A, {
           style: {
             color: '#202a5a'
           }
@@ -2348,40 +2468,43 @@ function ProjectViewAdmin() {
         top: '120px',
         textAlign: 'center'
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_43__/* ["default"] */ .A, null)) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_46__/* ["default"] */ .A, null)) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
       sx: {
         width: '100%',
         py: 1
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_MobileCardList__WEBPACK_IMPORTED_MODULE_52__/* ["default"] */ .A, {
-      type: "projects",
-      data: project,
-      searchPlaceholder: "Search projects by name, client, description...",
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_MobileCardList__WEBPACK_IMPORTED_MODULE_57__/* ["default"] */ .A, {
+      type: "quotations",
+      data: estimate,
+      searchPlaceholder: "Search quotations, clients, items, amounts...",
       searchValue: searchTerm,
       onSearchChange: setSearchTerm,
       page: page,
       totalCount: totalItemCount,
       onPageChange: setPage,
-      loading: loadingData
+      loading: loadingData,
+      statusFilter: statusFilter,
+      onStatusFilterChange: handleStatusClick,
+      statusCounts: statusCounts
     }));
   }
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "Homeemployee"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
     sx: {
       display: 'flex'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_CssBaseline__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .Ay, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(AppBar, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_CssBaseline__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .Ay, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(AppBar, {
     position: "absolute",
     open: sideBar,
     sx: {
       backgroundColor: '#30368a'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
     sx: {
       pr: '24px' // keep right padding when drawer closed
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
     edge: "start",
     color: "inherit",
     "aria-label": "open drawer",
@@ -2391,7 +2514,7 @@ function ProjectViewAdmin() {
     }, sideBar && {
       display: 'none'
     })
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Menu__WEBPACK_IMPORTED_MODULE_26__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Menu__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .A, {
     component: "h1",
     variant: "h6",
     color: "inherit",
@@ -2399,13 +2522,13 @@ function ProjectViewAdmin() {
     sx: {
       flexGrow: 1
     }
-  }, "Project"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_50__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_MessageAdminView__WEBPACK_IMPORTED_MODULE_49__/* ["default"] */ .A, {
+  }, "Quotation"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_55__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_MessageAdminView__WEBPACK_IMPORTED_MODULE_54__/* ["default"] */ .A, {
     name: user.data.userName,
     role: user.data.role
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
     color: "inherit",
     onClick: handleLogout
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_45__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_50__/* ["default"] */ .A, {
     style: {
       color: 'white'
     }
@@ -2414,20 +2537,20 @@ function ProjectViewAdmin() {
     open: sideBar,
     onMouseEnter: () => setSideBar(true),
     onMouseLeave: () => setSideBar(false)
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
     sx: {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'flex-end',
       px: [1]
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
     onClick: toggleDrawer
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_ChevronLeft__WEBPACK_IMPORTED_MODULE_27__/* ["default"] */ .A, null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Divider__WEBPACK_IMPORTED_MODULE_24__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_List__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_ChevronLeft__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Divider__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_List__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, {
     sx: {
       height: '700px'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_SidebarDash__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_SidebarDash__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
     component: "main",
     sx: {
       backgroundColor: theme => theme.palette.mode === 'light' ? theme.palette.grey[100] : theme.palette.grey[900],
@@ -2436,7 +2559,7 @@ function ProjectViewAdmin() {
       height: '100vh',
       overflow: 'auto'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Container__WEBPACK_IMPORTED_MODULE_25__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Container__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
     maxWidth: "none",
     sx: {
       mt: 0.5,
@@ -2445,7 +2568,7 @@ function ProjectViewAdmin() {
         sm: 2
       }
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
     sx: {
       display: 'grid',
       gridTemplateColumns: {
@@ -2459,59 +2582,59 @@ function ProjectViewAdmin() {
     }
   }, [{
     key: 'ALL',
-    label: 'ALL PROJECTS',
+    label: 'ALL QUOTATIONS',
     count: statusCounts.all,
     color: '#30368a',
     bgLight: '#eef2ff',
-    icon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_33__/* ["default"] */ .A, {
+    icon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_38__/* ["default"] */ .A, {
       sx: {
         fontSize: 15,
         color: '#30368a'
       }
     })
   }, {
-    key: 'Pending',
-    label: 'PENDING',
-    count: statusCounts.pending,
-    color: '#ed6c02',
-    bgLight: '#fff3e0',
-    icon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_37__/* ["default"] */ .A, {
+    key: 'Draft',
+    label: 'DRAFT',
+    count: statusCounts.draft,
+    color: '#78909c',
+    bgLight: '#eceff1',
+    icon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_41__/* ["default"] */ .A, {
       sx: {
         fontSize: 15,
-        color: '#ed6c02'
+        color: '#78909c'
       }
     })
   }, {
-    key: 'On-going',
-    label: 'ON-GOING',
-    count: statusCounts.ongoing,
+    key: 'Sent',
+    label: 'SENT',
+    count: statusCounts.sent,
     color: '#1976d2',
     bgLight: '#e3f2fd',
-    icon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_34__/* ["default"] */ .A, {
+    icon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_44__/* ["default"] */ .A, {
       sx: {
         fontSize: 15,
         color: '#1976d2'
       }
     })
   }, {
-    key: 'Stopped',
-    label: 'STOPPED',
-    count: statusCounts.stopped,
+    key: 'Decline',
+    label: 'DECLINE',
+    count: statusCounts.decline,
     color: '#d32f2f',
     bgLight: '#ffebee',
-    icon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A, {
+    icon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_39__/* ["default"] */ .A, {
       sx: {
         fontSize: 15,
         color: '#d32f2f'
       }
     })
   }, {
-    key: 'Completed',
-    label: 'COMPLETED',
-    count: statusCounts.completed,
+    key: 'Approved',
+    label: 'APPROVED',
+    count: statusCounts.approved,
     color: '#2e7d32',
     bgLight: '#e8f5e9',
-    icon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_44__/* ["default"] */ .A, {
+    icon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_47__/* ["default"] */ .A, {
       sx: {
         fontSize: 15,
         color: '#2e7d32'
@@ -2519,7 +2642,7 @@ function ProjectViewAdmin() {
     })
   }].map(card => {
     var isSelected = statusFilter.toLowerCase() === card.key.toLowerCase();
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
       key: card.key,
       onClick: () => handleStatusClick(card.key),
       sx: {
@@ -2542,7 +2665,7 @@ function ProjectViewAdmin() {
           borderColor: card.color
         }
       }
-    }, isSelected && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+    }, isSelected && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
       sx: {
         position: 'absolute',
         top: 0,
@@ -2551,14 +2674,14 @@ function ProjectViewAdmin() {
         height: '3px',
         backgroundColor: card.color
       }
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
       sx: {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
         mb: 0.25
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .A, {
       sx: {
         fontSize: '9.5px',
         fontWeight: 700,
@@ -2566,7 +2689,7 @@ function ProjectViewAdmin() {
         color: isSelected ? card.color : '#64748b',
         textTransform: 'uppercase'
       }
-    }, card.label), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+    }, card.label), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
       sx: {
         width: 22,
         height: 22,
@@ -2576,13 +2699,13 @@ function ProjectViewAdmin() {
         alignItems: 'center',
         justifyContent: 'center'
       }
-    }, card.icon)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+    }, card.icon)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
       sx: {
         display: 'flex',
         alignItems: 'baseline',
         gap: 1
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .A, {
       sx: {
         fontSize: '16px',
         fontWeight: 800,
@@ -2595,7 +2718,7 @@ function ProjectViewAdmin() {
       position: 'relative',
       top: '120px'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_43__/* ["default"] */ .A, null))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_46__/* ["default"] */ .A, null))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
     sx: {
       display: 'flex',
       justifyContent: 'space-between',
@@ -2603,29 +2726,29 @@ function ProjectViewAdmin() {
       mb: 0.5,
       mt: 0.25
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, null, project.length > 0 && selectedRows.length > 1 && selectedRows.length < project.length && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, null, estimate.length > 0 && selectedRows.length > 1 && selectedRows.length < estimate.length && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
     disabled: user.data.role !== 'CEO',
     onClick: handleOpenAll,
     className: "btnCustomer2"
-  }, "Delete multiple"), project.length > 0 && selectedRows.length === project.length && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+  }, "Delete multiple"), estimate.length > 0 && selectedRows.length === estimate.length && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
     onClick: handleOpenAll,
     disabled: user.data.role !== 'CEO',
     className: "btnCustomer2"
-  }, "Delete all")), !(0,_utils_isMobile__WEBPACK_IMPORTED_MODULE_51__/* .isNativeMobile */ .g1)() && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+  }, "Delete all")), !(0,_utils_isMobile__WEBPACK_IMPORTED_MODULE_56__/* .isNativeMobile */ .g1)() && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
     sx: {
       display: 'flex',
       alignItems: 'center',
       gap: 1
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(ViewTooltip, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
-    disabled: ProjectInfoC.length === 0,
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(ViewTooltip, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+    disabled: estimationInfoC.length === 0,
     size: "small"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_7__/* .NavLink */ .k2, {
-    to: '/ProjectFormView',
+    to: '/EstimateInvoiceForm',
     className: "LinkName"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
     className: "btnCustomerAdding"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_37__/* ["default"] */ .A, {
     sx: {
       fontSize: 18
     }
@@ -2637,23 +2760,26 @@ function ProjectViewAdmin() {
       lineHeight: '32px',
       padding: '0 12px'
     }
-  }, "Refresh Search"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+  }, "Refresh Search"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
     sx: {
-      height: (0,_utils_isMobile__WEBPACK_IMPORTED_MODULE_51__/* .isNativeMobile */ .g1)() ? 'auto' : 'calc(100vh - 200px)',
+      height: (0,_utils_isMobile__WEBPACK_IMPORTED_MODULE_56__/* .isNativeMobile */ .g1)() ? 'auto' : 'calc(100vh - 200px)',
       minHeight: 380,
       width: '100%'
     }
-  }, (0,_utils_isMobile__WEBPACK_IMPORTED_MODULE_51__/* .isNativeMobile */ .g1)() ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_MobileCardList__WEBPACK_IMPORTED_MODULE_52__/* ["default"] */ .A, {
-    type: "projects",
-    data: project,
-    searchPlaceholder: "Search projects by name, client, description...",
+  }, (0,_utils_isMobile__WEBPACK_IMPORTED_MODULE_56__/* .isNativeMobile */ .g1)() ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_MobileCardList__WEBPACK_IMPORTED_MODULE_57__/* ["default"] */ .A, {
+    type: "quotations",
+    data: estimate,
+    searchPlaceholder: "Search quotations, clients, items, amounts...",
     searchValue: searchTerm,
     onSearchChange: setSearchTerm,
     page: page,
     totalCount: totalItemCount,
     onPageChange: setPage,
-    loading: loadingData
-  }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, user.data.role === 'CEO' ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_x_data_grid__WEBPACK_IMPORTED_MODULE_47__/* .DataGrid */ .zh, {
+    loading: loadingData,
+    statusFilter: statusFilter,
+    onStatusFilterChange: handleStatusClick,
+    statusCounts: statusCounts
+  }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, user.data.role === 'CEO' ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_x_data_grid__WEBPACK_IMPORTED_MODULE_52__/* .DataGrid */ .zh, {
     paginationMode: "server",
     filterMode: "server",
     rowCount: totalItemCount,
@@ -2662,12 +2788,11 @@ function ProjectViewAdmin() {
       pageSize: limit
     },
     onPaginationModelChange: newModel => handlePageChange(newModel.page),
-    rows: project,
+    rows: estimate,
     columns: columns,
     slots: {
-      toolbar: _mui_x_data_grid__WEBPACK_IMPORTED_MODULE_48__/* .GridToolbar */ .O
+      toolbar: _mui_x_data_grid__WEBPACK_IMPORTED_MODULE_53__/* .GridToolbar */ .O
     },
-    onRowSelectionModelChange: newSelection => setSelectedRows(newSelection),
     slotProps: {
       toolbar: {
         showQuickFilter: true,
@@ -2679,10 +2804,11 @@ function ProjectViewAdmin() {
         }
       }
     },
+    rowSelectionModel: selectedRows,
+    onRowSelectionModelChange: newSelection => setSelectedRows(newSelection),
     rowRenderer: rowRenderer,
     checkboxSelection: true,
     disableDensitySelector: true,
-    rowSelectionModel: selectedRows,
     filterModel: filterModel,
     onFilterModelChange: newModel => handleFilter(newModel),
     columnVisibilityModel: columnVisibilityModel,
@@ -2701,7 +2827,7 @@ function ProjectViewAdmin() {
         display: 'none'
       }
     }
-  }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_x_data_grid__WEBPACK_IMPORTED_MODULE_47__/* .DataGrid */ .zh, {
+  }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_x_data_grid__WEBPACK_IMPORTED_MODULE_52__/* .DataGrid */ .zh, {
     paginationMode: "server",
     filterMode: "server",
     rowCount: totalItemCount,
@@ -2713,9 +2839,8 @@ function ProjectViewAdmin() {
     rows: filteredRows,
     columns: columns,
     slots: {
-      toolbar: _mui_x_data_grid__WEBPACK_IMPORTED_MODULE_48__/* .GridToolbar */ .O
+      toolbar: _mui_x_data_grid__WEBPACK_IMPORTED_MODULE_53__/* .GridToolbar */ .O
     },
-    onRowSelectionModelChange: newSelection => setSelectedRows(newSelection),
     slotProps: {
       toolbar: {
         showQuickFilter: true,
@@ -2727,10 +2852,11 @@ function ProjectViewAdmin() {
         }
       }
     },
+    onRowSelectionModelChange: newSelection => setSelectedRows(newSelection),
     rowRenderer: rowRenderer,
     checkboxSelection: true,
-    disableDensitySelector: true,
     rowSelectionModel: selectedRows,
+    disableDensitySelector: true,
     filterModel: filterModel,
     onFilterModelChange: newModel => handleFilter(newModel),
     columnVisibilityModel: columnVisibilityModel,
@@ -2749,38 +2875,126 @@ function ProjectViewAdmin() {
         display: 'none'
       }
     }
-  }))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, {
+  }))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .A, {
     open: open,
     onClose: handleClose,
     "aria-labelledby": "modal-modal-title",
     "aria-describedby": "modal-modal-description"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
     sx: _objectSpread(_objectSpread({}, style), {}, {
       width: 500
     })
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .Ay, {
+    container: true,
     style: {
-      justifyContent: 'center',
+      alignItems: 'center',
+      padding: '15px'
+    },
+    spacing: 2
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .Ay, {
+    item: true,
+    xs: 12,
+    style: {
+      width: '100%',
       textAlign: 'center'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", null, "Do you want to Delete ?"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-    style: {
-      display: 'flex',
-      gap: '60px',
-      justifyContent: 'center'
-    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .A, {
+    id: "modal-modal-title",
+    variant: "h6",
+    component: "h2"
+  }, "Do you Want to delete?")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .Ay, {
+    item: true,
+    xs: 6
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
-    className: "btnCustomer2",
-    onClick: handleDelete
-  }, "Delete"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+    type: "button",
+    onClick: handleClose,
     className: "btnCustomer",
-    onClick: handleClose
-  }, "Cancel"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, {
+    style: {
+      width: '100%'
+    }
+  }, "Cancel")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .Ay, {
+    item: true,
+    xs: 6
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+    onClick: handleDelete,
+    className: "btnCustomer2",
+    style: {
+      width: '100%'
+    }
+  }, "Delete"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .A, {
+    open: open1,
+    onClose: handleCloseUpdate,
+    "aria-labelledby": "modal-modal-title",
+    "aria-describedby": "modal-modal-description"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
+    sx: _objectSpread(_objectSpread({}, style), {}, {
+      width: 500
+    })
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(ViewTooltip, {
+    title: "Close",
+    placement: "left"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+    onClick: handleCloseUpdate,
+    style: {
+      position: 'relative',
+      float: 'right'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_40__/* ["default"] */ .A, {
+    style: {
+      color: '#202a5a'
+    }
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .A, {
+    id: "modal-modal-title",
+    variant: "h6",
+    component: "h2"
+  }, "Update Quotation Status"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("form", {
+    onSubmit: handleSubmitUpdateStatus
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .Ay, {
+    container: true,
+    style: {
+      alignItems: 'center',
+      padding: '15px'
+    },
+    spacing: 2
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .Ay, {
+    item: true,
+    xs: 12
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_24__/* ["default"] */ .A, {
+    sx: {
+      width: '100%'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_25__/* ["default"] */ .A, {
+    id: "status"
+  }, "Status"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_26__/* ["default"] */ .A, {
+    required: true,
+    id: "status",
+    value: status,
+    onChange: e => setStatus(e.target.value),
+    name: "status",
+    label: "status",
+    defaultValue: "Draft"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_27__/* ["default"] */ .A, {
+    value: "Draft"
+  }, "Draft"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_27__/* ["default"] */ .A, {
+    value: "Sent"
+  }, "Sent"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_27__/* ["default"] */ .A, {
+    value: "Decline"
+  }, "Decline"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_27__/* ["default"] */ .A, {
+    value: "Approved"
+  }, "Approved")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .Ay, {
+    item: true,
+    xs: 12
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+    className: "btnCustomer",
+    style: {
+      width: '100%'
+    }
+  }, "Update")))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .A, {
     open: openDeleteMultiple,
     onClose: handleCloseMultiple,
     "aria-labelledby": "modal-modal-title",
     "aria-describedby": "modal-modal-description"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
     sx: _objectSpread(_objectSpread({}, style), {}, {
       width: 500
     })
@@ -2806,12 +3020,12 @@ function ProjectViewAdmin() {
   }, "Delete"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
     className: "btnCustomer",
     onClick: handleCloseMultiple
-  }, "Cancel"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, {
+  }, "Cancel"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .A, {
     open: openDeleteAll,
     onClose: handleCloseAll,
     "aria-labelledby": "modal-modal-title",
     "aria-describedby": "modal-modal-description"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
     sx: _objectSpread(_objectSpread({}, style), {}, {
       width: 500
     })
@@ -2825,12 +3039,12 @@ function ProjectViewAdmin() {
     style: {
       color: 'red'
     }
-  }, "Note:"), " Selected rows will be deleted"), selectedRows.length > 1 && selectedRows.length < project.length && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
+  }, "Note:"), " Selected rows will be deleted"), selectedRows.length > 1 && selectedRows.length < estimate.length && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
     className: "txt2",
     style: {
       color: 'red'
     }
-  }, "Note:"), " All selected rows will be deleted"), selectedRows.length === project.length && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
+  }, "Note:"), " All selected rows will be deleted"), selectedRows.length === estimate.length && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
     className: "txt2",
     style: {
       color: 'red'
@@ -2847,26 +3061,26 @@ function ProjectViewAdmin() {
   }, "Delete"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
     className: "btnCustomer",
     onClick: handleCloseAll
-  }, "Cancel"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, {
+  }, "Cancel"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .A, {
     open: loadingOpenModal,
-    onClose: handleCloseModal,
+    onClose: handleCloseLoading,
     closeAfterTransition: true,
-    BackdropComponent: _mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A,
+    BackdropComponent: _mui_material__WEBPACK_IMPORTED_MODULE_28__/* ["default"] */ .A,
     BackdropProps: {
       timeout: 500
     },
     "aria-labelledby": "modal-modal-title",
     "aria-describedby": "modal-modal-description"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
     sx: _objectSpread(_objectSpread({}, style), {}, {
       width: 500
     })
-  }, loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_43__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+  }, loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_46__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     style: {
       justifyContent: 'center',
       textAlign: 'center'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_44__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_47__/* ["default"] */ .A, {
     style: {
       color: 'green',
       height: '40px',
@@ -2879,27 +3093,27 @@ function ProjectViewAdmin() {
       justifyContent: 'center'
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
-    onClick: handleCloseModal,
+    onClick: handleCloseLoading,
     className: "btnCustomer"
-  }, "Close"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, {
-    open: modalOpenLoading,
-    onClose: handleCloseModal,
-    BackdropComponent: _mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A,
+  }, "Close"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .A, {
+    open: modalDeleteOpenLoading,
+    onClose: handleDeleteCloseLoading,
+    BackdropComponent: _mui_material__WEBPACK_IMPORTED_MODULE_28__/* ["default"] */ .A,
     BackdropProps: {
       timeout: 500
     },
     "aria-labelledby": "modal-modal-title",
     "aria-describedby": "modal-modal-description"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
     sx: _objectSpread(_objectSpread({}, style), {}, {
       width: 500
     })
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_43__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_46__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     style: {
       justifyContent: 'center',
       textAlign: 'center'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_44__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_47__/* ["default"] */ .A, {
     style: {
       color: 'green',
       height: '40px',
@@ -2912,47 +3126,47 @@ function ProjectViewAdmin() {
       justifyContent: 'center'
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
-    onClick: handleCloseModal,
+    onClick: handleDeleteCloseLoading,
     className: "btnCustomer"
-  }, "Close")))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, {
+  }, "Close")))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .A, {
     open: openReasonDelete,
     onClose: handleCloseReasonDelete,
     "aria-labelledby": "modal-modal-title",
     "aria-describedby": "modal-modal-description"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
     sx: _objectSpread(_objectSpread({}, style), {}, {
       width: 500
     })
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(ViewTooltip, {
     title: "Close",
     placement: "left"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
     onClick: handleCloseReasonDelete,
     style: {
       position: 'relative',
       float: 'right'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_36__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_40__/* ["default"] */ .A, {
     style: {
       color: '#202a5a'
     }
-  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .A, {
     id: "modal-modal-title",
     variant: "h6",
     component: "h2"
-  }, "Why do you want to delete: ", info || (selectedRows.length > 1 ? "".concat(selectedRows.length, " selected projects") : 'this project'), "?"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("form", {
+  }, "Why do you want to delete: ", info || (selectedRows.length > 1 ? "".concat(selectedRows.length, " selected quotations") : 'this quotation'), "?"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("form", {
     onSubmit: handleDeleteMany
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .Ay, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .Ay, {
     container: true,
     style: {
       alignItems: 'center',
       padding: '15px'
     },
     spacing: 2
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .Ay, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .Ay, {
     item: true,
     xs: 12
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_29__/* ["default"] */ .A, {
     required: true,
     id: "reason",
     name: "reason",
@@ -2966,7 +3180,7 @@ function ProjectViewAdmin() {
       width: '100%',
       backgroundColor: 'white'
     }
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .Ay, {
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .Ay, {
     item: true,
     xs: 12
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
@@ -2977,7 +3191,7 @@ function ProjectViewAdmin() {
     }
   }, "Save")))))));
 }
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ProjectViewAdmin);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (EstimateViewAdmin);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, [
 /* harmony export */   "default", 0, /* export default binding */ __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ ]);

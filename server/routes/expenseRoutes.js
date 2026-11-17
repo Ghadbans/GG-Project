@@ -7,6 +7,7 @@ function branchFilter(req) {
   return branchId && branchId !== 'ALL' ? { branchId } : {};
 }
 const { authenticate } = require("../Middleware/auth");
+const { toSafeObjectId, cleanParamString } = require("../utils/objectIdUtils");
 const cors = require("cors");
 const multer = require("multer");
 let customerSchema = require("../model/Model");
@@ -283,20 +284,22 @@ Route.route("/expense", cors(corsOptionsDelegate)).get(
       const summary = req.query.summary === 'true';
       const projection = {};
       const filter = req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {};
-      if (req.query.projectId || req.query.projectName) {
+      const cleanProjectId = cleanParamString(req.query.projectId);
+      const cleanProjectName = cleanParamString(req.query.projectName);
+      const cleanMaintenanceId = cleanParamString(req.query.maintenanceId);
+
+      if (cleanProjectId || cleanProjectName) {
         let eConditions = [];
-        if (req.query.projectId) {
-          let objectId = null;
-          try { objectId = new require('mongoose').Types.ObjectId(req.query.projectId); } catch (e) {}
-          const pIds = objectId ? [req.query.projectId, objectId] : [req.query.projectId];
+        if (cleanProjectId) {
+          const objectId = toSafeObjectId(cleanProjectId);
+          const pIds = objectId ? [cleanProjectId, objectId] : [cleanProjectId];
           eConditions.push(
             { 'accountNameInfo._id': { $in: pIds } },
             { 'accountNameInfo': { $in: pIds } }
           );
         }
-        if (req.query.projectName) {
-          const rawName = req.query.projectName.trim();
-          const escapedName = rawName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        if (cleanProjectName) {
+          const escapedName = cleanProjectName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
           eConditions.push(
             { 'accountNameInfo.name': new RegExp('^' + escapedName + '$', 'i') },
             { 'accountName': new RegExp('^' + escapedName + '$', 'i') }
@@ -306,13 +309,12 @@ Route.route("/expense", cors(corsOptionsDelegate)).get(
           filter['$or'] = eConditions;
         }
       }
-      if (req.query.maintenanceId) {
-        let objectId = null;
-        try { objectId = new require('mongoose').Types.ObjectId(req.query.maintenanceId); } catch (e) {}
+      if (cleanMaintenanceId) {
+        const objectId = toSafeObjectId(cleanMaintenanceId);
         if (objectId) {
-          filter['accountNameInfo._id'] = { $in: [req.query.maintenanceId, objectId] };
+          filter['accountNameInfo._id'] = { $in: [cleanMaintenanceId, objectId] };
         } else {
-          filter['accountNameInfo._id'] = req.query.maintenanceId;
+          filter['accountNameInfo._id'] = cleanMaintenanceId;
         }
       }
 

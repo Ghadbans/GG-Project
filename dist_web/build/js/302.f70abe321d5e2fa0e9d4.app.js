@@ -690,24 +690,25 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mui_icons_material_ChevronLeft__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(8451);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(99380);
 /* harmony import */ var _apiConfig__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(71510);
-/* harmony import */ var _utils_formatUtils__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(37402);
-/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(99682);
-/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(27341);
-/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(52653);
-/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(74353);
-/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_27___default = /*#__PURE__*/__webpack_require__.n(dayjs__WEBPACK_IMPORTED_MODULE_27__);
-/* harmony import */ var _utils_fleetUtils__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(95025);
-/* harmony import */ var _component_Loader__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(65821);
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(13561);
-/* harmony import */ var _features_auth_authSlice__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(32005);
-/* harmony import */ var _component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(40301);
-/* harmony import */ var _img_no_data_png__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(20453);
-/* harmony import */ var _img_no_data_png__WEBPACK_IMPORTED_MODULE_33___default = /*#__PURE__*/__webpack_require__.n(_img_no_data_png__WEBPACK_IMPORTED_MODULE_33__);
-/* harmony import */ var _mui_material_CssBaseline__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(14519);
-/* harmony import */ var _mui_x_data_grid__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(1835);
-/* harmony import */ var _mui_x_data_grid__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(53071);
-/* harmony import */ var _MessageAdminView__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(83818);
-/* harmony import */ var _NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(95236);
+/* harmony import */ var _hooks_useModuleSearchState__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(80099);
+/* harmony import */ var _utils_formatUtils__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(37402);
+/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(99682);
+/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(27341);
+/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(52653);
+/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(74353);
+/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_28___default = /*#__PURE__*/__webpack_require__.n(dayjs__WEBPACK_IMPORTED_MODULE_28__);
+/* harmony import */ var _utils_fleetUtils__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(95025);
+/* harmony import */ var _component_Loader__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(65821);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(13561);
+/* harmony import */ var _features_auth_authSlice__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(32005);
+/* harmony import */ var _component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(40301);
+/* harmony import */ var _img_no_data_png__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(20453);
+/* harmony import */ var _img_no_data_png__WEBPACK_IMPORTED_MODULE_34___default = /*#__PURE__*/__webpack_require__.n(_img_no_data_png__WEBPACK_IMPORTED_MODULE_34__);
+/* harmony import */ var _mui_material_CssBaseline__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(14519);
+/* harmony import */ var _mui_x_data_grid__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(1835);
+/* harmony import */ var _mui_x_data_grid__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(53071);
+/* harmony import */ var _MessageAdminView__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(83818);
+/* harmony import */ var _NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(95236);
 var _excluded = ["className"];
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
 function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
@@ -726,6 +727,7 @@ function _extends() { return _extends = Object.assign ? Object.assign.bind() : f
 function _objectWithoutProperties(e, t) { if (null == e) return {}; var o, r, i = _objectWithoutPropertiesLoose(e, t); if (Object.getOwnPropertySymbols) { var n = Object.getOwnPropertySymbols(e); for (r = 0; r < n.length; r++) o = n[r], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]); } return i; }
 function _objectWithoutPropertiesLoose(r, e) { if (null == r) return {}; var t = {}; for (var n in r) if ({}.hasOwnProperty.call(r, n)) { if (-1 !== e.indexOf(n)) continue; t[n] = r[n]; } return t; }
 ;
+
 
 
 
@@ -849,28 +851,25 @@ function FleetViewAdmin() {
     _useState6 = _slicedToArray(_useState5, 2),
     loadingData = _useState6[0],
     setLoadingData = _useState6[1];
-  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
-    _useState8 = _slicedToArray(_useState7, 2),
-    page = _useState8[0],
-    setPage = _useState8[1];
+  var _useModuleSearchState = (0,_hooks_useModuleSearchState__WEBPACK_IMPORTED_MODULE_23__/* .useModuleSearchState */ .pi)('fleet'),
+    searchTerm = _useModuleSearchState.searchTerm,
+    setSearchTerm = _useModuleSearchState.setSearchTerm,
+    page = _useModuleSearchState.page,
+    setPage = _useModuleSearchState.setPage;
   var limit = 100;
-  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(1),
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(1),
+    _useState8 = _slicedToArray(_useState7, 2),
+    totalPage = _useState8[0],
+    setTotalPage = _useState8[1];
+  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(searchTerm),
     _useState0 = _slicedToArray(_useState9, 2),
-    totalPage = _useState0[0],
-    setTotalPage = _useState0[1];
-  var _useState1 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
+    debouncedSearchTerm = _useState0[0],
+    setDebouncedSearchTerm = _useState0[1];
+  var _useState1 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
     _useState10 = _slicedToArray(_useState1, 2),
-    searchTerm = _useState10[0],
-    setSearchTerm = _useState10[1];
-  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
-    _useState12 = _slicedToArray(_useState11, 2),
-    debouncedSearchTerm = _useState12[0],
-    setDebouncedSearchTerm = _useState12[1];
-  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
-    _useState14 = _slicedToArray(_useState13, 2),
-    totalItemCount = _useState14[0],
-    setTotalItemCount = _useState14[1];
-  var user = (0,react_redux__WEBPACK_IMPORTED_MODULE_30__/* .useSelector */ .d4)(_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_31__/* .selectCurrentUser */ .xu);
+    totalItemCount = _useState10[0],
+    setTotalItemCount = _useState10[1];
+  var user = (0,react_redux__WEBPACK_IMPORTED_MODULE_31__/* .useSelector */ .d4)(_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_32__/* .selectCurrentUser */ .xu);
   var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_5__/* .useNavigate */ .Zp)();
   var toggleDrawer = () => {
     setSideBar(!sideBar);
@@ -931,7 +930,7 @@ function FleetViewAdmin() {
           backgroundColor: '#f1f5f9',
           boxShadow: '0 1px 2px rgba(0,0,0,0.05)'
         }
-      }, !img && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_25__/* ["default"] */ .A, {
+      }, !img && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_26__/* ["default"] */ .A, {
         sx: {
           fontSize: 22,
           color: '#94a3b8'
@@ -956,15 +955,15 @@ function FleetViewAdmin() {
     headerName: 'Vehicle Color',
     flex: 1,
     minWidth: 120,
-    valueGetter: params => (0,_utils_fleetUtils__WEBPACK_IMPORTED_MODULE_28__/* .getEffectiveVehicleColor */ .$y)(params.row),
+    valueGetter: params => (0,_utils_fleetUtils__WEBPACK_IMPORTED_MODULE_29__/* .getEffectiveVehicleColor */ .$y)(params.row),
     renderCell: params => {
-      var colorName = (0,_utils_fleetUtils__WEBPACK_IMPORTED_MODULE_28__/* .getEffectiveVehicleColor */ .$y)(params.row);
+      var colorName = (0,_utils_fleetUtils__WEBPACK_IMPORTED_MODULE_29__/* .getEffectiveVehicleColor */ .$y)(params.row);
       if (!colorName) return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
         style: {
           color: '#94a3b8'
         }
       }, "\u2014");
-      var _resolveColorHex = (0,_utils_fleetUtils__WEBPACK_IMPORTED_MODULE_28__/* .resolveColorHex */ .bO)(colorName),
+      var _resolveColorHex = (0,_utils_fleetUtils__WEBPACK_IMPORTED_MODULE_29__/* .resolveColorHex */ .bO)(colorName),
         hex = _resolveColorHex.hex,
         border = _resolveColorHex.border;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
@@ -1001,14 +1000,14 @@ function FleetViewAdmin() {
     field: 'status',
     headerName: 'Status',
     flex: 0.9,
-    renderCell: params => (0,_utils_formatUtils__WEBPACK_IMPORTED_MODULE_23__/* .renderStatusBadge */ .UM)(params.row.status)
+    renderCell: params => (0,_utils_formatUtils__WEBPACK_IMPORTED_MODULE_24__/* .renderStatusBadge */ .UM)(params.row.status)
   }, {
     field: 'documents',
     headerName: 'Expiring Soon',
     flex: 1.5,
     minWidth: 170,
     renderCell: params => {
-      var compliance = (0,_utils_fleetUtils__WEBPACK_IMPORTED_MODULE_28__/* .evaluateFleetCompliance */ .Hx)(params.row);
+      var compliance = (0,_utils_fleetUtils__WEBPACK_IMPORTED_MODULE_29__/* .evaluateFleetCompliance */ .Hx)(params.row);
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(ViewTooltip, {
         title: compliance.tooltip,
         placement: "top"
@@ -1093,7 +1092,7 @@ function FleetViewAdmin() {
         }
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "viewButton"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_26__/* ["default"] */ .A, null)))));
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_27__/* ["default"] */ .A, null)))));
     }
   }];
   var handleLogout = () => {
@@ -1112,7 +1111,7 @@ function FleetViewAdmin() {
     sx: {
       display: 'flex'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_CssBaseline__WEBPACK_IMPORTED_MODULE_34__/* ["default"] */ .Ay, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(AppBar, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_CssBaseline__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .Ay, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(AppBar, {
     position: "absolute",
     open: sideBar,
     style: {
@@ -1140,13 +1139,13 @@ function FleetViewAdmin() {
     sx: {
       flexGrow: 1
     }
-  }, "Fleet Management"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_38__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_MessageAdminView__WEBPACK_IMPORTED_MODULE_37__/* ["default"] */ .A, {
+  }, "Fleet Management"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_39__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_MessageAdminView__WEBPACK_IMPORTED_MODULE_38__/* ["default"] */ .A, {
     name: user === null || user === void 0 || (_user$data = user.data) === null || _user$data === void 0 ? void 0 : _user$data.userName,
     role: user === null || user === void 0 || (_user$data2 = user.data) === null || _user$data2 === void 0 ? void 0 : _user$data2.role
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
     color: "inherit",
     onClick: handleLogout
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_33__/* ["default"] */ .A, {
     style: {
       color: 'white'
     }
@@ -1193,7 +1192,7 @@ function FleetViewAdmin() {
     className: "LinkName"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
     className: "btnCustomerAdding"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_24__/* ["default"] */ .A, null))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_25__/* ["default"] */ .A, null))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
     sx: {
       height: 600,
       width: '100%',
@@ -1210,11 +1209,11 @@ function FleetViewAdmin() {
         }
       }
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_x_data_grid__WEBPACK_IMPORTED_MODULE_35__/* .DataGrid */ .zh, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_x_data_grid__WEBPACK_IMPORTED_MODULE_36__/* .DataGrid */ .zh, {
     rowHeight: 52,
     getRowClassName: params => {
       if (params.row.status !== 'Running') return '';
-      var compliance = (0,_utils_fleetUtils__WEBPACK_IMPORTED_MODULE_28__/* .evaluateFleetCompliance */ .Hx)(params.row);
+      var compliance = (0,_utils_fleetUtils__WEBPACK_IMPORTED_MODULE_29__/* .evaluateFleetCompliance */ .Hx)(params.row);
       if (compliance.severity === 'error') return 'super-app-theme--Expiring';
       if (compliance.severity === 'warning') return 'row-expiring-soon';
       return '';
@@ -1230,7 +1229,7 @@ function FleetViewAdmin() {
     columns: columns,
     loading: loadingData,
     slots: {
-      toolbar: _mui_x_data_grid__WEBPACK_IMPORTED_MODULE_36__/* .GridToolbar */ .O
+      toolbar: _mui_x_data_grid__WEBPACK_IMPORTED_MODULE_37__/* .GridToolbar */ .O
     },
     getRowId: row => row._id,
     slotProps: {

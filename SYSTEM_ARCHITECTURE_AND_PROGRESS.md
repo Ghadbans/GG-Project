@@ -6021,3 +6021,40 @@ In **v3.7.0**, field testing revealed two critical issues in the Project module:
    - Verified 0 AST errors across all 245 source files via `node scripts/pre-build-check.js`.
    - Synchronized version **`3.7.1`** across `package.json`, `server/package.json`, `server/index.js`, `server/routes/downloadRoutes.js`, and `scripts/security-check.js`.
    - Built Web Portal (`dist_web/`), Electron Desktop (`build/` & `dist/Global Gate Setup 3.7.1.exe`), and Capacitor Android APK (`GlobalGate-v3.7.1.apk`), synced installers to `server/public/downloads/`, and pushed to `origin main`.
+
+
+### Rule 92: ObjectId Cast Safety, Startup DB Mutation Ban, Invoice Subject Recovery & Persistent Module Search State (Ver 3.7.2)
+
+#### Architectural Background & Motivation
+In **v3.7.1**, production inspection uncovered three critical data-integrity and UX bugs:
+1. **Project `P-000167` (`KREAM | CCTV & POS INSTALLATION`) Not Showing `PUR-000160` (`HTTP 500` CastError)**:
+   - `DELETE /endpoint/delete-invoice/:id` (`server/routes/invoiceRoutes.js`) previously wrote the literal string `'null'` into `purchase.ReferenceName2` and `estimation.ReferenceName`.
+   - When opening `P-000167`, `ProjectViewInformation.js` extracted `p.ReferenceName2` (`"null"`) from `PUR-000160`, sent `&invoiceIds=null` to `GET /endpoint/invoice`, and `invoiceRoutes.js` passed `{ _id: { $in: ['null'] } }` to Mongoose, throwing `Cast to ObjectId failed for value "null" (type string) at path "_id"`.
+2. **10 Unrelated Invoices Displaying `CCTV & POS INSTALLATION` as `SUBJECT`**:
+   - A legacy startup auto-repair loop in `server/index.js` (introduced in `v3.6.22`) ran on every server boot, queried invoices with empty/null/missing `invoiceSubject`, and stamped `invoiceSubject: 'CCTV & POS INSTALLATION'` directly into MongoDB (`INV-002673`, `INV-002487`, `INV-002482`, `INV-002480`, `INV-002479`, `INV-002213`, `INV-002012`, `INV-001967`, `INV-001663`, `INV-001103`), paired with a hardcoded `invoiceNumber === 2673` fallback in `InvoiceViewAdmin.js`.
+3. **Module Search Bar Resetting When Navigating Within the Same Module**:
+   - Local `useState('')` search bars reset every time a user opened a detail/edit page and returned to the same module's list view.
+
+#### Permanent Regression & Data-Safety Invariants (Rule 92 — Mandatory for All Future Releases)
+- **Ban Startup DB Mutations:** `server/index.js` must **NEVER** execute `updateMany` / `updateOne` or modify existing document fields (`subject`, `projectId`, `purchaseIds`, `invoiceIds`, `status`, `items`, etc.) on server boot.
+- **Strict ID & Query Hygiene:** Every frontend request must strip `"null"`, `"undefined"`, and `""` params before constructing query strings, and every backend route must sanitize IDs through `server/utils/objectIdUtils.js` (`isValidObjectId`, `toSafeObjectId`, `parseSafeIdList`, `cleanParamString`) so invalid/null IDs never reach `_id: { $in: ... }` or `new ObjectId(...)`.
+- **Mandatory Regression Gate:** `node scripts/pre-build-check.js`, `node scripts/security-check.js`, and `node scripts/regression-check.js` must all pass with **0 failures** before any release build or push to `origin main`.
+
+#### Implementation Details (v3.7.2)
+1. **`server/utils/objectIdUtils.js` (New) & Backend Route Hardening**:
+   - Created shared ObjectId & query-parameter sanitization utilities (`isValidObjectId`, `toSafeObjectId`, `parseSafeIdList`, `cleanParamString`).
+   - Hardened `server/routes/invoiceRoutes.js`, `purchaseRoutes.js`, `expenseRoutes.js`, `maintenanceRoutes.js`, and `supplierRoutes.js`.
+   - Updated `DELETE /endpoint/delete-invoice/:id` to clear unlinked references with `''` instead of literal `'null'`.
+2. **`src/js/AdminView1/PageView/ProjectView/ProjectViewInformation.js`**:
+   - Added `isCleanId` guard so `"null"`, `"undefined"`, and non-ObjectId values are never appended to `projectId`, `purchaseIds`, `invoiceIds`, or `purchaseNames`.
+3. **`server/index.js`, `src/js/AdminView1/InvoiceViewAdmin.js`, & `server/scripts/recover_invoice_subjects.js` (New)**:
+   - Removed all startup `updateMany`/`updateOne` document mutations from `server/index.js` and removed the hardcoded `CCTV & POS INSTALLATION` fallback from `InvoiceViewAdmin.js`.
+   - Created `server/scripts/recover_invoice_subjects.js` (with JSON backup snapshot, `--dry-run`, `--apply`, and `--rollback` support) and exposed `POST /api/admin/recover-invoice-subjects` (protected by `verifyInternalSetupKey`).
+4. **Centralized Persistent Module Search State (`src/js/hooks/useModuleSearchState.js` & `src/js/App.js`)**:
+   - Created `useModuleSearchState(moduleKey)` + `syncModuleRoute(pathname)` wired into `AppLayoutWrapper` in `src/js/App.js`.
+   - Integrated across all core modules (`InvoiceViewAdmin`, `ProjectViewAdmin`, `CustomerViewAdmin`, `PurchasesViewAdmin`, `MaintenanceViewAdmin`, `MaintenanceOrderAdmin`, `EstimateViewAdmin`, `ItemViewAdmin`, `DailyExpenses`, `PurchaseOrderViewAdmin`, `ItemOutViewAdmin`, `ItemPurchaseViewAdmin`, `ItemReturnAdminView`, `SupplierAdminView`, `PayRollViewAdmin`, `FleetViewAdmin`).
+   - Retains search term, `DataGrid` `quickFilterValues`, status filter, and page while navigating within the same module, and automatically resets when switching to a different module.
+5. **Automated Cross-Module Regression Suite (`scripts/regression-check.js`) & Multi-Platform Release (v3.7.2)**:
+   - Verified **0 AST errors** (`scripts/pre-build-check.js`), **21 PASSED / 0 FAILED** (`scripts/security-check.js`), and **11 PASSED / 0 FAILED** (`scripts/regression-check.js`).
+   - Synchronized version **`3.7.2`** across `package.json`, `server/package.json`, `server/index.js`, `server/routes/downloadRoutes.js`, and `scripts/security-check.js`.
+   - Built Web Portal (`dist_web/`), Electron Desktop (`build/` & `dist/Global Gate Setup 3.7.2.exe`), and Capacitor Android APK (`GlobalGate-v3.7.2.apk`), synced installers to `server/public/downloads/`, and pushed to `origin main`.

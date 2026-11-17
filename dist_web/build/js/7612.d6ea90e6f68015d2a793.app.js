@@ -2075,6 +2075,10 @@ function ProjectViewInformation() {
   }();
 
   // Tab-Specific Loaders
+  var isCleanId = v => {
+    var s = String(v || '').trim();
+    return Boolean(s && s.toLowerCase() !== 'null' && s.toLowerCase() !== 'undefined');
+  };
   var fetchInvoicesAndPurchases = /*#__PURE__*/function () {
     var _ref10 = _asyncToGenerator(function* () {
       var targetId = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : id;
@@ -2082,19 +2086,21 @@ function ProjectViewInformation() {
       var targetPName = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : projectName;
       try {
         var _resPurchases$data, _resInvoices$data;
+        var safeTargetId = isCleanId(targetId) ? String(targetId).trim() : '';
+        var pIdQuery = safeTargetId ? "&projectId=".concat(encodeURIComponent(safeTargetId)) : '';
         var pNameQuery = targetPName ? "&projectName=".concat(encodeURIComponent(targetPName)) : '';
         var pNumQuery = targetPNum ? "&projectNumber=".concat(targetPNum) : '';
-        var resPurchases = yield axios__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_33__/* .ENDPOINT_URL */ .m, "/purchase?summary=true&projectId=").concat(targetId).concat(pNameQuery).concat(pNumQuery));
+        var resPurchases = yield axios__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_33__/* .ENDPOINT_URL */ .m, "/purchase?summary=true").concat(pIdQuery).concat(pNameQuery).concat(pNumQuery));
         var relatedPurchases = ((_resPurchases$data = resPurchases.data) === null || _resPurchases$data === void 0 ? void 0 : _resPurchases$data.data) || [];
-        var projectPurchaseIds = relatedPurchases.map(p => p._id).filter(Boolean);
-        var linkedInvoiceAndRefIds = [...new Set(relatedPurchases.flatMap(p => [p.ReferenceName2, p.ReferenceName]).map(v => typeof v === 'object' && v !== null ? v._id : v).map(v => String(v || '').trim()).filter(Boolean))];
-        var projectPurchaseNames = [...new Set(relatedPurchases.flatMap(p => [p.purchaseName, p.purchaseNumber !== undefined && p.purchaseNumber !== null ? "PUR-".concat(String(p.purchaseNumber).padStart(6, '0')) : null, p.purchaseNumber !== undefined && p.purchaseNumber !== null ? "PUR-00".concat(p.purchaseNumber) : null]).filter(Boolean))];
+        var projectPurchaseIds = [...new Set(relatedPurchases.map(p => p._id).map(v => String(v || '').trim()).filter(isCleanId))];
+        var linkedInvoiceAndRefIds = [...new Set(relatedPurchases.flatMap(p => [p.ReferenceName2, p.ReferenceName]).map(v => typeof v === 'object' && v !== null ? v._id : v).map(v => String(v || '').trim()).filter(v => isCleanId(v) && /^[a-f0-9]{24}$/i.test(v)))];
+        var projectPurchaseNames = [...new Set(relatedPurchases.flatMap(p => [p.purchaseName, p.purchaseNumber !== undefined && p.purchaseNumber !== null ? "PUR-".concat(String(p.purchaseNumber).padStart(6, '0')) : null, p.purchaseNumber !== undefined && p.purchaseNumber !== null ? "PUR-00".concat(p.purchaseNumber) : null]).map(v => String(v || '').trim()).filter(isCleanId))];
 
         // Filter Invoices: linked via Purchase ID, Purchase's ReferenceName2/ReferenceName (Invoice/Quotation ID), Purchase Name, or directly via Project ID / Project Name
-        var pIdsQuery = projectPurchaseIds.length > 0 ? "&purchaseIds=".concat(projectPurchaseIds.join(',')) : '';
+        var pIdsQuery = projectPurchaseIds.length > 0 ? "&purchaseIds=".concat(encodeURIComponent(projectPurchaseIds.join(','))) : '';
         var invIdsQuery = linkedInvoiceAndRefIds.length > 0 ? "&invoiceIds=".concat(encodeURIComponent(linkedInvoiceAndRefIds.join(','))) : '';
         var pNamesQuery = projectPurchaseNames.length > 0 ? "&purchaseNames=".concat(encodeURIComponent(projectPurchaseNames.join(','))) : '';
-        var resInvoices = yield axios__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_33__/* .ENDPOINT_URL */ .m, "/invoice?summary=true&projectId=").concat(targetId).concat(pIdsQuery).concat(invIdsQuery).concat(pNamesQuery).concat(pNameQuery).concat(pNumQuery));
+        var resInvoices = yield axios__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_33__/* .ENDPOINT_URL */ .m, "/invoice?summary=true").concat(pIdQuery).concat(pIdsQuery).concat(invIdsQuery).concat(pNamesQuery).concat(pNameQuery).concat(pNumQuery));
         var relatedInvoices = ((_resInvoices$data = resInvoices.data) === null || _resInvoices$data === void 0 ? void 0 : _resInvoices$data.data) || [];
         var allProjectItems = relatedPurchases.flatMap(row => (row.items || []).map(Item => {
           var _Item$itemName, _Item$itemName2;

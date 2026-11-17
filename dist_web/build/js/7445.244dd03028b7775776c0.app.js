@@ -1,4 +1,4 @@
-(this["webpackChunkgg_management"] = this["webpackChunkgg_management"] || []).push([[4444],{
+(this["webpackChunkgg_management"] = this["webpackChunkgg_management"] || []).push([[7445],{
 
 /***/ 40530
 (__unused_webpack_module, exports, __webpack_require__) {
@@ -406,6 +406,126 @@ var _default = exports.A = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRun
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("path", {
   d: "M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6z"
 }), 'Add'));
+/* harmony export */ __webpack_require__.d(__webpack_exports__, [
+/* harmony export */   "A", 0, /* export default binding */ __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ ]);
+
+
+/***/ },
+
+/***/ 17332
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var _utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(20561);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(74848);
+"use client";
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("path", {
+  d: "M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2m-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1m2 14H7v-2h7zm3-4H7v-2h10zm0-4H7V7h10z"
+}), 'Assignment'));
+/* harmony export */ __webpack_require__.d(__webpack_exports__, [
+/* harmony export */   "A", 0, /* export default binding */ __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ ]);
+
+
+/***/ },
+
+/***/ 41737
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var _utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(20561);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(74848);
+"use client";
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("path", {
+  d: "M12 6v3l4-4-4-4v3c-4.42 0-8 3.58-8 8 0 1.57.46 3.03 1.24 4.26L6.7 14.8c-.45-.83-.7-1.79-.7-2.8 0-3.31 2.69-6 6-6m6.76 1.74L17.3 9.2c.44.84.7 1.79.7 2.8 0 3.31-2.69 6-6 6v-3l-4 4 4 4v-3c4.42 0 8-3.58 8-8 0-1.57-.46-3.03-1.24-4.26"
+}), 'Autorenew'));
+/* harmony export */ __webpack_require__.d(__webpack_exports__, [
+/* harmony export */   "A", 0, /* export default binding */ __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ ]);
+
+
+/***/ },
+
+/***/ 53540
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var _utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(20561);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(74848);
+"use client";
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("path", {
+  d: "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2M4 12c0-4.42 3.58-8 8-8 1.85 0 3.55.63 4.9 1.69L5.69 16.9C4.63 15.55 4 13.85 4 12m8 8c-1.85 0-3.55-.63-4.9-1.69L18.31 7.1C19.37 8.45 20 10.15 20 12c0 4.42-3.58 8-8 8"
+}), 'Block'));
+/* harmony export */ __webpack_require__.d(__webpack_exports__, [
+/* harmony export */   "A", 0, /* export default binding */ __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ ]);
+
+
+/***/ },
+
+/***/ 62430
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var _utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(20561);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(74848);
+"use client";
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("path", {
+  d: "M6 2v6h.01L6 8.01 10 12l-4 4 .01.01H6V22h12v-5.99h-.01L18 16l-4-4 4-3.99-.01-.01H18V2zm10 14.5V20H8v-3.5l4-4zm-4-5-4-4V4h8v3.5z"
+}), 'HourglassEmpty'));
+/* harmony export */ __webpack_require__.d(__webpack_exports__, [
+/* harmony export */   "A", 0, /* export default binding */ __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ ]);
+
+
+/***/ },
+
+/***/ 7078
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var _utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(20561);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(74848);
+"use client";
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("path", {
+  d: "M18.39 14.56C16.71 13.7 14.53 13 12 13s-4.71.7-6.39 1.56C4.61 15.07 4 16.1 4 17.22V20h16v-2.78c0-1.12-.61-2.15-1.61-2.66M18 18H6v-.78c0-.38.2-.72.52-.88C7.71 15.73 9.63 15 12 15c2.37 0 4.29.73 5.48 1.34.32.16.52.5.52.88zm-8.22-6h4.44c1.21 0 2.14-1.06 1.98-2.26l-.32-2.45C15.57 5.39 13.92 4 12 4S8.43 5.39 8.12 7.29L7.8 9.74c-.16 1.2.77 2.26 1.98 2.26m.32-4.41C10.26 6.67 11.06 6 12 6s1.74.67 1.9 1.59l.32 2.41H9.78z"
+}), 'Person2Outlined'));
+/* harmony export */ __webpack_require__.d(__webpack_exports__, [
+/* harmony export */   "A", 0, /* export default binding */ __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ ]);
+
+
+/***/ },
+
+/***/ 79030
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var _utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(20561);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(74848);
+"use client";
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("path", {
+  d: "M8.65 5.82C9.36 4.72 10.6 4 12 4c2.21 0 4 1.79 4 4 0 1.4-.72 2.64-1.82 3.35zM20 17.17c-.02-1.1-.63-2.11-1.61-2.62-.54-.28-1.13-.54-1.77-.76zm.49 3.32L3.51 3.51a.9959.9959 0 0 0-1.41 0c-.39.39-.39 1.02 0 1.41l8.18 8.18c-1.82.23-3.41.8-4.7 1.46C4.6 15.08 4 16.11 4 17.22V20h13.17l1.9 1.9c.39.39 1.02.39 1.41 0 .4-.39.4-1.02.01-1.41"
+}), 'PersonOffRounded'));
 /* harmony export */ __webpack_require__.d(__webpack_exports__, [
 /* harmony export */   "A", 0, /* export default binding */ __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ ]);
@@ -1371,7 +1491,7 @@ const GridToolbar = /*#__PURE__*/react.forwardRef(function GridToolbar(props, re
 
 /***/ },
 
-/***/ 34444
+/***/ 27445
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1406,22 +1526,32 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mui_icons_material_ChevronLeft__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(8451);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(99380);
 /* harmony import */ var _utils_apiCache__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(46986);
-/* harmony import */ var _apiConfig__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(71510);
-/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(17809);
-/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(99682);
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(13561);
-/* harmony import */ var _features_auth_authSlice__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(32005);
-/* harmony import */ var _component_Loader__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(65821);
-/* harmony import */ var _mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(20889);
-/* harmony import */ var _component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(40301);
-/* harmony import */ var _img_no_data_png__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(20453);
-/* harmony import */ var _img_no_data_png__WEBPACK_IMPORTED_MODULE_38___default = /*#__PURE__*/__webpack_require__.n(_img_no_data_png__WEBPACK_IMPORTED_MODULE_38__);
-/* harmony import */ var _mui_x_data_grid__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(1835);
-/* harmony import */ var _mui_x_data_grid__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(53071);
-/* harmony import */ var _MessageAdminView__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(83818);
-/* harmony import */ var _NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(95236);
-/* harmony import */ var _utils_isMobile__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(2650);
-/* harmony import */ var _component_MobileCardList__WEBPACK_IMPORTED_MODULE_44__ = __webpack_require__(353);
+/* harmony import */ var _utils_formatUtils__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(37402);
+/* harmony import */ var _apiConfig__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(71510);
+/* harmony import */ var _hooks_useModuleSearchState__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(80099);
+/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(99682);
+/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(17332);
+/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(41737);
+/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(53540);
+/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(17809);
+/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(62430);
+/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(7078);
+/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(79030);
+/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(74353);
+/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_41___default = /*#__PURE__*/__webpack_require__.n(dayjs__WEBPACK_IMPORTED_MODULE_41__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(13561);
+/* harmony import */ var _features_auth_authSlice__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(32005);
+/* harmony import */ var _component_Loader__WEBPACK_IMPORTED_MODULE_44__ = __webpack_require__(65821);
+/* harmony import */ var _mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_45__ = __webpack_require__(20889);
+/* harmony import */ var _component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_46__ = __webpack_require__(40301);
+/* harmony import */ var _img_no_data_png__WEBPACK_IMPORTED_MODULE_47__ = __webpack_require__(20453);
+/* harmony import */ var _img_no_data_png__WEBPACK_IMPORTED_MODULE_47___default = /*#__PURE__*/__webpack_require__.n(_img_no_data_png__WEBPACK_IMPORTED_MODULE_47__);
+/* harmony import */ var _mui_x_data_grid__WEBPACK_IMPORTED_MODULE_48__ = __webpack_require__(1835);
+/* harmony import */ var _mui_x_data_grid__WEBPACK_IMPORTED_MODULE_49__ = __webpack_require__(53071);
+/* harmony import */ var _MessageAdminView__WEBPACK_IMPORTED_MODULE_50__ = __webpack_require__(83818);
+/* harmony import */ var _NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_51__ = __webpack_require__(95236);
+/* harmony import */ var _utils_isMobile__WEBPACK_IMPORTED_MODULE_52__ = __webpack_require__(2650);
+/* harmony import */ var _component_MobileCardList__WEBPACK_IMPORTED_MODULE_53__ = __webpack_require__(353);
 var _excluded = ["className"],
   _excluded2 = ["className"],
   _excluded3 = ["className"];
@@ -1442,6 +1572,8 @@ function _extends() { return _extends = Object.assign ? Object.assign.bind() : f
 function _objectWithoutProperties(e, t) { if (null == e) return {}; var o, r, i = _objectWithoutPropertiesLoose(e, t); if (Object.getOwnPropertySymbols) { var n = Object.getOwnPropertySymbols(e); for (r = 0; r < n.length; r++) o = n[r], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]); } return i; }
 function _objectWithoutPropertiesLoose(r, e) { if (null == r) return {}; var t = {}; for (var n in r) if ({}.hasOwnProperty.call(r, n)) { if (-1 !== e.indexOf(n)) continue; t[n] = r[n]; } return t; }
 ;
+
+
 
 
 
@@ -1599,21 +1731,21 @@ var Drawer = (0,_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .Ay
     })
   };
 });
-function CustomerViewAdmin() {
+function ProjectViewAdmin() {
   var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_8__/* .useNavigate */ .Zp)();
-  var isMobile = (0,_utils_isMobile__WEBPACK_IMPORTED_MODULE_43__/* .useIsMobile */ .al)();
-  var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_33__/* .useDispatch */ .wA)();
-  var user = (0,react_redux__WEBPACK_IMPORTED_MODULE_33__/* .useSelector */ .d4)(_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_34__/* .selectCurrentUser */ .xu);
+  var isMobile = (0,_utils_isMobile__WEBPACK_IMPORTED_MODULE_52__/* .useIsMobile */ .al)();
+  var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_42__/* .useDispatch */ .wA)();
+  var user = (0,react_redux__WEBPACK_IMPORTED_MODULE_42__/* .useSelector */ .d4)(_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_43__/* .selectCurrentUser */ .xu);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     var storesUserId = localStorage.getItem('user');
     var fetchUser = /*#__PURE__*/function () {
       var _ref9 = _asyncToGenerator(function* () {
         if (storesUserId) {
           try {
-            var res = yield axios__WEBPACK_IMPORTED_MODULE_28__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_30__/* .ENDPOINT_URL */ .m, "/get-employeeuser/").concat(storesUserId));
+            var res = yield axios__WEBPACK_IMPORTED_MODULE_28__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_31__/* .ENDPOINT_URL */ .m, "/get-employeeuser/").concat(storesUserId));
             var Name = res.data.data.employeeName;
             var Role = res.data.data.role;
-            dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_34__/* .setUser */ .gV)({
+            dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_43__/* .setUser */ .gV)({
               userName: Name,
               role: Role,
               id: res.data.data._id
@@ -1640,7 +1772,7 @@ function CustomerViewAdmin() {
       var _ref0 = _asyncToGenerator(function* () {
         try {
           var _res$data;
-          var res = yield (0,_utils_apiCache__WEBPACK_IMPORTED_MODULE_29__/* .cachedGet */ .Fe)("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_30__/* .ENDPOINT_URL */ .m, "/grantAccess"));
+          var res = yield (0,_utils_apiCache__WEBPACK_IMPORTED_MODULE_29__/* .cachedGet */ .Fe)("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_31__/* .ENDPOINT_URL */ .m, "/grantAccess"));
           (_res$data = res.data) === null || _res$data === void 0 || (_res$data = _res$data.data) === null || _res$data === void 0 || _res$data.filter(row => row.userID === user.data.id).map(row => setGrantAccess(row.modules));
         } catch (error) {
           console.error('Error fetching data:', error);
@@ -1652,111 +1784,129 @@ function CustomerViewAdmin() {
     }();
     fetchNumber();
   }, [user]);
-  var customerInfoC = grantAccess.filter(row => row.moduleName === "Customer" && row.access.createM === true);
-  var customerInfoV = grantAccess.filter(row => row.moduleName === "Customer" && row.access.viewM === true);
-  var customerInfoU = grantAccess.filter(row => row.moduleName === "Customer" && row.access.editM === true);
-  var customerInfoD = grantAccess.filter(row => row.moduleName === "Customer" && row.access.deleteM === true);
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
+  var ProjectInfoC = grantAccess.filter(row => row.moduleName === "Project" && row.access.createM === true);
+  var ProjectInfoV = grantAccess.filter(row => row.moduleName === "Project" && row.access.viewM === true);
+  var ProjectInfoU = grantAccess.filter(row => row.moduleName === "Project" && row.access.editM === true);
+  var ProjectInfoD = grantAccess.filter(row => row.moduleName === "Project" && row.access.deleteM === true);
+  var handleLogout = () => {
+    localStorage.removeItem('user');
+    dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_43__/* .logOut */ .je)());
+    navigate('/');
+  };
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState4 = _slicedToArray(_useState3, 2),
-    loadingData = _useState4[0],
-    setLoadingData = _useState4[1];
+    project = _useState4[0],
+    setProject = _useState4[1];
   var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState6 = _slicedToArray(_useState5, 2),
-    customer = _useState6[0],
-    setCustomer = _useState6[1];
-  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
+    hiddenRow = _useState6[0],
+    setHiddenRow = _useState6[1];
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState8 = _slicedToArray(_useState7, 2),
-    searchCustomer = _useState8[0],
-    setSearchCustomer = _useState8[1];
-  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
+    hidden = _useState8[0],
+    setHidden = _useState8[1];
+  var _useModuleSearchState = (0,_hooks_useModuleSearchState__WEBPACK_IMPORTED_MODULE_32__/* .useModuleSearchState */ .pi)('project'),
+    searchTerm = _useModuleSearchState.searchTerm,
+    setSearchTerm = _useModuleSearchState.setSearchTerm,
+    filterField = _useModuleSearchState.filterField,
+    setFilterField = _useModuleSearchState.setFilterField,
+    filterValue = _useModuleSearchState.filterValue,
+    setFilterValue = _useModuleSearchState.setFilterValue,
+    statusFilter = _useModuleSearchState.statusFilter,
+    setStatusFilter = _useModuleSearchState.setStatusFilter,
+    page = _useModuleSearchState.page,
+    setPage = _useModuleSearchState.setPage;
+  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
+      all: 0,
+      pending: 0,
+      ongoing: 0,
+      stopped: 0,
+      completed: 0
+    }),
     _useState0 = _slicedToArray(_useState9, 2),
-    page = _useState0[0],
-    setPage = _useState0[1];
+    statusCounts = _useState0[0],
+    setStatusCounts = _useState0[1];
   var limit = 100;
-  var _useState1 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+  var _useState1 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(searchTerm),
     _useState10 = _slicedToArray(_useState1, 2),
-    searchTerm = _useState10[0],
-    setSearchTerm = _useState10[1];
-  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+    debouncedSearchTerm = _useState10[0],
+    setDebouncedSearchTerm = _useState10[1];
+  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
     _useState12 = _slicedToArray(_useState11, 2),
-    filterField = _useState12[0],
-    setFilterField = _useState12[1];
-  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+    totalPage = _useState12[0],
+    SetTotalPage = _useState12[1];
+  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
     _useState14 = _slicedToArray(_useState13, 2),
-    filterValue = _useState14[0],
-    setFilterValue = _useState14[1];
-  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
+    totalItemCount = _useState14[0],
+    setTotalItemCount = _useState14[1];
+  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
     _useState16 = _slicedToArray(_useState15, 2),
-    totalPage = _useState16[0],
-    SetTotalPage = _useState16[1];
-  var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
+    loadingData = _useState16[0],
+    setLoadingData = _useState16[1];
+  var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
     _useState18 = _slicedToArray(_useState17, 2),
-    totalItemCount = _useState18[0],
-    setTotalItemCount = _useState18[1];
-  var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(searchTerm),
-    _useState20 = _slicedToArray(_useState19, 2),
-    debouncedSearchTerm = _useState20[0],
-    setDebouncedSearchTerm = _useState20[1];
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    var handler = setTimeout(() => {
-      setDebouncedSearchTerm(searchTerm);
-    }, 500);
-    return () => {
-      clearTimeout(handler);
-    };
-  }, [searchTerm]);
-  var _useState21 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
-    _useState22 = _slicedToArray(_useState21, 2),
-    selectedRows = _useState22[0],
-    setSelectedRows = _useState22[1];
-  var _useState23 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
-    _useState24 = _slicedToArray(_useState23, 2),
-    reason = _useState24[0],
-    setReason = _useState24[1];
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(() => {
-    var storedValue = localStorage.getItem('QuickFilterCustomer');
-    if (storedValue) {
-      setSearchCustomer(storedValue);
-    }
-  });
+    reason = _useState18[0],
+    setReason = _useState18[1];
   var fetchItems = /*#__PURE__*/function () {
-    var _ref1 = _asyncToGenerator(function* (page, searchTerm, filterField, filterValue) {
+    var _ref1 = _asyncToGenerator(function* (page, searchTerm, filterField, filterValue, statusFilter) {
       try {
-        var res = yield axios__WEBPACK_IMPORTED_MODULE_28__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_30__/* .ENDPOINT_URL */ .m, "/customer-Information?page=").concat(page + 1, "&limit=").concat(limit, "&search=").concat(encodeURIComponent(searchTerm.trim()), "&filterField=").concat(encodeURIComponent(filterField.trim()), "&filterValue=").concat(encodeURIComponent(filterValue.trim())));
+        var statusParam = statusFilter && statusFilter !== 'ALL' ? "&status=".concat(encodeURIComponent(statusFilter)) : '';
+        var res = yield axios__WEBPACK_IMPORTED_MODULE_28__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_31__/* .ENDPOINT_URL */ .m, "/project-Information?page=").concat(page + 1, "&limit=").concat(limit, "&search=").concat(encodeURIComponent((searchTerm || '').trim()), "&filterField=").concat(encodeURIComponent((filterField || '').trim()), "&filterValue=").concat(encodeURIComponent((filterValue || '').trim())).concat(statusParam));
         var formatDate = res.data.itemI.map(item => _objectSpread(_objectSpread({}, item), {}, {
           id: item._id
         }));
-        setCustomer(formatDate);
+        setProject(formatDate);
         SetTotalPage(res.data.totalPages);
         setTotalItemCount(res.data.totalItem || 0);
+        if (res.data.statusCounts) {
+          setStatusCounts(res.data.statusCounts);
+        }
         setLoadingData(false);
       } catch (error) {
         console.error('Error fetching data:', error);
         setLoadingData(false);
       }
     });
-    return function fetchItems(_x, _x2, _x3, _x4) {
+    return function fetchItems(_x, _x2, _x3, _x4, _x5) {
       return _ref1.apply(this, arguments);
     };
   }();
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    fetchItems(page, debouncedSearchTerm, filterField, filterValue);
-  }, [page, debouncedSearchTerm, filterField, filterValue]);
+    fetchItems(page, debouncedSearchTerm, filterField, filterValue, statusFilter);
+  }, [page, debouncedSearchTerm, filterField, filterValue, statusFilter]);
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    var timer = setTimeout(() => {
+      setDebouncedSearchTerm(searchTerm);
+      setPage(0);
+    }, 400);
+    return () => clearTimeout(timer);
+  }, [searchTerm]);
+  var handleStatusClick = statusKey => {
+    if (statusFilter.toLowerCase() === statusKey.toLowerCase() && statusKey !== 'ALL') {
+      setStatusFilter('ALL');
+    } else {
+      setStatusFilter(statusKey);
+    }
+    setPage(0);
+  };
+  var handleRefreshSearch = () => {
+    fetchItems(page, searchTerm, filterField, filterValue, statusFilter);
+  };
   var handlePageChange = newPage => {
     setPage(newPage);
   };
-  var _useState25 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState26 = _slicedToArray(_useState25, 2),
-    loading = _useState26[0],
-    setLoading = _useState26[1];
-  var _useState27 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState28 = _slicedToArray(_useState27, 2),
-    loadingOpenModal = _useState28[0],
-    setLoadingOpenModal = _useState28[1];
-  var _useState29 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState30 = _slicedToArray(_useState29, 2),
-    ErrorOpenModal = _useState30[0],
-    setErrorOpenModal = _useState30[1];
+  var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState20 = _slicedToArray(_useState19, 2),
+    loading = _useState20[0],
+    setLoading = _useState20[1];
+  var _useState21 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState22 = _slicedToArray(_useState21, 2),
+    loadingOpenModal = _useState22[0],
+    setLoadingOpenModal = _useState22[1];
+  var _useState23 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState24 = _slicedToArray(_useState23, 2),
+    ErrorOpenModal = _useState24[0],
+    setErrorOpenModal = _useState24[1];
   var handleOpenOffline = () => {
     setLoadingOpenModal(true);
     setLoading(true);
@@ -1772,52 +1922,68 @@ function CustomerViewAdmin() {
     }, 500);
   };
   var handleCreateNotificationOffline = /*#__PURE__*/function () {
-    var _ref10 = _asyncToGenerator(function* (ReferenceInfo, ReferenceInfoCustomer) {
+    var _ref10 = _asyncToGenerator(function* (ReferenceInfo, ReferenceInfoProject, ReferenceInfoName) {
       var data = {
         idInfo: ReferenceInfo,
         person: user.data.userName + ' Created ',
-        reason: ReferenceInfoCustomer,
+        reason: ReferenceInfoProject + 'For' + ReferenceInfoName,
         dateNotification: new Date()
       };
       try {
-        yield axios__WEBPACK_IMPORTED_MODULE_28__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_30__/* .ENDPOINT_URL */ .m, "/create-notification"), data);
+        yield axios__WEBPACK_IMPORTED_MODULE_28__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_31__/* .ENDPOINT_URL */ .m, "/create-notification"), data);
       } catch (error) {
         console.log(error);
       }
     });
-    return function handleCreateNotificationOffline(_x5, _x6) {
+    return function handleCreateNotificationOffline(_x6, _x7, _x8) {
       return _ref10.apply(this, arguments);
     };
   }();
-  var _useState31 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+  /* const syncOff = async () => {
+  } */
+
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    var fetchDataHidden = /*#__PURE__*/function () {
+      var _ref11 = _asyncToGenerator(function* () {
+        try {
+          var res = yield axios__WEBPACK_IMPORTED_MODULE_28__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_31__/* .ENDPOINT_URL */ .m, "/hidden"));
+          setHiddenRow(res.data.data.map(row => row.idRow));
+          setHidden(res.data.data);
+          localStorage.removeItem('Hidden');
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        }
+      });
+      return function fetchDataHidden() {
+        return _ref11.apply(this, arguments);
+      };
+    }();
+    fetchDataHidden();
+  }, []);
+  var _useState25 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState26 = _slicedToArray(_useState25, 2),
+    open = _useState26[0],
+    setOpen = _useState26[1];
+  var _useState27 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    _useState28 = _slicedToArray(_useState27, 2),
+    DeleteId = _useState28[0],
+    setDeleteId = _useState28[1];
+  var _useState29 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState30 = _slicedToArray(_useState29, 2),
+    modalOpenLoading = _useState30[0],
+    setModalOpenLoading = _useState30[1];
+  var _useState31 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState32 = _slicedToArray(_useState31, 2),
-    open = _useState32[0],
-    setOpen = _useState32[1];
+    selectedRows = _useState32[0],
+    setSelectedRows = _useState32[1];
   var _useState33 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState34 = _slicedToArray(_useState33, 2),
     openDeleteMultiple = _useState34[0],
     setOpenDeleteMultiple = _useState34[1];
-  var handleOpenMultiple = () => {
-    setOpenDeleteMultiple(true);
-  };
-  var handleCloseMultiple = () => {
-    setOpenDeleteMultiple(false);
-  };
   var _useState35 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState36 = _slicedToArray(_useState35, 2),
-    openDeleteAll = _useState36[0],
-    setOpenDeleteAll = _useState36[1];
-  var handleOpenAll = () => {
-    setOpenDeleteAll(true);
-  };
-  var handleCloseAll = () => {
-    setOpenDeleteAll(false);
-    setSelectedRows([]);
-  };
-  var _useState37 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState38 = _slicedToArray(_useState37, 2),
-    openReasonDelete = _useState38[0],
-    setOpenReasonDelete = _useState38[1];
+    openReasonDelete = _useState36[0],
+    setOpenReasonDelete = _useState36[1];
   var handleOpenReasonDelete = e => {
     e.preventDefault();
     setOpenReasonDelete(true);
@@ -1825,144 +1991,73 @@ function CustomerViewAdmin() {
   var handleCloseReasonDelete = () => {
     setOpenReasonDelete(false);
   };
-  var _useState39 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
-    _useState40 = _slicedToArray(_useState39, 2),
-    DeleteId = _useState40[0],
-    setDeleteId = _useState40[1];
-  var _useState41 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState42 = _slicedToArray(_useState41, 2),
-    modalOpenLoading = _useState42[0],
-    setModalOpenLoading = _useState42[1];
-  var handleOpen = id => {
-    setOpen(true);
-    setSelectedRows([id]);
+  var handleOpenMultiple = () => {
+    setOpenDeleteMultiple(true);
   };
-  var handleOpenModal = () => {
-    setModalOpenLoading(true);
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-    }, 500);
-  };
-  var handleClose = () => {
-    setLoadingOpenModal(false);
-    setOpen(false);
-    setSelectedRows([]);
-  };
-  var handleCloseModal = () => {
-    setLoadingOpenModal(false);
-    setModalOpenLoading(false);
-    setOpenDeleteAll(false);
+  var handleCloseMultiple = () => {
     setOpenDeleteMultiple(false);
-    setOpen(false);
-    fetchItems(page, searchTerm, filterField, filterValue);
   };
-  var _useState43 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
-    _useState44 = _slicedToArray(_useState43, 2),
-    CustomerDeleted = _useState44[0],
-    setCustomerDeleted = _useState44[1];
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    var fetchFunction = /*#__PURE__*/function () {
-      var _ref11 = _asyncToGenerator(function* () {
-        var deletePromises = selectedRows.map(/*#__PURE__*/function () {
-          var _ref12 = _asyncToGenerator(function* (idToDelete) {
-            return axios__WEBPACK_IMPORTED_MODULE_28__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_30__/* .ENDPOINT_URL */ .m, "/get-customer/").concat(idToDelete));
-          });
-          return function (_x7) {
-            return _ref12.apply(this, arguments);
-          };
-        }());
+  var _useState37 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
+    _useState38 = _slicedToArray(_useState37, 2),
+    sideBar = _useState38[0],
+    setSideBar = _useState38[1];
+  var toggleDrawer = () => {
+    setSideBar(!sideBar);
+  };
+  var handleHideRow = /*#__PURE__*/function () {
+    var _ref12 = _asyncToGenerator(function* (id) {
+      if (user.data.role === 'CEO') {
         try {
-          var res = yield Promise.all(deletePromises);
-          setCustomerDeleted(res.map(row => row.data.data.Customer));
+          if (hiddenRow.includes(id)) {
+            setHiddenRow(hiddenRow.filter(row => row !== id));
+            var result = hidden.filter(row => row.idRow === id).map(row => row._id);
+            var hiddenId = result.toString();
+            yield axios__WEBPACK_IMPORTED_MODULE_28__/* ["default"] */ .A.delete("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_31__/* .ENDPOINT_URL */ .m, "/delete-hidden/").concat(hiddenId));
+          } else {
+            setHiddenRow([...hiddenRow, id]);
+            yield axios__WEBPACK_IMPORTED_MODULE_28__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_31__/* .ENDPOINT_URL */ .m, "/create-hidden"), {
+              idRow: id,
+              hiddenByCEO: true
+            });
+          }
         } catch (error) {
           console.log(error);
         }
-      });
-      return function fetchFunction() {
-        return _ref11.apply(this, arguments);
-      };
-    }();
-    if (selectedRows && selectedRows.length > 0) {
-      fetchFunction();
-    } else {
-      setCustomerDeleted([]);
+      }
+    });
+    return function handleHideRow(_x9) {
+      return _ref12.apply(this, arguments);
+    };
+  }();
+  var rowRenderer = params => {
+    if (hiddenRow.includes(params.row._id)) {
+      return null;
     }
-  }, [selectedRows]);
-  var infoFromState = (selectedRows || []).map(id => {
-    var found = customer.find(c => c._id === id || c.id === id);
-    return (found === null || found === void 0 ? void 0 : found.Customer) || (found === null || found === void 0 ? void 0 : found.customerName) || '';
-  }).filter(Boolean);
-  var info = infoFromState.length > 0 ? infoFromState.join(', ') : CustomerDeleted.length > 0 ? CustomerDeleted.join(', ') : selectedRows.length > 0 ? "".concat(selectedRows.length, " record(s)") : '';
-  var handleCreateNotification = /*#__PURE__*/function () {
-    var _ref13 = _asyncToGenerator(function* () {
-      var data = {
-        idInfo: '',
-        person: user.data.userName + ' Deleted ' + (info || 'Customer record(s)'),
-        reason,
-        dateNotification: new Date()
-      };
-      try {
-        yield axios__WEBPACK_IMPORTED_MODULE_28__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_30__/* .ENDPOINT_URL */ .m, "/create-notification"), data);
-      } catch (error) {
-        console.log(error);
-      }
-    });
-    return function handleCreateNotification() {
-      return _ref13.apply(this, arguments);
-    };
-  }();
-  var handleDeleteMany = /*#__PURE__*/function () {
-    var _ref14 = _asyncToGenerator(function* (e) {
-      if (e && e.preventDefault) e.preventDefault();
-      var deletePromises = selectedRows.map(/*#__PURE__*/function () {
-        var _ref15 = _asyncToGenerator(function* (idToDelete) {
-          return axios__WEBPACK_IMPORTED_MODULE_28__/* ["default"] */ .A.delete("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_30__/* .ENDPOINT_URL */ .m, "/remove-customer/").concat(idToDelete));
-        });
-        return function (_x9) {
-          return _ref15.apply(this, arguments);
-        };
-      }());
-      try {
-        var res = yield Promise.all(deletePromises);
-        if (res) {
-          handleCreateNotification();
-          setOpenReasonDelete(false);
-          setOpenDeleteAll(false);
-          setOpenDeleteMultiple(false);
-          setSelectedRows([]);
-          setReason('');
-          handleOpenModal();
-        }
-      } catch (error) {
-        console.log(error);
-        alert("Error deleting customers. Please try again.");
-      }
-    });
-    return function handleDeleteMany(_x8) {
-      return _ref14.apply(this, arguments);
-    };
-  }();
-  var handleLogout = () => {
-    localStorage.removeItem('user');
-    dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_34__/* .logOut */ .je)());
-    navigate('/');
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, params.row[params.field]);
   };
+  var _useState39 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    _useState40 = _slicedToArray(_useState39, 2),
+    filteredRows = _useState40[0],
+    setFilteredRows = _useState40[1];
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    var proj = project.filter(row => !hiddenRow.includes(row._id));
+    setFilteredRows(proj);
+  }, [project, hiddenRow]);
   var _React$useState = react__WEBPACK_IMPORTED_MODULE_0__.useState({
       items: [],
-      quickFilterExcludeHiddenColumns: false,
-      quickFilterValues: []
+      quickFilterExcludeHiddenColumns: true,
+      quickFilterValues: searchTerm ? searchTerm.split(/\s+/).filter(Boolean) : []
     }),
     _React$useState2 = _slicedToArray(_React$useState, 2),
     filterModel = _React$useState2[0],
     setFilterModel = _React$useState2[1];
-  var _useState45 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({}),
-    _useState46 = _slicedToArray(_useState45, 2),
-    columnVisibilityModel = _useState46[0],
-    setColumnVisibilityModel = _useState46[1];
+  var _useState41 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({}),
+    _useState42 = _slicedToArray(_useState41, 2),
+    columnVisibilityModel = _useState42[0],
+    setColumnVisibilityModel = _useState42[1];
   var handelHiddenColumn = newHidden => {
     setColumnVisibilityModel(newHidden);
-    localStorage.setItem('HiddenColumnsCustomer', JSON.stringify(newHidden));
+    localStorage.setItem('HiddenColumnsProject', JSON.stringify(newHidden));
   };
   var handleFilter = newModel => {
     setFilterModel(newModel);
@@ -1980,67 +2075,187 @@ function CustomerViewAdmin() {
     }
   };
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    var storedQuick = JSON.parse(localStorage.getItem('QuickFilterCustomerTst'));
+    var storedQuick = JSON.parse(localStorage.getItem('QuickFilterProjectTst'));
     if (storedQuick) {
       setFilterModel(storedQuick);
     }
-    var storedColumns = JSON.parse(localStorage.getItem('HiddenColumnsCustomer'));
+    var storedColumns = JSON.parse(localStorage.getItem('HiddenColumnsProject'));
     if (storedColumns) {
       setColumnVisibilityModel(storedColumns);
     }
-  }, [searchCustomer]);
-  var _React$useState3 = react__WEBPACK_IMPORTED_MODULE_0__.useState(true),
-    _React$useState4 = _slicedToArray(_React$useState3, 2),
-    open1 = _React$useState4[0],
-    setOpen1 = _React$useState4[1];
-  var toggleDrawer = () => {
-    setOpen1(!open1);
+  }, []);
+  var _useState43 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState44 = _slicedToArray(_useState43, 2),
+    openDeleteAll = _useState44[0],
+    setOpenDeleteAll = _useState44[1];
+  var handleOpenAll = () => {
+    setOpenDeleteAll(true);
   };
+  var handleCloseAll = () => {
+    setOpenDeleteAll(false);
+    setSelectedRows([]);
+  };
+  var handleOpen = id => {
+    setOpen(true);
+    setDeleteId(id);
+  };
+  var handleOpenModal = () => {
+    setModalOpenLoading(true);
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 500);
+  };
+  var handleClose = () => {
+    setLoadingOpenModal(false);
+    setOpen(false);
+  };
+  var handleCloseModal = () => {
+    setOpen(false);
+    setOpenDeleteMultiple(false);
+    setOpenDeleteAll(false);
+    setModalOpenLoading(false);
+    setLoading(false);
+    setSelectedRows([]);
+    fetchItems(page, debouncedSearchTerm, filterField, filterValue, statusFilter);
+  };
+  var _useState45 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    _useState46 = _slicedToArray(_useState45, 2),
+    ProjectDeleted = _useState46[0],
+    setProjectDeleted = _useState46[1];
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    var fetchFunction = /*#__PURE__*/function () {
+      var _ref13 = _asyncToGenerator(function* () {
+        var deletePromises = selectedRows.map(/*#__PURE__*/function () {
+          var _ref14 = _asyncToGenerator(function* (idToDelete) {
+            return axios__WEBPACK_IMPORTED_MODULE_28__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_31__/* .ENDPOINT_URL */ .m, "/get-projects/").concat(idToDelete));
+          });
+          return function (_x0) {
+            return _ref14.apply(this, arguments);
+          };
+        }());
+        try {
+          var res = yield Promise.all(deletePromises);
+          setProjectDeleted(res.map(row => 'P-' + row.data.data.projectNumber));
+        } catch (error) {
+          console.log(error);
+        }
+      });
+      return function fetchFunction() {
+        return _ref13.apply(this, arguments);
+      };
+    }();
+    if (selectedRows && selectedRows.length > 0) {
+      fetchFunction();
+    } else {
+      setProjectDeleted([]);
+    }
+  }, [selectedRows]);
+  var infoFromState = (selectedRows || []).map(id => {
+    var found = (project || []).find(p => p._id === id || p.id === id);
+    return found !== null && found !== void 0 && found.projectNumber ? "P-".concat(found.projectNumber) : '';
+  }).filter(Boolean);
+  var info = infoFromState.length > 0 ? infoFromState.join(', ') : ProjectDeleted.length > 0 ? ProjectDeleted.join(', ') : selectedRows.length > 0 ? "".concat(selectedRows.length, " project(s)") : '';
+  var handleCreateNotification = /*#__PURE__*/function () {
+    var _ref15 = _asyncToGenerator(function* () {
+      var data = {
+        idInfo: '',
+        person: user.data.userName + ' Deleted ' + (info || 'Project(s)'),
+        reason,
+        dateNotification: new Date()
+      };
+      try {
+        yield axios__WEBPACK_IMPORTED_MODULE_28__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_31__/* .ENDPOINT_URL */ .m, "/create-notification"), data);
+      } catch (error) {
+        console.log(error);
+      }
+    });
+    return function handleCreateNotification() {
+      return _ref15.apply(this, arguments);
+    };
+  }();
+  var handleDeleteMany = /*#__PURE__*/function () {
+    var _ref16 = _asyncToGenerator(function* (e) {
+      if (e && e.preventDefault) e.preventDefault();
+      var deletePromises = selectedRows.map(/*#__PURE__*/function () {
+        var _ref17 = _asyncToGenerator(function* (idToDelete) {
+          return axios__WEBPACK_IMPORTED_MODULE_28__/* ["default"] */ .A.delete("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_31__/* .ENDPOINT_URL */ .m, "/delete-projects/").concat(idToDelete));
+        });
+        return function (_x10) {
+          return _ref17.apply(this, arguments);
+        };
+      }());
+      try {
+        var res = yield Promise.all(deletePromises);
+        if (res) {
+          handleCreateNotification();
+          setOpenReasonDelete(false);
+          setOpenDeleteAll(false);
+          setOpenDeleteMultiple(false);
+          setSelectedRows([]);
+          setReason('');
+          handleOpenModal();
+        }
+      } catch (error) {
+        console.log('an error as occur ', error);
+        alert("Error deleting projects. Please try again.");
+      }
+    });
+    return function handleDeleteMany(_x1) {
+      return _ref16.apply(this, arguments);
+    };
+  }();
+  var handleDelete = /*#__PURE__*/function () {
+    var _ref18 = _asyncToGenerator(function* () {
+      setLoading(true);
+      setModalOpenLoading(true);
+      handleClose();
+      try {
+        var res = yield axios__WEBPACK_IMPORTED_MODULE_28__/* ["default"] */ .A.delete("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_31__/* .ENDPOINT_URL */ .m, "/delete-projects/").concat(DeleteId));
+        if (res) {
+          handleOpenModal();
+        }
+      } catch (error) {
+        console.log(error);
+        setLoading(false);
+        setModalOpenLoading(false);
+      }
+    });
+    return function handleDelete() {
+      return _ref18.apply(this, arguments);
+    };
+  }();
   var columns = [{
-    field: 'customerType',
-    headerName: 'Type',
+    field: 'projectNumber',
+    headerName: 'Project Number',
     minWidth: 80,
-    flex: 0.8
-  }, {
-    field: 'customerFullName',
-    headerName: 'Customer Name',
-    minWidth: 150,
-    flex: 1.5
-  }, {
-    field: 'companyName',
-    headerName: 'Company Name',
-    minWidth: 150,
-    flex: 1.5
+    flex: 0.8,
+    valueFormatter: params => 'P-' + String((params === null || params === void 0 ? void 0 : params.value) || '').padStart(6, '0')
   }, {
     field: 'customer',
-    headerName: 'Invoice Name',
+    headerName: 'Customer Name',
     minWidth: 150,
     flex: 1.5,
     valueGetter: params => {
-      var _params$row$Customer;
-      return (_params$row$Customer = params.row.Customer) === null || _params$row$Customer === void 0 ? void 0 : _params$row$Customer.toUpperCase();
+      var _params$row$customerN;
+      return ((_params$row$customerN = params.row.customerName) === null || _params$row$customerN === void 0 ? void 0 : _params$row$customerN.customerName) || 'No Customer';
     }
   }, {
-    field: 'customerEmail',
-    headerName: 'Email',
-    minWidth: 100,
-    flex: 1
-  }, {
-    field: 'customerCompanyPhone',
-    headerName: 'Phone N',
-    minWidth: 100,
-    flex: 1
-  }, {
-    field: 'customerPhone',
-    headerName: 'Phone N 2',
-    minWidth: 100,
-    flex: 1
-  }, {
-    field: 'billingAddress',
-    headerName: 'Address',
+    field: 'projectName',
+    headerName: 'Project Name',
     minWidth: 200,
-    flex: 2,
-    valueGetter: params => params.row.billingAddress.toUpperCase()
+    flex: 2
+  }, {
+    field: 'description',
+    headerName: 'Description',
+    minWidth: 150,
+    flex: 1.5
+  }, {
+    field: 'status',
+    headerName: 'Status',
+    minWidth: 100,
+    flex: 1,
+    renderCell: params => (0,_utils_formatUtils__WEBPACK_IMPORTED_MODULE_30__/* .renderStatusBadge */ .UM)(params.row.status)
   }, {
     field: 'view',
     headerName: 'View',
@@ -2049,9 +2264,9 @@ function CustomerViewAdmin() {
     renderCell: params => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(ViewTooltip, {
       title: "View"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
-      disabled: customerInfoV.length === 0
+      disabled: ProjectInfoV.length === 0
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_7__/* .NavLink */ .k2, {
-      to: "/CustomerInformationView/".concat(params.row._id),
+      to: "/ProjectInfo/".concat(params.row._id),
       className: "LinkName"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Visibility__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
       style: {
@@ -2066,9 +2281,9 @@ function CustomerViewAdmin() {
     renderCell: params => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(EditTooltip, {
       title: "Edit"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
-      disabled: customerInfoU.length === 0
+      disabled: ProjectInfoU.length === 0
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_7__/* .NavLink */ .k2, {
-      to: "/CustomerFormUpdate/".concat(params.row._id),
+      to: "/ProjectUpdateView/".concat(params.row._id),
       className: "LinkName"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Edit__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
       style: {
@@ -2082,15 +2297,42 @@ function CustomerViewAdmin() {
     minWidth: 60,
     renderCell: params => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(DeleteTooltip, {
       title: "Delete"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, "                                ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, "                           ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
       onClick: () => handleOpen(params.row._id),
-      disabled: customerInfoD.length === 0
+      disabled: ProjectInfoD.length === 0
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Delete__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
       style: {
         cursor: 'pointer',
         color: 'red'
       }
     }))))
+  }, {
+    field: 'hide',
+    headerName: 'Action',
+    sortable: false,
+    width: 60,
+    minWidth: 60,
+    renderCell: params => {
+      if (user.data.role === 'CEO') {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, hiddenRow.includes(params.row._id) ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(ViewTooltip, {
+          title: "UnHide"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
+          onClick: () => handleHideRow(params.row._id)
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_40__/* ["default"] */ .A, {
+          style: {
+            color: '#202a5a'
+          }
+        })))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(ViewTooltip, {
+          title: "Hide"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
+          onClick: () => handleHideRow(params.row._id)
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_39__/* ["default"] */ .A, {
+          style: {
+            color: '#202a5a'
+          }
+        })))));
+      }
+    }
   }];
   if (isMobile) {
     return loadingData ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
@@ -2099,15 +2341,15 @@ function CustomerViewAdmin() {
         top: '120px',
         textAlign: 'center'
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A, null)) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_44__/* ["default"] */ .A, null)) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
       sx: {
         width: '100%',
         py: 1
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_MobileCardList__WEBPACK_IMPORTED_MODULE_44__/* ["default"] */ .A, {
-      type: "customers",
-      data: customer,
-      searchPlaceholder: "Search customers by name, phone, email, company...",
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_MobileCardList__WEBPACK_IMPORTED_MODULE_53__/* ["default"] */ .A, {
+      type: "projects",
+      data: project,
+      searchPlaceholder: "Search projects by name, client, description...",
       searchValue: searchTerm,
       onSearchChange: setSearchTerm,
       page: page,
@@ -2124,7 +2366,7 @@ function CustomerViewAdmin() {
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_CssBaseline__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .Ay, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(AppBar, {
     position: "absolute",
-    open: open1,
+    open: sideBar,
     sx: {
       backgroundColor: '#30368a'
     }
@@ -2139,7 +2381,7 @@ function CustomerViewAdmin() {
     onClick: toggleDrawer,
     sx: _objectSpread({
       marginRight: '36px'
-    }, open1 && {
+    }, sideBar && {
       display: 'none'
     })
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Menu__WEBPACK_IMPORTED_MODULE_26__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
@@ -2150,21 +2392,21 @@ function CustomerViewAdmin() {
     sx: {
       flexGrow: 1
     }
-  }, "Customer"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_42__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_MessageAdminView__WEBPACK_IMPORTED_MODULE_41__/* ["default"] */ .A, {
+  }, "Project"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_51__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_MessageAdminView__WEBPACK_IMPORTED_MODULE_50__/* ["default"] */ .A, {
     name: user.data.userName,
     role: user.data.role
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
     color: "inherit",
     onClick: handleLogout
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_37__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_46__/* ["default"] */ .A, {
     style: {
       color: 'white'
     }
   })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(Drawer, {
     variant: "permanent",
-    open: open1,
-    onMouseEnter: () => setOpen1(true),
-    onMouseLeave: () => setOpen1(false)
+    open: sideBar,
+    onMouseEnter: () => setSideBar(true),
+    onMouseLeave: () => setSideBar(false)
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
     sx: {
       display: 'flex',
@@ -2190,60 +2432,221 @@ function CustomerViewAdmin() {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Container__WEBPACK_IMPORTED_MODULE_25__/* ["default"] */ .A, {
     maxWidth: "none",
     sx: {
-      mt: 1
+      mt: 0.5,
+      px: {
+        xs: 1,
+        sm: 2
+      }
     }
-  }, loadingData ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+    sx: {
+      display: 'grid',
+      gridTemplateColumns: {
+        xs: 'repeat(2, 1fr)',
+        sm: 'repeat(3, 1fr)',
+        md: 'repeat(5, 1fr)'
+      },
+      gap: 1,
+      mb: 0.75,
+      mt: 0.25
+    }
+  }, [{
+    key: 'ALL',
+    label: 'ALL PROJECTS',
+    count: statusCounts.all,
+    color: '#30368a',
+    bgLight: '#eef2ff',
+    icon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_34__/* ["default"] */ .A, {
+      sx: {
+        fontSize: 15,
+        color: '#30368a'
+      }
+    })
+  }, {
+    key: 'Pending',
+    label: 'PENDING',
+    count: statusCounts.pending,
+    color: '#ed6c02',
+    bgLight: '#fff3e0',
+    icon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_38__/* ["default"] */ .A, {
+      sx: {
+        fontSize: 15,
+        color: '#ed6c02'
+      }
+    })
+  }, {
+    key: 'On-going',
+    label: 'ON-GOING',
+    count: statusCounts.ongoing,
+    color: '#1976d2',
+    bgLight: '#e3f2fd',
+    icon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A, {
+      sx: {
+        fontSize: 15,
+        color: '#1976d2'
+      }
+    })
+  }, {
+    key: 'Stopped',
+    label: 'STOPPED',
+    count: statusCounts.stopped,
+    color: '#d32f2f',
+    bgLight: '#ffebee',
+    icon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_36__/* ["default"] */ .A, {
+      sx: {
+        fontSize: 15,
+        color: '#d32f2f'
+      }
+    })
+  }, {
+    key: 'Completed',
+    label: 'COMPLETED',
+    count: statusCounts.completed,
+    color: '#2e7d32',
+    bgLight: '#e8f5e9',
+    icon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_45__/* ["default"] */ .A, {
+      sx: {
+        fontSize: 15,
+        color: '#2e7d32'
+      }
+    })
+  }].map(card => {
+    var isSelected = statusFilter.toLowerCase() === card.key.toLowerCase();
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+      key: card.key,
+      onClick: () => handleStatusClick(card.key),
+      sx: {
+        backgroundColor: '#ffffff',
+        borderRadius: '8px',
+        p: '6px 10px',
+        cursor: 'pointer',
+        position: 'relative',
+        overflow: 'hidden',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        border: isSelected ? "2px solid ".concat(card.color) : '1px solid #e2e8f0',
+        boxShadow: isSelected ? "0 4px 12px -2px ".concat(card.color, "33, 0 2px 4px -1px rgba(0, 0, 0, 0.06)") : '0 1px 2px 0 rgba(0, 0, 0, 0.04)',
+        transform: isSelected ? 'translateY(-1px)' : 'none',
+        transition: 'all 0.15s ease-in-out',
+        '&:hover': {
+          boxShadow: "0 4px 10px -2px ".concat(card.color, "25, 0 2px 4px -1px rgba(0, 0, 0, 0.06)"),
+          transform: 'translateY(-1px)',
+          borderColor: card.color
+        }
+      }
+    }, isSelected && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+      sx: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        height: '3px',
+        backgroundColor: card.color
+      }
+    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+      sx: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        mb: 0.25
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+      sx: {
+        fontSize: '9.5px',
+        fontWeight: 700,
+        letterSpacing: '0.4px',
+        color: isSelected ? card.color : '#64748b',
+        textTransform: 'uppercase'
+      }
+    }, card.label), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+      sx: {
+        width: 22,
+        height: 22,
+        borderRadius: '50%',
+        backgroundColor: card.bgLight,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
+      }
+    }, card.icon)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+      sx: {
+        display: 'flex',
+        alignItems: 'baseline',
+        gap: 1
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+      sx: {
+        fontSize: '16px',
+        fontWeight: 800,
+        color: isSelected ? card.color : '#1e293b',
+        lineHeight: 1.1
+      }
+    }, (card.count || 0).toLocaleString())));
+  })), loadingData ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     style: {
       position: 'relative',
       top: '120px'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A, null))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("section", {
-    style: {
-      position: 'relative',
-      float: 'right',
-      margin: '10px'
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_44__/* ["default"] */ .A, null))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+    sx: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      mb: 0.5,
+      mt: 0.25
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, null, project.length > 0 && selectedRows.length > 1 && selectedRows.length < project.length && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+    disabled: user.data.role !== 'CEO',
+    onClick: handleOpenAll,
+    className: "btnCustomer2"
+  }, "Delete multiple"), project.length > 0 && selectedRows.length === project.length && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+    onClick: handleOpenAll,
+    disabled: user.data.role !== 'CEO',
+    className: "btnCustomer2"
+  }, "Delete all")), !(0,_utils_isMobile__WEBPACK_IMPORTED_MODULE_52__/* .isNativeMobile */ .g1)() && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+    sx: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: 1
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(ViewTooltip, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
-    disabled: customerInfoC.length === 0
+    disabled: ProjectInfoC.length === 0,
+    size: "small"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_7__/* .NavLink */ .k2, {
-    to: '/CustomerForm',
+    to: '/ProjectFormView',
     className: "LinkName"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
     className: "btnCustomerAdding"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A, null))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_33__/* ["default"] */ .A, {
     sx: {
-      height: (0,_utils_isMobile__WEBPACK_IMPORTED_MODULE_43__/* .isNativeMobile */ .g1)() ? 'auto' : 600,
+      fontSize: 18
+    }
+  })))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+    onClick: handleRefreshSearch,
+    className: "btnCustomer2",
+    style: {
+      height: '32px',
+      lineHeight: '32px',
+      padding: '0 12px'
+    }
+  }, "Refresh Search"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+    sx: {
+      height: (0,_utils_isMobile__WEBPACK_IMPORTED_MODULE_52__/* .isNativeMobile */ .g1)() ? 'auto' : 'calc(100vh - 200px)',
+      minHeight: 380,
       width: '100%'
     }
-  }, (0,_utils_isMobile__WEBPACK_IMPORTED_MODULE_43__/* .isNativeMobile */ .g1)() ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_MobileCardList__WEBPACK_IMPORTED_MODULE_44__/* ["default"] */ .A, {
-    type: "customers",
-    data: customer,
-    searchPlaceholder: "Search customers by name, phone, email, company...",
+  }, (0,_utils_isMobile__WEBPACK_IMPORTED_MODULE_52__/* .isNativeMobile */ .g1)() ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_MobileCardList__WEBPACK_IMPORTED_MODULE_53__/* ["default"] */ .A, {
+    type: "projects",
+    data: project,
+    searchPlaceholder: "Search projects by name, client, description...",
     searchValue: searchTerm,
     onSearchChange: setSearchTerm,
     page: page,
     totalCount: totalItemCount,
     onPageChange: setPage,
     loading: loadingData
-  }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, customer.length > 0 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("section", {
-    style: {
-      position: 'relative',
-      float: 'left',
-      margin: '10px'
-    }
-  }, selectedRows.length > 1 && selectedRows.length < customer.length && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
-    disabled: user.data.role !== 'CEO',
-    onClick: handleOpenAll,
-    className: "btnCustomer2"
-  }, "Delete multiple"), selectedRows.length === customer.length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
-    onClick: handleOpenAll,
-    disabled: user.data.role !== 'CEO',
-    className: "btnCustomer2"
-  }, "Delete all") : '') : '', /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_x_data_grid__WEBPACK_IMPORTED_MODULE_39__/* .DataGrid */ .zh, {
-    rows: customer,
-    columns: columns,
-    checkboxSelection: true,
-    disableDensitySelector: true,
+  }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, user.data.role === 'CEO' ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_x_data_grid__WEBPACK_IMPORTED_MODULE_48__/* .DataGrid */ .zh, {
     paginationMode: "server",
     filterMode: "server",
     rowCount: totalItemCount,
@@ -2252,10 +2655,12 @@ function CustomerViewAdmin() {
       pageSize: limit
     },
     onPaginationModelChange: newModel => handlePageChange(newModel.page),
-    onRowSelectionModelChange: newSelection => setSelectedRows(newSelection),
+    rows: project,
+    columns: columns,
     slots: {
-      toolbar: _mui_x_data_grid__WEBPACK_IMPORTED_MODULE_40__/* .GridToolbar */ .O
+      toolbar: _mui_x_data_grid__WEBPACK_IMPORTED_MODULE_49__/* .GridToolbar */ .O
     },
+    onRowSelectionModelChange: newSelection => setSelectedRows(newSelection),
     slotProps: {
       toolbar: {
         showQuickFilter: true,
@@ -2267,6 +2672,9 @@ function CustomerViewAdmin() {
         }
       }
     },
+    rowRenderer: rowRenderer,
+    checkboxSelection: true,
+    disableDensitySelector: true,
     rowSelectionModel: selectedRows,
     filterModel: filterModel,
     onFilterModelChange: newModel => handleFilter(newModel),
@@ -2275,9 +2683,66 @@ function CustomerViewAdmin() {
     sx: {
       width: '100%',
       backgroundColor: 'white',
-      padding: '10px'
+      padding: '10px',
+      '& .MuiDataGrid-footerContainer': {
+        justifyContent: 'flex-start'
+      },
+      '& .MuiTablePagination-root': {
+        flex: 'none'
+      },
+      '& .MuiTablePagination-spacer': {
+        display: 'none'
+      }
     }
-  })))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, {
+  }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_x_data_grid__WEBPACK_IMPORTED_MODULE_48__/* .DataGrid */ .zh, {
+    paginationMode: "server",
+    filterMode: "server",
+    rowCount: totalItemCount,
+    paginationModel: {
+      page: page,
+      pageSize: limit
+    },
+    onPaginationModelChange: newModel => handlePageChange(newModel.page),
+    rows: filteredRows,
+    columns: columns,
+    slots: {
+      toolbar: _mui_x_data_grid__WEBPACK_IMPORTED_MODULE_49__/* .GridToolbar */ .O
+    },
+    onRowSelectionModelChange: newSelection => setSelectedRows(newSelection),
+    slotProps: {
+      toolbar: {
+        showQuickFilter: true,
+        quickFilterProps: {
+          debounceMs: 500
+        },
+        printOptions: {
+          disableToolbarButton: true
+        }
+      }
+    },
+    rowRenderer: rowRenderer,
+    checkboxSelection: true,
+    disableDensitySelector: true,
+    rowSelectionModel: selectedRows,
+    filterModel: filterModel,
+    onFilterModelChange: newModel => handleFilter(newModel),
+    columnVisibilityModel: columnVisibilityModel,
+    onColumnVisibilityModelChange: handelHiddenColumn,
+    sx: {
+      width: '100%',
+      backgroundColor: 'white',
+      padding: '10px',
+      '& .MuiDataGrid-footerContainer': {
+        justifyContent: 'flex-start'
+      },
+      '& .MuiTablePagination-root': {
+        flex: 'none'
+      },
+      '& .MuiTablePagination-spacer': {
+        display: 'none'
+      }
+    }
+  }))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, {
     open: open,
     onClose: handleClose,
     "aria-labelledby": "modal-modal-title",
@@ -2299,7 +2764,7 @@ function CustomerViewAdmin() {
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
     className: "btnCustomer2",
-    onClick: handleOpenReasonDelete
+    onClick: handleDelete
   }, "Delete"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
     className: "btnCustomer",
     onClick: handleClose
@@ -2330,7 +2795,7 @@ function CustomerViewAdmin() {
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
     className: "btnCustomer2",
-    onClick: handleOpenReasonDelete
+    onClick: handleDeleteMany
   }, "Delete"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
     className: "btnCustomer",
     onClick: handleCloseMultiple
@@ -2353,12 +2818,12 @@ function CustomerViewAdmin() {
     style: {
       color: 'red'
     }
-  }, "Note:"), " Selected rows will be deleted"), selectedRows.length > 1 && selectedRows.length < customer.length && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
+  }, "Note:"), " Selected rows will be deleted"), selectedRows.length > 1 && selectedRows.length < project.length && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
     className: "txt2",
     style: {
       color: 'red'
     }
-  }, "Note:"), " All selected rows will be deleted"), selectedRows.length === customer.length && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
+  }, "Note:"), " All selected rows will be deleted"), selectedRows.length === project.length && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
     className: "txt2",
     style: {
       color: 'red'
@@ -2389,12 +2854,12 @@ function CustomerViewAdmin() {
     sx: _objectSpread(_objectSpread({}, style), {}, {
       width: 500
     })
-  }, loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+  }, loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_44__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     style: {
       justifyContent: 'center',
       textAlign: 'center'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_36__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_45__/* ["default"] */ .A, {
     style: {
       color: 'green',
       height: '40px',
@@ -2422,12 +2887,12 @@ function CustomerViewAdmin() {
     sx: _objectSpread(_objectSpread({}, style), {}, {
       width: 500
     })
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_44__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     style: {
       justifyContent: 'center',
       textAlign: 'center'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_36__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_45__/* ["default"] */ .A, {
     style: {
       color: 'green',
       height: '40px',
@@ -2460,7 +2925,7 @@ function CustomerViewAdmin() {
       position: 'relative',
       float: 'right'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_31__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_37__/* ["default"] */ .A, {
     style: {
       color: '#202a5a'
     }
@@ -2468,7 +2933,7 @@ function CustomerViewAdmin() {
     id: "modal-modal-title",
     variant: "h6",
     component: "h2"
-  }, "Why do you want to delete: ", info || (selectedRows.length > 1 ? "".concat(selectedRows.length, " selected customers") : 'this customer'), "?"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("form", {
+  }, "Why do you want to delete: ", info || (selectedRows.length > 1 ? "".concat(selectedRows.length, " selected projects") : 'this project'), "?"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("form", {
     onSubmit: handleDeleteMany
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .Ay, {
     container: true,
@@ -2505,7 +2970,7 @@ function CustomerViewAdmin() {
     }
   }, "Save")))))));
 }
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (CustomerViewAdmin);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ProjectViewAdmin);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, [
 /* harmony export */   "default", 0, /* export default binding */ __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ ]);

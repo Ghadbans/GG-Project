@@ -14,6 +14,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import axios from 'axios';
 import { ENDPOINT_URL } from '../apiConfig';
+import { useModuleSearchState } from '../hooks/useModuleSearchState';
 import { renderStatusBadge } from '../utils/formatUtils';
 import { Add, Delete, Edit, Visibility, DirectionsCar as DirectionsCarIcon } from '@mui/icons-material';
 import dayjs from 'dayjs';
@@ -102,11 +103,15 @@ export default function FleetViewAdmin() {
   const [sideBar, setSideBar] = useState(false);
   const [fleets, setFleets] = useState([]);
   const [loadingData, setLoadingData] = useState(true);
-  const [page, setPage] = useState(0);
+  const {
+    searchTerm,
+    setSearchTerm,
+    page,
+    setPage,
+  } = useModuleSearchState('fleet');
   const limit = 100;
   const [totalPage, setTotalPage] = useState(1);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState(searchTerm);
   const [totalItemCount, setTotalItemCount] = useState(0);
   const user = useSelector(selectCurrentUser);
   const navigate = useNavigate();

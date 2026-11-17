@@ -26,6 +26,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import axios from 'axios';
 import { cachedGet } from '../utils/apiCache';
 import { ENDPOINT_URL } from '../apiConfig';
+import { useModuleSearchState } from '../hooks/useModuleSearchState';
 import { Add, MailOutline, Sync, SyncAltOutlined } from '@mui/icons-material';
 import { useDispatch, useSelector } from "react-redux"
 import { logOut, selectCurrentUser, setUser } from '../features/auth/authSlice';
@@ -188,12 +189,18 @@ function SupplierAdminView() {
     }
   })
 
-  const [page, setPage] = useState(0);
+  const {
+    searchTerm,
+    setSearchTerm,
+    filterField,
+    setFilterField,
+    filterValue,
+    setFilterValue,
+    page,
+    setPage,
+  } = useModuleSearchState('supplier');
   const limit = 100;
-  const [searchTerm, setSearchTerm] = useState("");
-  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
-  const [filterField, setFilterField] = useState("");
-  const [filterValue, setFilterValue] = useState("");
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState(searchTerm);
   const [totalPage, SetTotalPage] = useState(0);
   const [totalItemCount, setTotalItemCount] = useState(0);
     const fetchItems = async (page, searchTerm, filterField, filterValue) => {
@@ -381,7 +388,7 @@ function SupplierAdminView() {
   const [filterModel, setFilterModel] = React.useState({
     items: [],
     quickFilterExcludeHiddenColumns: true,
-    quickFilterValues: [],
+    quickFilterValues: searchTerm ? searchTerm.split(/\s+/).filter(Boolean) : [],
   });
   const [columnVisibilityModel, setColumnVisibilityModel] = useState({});
 

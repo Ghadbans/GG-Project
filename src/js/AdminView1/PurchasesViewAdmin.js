@@ -28,6 +28,7 @@ import { cachedGet } from '../utils/apiCache';
 import { renderStatusBadge } from '../utils/formatUtils';
 import { Add, Close, MailOutline, Assignment as AssignmentIcon, HourglassEmpty as HourglassEmptyIcon, Autorenew as AutorenewIcon, Block as BlockIcon } from '@mui/icons-material';
 import { ENDPOINT_URL } from '../apiConfig';
+import { useModuleSearchState } from '../hooks/useModuleSearchState';
 import dayjs from 'dayjs';
 import { useDispatch, useSelector } from "react-redux"
 import { logOut, selectCurrentUser, setUser } from '../features/auth/authSlice';
@@ -187,7 +188,18 @@ function PurchasesViewAdmin() {
   const [loadingData, setLoadingData] = useState(true);
   const [reason, setReason] = useState("");
   const apiUrl = `${ENDPOINT_URL}/purchase`;
-  const [statusFilter, setStatusFilter] = useState('ALL');
+  const {
+    searchTerm,
+    setSearchTerm,
+    filterField,
+    setFilterField,
+    filterValue,
+    setFilterValue,
+    statusFilter,
+    setStatusFilter,
+    page,
+    setPage,
+  } = useModuleSearchState('purchase');
   const [statusCounts, setStatusCounts] = useState({
     all: 0,
     pending: 0,
@@ -196,16 +208,13 @@ function PurchasesViewAdmin() {
     completed: 0
   });
 
-  const [page, setPage] = useState(0);
   const limit = 100;
-  const [searchTerm, setSearchTerm] = useState("");
-  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
-  const [filterField, setFilterField] = useState("");
-  const [filterValue, setFilterValue] = useState("");
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState(searchTerm);
   const [totalPage, SetTotalPage] = useState(0);
   const [totalItemCount, setTotalItemCount] = useState(0);
 
   useEffect(() => {
+    if (debouncedSearchTerm === searchTerm) return;
     const timer = setTimeout(() => {
       setDebouncedSearchTerm(searchTerm);
       setPage(0); // Reset page on new search
@@ -418,7 +427,7 @@ function PurchasesViewAdmin() {
   const [filterModel, setFilterModel] = React.useState({
     items: [],
     quickFilterExcludeHiddenColumns: true,
-    quickFilterValues: [],
+    quickFilterValues: searchTerm ? searchTerm.split(/\s+/).filter(Boolean) : [],
   });
   const [columnVisibilityModel, setColumnVisibilityModel] = useState({});
   const handelHiddenColumn = (newHidden) => {

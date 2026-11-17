@@ -50,6 +50,7 @@ let SupplierSchema = require("../model/suppliersSchema");
 let RateReturnSchema = require("../model/rateReturnSchema");
 const { syncInvoiceBalances, reconcileAllInvoiceBalances } = require("../utils/invoiceBalanceUtils");
 const { buildCustomerFilter, applyCustomerFilter } = require("../utils/customerFilterUtils");
+const { isValidObjectId, toSafeObjectId, parseSafeIdList, cleanParamString } = require("../utils/objectIdUtils");
 
 const { object } = require("joi");
 const { default: mongoose } = require("mongoose");
@@ -133,12 +134,18 @@ Route.route("/invoice", cors(corsOptionsDelegate)).get(
           filter.branchId = req.query.branchId;
         }
       }
-      if (req.query.projectId || req.query.purchaseIds || req.query.invoiceIds || req.query.purchaseNames || req.query.projectName || req.query.projectNumber) {
+      const cleanProjectId = cleanParamString(req.query.projectId);
+      const cleanPurchaseIds = cleanParamString(req.query.purchaseIds);
+      const cleanInvoiceIds = cleanParamString(req.query.invoiceIds);
+      const cleanPurchaseNames = cleanParamString(req.query.purchaseNames);
+      const cleanProjectName = cleanParamString(req.query.projectName);
+      const cleanProjectNumber = cleanParamString(req.query.projectNumber);
+
+      if (cleanProjectId || cleanPurchaseIds || cleanInvoiceIds || cleanPurchaseNames || cleanProjectName || cleanProjectNumber) {
         let orConditions = [];
-        if (req.query.projectId) {
-          let objectId = null;
-          try { objectId = new require('mongoose').Types.ObjectId(req.query.projectId); } catch (e) {}
-          const pIds = objectId ? [req.query.projectId, objectId] : [req.query.projectId];
+        if (cleanProjectId) {
+          const objectId = toSafeObjectId(cleanProjectId);
+          const pIds = objectId ? [cleanProjectId, objectId] : [cleanProjectId];
           orConditions.push(
             { 'ReferenceName2': { $in: pIds } },
             { 'ReferenceName': { $in: pIds } },
@@ -146,36 +153,30 @@ Route.route("/invoice", cors(corsOptionsDelegate)).get(
             { 'projectId': { $in: pIds } }
           );
         }
-        if (req.query.purchaseIds) {
-          const pIds = req.query.purchaseIds.split(',').map(id => id.trim()).filter(Boolean);
-          const objIds = [];
-          pIds.forEach(id => {
-            try { objIds.push(new require('mongoose').Types.ObjectId(id)); } catch (e) {}
-          });
-          const allPIds = [...pIds, ...objIds];
-          orConditions.push(
-            { 'ReferenceName2': { $in: allPIds } },
-            { 'ReferenceName': { $in: allPIds } },
-            { 'Ref._id': { $in: allPIds } }
-          );
+        if (cleanPurchaseIds) {
+          const { allIds: allPIds } = parseSafeIdList(cleanPurchaseIds);
+          if (allPIds.length > 0) {
+            orConditions.push(
+              { 'ReferenceName2': { $in: allPIds } },
+              { 'ReferenceName': { $in: allPIds } },
+              { 'Ref._id': { $in: allPIds } }
+            );
+          }
         }
-        if (req.query.invoiceIds) {
-          const invIds = req.query.invoiceIds.split(',').map(id => id.trim()).filter(Boolean);
-          const objIds = [];
-          invIds.forEach(id => {
-            try { objIds.push(new require('mongoose').Types.ObjectId(id)); } catch (e) {}
-          });
-          const allInvIds = [...invIds, ...objIds];
+        if (cleanInvoiceIds) {
+          const { objectIds: objIds, allIds: allInvIds } = parseSafeIdList(cleanInvoiceIds);
+          if (objIds.length > 0) {
+            orConditions.push({ '_id': { $in: objIds } });
+          }
           if (allInvIds.length > 0) {
             orConditions.push(
-              { '_id': { $in: allInvIds } },
               { 'ReferenceName': { $in: allInvIds } },
               { 'ReferenceName2': { $in: allInvIds } }
             );
           }
         }
-        if (req.query.purchaseNames) {
-          const pNames = req.query.purchaseNames.split(',').map(n => n.trim()).filter(Boolean);
+        if (cleanPurchaseNames) {
+          const { rawStrings: pNames } = parseSafeIdList(cleanPurchaseNames);
           if (pNames.length > 0) {
             orConditions.push(
               { 'invoicePurchase': { $in: pNames } },
@@ -184,17 +185,16 @@ Route.route("/invoice", cors(corsOptionsDelegate)).get(
             );
           }
         }
-        if (req.query.projectName) {
-          const rawName = req.query.projectName.trim();
-          const escapedName = rawName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        if (cleanProjectName) {
+          const escapedName = cleanProjectName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
           orConditions.push(
             { 'Ref.projectName': new RegExp('^' + escapedName + '$', 'i') },
             { 'ReferenceName': new RegExp('^' + escapedName + '$', 'i') },
             { 'invoiceSubject': new RegExp('^' + escapedName + '$', 'i') }
           );
         }
-        if (req.query.projectNumber) {
-          const pNum = Number(req.query.projectNumber);
+        if (cleanProjectNumber) {
+          const pNum = Number(cleanProjectNumber);
           if (!isNaN(pNum)) {
             orConditions.push(
               { 'ReferenceName': 'P-' + String(pNum).padStart(6, '0') },
@@ -721,14 +721,14 @@ Route.route("/delete-invoice/:id").delete(async (req, res, next) => {
           if (row.ReferenceName === undefined && row.invoicePurchase === '') {
             await purchaseSchema.findOneAndDelete({ReferenceName2:row._id});
           } else if (row.Position === 'Last') {
-            await purchaseSchema.findOneAndUpdate({ReferenceName2:row._id},{$set:{status: 'Estimated',ReferenceName2:'null'}});
+            await purchaseSchema.findOneAndUpdate({ReferenceName2:row._id},{$set:{status: 'Estimated',ReferenceName2:''}});
           } else if (row.Position === 'Maintenance') {
             await maintenanceSchema.updateMany(
               { $or: [{ ReferenceName: String(row._id) }, { _id: row.ReferenceName }] },
               { $set: { Converted: false, ReferenceName: '', status: 'Close' } }
             );
-          } else if (row.Position === 'Second' && row.ReferenceName2 === 'null') {
-            await estimationSchema.findOneAndUpdate({ReferenceName:row._id},{$set:{status: 'Approved',ReferenceName:'null'}});
+          } else if (row.Position === 'Second' && (!row.ReferenceName2 || row.ReferenceName2 === 'null')) {
+            await estimationSchema.findOneAndUpdate({ReferenceName:row._id},{$set:{status: 'Approved',ReferenceName:''}});
           }
         }));
         res.json({ msg: "Data successfully deleted." });

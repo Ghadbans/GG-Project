@@ -1,4 +1,4 @@
-(this["webpackChunkgg_management"] = this["webpackChunkgg_management"] || []).push([[1985],{
+(this["webpackChunkgg_management"] = this["webpackChunkgg_management"] || []).push([[2529],{
 
 /***/ 99682
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
@@ -1227,7 +1227,7 @@ const GridToolbar = /*#__PURE__*/react.forwardRef(function GridToolbar(props, re
 
 /***/ },
 
-/***/ 91985
+/***/ 32529
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1270,28 +1270,29 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(99380);
 /* harmony import */ var _utils_apiCache__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(46986);
 /* harmony import */ var _apiConfig__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(71510);
-/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(99682);
-/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(17809);
-/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(74353);
-/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_40___default = /*#__PURE__*/__webpack_require__.n(dayjs__WEBPACK_IMPORTED_MODULE_40__);
-/* harmony import */ var _component_Loader__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(65821);
-/* harmony import */ var _mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(20889);
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(13561);
-/* harmony import */ var _features_auth_authSlice__WEBPACK_IMPORTED_MODULE_44__ = __webpack_require__(32005);
-/* harmony import */ var _component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_45__ = __webpack_require__(40301);
-/* harmony import */ var _img_no_data_png__WEBPACK_IMPORTED_MODULE_46__ = __webpack_require__(20453);
-/* harmony import */ var _img_no_data_png__WEBPACK_IMPORTED_MODULE_46___default = /*#__PURE__*/__webpack_require__.n(_img_no_data_png__WEBPACK_IMPORTED_MODULE_46__);
-/* harmony import */ var _img_images_png__WEBPACK_IMPORTED_MODULE_47__ = __webpack_require__(72761);
-/* harmony import */ var _img_images_png__WEBPACK_IMPORTED_MODULE_47___default = /*#__PURE__*/__webpack_require__.n(_img_images_png__WEBPACK_IMPORTED_MODULE_47__);
-/* harmony import */ var _mui_x_data_grid__WEBPACK_IMPORTED_MODULE_48__ = __webpack_require__(1835);
-/* harmony import */ var _mui_x_data_grid__WEBPACK_IMPORTED_MODULE_49__ = __webpack_require__(53071);
-/* harmony import */ var _MessageAdminView__WEBPACK_IMPORTED_MODULE_50__ = __webpack_require__(83818);
-/* harmony import */ var _NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_51__ = __webpack_require__(95236);
-/* harmony import */ var react_to_print__WEBPACK_IMPORTED_MODULE_52__ = __webpack_require__(57240);
-/* harmony import */ var react_to_print__WEBPACK_IMPORTED_MODULE_52___default = /*#__PURE__*/__webpack_require__.n(react_to_print__WEBPACK_IMPORTED_MODULE_52__);
-/* harmony import */ var _mui_icons_material_LocalPrintshop__WEBPACK_IMPORTED_MODULE_53__ = __webpack_require__(8659);
-/* harmony import */ var _component_PrintHeader__WEBPACK_IMPORTED_MODULE_54__ = __webpack_require__(77438);
-/* harmony import */ var _component_PrintFooter__WEBPACK_IMPORTED_MODULE_55__ = __webpack_require__(61296);
+/* harmony import */ var _hooks_useModuleSearchState__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(80099);
+/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(99682);
+/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(17809);
+/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(74353);
+/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_41___default = /*#__PURE__*/__webpack_require__.n(dayjs__WEBPACK_IMPORTED_MODULE_41__);
+/* harmony import */ var _component_Loader__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(65821);
+/* harmony import */ var _mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(20889);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_44__ = __webpack_require__(13561);
+/* harmony import */ var _features_auth_authSlice__WEBPACK_IMPORTED_MODULE_45__ = __webpack_require__(32005);
+/* harmony import */ var _component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_46__ = __webpack_require__(40301);
+/* harmony import */ var _img_no_data_png__WEBPACK_IMPORTED_MODULE_47__ = __webpack_require__(20453);
+/* harmony import */ var _img_no_data_png__WEBPACK_IMPORTED_MODULE_47___default = /*#__PURE__*/__webpack_require__.n(_img_no_data_png__WEBPACK_IMPORTED_MODULE_47__);
+/* harmony import */ var _img_images_png__WEBPACK_IMPORTED_MODULE_48__ = __webpack_require__(72761);
+/* harmony import */ var _img_images_png__WEBPACK_IMPORTED_MODULE_48___default = /*#__PURE__*/__webpack_require__.n(_img_images_png__WEBPACK_IMPORTED_MODULE_48__);
+/* harmony import */ var _mui_x_data_grid__WEBPACK_IMPORTED_MODULE_49__ = __webpack_require__(1835);
+/* harmony import */ var _mui_x_data_grid__WEBPACK_IMPORTED_MODULE_50__ = __webpack_require__(53071);
+/* harmony import */ var _MessageAdminView__WEBPACK_IMPORTED_MODULE_51__ = __webpack_require__(83818);
+/* harmony import */ var _NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_52__ = __webpack_require__(95236);
+/* harmony import */ var react_to_print__WEBPACK_IMPORTED_MODULE_53__ = __webpack_require__(57240);
+/* harmony import */ var react_to_print__WEBPACK_IMPORTED_MODULE_53___default = /*#__PURE__*/__webpack_require__.n(react_to_print__WEBPACK_IMPORTED_MODULE_53__);
+/* harmony import */ var _mui_icons_material_LocalPrintshop__WEBPACK_IMPORTED_MODULE_54__ = __webpack_require__(8659);
+/* harmony import */ var _component_PrintHeader__WEBPACK_IMPORTED_MODULE_55__ = __webpack_require__(77438);
+/* harmony import */ var _component_PrintFooter__WEBPACK_IMPORTED_MODULE_56__ = __webpack_require__(61296);
 var _excluded = ["className"],
   _excluded2 = ["className"],
   _excluded3 = ["className"];
@@ -1312,6 +1313,7 @@ function _extends() { return _extends = Object.assign ? Object.assign.bind() : f
 function _objectWithoutProperties(e, t) { if (null == e) return {}; var o, r, i = _objectWithoutPropertiesLoose(e, t); if (Object.getOwnPropertySymbols) { var n = Object.getOwnPropertySymbols(e); for (r = 0; r < n.length; r++) o = n[r], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]); } return i; }
 function _objectWithoutPropertiesLoose(r, e) { if (null == r) return {}; var t = {}; for (var n in r) if ({}.hasOwnProperty.call(r, n)) { if (-1 !== e.indexOf(n)) continue; t[n] = r[n]; } return t; }
 ;
+
 
 
 
@@ -1476,11 +1478,11 @@ var Drawer = (0,_mui_material__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .Ay
     })
   };
 });
-function ItemReturnAdminView() {
-  var _itemPurchaseView$Cre, _user$data, _itemPurchaseView$ite, _itemPurchaseView$Cre2, _itemPurchaseView$Cre3, _itemPurchaseView$ite2;
+function ItemOutViewAdmin() {
+  var _itemPurchaseView$ite, _itemPurchaseView$Cre, _user$data, _itemPurchaseView$ite2, _itemPurchaseView$Cre2, _itemPurchaseView$Cre3, _itemPurchaseView$ite3;
   var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_8__/* .useNavigate */ .Zp)();
-  var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_43__/* .useDispatch */ .wA)();
-  var user = (0,react_redux__WEBPACK_IMPORTED_MODULE_43__/* .useSelector */ .d4)(_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_44__/* .selectCurrentUser */ .xu);
+  var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_44__/* .useDispatch */ .wA)();
+  var user = (0,react_redux__WEBPACK_IMPORTED_MODULE_44__/* .useSelector */ .d4)(_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_45__/* .selectCurrentUser */ .xu);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     var storesUserId = localStorage.getItem('user');
     var fetchUser = /*#__PURE__*/function () {
@@ -1490,7 +1492,7 @@ function ItemReturnAdminView() {
             var res = yield axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_37__/* .ENDPOINT_URL */ .m, "/get-employeeuser/").concat(storesUserId));
             var Name = res.data.data.employeeName;
             var Role = res.data.data.role;
-            dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_44__/* .setUser */ .gV)({
+            dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_45__/* .setUser */ .gV)({
               userName: Name,
               role: Role,
               id: res.data.data._id
@@ -1508,6 +1510,11 @@ function ItemReturnAdminView() {
     }();
     fetchUser();
   }, [dispatch]);
+  var handleLogout = () => {
+    localStorage.removeItem('user');
+    dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_45__/* .logOut */ .je)());
+    navigate('/');
+  };
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState2 = _slicedToArray(_useState, 2),
     grantAccess = _useState2[0],
@@ -1529,15 +1536,10 @@ function ItemReturnAdminView() {
     }();
     fetchNumber();
   }, [user]);
-  var ReturnInfoC = grantAccess.filter(row => row.moduleName === "Item-Return" && row.access.createM === true);
-  var ReturnInfoV = grantAccess.filter(row => row.moduleName === "Item-Return" && row.access.viewM === true);
-  var ReturnInfoU = grantAccess.filter(row => row.moduleName === "Item-Return" && row.access.editM === true);
-  var ReturnInfoD = grantAccess.filter(row => row.moduleName === "Item-Return" && row.access.deleteM === true);
-  var handleLogout = () => {
-    localStorage.removeItem('user');
-    dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_44__/* .logOut */ .je)());
-    navigate('/');
-  };
+  var ItemOInfoC = grantAccess.filter(row => row.moduleName === "Item-Out" && row.access.createM === true);
+  var ItemOInfoV = grantAccess.filter(row => row.moduleName === "Item-Out" && row.access.viewM === true);
+  var ItemOInfoU = grantAccess.filter(row => row.moduleName === "Item-Out" && row.access.editM === true);
+  var ItemOInfoD = grantAccess.filter(row => row.moduleName === "Item-Out" && row.access.deleteM === true);
   var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState4 = _slicedToArray(_useState3, 2),
     itemOut = _useState4[0],
@@ -1558,44 +1560,40 @@ function ItemReturnAdminView() {
     _useState10 = _slicedToArray(_useState1, 2),
     newPurchase = _useState10[0],
     setNewPurchase = _useState10[1];
+  var _useModuleSearchState = (0,_hooks_useModuleSearchState__WEBPACK_IMPORTED_MODULE_38__/* .useModuleSearchState */ .pi)('itemOut'),
+    searchTerm = _useModuleSearchState.searchTerm,
+    setSearchTerm = _useModuleSearchState.setSearchTerm,
+    filterField = _useModuleSearchState.filterField,
+    setFilterField = _useModuleSearchState.setFilterField,
+    filterValue = _useModuleSearchState.filterValue,
+    setFilterValue = _useModuleSearchState.setFilterValue,
+    page = _useModuleSearchState.page,
+    setPage = _useModuleSearchState.setPage;
+  var limit = 100;
   var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
     _useState12 = _slicedToArray(_useState11, 2),
-    page = _useState12[0],
-    setPage = _useState12[1]; // Initialize page state to 0 (0-based index)
-  var limit = 100;
-  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+    totalPage = _useState12[0],
+    SetTotalPage = _useState12[1];
+  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
     _useState14 = _slicedToArray(_useState13, 2),
-    searchTerm = _useState14[0],
-    setSearchTerm = _useState14[1]; // Initialize search term state
-  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
-    _useState16 = _slicedToArray(_useState15, 2),
-    filterField = _useState16[0],
-    setFilterField = _useState16[1]; // Initialize filter field state
-  var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
-    _useState18 = _slicedToArray(_useState17, 2),
-    filterValue = _useState18[0],
-    setFilterValue = _useState18[1]; // Initialize filter value state
-  var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
-    _useState20 = _slicedToArray(_useState19, 2),
-    totalPage = _useState20[0],
-    SetTotalPage = _useState20[1];
-  var _useState21 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
-    _useState22 = _slicedToArray(_useState21, 2),
-    totalItemCount = _useState22[0],
-    setTotalItemCount = _useState22[1];
+    totalItemCount = _useState14[0],
+    setTotalItemCount = _useState14[1];
   var fetchItems = /*#__PURE__*/function () {
     var _ref1 = _asyncToGenerator(function* (page, searchTerm, filterField, filterValue) {
       try {
-        var res = yield axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_37__/* .ENDPOINT_URL */ .m, "/itemReturn-Information?page=").concat(page + 1, "&limit=").concat(limit, "&search=").concat(encodeURIComponent(searchTerm.trim()), "&filterField=").concat(encodeURIComponent(filterField.trim()), "&filterValue=").concat(encodeURIComponent(filterValue.trim())));
-        var formatDate = res.data.itemI.map(item => _objectSpread(_objectSpread({}, item), {}, {
-          id: item._id,
-          dataField: dayjs__WEBPACK_IMPORTED_MODULE_40___default()(item.itemOutDate).format('DD/MM/YYYY'),
-          referenceInfo: item.reference !== undefined ? item.reference.referenceName : item.description,
-          itemInfo: (item.itemsQtyArray || []).filter(row => row.newItemOut > 0).map(row => row.itemName ? typeof row.itemName === 'object' ? row.itemName.itemName || row.itemName.itemDescription || '' : row.itemName : ''),
-          itemDescriptionInfo: item.itemsQtyArray.filter(row => row.newItemOut > 0).map(row => row.itemDescription !== undefined ? row.itemDescription : '')
-        }));
+        var res = yield axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_37__/* .ENDPOINT_URL */ .m, "/itemOut-Information?page=").concat(page + 1, "&limit=").concat(limit, "&search=").concat(encodeURIComponent(searchTerm.trim()), "&filterField=").concat(encodeURIComponent(filterField.trim()), "&filterValue=").concat(encodeURIComponent(filterValue.trim())));
+        var formatDate = res.data.itemI.map(item => {
+          var _item$reference;
+          return _objectSpread(_objectSpread({}, item), {}, {
+            id: item._id,
+            dataField: dayjs__WEBPACK_IMPORTED_MODULE_41___default()(item.itemOutDate).format('DD/MM/YYYY'),
+            referenceInfo: item.reference !== undefined ? (_item$reference = item.reference) === null || _item$reference === void 0 ? void 0 : _item$reference.referenceName : item.description,
+            itemInfo: (item.itemsQtyArray || []).filter(row => row.newItemOut > 0).map(row => row.itemName ? typeof row.itemName === 'object' ? row.itemName.itemName || row.itemName.itemDescription || '' : row.itemName : ''),
+            itemDescriptionInfo: item.itemsQtyArray.filter(row => row.newItemOut > 0).map(row => row.itemDescription !== undefined ? row.itemDescription : '')
+          });
+        });
         SetTotalPage(Math.ceil(res.data.totalItem / limit));
-        setTotalItemCount(res.data.totalItem); // Ensure totalPage is correctly calculated
+        setTotalItemCount(res.data.totalItem || 0); // Ensure totalPage is correctly calculated
         setItemOut(formatDate);
         setLoadingData(false);
       } catch (error) {
@@ -1634,22 +1632,31 @@ function ItemReturnAdminView() {
   var handlePageChange = newPage => {
     setPage(newPage); // Update page state (convert to 0-based index)
   };
+  var handleSearchChange = event => {
+    setSearchTerm(event.target.value);
+  };
+  var handleFilterFieldChange = event => {
+    setFilterField(event.target.value);
+  };
+  var handleFilterValueChange = event => {
+    setFilterValue(event.target.value);
+  };
   {/** search start */}
   var _React$useState = react__WEBPACK_IMPORTED_MODULE_0__.useState({
       items: [],
       quickFilterExcludeHiddenColumns: true,
-      quickFilterValues: []
+      quickFilterValues: searchTerm ? searchTerm.split(/\s+/).filter(Boolean) : []
     }),
     _React$useState2 = _slicedToArray(_React$useState, 2),
     filterModel = _React$useState2[0],
     setFilterModel = _React$useState2[1];
-  var _useState23 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({}),
-    _useState24 = _slicedToArray(_useState23, 2),
-    columnVisibilityModel = _useState24[0],
-    setColumnVisibilityModel = _useState24[1];
+  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({}),
+    _useState16 = _slicedToArray(_useState15, 2),
+    columnVisibilityModel = _useState16[0],
+    setColumnVisibilityModel = _useState16[1];
   var handelHiddenColumn = newHidden => {
     setColumnVisibilityModel(newHidden);
-    localStorage.setItem('HiddenColumnsItemReturn', JSON.stringify(newHidden));
+    localStorage.setItem('HiddenColumnsItemOut', JSON.stringify(newHidden));
   };
   var handleFilter = newModel => {
     var _newModel$quickFilter;
@@ -1658,35 +1665,35 @@ function ItemReturnAdminView() {
     setFilterModel(newModel);
   };
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    var storedQuick = JSON.parse(localStorage.getItem('QuickFilterItemReturnTst'));
+    var storedQuick = JSON.parse(localStorage.getItem('QuickFilterItemOutTst'));
     if (storedQuick) {
       var _storedQuick$quickFil;
       var _searchTerm = ((_storedQuick$quickFil = storedQuick.quickFilterValues) === null || _storedQuick$quickFil === void 0 ? void 0 : _storedQuick$quickFil.join(' ')) || '';
       setSearchTerm(_searchTerm);
       setFilterModel(storedQuick);
     }
-    var storedColumns = JSON.parse(localStorage.getItem('HiddenColumnsItemReturn'));
+    var storedColumns = JSON.parse(localStorage.getItem('HiddenColumnsItemOut'));
     if (storedColumns) {
       setColumnVisibilityModel(storedColumns);
     }
   }, []);
   {/** view start */}
-  var _useState25 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState26 = _slicedToArray(_useState25, 2),
-    openView = _useState26[0],
-    setOpenView = _useState26[1];
-  var _useState27 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
-    _useState28 = _slicedToArray(_useState27, 2),
-    idView = _useState28[0],
-    setIdView = _useState28[1];
-  var _useState29 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
-    _useState30 = _slicedToArray(_useState29, 2),
-    itemPurchaseView = _useState30[0],
-    setItemPurchaseView = _useState30[1];
-  var _useState31 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
-    _useState32 = _slicedToArray(_useState31, 2),
-    reason = _useState32[0],
-    setReason = _useState32[1];
+  var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState18 = _slicedToArray(_useState17, 2),
+    openView = _useState18[0],
+    setOpenView = _useState18[1];
+  var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    _useState20 = _slicedToArray(_useState19, 2),
+    idView = _useState20[0],
+    setIdView = _useState20[1];
+  var _useState21 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    _useState22 = _slicedToArray(_useState21, 2),
+    itemPurchaseView = _useState22[0],
+    setItemPurchaseView = _useState22[1];
+  var _useState23 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
+    _useState24 = _slicedToArray(_useState23, 2),
+    reason = _useState24[0],
+    setReason = _useState24[1];
   var handleOpenView = id => {
     setOpenView(true);
     setIdView(id);
@@ -1702,7 +1709,7 @@ function ItemReturnAdminView() {
       var _ref11 = _asyncToGenerator(function* () {
         if (idView !== null) {
           try {
-            var res = yield axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_37__/* .ENDPOINT_URL */ .m, "/get-itemReturn/").concat(idView));
+            var res = yield axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_37__/* .ENDPOINT_URL */ .m, "/get-itemOut/").concat(idView));
             setItemPurchaseView(res.data.data);
           } catch (error) {
             console.log(error);
@@ -1716,14 +1723,14 @@ function ItemReturnAdminView() {
     fetchData2();
   }, [idView]);
   {/** view end */}
-  var _useState33 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState34 = _slicedToArray(_useState33, 2),
-    open = _useState34[0],
-    setOpen = _useState34[1];
-  var _useState35 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
-    _useState36 = _slicedToArray(_useState35, 2),
-    DeleteId = _useState36[0],
-    setDeleteId = _useState36[1];
+  var _useState25 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState26 = _slicedToArray(_useState25, 2),
+    open = _useState26[0],
+    setOpen = _useState26[1];
+  var _useState27 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    _useState28 = _slicedToArray(_useState27, 2),
+    DeleteId = _useState28[0],
+    setDeleteId = _useState28[1];
   var handleOpen = id => {
     setOpen(true);
     setDeleteId(id);
@@ -1732,11 +1739,10 @@ function ItemReturnAdminView() {
     setLoadingOpenModal(false);
     setOpen(false);
   };
-  {/** delete multiple && all modal end */}
-  var _useState37 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState38 = _slicedToArray(_useState37, 2),
-    openReasonDelete = _useState38[0],
-    setOpenReasonDelete = _useState38[1];
+  var _useState29 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState30 = _slicedToArray(_useState29, 2),
+    openReasonDelete = _useState30[0],
+    setOpenReasonDelete = _useState30[1];
   var handleOpenReasonDelete = e => {
     e.preventDefault();
     setOpenReasonDelete(true);
@@ -1744,18 +1750,19 @@ function ItemReturnAdminView() {
   var handleCloseReasonDelete = () => {
     setOpenReasonDelete(false);
   };
-  var _useState39 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState40 = _slicedToArray(_useState39, 2),
-    loading = _useState40[0],
-    setLoading = _useState40[1];
-  var _useState41 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState42 = _slicedToArray(_useState41, 2),
-    loadingOpenModal = _useState42[0],
-    setLoadingOpenModal = _useState42[1];
-  var _useState43 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState44 = _slicedToArray(_useState43, 2),
-    modalDeleteOpenLoading = _useState44[0],
-    setModalDeleteOpenLoading = _useState44[1];
+  {/** delete multiple && all modal end */}
+  var _useState31 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState32 = _slicedToArray(_useState31, 2),
+    loading = _useState32[0],
+    setLoading = _useState32[1];
+  var _useState33 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState34 = _slicedToArray(_useState33, 2),
+    loadingOpenModal = _useState34[0],
+    setLoadingOpenModal = _useState34[1];
+  var _useState35 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState36 = _slicedToArray(_useState35, 2),
+    modalDeleteOpenLoading = _useState36[0],
+    setModalDeleteOpenLoading = _useState36[1];
   {/** Loading Update View Start */}
   var handleOpenLoading = () => {
     setLoadingOpenModal(true);
@@ -1785,25 +1792,25 @@ function ItemReturnAdminView() {
     fetchItems(page, searchTerm, filterField, filterValue);
   };
   {/** getting all info start */}
-  var _useState45 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
-    _useState46 = _slicedToArray(_useState45, 2),
-    itemsQtyArray = _useState46[0],
-    SetItemsQtyArray = _useState46[1];
-  var _useState47 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({}),
-    _useState48 = _slicedToArray(_useState47, 2),
-    reference = _useState48[0],
-    setReference = _useState48[1];
-  var _useState49 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
-    _useState50 = _slicedToArray(_useState49, 2),
-    relatedNumber = _useState50[0],
-    setRelatedNumber = _useState50[1];
+  var _useState37 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    _useState38 = _slicedToArray(_useState37, 2),
+    itemsQtyArray = _useState38[0],
+    SetItemsQtyArray = _useState38[1];
+  var _useState39 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({}),
+    _useState40 = _slicedToArray(_useState39, 2),
+    reference = _useState40[0],
+    setReference = _useState40[1];
+  var _useState41 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
+    _useState42 = _slicedToArray(_useState41, 2),
+    relatedNumber = _useState42[0],
+    setRelatedNumber = _useState42[1];
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     var fetchId = /*#__PURE__*/function () {
       var _ref12 = _asyncToGenerator(function* () {
         if (DeleteId !== null) {
           try {
             var _res$data2, _res$data3;
-            var res = yield axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_37__/* .ENDPOINT_URL */ .m, "/get-itemReturn/").concat(DeleteId));
+            var res = yield axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_37__/* .ENDPOINT_URL */ .m, "/get-itemOut/").concat(DeleteId));
             SetItemsQtyArray(res.data.data.itemsQtyArray);
             setReference(res.data.data.reference);
             setRelatedNumber(Number(((_res$data2 = res.data) === null || _res$data2 === void 0 || (_res$data2 = _res$data2.data) === null || _res$data2 === void 0 ? void 0 : _res$data2.outNumber) || ((_res$data3 = res.data) === null || _res$data3 === void 0 ? void 0 : _res$data3.outNumber) || 0));
@@ -1819,18 +1826,18 @@ function ItemReturnAdminView() {
     fetchId();
   }, [DeleteId]);
   //console.log(itemsQtyArray)
-  var _useState51 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
-    _useState52 = _slicedToArray(_useState51, 2),
-    projects = _useState52[0],
-    setProject = _useState52[1];
-  var _useState53 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
-    _useState54 = _slicedToArray(_useState53, 2),
-    maintenance = _useState54[0],
-    setMaintenance = _useState54[1];
-  var _useState55 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
-    _useState56 = _slicedToArray(_useState55, 2),
-    invoice = _useState56[0],
-    setInvoice = _useState56[1];
+  var _useState43 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    _useState44 = _slicedToArray(_useState43, 2),
+    projects = _useState44[0],
+    setProject = _useState44[1];
+  var _useState45 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    _useState46 = _slicedToArray(_useState45, 2),
+    maintenance = _useState46[0],
+    setMaintenance = _useState46[1];
+  var _useState47 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    _useState48 = _slicedToArray(_useState47, 2),
+    invoice = _useState48[0],
+    setInvoice = _useState48[1];
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     var fetchData = /*#__PURE__*/function () {
       var _ref13 = _asyncToGenerator(function* () {
@@ -1853,30 +1860,30 @@ function ItemReturnAdminView() {
     }();
     fetchData();
   }, []);
+  var _useState49 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    _useState50 = _slicedToArray(_useState49, 2),
+    filteredInvoice = _useState50[0],
+    setFilteredInvoice = _useState50[1];
+  var _useState51 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+    _useState52 = _slicedToArray(_useState51, 2),
+    invoiceId = _useState52[0],
+    setInvoiceId = _useState52[1];
+  var _useState53 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    _useState54 = _slicedToArray(_useState53, 2),
+    filteredProject = _useState54[0],
+    setFilteredProject = _useState54[1];
+  var _useState55 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+    _useState56 = _slicedToArray(_useState55, 2),
+    projectId = _useState56[0],
+    setProjectId = _useState56[1];
   var _useState57 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState58 = _slicedToArray(_useState57, 2),
-    filteredInvoice = _useState58[0],
-    setFilteredInvoice = _useState58[1];
+    filteredMaintenance = _useState58[0],
+    setFilteredMaintenance = _useState58[1];
   var _useState59 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
     _useState60 = _slicedToArray(_useState59, 2),
-    invoiceId = _useState60[0],
-    setInvoiceId = _useState60[1];
-  var _useState61 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
-    _useState62 = _slicedToArray(_useState61, 2),
-    filteredProject = _useState62[0],
-    setFilteredProject = _useState62[1];
-  var _useState63 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
-    _useState64 = _slicedToArray(_useState63, 2),
-    projectId = _useState64[0],
-    setProjectId = _useState64[1];
-  var _useState65 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
-    _useState66 = _slicedToArray(_useState65, 2),
-    filteredMaintenance = _useState66[0],
-    setFilteredMaintenance = _useState66[1];
-  var _useState67 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
-    _useState68 = _slicedToArray(_useState67, 2),
-    serviceId = _useState68[0],
-    setServiceId = _useState68[1];
+    serviceId = _useState60[0],
+    setServiceId = _useState60[1];
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     setInvoiceId('');
     setProjectId('');
@@ -1914,7 +1921,7 @@ function ItemReturnAdminView() {
           });
           if (relatedArray) {
             var infoOut = relatedArray.newItemOut > 0 ? parseFloat(relatedArray.newItemOut) : 0;
-            var _itemOut = (parseFloat(row.itemOut) || 0) + infoOut;
+            var _itemOut = Math.max(0, (parseFloat(row.itemOut) || 0) - infoOut);
             return _objectSpread(_objectSpread({}, row), {}, {
               itemOut: _itemOut
             });
@@ -1945,7 +1952,7 @@ function ItemReturnAdminView() {
           });
           if (relatedArray) {
             var infoOut = relatedArray.newItemOut > 0 ? parseFloat(relatedArray.newItemOut) : 0;
-            var _itemOut2 = (parseFloat(row.itemOut) || 0) + infoOut;
+            var _itemOut2 = (parseFloat(row.itemOut) || 0) - infoOut;
             return _objectSpread(_objectSpread({}, row), {}, {
               itemOut: _itemOut2
             });
@@ -1976,7 +1983,7 @@ function ItemReturnAdminView() {
           });
           if (relatedArray) {
             var infoOut = relatedArray.newItemOut > 0 ? parseFloat(relatedArray.newItemOut) : 0;
-            var _itemOut3 = (parseFloat(row.itemOut) || 0) + infoOut;
+            var _itemOut3 = (parseFloat(row.itemOut) || 0) - infoOut;
             return _objectSpread(_objectSpread({}, row), {}, {
               itemOut: _itemOut3
             });
@@ -2001,7 +2008,7 @@ function ItemReturnAdminView() {
     var _ref17 = _asyncToGenerator(function* () {
       var data = {
         idInfo: '',
-        person: user.data.userName + ' Deleted ' + ' R-' + relatedNumber,
+        person: user.data.userName + ' Deleted ' + ' O-' + relatedNumber,
         reason,
         dateNotification: new Date()
       };
@@ -2031,7 +2038,7 @@ function ItemReturnAdminView() {
     var _ref19 = _asyncToGenerator(function* (e) {
       e.preventDefault();
       try {
-        var res = yield axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.delete("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_37__/* .ENDPOINT_URL */ .m, "/delete-itemReturn/").concat(DeleteId));
+        var res = yield axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.delete("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_37__/* .ENDPOINT_URL */ .m, "/delete-itemOut/").concat(DeleteId));
         if (res) {
           yield handleCreateNotification();
           yield handleQty();
@@ -2064,18 +2071,23 @@ function ItemReturnAdminView() {
   var toggleDrawer = () => {
     setOpen1(!open1);
   };
+  var itemsArray = (itemPurchaseView === null || itemPurchaseView === void 0 || (_itemPurchaseView$ite = itemPurchaseView.itemsQtyArray) === null || _itemPurchaseView$ite === void 0 ? void 0 : _itemPurchaseView$ite.length) < 5 ? [...itemPurchaseView.itemsQtyArray, ...Array(5 - itemPurchaseView.itemsQtyArray.length).fill({
+    itemName: '',
+    itemDescription: '',
+    newItemOut: ''
+  })] : itemPurchaseView === null || itemPurchaseView === void 0 ? void 0 : itemPurchaseView.itemsQtyArray;
   var columns = [{
     field: 'outNumber',
     headerName: '#',
     width: 90,
-    renderCell: params => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, "R-0"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, params.row.outNumber), " ")
+    renderCell: params => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, "O-0"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, params.row.outNumber), " ")
   }, {
     field: 'itemOutDate',
     headerName: 'Date',
     width: 100,
     type: 'date',
-    valueGetter: params => params.row.itemOutDate ? new Date(params.row.itemOutDate) : null,
-    renderCell: params => params.row.itemOutDate ? dayjs__WEBPACK_IMPORTED_MODULE_40___default()(params.row.itemOutDate).format('DD/MM/YYYY') : '—'
+    valueGetter: params => new Date(params.row.itemOutDate),
+    renderCell: params => dayjs__WEBPACK_IMPORTED_MODULE_41___default()(params.row.itemOutDate).format('DD/MM/YYYY')
   }, {
     field: 'reason',
     headerName: 'Reason',
@@ -2104,8 +2116,8 @@ function ItemReturnAdminView() {
     renderCell: params => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(ViewTooltip, {
       title: "View"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
-      onClick: () => handleOpenView(params.row._id),
-      disabled: ReturnInfoV.length === 0
+      disabled: ItemOInfoV.length === 0,
+      onClick: () => handleOpenView(params.row._id)
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Visibility__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
       style: {
         color: '#202a5a'
@@ -2118,9 +2130,9 @@ function ItemReturnAdminView() {
     renderCell: params => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(EditTooltip, {
       title: "Edit"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
-      disabled: ReturnInfoU.length === 0
+      disabled: ItemOInfoU.length === 0
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_7__/* .NavLink */ .k2, {
-      to: "/ItemReturnViewForm/".concat(params.row._id),
+      to: "/ItemOutViewUpdate/".concat(params.row._id),
       className: "LinkName"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Edit__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
       style: {
@@ -2135,7 +2147,7 @@ function ItemReturnAdminView() {
       title: "Delete"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, "                  ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
       onClick: () => handleOpen(params.row._id),
-      disabled: ReturnInfoD.length === 0
+      disabled: ItemOInfoD.length === 0
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Delete__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
       style: {
         cursor: 'pointer',
@@ -2144,9 +2156,9 @@ function ItemReturnAdminView() {
     }))))
   }];
   var componentRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
-  var handlePrint = (0,react_to_print__WEBPACK_IMPORTED_MODULE_52__.useReactToPrint)({
+  var handlePrint = (0,react_to_print__WEBPACK_IMPORTED_MODULE_53__.useReactToPrint)({
     content: () => componentRef.current,
-    documentTitle: itemPurchaseView !== null && itemPurchaseView !== void 0 && itemPurchaseView.outNumber ? "Item-Return-R-".concat(String(itemPurchaseView.outNumber).padStart(6, '0')) : 'Item-Return',
+    documentTitle: itemPurchaseView !== null && itemPurchaseView !== void 0 && itemPurchaseView.outNumber ? "Item-Out-O-".concat(String(itemPurchaseView.outNumber).padStart(6, '0')) : 'Item-Out',
     pageStyle: "@page { size: A4 portrait; margin: 8mm 10mm 10mm 10mm; } @media print { body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }"
   });
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
@@ -2183,13 +2195,13 @@ function ItemReturnAdminView() {
     sx: {
       flexGrow: 1
     }
-  }, "Item Return"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_51__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_MessageAdminView__WEBPACK_IMPORTED_MODULE_50__/* ["default"] */ .A, {
+  }, "Item Out"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_52__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_MessageAdminView__WEBPACK_IMPORTED_MODULE_51__/* ["default"] */ .A, {
     name: user.data.userName,
     role: user.data.role
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
     color: "inherit",
     onClick: handleLogout
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_45__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_46__/* ["default"] */ .A, {
     style: {
       color: 'white'
     }
@@ -2228,20 +2240,20 @@ function ItemReturnAdminView() {
       position: 'relative',
       top: '120px'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_41__/* ["default"] */ .A, null))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("section", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_42__/* ["default"] */ .A, null))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("section", {
     style: {
       position: 'relative',
       float: 'right',
       margin: '10px'
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(ViewTooltip, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
-    disabled: ReturnInfoC.length === 0
+    disabled: ItemOInfoC.length === 0
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_7__/* .NavLink */ .k2, {
-    to: '/ItemReturnUpdateForm',
+    to: '/ItemOutViewForm',
     className: "LinkName"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
     className: "btnCustomerAdding"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_38__/* ["default"] */ .A, null)))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_39__/* ["default"] */ .A, null)))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
     onClick: handleRefreshSearch,
     className: "btnCustomer2"
   }, "Refresh Search")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
@@ -2249,7 +2261,7 @@ function ItemReturnAdminView() {
       height: 600,
       width: '100%'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_x_data_grid__WEBPACK_IMPORTED_MODULE_48__/* .DataGrid */ .zh, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_x_data_grid__WEBPACK_IMPORTED_MODULE_49__/* .DataGrid */ .zh, {
     paginationMode: "server",
     filterMode: "server",
     rowCount: totalItemCount,
@@ -2261,7 +2273,7 @@ function ItemReturnAdminView() {
     rows: itemOut,
     columns: columns,
     slots: {
-      toolbar: _mui_x_data_grid__WEBPACK_IMPORTED_MODULE_49__/* .GridToolbar */ .O
+      toolbar: _mui_x_data_grid__WEBPACK_IMPORTED_MODULE_50__/* .GridToolbar */ .O
     },
     onRowSelectionModelChange: newSelection => setSelectedRows(newSelection),
     slotProps: {
@@ -2362,12 +2374,12 @@ function ItemReturnAdminView() {
     sx: _objectSpread(_objectSpread({}, style), {}, {
       width: 500
     })
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_41__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_42__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     style: {
       justifyContent: 'center',
       textAlign: 'center'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_42__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_43__/* ["default"] */ .A, {
     style: {
       color: 'green',
       height: '40px',
@@ -2400,7 +2412,7 @@ function ItemReturnAdminView() {
       position: 'relative',
       float: 'right'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_39__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_40__/* ["default"] */ .A, {
     style: {
       color: '#202a5a'
     }
@@ -2413,7 +2425,7 @@ function ItemReturnAdminView() {
       position: 'relative',
       float: 'right'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_LocalPrintshop__WEBPACK_IMPORTED_MODULE_53__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_LocalPrintshop__WEBPACK_IMPORTED_MODULE_54__/* ["default"] */ .A, {
     style: {
       color: '#202a5a'
     }
@@ -2438,7 +2450,7 @@ function ItemReturnAdminView() {
       borderBottom: '2px solid #093170',
       paddingBottom: '8px'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_PrintHeader__WEBPACK_IMPORTED_MODULE_54__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_PrintHeader__WEBPACK_IMPORTED_MODULE_55__/* ["default"] */ .A, {
     branchId: itemPurchaseView.branchId || ''
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     style: {
@@ -2460,13 +2472,13 @@ function ItemReturnAdminView() {
       letterSpacing: '1px',
       textTransform: 'uppercase'
     }
-  }, "ITEM RETURN VOUCHER / BON DE RETOUR"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
+  }, "ITEM OUT VOUCHER / BON DE SORTIE"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
     style: {
       fontSize: '14px',
       fontWeight: 'bold',
       letterSpacing: '0.5px'
     }
-  }, "R-", String(itemPurchaseView.outNumber).padStart(6, '0'))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+  }, "O-", String(itemPurchaseView.outNumber).padStart(6, '0'))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     style: {
       width: '100%',
       border: '1px solid #cbd5e1',
@@ -2490,7 +2502,7 @@ function ItemReturnAdminView() {
       padding: '4px 0',
       verticalAlign: 'top'
     }
-  }, "Return Date:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
+  }, "Date:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
     style: {
       width: '36%',
       color: '#0f172a',
@@ -2498,7 +2510,7 @@ function ItemReturnAdminView() {
       verticalAlign: 'top',
       fontWeight: '500'
     }
-  }, dayjs__WEBPACK_IMPORTED_MODULE_40___default()(itemPurchaseView.itemOutDate).format('DD/MM/YYYY')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
+  }, dayjs__WEBPACK_IMPORTED_MODULE_41___default()(itemPurchaseView.itemOutDate).format('DD/MM/YYYY')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
     style: {
       width: '14%',
       fontWeight: 'bold',
@@ -2536,7 +2548,7 @@ function ItemReturnAdminView() {
       padding: '4px 0',
       verticalAlign: 'top'
     }
-  }, "Received By:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
+  }, "Issued By:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
     style: {
       color: '#0f172a',
       padding: '4px 0',
@@ -2602,7 +2614,7 @@ function ItemReturnAdminView() {
       border: '1px solid #093170',
       fontWeight: 'bold'
     }
-  }, "Qty Returned"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("tbody", null, (_itemPurchaseView$ite = itemPurchaseView.itemsQtyArray) === null || _itemPurchaseView$ite === void 0 ? void 0 : _itemPurchaseView$ite.filter(row => parseFloat(row.newItemOut) > 0 || row.newDescription).map((row, i) => {
+  }, "Qty"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("tbody", null, (_itemPurchaseView$ite2 = itemPurchaseView.itemsQtyArray) === null || _itemPurchaseView$ite2 === void 0 ? void 0 : _itemPurchaseView$ite2.filter(row => parseFloat(row.newItemOut) > 0 || row.newDescription).map((row, i) => {
     var _row$itemName4, _row$itemName5, _row$itemName6, _row$itemName7, _row$itemName8;
     var itemId = ((_row$itemName4 = row.itemName) === null || _row$itemName4 === void 0 ? void 0 : _row$itemName4._id) || (typeof row.itemName === 'string' ? row.itemName : null);
     var relatedUnit = itemId ? (item || []).find(Item1 => Item1._id === itemId) : null;
@@ -2740,7 +2752,7 @@ function ItemReturnAdminView() {
       color: '#1e293b',
       textTransform: 'uppercase'
     }
-  }, "Returned By / Client ou Technicien"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+  }, "Receiver / Destinataire"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     style: {
       height: '55px',
       borderBottom: '1px dashed #94a3b8',
@@ -2759,13 +2771,13 @@ function ItemReturnAdminView() {
       marginTop: '30px',
       pageBreakInside: 'avoid'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_PrintFooter__WEBPACK_IMPORTED_MODULE_55__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_PrintFooter__WEBPACK_IMPORTED_MODULE_56__/* ["default"] */ .A, {
     branchId: itemPurchaseView.branchId || ''
   })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
     id: "modal-modal-title",
     variant: "h6",
     component: "h2"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, ((_itemPurchaseView$Cre2 = itemPurchaseView.Create) === null || _itemPurchaseView$Cre2 === void 0 ? void 0 : _itemPurchaseView$Cre2.person) || '', " "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, " Created R-", String(itemPurchaseView.outNumber).padStart(6, '0')), " on ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, ((_itemPurchaseView$Cre3 = itemPurchaseView.Create) === null || _itemPurchaseView$Cre3 === void 0 ? void 0 : _itemPurchaseView$Cre3.dateComment) || '')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .Ay, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, ((_itemPurchaseView$Cre2 = itemPurchaseView.Create) === null || _itemPurchaseView$Cre2 === void 0 ? void 0 : _itemPurchaseView$Cre2.person) || '', " "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, " Created O-", String(itemPurchaseView.outNumber).padStart(6, '0')), " on ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, ((_itemPurchaseView$Cre3 = itemPurchaseView.Create) === null || _itemPurchaseView$Cre3 === void 0 ? void 0 : _itemPurchaseView$Cre3.dateComment) || '')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .Ay, {
     container: true,
     style: {
       alignItems: 'center',
@@ -2791,9 +2803,9 @@ function ItemReturnAdminView() {
     style: {
       marginBottom: '5px'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, null, "Return Date"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, null, "Out Date"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
     colSpan: 3
-  }, dayjs__WEBPACK_IMPORTED_MODULE_40___default()(itemPurchaseView.itemOutDate).format('DD/MM/YYYY'))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, null, "Reason"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
+  }, dayjs__WEBPACK_IMPORTED_MODULE_41___default()(itemPurchaseView.itemOutDate).format('DD/MM/YYYY'))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, null, "Reason"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
     colSpan: 3
   }, itemPurchaseView.reason !== undefined ? itemPurchaseView.reason : '')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, null, "Reference"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
     colSpan: 3
@@ -2807,7 +2819,7 @@ function ItemReturnAdminView() {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, {
     "aria-label": "collapsible table",
     stickyHeader: true
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, null, "#"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, null, "Item"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, null, "Description"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, null, "Qty"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, null, (_itemPurchaseView$ite2 = itemPurchaseView.itemsQtyArray) === null || _itemPurchaseView$ite2 === void 0 ? void 0 : _itemPurchaseView$ite2.filter(row => parseFloat(row.newItemOut) > 0 || row.newDescription).map((row, i) => {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, null, "#"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, null, "Item"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, null, "Description"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, null, "Qty"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, null, (_itemPurchaseView$ite3 = itemPurchaseView.itemsQtyArray) === null || _itemPurchaseView$ite3 === void 0 ? void 0 : _itemPurchaseView$ite3.filter(row => parseFloat(row.newItemOut) > 0 || row.newDescription).map((row, i) => {
     var _row$itemName9, _row$itemName0, _row$itemName1, _row$itemName10, _row$itemName11;
     var itemId = ((_row$itemName9 = row.itemName) === null || _row$itemName9 === void 0 ? void 0 : _row$itemName9._id) || (typeof row.itemName === 'string' ? row.itemName : null);
     var relatedUnit = itemId ? (item || []).find(Item1 => Item1._id === itemId) : null;
@@ -2842,7 +2854,7 @@ function ItemReturnAdminView() {
       position: 'relative',
       float: 'right'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_39__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_40__/* ["default"] */ .A, {
     style: {
       color: '#202a5a'
     }
@@ -2850,7 +2862,7 @@ function ItemReturnAdminView() {
     id: "modal-modal-title",
     variant: "h6",
     component: "h2"
-  }, "Why do you want to delete: R-", relatedNumber, "?"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("form", {
+  }, "Why do you want to delete: O-", relatedNumber, "?"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("form", {
     onSubmit: handleDeleteUpdate
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .Ay, {
     container: true,
@@ -2887,7 +2899,7 @@ function ItemReturnAdminView() {
     }
   }, "Save")))))));
 }
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ItemReturnAdminView);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ItemOutViewAdmin);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, [
 /* harmony export */   "default", 0, /* export default binding */ __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ ]);

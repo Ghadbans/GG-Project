@@ -26,6 +26,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import axios from 'axios';
 import { cachedGet } from '../../../utils/apiCache';
 import { ENDPOINT_URL } from '../../../apiConfig';
+import { useModuleSearchState } from '../../../hooks/useModuleSearchState';
 import { Add, Close, MailOutline, Assignment as AssignmentIcon, Build as BuildIcon, HourglassEmpty as HourglassEmptyIcon, EventRepeat as EventRepeatIcon } from '@mui/icons-material';
 import dayjs from 'dayjs';
 import Loader from '../../../component/Loader';
@@ -179,7 +180,18 @@ function MaintenanceOrderAdmin() {
   const [maintenance, setMaintenance] = useState([]);
   const [newPurchase, setNewPurchase] = useState([]);
   const [loadingData, setLoadingData] = useState(true);
-  const [statusFilter, setStatusFilter] = useState('ALL');
+  const {
+    searchTerm,
+    setSearchTerm,
+    filterField,
+    setFilterField,
+    filterValue,
+    setFilterValue,
+    statusFilter,
+    setStatusFilter,
+    page,
+    setPage,
+  } = useModuleSearchState('maintenanceOrder');
   const [statusCounts, setStatusCounts] = useState({
     all: 0,
     open: 0,
@@ -187,11 +199,7 @@ function MaintenanceOrderAdmin() {
     reschedule: 0
   });
 
-  const [page, setPage] = useState(0); // Initialize page state to 0 (0-based index)
   const limit = 100;
-  const [searchTerm, setSearchTerm] = useState(''); // Initialize search term state
-  const [filterField, setFilterField] = useState(''); // Initialize filter field state
-  const [filterValue, setFilterValue] = useState(''); // Initialize filter value state
   const [totalPage, SetTotalPage] = useState(0);
   const [totalItemCount, setTotalItemCount] = useState(0);
 
@@ -486,7 +494,7 @@ function MaintenanceOrderAdmin() {
   const [filterModel, setFilterModel] = React.useState({
     items: [],
     quickFilterExcludeHiddenColumns: true,
-    quickFilterValues: [],
+    quickFilterValues: searchTerm ? searchTerm.split(/\s+/).filter(Boolean) : [],
   });
   const [columnVisibilityModel, setColumnVisibilityModel] = useState({});
   const handelHiddenColumn = (newHidden) => {

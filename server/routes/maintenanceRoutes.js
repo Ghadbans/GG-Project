@@ -588,14 +588,13 @@ Route.route("/delete-maintenance/:id").delete(async (req, res) => {
 Route.route("/get-maintenance-related-info/:id").get(async (req, res, next) => {
   try {
     const id = req.params.id;
+    const { isValidObjectId, toSafeObjectId } = require("../utils/objectIdUtils");
+    if (!isValidObjectId(id)) {
+      return res.status(400).json({ message: "Invalid maintenance ID." });
+    }
     const maintenanceData = await maintenanceSchema.findOne({ _id: id }).lean();
     const refName = maintenanceData ? maintenanceData.ReferenceName : null;
-    let objectId = null;
-    try {
-      if (mongoose.Types.ObjectId.isValid(id)) {
-        objectId = new mongoose.Types.ObjectId(id);
-      }
-    } catch (e) {}
+    const objectId = toSafeObjectId(id);
 
     const refQuery = objectId ? { $or: [{ "reference._id": id }, { "reference._id": objectId }] } : { "reference._id": id };
     const projectQuery = objectId ? { $or: [{ "projectName._id": id }, { "projectName._id": objectId }] } : { "projectName._id": id };

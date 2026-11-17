@@ -25,6 +25,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import axios from 'axios';
 import { cachedGet } from '../utils/apiCache';
 import { ENDPOINT_URL } from '../apiConfig';
+import { useModuleSearchState } from '../hooks/useModuleSearchState';
 import { Close } from '@mui/icons-material';
 import { Add, MailOutline } from '@mui/icons-material';
 import { useDispatch, useSelector } from "react-redux"
@@ -173,11 +174,17 @@ function CustomerViewAdmin() {
   const [loadingData, setLoadingData] = useState(true);
   const [customer, setCustomer] = useState([]);
   const [searchCustomer, setSearchCustomer] = useState("");
-  const [page, setPage] = useState(0);
+  const {
+    searchTerm,
+    setSearchTerm,
+    filterField,
+    setFilterField,
+    filterValue,
+    setFilterValue,
+    page,
+    setPage,
+  } = useModuleSearchState('customer');
   const limit = 100;
-  const [searchTerm, setSearchTerm] = useState('');
-  const [filterField, setFilterField] = useState('');
-  const [filterValue, setFilterValue] = useState('');
   const [totalPage, SetTotalPage] = useState(0);
   const [totalItemCount, setTotalItemCount] = useState(0);
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState(searchTerm);

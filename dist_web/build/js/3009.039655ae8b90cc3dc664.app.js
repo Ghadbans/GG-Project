@@ -655,21 +655,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(99380);
 /* harmony import */ var _utils_apiCache__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(46986);
 /* harmony import */ var _apiConfig__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(71510);
-/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(99682);
-/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(17809);
-/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(74353);
-/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_33___default = /*#__PURE__*/__webpack_require__.n(dayjs__WEBPACK_IMPORTED_MODULE_33__);
-/* harmony import */ var _component_Loader__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(65821);
-/* harmony import */ var _mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(20889);
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(13561);
-/* harmony import */ var _features_auth_authSlice__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(32005);
-/* harmony import */ var _component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(40301);
-/* harmony import */ var _img_no_data_png__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(20453);
-/* harmony import */ var _img_no_data_png__WEBPACK_IMPORTED_MODULE_39___default = /*#__PURE__*/__webpack_require__.n(_img_no_data_png__WEBPACK_IMPORTED_MODULE_39__);
-/* harmony import */ var _mui_x_data_grid__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(1835);
-/* harmony import */ var _mui_x_data_grid__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(53071);
-/* harmony import */ var _MessageAdminView__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(83818);
-/* harmony import */ var _NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(95236);
+/* harmony import */ var _hooks_useModuleSearchState__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(80099);
+/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(99682);
+/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(17809);
+/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(74353);
+/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_34___default = /*#__PURE__*/__webpack_require__.n(dayjs__WEBPACK_IMPORTED_MODULE_34__);
+/* harmony import */ var _component_Loader__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(65821);
+/* harmony import */ var _mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(20889);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(13561);
+/* harmony import */ var _features_auth_authSlice__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(32005);
+/* harmony import */ var _component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(40301);
+/* harmony import */ var _img_no_data_png__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(20453);
+/* harmony import */ var _img_no_data_png__WEBPACK_IMPORTED_MODULE_40___default = /*#__PURE__*/__webpack_require__.n(_img_no_data_png__WEBPACK_IMPORTED_MODULE_40__);
+/* harmony import */ var _mui_x_data_grid__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(1835);
+/* harmony import */ var _mui_x_data_grid__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(53071);
+/* harmony import */ var _MessageAdminView__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(83818);
+/* harmony import */ var _NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_44__ = __webpack_require__(95236);
 var _excluded = ["className"],
   _excluded2 = ["className"],
   _excluded3 = ["className"];
@@ -690,6 +691,7 @@ function _extends() { return _extends = Object.assign ? Object.assign.bind() : f
 function _objectWithoutProperties(e, t) { if (null == e) return {}; var o, r, i = _objectWithoutPropertiesLoose(e, t); if (Object.getOwnPropertySymbols) { var n = Object.getOwnPropertySymbols(e); for (r = 0; r < n.length; r++) o = n[r], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]); } return i; }
 function _objectWithoutPropertiesLoose(r, e) { if (null == r) return {}; var t = {}; for (var n in r) if ({}.hasOwnProperty.call(r, n)) { if (-1 !== e.indexOf(n)) continue; t[n] = r[n]; } return t; }
 ;
+
 
 
 
@@ -847,8 +849,8 @@ var Drawer = (0,_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .Ay
 });
 function PayRollViewAdmin() {
   var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_8__/* .useNavigate */ .Zp)();
-  var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_36__/* .useDispatch */ .wA)();
-  var user = (0,react_redux__WEBPACK_IMPORTED_MODULE_36__/* .useSelector */ .d4)(_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_37__/* .selectCurrentUser */ .xu);
+  var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_37__/* .useDispatch */ .wA)();
+  var user = (0,react_redux__WEBPACK_IMPORTED_MODULE_37__/* .useSelector */ .d4)(_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_38__/* .selectCurrentUser */ .xu);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     var storesUserId = localStorage.getItem('user');
     var fetchUser = /*#__PURE__*/function () {
@@ -858,7 +860,7 @@ function PayRollViewAdmin() {
             var res = yield axios__WEBPACK_IMPORTED_MODULE_28__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_30__/* .ENDPOINT_URL */ .m, "/get-employeeuser/").concat(storesUserId));
             var Name = res.data.data.employeeName;
             var Role = res.data.data.role;
-            dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_37__/* .setUser */ .gV)({
+            dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_38__/* .setUser */ .gV)({
               userName: Name,
               role: Role,
               id: res.data.data._id
@@ -903,7 +905,7 @@ function PayRollViewAdmin() {
   var PRollInfoD = grantAccess.filter(row => row.moduleName === "Pay-Roll" && row.access.deleteM === true);
   var handleLogout = () => {
     localStorage.removeItem('user');
-    dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_37__/* .logOut */ .je)());
+    dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_38__/* .logOut */ .je)());
     navigate('/');
   };
   var _React$useState = react__WEBPACK_IMPORTED_MODULE_0__.useState(true),
@@ -939,36 +941,30 @@ function PayRollViewAdmin() {
       setSearchCustomer(storedValue);
     }
   });
-  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
-    _useState12 = _slicedToArray(_useState11, 2),
-    page = _useState12[0],
-    setPage = _useState12[1];
+  var _useModuleSearchState = (0,_hooks_useModuleSearchState__WEBPACK_IMPORTED_MODULE_31__/* .useModuleSearchState */ .pi)('payroll'),
+    searchTerm = _useModuleSearchState.searchTerm,
+    setSearchTerm = _useModuleSearchState.setSearchTerm,
+    filterField = _useModuleSearchState.filterField,
+    setFilterField = _useModuleSearchState.setFilterField,
+    filterValue = _useModuleSearchState.filterValue,
+    setFilterValue = _useModuleSearchState.setFilterValue,
+    page = _useModuleSearchState.page,
+    setPage = _useModuleSearchState.setPage;
   var limit = 100;
-  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
+  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(searchTerm),
+    _useState12 = _slicedToArray(_useState11, 2),
+    debouncedSearchTerm = _useState12[0],
+    setDebouncedSearchTerm = _useState12[1];
+  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
     _useState14 = _slicedToArray(_useState13, 2),
-    searchTerm = _useState14[0],
-    setSearchTerm = _useState14[1];
-  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
+    totalPage = _useState14[0],
+    SetTotalPage = _useState14[1];
+  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
     _useState16 = _slicedToArray(_useState15, 2),
-    debouncedSearchTerm = _useState16[0],
-    setDebouncedSearchTerm = _useState16[1];
-  var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
-    _useState18 = _slicedToArray(_useState17, 2),
-    filterField = _useState18[0],
-    setFilterField = _useState18[1];
-  var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
-    _useState20 = _slicedToArray(_useState19, 2),
-    filterValue = _useState20[0],
-    setFilterValue = _useState20[1];
-  var _useState21 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
-    _useState22 = _slicedToArray(_useState21, 2),
-    totalPage = _useState22[0],
-    SetTotalPage = _useState22[1];
-  var _useState23 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
-    _useState24 = _slicedToArray(_useState23, 2),
-    totalItemCount = _useState24[0],
-    setTotalItemCount = _useState24[1];
+    totalItemCount = _useState16[0],
+    setTotalItemCount = _useState16[1];
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    if (debouncedSearchTerm === searchTerm) return;
     var handler = setTimeout(() => {
       setDebouncedSearchTerm(searchTerm);
       setPage(0);
@@ -1000,14 +996,14 @@ function PayRollViewAdmin() {
   var handlePageChange = newPage => {
     setPage(newPage);
   };
-  var _useState25 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState26 = _slicedToArray(_useState25, 2),
-    modalOpenLoading = _useState26[0],
-    setModalOpenLoading = _useState26[1];
-  var _useState27 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState28 = _slicedToArray(_useState27, 2),
-    loading = _useState28[0],
-    setLoading = _useState28[1];
+  var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState18 = _slicedToArray(_useState17, 2),
+    modalOpenLoading = _useState18[0],
+    setModalOpenLoading = _useState18[1];
+  var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState20 = _slicedToArray(_useState19, 2),
+    loading = _useState20[0],
+    setLoading = _useState20[1];
   var handleOpenOffline = () => {
     setLoadingOpenModal(true);
     setLoading(true);
@@ -1041,10 +1037,10 @@ function PayRollViewAdmin() {
       return _ref11.apply(this, arguments);
     };
   }();
-  var _useState29 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState30 = _slicedToArray(_useState29, 2),
-    openReasonDelete = _useState30[0],
-    setOpenReasonDelete = _useState30[1];
+  var _useState21 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState22 = _slicedToArray(_useState21, 2),
+    openReasonDelete = _useState22[0],
+    setOpenReasonDelete = _useState22[1];
   var handleOpenReasonDelete = e => {
     e.preventDefault();
     setOpenReasonDelete(true);
@@ -1052,24 +1048,24 @@ function PayRollViewAdmin() {
   var handleCloseReasonDelete = () => {
     setOpenReasonDelete(false);
   };
-  var _useState31 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState32 = _slicedToArray(_useState31, 2),
-    open = _useState32[0],
-    setOpen = _useState32[1];
-  var _useState33 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState34 = _slicedToArray(_useState33, 2),
-    openDeleteMultiple = _useState34[0],
-    setOpenDeleteMultiple = _useState34[1];
+  var _useState23 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState24 = _slicedToArray(_useState23, 2),
+    open = _useState24[0],
+    setOpen = _useState24[1];
+  var _useState25 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState26 = _slicedToArray(_useState25, 2),
+    openDeleteMultiple = _useState26[0],
+    setOpenDeleteMultiple = _useState26[1];
   var handleOpenMultiple = () => {
     setOpenDeleteMultiple(true);
   };
   var handleCloseMultiple = () => {
     setOpenDeleteMultiple(false);
   };
-  var _useState35 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState36 = _slicedToArray(_useState35, 2),
-    openDeleteAll = _useState36[0],
-    setOpenDeleteAll = _useState36[1];
+  var _useState27 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState28 = _slicedToArray(_useState27, 2),
+    openDeleteAll = _useState28[0],
+    setOpenDeleteAll = _useState28[1];
   var handleOpenAll = () => {
     setOpenDeleteAll(true);
   };
@@ -1077,10 +1073,10 @@ function PayRollViewAdmin() {
     setOpenDeleteAll(false);
     setSelectedRows([]);
   };
-  var _useState37 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
-    _useState38 = _slicedToArray(_useState37, 2),
-    DeleteId = _useState38[0],
-    setDeleteId = _useState38[1];
+  var _useState29 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    _useState30 = _slicedToArray(_useState29, 2),
+    DeleteId = _useState30[0],
+    setDeleteId = _useState30[1];
   var handleOpen = id => {
     setOpen(true);
     setDeleteId(id);
@@ -1122,10 +1118,10 @@ function PayRollViewAdmin() {
       return _ref12.apply(this, arguments);
     };
   }();
-  var _useState39 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
-    _useState40 = _slicedToArray(_useState39, 2),
-    PayRollDeleted = _useState40[0],
-    setPayRollDeleted = _useState40[1];
+  var _useState31 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    _useState32 = _slicedToArray(_useState31, 2),
+    PayRollDeleted = _useState32[0],
+    setPayRollDeleted = _useState32[1];
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     var fetchFunction = /*#__PURE__*/function () {
       var _ref13 = _asyncToGenerator(function* () {
@@ -1196,18 +1192,18 @@ function PayRollViewAdmin() {
       return _ref16.apply(this, arguments);
     };
   }();
-  var _useState41 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState42 = _slicedToArray(_useState41, 2),
-    open2 = _useState42[0],
-    setOpen2 = _useState42[1];
-  var _useState43 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
-    _useState44 = _slicedToArray(_useState43, 2),
-    updateId = _useState44[0],
-    setUpdateId = _useState44[1];
-  var _useState45 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
-    _useState46 = _slicedToArray(_useState45, 2),
-    status = _useState46[0],
-    setStatus = _useState46[1];
+  var _useState33 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState34 = _slicedToArray(_useState33, 2),
+    open2 = _useState34[0],
+    setOpen2 = _useState34[1];
+  var _useState35 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    _useState36 = _slicedToArray(_useState35, 2),
+    updateId = _useState36[0],
+    setUpdateId = _useState36[1];
+  var _useState37 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
+    _useState38 = _slicedToArray(_useState37, 2),
+    status = _useState38[0],
+    setStatus = _useState38[1];
   var handleOpenUpdate = id => {
     setOpen2(true);
     setUpdateId(id);
@@ -1216,10 +1212,10 @@ function PayRollViewAdmin() {
     setOpen2(false);
     setUpdateId(null);
   };
-  var _useState47 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState48 = _slicedToArray(_useState47, 2),
-    loadingOpenModal = _useState48[0],
-    setLoadingOpenModal = _useState48[1];
+  var _useState39 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState40 = _slicedToArray(_useState39, 2),
+    loadingOpenModal = _useState40[0],
+    setLoadingOpenModal = _useState40[1];
   var handleOpenLoading = () => {
     setLoadingOpenModal(true);
     setLoading(true);
@@ -1274,15 +1270,15 @@ function PayRollViewAdmin() {
   var _React$useState3 = react__WEBPACK_IMPORTED_MODULE_0__.useState({
       items: [],
       quickFilterExcludeHiddenColumns: true,
-      quickFilterValues: []
+      quickFilterValues: searchTerm ? searchTerm.split(/\s+/).filter(Boolean) : []
     }),
     _React$useState4 = _slicedToArray(_React$useState3, 2),
     filterModel = _React$useState4[0],
     setFilterModel = _React$useState4[1];
-  var _useState49 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({}),
-    _useState50 = _slicedToArray(_useState49, 2),
-    columnVisibilityModel = _useState50[0],
-    setColumnVisibilityModel = _useState50[1];
+  var _useState41 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({}),
+    _useState42 = _slicedToArray(_useState41, 2),
+    columnVisibilityModel = _useState42[0],
+    setColumnVisibilityModel = _useState42[1];
   var handelHiddenColumn = newHidden => {
     setColumnVisibilityModel(newHidden);
     localStorage.setItem('HiddenColumnsPayRoll', JSON.stringify(newHidden));
@@ -1438,13 +1434,13 @@ function PayRollViewAdmin() {
     sx: {
       flexGrow: 1
     }
-  }, "Pay Roll"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_43__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_MessageAdminView__WEBPACK_IMPORTED_MODULE_42__/* ["default"] */ .A, {
+  }, "Pay Roll"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_44__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_MessageAdminView__WEBPACK_IMPORTED_MODULE_43__/* ["default"] */ .A, {
     name: user.data.userName,
     role: user.data.role
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
     color: "inherit",
     onClick: handleLogout
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_38__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_39__/* ["default"] */ .A, {
     style: {
       color: 'white'
     }
@@ -1487,7 +1483,7 @@ function PayRollViewAdmin() {
       position: 'relative',
       top: '120px'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_34__/* ["default"] */ .A, null))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("section", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A, null))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("section", {
     style: {
       position: 'relative',
       float: 'right',
@@ -1500,7 +1496,7 @@ function PayRollViewAdmin() {
     className: "LinkName"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
     className: "btnCustomerAdding"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_31__/* ["default"] */ .A, null))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A, null))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
     sx: {
       height: 600,
       width: '100%'
@@ -1519,7 +1515,7 @@ function PayRollViewAdmin() {
     onClick: handleOpenAll,
     disabled: user.data.role !== 'CEO',
     className: "btnCustomer2"
-  }, "Delete all") : '') : '', /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_x_data_grid__WEBPACK_IMPORTED_MODULE_40__/* .DataGrid */ .zh, {
+  }, "Delete all") : '') : '', /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_x_data_grid__WEBPACK_IMPORTED_MODULE_41__/* .DataGrid */ .zh, {
     paginationMode: "server",
     rowCount: totalItemCount,
     paginationModel: {
@@ -1533,7 +1529,7 @@ function PayRollViewAdmin() {
     disableDensitySelector: true,
     onRowSelectionModelChange: newSelection => setSelectedRows(newSelection),
     slots: {
-      toolbar: _mui_x_data_grid__WEBPACK_IMPORTED_MODULE_41__/* .GridToolbar */ .O
+      toolbar: _mui_x_data_grid__WEBPACK_IMPORTED_MODULE_42__/* .GridToolbar */ .O
     },
     slotProps: {
       toolbar: {
@@ -1667,12 +1663,12 @@ function PayRollViewAdmin() {
     sx: _objectSpread(_objectSpread({}, style), {}, {
       width: 500
     })
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_34__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     style: {
       justifyContent: 'center',
       textAlign: 'center'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_36__/* ["default"] */ .A, {
     style: {
       color: 'green',
       height: '40px',
@@ -1701,12 +1697,12 @@ function PayRollViewAdmin() {
     sx: _objectSpread(_objectSpread({}, style), {}, {
       width: 500
     })
-  }, loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_34__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+  }, loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     style: {
       justifyContent: 'center',
       textAlign: 'center'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_36__/* ["default"] */ .A, {
     style: {
       color: 'green',
       height: '40px',
@@ -1739,7 +1735,7 @@ function PayRollViewAdmin() {
       position: 'relative',
       float: 'right'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_33__/* ["default"] */ .A, {
     style: {
       color: '#202a5a'
     }

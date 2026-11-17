@@ -94833,6 +94833,302 @@ function useLayoutConfig() {
 
 /***/ },
 
+/***/ 80099
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   $m: () => (/* binding */ syncModuleRoute),
+/* harmony export */   pi: () => (/* binding */ useModuleSearchState)
+/* harmony export */ });
+/* unused harmony exports getModuleKeyForPath, clearModuleSearchStore */
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(96540);
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+;
+var ROUTE_MODULE_PREFIXES = [{
+  prefix: '/Invoice',
+  module: 'invoice'
+}, {
+  prefix: '/MakePurchaseConvertToProject',
+  module: 'estimate'
+}, {
+  prefix: '/MakePurchase',
+  module: 'invoice'
+}, {
+  prefix: '/Project',
+  module: 'project'
+}, {
+  prefix: '/Customer',
+  module: 'customer'
+}, {
+  prefix: '/PurchaseOrder',
+  module: 'purchaseOrder'
+}, {
+  prefix: '/ConvertPoToIP',
+  module: 'purchaseOrder'
+}, {
+  prefix: '/PurchaseForm',
+  module: 'purchaseOrder'
+},
+// Note: PurchaseFormUpdate is /PurchaseFormUpdate
+{
+  prefix: '/Purchases',
+  module: 'purchase'
+}, {
+  prefix: '/ConvertToEstimate',
+  module: 'purchase'
+}, {
+  prefix: '/ConvertToInvoice',
+  module: 'purchase'
+}, {
+  prefix: '/MaintenanceOrder',
+  module: 'maintenanceOrder'
+}, {
+  prefix: '/TechnicianStoreCatalog',
+  module: 'maintenanceOrder'
+}, {
+  prefix: '/Maintenance',
+  module: 'maintenance'
+}, {
+  prefix: '/Estimate',
+  module: 'estimate'
+}, {
+  prefix: '/ItemOut',
+  module: 'itemOut'
+}, {
+  prefix: '/ItemReturn',
+  module: 'itemReturn'
+}, {
+  prefix: '/ItemPurchase',
+  module: 'itemPurchase'
+}, {
+  prefix: '/Item',
+  module: 'item'
+}, {
+  prefix: '/DailyExpense',
+  module: 'expense'
+}, {
+  prefix: '/CategoryViewDailyExpenses',
+  module: 'expense'
+}, {
+  prefix: '/ExpensesViewAdmin',
+  module: 'expense'
+}, {
+  prefix: '/Supplier',
+  module: 'supplier'
+}, {
+  prefix: '/PointOfSale',
+  module: 'pos'
+}, {
+  prefix: '/StoreItemDisplay',
+  module: 'pos'
+}, {
+  prefix: '/TechnicianStoreDisplay',
+  module: 'pos'
+}, {
+  prefix: '/ReportPos',
+  module: 'pos'
+}, {
+  prefix: '/SellShopInvoiceView',
+  module: 'pos'
+}, {
+  prefix: '/ShopPos',
+  module: 'pos'
+}, {
+  prefix: '/PayRoll',
+  module: 'payroll'
+}, {
+  prefix: '/Fleet',
+  module: 'fleet'
+}, {
+  prefix: '/TewmViewAdmin',
+  module: 'team'
+}, {
+  prefix: '/Employee',
+  module: 'team'
+}, {
+  prefix: '/Payment',
+  module: 'payment'
+}, {
+  prefix: '/Recuring',
+  module: 'recurringInvoice'
+}, {
+  prefix: '/Recurring',
+  module: 'recurringInvoice'
+}, {
+  prefix: '/Retainer',
+  module: 'retainerInvoice'
+}, {
+  prefix: '/InspectionReport',
+  module: 'inspectionReport'
+}, {
+  prefix: '/Block',
+  module: 'blockFactory'
+}, {
+  prefix: '/WorkerPaymentView',
+  module: 'blockFactory'
+}, {
+  prefix: '/AdminHome',
+  module: 'dashboard'
+}];
+function getModuleKeyForPath(pathname) {
+  var cleanPath = String(pathname || '').trim();
+  if (!cleanPath || cleanPath === '/') return 'home';
+  if (cleanPath.startsWith('/PurchaseFormUpdate')) return 'purchase';
+  if (cleanPath.startsWith('/PurchaseUpdateOrder')) return 'purchaseOrder';
+  for (var entry of ROUTE_MODULE_PREFIXES) {
+    if (cleanPath.startsWith(entry.prefix)) {
+      return entry.module;
+    }
+  }
+  return cleanPath.split('/')[1] || 'other';
+}
+var moduleSearchStore = {
+  moduleKey: null,
+  searchTerm: '',
+  filterField: '',
+  filterValue: '',
+  statusFilter: 'ALL',
+  page: 0
+};
+function syncModuleRoute(pathname) {
+  var nextModule = getModuleKeyForPath(pathname);
+  if (moduleSearchStore.moduleKey && moduleSearchStore.moduleKey !== nextModule) {
+    moduleSearchStore.moduleKey = nextModule;
+    moduleSearchStore.searchTerm = '';
+    moduleSearchStore.filterField = '';
+    moduleSearchStore.filterValue = '';
+    moduleSearchStore.statusFilter = 'ALL';
+    moduleSearchStore.page = 0;
+  } else if (!moduleSearchStore.moduleKey) {
+    moduleSearchStore.moduleKey = nextModule;
+  }
+}
+function clearModuleSearchStore() {
+  moduleSearchStore.searchTerm = '';
+  moduleSearchStore.filterField = '';
+  moduleSearchStore.filterValue = '';
+  moduleSearchStore.statusFilter = 'ALL';
+  moduleSearchStore.page = 0;
+}
+
+/**
+ * Persists searchTerm, filterField, filterValue, statusFilter, and page while
+ * navigating within the same module, and automatically resets when switching modules.
+ */
+function useModuleSearchState(moduleKey) {
+  var _defaults$searchTerm, _defaults$filterField, _defaults$filterValue, _defaults$statusFilte, _defaults$page;
+  var defaults = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  var defaultSearch = (_defaults$searchTerm = defaults.searchTerm) !== null && _defaults$searchTerm !== void 0 ? _defaults$searchTerm : '';
+  var defaultFilterField = (_defaults$filterField = defaults.filterField) !== null && _defaults$filterField !== void 0 ? _defaults$filterField : '';
+  var defaultFilterValue = (_defaults$filterValue = defaults.filterValue) !== null && _defaults$filterValue !== void 0 ? _defaults$filterValue : '';
+  var defaultStatus = (_defaults$statusFilte = defaults.statusFilter) !== null && _defaults$statusFilte !== void 0 ? _defaults$statusFilte : 'ALL';
+  var defaultPage = (_defaults$page = defaults.page) !== null && _defaults$page !== void 0 ? _defaults$page : 0;
+  var isSameModule = moduleSearchStore.moduleKey === moduleKey;
+  if (!isSameModule) {
+    moduleSearchStore.moduleKey = moduleKey;
+    moduleSearchStore.searchTerm = defaultSearch;
+    moduleSearchStore.filterField = defaultFilterField;
+    moduleSearchStore.filterValue = defaultFilterValue;
+    moduleSearchStore.statusFilter = defaultStatus;
+    moduleSearchStore.page = defaultPage;
+  }
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(isSameModule ? moduleSearchStore.searchTerm : defaultSearch),
+    _useState2 = _slicedToArray(_useState, 2),
+    searchTerm = _useState2[0],
+    _setSearchTerm = _useState2[1];
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(isSameModule ? moduleSearchStore.filterField : defaultFilterField),
+    _useState4 = _slicedToArray(_useState3, 2),
+    filterField = _useState4[0],
+    _setFilterField = _useState4[1];
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(isSameModule ? moduleSearchStore.filterValue : defaultFilterValue),
+    _useState6 = _slicedToArray(_useState5, 2),
+    filterValue = _useState6[0],
+    _setFilterValue = _useState6[1];
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(isSameModule ? moduleSearchStore.statusFilter : defaultStatus),
+    _useState8 = _slicedToArray(_useState7, 2),
+    statusFilter = _useState8[0],
+    _setStatusFilter = _useState8[1];
+  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(isSameModule ? moduleSearchStore.page : defaultPage),
+    _useState0 = _slicedToArray(_useState9, 2),
+    page = _useState0[0],
+    _setPage = _useState0[1];
+  var setSearchTerm = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(val => {
+    _setSearchTerm(prev => {
+      var next = typeof val === 'function' ? val(prev) : val;
+      moduleSearchStore.moduleKey = moduleKey;
+      moduleSearchStore.searchTerm = next;
+      return next;
+    });
+  }, [moduleKey]);
+  var setFilterField = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(val => {
+    _setFilterField(prev => {
+      var next = typeof val === 'function' ? val(prev) : val;
+      moduleSearchStore.moduleKey = moduleKey;
+      moduleSearchStore.filterField = next;
+      return next;
+    });
+  }, [moduleKey]);
+  var setFilterValue = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(val => {
+    _setFilterValue(prev => {
+      var next = typeof val === 'function' ? val(prev) : val;
+      moduleSearchStore.moduleKey = moduleKey;
+      moduleSearchStore.filterValue = next;
+      return next;
+    });
+  }, [moduleKey]);
+  var setStatusFilter = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(val => {
+    _setStatusFilter(prev => {
+      var next = typeof val === 'function' ? val(prev) : val;
+      moduleSearchStore.moduleKey = moduleKey;
+      moduleSearchStore.statusFilter = next;
+      return next;
+    });
+  }, [moduleKey]);
+  var setPage = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(val => {
+    _setPage(prev => {
+      var next = typeof val === 'function' ? val(prev) : val;
+      moduleSearchStore.moduleKey = moduleKey;
+      moduleSearchStore.page = next;
+      return next;
+    });
+  }, [moduleKey]);
+  var resetSearchState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(() => {
+    moduleSearchStore.moduleKey = moduleKey;
+    moduleSearchStore.searchTerm = defaultSearch;
+    moduleSearchStore.filterField = defaultFilterField;
+    moduleSearchStore.filterValue = defaultFilterValue;
+    moduleSearchStore.statusFilter = defaultStatus;
+    moduleSearchStore.page = defaultPage;
+    _setSearchTerm(defaultSearch);
+    _setFilterField(defaultFilterField);
+    _setFilterValue(defaultFilterValue);
+    _setStatusFilter(defaultStatus);
+    _setPage(defaultPage);
+  }, [moduleKey, defaultSearch, defaultFilterField, defaultFilterValue, defaultStatus, defaultPage]);
+  return {
+    searchTerm,
+    setSearchTerm,
+    filterField,
+    setFilterField,
+    filterValue,
+    setFilterValue,
+    statusFilter,
+    setStatusFilter,
+    page,
+    setPage,
+    resetSearchState
+  };
+}
+/* unused harmony default export */ var __WEBPACK_DEFAULT_EXPORT__ = ((/* unused pure expression or super */ null && (useModuleSearchState)));
+
+/***/ },
+
 /***/ 46986
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
@@ -123463,7 +123759,7 @@ Object.assign(esm_lookup, {
 (module) {
 
 "use strict";
-module.exports = {"rE":"3.7.1"};
+module.exports = {"rE":"3.7.2"};
 
 /***/ },
 
@@ -123595,7 +123891,7 @@ module.exports = /*#__PURE__*/JSON.parse('{"--header-logo-width":"240px","--glob
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames based on template
-/******/ 			return "" + chunkId + "." + {"100":"aa63db6838f5d1a5faf7","116":"47fa8762f753762d291d","118":"67282ee0f46830583293","223":"11c50fcf642acaf01578","296":"f29e824f38522a627939","302":"3b51e5ea3fefb90347e1","327":"c88df084641bfac45cdc","441":"8b8b0c21d0b0ba268348","457":"b2fe082b3d2c55d4e66a","483":"6fdf7d28f4a344461077","590":"28953f61605420ae99a4","614":"aa1a4baa485591a45a5d","712":"c343443ce7a1887d14b2","742":"3c7280819fde965ae055","778":"f8950b7fd584414ccde4","806":"da0d5537a0ce2d9902c5","808":"d395eb1e252309375036","864":"ac9193b4bf40eb4964a0","885":"cc8a4df32b65323e1a80","956":"1824448f5e358187a171","1019":"1d406482e04e60bb652f","1096":"cb8119cdaa351f0e4cf8","1168":"b2f690e1d5399977dcaf","1195":"4e320567bf4b2f2e2ce2","1223":"7aa1f69e403b594d5336","1251":"9da50dc8470bc764d3b6","1364":"fdfc76afc243ce14e56a","1390":"a28f1a9c7193c75a2232","1500":"5a4f44c7307068ea961b","1624":"1e1d88c032094f247d47","1645":"91425e2d595129e29cca","1679":"6fad6afa1ba97ccbdd34","1722":"5aacfbdbf20395aae3a9","1853":"d87ffdbd183011dc2319","1861":"b7634fa92c4aa00d7ec7","1919":"02ba73fbcb08f6b43e75","1985":"c372e67729f897b94140","2120":"260136f37f71dde36ba1","2122":"89773bbe7a6bb157934a","2153":"dfaa809d81b011fe402a","2400":"a9b22dd012a855732973","2410":"4cafc6ed1377bd0877a8","2495":"76a26795d4033aa439a4","2517":"956f7558989fb2a45d33","2529":"4184ea0b2e089c7b1cb8","2533":"19eb2da5d7015e61eb3c","2605":"6da45bf0a374acc6b637","2608":"a86e0ce81d9f46c9b9e6","2611":"21b2cd175be9359600da","2756":"2e4d9a6b9a21c6a4e68d","2757":"68776b517befffb1bc05","2778":"cdd44eceb38686d06a9b","2821":"d40aee3e8cd86fb5bbff","2835":"cb586f1aed058e586821","2982":"50cb8e5b42cad8be4068","2992":"e2ce4fd5d1911fd7a1db","3009":"567b00944880ad958271","3058":"8731c40b91fb7e88e761","3094":"9608277b9f1b21b145b5","3229":"f61da12dafbdb6c066d3","3426":"bfabe6a073b863c03ba6","3502":"38861f26dae3c79e1f31","3547":"1e2de2721983f1041975","3697":"28cee7f495153986eb4d","3741":"37d03a8a510f8bda1f4a","3808":"136bd52e344be0b35997","3970":"396fecaabf382a5f1a39","3976":"c6c4d900d8043e884ea2","4001":"46e65a3580442b90df56","4006":"fca8e7aa1bfbea49786a","4107":"78bb8e93491e33a3e285","4184":"7b249b747702470ec69b","4237":"ae9e77c6d4f5a70c297a","4270":"8a1f4d5a2122aa062681","4444":"c82ca57a4e743e20a326","4783":"f419a9163eb350212f2e","5059":"0c82fc8853d0143df171","5117":"2eb054ea4f2bc653fb1e","5194":"d116fb1164b0c3887dc1","5391":"e988f4900e7424bc4682","5394":"a0a7cb02ad75cdae6762","5646":"6a57c318facfce5b2863","5669":"7dd77c65e44c3dc05cd9","5754":"8e63db711cee747f1391","5824":"00be3ef2515b3d5a318a","5881":"1b229fbf1b0bff87b387","5910":"0aa1b84089d2b2145046","5919":"2ebbeceef8b03aefddce","5934":"2c8f6180504c7442626c","6155":"25803bf72f57df4b3658","6226":"74b7c7db0abf1a090d6c","6619":"da19331cff7f3dfae6d4","6671":"08024645a54e509e6ab8","6685":"1ef5575a72b652f74b7d","6725":"a646dcc64b6e6c9d3c0c","6744":"c01d52eb99441e4e3afa","7120":"fbec0e4401c2f3946a30","7171":"918e19a0ed17fcdfa115","7269":"ff4ddba0d139d575c9da","7270":"aef71d036742a212ea6b","7384":"78a1f59ffc7924fc8f70","7405":"53dd5e5077e4f953ad70","7444":"b53c12d6ba889fd7ff49","7445":"8abb73a89b2923f90e9e","7539":"a814c7e2536f3a2ded57","7592":"b2cbea05232b51c85f6d","7612":"dff2eb16111c13d88ea0","7645":"8d59712268ea3994cd6e","7757":"a975138d681a2a9b3a0c","7801":"31435af205e48581d2b3","7897":"a38b6def5b5e496d5051","7941":"bcfca37d69249c324194","7997":"2e21126ab3301ab4a2fa","8011":"6e467f8105662710240b","8017":"cc1a3f74e55f56cc9fd6","8027":"697b9c2fe3ecff9f4978","8060":"4aa5b748815f03e5410c","8117":"25756ad53d0d4449d1f8","8282":"65d85f7cb5c9b37e0642","8354":"176023e85ee8d67dc8c1","8442":"4dc34606f2dc199c6158","8520":"bd678456cc879023807e","8646":"9051fd6297c5d3d0292e","8685":"2e4858ba3af14fde840a","8838":"43934310530795354dca","8849":"7aa8da37935a32e20a20","8970":"110c16bdc91946671e41","8979":"4805158afa23d0486340","9220":"861c86c07129ab78a89d","9246":"b46d76330431170b4b44","9250":"739e41027b099328904d","9260":"ebf3b7b938e195a708ee","9419":"28f8dff176ca425ca595","9528":"4dd9c43eb666c40b578c","9564":"746623511c55650ec60b","9573":"68b312b970dd10a49f39","9575":"e9bf1fcbb360227bdd13","9670":"012e43f63f6fefe161c8","9762":"2b4c7cd7446953ac1c72","9773":"2279481f7cc6a7e19ef6","9846":"305acfa47d491e196677","9971":"b8cd2845d2a3543a5e11"}[chunkId] + ".app.js";
+/******/ 			return "" + chunkId + "." + {"100":"aa63db6838f5d1a5faf7","116":"47fa8762f753762d291d","118":"67282ee0f46830583293","223":"11c50fcf642acaf01578","296":"f29e824f38522a627939","302":"f70abe321d5e2fa0e9d4","327":"c88df084641bfac45cdc","441":"8b8b0c21d0b0ba268348","457":"b2fe082b3d2c55d4e66a","483":"6fdf7d28f4a344461077","590":"28953f61605420ae99a4","614":"aa1a4baa485591a45a5d","712":"c343443ce7a1887d14b2","742":"3c7280819fde965ae055","778":"f8950b7fd584414ccde4","806":"6e8d49ab84c4787285c9","808":"d395eb1e252309375036","864":"ac9193b4bf40eb4964a0","885":"cc8a4df32b65323e1a80","956":"1824448f5e358187a171","1019":"1d406482e04e60bb652f","1096":"cb8119cdaa351f0e4cf8","1168":"b2f690e1d5399977dcaf","1195":"2b571690c6c006ecf4c2","1223":"7aa1f69e403b594d5336","1251":"9da50dc8470bc764d3b6","1364":"fdfc76afc243ce14e56a","1390":"a28f1a9c7193c75a2232","1500":"5a4f44c7307068ea961b","1624":"1e1d88c032094f247d47","1645":"326ae9fdb0b080e9c3d2","1679":"6fad6afa1ba97ccbdd34","1722":"5aacfbdbf20395aae3a9","1853":"d87ffdbd183011dc2319","1861":"b7634fa92c4aa00d7ec7","1919":"02ba73fbcb08f6b43e75","1985":"e7dabafac7bfb5ca1e6d","2120":"260136f37f71dde36ba1","2122":"89773bbe7a6bb157934a","2153":"dfaa809d81b011fe402a","2400":"a9b22dd012a855732973","2410":"4cafc6ed1377bd0877a8","2495":"76a26795d4033aa439a4","2517":"956f7558989fb2a45d33","2529":"42fd28fddfb8eb0f7f6b","2533":"19eb2da5d7015e61eb3c","2605":"6da45bf0a374acc6b637","2608":"a86e0ce81d9f46c9b9e6","2611":"21b2cd175be9359600da","2756":"2e4d9a6b9a21c6a4e68d","2757":"68776b517befffb1bc05","2778":"cdd44eceb38686d06a9b","2821":"d40aee3e8cd86fb5bbff","2835":"cb586f1aed058e586821","2982":"50cb8e5b42cad8be4068","2992":"e2ce4fd5d1911fd7a1db","3009":"039655ae8b90cc3dc664","3058":"1a35062e5a067e9786e3","3094":"9608277b9f1b21b145b5","3229":"f61da12dafbdb6c066d3","3426":"bfabe6a073b863c03ba6","3502":"38861f26dae3c79e1f31","3547":"1e2de2721983f1041975","3697":"28cee7f495153986eb4d","3741":"37d03a8a510f8bda1f4a","3808":"6a82f3970096ce498910","3970":"396fecaabf382a5f1a39","3976":"c6c4d900d8043e884ea2","4001":"96409a9cac9abf8daab9","4006":"fca8e7aa1bfbea49786a","4107":"78bb8e93491e33a3e285","4184":"7b249b747702470ec69b","4237":"ae9e77c6d4f5a70c297a","4270":"a55fa88715d21a7c4d8b","4444":"f34f5d4d04506c18db14","4783":"f419a9163eb350212f2e","5059":"0c82fc8853d0143df171","5117":"2eb054ea4f2bc653fb1e","5194":"d116fb1164b0c3887dc1","5391":"e988f4900e7424bc4682","5394":"a0a7cb02ad75cdae6762","5646":"6a57c318facfce5b2863","5669":"7dd77c65e44c3dc05cd9","5754":"8e63db711cee747f1391","5824":"5b0b22047b9e46f0781f","5881":"1b229fbf1b0bff87b387","5910":"0aa1b84089d2b2145046","5919":"2ebbeceef8b03aefddce","5934":"2c8f6180504c7442626c","6155":"25803bf72f57df4b3658","6226":"74b7c7db0abf1a090d6c","6619":"da19331cff7f3dfae6d4","6671":"08024645a54e509e6ab8","6685":"1ef5575a72b652f74b7d","6725":"a646dcc64b6e6c9d3c0c","6744":"c01d52eb99441e4e3afa","7120":"fbec0e4401c2f3946a30","7171":"918e19a0ed17fcdfa115","7269":"ff4ddba0d139d575c9da","7270":"aef71d036742a212ea6b","7384":"78a1f59ffc7924fc8f70","7405":"53dd5e5077e4f953ad70","7444":"b53c12d6ba889fd7ff49","7445":"244dd03028b7775776c0","7539":"a814c7e2536f3a2ded57","7592":"b2cbea05232b51c85f6d","7612":"d6ea90e6f68015d2a793","7645":"8d59712268ea3994cd6e","7757":"a975138d681a2a9b3a0c","7801":"31435af205e48581d2b3","7897":"a38b6def5b5e496d5051","7941":"bcfca37d69249c324194","7997":"2e21126ab3301ab4a2fa","8011":"6e467f8105662710240b","8017":"cc1a3f74e55f56cc9fd6","8027":"697b9c2fe3ecff9f4978","8060":"4aa5b748815f03e5410c","8117":"25756ad53d0d4449d1f8","8282":"65d85f7cb5c9b37e0642","8354":"176023e85ee8d67dc8c1","8442":"4dc34606f2dc199c6158","8520":"bd678456cc879023807e","8646":"9051fd6297c5d3d0292e","8685":"2e4858ba3af14fde840a","8838":"43934310530795354dca","8849":"7aa8da37935a32e20a20","8970":"110c16bdc91946671e41","8979":"4805158afa23d0486340","9220":"861c86c07129ab78a89d","9246":"b46d76330431170b4b44","9250":"739e41027b099328904d","9260":"ebf3b7b938e195a708ee","9419":"6e29a4953ebf287049c7","9528":"4dd9c43eb666c40b578c","9564":"746623511c55650ec60b","9573":"697c870f768691c1ce84","9575":"e9bf1fcbb360227bdd13","9670":"012e43f63f6fefe161c8","9762":"2b4c7cd7446953ac1c72","9773":"2279481f7cc6a7e19ef6","9846":"305acfa47d491e196677","9971":"b8cd2845d2a3543a5e11"}[chunkId] + ".app.js";
 /******/ 		};
 /******/ 	})();
 /******/ 	
@@ -123841,10 +124137,10 @@ if (true) {
 
 // EXTERNAL MODULE: ./node_modules/react/index.js
 var react = __webpack_require__(96540);
-// EXTERNAL MODULE: ./node_modules/react-router-dom/dist/index.js
-var dist = __webpack_require__(84976);
 // EXTERNAL MODULE: ./node_modules/react-router/dist/index.js
-var react_router_dist = __webpack_require__(47767);
+var dist = __webpack_require__(47767);
+// EXTERNAL MODULE: ./node_modules/react-router-dom/dist/index.js
+var react_router_dom_dist = __webpack_require__(84976);
 // EXTERNAL MODULE: ./node_modules/@mui/material/styles/createTheme.js + 13 modules
 var createTheme = __webpack_require__(76544);
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/extends.js
@@ -127064,7 +127360,7 @@ function Loginadmin() {
   var handleClickShowPassword = () => {
     setShowPassword(!showPassword);
   };
-  var navigate = (0,react_router_dist/* useNavigate */.Zp)();
+  var navigate = (0,dist/* useNavigate */.Zp)();
   var _useLoginMutation = useLoginMutation(),
     _useLoginMutation2 = _slicedToArray(_useLoginMutation, 2),
     login = _useLoginMutation2[0],
@@ -127451,7 +127747,7 @@ function Loginemployee() {
     _useState4 = Loginemployee_slicedToArray(_useState3, 2),
     password = _useState4[0],
     setPassword = _useState4[1];
-  var navigate = (0,react_router_dist/* useNavigate */.Zp)();
+  var navigate = (0,dist/* useNavigate */.Zp)();
   var _useLoginMutation = useLoginMutation(),
     _useLoginMutation2 = Loginemployee_slicedToArray(_useLoginMutation, 2),
     login = _useLoginMutation2[0],
@@ -127791,7 +128087,7 @@ function Sidebar() {
       whiteSpace: 'nowrap',
       flexWrap: 'nowrap'
     }
-  }, /*#__PURE__*/react.createElement(dist/* Link */.N_, {
+  }, /*#__PURE__*/react.createElement(react_router_dom_dist/* Link */.N_, {
     to: "/",
     className: "LinkName",
     style: {
@@ -127829,7 +128125,7 @@ function Sidebar() {
     className: "face face2"
   }, /*#__PURE__*/react.createElement("div", {
     className: "cardNavContent"
-  }, /*#__PURE__*/react.createElement(dist/* Link */.N_, {
+  }, /*#__PURE__*/react.createElement(react_router_dom_dist/* Link */.N_, {
     to: "Loginadmin",
     className: "LinkName"
   }, " ", /*#__PURE__*/react.createElement("button", {
@@ -128149,7 +128445,7 @@ function parseItemDate(item) {
 }
 function MobileDashboardContent() {
   var _user$data, _user$data2;
-  var navigate = (0,react_router_dist/* useNavigate */.Zp)();
+  var navigate = (0,dist/* useNavigate */.Zp)();
   var user = (0,react_redux_es/* useSelector */.d4)(authSlice/* selectCurrentUser */.xu);
   var userName = (user === null || user === void 0 || (_user$data = user.data) === null || _user$data === void 0 ? void 0 : _user$data.userName) || '';
   var userRole = (user === null || user === void 0 || (_user$data2 = user.data) === null || _user$data2 === void 0 ? void 0 : _user$data2.role) || '';
@@ -134196,7 +134492,7 @@ var pData = (/* unused pure expression or super */ null && ([2400, 1398, 9800, 3
 var xLabels = (/* unused pure expression or super */ null && (['Page A', 'Page B', 'Page C', 'Page D', 'Page E', 'Page F', 'Page G']));
 function AdminHome() {
   var _user$data3, _ref23;
-  var navigate = (0,react_router_dist/* useNavigate */.Zp)();
+  var navigate = (0,dist/* useNavigate */.Zp)();
   var isMobile = (0,utils_isMobile/* useIsMobile */.al)();
   var dispatch = (0,react_redux_es/* useDispatch */.wA)();
   var user = (0,react_redux_es/* useSelector */.d4)(authSlice/* selectCurrentUser */.xu);
@@ -135379,7 +135675,7 @@ function AdminHome() {
       title: "View"
     }, /*#__PURE__*/react.createElement("span", null, /*#__PURE__*/react.createElement(IconButton/* default */.A, {
       disabled: user.data.role === 'User'
-    }, /*#__PURE__*/react.createElement(dist/* NavLink */.k2, {
+    }, /*#__PURE__*/react.createElement(react_router_dom_dist/* NavLink */.k2, {
       to: "/MaintenanceViewInformation/".concat(params.row._id),
       className: "LinkName"
     }, /*#__PURE__*/react.createElement(Visibility/* default */.A, {
@@ -135447,7 +135743,7 @@ function AdminHome() {
       title: "View"
     }, /*#__PURE__*/react.createElement("span", null, /*#__PURE__*/react.createElement(IconButton/* default */.A, {
       disabled: user.data.role === 'User'
-    }, /*#__PURE__*/react.createElement(dist/* NavLink */.k2, {
+    }, /*#__PURE__*/react.createElement(react_router_dom_dist/* NavLink */.k2, {
       to: "/ProjectInfo/".concat(params.row._id),
       className: "LinkName"
     }, /*#__PURE__*/react.createElement(Visibility/* default */.A, {
@@ -135516,7 +135812,7 @@ function AdminHome() {
       title: "View"
     }, /*#__PURE__*/react.createElement("span", null, /*#__PURE__*/react.createElement(IconButton/* default */.A, {
       disabled: user.data.role === 'User'
-    }, /*#__PURE__*/react.createElement(dist/* NavLink */.k2, {
+    }, /*#__PURE__*/react.createElement(react_router_dom_dist/* NavLink */.k2, {
       to: "/InvoiceViewAdminAll/".concat(params.row._id),
       className: "LinkName"
     }, /*#__PURE__*/react.createElement(Visibility/* default */.A, {
@@ -135600,7 +135896,7 @@ function AdminHome() {
       title: "View"
     }, /*#__PURE__*/react.createElement("span", null, /*#__PURE__*/react.createElement(IconButton/* default */.A, {
       disabled: user.data.role === 'User'
-    }, /*#__PURE__*/react.createElement(dist/* NavLink */.k2, {
+    }, /*#__PURE__*/react.createElement(react_router_dom_dist/* NavLink */.k2, {
       to: "/CustomerInformationView/".concat(params.row._id),
       className: "LinkName"
     }, /*#__PURE__*/react.createElement(Visibility/* default */.A, {
@@ -138135,7 +138431,7 @@ var RequireAuth = () => {
   var _user$data, _user$data2, _user$data3, _user$data4;
   var user = (0,react_redux_es/* useSelector */.d4)(authSlice/* selectCurrentUser */.xu);
   var dispatch = (0,react_redux_es/* useDispatch */.wA)();
-  var location = (0,react_router_dist/* useLocation */.zy)();
+  var location = (0,dist/* useLocation */.zy)();
   var _useState = (0,react.useState)(null),
     _useState2 = RequireAuth_slicedToArray(_useState, 2),
     grantAccess = _useState2[0],
@@ -138251,7 +138547,7 @@ var RequireAuth = () => {
 
   // Authentication check: if no valid JWT token or no user session at all, redirect to login
   if (!validToken || !effectiveUserName && !storedUserId && !reduxUserId) {
-    return /*#__PURE__*/react.createElement(react_router_dist/* Navigate */.C5, {
+    return /*#__PURE__*/react.createElement(dist/* Navigate */.C5, {
       to: "/Loginadmin",
       state: {
         from: location
@@ -138267,7 +138563,7 @@ var RequireAuth = () => {
 
   // Superuser 'GG' bypass
   if (effectiveUserName === "GG") {
-    return /*#__PURE__*/react.createElement(react_router_dist/* Outlet */.sv, null);
+    return /*#__PURE__*/react.createElement(dist/* Outlet */.sv, null);
   }
 
   // Evaluate Route Permission Rule
@@ -138275,13 +138571,13 @@ var RequireAuth = () => {
 
   // Unrestricted logged-in routes (e.g. /AdminHome, /SettingsViewAdmin)
   if (!routePerm) {
-    return /*#__PURE__*/react.createElement(react_router_dist/* Outlet */.sv, null);
+    return /*#__PURE__*/react.createElement(dist/* Outlet */.sv, null);
   }
 
   // Special restrictions: GG only routes
   if (routePerm.ggOnly && effectiveUserName !== "GG") {
     react_toastify_esm/* toast */.oR.error("Access Denied: Grant Access is restricted to Super Administrator.");
-    return /*#__PURE__*/react.createElement(react_router_dist/* Navigate */.C5, {
+    return /*#__PURE__*/react.createElement(dist/* Navigate */.C5, {
       to: "/AdminHome",
       replace: true
     });
@@ -138290,7 +138586,7 @@ var RequireAuth = () => {
   // Special restrictions: CEO only routes
   if (routePerm.ceoOnly && effectiveUserRole !== "CEO" && effectiveUserName !== "GG") {
     react_toastify_esm/* toast */.oR.error("Access Denied: This module requires CEO authorization.");
-    return /*#__PURE__*/react.createElement(react_router_dist/* Navigate */.C5, {
+    return /*#__PURE__*/react.createElement(dist/* Navigate */.C5, {
       to: "/AdminHome",
       replace: true
     });
@@ -138300,18 +138596,20 @@ var RequireAuth = () => {
   var hasAccess = (0,permissionUtils/* canAccessModule */.jI)(effectiveUser, grantAccess || [], routePerm.module, routePerm.action);
   if (!hasAccess) {
     react_toastify_esm/* toast */.oR.error("Access Denied: You do not have permission for the ".concat(routePerm.module, " module."));
-    return /*#__PURE__*/react.createElement(react_router_dist/* Navigate */.C5, {
+    return /*#__PURE__*/react.createElement(dist/* Navigate */.C5, {
       to: "/AdminHome",
       replace: true
     });
   }
-  return /*#__PURE__*/react.createElement(react_router_dist/* Outlet */.sv, null);
+  return /*#__PURE__*/react.createElement(dist/* Outlet */.sv, null);
 };
 /* harmony default export */ const js_RequireAuth = (RequireAuth);
 // EXTERNAL MODULE: ./node_modules/react-toastify/dist/ReactToastify.css
 var ReactToastify = __webpack_require__(12717);
 // EXTERNAL MODULE: ./src/js/hooks/useLayoutConfig.js
 var useLayoutConfig = __webpack_require__(99076);
+// EXTERNAL MODULE: ./src/js/hooks/useModuleSearchState.js
+var useModuleSearchState = __webpack_require__(80099);
 // EXTERNAL MODULE: ./src/js/utils/modalBackManager.js
 var modalBackManager = __webpack_require__(3625);
 // EXTERNAL MODULE: ./node_modules/@mui/icons-material/Dashboard.js
@@ -138379,7 +138677,7 @@ function MobileDrawer(_ref) {
   var _user$data3, _user$data4, _user$data5;
   var open = _ref.open,
     onClose = _ref.onClose;
-  var navigate = (0,react_router_dist/* useNavigate */.Zp)();
+  var navigate = (0,dist/* useNavigate */.Zp)();
   var dispatch = (0,react_redux_es/* useDispatch */.wA)();
   var user = (0,react_redux_es/* useSelector */.d4)(authSlice/* selectCurrentUser */.xu);
   var _useState = (0,react.useState)(true),
@@ -138929,8 +139227,8 @@ function isMainListRoute(pathname) {
 function MobileLayout(_ref) {
   var _user$data3, _user$data4, _user$data5, _user$data6;
   var children = _ref.children;
-  var location = (0,react_router_dist/* useLocation */.zy)();
-  var navigate = (0,react_router_dist/* useNavigate */.Zp)();
+  var location = (0,dist/* useLocation */.zy)();
+  var navigate = (0,dist/* useNavigate */.Zp)();
   var dispatch = (0,react_redux_es/* useDispatch */.wA)();
   var user = (0,react_redux_es/* useSelector */.d4)(authSlice/* selectCurrentUser */.xu);
   var _useState = (0,react.useState)(false),
@@ -139380,8 +139678,8 @@ function NativeBackHandler_arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 function NativeBackHandler() {
-  var location = (0,react_router_dist/* useLocation */.zy)();
-  var navigate = (0,react_router_dist/* useNavigate */.Zp)();
+  var location = (0,dist/* useLocation */.zy)();
+  var navigate = (0,dist/* useNavigate */.Zp)();
   var _useState = (0,react.useState)(false),
     _useState2 = NativeBackHandler_slicedToArray(_useState, 2),
     exitDialogOpen = _useState2[0],
@@ -139634,6 +139932,7 @@ function NativeBackHandler() {
 
 
 
+
 var globalMuiTheme = (0,createTheme/* default */.A)({
   components: {
     MuiInputBase: {
@@ -139673,6 +139972,10 @@ var globalMuiTheme = (0,createTheme/* default */.A)({
 function AppLayoutWrapper(_ref) {
   var children = _ref.children;
   var isMobile = (0,utils_isMobile/* useIsMobile */.al)();
+  var location = (0,dist/* useLocation */.zy)();
+  (0,react.useEffect)(() => {
+    (0,useModuleSearchState/* syncModuleRoute */.$m)(location.pathname);
+  }, [location.pathname]);
   (0,react.useEffect)(() => {
     if (typeof document !== 'undefined') {
       if (isMobile) {
@@ -139890,451 +140193,451 @@ function App_App() {
   }, []);
   return /*#__PURE__*/react.createElement(styles_ThemeProvider_ThemeProvider, {
     theme: globalMuiTheme
-  }, /*#__PURE__*/react.createElement(dist/* HashRouter */.I9, null, /*#__PURE__*/react.createElement(AppLayoutWrapper, null, /*#__PURE__*/react.createElement(react.Suspense, {
+  }, /*#__PURE__*/react.createElement(react_router_dom_dist/* HashRouter */.I9, null, /*#__PURE__*/react.createElement(AppLayoutWrapper, null, /*#__PURE__*/react.createElement(react.Suspense, {
     fallback: /*#__PURE__*/react.createElement(Loader/* default */.A, null)
-  }, /*#__PURE__*/react.createElement(react_router_dist/* Routes */.BV, null, /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }, /*#__PURE__*/react.createElement(dist/* Routes */.BV, null, /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "Loginadmin",
     element: /*#__PURE__*/react.createElement(js_Loginadmin, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "Loginemployee",
     element: /*#__PURE__*/react.createElement(js_Loginemployee, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "/",
     element: /*#__PURE__*/react.createElement(js_Home, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     element: /*#__PURE__*/react.createElement(js_RequireAuth, null)
-  }, /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }, /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "AdminHome",
     element: /*#__PURE__*/react.createElement(AdminView1_AdminHome, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "CustomerViewAdmin",
     element: /*#__PURE__*/react.createElement(CustomerViewAdmin, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "CustomerFormUpdate/:id",
     element: /*#__PURE__*/react.createElement(CustomerFormUpdate, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "CustomerInformationView/:id",
     element: /*#__PURE__*/react.createElement(CustomerInformationView, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "CustomerForm",
     element: /*#__PURE__*/react.createElement(CustomerForm, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "ItemViewAdmin",
     element: /*#__PURE__*/react.createElement(ItemViewAdmin, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "ItemForm",
     element: /*#__PURE__*/react.createElement(ItemForm, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "ItemFormUpdate/:id",
     element: /*#__PURE__*/react.createElement(ItemFormUpdate, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "ItemInfo",
     element: /*#__PURE__*/react.createElement(ItemViewLayout, null)
-  }, /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }, /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: ":id",
     element: /*#__PURE__*/react.createElement(ItemInformationVIew, null)
-  })), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  })), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "ItemFormClone/:id",
     element: /*#__PURE__*/react.createElement(ItemFormClone, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "ItemCommentForm/:id",
     element: /*#__PURE__*/react.createElement(ItemCommentForm, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "ItemFormView2",
     element: /*#__PURE__*/react.createElement(ItemFormView2, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "ItemUpdateView2/:id",
     element: /*#__PURE__*/react.createElement(ItemUpdateView2, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "InvoiceViewAdmin",
     element: /*#__PURE__*/react.createElement(InvoiceViewAdmin, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "InvoiceForm",
     element: /*#__PURE__*/react.createElement(InvoiceForm, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "InvoiceFormUpdate/:id",
     element: /*#__PURE__*/react.createElement(InvoiceFormUpdate, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "InvoiceViewAdminAll/:id",
     element: /*#__PURE__*/react.createElement(InvoiceViewAdminAll, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "InvoiceFormClone/:id",
     element: /*#__PURE__*/react.createElement(InvoiceFormClone, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "InvoiceAllViewTable",
     element: /*#__PURE__*/react.createElement(InvoiceAllViewTable, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "MakePurchase/:id",
     element: /*#__PURE__*/react.createElement(MakePurchase, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "DailyExpenses",
     element: /*#__PURE__*/react.createElement(DailyExpenses, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "DailyExpenseAdminView",
     element: /*#__PURE__*/react.createElement(DailyExpenseAdminView, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "DailyExpenseForm",
     element: /*#__PURE__*/react.createElement(DailyExpenseForm, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "DailyExpenseUpdate/:id",
     element: /*#__PURE__*/react.createElement(DailyExpenseUpdate, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "CategoryViewDailyExpenses",
     element: /*#__PURE__*/react.createElement(CategoryViewDailyExpenses, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "ExpensesViewAdmin",
     element: /*#__PURE__*/react.createElement(ExpensesViewAdmin, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "ExpensesViewAdminAll/:id",
     element: /*#__PURE__*/react.createElement(ExpensesViewAdminAll, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "EstimateViewAdmin",
     element: /*#__PURE__*/react.createElement(EstimateViewAdmin, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "EstimateInvoiceForm",
     element: /*#__PURE__*/react.createElement(EstimateInvoiceForm, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "EstimateForm",
     element: /*#__PURE__*/react.createElement(EstimateInvoiceForm, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "EstimateInvoiceFormUpdate/:id",
     element: /*#__PURE__*/react.createElement(EstimateInvoiceFormUpdate, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "EstimateViewAdminAll/:id",
     element: /*#__PURE__*/react.createElement(EstimateViewAdminAll, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "EstimateInformation/:id",
     element: /*#__PURE__*/react.createElement(EstimateInformation, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "EstimateFormClone/:id",
     element: /*#__PURE__*/react.createElement(EstimateFormClone, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "EstimateViewConvertToInvoice/:id",
     element: /*#__PURE__*/react.createElement(EstimateViewConvertToInvoice, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "EstimateConvertToMaintenance/:id",
     element: /*#__PURE__*/react.createElement(EstimateConvertToMaintenance, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "MakePurchaseConvertToProject/:id",
     element: /*#__PURE__*/react.createElement(MakePurchaseConvertToProject, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "RecuringInvoiceViewAdmin",
     element: /*#__PURE__*/react.createElement(RecuringInvoiceViewAdmin, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "RecuringInvoiceForm",
     element: /*#__PURE__*/react.createElement(RecuringInvoiceForm, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "RecuringViewAdminAll/:id",
     element: /*#__PURE__*/react.createElement(RecuringViewAdminAll, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "RecurringInvoiceFormUpdate/:id",
     element: /*#__PURE__*/react.createElement(RecurringInvoiceFormUpdate, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "RetainerInvoiceView",
     element: /*#__PURE__*/react.createElement(RetainerInvoiceView, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "RetainerInvoiceForm",
     element: /*#__PURE__*/react.createElement(RetainerInvoiceForm, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "RetainerViewAdminAll/:id",
     element: /*#__PURE__*/react.createElement(RetainerViewAdminAll, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "RetainerInvoiceFormUpdate/:id",
     element: /*#__PURE__*/react.createElement(RetainerInvoiceFormUpdate, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "PaymentView",
     element: /*#__PURE__*/react.createElement(PaymentView, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "PaymentInformation",
     element: /*#__PURE__*/react.createElement(PaymentInformation, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "PaymentInformationForm",
     element: /*#__PURE__*/react.createElement(PaymentInformationForm, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "PaymentInformationView/:id",
     element: /*#__PURE__*/react.createElement(PaymentInformationView, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "PaymentInformationUpdate/:id",
     element: /*#__PURE__*/react.createElement(PaymentInformationUpdate, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "ItemOutViewAdmin",
     element: /*#__PURE__*/react.createElement(ItemOutViewAdmin, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "ItemOutViewForm",
     element: /*#__PURE__*/react.createElement(ItemOutViewForm, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "ItemOutViewUpdate/:id",
     element: /*#__PURE__*/react.createElement(ItemOutViewUpdate, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "ItemReturnAdminView",
     element: /*#__PURE__*/react.createElement(ItemReturnAdminView, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "ItemReturnViewForm/:id",
     element: /*#__PURE__*/react.createElement(ItemReturnViewForm, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "ItemReturnUpdateForm",
     element: /*#__PURE__*/react.createElement(ItemReturnUpdateForm, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "ItemReturnUpdateForm/:id",
     element: /*#__PURE__*/react.createElement(ItemReturnUpdateForm, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "PurchaseOrderViewAdmin",
     element: /*#__PURE__*/react.createElement(PurchaseOrderViewAdmin, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "ConvertPoToIP/:id",
     element: /*#__PURE__*/react.createElement(ConvertPoToIP, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "PurchaseForm",
     element: /*#__PURE__*/react.createElement(PurchaseForm, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "PurchaseUpdateOrder/:id",
     element: /*#__PURE__*/react.createElement(PurchaseUpdateOrder, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "PurchaseOrderInfoView/:id",
     element: /*#__PURE__*/react.createElement(PurchaseOrderInfoView, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "MaintenanceViewAdmin",
     element: /*#__PURE__*/react.createElement(MaintenanceViewAdmin, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "MaintenanceOrderAdmin",
     element: /*#__PURE__*/react.createElement(MaintenanceOrderAdmin, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "MaintenanceOrderUpdate/:id",
     element: /*#__PURE__*/react.createElement(MaintenanceOrderUpdate, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "MaintenanceOrderViewInformation/:id",
     element: /*#__PURE__*/react.createElement(MaintenanceOrderViewInformation, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "TechnicianStoreCatalog",
     element: /*#__PURE__*/react.createElement(TechnicianStoreCatalog, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "MaintenanceUpdateView/:id",
     element: /*#__PURE__*/react.createElement(MaintenanceUpdateView, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "MaintenanceViewInformation/:id",
     element: /*#__PURE__*/react.createElement(MaintenanceViewInformation, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "MaintenanceFormView",
     element: /*#__PURE__*/react.createElement(MaintenanceFormView, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "MaintenanceConvertToInvoice/:id",
     element: /*#__PURE__*/react.createElement(MaintenanceConvertToInvoice, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "MaintenanceFormClone/:id",
     element: /*#__PURE__*/react.createElement(MaintenanceFormClone, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "FleetViewAdmin",
     element: /*#__PURE__*/react.createElement(FleetViewAdmin, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "FleetFormUpdate/:id",
     element: /*#__PURE__*/react.createElement(FleetFormUpdate, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "FleetFormView",
     element: /*#__PURE__*/react.createElement(FleetFormView, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "ProjectViewAdmin",
     element: /*#__PURE__*/react.createElement(ProjectViewAdmin, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "ProjectInfo",
     element: /*#__PURE__*/react.createElement(ProjectViewLayout, null)
-  }, /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }, /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: ":id",
     element: /*#__PURE__*/react.createElement(ProjectViewInformation, null)
-  })), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  })), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "ProjectUpdateView/:id",
     element: /*#__PURE__*/react.createElement(ProjectUpdateView, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "ProjectFormView",
     element: /*#__PURE__*/react.createElement(ProjectFormView, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "ProjectFormView2",
     element: /*#__PURE__*/react.createElement(ProjectFormView2, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "ProjectPhase/:id",
     element: /*#__PURE__*/react.createElement(ProjectPhase, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "EmployeeViewAdminAll",
     element: /*#__PURE__*/react.createElement(EmployeeViewAdminAll, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "EmployeeViewAdminAll/:id",
     element: /*#__PURE__*/react.createElement(EmployeeViewAdminAll, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "TewmViewAdmin",
     element: /*#__PURE__*/react.createElement(TewmViewAdmin, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "EmployeeAttendanceForm",
     element: /*#__PURE__*/react.createElement(EmployeeAttendanceForm, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "EmployeeAttendanceFormOut",
     element: /*#__PURE__*/react.createElement(EmployeeAttendanceFormOut, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "EmployeeFormView",
     element: /*#__PURE__*/react.createElement(EmployeeFormView, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "EmployeePlaningForm",
     element: /*#__PURE__*/react.createElement(EmployeePlaningForm, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "EmployeeUpdateView/:id",
     element: /*#__PURE__*/react.createElement(EmployeeUpdateView, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "EmployeeAttendanceSheet/:id",
     element: /*#__PURE__*/react.createElement(EmployeeAttendanceSheet, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "EmployeePlaningFormUpdate/:id",
     element: /*#__PURE__*/react.createElement(EmployeePlaningFormUpdate, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "EmployeeTodayAttendance",
     element: /*#__PURE__*/react.createElement(EmployeeTodayAttendance, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "EmployeePlaningView",
     element: /*#__PURE__*/react.createElement(EmployeePlaningView, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "EmployeeAllViewTable",
     element: /*#__PURE__*/react.createElement(EmployeeAllViewTable, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "PayRollViewAdmin",
     element: /*#__PURE__*/react.createElement(PayRollViewAdmin, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "PayRollViewInformation/:id",
     element: /*#__PURE__*/react.createElement(PayRollViewInformation, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "PayRollUpdateFormView/:id",
     element: /*#__PURE__*/react.createElement(PayRollUpdateFormView, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "PayRollFormView",
     element: /*#__PURE__*/react.createElement(PayRollFormView, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "PurchasesViewAdmin",
     element: /*#__PURE__*/react.createElement(PurchasesViewAdmin, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "PurchaseFormUpdate/:id",
     element: /*#__PURE__*/react.createElement(PurchaseFormUpdate, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "PurchasesFormView",
     element: /*#__PURE__*/react.createElement(PurchasesFormView, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "PurchasesViewAdminAll/:id",
     element: /*#__PURE__*/react.createElement(PurchasesViewAdminAll, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "ConvertToEstimate/:id",
     element: /*#__PURE__*/react.createElement(ConvertToEstimate, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "ConvertToInvoice/:id",
     element: /*#__PURE__*/react.createElement(ConvertToInvoice, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "SupplierAdminView",
     element: /*#__PURE__*/react.createElement(SupplierAdminView, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "SupplierForm",
     element: /*#__PURE__*/react.createElement(SupplierForm, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "SupplierFormUpdate/:id",
     element: /*#__PURE__*/react.createElement(SupplierFormUpdate, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "SupplierViewInformation/:id",
     element: /*#__PURE__*/react.createElement(SupplierViewInformation, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "SettingsViewAdmin",
     element: /*#__PURE__*/react.createElement(SettingsViewAdmin, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "BranchManagement",
     element: /*#__PURE__*/react.createElement(BranchManagement, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "MarketingViewAdmin",
     element: /*#__PURE__*/react.createElement(MarketingViewAdmin, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "InspectionReportView",
     element: /*#__PURE__*/react.createElement(InspectionReportView, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "InspectionReportForm",
     element: /*#__PURE__*/react.createElement(InspectionReportForm, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "InspectionReportForm/:id",
     element: /*#__PURE__*/react.createElement(InspectionReportForm, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "InspectionReportPrintView/:id",
     element: /*#__PURE__*/react.createElement(InspectionReportPrintView, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "RateViewAdmin",
     element: /*#__PURE__*/react.createElement(RateViewAdmin, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "RolePermission",
     element: /*#__PURE__*/react.createElement(RolePermission, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "UserAccount",
     element: /*#__PURE__*/react.createElement(UserAccount, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "CompanyProfile",
     element: /*#__PURE__*/react.createElement(CompanyProfile, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "CompanyProfileForm",
     element: /*#__PURE__*/react.createElement(CompanyProfileForm, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "UserAccountForm",
     element: /*#__PURE__*/react.createElement(UserAccountForm, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "GrantAccessFormView",
     element: /*#__PURE__*/react.createElement(GrantAccessFormView, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "GrantAccessUpdateView/:id",
     element: /*#__PURE__*/react.createElement(GrantAccessUpdateView, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "ReportsViewAdmin",
     element: /*#__PURE__*/react.createElement(ReportsViewAdmin, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "PointOfSale",
     element: /*#__PURE__*/react.createElement(PointOfSale, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "StoreItemDisplay",
     element: /*#__PURE__*/react.createElement(StoreItemDisplay, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "TechnicianStoreDisplay",
     element: /*#__PURE__*/react.createElement(TechnicianStoreDisplay, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "ReportPos",
     element: /*#__PURE__*/react.createElement(ReportPos, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "SellShopInvoiceView",
     element: /*#__PURE__*/react.createElement(SellShopInvoiceView, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "ShopPosForm",
     element: /*#__PURE__*/react.createElement(ShopPosForm, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "ShopPosUpdateForm/:id",
     element: /*#__PURE__*/react.createElement(ShopPosUpdateForm, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "ItemPurchaseViewAdmin",
     element: /*#__PURE__*/react.createElement(ItemPurchaseViewAdmin, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "ItemPurchaseViewForm",
     element: /*#__PURE__*/react.createElement(ItemPurchaseViewForm, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "ItemPurchaseViewForm/:id",
     element: /*#__PURE__*/react.createElement(ItemPurchaseViewForm, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "ItemPurchaseUpdateForm/:id",
     element: /*#__PURE__*/react.createElement(ItemPurchaseUpdateForm, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     element: /*#__PURE__*/react.createElement(BlockFactoryLayout, null)
-  }, /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }, /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "BlockProductionView",
     element: /*#__PURE__*/react.createElement(BlockProductionView, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "BlockSalesView",
     element: /*#__PURE__*/react.createElement(BlockSalesView, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "BlockTrackingView",
     element: /*#__PURE__*/react.createElement(BlockTrackingView, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "BlockConfigView",
     element: /*#__PURE__*/react.createElement(BlockConfigView, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "WorkerPaymentView",
     element: /*#__PURE__*/react.createElement(WorkerPaymentView, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "BlockDamageView",
     element: /*#__PURE__*/react.createElement(BlockDamageView, null)
-  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+  }), /*#__PURE__*/react.createElement(dist/* Route */.qh, {
     path: "BlockMixerView",
     element: /*#__PURE__*/react.createElement(BlockMixerView, null)
   }))))))), /*#__PURE__*/react.createElement(react_toastify_esm/* ToastContainer */.N9, {

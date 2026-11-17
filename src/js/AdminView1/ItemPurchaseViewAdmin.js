@@ -27,6 +27,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import axios from 'axios';
 import { cachedGet } from '../utils/apiCache';
 import { ENDPOINT_URL } from '../apiConfig';
+import { useModuleSearchState } from '../hooks/useModuleSearchState';
 import { Add, Close } from '@mui/icons-material';
 import dayjs from 'dayjs';
 import Loader from '../component/Loader';
@@ -215,11 +216,17 @@ function ItemPurchaseViewAdmin() {
   const [categories, setCategories] = useState([]);
   const [systemRate, setSystemRate] = useState(0);
 
-  const [page, setPage] = useState(0); 
-  const limit = 100;
-  const [searchTerm, setSearchTerm] = useState(''); 
-  const [filterField, setFilterField] = useState(''); 
-  const [filterValue, setFilterValue] = useState(''); 
+  const {
+    searchTerm,
+    setSearchTerm,
+    filterField,
+    setFilterField,
+    filterValue,
+    setFilterValue,
+    page,
+    setPage,
+  } = useModuleSearchState('itemPurchase');
+  const limit = 100; 
   const [totalPage, SetTotalPage] = useState(0);
   const [totalItemCount, setTotalItemCount] = useState(0);
 
@@ -287,7 +294,7 @@ function ItemPurchaseViewAdmin() {
   const [filterModel, setFilterModel] = React.useState({
     items: [],
     quickFilterExcludeHiddenColumns: true,
-    quickFilterValues: [],
+    quickFilterValues: searchTerm ? searchTerm.split(/\s+/).filter(Boolean) : [],
   });
   const [columnVisibilityModel, setColumnVisibilityModel] = useState({});
   const handelHiddenColumn = (newHidden) => {

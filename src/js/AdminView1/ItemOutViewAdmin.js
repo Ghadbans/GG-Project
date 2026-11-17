@@ -25,6 +25,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import axios from 'axios';
 import { cachedGet } from '../utils/apiCache';
 import { ENDPOINT_URL } from '../apiConfig';
+import { useModuleSearchState } from '../hooks/useModuleSearchState';
 import { Add, Close, MailOutline } from '@mui/icons-material';
 import dayjs from 'dayjs';
 import Loader from '../component/Loader';
@@ -188,11 +189,17 @@ function ItemOutViewAdmin() {
   const [item, SetItems] = useState([])
   const [newPurchase, setNewPurchase] = useState([]);
 
-  const [page, setPage] = useState(0); // Initialize page state to 0 (0-based index)
+  const {
+    searchTerm,
+    setSearchTerm,
+    filterField,
+    setFilterField,
+    filterValue,
+    setFilterValue,
+    page,
+    setPage,
+  } = useModuleSearchState('itemOut');
   const limit = 100;
-  const [searchTerm, setSearchTerm] = useState(''); // Initialize search term state
-  const [filterField, setFilterField] = useState(''); // Initialize filter field state
-  const [filterValue, setFilterValue] = useState(''); // Initialize filter value state
   const [totalPage, SetTotalPage] = useState(0);
   const [totalItemCount, setTotalItemCount] = useState(0);
 
@@ -261,7 +268,7 @@ function ItemOutViewAdmin() {
   const [filterModel, setFilterModel] = React.useState({
     items: [],
     quickFilterExcludeHiddenColumns: true,
-    quickFilterValues: [],
+    quickFilterValues: searchTerm ? searchTerm.split(/\s+/).filter(Boolean) : [],
   });
   const [columnVisibilityModel, setColumnVisibilityModel] = useState({});
   const handelHiddenColumn = (newHidden) => {

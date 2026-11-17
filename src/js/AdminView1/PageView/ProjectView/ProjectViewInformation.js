@@ -262,19 +262,26 @@ function ProjectViewInformation() {
   };
 
   // Tab-Specific Loaders
+  const isCleanId = (v) => {
+    const s = String(v || '').trim();
+    return Boolean(s && s.toLowerCase() !== 'null' && s.toLowerCase() !== 'undefined');
+  };
+
   const fetchInvoicesAndPurchases = async (targetId = id, targetPNum = projectNumber, targetPName = projectName) => {
     try {
+      const safeTargetId = isCleanId(targetId) ? String(targetId).trim() : '';
+      const pIdQuery = safeTargetId ? `&projectId=${encodeURIComponent(safeTargetId)}` : '';
       const pNameQuery = targetPName ? `&projectName=${encodeURIComponent(targetPName)}` : '';
       const pNumQuery = targetPNum ? `&projectNumber=${targetPNum}` : '';
-      const resPurchases = await axios.get(`${ENDPOINT_URL}/purchase?summary=true&projectId=${targetId}${pNameQuery}${pNumQuery}`);
+      const resPurchases = await axios.get(`${ENDPOINT_URL}/purchase?summary=true${pIdQuery}${pNameQuery}${pNumQuery}`);
       const relatedPurchases = resPurchases.data?.data || [];
-      const projectPurchaseIds = relatedPurchases.map(p => p._id).filter(Boolean);
+      const projectPurchaseIds = [...new Set(relatedPurchases.map(p => p._id).map(v => String(v || '').trim()).filter(isCleanId))];
       const linkedInvoiceAndRefIds = [...new Set(
         relatedPurchases
           .flatMap(p => [p.ReferenceName2, p.ReferenceName])
           .map(v => (typeof v === 'object' && v !== null ? v._id : v))
           .map(v => String(v || '').trim())
-          .filter(Boolean)
+          .filter(v => isCleanId(v) && /^[a-f0-9]{24}$/i.test(v))
       )];
       const projectPurchaseNames = [...new Set(
         relatedPurchases
@@ -283,14 +290,15 @@ function ProjectViewInformation() {
             p.purchaseNumber !== undefined && p.purchaseNumber !== null ? `PUR-${String(p.purchaseNumber).padStart(6, '0')}` : null,
             p.purchaseNumber !== undefined && p.purchaseNumber !== null ? `PUR-00${p.purchaseNumber}` : null
           ])
-          .filter(Boolean)
+          .map(v => String(v || '').trim())
+          .filter(isCleanId)
       )];
 
       // Filter Invoices: linked via Purchase ID, Purchase's ReferenceName2/ReferenceName (Invoice/Quotation ID), Purchase Name, or directly via Project ID / Project Name
-      const pIdsQuery = projectPurchaseIds.length > 0 ? `&purchaseIds=${projectPurchaseIds.join(',')}` : '';
+      const pIdsQuery = projectPurchaseIds.length > 0 ? `&purchaseIds=${encodeURIComponent(projectPurchaseIds.join(','))}` : '';
       const invIdsQuery = linkedInvoiceAndRefIds.length > 0 ? `&invoiceIds=${encodeURIComponent(linkedInvoiceAndRefIds.join(','))}` : '';
       const pNamesQuery = projectPurchaseNames.length > 0 ? `&purchaseNames=${encodeURIComponent(projectPurchaseNames.join(','))}` : '';
-      const resInvoices = await axios.get(`${ENDPOINT_URL}/invoice?summary=true&projectId=${targetId}${pIdsQuery}${invIdsQuery}${pNamesQuery}${pNameQuery}${pNumQuery}`);
+      const resInvoices = await axios.get(`${ENDPOINT_URL}/invoice?summary=true${pIdQuery}${pIdsQuery}${invIdsQuery}${pNamesQuery}${pNameQuery}${pNumQuery}`);
       const relatedInvoices = resInvoices.data?.data || [];
 
       const allProjectItems = relatedPurchases.flatMap((row) => (row.items || []).map((Item) => ({

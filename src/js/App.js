@@ -1,6 +1,6 @@
 import React, { useEffect, useState, Suspense } from 'react'
 import {
-  HashRouter as Router, Routes, Route
+  HashRouter as Router, Routes, Route, useLocation
 } from 'react-router-dom'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import '../js/css/Side.css'
@@ -13,6 +13,7 @@ import Loader from './component/Loader'
 import { ToastContainer, toast } from 'react-toastify';
 import "react-toastify/ReactToastify.css";
 import useLayoutConfig from './hooks/useLayoutConfig';
+import { syncModuleRoute } from './hooks/useModuleSearchState';
 import MobileLayout from './component/MobileLayout';
 import NativeBackHandler from './component/NativeBackHandler';
 
@@ -57,6 +58,11 @@ const globalMuiTheme = createTheme({
 
 function AppLayoutWrapper({ children }) {
   const isMobile = useIsMobile();
+  const location = useLocation();
+
+  useEffect(() => {
+    syncModuleRoute(location.pathname);
+  }, [location.pathname]);
 
   useEffect(() => {
     if (typeof document !== 'undefined') {

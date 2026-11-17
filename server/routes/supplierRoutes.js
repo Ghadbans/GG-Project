@@ -150,15 +150,15 @@ async function cascadeSupplierUpdate(supplierId, oldSupplier, newSupplierData) {
 
     if (!newStoreName) return;
 
+    const { toSafeObjectId } = require("../utils/objectIdUtils");
     let orConditions = [
       { manufacturerID: supplierId },
       { manufacturerID: String(supplierId) }
     ];
-    try {
-      if (mongoose.Types.ObjectId.isValid(supplierId)) {
-        orConditions.push({ manufacturerID: new mongoose.Types.ObjectId(supplierId) });
-      }
-    } catch (e) {}
+    const supplierOid = toSafeObjectId(supplierId);
+    if (supplierOid) {
+      orConditions.push({ manufacturerID: supplierOid });
+    }
 
     const addNameConditions = (name) => {
       if (!name || !name.trim() || name.trim() === '.' || name.trim().length < 3) return;
