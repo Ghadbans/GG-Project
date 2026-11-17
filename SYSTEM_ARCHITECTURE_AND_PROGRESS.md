@@ -5893,3 +5893,51 @@ In **v3.6.67**, field testing highlighted three operational usability and format
    - Android APK compiled via Gradle and mirrored to `server/public/downloads/GlobalGate-v3.6.68.apk` & `GlobalGate.apk` (17.11 MB).
    - Windows Desktop Installer packaged via electron-builder and mirrored to `server/public/downloads/Global Gate Setup 3.6.68.exe` & `Global Gate Setup.exe` (99.99 MB).
    - Removed `dist/win-unpacked` to preserve disk headroom.
+
+
+### Rule 89: Defensive Security Architecture & Infrastructure Hardening (Ver 3.6.69)
+
+#### Architectural Background & Motivation
+To safeguard the distributed multi-platform architecture (Node.js/Express backend hosted on Railway, standalone MongoDB, Cloudflare edge proxy, Cloudflare Pages web portal, Android Capacitor app, and Electron desktop client) against DoS, DDoS, credential stuffing, brute-force attacks, and API abuse, a comprehensive defensive security audit and infrastructure hardening pass was executed in **v3.6.69**:
+1. **Cloudflare-Aware Client IP Resolution & Anti-Spoofing**:
+   - `trust proxy: 1` with naive reliance on raw `CF-Connecting-IP` allowed attackers hitting Railway origin directly to spoof arbitrary client IPs and bypass rate limits.
+   - Resolved via `getClientIp`: `CF-Connecting-IP` is honored **only** if the immediate connecting peer is verified to belong to Cloudflare's published CIDR IP blocks; otherwise, it falls back to the peer IP.
+2. **Tiered Rate Limiting (`express-rate-limit`)**:
+   - **Strict Auth Limiter**: 10 failed login attempts per 15 minutes per IP (successful logins never penalize users).
+   - **Heavy Resource Limiter**: 60 write requests per 15 minutes per IP on heavy routes (`/api/marketing`, `/endpoint/marketing`, `/api/invoice-whatsapp`, `/endpoint/invoice-whatsapp`).
+   - **AI Generation Limiter**: 20 requests per 15 minutes per IP on `/api/inspection-reports/ai-draft`.
+   - **Attachment Upload Limiter**: 120 requests per 15 minutes per IP on `/endpoint/upload-attachment`.
+   - **Download Limiter**: 30 requests per hour per IP on `/download/*` and `/downloads/*` to prevent installer bandwidth abuse.
+   - **Global Baseline Limiter**: Generous 2,000 requests per 15 minutes per IP across all `/endpoint`, `/api`, and `/auth` routes to accommodate high-volume multi-user NAT office networks.
+3. **Application-Layer DoS & Memory Protection**:
+   - Replaced flat `50mb` global body limit with tiered parsing: `10mb` default for standard routes; `50mb` strictly reserved for image-carrying routes (inspection reports, marketing flyers, item/employee avatars).
+   - Slowloris and connection-exhaustion mitigation: Configured HTTP timeouts (`keepAliveTimeout = 61s`, `headersTimeout = 65s`, `requestTimeout = 120s`) aligned with Cloudflare's 60s idle keep-alive.
+4. **NoSQL Injection, ReDoS, and Input Hardening**:
+   - Integrated `express-mongo-sanitize` (`allowDots: true, replaceWith: '_'`) to strip malicious MongoDB `$` operators from bodies, queries, and params while preserving legitimate dotted object properties.
+   - Implemented `clampQuery` middleware globally truncating string query parameters exceeding 200 characters to cap regex lookahead processing costs and prevent ReDoS.
+5. **Security Headers, CORS Lockdown, and Internal Endpoint Guards**:
+   - Applied `helmet` configured specifically for API operations (`crossOriginResourcePolicy: 'cross-origin'`, `frameguard: false` to allow internal iframe rendering of PDF previews from trusted portal origins, masking `x-powered-by`).
+   - Replaced wildcard CORS with strict origin validation matching `portal.globalgate.sarl`, `gg-project.pages.dev`, `capacitor://localhost`, `file://`, localhost dev servers, and optional `CORS_EXTRA_ORIGINS`.
+   - Removed hardcoded fallback keys from `/init-admin`, `/init-permissions`, and `/debug-db`. Secured endpoints with `crypto.timingSafeEqual` requiring `ADMIN_SETUP_KEY` or `SECRET_KEY` strictly from environment variables.
+   - Introduced optional `originLock` middleware: When `ORIGIN_VERIFY_SECRET` is configured in Railway, requests lacking the matching `X-Origin-Verify` header (injected via Cloudflare Transform Rule) are rejected with HTTP 403, preventing attackers from bypassing Cloudflare.
+   - Masked internal 5xx error messages from leaking database/code internals in HTTP responses.
+
+#### Implementation & Verification Details (v3.6.69)
+1. **`server/Middleware/security.js` (New)**:
+   - Contains `getClientIp`, `isCloudflareIp`, `originLock`, `corsOptions`, `bodyParsers`, `sanitizeNoSql`, `clampQuery`, `helmetMiddleware`, and `verifyInternalKey`.
+2. **`server/Middleware/rateLimiter.js`**:
+   - Rebuilt with Cloudflare-aware key generators and tiered rate limiters (`loginLimiter`, `passwordResetLimiter`, `globalLimiter`, `heavyLimiter`, `aiLimiter`, `uploadLimiter`, `downloadLimiter`).
+3. **`server/index.js`**:
+   - Mounted security middleware stack before body parsing and route handlers.
+   - Configured MongoDB pool settings (`maxPoolSize: 30`, `minPoolSize: 2`, `serverSelectionTimeoutMS: 10000`, `connectTimeoutMS: 10000`, `socketTimeoutMS: 90000`, `mongoose.set('maxTimeMS', 60000)`).
+4. **`docs/SECURITY_CLOUDFLARE_CHECKLIST.md` (New)**:
+   - Comprehensive guide covering Cloudflare DNS/TLS (Full Strict, TLS 1.2+), 5 WAF Custom Rules, Login Rate Limiting Rule, Bot Fight Mode, and `X-Origin-Verify` Transform Rule setup.
+5. **`scripts/security-check.js` (New)**:
+   - Automated defensive test suite verifying 14 security criteria across headers, CORS, body limits, NoSQL injection, query clamping, internal route locks, and brute-force 429 triggering. **All 14 tests PASSED (0 failures)**.
+6. **Multi-Platform Incremental Release (v3.6.69)**:
+   - Verified 0 AST errors across 245 source files via `node scripts/pre-build-check.js`.
+   - Version synchronized across `package.json`, `server/package.json`, `server/index.js`, and `server/routes/downloadRoutes.js`.
+   - Web bundle compiled and synced to `dist_web/` and `build/`.
+   - Android APK compiled via Gradle and copied to `server/public/downloads/GlobalGate-v3.6.69.apk` & `GlobalGate.apk` (17.11 MB).
+   - Windows Desktop Installer packaged via electron-builder and synced to `server/public/downloads/Global Gate Setup 3.6.69.exe` & `Global Gate Setup.exe` (99.99 MB).
+   - Cleaned `dist/win-unpacked` to preserve disk headroom.

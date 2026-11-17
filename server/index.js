@@ -11,6 +11,9 @@ const createError = require("http-errors");
 const { Server } = require('socket.io')
 
 // Connecting MongoDB
+// Security: cap every query at 60s server-side so one slow/abusive query cannot lock the database
+// (long enough for backups/exports, short enough to stop runaway scans).
+mongoose.set('maxTimeMS', 60000);
 async function mongoDbConnection() {
   const mongoUri = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/globalgatedb";
   await mongoose.connect(
@@ -18,8 +21,12 @@ async function mongoDbConnection() {
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,
-    },
-    6000
+      maxPoolSize: 30,
+      minPoolSize: 2,
+      serverSelectionTimeoutMS: 10000,
+      connectTimeoutMS: 10000,
+      socketTimeoutMS: 90000,
+    }
   );
 }
 mongoDbConnection().then(() => {
@@ -386,27 +393,50 @@ const projectRoutes = require("./routes/projectRoutes");
 const attachmentRoutes = require("./routes/attachmentRoutes");
 
 
+// ---- Security hardening (v3.6.69) ----
+const security = require("./Middleware/security");
+const limiters = require("./Middleware/rateLimiter");
+
 const app = express();
-// Trust Cloudflare / Railway reverse proxy so req.ip and rate limiters receive real client IPs
+// Railway reverse proxy = 1 hop. Real client IP behind Cloudflare is resolved (spoof-proof) in
+// Middleware/security.js#getClientIp, which every rate limiter uses.
 app.set('trust proxy', 1);
+app.disable('x-powered-by');
 const server = http.createServer(app)
+// Slowloris / hanging-connection protection (keepAlive > Cloudflare's 60s idle, headers > keepAlive)
+server.keepAliveTimeout = 61 * 1000;
+server.headersTimeout = 65 * 1000;
+server.requestTimeout = 120 * 1000;
 const io = new Server(server, {
   cors: {
-    origin: "*",
+    origin: security.corsOptions.origin,
     methods: ["GET", "POST"]
-  }
+  },
+  maxHttpBufferSize: 1e6
 });
 
-app.use(express.json({ limit: '50mb' }));
-app.use(express.urlencoded({ limit: '50mb', extended: true }));
+// 1. Origin lock (no-op until ORIGIN_VERIFY_SECRET is set in Railway)
+app.use(security.originLock);
+// 2. Security headers + CORS allow-list
+app.use(security.helmetMiddleware);
+app.use(cors(security.corsOptions));
+// 3. Rate limits (before body parsing so floods are rejected cheaply)
+app.use(['/endpoint', '/api', '/auth'], limiters.globalLimiter);
+app.use(['/api/marketing', '/endpoint/marketing', '/api/invoice-whatsapp', '/endpoint/invoice-whatsapp'], limiters.heavyLimiter);
+app.use(['/api/inspection-reports/ai-draft', '/endpoint/inspection-reports/ai-draft'], limiters.aiLimiter);
+app.use('/endpoint/upload-attachment', limiters.uploadLimiter);
+app.use(['/download/android', '/download/windows', '/downloads/android', '/downloads/windows'], limiters.downloadLimiter);
+// 4. Body parsers: 10 MB default, 50 MB only on image-carrying write routes
+app.use(security.bodyParsers(express));
+// 5. NoSQL operator stripping + query clamp (bounds regex search cost)
+app.use(security.sanitizeNoSql);
+app.use(security.clampQuery);
 
 app.use(function (req, res, next) {
   req.io = io;
   return next();
 });
-// CORS
 app.use(compression());
-app.use(cors());
 const bcrypt = require('bcrypt');
 const User = require("./model/employeeUserSchema");
 
@@ -461,24 +491,18 @@ const inspectionReportRoutes = require('./routes/inspectionReportRoutes');
 app.use('/api/inspection-reports', inspectionReportRoutes);
 app.use('/endpoint/inspection-reports', inspectionReportRoutes);
 
-app.get('/', (req, res) => res.json({ name: 'Global Gate API', version: '3.6.68', status: 'online', uptime: process.uptime(), cloudWhatsApp: true }));
+app.get('/', (req, res) => res.json({ name: 'Global Gate API', version: '3.6.69', status: 'online', uptime: process.uptime(), cloudWhatsApp: true }));
 app.get('/robots.txt', (req, res) => {
   res.type('text/plain');
   res.send("User-agent: *\nDisallow: /\n");
 });
 app.get('/favicon.ico', (req, res) => res.status(204).end());
-app.get('/test', (req, res) => res.send('Backend is LIVE and UPDATED! [v3.6.68-todays-planning-and-attachments-polish]'));
-app.get('/status', (req, res) => res.json({ status: 'ok', version: '3.6.68', attachments: true, cloudWhatsApp: true, uptime: process.uptime() })); // health check
+app.get('/test', (req, res) => res.send('Backend is LIVE and UPDATED! [v3.6.69-security-hardening]'));
+app.get('/status', (req, res) => res.json({ status: 'ok', version: '3.6.69', attachments: true, cloudWhatsApp: true, uptime: process.uptime() })); // health check
 
 // SECURITY GUARD FOR INTERNAL INIT & DEBUG ROUTES
-const verifyInternalSetupKey = (req, res, next) => {
-  const setupKey = req.headers['x-admin-setup-key'] || req.query.setupKey;
-  const expectedKey = process.env.ADMIN_SETUP_KEY || process.env.SECRET_KEY || 'GG_Enterprise_Admin_Lock_2026';
-  if (setupKey && setupKey === expectedKey) {
-    return next();
-  }
-  return res.status(403).json({ error: 'Forbidden: Unauthorized access to system maintenance endpoint.' });
-};
+// Key comes ONLY from env (ADMIN_SETUP_KEY, else SECRET_KEY). No hardcoded fallback; timing-safe compare.
+const verifyInternalSetupKey = security.verifyInternalKey;
 
 // DEBUG & INIT ROUTES (Protected with internal security guard)
 app.get('/debug-db', verifyInternalSetupKey, async (req, res) => {
@@ -577,6 +601,7 @@ app.use((req, res, next) => {
 app.use(function (err, req, res, next) {
   const status = err.statusCode || err.status || 500;
   console.error(`[${status}] ${req.method} ${req.originalUrl} — ${err.message}`);
-  res.status(status).send(err.message);
+  // Never leak internals for server errors; client errors (400/404/413...) keep their message.
+  res.status(status).send(status >= 500 ? 'Internal Server Error' : err.message);
 });
 
