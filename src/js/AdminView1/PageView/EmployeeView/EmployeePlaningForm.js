@@ -181,7 +181,8 @@ function EmployeePlaningForm() {
         const resPlaning = await axios.get(`${ENDPOINT_URL}/planing`)
         setProject(resProject.data?.data?.filter((row) => row.status === 'On-Going').reverse());
         const resMaintenance = await axios.get(`${ENDPOINT_URL}/maintenance?summary=true`)
-        setMaintenance(resMaintenance.data?.data?.filter((row) => row.status === "Open"));
+        const allowedStatuses = ['open', 'pending'];
+        setMaintenance(resMaintenance.data?.data?.filter((row) => allowedStatuses.includes(String(row.status || '').trim().toLowerCase())));
         setPlaning(resPlaning.data?.data?.filter((row) => dayjs(row.planingDate).format('DD/MM/YYYY') === dayjs(planingDate).format('DD/MM/YYYY')))
         const resPRate = await axios.get(`${ENDPOINT_URL}/paymentRate`);
         (resPRate.data?.data || []).map((row) => setRate(row.paymentRate));
@@ -516,7 +517,9 @@ function EmployeePlaningForm() {
                           return options.filter((option) => {
                             const cust = (typeof option?.customerName === 'object' ? (option?.customerName?.customerName || option?.customerName?.Customer || '') : String(option?.customerName || '')).toLowerCase();
                             const sName = String(option?.serviceName || '').toLowerCase();
-                            return cust.includes(q) || sName.includes(q);
+                            const sNum = String(option?.serviceNumber || '').toLowerCase();
+                            const oNum = String(option?.orderNumber || '').toLowerCase();
+                            return cust.includes(q) || sName.includes(q) || sNum.includes(q) || oNum.includes(q);
                           });
                         }}
                         sx={{ width: '100%', backgroundColor: 'white' }}

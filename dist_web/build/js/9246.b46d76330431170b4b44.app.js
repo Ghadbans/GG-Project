@@ -350,7 +350,8 @@ function EmployeePlaningForm() {
           var resPlaning = yield axios__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_31__/* .ENDPOINT_URL */ .m, "/planing"));
           setProject((_resProject$data = resProject.data) === null || _resProject$data === void 0 || (_resProject$data = _resProject$data.data) === null || _resProject$data === void 0 ? void 0 : _resProject$data.filter(row => row.status === 'On-Going').reverse());
           var resMaintenance = yield axios__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_31__/* .ENDPOINT_URL */ .m, "/maintenance?summary=true"));
-          setMaintenance((_resMaintenance$data = resMaintenance.data) === null || _resMaintenance$data === void 0 || (_resMaintenance$data = _resMaintenance$data.data) === null || _resMaintenance$data === void 0 ? void 0 : _resMaintenance$data.filter(row => row.status === "Open"));
+          var allowedStatuses = ['open', 'pending'];
+          setMaintenance((_resMaintenance$data = resMaintenance.data) === null || _resMaintenance$data === void 0 || (_resMaintenance$data = _resMaintenance$data.data) === null || _resMaintenance$data === void 0 ? void 0 : _resMaintenance$data.filter(row => allowedStatuses.includes(String(row.status || '').trim().toLowerCase())));
           setPlaning((_resPlaning$data = resPlaning.data) === null || _resPlaning$data === void 0 || (_resPlaning$data = _resPlaning$data.data) === null || _resPlaning$data === void 0 ? void 0 : _resPlaning$data.filter(row => dayjs__WEBPACK_IMPORTED_MODULE_39___default()(row.planingDate).format('DD/MM/YYYY') === dayjs__WEBPACK_IMPORTED_MODULE_39___default()(planingDate).format('DD/MM/YYYY')));
           var resPRate = yield axios__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_31__/* .ENDPOINT_URL */ .m, "/paymentRate"));
           (((_resPRate$data = resPRate.data) === null || _resPRate$data === void 0 ? void 0 : _resPRate$data.data) || []).map(row => setRate(row.paymentRate));
@@ -734,7 +735,9 @@ function EmployeePlaningForm() {
         var _option$customerName7, _option$customerName8;
         var cust = (typeof (option === null || option === void 0 ? void 0 : option.customerName) === 'object' ? (option === null || option === void 0 || (_option$customerName7 = option.customerName) === null || _option$customerName7 === void 0 ? void 0 : _option$customerName7.customerName) || (option === null || option === void 0 || (_option$customerName8 = option.customerName) === null || _option$customerName8 === void 0 ? void 0 : _option$customerName8.Customer) || '' : String((option === null || option === void 0 ? void 0 : option.customerName) || '')).toLowerCase();
         var sName = String((option === null || option === void 0 ? void 0 : option.serviceName) || '').toLowerCase();
-        return cust.includes(q) || sName.includes(q);
+        var sNum = String((option === null || option === void 0 ? void 0 : option.serviceNumber) || '').toLowerCase();
+        var oNum = String((option === null || option === void 0 ? void 0 : option.orderNumber) || '').toLowerCase();
+        return cust.includes(q) || sName.includes(q) || sNum.includes(q) || oNum.includes(q);
       });
     },
     sx: {

@@ -3596,10 +3596,10 @@ function ItemViewAdmin() {
 /* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(14073);
 /* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(56655);
 /* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(11641);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(86990);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(22477);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(73357);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(60538);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(22477);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(73357);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(60538);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(86990);
 /* harmony import */ var _mui_icons_material_Close__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(39781);
 /* harmony import */ var _mui_icons_material_Print__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(45234);
 /* harmony import */ var _mui_icons_material_Download__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(10609);
@@ -3712,160 +3712,129 @@ function AttachmentPreviewDialog(_ref) {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, {
     sx: {
       m: 0,
-      p: '10px 20px',
+      p: {
+        xs: '8px 12px',
+        sm: '10px 20px'
+      },
       bgcolor: '#0f172a',
       color: '#f8fafc',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'space-between',
-      borderBottom: '1px solid #334155'
+      borderBottom: '1px solid #334155',
+      gap: 1
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, {
     sx: {
       display: 'flex',
       alignItems: 'center',
       gap: 1.5,
-      minWidth: 0
+      minWidth: 0,
+      flex: 1
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, {
+    sx: {
+      width: 32,
+      height: 32,
+      borderRadius: '6px',
+      bgcolor: isPdf ? 'rgba(239, 68, 68, 0.15)' : isImage ? 'rgba(56, 189, 248, 0.15)' : 'rgba(148, 163, 184, 0.15)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      flexShrink: 0
     }
   }, isPdf ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_PictureAsPdf__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
     sx: {
       color: '#ef4444',
-      fontSize: 24
+      fontSize: 20
     }
   }) : isImage ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Image__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
     sx: {
       color: '#38bdf8',
-      fontSize: 24
+      fontSize: 20
     }
   }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_InsertDriveFile__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
     sx: {
       color: '#94a3b8',
-      fontSize: 24
+      fontSize: 20
     }
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
-    variant: "subtitle1",
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, {
     sx: {
-      fontWeight: 600,
-      fontSize: '15px',
+      minWidth: 0,
+      flex: 1
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
+    variant: "subtitle2",
+    sx: {
+      fontWeight: 700,
+      fontSize: {
+        xs: '0.85rem',
+        sm: '0.95rem'
+      },
+      color: '#f8fafc',
       whiteSpace: 'nowrap',
       overflow: 'hidden',
-      textOverflow: 'ellipsis',
-      maxWidth: {
-        xs: '200px',
-        sm: '350px',
-        md: '500px'
-      }
+      textOverflow: 'ellipsis'
     },
     title: fileName
-  }, fileName)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, {
-    sx: {
-      display: 'flex',
-      alignItems: 'center',
-      gap: 1
-    }
-  }, isImage && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, {
-    sx: {
-      display: 'flex',
-      alignItems: 'center',
-      bgcolor: '#1e293b',
-      borderRadius: '4px',
-      p: '2px 6px',
-      mr: 1
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
-    title: "Zoom Out"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
-    size: "small",
-    onClick: handleZoomOut,
-    sx: {
-      color: '#94a3b8',
-      '&:hover': {
-        color: '#ffffff'
-      }
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_ZoomOut__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, {
-    fontSize: "small"
-  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
+  }, fileName), attachment !== null && attachment !== void 0 && attachment.fileSize ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
     variant: "caption",
     sx: {
-      color: '#cbd5e1',
-      px: 1,
-      minWidth: '42px',
-      textAlign: 'center',
-      fontWeight: 600
-    }
-  }, Math.round(zoom * 100), "%"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
-    title: "Zoom In"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
-    size: "small",
-    onClick: handleZoomIn,
-    sx: {
       color: '#94a3b8',
-      '&:hover': {
-        color: '#ffffff'
-      }
+      display: 'block',
+      fontSize: '0.72rem',
+      lineHeight: 1.1
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_ZoomIn__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
-    fontSize: "small"
-  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
-    title: "Reset Zoom"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
-    size: "small",
-    onClick: handleResetZoom,
+  }, (attachment.fileSize / (1024 * 1024)).toFixed(1), " MB", attachment.uploadedBy ? " \u2022 By ".concat(attachment.uploadedBy) : '') : null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, {
     sx: {
-      color: '#94a3b8',
-      '&:hover': {
-        color: '#ffffff'
-      }
+      display: 'flex',
+      alignItems: 'center',
+      gap: 0.8,
+      flexShrink: 0
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_RestartAlt__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, {
-    fontSize: "small"
-  })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
     title: "Print Attachment"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
-    variant: "outlined",
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
     size: "small",
     onClick: handlePrint,
-    startIcon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Print__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, null),
     sx: {
       color: '#f8fafc',
-      borderColor: '#475569',
-      textTransform: 'none',
-      fontWeight: 600,
+      bgcolor: 'rgba(255,255,255,0.08)',
       '&:hover': {
-        bgcolor: '#334155',
-        borderColor: '#94a3b8'
+        bgcolor: 'rgba(255,255,255,0.18)'
       }
     }
-  }, "Print")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Print__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+    fontSize: "small"
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
     title: "Download File"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
-    variant: "outlined",
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
     size: "small",
     onClick: handleDownload,
-    startIcon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Download__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, null),
     sx: {
       color: '#f8fafc',
-      borderColor: '#475569',
-      textTransform: 'none',
-      fontWeight: 600,
+      bgcolor: 'rgba(255,255,255,0.08)',
       '&:hover': {
-        bgcolor: '#334155',
-        borderColor: '#94a3b8'
+        bgcolor: 'rgba(255,255,255,0.18)'
       }
     }
-  }, "Download")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Download__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
+    fontSize: "small"
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
     "aria-label": "close",
     onClick: onClose,
     sx: {
       color: '#94a3b8',
-      ml: 1,
+      bgcolor: 'rgba(255,255,255,0.04)',
+      ml: 0.5,
       '&:hover': {
         color: '#ffffff',
-        bgcolor: '#334155'
+        bgcolor: 'rgba(239, 68, 68, 0.2)'
       }
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Close__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, null)))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Close__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+    fontSize: "small"
+  })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
     sx: {
       p: 0,
       flex: 1,
@@ -3896,7 +3865,7 @@ function AttachmentPreviewDialog(_ref) {
       bgcolor: '#0b1120',
       zIndex: 1
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
     color: "primary"
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
     variant: "body2",
@@ -3932,7 +3901,7 @@ function AttachmentPreviewDialog(_ref) {
       flexDirection: 'column',
       alignItems: 'center'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
     color: "primary"
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
     src: fileUrl,
@@ -3947,7 +3916,7 @@ function AttachmentPreviewDialog(_ref) {
       boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.5)',
       borderRadius: '4px'
     }
-  })) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+  })) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
     elevation: 4,
     sx: {
       p: 4,
@@ -3975,7 +3944,7 @@ function AttachmentPreviewDialog(_ref) {
       color: '#94a3b8',
       mb: 3
     }
-  }, "Preview is not available for this file type. You can download and open it on your device."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+  }, "Preview is not available for this file type. You can download and open it on your device."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
     variant: "contained",
     color: "primary",
     onClick: handleDownload,
@@ -3984,7 +3953,76 @@ function AttachmentPreviewDialog(_ref) {
       textTransform: 'none',
       fontWeight: 600
     }
-  }, "Download to View"))));
+  }, "Download to View")), isImage && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, {
+    sx: {
+      position: 'absolute',
+      bottom: {
+        xs: 16,
+        sm: 24
+      },
+      left: '50%',
+      transform: 'translateX(-50%)',
+      zIndex: 10,
+      display: 'flex',
+      alignItems: 'center',
+      bgcolor: 'rgba(15, 23, 42, 0.88)',
+      backdropFilter: 'blur(8px)',
+      borderRadius: '24px',
+      px: 1.5,
+      py: 0.5,
+      boxShadow: '0 8px 30px rgba(0,0,0,0.5)',
+      border: '1px solid rgba(255,255,255,0.12)'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+    title: "Zoom Out"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+    size: "small",
+    onClick: handleZoomOut,
+    sx: {
+      color: '#94a3b8',
+      '&:hover': {
+        color: '#fff'
+      }
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_ZoomOut__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, {
+    fontSize: "small"
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
+    variant: "caption",
+    sx: {
+      color: '#fff',
+      px: 1.2,
+      fontWeight: 700,
+      minWidth: '44px',
+      textAlign: 'center',
+      userSelect: 'none'
+    }
+  }, Math.round(zoom * 100), "%"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+    title: "Zoom In"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+    size: "small",
+    onClick: handleZoomIn,
+    sx: {
+      color: '#94a3b8',
+      '&:hover': {
+        color: '#fff'
+      }
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_ZoomIn__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
+    fontSize: "small"
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+    title: "Reset Zoom"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+    size: "small",
+    onClick: handleResetZoom,
+    sx: {
+      color: '#94a3b8',
+      '&:hover': {
+        color: '#fff'
+      }
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_RestartAlt__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, {
+    fontSize: "small"
+  }))))));
 }
 
 /***/ },
@@ -4014,19 +4052,18 @@ function AttachmentPreviewDialog(_ref) {
 /* harmony import */ var _mui_icons_material_CloudUpload__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(61561);
 /* harmony import */ var _mui_icons_material_AttachFile__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(40530);
 /* harmony import */ var _mui_icons_material_PictureAsPdf__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(8845);
-/* harmony import */ var _mui_icons_material_Image__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(55072);
-/* harmony import */ var _mui_icons_material_InsertDriveFile__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(46000);
-/* harmony import */ var _mui_icons_material_Visibility__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(5673);
-/* harmony import */ var _mui_icons_material_Print__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(45234);
-/* harmony import */ var _mui_icons_material_Download__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(10609);
-/* harmony import */ var _mui_icons_material_DeleteOutline__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(81730);
-/* harmony import */ var react_toastify__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(99571);
-/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(74353);
-/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_25___default = /*#__PURE__*/__webpack_require__.n(dayjs__WEBPACK_IMPORTED_MODULE_25__);
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(13561);
-/* harmony import */ var _features_auth_authSlice__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(32005);
-/* harmony import */ var _apiConfig__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(71510);
-/* harmony import */ var _AttachmentPreviewDialog__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(12699);
+/* harmony import */ var _mui_icons_material_InsertDriveFile__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(46000);
+/* harmony import */ var _mui_icons_material_Visibility__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(5673);
+/* harmony import */ var _mui_icons_material_Print__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(45234);
+/* harmony import */ var _mui_icons_material_Download__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(10609);
+/* harmony import */ var _mui_icons_material_DeleteOutline__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(81730);
+/* harmony import */ var react_toastify__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(99571);
+/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(74353);
+/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_24___default = /*#__PURE__*/__webpack_require__.n(dayjs__WEBPACK_IMPORTED_MODULE_24__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(13561);
+/* harmony import */ var _features_auth_authSlice__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(32005);
+/* harmony import */ var _apiConfig__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(71510);
+/* harmony import */ var _AttachmentPreviewDialog__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(12699);
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
 function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
@@ -4063,7 +4100,7 @@ function DocumentAttachmentsModal(_ref) {
     _ref$documentNumber = _ref.documentNumber,
     documentNumber = _ref$documentNumber === void 0 ? '' : _ref$documentNumber,
     onAttachmentCountChange = _ref.onAttachmentCountChange;
-  var user = (0,react_redux__WEBPACK_IMPORTED_MODULE_26__/* .useSelector */ .d4)(_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_27__/* .selectCurrentUser */ .xu);
+  var user = (0,react_redux__WEBPACK_IMPORTED_MODULE_25__/* .useSelector */ .d4)(_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_26__/* .selectCurrentUser */ .xu);
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState2 = _slicedToArray(_useState, 2),
     attachments = _useState2[0],
@@ -4097,7 +4134,7 @@ function DocumentAttachmentsModal(_ref) {
       try {
         var _res$data;
         setLoading(true);
-        var res = yield axios__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_28__/* .ENDPOINT_URL */ .m, "/attachments/").concat(documentId));
+        var res = yield axios__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_27__/* .ENDPOINT_URL */ .m, "/attachments/").concat(documentId));
         var list = ((_res$data = res.data) === null || _res$data === void 0 ? void 0 : _res$data.data) || [];
         setAttachments(list);
         if (onAttachmentCountChange) {
@@ -4142,7 +4179,7 @@ function DocumentAttachmentsModal(_ref) {
       var validFiles = [];
       for (var i = 0; i < files.length; i++) {
         if (files[i].size > MAX_SIZE) {
-          react_toastify__WEBPACK_IMPORTED_MODULE_24__/* .toast */ .oR.error("File \"".concat(files[i].name, "\" exceeds the 15MB limit."));
+          react_toastify__WEBPACK_IMPORTED_MODULE_23__/* .toast */ .oR.error("File \"".concat(files[i].name, "\" exceeds the 15MB limit."));
           return;
         }
         validFiles.push(files[i]);
@@ -4159,16 +4196,16 @@ function DocumentAttachmentsModal(_ref) {
       try {
         var _res$data2;
         setUploading(true);
-        var res = yield axios__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_28__/* .ENDPOINT_URL */ .m, "/upload-attachment"), formData);
-        react_toastify__WEBPACK_IMPORTED_MODULE_24__/* .toast */ .oR.success(((_res$data2 = res.data) === null || _res$data2 === void 0 ? void 0 : _res$data2.message) || 'Attachment(s) uploaded successfully');
+        var res = yield axios__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_27__/* .ENDPOINT_URL */ .m, "/upload-attachment"), formData);
+        react_toastify__WEBPACK_IMPORTED_MODULE_23__/* .toast */ .oR.success(((_res$data2 = res.data) === null || _res$data2 === void 0 ? void 0 : _res$data2.message) || 'Attachment(s) uploaded successfully');
         fetchAttachments();
       } catch (err) {
         var _err$response2;
         console.error('Error uploading attachment:', err);
         if (((_err$response2 = err.response) === null || _err$response2 === void 0 ? void 0 : _err$response2.status) === 404) {
-          react_toastify__WEBPACK_IMPORTED_MODULE_24__/* .toast */ .oR.warning('Railway deployment is currently pending (builds queued due to Railway infrastructure incident). The endpoint will activate once Railway finishes redeploying.');
+          react_toastify__WEBPACK_IMPORTED_MODULE_23__/* .toast */ .oR.warning('Railway deployment is currently pending (builds queued due to Railway infrastructure incident). The endpoint will activate once Railway finishes redeploying.');
         } else {
-          react_toastify__WEBPACK_IMPORTED_MODULE_24__/* .toast */ .oR.error('Failed to upload attachment. Please try again.');
+          react_toastify__WEBPACK_IMPORTED_MODULE_23__/* .toast */ .oR.error('Failed to upload attachment. Please try again.');
         }
       } finally {
         setUploading(false);
@@ -4204,7 +4241,7 @@ function DocumentAttachmentsModal(_ref) {
 
   // Direct print handler for item
   var handleDirectPrint = att => {
-    var fileUrl = "".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_28__/* .ENDPOINT_URL */ .m, "/attachment-file/").concat(att._id);
+    var fileUrl = "".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_27__/* .ENDPOINT_URL */ .m, "/attachment-file/").concat(att._id);
     var contentType = (att.contentType || '').toLowerCase();
     var isPdf = contentType.includes('pdf') || (att.fileName || '').toLowerCase().endsWith('.pdf');
     if (isPdf) {
@@ -4226,7 +4263,7 @@ function DocumentAttachmentsModal(_ref) {
 
   // Direct download handler
   var handleDownload = att => {
-    var downloadUrl = "".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_28__/* .ENDPOINT_URL */ .m, "/attachment-file/").concat(att._id, "?download=true");
+    var downloadUrl = "".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_27__/* .ENDPOINT_URL */ .m, "/attachment-file/").concat(att._id, "?download=true");
     var link = document.createElement('a');
     link.href = downloadUrl;
     link.download = att.fileName;
@@ -4240,13 +4277,13 @@ function DocumentAttachmentsModal(_ref) {
     var _ref4 = _asyncToGenerator(function* () {
       if (!deleteConfirmId) return;
       try {
-        yield axios__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A.delete("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_28__/* .ENDPOINT_URL */ .m, "/delete-attachment/").concat(deleteConfirmId));
-        react_toastify__WEBPACK_IMPORTED_MODULE_24__/* .toast */ .oR.success('Attachment deleted successfully');
+        yield axios__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A.delete("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_27__/* .ENDPOINT_URL */ .m, "/delete-attachment/").concat(deleteConfirmId));
+        react_toastify__WEBPACK_IMPORTED_MODULE_23__/* .toast */ .oR.success('Attachment deleted successfully');
         setDeleteConfirmId(null);
         fetchAttachments();
       } catch (err) {
         console.error('Error deleting attachment:', err);
-        react_toastify__WEBPACK_IMPORTED_MODULE_24__/* .toast */ .oR.error('Failed to delete attachment');
+        react_toastify__WEBPACK_IMPORTED_MODULE_23__/* .toast */ .oR.error('Failed to delete attachment');
       }
     });
     return function handleDeleteConfirm() {
@@ -4362,13 +4399,29 @@ function DocumentAttachmentsModal(_ref) {
       key: att._id,
       variant: "outlined",
       sx: {
-        p: '12px 16px',
+        p: {
+          xs: 1.5,
+          sm: 2
+        },
+        mb: 1.5,
         display: 'flex',
-        alignItems: 'center',
+        flexDirection: {
+          xs: 'column',
+          sm: 'row'
+        },
+        alignItems: {
+          xs: 'stretch',
+          sm: 'center'
+        },
         justifyContent: 'space-between',
-        borderRadius: '8px',
+        gap: {
+          xs: 1.2,
+          sm: 1.5
+        },
+        borderRadius: '10px',
         borderColor: '#e2e8f0',
         bgcolor: '#ffffff',
+        boxShadow: '0 1px 3px rgba(0, 0, 0, 0.02)',
         transition: 'all 0.2s ease',
         '&:hover': {
           borderColor: '#cbd5e1',
@@ -4387,29 +4440,37 @@ function DocumentAttachmentsModal(_ref) {
       onClick: () => setPreviewAttachment(att)
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
       sx: {
-        width: 38,
-        height: 38,
-        borderRadius: '6px',
+        width: 44,
+        height: 44,
+        borderRadius: '8px',
         bgcolor: isPdf ? '#fee2e2' : isImage ? '#e0f2fe' : '#f1f5f9',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        flexShrink: 0
+        flexShrink: 0,
+        overflow: 'hidden',
+        border: '1px solid #e2e8f0'
       }
-    }, isPdf ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_PictureAsPdf__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
+    }, isImage ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
+      src: "".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_27__/* .ENDPOINT_URL */ .m, "/attachment-file/").concat(att._id),
+      alt: att.fileName,
+      style: {
+        width: '100%',
+        height: '100%',
+        objectFit: 'cover'
+      },
+      onError: e => {
+        e.target.style.display = 'none';
+      }
+    }) : isPdf ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_PictureAsPdf__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
       sx: {
         color: '#dc2626',
-        fontSize: 22
+        fontSize: 24
       }
-    }) : isImage ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Image__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
-      sx: {
-        color: '#0284c7',
-        fontSize: 22
-      }
-    }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_InsertDriveFile__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
+    }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_InsertDriveFile__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
       sx: {
         color: '#64748b',
-        fontSize: 22
+        fontSize: 24
       }
     })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
       sx: {
@@ -4419,30 +4480,44 @@ function DocumentAttachmentsModal(_ref) {
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
       variant: "body2",
       sx: {
-        fontWeight: 600,
+        fontWeight: 700,
         color: '#1e293b',
-        whiteSpace: 'nowrap',
-        overflow: 'hidden',
-        textOverflow: 'ellipsis',
+        fontSize: '0.9rem',
+        lineHeight: 1.3,
+        wordBreak: 'break-word',
         '&:hover': {
           color: '#2563eb',
           textDecoration: 'underline'
         }
       },
       title: att.fileName
-    }, att.fileName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+    }, att.fileName || 'Attachment File'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
       variant: "caption",
       sx: {
         color: '#64748b',
         display: 'block',
-        lineHeight: 1.2
+        mt: 0.3,
+        fontSize: '0.78rem',
+        lineHeight: 1.3
       }
-    }, "File Size: ", formatFileSize(att.fileSize), att.uploadedBy ? " \u2022 By ".concat(att.uploadedBy) : '', att.createdAt ? " \u2022 ".concat(dayjs__WEBPACK_IMPORTED_MODULE_25___default()(att.createdAt).format('DD/MM/YYYY')) : ''))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
+    }, formatFileSize(att.fileSize), att.uploadedBy ? " \u2022 By ".concat(att.uploadedBy) : '', att.createdAt ? " \u2022 ".concat(dayjs__WEBPACK_IMPORTED_MODULE_24___default()(att.createdAt).format('DD/MM/YYYY')) : ''))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
       sx: {
         display: 'flex',
         alignItems: 'center',
-        gap: 0.5,
-        ml: 1
+        justifyContent: {
+          xs: 'flex-end',
+          sm: 'flex-end'
+        },
+        gap: 0.8,
+        pt: {
+          xs: 1,
+          sm: 0
+        },
+        borderTop: {
+          xs: '1px dashed #e2e8f0',
+          sm: 'none'
+        },
+        flexShrink: 0
       }
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
       title: "Preview"
@@ -4451,12 +4526,13 @@ function DocumentAttachmentsModal(_ref) {
       onClick: () => setPreviewAttachment(att),
       sx: {
         color: '#475569',
+        bgcolor: '#f8fafc',
         '&:hover': {
           color: '#2563eb',
           bgcolor: '#eff6ff'
         }
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Visibility__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Visibility__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
       fontSize: "small"
     }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
       title: "Direct Print"
@@ -4465,12 +4541,13 @@ function DocumentAttachmentsModal(_ref) {
       onClick: () => handleDirectPrint(att),
       sx: {
         color: '#475569',
+        bgcolor: '#f8fafc',
         '&:hover': {
           color: '#0f766e',
           bgcolor: '#f0fdfa'
         }
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Print__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Print__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
       fontSize: "small"
     }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
       title: "Download"
@@ -4479,12 +4556,13 @@ function DocumentAttachmentsModal(_ref) {
       onClick: () => handleDownload(att),
       sx: {
         color: '#475569',
+        bgcolor: '#f8fafc',
         '&:hover': {
           color: '#2563eb',
           bgcolor: '#eff6ff'
         }
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Download__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Download__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
       fontSize: "small"
     }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
       title: "Delete"
@@ -4493,12 +4571,13 @@ function DocumentAttachmentsModal(_ref) {
       onClick: () => setDeleteConfirmId(att._id),
       sx: {
         color: '#94a3b8',
+        bgcolor: '#f8fafc',
         '&:hover': {
           color: '#dc2626',
           bgcolor: '#fee2e2'
         }
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_DeleteOutline__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_DeleteOutline__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .A, {
       fontSize: "small"
     })))));
   })) :
@@ -4668,7 +4747,7 @@ function DocumentAttachmentsModal(_ref) {
       textTransform: 'none',
       fontWeight: 600
     }
-  }, "Delete"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_AttachmentPreviewDialog__WEBPACK_IMPORTED_MODULE_29__/* ["default"] */ .A, {
+  }, "Delete"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_AttachmentPreviewDialog__WEBPACK_IMPORTED_MODULE_28__/* ["default"] */ .A, {
     open: Boolean(previewAttachment),
     onClose: () => setPreviewAttachment(null),
     attachment: previewAttachment
@@ -5958,8 +6037,9 @@ function MobileDetailSheet(_ref) {
       var documentType = typeMapping[type] || 'Invoice';
       var docNumber = '';
       if (type === 'invoices') docNumber = "INV-".concat(String((record === null || record === void 0 ? void 0 : record.invoiceNumber) || '').padStart(6, '0'));else if (type === 'quotations' || type === 'estimates') docNumber = "Q-".concat(String((record === null || record === void 0 ? void 0 : record.estimateNumber) || '').padStart(6, '0'));else if (type === 'maintenance' || type === 'maintenance_orders') docNumber = MobileDetailSheet_safeText((record === null || record === void 0 ? void 0 : record.serviceNumber) || (record === null || record === void 0 ? void 0 : record.orderNumber) || (record === null || record === void 0 ? void 0 : record.maintenanceNumber));else if (type === 'projects') docNumber = "P-".concat(String((record === null || record === void 0 ? void 0 : record.projectNumber) || '').padStart(6, '0'));
+      var finalFileName = file.name && file.name !== 'image.jpg' && file.name !== 'input_file.jpg' ? file.name : "".concat(docNumber || 'Photo', "_").concat(dayjs().format('YYYYMMDD_HHmmss'), ".jpg");
       var formData = new FormData();
-      formData.append('files', file);
+      formData.append('files', file, finalFileName);
       formData.append('documentId', docId);
       formData.append('documentType', documentType);
       formData.append('documentNumber', docNumber);

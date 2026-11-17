@@ -208,7 +208,8 @@ function EmployeePlaningFormUpdate() {
         const resProject = await axios.get(`${ENDPOINT_URL}/projects`)
         setProject(resProject.data?.data?.filter((row) => row.status === 'On-Going').reverse());
         const resMaintenance = await axios.get(`${ENDPOINT_URL}/maintenance?summary=true`)
-        setMaintenance(resMaintenance.data?.data?.filter((row) => row.status === "Open"));
+        const allowedStatuses = ['open', 'pending'];
+        setMaintenance(resMaintenance.data?.data?.filter((row) => allowedStatuses.includes(String(row.status || '').trim().toLowerCase())));
         const resPRate = await axios.get(`${ENDPOINT_URL}/paymentRate`);
         (resPRate.data?.data || []).map((row) => setRate(row.paymentRate));
         const res = await axios.get(`${ENDPOINT_URL}/employeeattendance`)
@@ -567,8 +568,11 @@ function EmployeePlaningFormUpdate() {
                             (
                               <Autocomplete
                                 options={maintenance}
-                                getOptionLabel={(option) => option.serviceName}
-                                renderOption={(props, option) => (<Box {...props}> {option.customerName.customerName} | {option.serviceName}</Box>)}
+                                getOptionLabel={(option) => option?.serviceName || ''}
+                                renderOption={(props, option) => {
+                                  const cust = typeof option?.customerName === 'object' ? (option?.customerName?.customerName || option?.customerName?.Customer || '') : (option?.customerName || '');
+                                  return (<Box {...props}> {cust} | {option?.serviceName || ''}</Box>);
+                                }}
                                 renderInput={(params) => <TextField {...params} label="Maintenance Number" />}
                                 onChange={(e, newValue) => handleChangeService(newValue ? newValue : '')}
                                 inputValue={inputValue2}
@@ -576,11 +580,15 @@ function EmployeePlaningFormUpdate() {
                                   setInputValue2(newInputValue);
                                 }}
                                 filterOptions={(options, { inputValue }) => {
-                                  return options.filter(
-                                    (option) =>
-                                      option.customerName.customerName.toLowerCase().includes(inputValue.toLowerCase()) ||
-                                      option.serviceName.toLowerCase().includes(inputValue.toLowerCase())
-                                  )
+                                  const q = (inputValue || '').toLowerCase().trim();
+                                  if (!q) return options;
+                                  return options.filter((option) => {
+                                    const cust = (typeof option?.customerName === 'object' ? (option?.customerName?.customerName || option?.customerName?.Customer || '') : String(option?.customerName || '')).toLowerCase();
+                                    const sName = String(option?.serviceName || '').toLowerCase();
+                                    const sNum = String(option?.serviceNumber || '').toLowerCase();
+                                    const oNum = String(option?.orderNumber || '').toLowerCase();
+                                    return cust.includes(q) || sName.includes(q) || sNum.includes(q) || oNum.includes(q);
+                                  });
                                 }}
                                 sx={{ width: '100%', backgroundColor: 'white' }}
                               />

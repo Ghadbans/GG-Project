@@ -118,105 +118,95 @@ export default function AttachmentPreviewDialog({ open, onClose, attachment }) {
         }
       }}
     >
-      {/* Dark Top Toolbar - Matching Zoho Reference */}
+      {/* Top Toolbar - Clean, Non-Overflowing Header */}
       <DialogTitle
         sx={{
           m: 0,
-          p: '10px 20px',
+          p: { xs: '8px 12px', sm: '10px 20px' },
           bgcolor: '#0f172a',
           color: '#f8fafc',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          borderBottom: '1px solid #334155'
+          borderBottom: '1px solid #334155',
+          gap: 1
         }}
       >
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, minWidth: 0 }}>
-          {isPdf ? (
-            <PictureAsPdfIcon sx={{ color: '#ef4444', fontSize: 24 }} />
-          ) : isImage ? (
-            <ImageIcon sx={{ color: '#38bdf8', fontSize: 24 }} />
-          ) : (
-            <InsertDriveFileIcon sx={{ color: '#94a3b8', fontSize: 24 }} />
-          )}
-          <Typography
-            variant="subtitle1"
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, minWidth: 0, flex: 1 }}>
+          <Box
             sx={{
-              fontWeight: 600,
-              fontSize: '15px',
-              whiteSpace: 'nowrap',
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
-              maxWidth: { xs: '200px', sm: '350px', md: '500px' }
+              width: 32,
+              height: 32,
+              borderRadius: '6px',
+              bgcolor: isPdf ? 'rgba(239, 68, 68, 0.15)' : isImage ? 'rgba(56, 189, 248, 0.15)' : 'rgba(148, 163, 184, 0.15)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              flexShrink: 0
             }}
-            title={fileName}
           >
-            {fileName}
-          </Typography>
+            {isPdf ? (
+              <PictureAsPdfIcon sx={{ color: '#ef4444', fontSize: 20 }} />
+            ) : isImage ? (
+              <ImageIcon sx={{ color: '#38bdf8', fontSize: 20 }} />
+            ) : (
+              <InsertDriveFileIcon sx={{ color: '#94a3b8', fontSize: 20 }} />
+            )}
+          </Box>
+          <Box sx={{ minWidth: 0, flex: 1 }}>
+            <Typography
+              variant="subtitle2"
+              sx={{
+                fontWeight: 700,
+                fontSize: { xs: '0.85rem', sm: '0.95rem' },
+                color: '#f8fafc',
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis'
+              }}
+              title={fileName}
+            >
+              {fileName}
+            </Typography>
+            {attachment?.fileSize ? (
+              <Typography variant="caption" sx={{ color: '#94a3b8', display: 'block', fontSize: '0.72rem', lineHeight: 1.1 }}>
+                {(attachment.fileSize / (1024 * 1024)).toFixed(1)} MB
+                {attachment.uploadedBy ? ` • By ${attachment.uploadedBy}` : ''}
+              </Typography>
+            ) : null}
+          </Box>
         </Box>
 
         {/* Toolbar Controls */}
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-          {/* Zoom controls for Images */}
-          {isImage && (
-            <Box sx={{ display: 'flex', alignItems: 'center', bgcolor: '#1e293b', borderRadius: '4px', p: '2px 6px', mr: 1 }}>
-              <Tooltip title="Zoom Out">
-                <IconButton size="small" onClick={handleZoomOut} sx={{ color: '#94a3b8', '&:hover': { color: '#ffffff' } }}>
-                  <ZoomOutIcon fontSize="small" />
-                </IconButton>
-              </Tooltip>
-              <Typography variant="caption" sx={{ color: '#cbd5e1', px: 1, minWidth: '42px', textAlign: 'center', fontWeight: 600 }}>
-                {Math.round(zoom * 100)}%
-              </Typography>
-              <Tooltip title="Zoom In">
-                <IconButton size="small" onClick={handleZoomIn} sx={{ color: '#94a3b8', '&:hover': { color: '#ffffff' } }}>
-                  <ZoomInIcon fontSize="small" />
-                </IconButton>
-              </Tooltip>
-              <Tooltip title="Reset Zoom">
-                <IconButton size="small" onClick={handleResetZoom} sx={{ color: '#94a3b8', '&:hover': { color: '#ffffff' } }}>
-                  <RestartAltIcon fontSize="small" />
-                </IconButton>
-              </Tooltip>
-            </Box>
-          )}
-
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.8, flexShrink: 0 }}>
           {/* Direct Print Button */}
           <Tooltip title="Print Attachment">
-            <Button
-              variant="outlined"
+            <IconButton
               size="small"
               onClick={handlePrint}
-              startIcon={<PrintIcon />}
               sx={{
                 color: '#f8fafc',
-                borderColor: '#475569',
-                textTransform: 'none',
-                fontWeight: 600,
-                '&:hover': { bgcolor: '#334155', borderColor: '#94a3b8' }
+                bgcolor: 'rgba(255,255,255,0.08)',
+                '&:hover': { bgcolor: 'rgba(255,255,255,0.18)' }
               }}
             >
-              Print
-            </Button>
+              <PrintIcon fontSize="small" />
+            </IconButton>
           </Tooltip>
 
           {/* Download Button */}
           <Tooltip title="Download File">
-            <Button
-              variant="outlined"
+            <IconButton
               size="small"
               onClick={handleDownload}
-              startIcon={<DownloadIcon />}
               sx={{
                 color: '#f8fafc',
-                borderColor: '#475569',
-                textTransform: 'none',
-                fontWeight: 600,
-                '&:hover': { bgcolor: '#334155', borderColor: '#94a3b8' }
+                bgcolor: 'rgba(255,255,255,0.08)',
+                '&:hover': { bgcolor: 'rgba(255,255,255,0.18)' }
               }}
             >
-              Download
-            </Button>
+              <DownloadIcon fontSize="small" />
+            </IconButton>
           </Tooltip>
 
           {/* Close Button */}
@@ -225,11 +215,12 @@ export default function AttachmentPreviewDialog({ open, onClose, attachment }) {
             onClick={onClose}
             sx={{
               color: '#94a3b8',
-              ml: 1,
-              '&:hover': { color: '#ffffff', bgcolor: '#334155' }
+              bgcolor: 'rgba(255,255,255,0.04)',
+              ml: 0.5,
+              '&:hover': { color: '#ffffff', bgcolor: 'rgba(239, 68, 68, 0.2)' }
             }}
           >
-            <CloseIcon />
+            <CloseIcon fontSize="small" />
           </IconButton>
         </Box>
       </DialogTitle>
@@ -345,6 +336,47 @@ export default function AttachmentPreviewDialog({ open, onClose, attachment }) {
               Download to View
             </Button>
           </Paper>
+        )}
+
+        {/* Floating Glassmorphic Zoom Controls for Images */}
+        {isImage && (
+          <Box
+            sx={{
+              position: 'absolute',
+              bottom: { xs: 16, sm: 24 },
+              left: '50%',
+              transform: 'translateX(-50%)',
+              zIndex: 10,
+              display: 'flex',
+              alignItems: 'center',
+              bgcolor: 'rgba(15, 23, 42, 0.88)',
+              backdropFilter: 'blur(8px)',
+              borderRadius: '24px',
+              px: 1.5,
+              py: 0.5,
+              boxShadow: '0 8px 30px rgba(0,0,0,0.5)',
+              border: '1px solid rgba(255,255,255,0.12)'
+            }}
+          >
+            <Tooltip title="Zoom Out">
+              <IconButton size="small" onClick={handleZoomOut} sx={{ color: '#94a3b8', '&:hover': { color: '#fff' } }}>
+                <ZoomOutIcon fontSize="small" />
+              </IconButton>
+            </Tooltip>
+            <Typography variant="caption" sx={{ color: '#fff', px: 1.2, fontWeight: 700, minWidth: '44px', textAlign: 'center', userSelect: 'none' }}>
+              {Math.round(zoom * 100)}%
+            </Typography>
+            <Tooltip title="Zoom In">
+              <IconButton size="small" onClick={handleZoomIn} sx={{ color: '#94a3b8', '&:hover': { color: '#fff' } }}>
+                <ZoomInIcon fontSize="small" />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Reset Zoom">
+              <IconButton size="small" onClick={handleResetZoom} sx={{ color: '#94a3b8', '&:hover': { color: '#fff' } }}>
+                <RestartAltIcon fontSize="small" />
+              </IconButton>
+            </Tooltip>
+          </Box>
         )}
       </DialogContent>
     </Dialog>

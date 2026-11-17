@@ -247,8 +247,12 @@ function MobileDetailSheet({ open, onClose, record, type }) {
     else if (type === 'maintenance' || type === 'maintenance_orders') docNumber = safeText(record?.serviceNumber || record?.orderNumber || record?.maintenanceNumber);
     else if (type === 'projects') docNumber = `P-${String(record?.projectNumber || '').padStart(6, '0')}`;
 
+    const finalFileName = file.name && file.name !== 'image.jpg' && file.name !== 'input_file.jpg'
+      ? file.name
+      : `${docNumber || 'Photo'}_${dayjs().format('YYYYMMDD_HHmmss')}.jpg`;
+
     const formData = new FormData();
-    formData.append('files', file);
+    formData.append('files', file, finalFileName);
     formData.append('documentId', docId);
     formData.append('documentType', documentType);
     formData.append('documentNumber', docNumber);

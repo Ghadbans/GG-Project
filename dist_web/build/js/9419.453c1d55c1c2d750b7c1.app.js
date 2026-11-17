@@ -1,4 +1,4 @@
-(this["webpackChunkgg_management"] = this["webpackChunkgg_management"] || []).push([[5391],{
+(this["webpackChunkgg_management"] = this["webpackChunkgg_management"] || []).push([[9419],{
 
 /***/ 40530
 (__unused_webpack_module, exports, __webpack_require__) {
@@ -413,6 +413,486 @@ var _default = exports.A = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRun
 
 /***/ },
 
+/***/ 17332
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var _utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(20561);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(74848);
+"use client";
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("path", {
+  d: "M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2m-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1m2 14H7v-2h7zm3-4H7v-2h10zm0-4H7V7h10z"
+}), 'Assignment'));
+/* harmony export */ __webpack_require__.d(__webpack_exports__, [
+/* harmony export */   "A", 0, /* export default binding */ __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ ]);
+
+
+/***/ },
+
+/***/ 8047
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var _utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(20561);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(74848);
+"use client";
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("path", {
+  d: "M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2m5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12z"
+}), 'Cancel'));
+/* harmony export */ __webpack_require__.d(__webpack_exports__, [
+/* harmony export */   "A", 0, /* export default binding */ __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ ]);
+
+
+/***/ },
+
+/***/ 81757
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var _utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(20561);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(74848);
+"use client";
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("path", {
+  d: "M3 10h11v2H3zm0-2h11V6H3zm0 8h7v-2H3zm15.01-3.13.71-.71c.39-.39 1.02-.39 1.41 0l.71.71c.39.39.39 1.02 0 1.41l-.71.71zm-.71.71-5.3 5.3V21h2.12l5.3-5.3z"
+}), 'EditNote'));
+/* harmony export */ __webpack_require__.d(__webpack_exports__, [
+/* harmony export */   "A", 0, /* export default binding */ __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ ]);
+
+
+/***/ },
+
+/***/ 62430
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var _utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(20561);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(74848);
+"use client";
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("path", {
+  d: "M6 2v6h.01L6 8.01 10 12l-4 4 .01.01H6V22h12v-5.99h-.01L18 16l-4-4 4-3.99-.01-.01H18V2zm10 14.5V20H8v-3.5l4-4zm-4-5-4-4V4h8v3.5z"
+}), 'HourglassEmpty'));
+/* harmony export */ __webpack_require__.d(__webpack_exports__, [
+/* harmony export */   "A", 0, /* export default binding */ __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ ]);
+
+
+/***/ },
+
+/***/ 7078
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var _utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(20561);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(74848);
+"use client";
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("path", {
+  d: "M18.39 14.56C16.71 13.7 14.53 13 12 13s-4.71.7-6.39 1.56C4.61 15.07 4 16.1 4 17.22V20h16v-2.78c0-1.12-.61-2.15-1.61-2.66M18 18H6v-.78c0-.38.2-.72.52-.88C7.71 15.73 9.63 15 12 15c2.37 0 4.29.73 5.48 1.34.32.16.52.5.52.88zm-8.22-6h4.44c1.21 0 2.14-1.06 1.98-2.26l-.32-2.45C15.57 5.39 13.92 4 12 4S8.43 5.39 8.12 7.29L7.8 9.74c-.16 1.2.77 2.26 1.98 2.26m.32-4.41C10.26 6.67 11.06 6 12 6s1.74.67 1.9 1.59l.32 2.41H9.78z"
+}), 'Person2Outlined'));
+/* harmony export */ __webpack_require__.d(__webpack_exports__, [
+/* harmony export */   "A", 0, /* export default binding */ __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ ]);
+
+
+/***/ },
+
+/***/ 79030
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var _utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(20561);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(74848);
+"use client";
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("path", {
+  d: "M8.65 5.82C9.36 4.72 10.6 4 12 4c2.21 0 4 1.79 4 4 0 1.4-.72 2.64-1.82 3.35zM20 17.17c-.02-1.1-.63-2.11-1.61-2.62-.54-.28-1.13-.54-1.77-.76zm.49 3.32L3.51 3.51a.9959.9959 0 0 0-1.41 0c-.39.39-.39 1.02 0 1.41l8.18 8.18c-1.82.23-3.41.8-4.7 1.46C4.6 15.08 4 16.11 4 17.22V20h13.17l1.9 1.9c.39.39 1.02.39 1.41 0 .4-.39.4-1.02.01-1.41"
+}), 'PersonOffRounded'));
+/* harmony export */ __webpack_require__.d(__webpack_exports__, [
+/* harmony export */   "A", 0, /* export default binding */ __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ ]);
+
+
+/***/ },
+
+/***/ 52751
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var _utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(20561);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(74848);
+"use client";
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("path", {
+  d: "M2.01 21 23 12 2.01 3 2 10l15 2-15 2z"
+}), 'Send'));
+/* harmony export */ __webpack_require__.d(__webpack_exports__, [
+/* harmony export */   "A", 0, /* export default binding */ __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ ]);
+
+
+/***/ },
+
+/***/ 36632
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+
+// EXPORTS
+__webpack_require__.d(__webpack_exports__, {
+  A: () => (/* binding */ Alert_Alert)
+});
+
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js
+var objectWithoutPropertiesLoose = __webpack_require__(98587);
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/extends.js
+var esm_extends = __webpack_require__(58168);
+// EXTERNAL MODULE: ./node_modules/react/index.js
+var react = __webpack_require__(96540);
+// EXTERNAL MODULE: ./node_modules/clsx/dist/clsx.mjs
+var clsx = __webpack_require__(34164);
+// EXTERNAL MODULE: ./node_modules/@mui/utils/esm/composeClasses/composeClasses.js
+var composeClasses = __webpack_require__(75659);
+// EXTERNAL MODULE: ./node_modules/@mui/system/colorManipulator.js
+var colorManipulator = __webpack_require__(771);
+// EXTERNAL MODULE: ./node_modules/@mui/material/styles/styled.js
+var styled = __webpack_require__(11848);
+// EXTERNAL MODULE: ./node_modules/@mui/material/DefaultPropsProvider/DefaultPropsProvider.js
+var DefaultPropsProvider = __webpack_require__(25669);
+// EXTERNAL MODULE: ./node_modules/@mui/material/utils/useSlot.js
+var useSlot = __webpack_require__(6025);
+// EXTERNAL MODULE: ./node_modules/@mui/material/utils/capitalize.js
+var capitalize = __webpack_require__(28466);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Paper/Paper.js + 2 modules
+var Paper = __webpack_require__(60538);
+// EXTERNAL MODULE: ./node_modules/@mui/utils/esm/generateUtilityClasses/generateUtilityClasses.js
+var generateUtilityClasses = __webpack_require__(38413);
+// EXTERNAL MODULE: ./node_modules/@mui/utils/esm/generateUtilityClass/generateUtilityClass.js
+var generateUtilityClass = __webpack_require__(31609);
+;// ./node_modules/@mui/material/Alert/alertClasses.js
+
+
+function getAlertUtilityClass(slot) {
+  return (0,generateUtilityClass/* default */.Ay)('MuiAlert', slot);
+}
+const alertClasses = (0,generateUtilityClasses/* default */.A)('MuiAlert', ['root', 'action', 'icon', 'message', 'filled', 'colorSuccess', 'colorInfo', 'colorWarning', 'colorError', 'filledSuccess', 'filledInfo', 'filledWarning', 'filledError', 'outlined', 'outlinedSuccess', 'outlinedInfo', 'outlinedWarning', 'outlinedError', 'standard', 'standardSuccess', 'standardInfo', 'standardWarning', 'standardError']);
+/* harmony default export */ const Alert_alertClasses = (alertClasses);
+// EXTERNAL MODULE: ./node_modules/@mui/material/IconButton/IconButton.js + 1 modules
+var IconButton = __webpack_require__(11641);
+// EXTERNAL MODULE: ./node_modules/@mui/material/utils/createSvgIcon.js
+var createSvgIcon = __webpack_require__(20561);
+// EXTERNAL MODULE: ./node_modules/react/jsx-runtime.js
+var jsx_runtime = __webpack_require__(74848);
+;// ./node_modules/@mui/material/internal/svg-icons/SuccessOutlined.js
+'use client';
+
+
+
+
+/**
+ * @ignore - internal component.
+ */
+
+/* harmony default export */ const SuccessOutlined = ((0,createSvgIcon/* default */.A)( /*#__PURE__*/(0,jsx_runtime.jsx)("path", {
+  d: "M20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4C12.76,4 13.5,4.11 14.2, 4.31L15.77,2.74C14.61,2.26 13.34,2 12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0, 0 22,12M7.91,10.08L6.5,11.5L11,16L21,6L19.59,4.58L11,13.17L7.91,10.08Z"
+}), 'SuccessOutlined'));
+;// ./node_modules/@mui/material/internal/svg-icons/ReportProblemOutlined.js
+'use client';
+
+
+
+
+/**
+ * @ignore - internal component.
+ */
+
+/* harmony default export */ const ReportProblemOutlined = ((0,createSvgIcon/* default */.A)( /*#__PURE__*/(0,jsx_runtime.jsx)("path", {
+  d: "M12 5.99L19.53 19H4.47L12 5.99M12 2L1 21h22L12 2zm1 14h-2v2h2v-2zm0-6h-2v4h2v-4z"
+}), 'ReportProblemOutlined'));
+;// ./node_modules/@mui/material/internal/svg-icons/ErrorOutline.js
+'use client';
+
+
+
+
+/**
+ * @ignore - internal component.
+ */
+
+/* harmony default export */ const ErrorOutline = ((0,createSvgIcon/* default */.A)( /*#__PURE__*/(0,jsx_runtime.jsx)("path", {
+  d: "M11 15h2v2h-2zm0-8h2v6h-2zm.99-5C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
+}), 'ErrorOutline'));
+;// ./node_modules/@mui/material/internal/svg-icons/InfoOutlined.js
+'use client';
+
+
+
+
+/**
+ * @ignore - internal component.
+ */
+
+/* harmony default export */ const InfoOutlined = ((0,createSvgIcon/* default */.A)( /*#__PURE__*/(0,jsx_runtime.jsx)("path", {
+  d: "M11,9H13V7H11M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20, 12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10, 10 0 0,0 12,2M11,17H13V11H11V17Z"
+}), 'InfoOutlined'));
+// EXTERNAL MODULE: ./node_modules/@mui/material/internal/svg-icons/Close.js
+var Close = __webpack_require__(49350);
+;// ./node_modules/@mui/material/Alert/Alert.js
+'use client';
+
+
+
+const _excluded = ["action", "children", "className", "closeText", "color", "components", "componentsProps", "icon", "iconMapping", "onClose", "role", "severity", "slotProps", "slots", "variant"];
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const useUtilityClasses = ownerState => {
+  const {
+    variant,
+    color,
+    severity,
+    classes
+  } = ownerState;
+  const slots = {
+    root: ['root', `color${(0,capitalize/* default */.A)(color || severity)}`, `${variant}${(0,capitalize/* default */.A)(color || severity)}`, `${variant}`],
+    icon: ['icon'],
+    message: ['message'],
+    action: ['action']
+  };
+  return (0,composeClasses/* default */.A)(slots, getAlertUtilityClass, classes);
+};
+const AlertRoot = (0,styled/* default */.Ay)(Paper/* default */.A, {
+  name: 'MuiAlert',
+  slot: 'Root',
+  overridesResolver: (props, styles) => {
+    const {
+      ownerState
+    } = props;
+    return [styles.root, styles[ownerState.variant], styles[`${ownerState.variant}${(0,capitalize/* default */.A)(ownerState.color || ownerState.severity)}`]];
+  }
+})(({
+  theme
+}) => {
+  const getColor = theme.palette.mode === 'light' ? colorManipulator/* darken */.e$ : colorManipulator/* lighten */.a;
+  const getBackgroundColor = theme.palette.mode === 'light' ? colorManipulator/* lighten */.a : colorManipulator/* darken */.e$;
+  return (0,esm_extends/* default */.A)({}, theme.typography.body2, {
+    backgroundColor: 'transparent',
+    display: 'flex',
+    padding: '6px 16px',
+    variants: [...Object.entries(theme.palette).filter(([, value]) => value.main && value.light).map(([color]) => ({
+      props: {
+        colorSeverity: color,
+        variant: 'standard'
+      },
+      style: {
+        color: theme.vars ? theme.vars.palette.Alert[`${color}Color`] : getColor(theme.palette[color].light, 0.6),
+        backgroundColor: theme.vars ? theme.vars.palette.Alert[`${color}StandardBg`] : getBackgroundColor(theme.palette[color].light, 0.9),
+        [`& .${Alert_alertClasses.icon}`]: theme.vars ? {
+          color: theme.vars.palette.Alert[`${color}IconColor`]
+        } : {
+          color: theme.palette[color].main
+        }
+      }
+    })), ...Object.entries(theme.palette).filter(([, value]) => value.main && value.light).map(([color]) => ({
+      props: {
+        colorSeverity: color,
+        variant: 'outlined'
+      },
+      style: {
+        color: theme.vars ? theme.vars.palette.Alert[`${color}Color`] : getColor(theme.palette[color].light, 0.6),
+        border: `1px solid ${(theme.vars || theme).palette[color].light}`,
+        [`& .${Alert_alertClasses.icon}`]: theme.vars ? {
+          color: theme.vars.palette.Alert[`${color}IconColor`]
+        } : {
+          color: theme.palette[color].main
+        }
+      }
+    })), ...Object.entries(theme.palette).filter(([, value]) => value.main && value.dark).map(([color]) => ({
+      props: {
+        colorSeverity: color,
+        variant: 'filled'
+      },
+      style: (0,esm_extends/* default */.A)({
+        fontWeight: theme.typography.fontWeightMedium
+      }, theme.vars ? {
+        color: theme.vars.palette.Alert[`${color}FilledColor`],
+        backgroundColor: theme.vars.palette.Alert[`${color}FilledBg`]
+      } : {
+        backgroundColor: theme.palette.mode === 'dark' ? theme.palette[color].dark : theme.palette[color].main,
+        color: theme.palette.getContrastText(theme.palette[color].main)
+      })
+    }))]
+  });
+});
+const AlertIcon = (0,styled/* default */.Ay)('div', {
+  name: 'MuiAlert',
+  slot: 'Icon',
+  overridesResolver: (props, styles) => styles.icon
+})({
+  marginRight: 12,
+  padding: '7px 0',
+  display: 'flex',
+  fontSize: 22,
+  opacity: 0.9
+});
+const AlertMessage = (0,styled/* default */.Ay)('div', {
+  name: 'MuiAlert',
+  slot: 'Message',
+  overridesResolver: (props, styles) => styles.message
+})({
+  padding: '8px 0',
+  minWidth: 0,
+  overflow: 'auto'
+});
+const AlertAction = (0,styled/* default */.Ay)('div', {
+  name: 'MuiAlert',
+  slot: 'Action',
+  overridesResolver: (props, styles) => styles.action
+})({
+  display: 'flex',
+  alignItems: 'flex-start',
+  padding: '4px 0 0 16px',
+  marginLeft: 'auto',
+  marginRight: -8
+});
+const defaultIconMapping = {
+  success: /*#__PURE__*/(0,jsx_runtime.jsx)(SuccessOutlined, {
+    fontSize: "inherit"
+  }),
+  warning: /*#__PURE__*/(0,jsx_runtime.jsx)(ReportProblemOutlined, {
+    fontSize: "inherit"
+  }),
+  error: /*#__PURE__*/(0,jsx_runtime.jsx)(ErrorOutline, {
+    fontSize: "inherit"
+  }),
+  info: /*#__PURE__*/(0,jsx_runtime.jsx)(InfoOutlined, {
+    fontSize: "inherit"
+  })
+};
+const Alert = /*#__PURE__*/react.forwardRef(function Alert(inProps, ref) {
+  const props = (0,DefaultPropsProvider/* useDefaultProps */.b)({
+    props: inProps,
+    name: 'MuiAlert'
+  });
+  const {
+      action,
+      children,
+      className,
+      closeText = 'Close',
+      color,
+      components = {},
+      componentsProps = {},
+      icon,
+      iconMapping = defaultIconMapping,
+      onClose,
+      role = 'alert',
+      severity = 'success',
+      slotProps = {},
+      slots = {},
+      variant = 'standard'
+    } = props,
+    other = (0,objectWithoutPropertiesLoose/* default */.A)(props, _excluded);
+  const ownerState = (0,esm_extends/* default */.A)({}, props, {
+    color,
+    severity,
+    variant,
+    colorSeverity: color || severity
+  });
+  const classes = useUtilityClasses(ownerState);
+  const externalForwardedProps = {
+    slots: (0,esm_extends/* default */.A)({
+      closeButton: components.CloseButton,
+      closeIcon: components.CloseIcon
+    }, slots),
+    slotProps: (0,esm_extends/* default */.A)({}, componentsProps, slotProps)
+  };
+  const [CloseButtonSlot, closeButtonProps] = (0,useSlot/* default */.A)('closeButton', {
+    elementType: IconButton/* default */.A,
+    externalForwardedProps,
+    ownerState
+  });
+  const [CloseIconSlot, closeIconProps] = (0,useSlot/* default */.A)('closeIcon', {
+    elementType: Close/* default */.A,
+    externalForwardedProps,
+    ownerState
+  });
+  return /*#__PURE__*/(0,jsx_runtime.jsxs)(AlertRoot, (0,esm_extends/* default */.A)({
+    role: role,
+    elevation: 0,
+    ownerState: ownerState,
+    className: (0,clsx/* default */.A)(classes.root, className),
+    ref: ref
+  }, other, {
+    children: [icon !== false ? /*#__PURE__*/(0,jsx_runtime.jsx)(AlertIcon, {
+      ownerState: ownerState,
+      className: classes.icon,
+      children: icon || iconMapping[severity] || defaultIconMapping[severity]
+    }) : null, /*#__PURE__*/(0,jsx_runtime.jsx)(AlertMessage, {
+      ownerState: ownerState,
+      className: classes.message,
+      children: children
+    }), action != null ? /*#__PURE__*/(0,jsx_runtime.jsx)(AlertAction, {
+      ownerState: ownerState,
+      className: classes.action,
+      children: action
+    }) : null, action == null && onClose ? /*#__PURE__*/(0,jsx_runtime.jsx)(AlertAction, {
+      ownerState: ownerState,
+      className: classes.action,
+      children: /*#__PURE__*/(0,jsx_runtime.jsx)(CloseButtonSlot, (0,esm_extends/* default */.A)({
+        size: "small",
+        "aria-label": closeText,
+        title: closeText,
+        color: "inherit",
+        onClick: onClose
+      }, closeButtonProps, {
+        children: /*#__PURE__*/(0,jsx_runtime.jsx)(CloseIconSlot, (0,esm_extends/* default */.A)({
+          fontSize: "small"
+        }, closeIconProps))
+      }))
+    }) : null]
+  }));
+});
+ false ? 0 : void 0;
+/* harmony default export */ const Alert_Alert = (Alert);
+
+/***/ },
+
 /***/ 87458
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
@@ -769,6 +1249,614 @@ const LinearProgress = /*#__PURE__*/react.forwardRef(function LinearProgress(inP
 });
  false ? 0 : void 0;
 /* harmony default export */ const LinearProgress_LinearProgress = (LinearProgress);
+
+/***/ },
+
+/***/ 69279
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+
+// EXPORTS
+__webpack_require__.d(__webpack_exports__, {
+  A: () => (/* binding */ Pagination_Pagination)
+});
+
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/extends.js
+var esm_extends = __webpack_require__(58168);
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js
+var objectWithoutPropertiesLoose = __webpack_require__(98587);
+// EXTERNAL MODULE: ./node_modules/react/index.js
+var react = __webpack_require__(96540);
+// EXTERNAL MODULE: ./node_modules/clsx/dist/clsx.mjs
+var clsx = __webpack_require__(34164);
+// EXTERNAL MODULE: ./node_modules/@mui/utils/esm/composeClasses/composeClasses.js
+var composeClasses = __webpack_require__(75659);
+// EXTERNAL MODULE: ./node_modules/@mui/material/DefaultPropsProvider/DefaultPropsProvider.js
+var DefaultPropsProvider = __webpack_require__(25669);
+// EXTERNAL MODULE: ./node_modules/@mui/utils/esm/generateUtilityClasses/generateUtilityClasses.js
+var generateUtilityClasses = __webpack_require__(38413);
+// EXTERNAL MODULE: ./node_modules/@mui/utils/esm/generateUtilityClass/generateUtilityClass.js
+var generateUtilityClass = __webpack_require__(31609);
+;// ./node_modules/@mui/material/Pagination/paginationClasses.js
+
+
+function getPaginationUtilityClass(slot) {
+  return (0,generateUtilityClass/* default */.Ay)('MuiPagination', slot);
+}
+const paginationClasses = (0,generateUtilityClasses/* default */.A)('MuiPagination', ['root', 'ul', 'outlined', 'text']);
+/* harmony default export */ const Pagination_paginationClasses = ((/* unused pure expression or super */ null && (paginationClasses)));
+// EXTERNAL MODULE: ./node_modules/@mui/utils/esm/useControlled/useControlled.js
+var useControlled = __webpack_require__(2501);
+;// ./node_modules/@mui/material/usePagination/usePagination.js
+'use client';
+
+
+
+const _excluded = ["boundaryCount", "componentName", "count", "defaultPage", "disabled", "hideNextButton", "hidePrevButton", "onChange", "page", "showFirstButton", "showLastButton", "siblingCount"];
+
+function usePagination(props = {}) {
+  // keep default values in sync with @default tags in Pagination.propTypes
+  const {
+      boundaryCount = 1,
+      componentName = 'usePagination',
+      count = 1,
+      defaultPage = 1,
+      disabled = false,
+      hideNextButton = false,
+      hidePrevButton = false,
+      onChange: handleChange,
+      page: pageProp,
+      showFirstButton = false,
+      showLastButton = false,
+      siblingCount = 1
+    } = props,
+    other = (0,objectWithoutPropertiesLoose/* default */.A)(props, _excluded);
+  const [page, setPageState] = (0,useControlled/* default */.A)({
+    controlled: pageProp,
+    default: defaultPage,
+    name: componentName,
+    state: 'page'
+  });
+  const handleClick = (event, value) => {
+    if (!pageProp) {
+      setPageState(value);
+    }
+    if (handleChange) {
+      handleChange(event, value);
+    }
+  };
+
+  // https://dev.to/namirsab/comment/2050
+  const range = (start, end) => {
+    const length = end - start + 1;
+    return Array.from({
+      length
+    }, (_, i) => start + i);
+  };
+  const startPages = range(1, Math.min(boundaryCount, count));
+  const endPages = range(Math.max(count - boundaryCount + 1, boundaryCount + 1), count);
+  const siblingsStart = Math.max(Math.min(
+  // Natural start
+  page - siblingCount,
+  // Lower boundary when page is high
+  count - boundaryCount - siblingCount * 2 - 1),
+  // Greater than startPages
+  boundaryCount + 2);
+  const siblingsEnd = Math.min(Math.max(
+  // Natural end
+  page + siblingCount,
+  // Upper boundary when page is low
+  boundaryCount + siblingCount * 2 + 2),
+  // Less than endPages
+  endPages.length > 0 ? endPages[0] - 2 : count - 1);
+
+  // Basic list of items to render
+  // for example itemList = ['first', 'previous', 1, 'ellipsis', 4, 5, 6, 'ellipsis', 10, 'next', 'last']
+  const itemList = [...(showFirstButton ? ['first'] : []), ...(hidePrevButton ? [] : ['previous']), ...startPages,
+  // Start ellipsis
+  // eslint-disable-next-line no-nested-ternary
+  ...(siblingsStart > boundaryCount + 2 ? ['start-ellipsis'] : boundaryCount + 1 < count - boundaryCount ? [boundaryCount + 1] : []),
+  // Sibling pages
+  ...range(siblingsStart, siblingsEnd),
+  // End ellipsis
+  // eslint-disable-next-line no-nested-ternary
+  ...(siblingsEnd < count - boundaryCount - 1 ? ['end-ellipsis'] : count - boundaryCount > boundaryCount ? [count - boundaryCount] : []), ...endPages, ...(hideNextButton ? [] : ['next']), ...(showLastButton ? ['last'] : [])];
+
+  // Map the button type to its page number
+  const buttonPage = type => {
+    switch (type) {
+      case 'first':
+        return 1;
+      case 'previous':
+        return page - 1;
+      case 'next':
+        return page + 1;
+      case 'last':
+        return count;
+      default:
+        return null;
+    }
+  };
+
+  // Convert the basic item list to PaginationItem props objects
+  const items = itemList.map(item => {
+    return typeof item === 'number' ? {
+      onClick: event => {
+        handleClick(event, item);
+      },
+      type: 'page',
+      page: item,
+      selected: item === page,
+      disabled,
+      'aria-current': item === page ? 'true' : undefined
+    } : {
+      onClick: event => {
+        handleClick(event, buttonPage(item));
+      },
+      type: item,
+      page: buttonPage(item),
+      selected: false,
+      disabled: disabled || item.indexOf('ellipsis') === -1 && (item === 'next' || item === 'last' ? page >= count : page <= 1)
+    };
+  });
+  return (0,esm_extends/* default */.A)({
+    items
+  }, other);
+}
+// EXTERNAL MODULE: ./node_modules/@mui/system/colorManipulator.js
+var colorManipulator = __webpack_require__(771);
+// EXTERNAL MODULE: ./node_modules/@mui/system/esm/RtlProvider/index.js
+var RtlProvider = __webpack_require__(73788);
+;// ./node_modules/@mui/material/PaginationItem/paginationItemClasses.js
+
+
+function getPaginationItemUtilityClass(slot) {
+  return (0,generateUtilityClass/* default */.Ay)('MuiPaginationItem', slot);
+}
+const paginationItemClasses = (0,generateUtilityClasses/* default */.A)('MuiPaginationItem', ['root', 'page', 'sizeSmall', 'sizeLarge', 'text', 'textPrimary', 'textSecondary', 'outlined', 'outlinedPrimary', 'outlinedSecondary', 'rounded', 'ellipsis', 'firstLast', 'previousNext', 'focusVisible', 'disabled', 'selected', 'icon', 'colorPrimary', 'colorSecondary']);
+/* harmony default export */ const PaginationItem_paginationItemClasses = (paginationItemClasses);
+// EXTERNAL MODULE: ./node_modules/@mui/material/ButtonBase/ButtonBase.js + 4 modules
+var ButtonBase = __webpack_require__(18850);
+// EXTERNAL MODULE: ./node_modules/@mui/material/utils/capitalize.js
+var capitalize = __webpack_require__(28466);
+// EXTERNAL MODULE: ./node_modules/@mui/material/internal/svg-icons/FirstPage.js
+var FirstPage = __webpack_require__(28775);
+// EXTERNAL MODULE: ./node_modules/@mui/material/internal/svg-icons/LastPage.js
+var LastPage = __webpack_require__(35067);
+// EXTERNAL MODULE: ./node_modules/@mui/material/utils/createSvgIcon.js
+var createSvgIcon = __webpack_require__(20561);
+// EXTERNAL MODULE: ./node_modules/react/jsx-runtime.js
+var jsx_runtime = __webpack_require__(74848);
+;// ./node_modules/@mui/material/internal/svg-icons/NavigateBefore.js
+'use client';
+
+
+
+
+/**
+ * @ignore - internal component.
+ */
+
+/* harmony default export */ const NavigateBefore = ((0,createSvgIcon/* default */.A)( /*#__PURE__*/(0,jsx_runtime.jsx)("path", {
+  d: "M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"
+}), 'NavigateBefore'));
+;// ./node_modules/@mui/material/internal/svg-icons/NavigateNext.js
+'use client';
+
+
+
+
+/**
+ * @ignore - internal component.
+ */
+
+/* harmony default export */ const NavigateNext = ((0,createSvgIcon/* default */.A)( /*#__PURE__*/(0,jsx_runtime.jsx)("path", {
+  d: "M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"
+}), 'NavigateNext'));
+// EXTERNAL MODULE: ./node_modules/@mui/material/styles/styled.js
+var styled = __webpack_require__(11848);
+;// ./node_modules/@mui/material/PaginationItem/PaginationItem.js
+'use client';
+
+
+
+const PaginationItem_excluded = ["className", "color", "component", "components", "disabled", "page", "selected", "shape", "size", "slots", "type", "variant"];
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const overridesResolver = (props, styles) => {
+  const {
+    ownerState
+  } = props;
+  return [styles.root, styles[ownerState.variant], styles[`size${(0,capitalize/* default */.A)(ownerState.size)}`], ownerState.variant === 'text' && styles[`text${(0,capitalize/* default */.A)(ownerState.color)}`], ownerState.variant === 'outlined' && styles[`outlined${(0,capitalize/* default */.A)(ownerState.color)}`], ownerState.shape === 'rounded' && styles.rounded, ownerState.type === 'page' && styles.page, (ownerState.type === 'start-ellipsis' || ownerState.type === 'end-ellipsis') && styles.ellipsis, (ownerState.type === 'previous' || ownerState.type === 'next') && styles.previousNext, (ownerState.type === 'first' || ownerState.type === 'last') && styles.firstLast];
+};
+const useUtilityClasses = ownerState => {
+  const {
+    classes,
+    color,
+    disabled,
+    selected,
+    size,
+    shape,
+    type,
+    variant
+  } = ownerState;
+  const slots = {
+    root: ['root', `size${(0,capitalize/* default */.A)(size)}`, variant, shape, color !== 'standard' && `color${(0,capitalize/* default */.A)(color)}`, color !== 'standard' && `${variant}${(0,capitalize/* default */.A)(color)}`, disabled && 'disabled', selected && 'selected', {
+      page: 'page',
+      first: 'firstLast',
+      last: 'firstLast',
+      'start-ellipsis': 'ellipsis',
+      'end-ellipsis': 'ellipsis',
+      previous: 'previousNext',
+      next: 'previousNext'
+    }[type]],
+    icon: ['icon']
+  };
+  return (0,composeClasses/* default */.A)(slots, getPaginationItemUtilityClass, classes);
+};
+const PaginationItemEllipsis = (0,styled/* default */.Ay)('div', {
+  name: 'MuiPaginationItem',
+  slot: 'Root',
+  overridesResolver
+})(({
+  theme,
+  ownerState
+}) => (0,esm_extends/* default */.A)({}, theme.typography.body2, {
+  borderRadius: 32 / 2,
+  textAlign: 'center',
+  boxSizing: 'border-box',
+  minWidth: 32,
+  padding: '0 6px',
+  margin: '0 3px',
+  color: (theme.vars || theme).palette.text.primary,
+  height: 'auto',
+  [`&.${PaginationItem_paginationItemClasses.disabled}`]: {
+    opacity: (theme.vars || theme).palette.action.disabledOpacity
+  }
+}, ownerState.size === 'small' && {
+  minWidth: 26,
+  borderRadius: 26 / 2,
+  margin: '0 1px',
+  padding: '0 4px'
+}, ownerState.size === 'large' && {
+  minWidth: 40,
+  borderRadius: 40 / 2,
+  padding: '0 10px',
+  fontSize: theme.typography.pxToRem(15)
+}));
+const PaginationItemPage = (0,styled/* default */.Ay)(ButtonBase/* default */.A, {
+  name: 'MuiPaginationItem',
+  slot: 'Root',
+  overridesResolver
+})(({
+  theme,
+  ownerState
+}) => (0,esm_extends/* default */.A)({}, theme.typography.body2, {
+  borderRadius: 32 / 2,
+  textAlign: 'center',
+  boxSizing: 'border-box',
+  minWidth: 32,
+  height: 32,
+  padding: '0 6px',
+  margin: '0 3px',
+  color: (theme.vars || theme).palette.text.primary,
+  [`&.${PaginationItem_paginationItemClasses.focusVisible}`]: {
+    backgroundColor: (theme.vars || theme).palette.action.focus
+  },
+  [`&.${PaginationItem_paginationItemClasses.disabled}`]: {
+    opacity: (theme.vars || theme).palette.action.disabledOpacity
+  },
+  transition: theme.transitions.create(['color', 'background-color'], {
+    duration: theme.transitions.duration.short
+  }),
+  '&:hover': {
+    backgroundColor: (theme.vars || theme).palette.action.hover,
+    // Reset on touch devices, it doesn't add specificity
+    '@media (hover: none)': {
+      backgroundColor: 'transparent'
+    }
+  },
+  [`&.${PaginationItem_paginationItemClasses.selected}`]: {
+    backgroundColor: (theme.vars || theme).palette.action.selected,
+    '&:hover': {
+      backgroundColor: theme.vars ? `rgba(${theme.vars.palette.action.selectedChannel} / calc(${theme.vars.palette.action.selectedOpacity} + ${theme.vars.palette.action.hoverOpacity}))` : (0,colorManipulator/* alpha */.X4)(theme.palette.action.selected, theme.palette.action.selectedOpacity + theme.palette.action.hoverOpacity),
+      // Reset on touch devices, it doesn't add specificity
+      '@media (hover: none)': {
+        backgroundColor: (theme.vars || theme).palette.action.selected
+      }
+    },
+    [`&.${PaginationItem_paginationItemClasses.focusVisible}`]: {
+      backgroundColor: theme.vars ? `rgba(${theme.vars.palette.action.selectedChannel} / calc(${theme.vars.palette.action.selectedOpacity} + ${theme.vars.palette.action.focusOpacity}))` : (0,colorManipulator/* alpha */.X4)(theme.palette.action.selected, theme.palette.action.selectedOpacity + theme.palette.action.focusOpacity)
+    },
+    [`&.${PaginationItem_paginationItemClasses.disabled}`]: {
+      opacity: 1,
+      color: (theme.vars || theme).palette.action.disabled,
+      backgroundColor: (theme.vars || theme).palette.action.selected
+    }
+  }
+}, ownerState.size === 'small' && {
+  minWidth: 26,
+  height: 26,
+  borderRadius: 26 / 2,
+  margin: '0 1px',
+  padding: '0 4px'
+}, ownerState.size === 'large' && {
+  minWidth: 40,
+  height: 40,
+  borderRadius: 40 / 2,
+  padding: '0 10px',
+  fontSize: theme.typography.pxToRem(15)
+}, ownerState.shape === 'rounded' && {
+  borderRadius: (theme.vars || theme).shape.borderRadius
+}), ({
+  theme,
+  ownerState
+}) => (0,esm_extends/* default */.A)({}, ownerState.variant === 'text' && {
+  [`&.${PaginationItem_paginationItemClasses.selected}`]: (0,esm_extends/* default */.A)({}, ownerState.color !== 'standard' && {
+    color: (theme.vars || theme).palette[ownerState.color].contrastText,
+    backgroundColor: (theme.vars || theme).palette[ownerState.color].main,
+    '&:hover': {
+      backgroundColor: (theme.vars || theme).palette[ownerState.color].dark,
+      // Reset on touch devices, it doesn't add specificity
+      '@media (hover: none)': {
+        backgroundColor: (theme.vars || theme).palette[ownerState.color].main
+      }
+    },
+    [`&.${PaginationItem_paginationItemClasses.focusVisible}`]: {
+      backgroundColor: (theme.vars || theme).palette[ownerState.color].dark
+    }
+  }, {
+    [`&.${PaginationItem_paginationItemClasses.disabled}`]: {
+      color: (theme.vars || theme).palette.action.disabled
+    }
+  })
+}, ownerState.variant === 'outlined' && {
+  border: theme.vars ? `1px solid rgba(${theme.vars.palette.common.onBackgroundChannel} / 0.23)` : `1px solid ${theme.palette.mode === 'light' ? 'rgba(0, 0, 0, 0.23)' : 'rgba(255, 255, 255, 0.23)'}`,
+  [`&.${PaginationItem_paginationItemClasses.selected}`]: (0,esm_extends/* default */.A)({}, ownerState.color !== 'standard' && {
+    color: (theme.vars || theme).palette[ownerState.color].main,
+    border: `1px solid ${theme.vars ? `rgba(${theme.vars.palette[ownerState.color].mainChannel} / 0.5)` : (0,colorManipulator/* alpha */.X4)(theme.palette[ownerState.color].main, 0.5)}`,
+    backgroundColor: theme.vars ? `rgba(${theme.vars.palette[ownerState.color].mainChannel} / ${theme.vars.palette.action.activatedOpacity})` : (0,colorManipulator/* alpha */.X4)(theme.palette[ownerState.color].main, theme.palette.action.activatedOpacity),
+    '&:hover': {
+      backgroundColor: theme.vars ? `rgba(${theme.vars.palette[ownerState.color].mainChannel} / calc(${theme.vars.palette.action.activatedOpacity} + ${theme.vars.palette.action.focusOpacity}))` : (0,colorManipulator/* alpha */.X4)(theme.palette[ownerState.color].main, theme.palette.action.activatedOpacity + theme.palette.action.focusOpacity),
+      // Reset on touch devices, it doesn't add specificity
+      '@media (hover: none)': {
+        backgroundColor: 'transparent'
+      }
+    },
+    [`&.${PaginationItem_paginationItemClasses.focusVisible}`]: {
+      backgroundColor: theme.vars ? `rgba(${theme.vars.palette[ownerState.color].mainChannel} / calc(${theme.vars.palette.action.activatedOpacity} + ${theme.vars.palette.action.focusOpacity}))` : (0,colorManipulator/* alpha */.X4)(theme.palette[ownerState.color].main, theme.palette.action.activatedOpacity + theme.palette.action.focusOpacity)
+    }
+  }, {
+    [`&.${PaginationItem_paginationItemClasses.disabled}`]: {
+      borderColor: (theme.vars || theme).palette.action.disabledBackground,
+      color: (theme.vars || theme).palette.action.disabled
+    }
+  })
+}));
+const PaginationItemPageIcon = (0,styled/* default */.Ay)('div', {
+  name: 'MuiPaginationItem',
+  slot: 'Icon',
+  overridesResolver: (props, styles) => styles.icon
+})(({
+  theme,
+  ownerState
+}) => (0,esm_extends/* default */.A)({
+  fontSize: theme.typography.pxToRem(20),
+  margin: '0 -8px'
+}, ownerState.size === 'small' && {
+  fontSize: theme.typography.pxToRem(18)
+}, ownerState.size === 'large' && {
+  fontSize: theme.typography.pxToRem(22)
+}));
+const PaginationItem = /*#__PURE__*/react.forwardRef(function PaginationItem(inProps, ref) {
+  const props = (0,DefaultPropsProvider/* useDefaultProps */.b)({
+    props: inProps,
+    name: 'MuiPaginationItem'
+  });
+  const {
+      className,
+      color = 'standard',
+      component,
+      components = {},
+      disabled = false,
+      page,
+      selected = false,
+      shape = 'circular',
+      size = 'medium',
+      slots = {},
+      type = 'page',
+      variant = 'text'
+    } = props,
+    other = (0,objectWithoutPropertiesLoose/* default */.A)(props, PaginationItem_excluded);
+  const ownerState = (0,esm_extends/* default */.A)({}, props, {
+    color,
+    disabled,
+    selected,
+    shape,
+    size,
+    type,
+    variant
+  });
+  const isRtl = (0,RtlProvider/* useRtl */.I)();
+  const classes = useUtilityClasses(ownerState);
+  const normalizedIcons = isRtl ? {
+    previous: slots.next || components.next || NavigateNext,
+    next: slots.previous || components.previous || NavigateBefore,
+    last: slots.first || components.first || FirstPage/* default */.A,
+    first: slots.last || components.last || LastPage/* default */.A
+  } : {
+    previous: slots.previous || components.previous || NavigateBefore,
+    next: slots.next || components.next || NavigateNext,
+    first: slots.first || components.first || FirstPage/* default */.A,
+    last: slots.last || components.last || LastPage/* default */.A
+  };
+  const Icon = normalizedIcons[type];
+  return type === 'start-ellipsis' || type === 'end-ellipsis' ? /*#__PURE__*/(0,jsx_runtime.jsx)(PaginationItemEllipsis, {
+    ref: ref,
+    ownerState: ownerState,
+    className: (0,clsx/* default */.A)(classes.root, className),
+    children: "\u2026"
+  }) : /*#__PURE__*/(0,jsx_runtime.jsxs)(PaginationItemPage, (0,esm_extends/* default */.A)({
+    ref: ref,
+    ownerState: ownerState,
+    component: component,
+    disabled: disabled,
+    className: (0,clsx/* default */.A)(classes.root, className)
+  }, other, {
+    children: [type === 'page' && page, Icon ? /*#__PURE__*/(0,jsx_runtime.jsx)(PaginationItemPageIcon, {
+      as: Icon,
+      ownerState: ownerState,
+      className: classes.icon
+    }) : null]
+  }));
+});
+ false ? 0 : void 0;
+/* harmony default export */ const PaginationItem_PaginationItem = (PaginationItem);
+;// ./node_modules/@mui/material/Pagination/Pagination.js
+'use client';
+
+
+
+const Pagination_excluded = ["boundaryCount", "className", "color", "count", "defaultPage", "disabled", "getItemAriaLabel", "hideNextButton", "hidePrevButton", "onChange", "page", "renderItem", "shape", "showFirstButton", "showLastButton", "siblingCount", "size", "variant"];
+
+
+
+
+
+
+
+
+
+
+
+const Pagination_useUtilityClasses = ownerState => {
+  const {
+    classes,
+    variant
+  } = ownerState;
+  const slots = {
+    root: ['root', variant],
+    ul: ['ul']
+  };
+  return (0,composeClasses/* default */.A)(slots, getPaginationUtilityClass, classes);
+};
+const PaginationRoot = (0,styled/* default */.Ay)('nav', {
+  name: 'MuiPagination',
+  slot: 'Root',
+  overridesResolver: (props, styles) => {
+    const {
+      ownerState
+    } = props;
+    return [styles.root, styles[ownerState.variant]];
+  }
+})({});
+const PaginationUl = (0,styled/* default */.Ay)('ul', {
+  name: 'MuiPagination',
+  slot: 'Ul',
+  overridesResolver: (props, styles) => styles.ul
+})({
+  display: 'flex',
+  flexWrap: 'wrap',
+  alignItems: 'center',
+  padding: 0,
+  margin: 0,
+  listStyle: 'none'
+});
+function defaultGetAriaLabel(type, page, selected) {
+  if (type === 'page') {
+    return `${selected ? '' : 'Go to '}page ${page}`;
+  }
+  return `Go to ${type} page`;
+}
+const Pagination = /*#__PURE__*/react.forwardRef(function Pagination(inProps, ref) {
+  const props = (0,DefaultPropsProvider/* useDefaultProps */.b)({
+    props: inProps,
+    name: 'MuiPagination'
+  });
+  const {
+      boundaryCount = 1,
+      className,
+      color = 'standard',
+      count = 1,
+      defaultPage = 1,
+      disabled = false,
+      getItemAriaLabel = defaultGetAriaLabel,
+      hideNextButton = false,
+      hidePrevButton = false,
+      renderItem = item => /*#__PURE__*/(0,jsx_runtime.jsx)(PaginationItem_PaginationItem, (0,esm_extends/* default */.A)({}, item)),
+      shape = 'circular',
+      showFirstButton = false,
+      showLastButton = false,
+      siblingCount = 1,
+      size = 'medium',
+      variant = 'text'
+    } = props,
+    other = (0,objectWithoutPropertiesLoose/* default */.A)(props, Pagination_excluded);
+  const {
+    items
+  } = usePagination((0,esm_extends/* default */.A)({}, props, {
+    componentName: 'Pagination'
+  }));
+  const ownerState = (0,esm_extends/* default */.A)({}, props, {
+    boundaryCount,
+    color,
+    count,
+    defaultPage,
+    disabled,
+    getItemAriaLabel,
+    hideNextButton,
+    hidePrevButton,
+    renderItem,
+    shape,
+    showFirstButton,
+    showLastButton,
+    siblingCount,
+    size,
+    variant
+  });
+  const classes = Pagination_useUtilityClasses(ownerState);
+  return /*#__PURE__*/(0,jsx_runtime.jsx)(PaginationRoot, (0,esm_extends/* default */.A)({
+    "aria-label": "pagination navigation",
+    className: (0,clsx/* default */.A)(classes.root, className),
+    ownerState: ownerState,
+    ref: ref
+  }, other, {
+    children: /*#__PURE__*/(0,jsx_runtime.jsx)(PaginationUl, {
+      className: classes.ul,
+      ownerState: ownerState,
+      children: items.map((item, index) => /*#__PURE__*/(0,jsx_runtime.jsx)("li", {
+        children: renderItem((0,esm_extends/* default */.A)({}, item, {
+          color,
+          'aria-label': getItemAriaLabel(item.type, item.page, item.selected),
+          shape,
+          size,
+          variant
+        }))
+      }, index))
+    })
+  }));
+});
+
+// @default tags synced with default values from usePagination
+
+ false ? 0 : void 0;
+/* harmony default export */ const Pagination_Pagination = (Pagination);
 
 /***/ },
 
@@ -1371,68 +2459,226 @@ const GridToolbar = /*#__PURE__*/react.forwardRef(function GridToolbar(props, re
 
 /***/ },
 
-/***/ 85391
+/***/ 69419
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+// ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(96540);
-/* harmony import */ var _view_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(68525);
-/* harmony import */ var _component_SidebarDash__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(4640);
-/* harmony import */ var _PageView_Chartview_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(55746);
-/* harmony import */ var _mui_icons_material_Visibility__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(5673);
-/* harmony import */ var _mui_icons_material_Edit__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(28597);
-/* harmony import */ var _mui_icons_material_Delete__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(67034);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(84976);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(47767);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(14073);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(11641);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(69067);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(10423);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(8239);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(47419);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(844);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(35406);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(11848);
-/* harmony import */ var _mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(56655);
-/* harmony import */ var _mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(58331);
-/* harmony import */ var _mui_material_AppBar__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(89828);
-/* harmony import */ var _mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(8532);
-/* harmony import */ var _mui_material_CssBaseline__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(14519);
-/* harmony import */ var _mui_material_Drawer__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(88248);
-/* harmony import */ var _mui_material_List__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(49799);
-/* harmony import */ var _mui_material_Divider__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(71543);
-/* harmony import */ var _utils_apiCache__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(46986);
-/* harmony import */ var _mui_material_Container__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(97834);
-/* harmony import */ var _mui_icons_material_Menu__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(62274);
-/* harmony import */ var _mui_icons_material_ChevronLeft__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(8451);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(99380);
-/* harmony import */ var _utils_formatUtils__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(37402);
-/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(99682);
-/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(17809);
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(13561);
-/* harmony import */ var _features_auth_authSlice__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(32005);
-/* harmony import */ var _component_Loader__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(65821);
-/* harmony import */ var _mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(20889);
-/* harmony import */ var _component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(40301);
-/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(74353);
-/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_39___default = /*#__PURE__*/__webpack_require__.n(dayjs__WEBPACK_IMPORTED_MODULE_39__);
-/* harmony import */ var _mui_x_data_grid__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(1835);
-/* harmony import */ var _mui_x_data_grid__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(53071);
-/* harmony import */ var _MessageAdminView__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(83818);
-/* harmony import */ var _mui_lab__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(5733);
-/* harmony import */ var _mui_lab__WEBPACK_IMPORTED_MODULE_44__ = __webpack_require__(38339);
-/* harmony import */ var _mui_lab__WEBPACK_IMPORTED_MODULE_45__ = __webpack_require__(38354);
-/* harmony import */ var _NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_46__ = __webpack_require__(95236);
-/* harmony import */ var _dexieDb__WEBPACK_IMPORTED_MODULE_47__ = __webpack_require__(33613);
-/* harmony import */ var _apiConfig__WEBPACK_IMPORTED_MODULE_48__ = __webpack_require__(71510);
-/* harmony import */ var _utils_isMobile__WEBPACK_IMPORTED_MODULE_49__ = __webpack_require__(2650);
-/* harmony import */ var _component_MobileCardList__WEBPACK_IMPORTED_MODULE_50__ = __webpack_require__(353);
+
+// EXPORTS
+__webpack_require__.d(__webpack_exports__, {
+  "default": () => (/* binding */ AdminView1_InvoiceViewAdmin)
+});
+
+// EXTERNAL MODULE: ./node_modules/react/index.js
+var react = __webpack_require__(96540);
+// EXTERNAL MODULE: ./node_modules/react-toastify/dist/react-toastify.esm.mjs
+var react_toastify_esm = __webpack_require__(99571);
+// EXTERNAL MODULE: ./src/js/AdminView1/view.css
+var view = __webpack_require__(68525);
+// EXTERNAL MODULE: ./src/js/AdminView1/PageView/Chartview.css
+var Chartview = __webpack_require__(55746);
+// EXTERNAL MODULE: ./src/js/component/SidebarDash.js
+var SidebarDash = __webpack_require__(4640);
+// EXTERNAL MODULE: ./node_modules/@mui/icons-material/Search.js
+var Search = __webpack_require__(64745);
+// EXTERNAL MODULE: ./node_modules/@mui/icons-material/Visibility.js
+var Visibility = __webpack_require__(5673);
+// EXTERNAL MODULE: ./node_modules/@mui/icons-material/Edit.js
+var Edit = __webpack_require__(28597);
+// EXTERNAL MODULE: ./node_modules/@mui/icons-material/Delete.js
+var Delete = __webpack_require__(67034);
+// EXTERNAL MODULE: ./node_modules/react-router/dist/index.js
+var dist = __webpack_require__(47767);
+// EXTERNAL MODULE: ./node_modules/react-router-dom/dist/index.js
+var react_router_dom_dist = __webpack_require__(84976);
+// EXTERNAL MODULE: ./node_modules/@mui/material/styles/styled.js
+var styled = __webpack_require__(11848);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Chip/Chip.js + 2 modules
+var Chip = __webpack_require__(82022);
+// EXTERNAL MODULE: ./node_modules/@mui/material/IconButton/IconButton.js + 1 modules
+var IconButton = __webpack_require__(11641);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Box/Box.js + 2 modules
+var Box = __webpack_require__(69067);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Typography/Typography.js + 1 modules
+var Typography = __webpack_require__(14073);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Button/Button.js + 3 modules
+var Button = __webpack_require__(86990);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Pagination/Pagination.js + 6 modules
+var Pagination = __webpack_require__(69279);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Modal/Modal.js + 3 modules
+var Modal = __webpack_require__(35406);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Grid/Grid.js + 2 modules
+var Grid = __webpack_require__(8239);
+// EXTERNAL MODULE: ./node_modules/@mui/material/TextField/TextField.js + 2 modules
+var TextField = __webpack_require__(844);
+// EXTERNAL MODULE: ./node_modules/@mui/material/FormControl/FormControl.js + 1 modules
+var FormControl = __webpack_require__(50779);
+// EXTERNAL MODULE: ./node_modules/@mui/material/InputLabel/InputLabel.js + 1 modules
+var InputLabel = __webpack_require__(29571);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Select/Select.js + 4 modules
+var Select = __webpack_require__(2071);
+// EXTERNAL MODULE: ./node_modules/@mui/material/MenuItem/MenuItem.js + 1 modules
+var MenuItem = __webpack_require__(73896);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Dialog/Dialog.js
+var Dialog = __webpack_require__(77037);
+// EXTERNAL MODULE: ./node_modules/@mui/material/DialogTitle/DialogTitle.js
+var DialogTitle = __webpack_require__(46831);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Tabs/Tabs.js + 6 modules
+var Tabs = __webpack_require__(17532);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Tab/Tab.js + 1 modules
+var Tab = __webpack_require__(10423);
+// EXTERNAL MODULE: ./node_modules/@mui/material/DialogContent/DialogContent.js + 1 modules
+var DialogContent = __webpack_require__(22477);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Alert/Alert.js + 5 modules
+var Alert = __webpack_require__(36632);
+// EXTERNAL MODULE: ./node_modules/@mui/material/InputAdornment/InputAdornment.js + 1 modules
+var InputAdornment = __webpack_require__(25239);
+// EXTERNAL MODULE: ./node_modules/@mui/material/TableContainer/TableContainer.js + 1 modules
+var TableContainer = __webpack_require__(33198);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Paper/Paper.js + 2 modules
+var Paper = __webpack_require__(60538);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Table/Table.js + 1 modules
+var Table = __webpack_require__(64137);
+// EXTERNAL MODULE: ./node_modules/@mui/material/TableHead/TableHead.js + 1 modules
+var TableHead = __webpack_require__(96627);
+// EXTERNAL MODULE: ./node_modules/@mui/material/TableRow/TableRow.js + 1 modules
+var TableRow = __webpack_require__(86798);
+// EXTERNAL MODULE: ./node_modules/@mui/material/TableCell/TableCell.js
+var TableCell = __webpack_require__(70691);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Checkbox/Checkbox.js + 4 modules
+var Checkbox = __webpack_require__(27558);
+// EXTERNAL MODULE: ./node_modules/@mui/material/TableBody/TableBody.js + 1 modules
+var TableBody = __webpack_require__(43884);
+// EXTERNAL MODULE: ./node_modules/@mui/material/LinearProgress/LinearProgress.js + 1 modules
+var LinearProgress = __webpack_require__(87458);
+// EXTERNAL MODULE: ./node_modules/@mui/material/DialogActions/DialogActions.js + 1 modules
+var DialogActions = __webpack_require__(58763);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Tooltip/Tooltip.js
+var Tooltip = __webpack_require__(56655);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Tooltip/tooltipClasses.js
+var tooltipClasses = __webpack_require__(58331);
+// EXTERNAL MODULE: ./node_modules/@mui/material/AppBar/AppBar.js + 1 modules
+var AppBar = __webpack_require__(89828);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Toolbar/Toolbar.js + 1 modules
+var Toolbar = __webpack_require__(8532);
+// EXTERNAL MODULE: ./node_modules/@mui/material/CssBaseline/CssBaseline.js
+var CssBaseline = __webpack_require__(14519);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Drawer/Drawer.js + 1 modules
+var Drawer = __webpack_require__(88248);
+// EXTERNAL MODULE: ./node_modules/@mui/material/List/List.js + 1 modules
+var List = __webpack_require__(49799);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Divider/Divider.js
+var Divider = __webpack_require__(71543);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Container/Container.js + 1 modules
+var Container = __webpack_require__(97834);
+// EXTERNAL MODULE: ./node_modules/@mui/icons-material/Menu.js
+var Menu = __webpack_require__(62274);
+// EXTERNAL MODULE: ./node_modules/@mui/icons-material/ChevronLeft.js
+var ChevronLeft = __webpack_require__(8451);
+// EXTERNAL MODULE: ./node_modules/axios/lib/axios.js + 48 modules
+var axios = __webpack_require__(99380);
+// EXTERNAL MODULE: ./src/js/utils/apiCache.js
+var apiCache = __webpack_require__(46986);
+// EXTERNAL MODULE: ./src/js/apiConfig.js
+var apiConfig = __webpack_require__(71510);
+// EXTERNAL MODULE: ./node_modules/@mui/material/utils/createSvgIcon.js
+var createSvgIcon = __webpack_require__(20561);
+// EXTERNAL MODULE: ./node_modules/react/jsx-runtime.js
+var jsx_runtime = __webpack_require__(74848);
+;// ./node_modules/@mui/icons-material/esm/WhatsApp.js
+'use client';
+
+
+
+
+/* harmony default export */ const WhatsApp = ((0,createSvgIcon/* default */.A)( /*#__PURE__*/(0,jsx_runtime.jsx)("path", {
+  d: "M16.75 13.96c.25.13.41.2.46.3.06.11.04.61-.21 1.18-.2.56-1.24 1.1-1.7 1.12-.46.02-.47.36-2.96-.73-2.49-1.09-3.99-3.75-4.11-3.92-.12-.17-.96-1.38-.92-2.61.05-1.22.69-1.8.95-2.04.24-.26.51-.29.68-.26h.47c.15 0 .36-.06.55.45l.69 1.87c.06.13.1.28.01.44l-.27.41-.39.42c-.12.12-.26.25-.12.5.12.26.62 1.09 1.32 1.78.91.88 1.71 1.17 1.95 1.3.24.14.39.12.54-.04l.81-.94c.19-.25.35-.19.58-.11l1.67.88M12 2a10 10 0 0 1 10 10 10 10 0 0 1-10 10c-1.97 0-3.8-.57-5.35-1.55L2 22l1.55-4.65A9.969 9.969 0 0 1 2 12 10 10 0 0 1 12 2m0 2a8 8 0 0 0-8 8c0 1.72.54 3.31 1.46 4.61L4.5 19.5l2.89-.96A7.95 7.95 0 0 0 12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8z"
+}), 'WhatsApp'));
+// EXTERNAL MODULE: ./node_modules/@mui/icons-material/esm/PersonOffRounded.js
+var PersonOffRounded = __webpack_require__(79030);
+// EXTERNAL MODULE: ./node_modules/@mui/icons-material/esm/Person2Outlined.js
+var Person2Outlined = __webpack_require__(7078);
+// EXTERNAL MODULE: ./node_modules/@mui/icons-material/esm/Assignment.js
+var Assignment = __webpack_require__(17332);
+;// ./node_modules/@mui/icons-material/esm/Payments.js
+"use client";
+
+
+
+/* harmony default export */ const Payments = ((0,createSvgIcon/* default */.A)( /*#__PURE__*/(0,jsx_runtime.jsx)("path", {
+  d: "M19 14V6c0-1.1-.9-2-2-2H3c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2m-9-1c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3m13-6v11c0 1.1-.9 2-2 2H4v-2h17V7z"
+}), 'Payments'));
+// EXTERNAL MODULE: ./node_modules/@mui/icons-material/esm/EditNote.js
+var EditNote = __webpack_require__(81757);
+// EXTERNAL MODULE: ./node_modules/@mui/icons-material/esm/Send.js
+var Send = __webpack_require__(52751);
+// EXTERNAL MODULE: ./node_modules/@mui/icons-material/esm/HourglassEmpty.js
+var HourglassEmpty = __webpack_require__(62430);
+// EXTERNAL MODULE: ./node_modules/@mui/icons-material/esm/Cancel.js
+var Cancel = __webpack_require__(8047);
+;// ./node_modules/@mui/icons-material/esm/CardGiftcard.js
+"use client";
+
+
+
+/* harmony default export */ const CardGiftcard = ((0,createSvgIcon/* default */.A)( /*#__PURE__*/(0,jsx_runtime.jsx)("path", {
+  d: "M20 6h-2.18c.11-.31.18-.65.18-1 0-1.66-1.34-3-3-3-1.05 0-1.96.54-2.5 1.35l-.5.67-.5-.68C10.96 2.54 10.05 2 9 2 7.34 2 6 3.34 6 5c0 .35.07.69.18 1H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2m-5-2c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1M9 4c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1m11 15H4v-2h16zm0-5H4V8h5.08L7 10.83 8.62 12 11 8.76l1-1.36 1 1.36L15.38 12 17 10.83 14.92 8H20z"
+}), 'CardGiftcard'));
+// EXTERNAL MODULE: ./node_modules/@mui/icons-material/esm/Add.js
+var Add = __webpack_require__(99682);
+// EXTERNAL MODULE: ./node_modules/@mui/icons-material/esm/Close.js
+var Close = __webpack_require__(17809);
+;// ./node_modules/@mui/icons-material/esm/History.js
+"use client";
+
+
+
+/* harmony default export */ const History = ((0,createSvgIcon/* default */.A)( /*#__PURE__*/(0,jsx_runtime.jsx)("path", {
+  d: "M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9m-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8z"
+}), 'History'));
+;// ./node_modules/@mui/icons-material/esm/Save.js
+"use client";
+
+
+
+/* harmony default export */ const Save = ((0,createSvgIcon/* default */.A)( /*#__PURE__*/(0,jsx_runtime.jsx)("path", {
+  d: "M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3m3-10H5V5h10z"
+}), 'Save'));
+// EXTERNAL MODULE: ./node_modules/dayjs/dayjs.min.js
+var dayjs_min = __webpack_require__(74353);
+var dayjs_min_default = /*#__PURE__*/__webpack_require__.n(dayjs_min);
+// EXTERNAL MODULE: ./src/js/component/Loader.js + 1 modules
+var Loader = __webpack_require__(65821);
+// EXTERNAL MODULE: ./node_modules/@mui/icons-material/CheckCircle.js
+var CheckCircle = __webpack_require__(20889);
+// EXTERNAL MODULE: ./node_modules/react-redux/es/index.js + 14 modules
+var es = __webpack_require__(13561);
+// EXTERNAL MODULE: ./src/js/features/auth/authSlice.js
+var authSlice = __webpack_require__(32005);
+// EXTERNAL MODULE: ./src/js/component/NetworkLogoutIcon.js
+var NetworkLogoutIcon = __webpack_require__(40301);
+// EXTERNAL MODULE: ./src/js/img/no-data.png
+var no_data = __webpack_require__(20453);
+// EXTERNAL MODULE: ./node_modules/@mui/x-data-grid/DataGrid/DataGrid.js + 185 modules
+var DataGrid = __webpack_require__(1835);
+// EXTERNAL MODULE: ./node_modules/@mui/x-data-grid/components/toolbar/GridToolbar.js + 5 modules
+var GridToolbar = __webpack_require__(53071);
+// EXTERNAL MODULE: ./src/js/AdminView1/MessageAdminView.js + 2 modules
+var MessageAdminView = __webpack_require__(83818);
+// EXTERNAL MODULE: ./src/js/AdminView1/NotificationVIewInfo.js
+var NotificationVIewInfo = __webpack_require__(95236);
+// EXTERNAL MODULE: ./src/js/utils/isMobile.js
+var utils_isMobile = __webpack_require__(2650);
+// EXTERNAL MODULE: ./src/js/component/MobileCardList.js + 2 modules
+var MobileCardList = __webpack_require__(353);
+// EXTERNAL MODULE: ./src/js/utils/formatUtils.js
+var formatUtils = __webpack_require__(37402);
+;// ./src/js/AdminView1/InvoiceViewAdmin.js
 var _excluded = ["className"],
   _excluded2 = ["className"],
   _excluded3 = ["className"];
-function _toArray(r) { return _arrayWithHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableRest(); }
-function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
@@ -1491,11 +2737,10 @@ function _objectWithoutPropertiesLoose(r, e) { if (null == r) return {}; var t =
 
 
 
-
-var DeleteTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .Ay)(_ref => {
+var DeleteTooltip = (0,styled/* default */.Ay)(_ref => {
   var className = _ref.className,
     props = _objectWithoutProperties(_ref, _excluded);
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, _extends({}, props, {
+  return /*#__PURE__*/react.createElement(Tooltip/* default */.A, _extends({}, props, {
     classes: {
       popper: className
     }
@@ -1503,7 +2748,7 @@ var DeleteTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"]
 })(_ref2 => {
   var theme = _ref2.theme;
   return {
-    ["& .".concat(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A.tooltip)]: {
+    ["& .".concat(tooltipClasses/* default */.A.tooltip)]: {
       backgroundColor: 'red',
       color: 'white',
       boxShadow: theme.shadows[1],
@@ -1511,10 +2756,10 @@ var DeleteTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"]
     }
   };
 });
-var ViewTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .Ay)(_ref3 => {
+var EditTooltip = (0,styled/* default */.Ay)(_ref3 => {
   var className = _ref3.className,
     props = _objectWithoutProperties(_ref3, _excluded2);
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, _extends({}, props, {
+  return /*#__PURE__*/react.createElement(Tooltip/* default */.A, _extends({}, props, {
     classes: {
       popper: className
     }
@@ -1522,26 +2767,7 @@ var ViewTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] *
 })(_ref4 => {
   var theme = _ref4.theme;
   return {
-    ["& .".concat(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A.tooltip)]: {
-      backgroundColor: '#202a5a',
-      color: 'white',
-      boxShadow: theme.shadows[1],
-      fontSize: 11
-    }
-  };
-});
-var EditTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .Ay)(_ref5 => {
-  var className = _ref5.className,
-    props = _objectWithoutProperties(_ref5, _excluded3);
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, _extends({}, props, {
-    classes: {
-      popper: className
-    }
-  }));
-})(_ref6 => {
-  var theme = _ref6.theme;
-  return {
-    ["& .".concat(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A.tooltip)]: {
+    ["& .".concat(tooltipClasses/* default */.A.tooltip)]: {
       backgroundColor: 'gray',
       color: 'white',
       boxShadow: theme.shadows[1],
@@ -1549,8 +2775,39 @@ var EditTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] *
     }
   };
 });
+var ViewTooltip = (0,styled/* default */.Ay)(_ref5 => {
+  var className = _ref5.className,
+    props = _objectWithoutProperties(_ref5, _excluded3);
+  return /*#__PURE__*/react.createElement(Tooltip/* default */.A, _extends({}, props, {
+    classes: {
+      popper: className
+    }
+  }));
+})(_ref6 => {
+  var theme = _ref6.theme;
+  return {
+    ["& .".concat(tooltipClasses/* default */.A.tooltip)]: {
+      backgroundColor: '#202a5a',
+      color: 'white',
+      boxShadow: theme.shadows[1],
+      fontSize: 11
+    }
+  };
+});
+var style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  boxShadow: 24,
+  pt: 2,
+  px: 4,
+  pb: 3
+};
 var drawerWidth = 240;
-var AppBar = (0,_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .Ay)(_mui_material_AppBar__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+var InvoiceViewAdmin_AppBar = (0,styled/* default */.Ay)(AppBar/* default */.A, {
   shouldForwardProp: prop => prop !== 'open'
 })(_ref7 => {
   var theme = _ref7.theme,
@@ -1570,19 +2827,7 @@ var AppBar = (0,_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .Ay
     })
   });
 });
-var style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  bgcolor: 'background.paper',
-  boxShadow: 24,
-  pt: 2,
-  px: 4,
-  pb: 3
-};
-var Drawer = (0,_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .Ay)(_mui_material_Drawer__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .Ay, {
+var InvoiceViewAdmin_Drawer = (0,styled/* default */.Ay)(Drawer/* default */.Ay, {
   shouldForwardProp: prop => prop !== 'open'
 })(_ref8 => {
   var theme = _ref8.theme,
@@ -1610,43 +2855,30 @@ var Drawer = (0,_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .Ay
     })
   };
 });
-function PaymentView() {
-  var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_8__/* .useNavigate */ .Zp)();
-  var isMobile = (0,_utils_isMobile__WEBPACK_IMPORTED_MODULE_49__/* .useIsMobile */ .al)();
-  var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_34__/* .useDispatch */ .wA)();
-  var user = (0,react_redux__WEBPACK_IMPORTED_MODULE_34__/* .useSelector */ .d4)(_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_35__/* .selectCurrentUser */ .xu);
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+function InvoiceViewAdmin() {
+  var _user$data, _dispatchResult$repor, _dispatchResult$repor2, _dispatchResult$repor3, _dispatchResult$repor4, _dispatchResult$repor5, _dispatchResult$repor6;
+  var navigate = (0,dist/* useNavigate */.Zp)();
+  var isMobile = (0,utils_isMobile/* useIsMobile */.al)();
+  var dispatch = (0,es/* useDispatch */.wA)();
+  var user = (0,es/* useSelector */.d4)(authSlice/* selectCurrentUser */.xu);
+  (0,react.useEffect)(() => {
     var storesUserId = localStorage.getItem('user');
     var fetchUser = /*#__PURE__*/function () {
       var _ref9 = _asyncToGenerator(function* () {
-        if (storesUserId) {
-          if (navigator.onLine) {
-            try {
-              var res = yield (0,_utils_apiCache__WEBPACK_IMPORTED_MODULE_26__/* .cachedGet */ .Fe)("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_48__/* .ENDPOINT_URL */ .m, "/get-employeeuser/").concat(storesUserId));
-              var Name = res.data.data.employeeName;
-              var Role = res.data.data.role;
-              dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_35__/* .setUser */ .gV)({
-                userName: Name,
-                role: Role,
-                id: res.data.data._id
-              }));
-            } catch (error) {
-              console.error('Error fetching data:', error);
-            }
-          } else {
-            var resLocalInfo = yield _dexieDb__WEBPACK_IMPORTED_MODULE_47__/* ["default"] */ .A.employeeUserSchema.get({
-              _id: storesUserId
-            });
-            var _Name = resLocalInfo.employeeName;
-            var _Role = resLocalInfo.role;
-            dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_35__/* .setUser */ .gV)({
-              userName: _Name,
-              role: _Role,
-              id: resLocalInfo._id
+        if (storesUserId && storesUserId !== 'null') {
+          try {
+            var res = yield axios/* default */.A.get("".concat(apiConfig/* ENDPOINT_URL */.m, "/get-employeeuser/").concat(storesUserId));
+            var Name = res.data.data.employeeName;
+            var Role = res.data.data.role;
+            dispatch((0,authSlice/* setUser */.gV)({
+              userName: Name,
+              role: Role,
+              id: res.data.data._id
             }));
+          } catch (error) {
+            console.error('Error fetching data:', error);
+            react_toastify_esm/* toast */.oR.error('Failed to fetch user data.');
           }
-        } else {
-          navigate('/');
         }
       });
       return function fetchUser() {
@@ -1655,24 +2887,33 @@ function PaymentView() {
     }();
     fetchUser();
   }, [dispatch]);
-  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+  var handleLogout = () => {
+    localStorage.removeItem('user');
+    dispatch((0,authSlice/* logOut */.je)());
+    navigate('/');
+  };
+  var _useState = (0,react.useState)([]),
     _useState2 = _slicedToArray(_useState, 2),
     grantAccess = _useState2[0],
     setGrantAccess = _useState2[1];
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+  var _useState3 = (0,react.useState)(null),
+    _useState4 = _slicedToArray(_useState3, 2),
+    grantAccessRecord = _useState4[0],
+    setGrantAccessRecord = _useState4[1];
+  (0,react.useEffect)(() => {
     var fetchNumber = /*#__PURE__*/function () {
       var _ref0 = _asyncToGenerator(function* () {
-        if (navigator.onLine) {
-          try {
-            var _res$data;
-            var res = yield (0,_utils_apiCache__WEBPACK_IMPORTED_MODULE_26__/* .cachedGet */ .Fe)("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_48__/* .ENDPOINT_URL */ .m, "/grantAccess"));
-            (_res$data = res.data) === null || _res$data === void 0 || (_res$data = _res$data.data) === null || _res$data === void 0 || _res$data.filter(row => row.userID === user.data.id).map(row => setGrantAccess(row.modules));
-          } catch (error) {
-            console.error('Error fetching data:', error);
+        try {
+          var _res$data;
+          var res = yield (0,apiCache/* cachedGet */.Fe)("".concat(apiConfig/* ENDPOINT_URL */.m, "/grantAccess"));
+          var userAccess = (_res$data = res.data) === null || _res$data === void 0 || (_res$data = _res$data.data) === null || _res$data === void 0 ? void 0 : _res$data.find(row => row.userID === user.data.id);
+          if (userAccess) {
+            setGrantAccess(userAccess.modules || []);
+            setGrantAccessRecord(userAccess);
           }
-        } else {
-          var offLineCustomer1 = yield _dexieDb__WEBPACK_IMPORTED_MODULE_47__/* ["default"] */ .A.grantAccessSchema.toArray();
-          offLineCustomer1.filter(row => row.userID === user.data.id).map(row => setGrantAccess(row.modules));
+        } catch (error) {
+          console.error('Error fetching data:', error);
+          react_toastify_esm/* toast */.oR.error('Failed to fetch permissions.');
         }
       });
       return function fetchNumber() {
@@ -1681,97 +2922,800 @@ function PaymentView() {
     }();
     fetchNumber();
   }, [user]);
-  var PaymentInfoC = grantAccess.filter(row => row.moduleName === "Payment" && row.access.createM === true);
-  var PaymentInfoV = grantAccess.filter(row => row.moduleName === "Payment" && row.access.viewM === true);
-  var PaymentInfoU = grantAccess.filter(row => row.moduleName === "Payment" && row.access.editM === true);
-  var PaymentInfoD = grantAccess.filter(row => row.moduleName === "Payment" && row.access.deleteM === true);
-  var handleLogout = () => {
-    localStorage.removeItem('user');
-    dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_35__/* .logOut */ .je)());
-    navigate('/');
-  };
-  var _React$useState = react__WEBPACK_IMPORTED_MODULE_0__.useState('1'),
-    _React$useState2 = _slicedToArray(_React$useState, 2),
-    value3 = _React$useState2[0],
-    setValue3 = _React$useState2[1];
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    var result = localStorage.getItem('SelectPaymentView');
-    if (result) {
-      setValue3(result);
-    }
-  }, []);
-  var handleChange3 = (event, newValue) => {
-    var changeValue = newValue;
-    setValue3(changeValue);
-    localStorage.setItem('SelectPaymentView', changeValue);
-  };
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
-    _useState4 = _slicedToArray(_useState3, 2),
-    payment = _useState4[0],
-    setPayment = _useState4[1];
-  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+  var canSendWhatsAppInvoice = (user === null || user === void 0 || (_user$data = user.data) === null || _user$data === void 0 ? void 0 : _user$data.userName) === 'GG' || (grantAccessRecord === null || grantAccessRecord === void 0 ? void 0 : grantAccessRecord.whatsappInvoice) === true;
+
+  // console.log(grantAccess)
+
+  var InvoiceInfoC = grantAccess.filter(row => row.moduleName === "Invoice" && row.access.createM === true);
+  var InvoiceInfoV = grantAccess.filter(row => row.moduleName === "Invoice" && row.access.viewM === true);
+  var InvoiceInfoU = grantAccess.filter(row => row.moduleName === "Invoice" && row.access.editM === true);
+  var InvoiceInfoD = grantAccess.filter(row => row.moduleName === "Invoice" && row.access.deleteM === true);
+  {/** Get Invoice */}
+  var _useState5 = (0,react.useState)([]),
     _useState6 = _slicedToArray(_useState5, 2),
-    customer = _useState6[0],
-    setCustomer = _useState6[1];
-  var fetchData = /*#__PURE__*/function () {
-    var _ref1 = _asyncToGenerator(function* () {
-      if (navigator.onLine) {
-        try {
-          var res = yield (0,_utils_apiCache__WEBPACK_IMPORTED_MODULE_26__/* .cachedGet */ .Fe)("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_48__/* .ENDPOINT_URL */ .m, "/payment"));
-          var formatDate = res.data.data.map(item => {
-            var _item$referenceNumber;
-            return _objectSpread(_objectSpread({}, item), {}, {
-              id: item._id,
-              dateField: dayjs__WEBPACK_IMPORTED_MODULE_39___default()(item.paymentDate).format('DD/MM/YYYY'),
-              reference: item.TotalAmount && item.TotalAmount.length > 0 ? item.TotalAmount.map(row1 => (row1.prefix ? row1.prefix.replace('00', '') : item.reason === "Project" ? "P-" : "INV-") + String(row1.Ref).padStart(6, '0')) : (_item$referenceNumber = item.referenceNumber) === null || _item$referenceNumber === void 0 ? void 0 : _item$referenceNumber.map(row1 => (item.reason === "Project" ? "P-" : "INV-") + String(row1).padStart(6, '0'))
-            });
-          });
-          var sortedPayments = [...formatDate].sort((a, b) => Number(b.paymentNumber || 0) - Number(a.paymentNumber || 0));
-          setPayment(sortedPayments);
-          // Use bulkPut instead of 1031 individual puts — major perf fix
-          // Filter out items without paymentNumber to prevent Dexie DataError
-          var validItems = res.data.data.filter(item => item.paymentNumber).map(item => _objectSpread(_objectSpread({}, item), {}, {
-            synced: true,
-            updateS: true
-          }));
-          yield _dexieDb__WEBPACK_IMPORTED_MODULE_47__/* ["default"] */ .A.paymentSchema.clear();
-          yield _dexieDb__WEBPACK_IMPORTED_MODULE_47__/* ["default"] */ .A.paymentSchema.bulkPut(validItems);
-          setLoadingData(false);
-        } catch (error) {
-          console.error('Error fetching data:', error);
-          /* setLoadingData(false) disabled here to fix race */
+    invoice = _useState6[0],
+    setInvoice = _useState6[1];
+  var _useState7 = (0,react.useState)([]),
+    _useState8 = _slicedToArray(_useState7, 2),
+    hiddenRow = _useState8[0],
+    setHiddenRow = _useState8[1];
+  var _useState9 = (0,react.useState)([]),
+    _useState0 = _slicedToArray(_useState9, 2),
+    hidden = _useState0[0],
+    setHidden = _useState0[1];
+  var _useState1 = (0,react.useState)([]),
+    _useState10 = _slicedToArray(_useState1, 2),
+    selectedRows = _useState10[0],
+    setSelectedRows = _useState10[1];
+  var _useState11 = (0,react.useState)(true),
+    _useState12 = _slicedToArray(_useState11, 2),
+    loadingData = _useState12[0],
+    setLoadingData = _useState12[1];
+  var _useState13 = (0,react.useState)(""),
+    _useState14 = _slicedToArray(_useState13, 2),
+    reason = _useState14[0],
+    setReason = _useState14[1];
+  var _useState15 = (0,react.useState)([]),
+    _useState16 = _slicedToArray(_useState15, 2),
+    newPurchase = _useState16[0],
+    setNewPurchase = _useState16[1];
+  var _useState17 = (0,react.useState)('ALL'),
+    _useState18 = _slicedToArray(_useState17, 2),
+    statusFilter = _useState18[0],
+    setStatusFilter = _useState18[1];
+  var _useState19 = (0,react.useState)({
+      all: 0,
+      draft: 0,
+      sent: 0,
+      pending: 0,
+      decline: 0,
+      freeOfCharge: 0,
+      paid: 0,
+      partiallyPaid: 0
+    }),
+    _useState20 = _slicedToArray(_useState19, 2),
+    statusCounts = _useState20[0],
+    setStatusCounts = _useState20[1];
+  var _useState21 = (0,react.useState)(0),
+    _useState22 = _slicedToArray(_useState21, 2),
+    page = _useState22[0],
+    setPage = _useState22[1]; // Initialize page state to 0 (0-based index)
+  var limit = isMobile ? 30 : 100;
+  var _useState23 = (0,react.useState)(''),
+    _useState24 = _slicedToArray(_useState23, 2),
+    searchTerm = _useState24[0],
+    setSearchTerm = _useState24[1]; // Initialize search term state
+  var _useState25 = (0,react.useState)(''),
+    _useState26 = _slicedToArray(_useState25, 2),
+    filterField = _useState26[0],
+    setFilterField = _useState26[1]; // Initialize filter field state
+  var _useState27 = (0,react.useState)(''),
+    _useState28 = _slicedToArray(_useState27, 2),
+    filterValue = _useState28[0],
+    setFilterValue = _useState28[1]; // Initialize filter value state
+  var _useState29 = (0,react.useState)(0),
+    _useState30 = _slicedToArray(_useState29, 2),
+    totalPage = _useState30[0],
+    SetTotalPage = _useState30[1];
+  var _useState31 = (0,react.useState)(0),
+    _useState32 = _slicedToArray(_useState31, 2),
+    totalItemCount = _useState32[0],
+    setTotalItemCount = _useState32[1];
+  var _useState33 = (0,react.useState)(searchTerm),
+    _useState34 = _slicedToArray(_useState33, 2),
+    debouncedSearchTerm = _useState34[0],
+    setDebouncedSearchTerm = _useState34[1];
+  (0,react.useEffect)(() => {
+    var handler = setTimeout(() => {
+      setDebouncedSearchTerm(searchTerm);
+    }, 250); // 250ms debounce delay
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [searchTerm]);
+  var fetchItems = /*#__PURE__*/function () {
+    var _ref1 = _asyncToGenerator(function* (page, searchTerm, filterField, filterValue, statusFilter) {
+      try {
+        var statusParam = statusFilter && statusFilter !== 'ALL' ? "&status=".concat(encodeURIComponent(statusFilter)) : '';
+        var res = yield axios/* default */.A.get("".concat(apiConfig/* ENDPOINT_URL */.m, "/invoice-Information?page=").concat(page + 1, "&limit=").concat(limit, "&search=").concat(encodeURIComponent((searchTerm || '').trim()), "&filterField=").concat(encodeURIComponent((filterField || '').trim()), "&filterValue=").concat(encodeURIComponent((filterValue || '').trim())).concat(statusParam));
+        var formatDate = res.data.itemI.map(row => _objectSpread(_objectSpread({}, row), {}, {
+          id: row._id,
+          invoiceNumber: row.invoiceNumber,
+          dateField: row.invoiceDate !== null ? dayjs_min_default()(row.invoiceDate).format('DD/MM/YYYY') : '',
+          dueDateField: dayjs_min_default()(row.invoiceDueDate).format('DD/MM/YYYY')
+        }));
+        var invoices = formatDate;
+        SetTotalPage(res.data.totalPages); // Ensure totalPage is correctly calculated
+        setTotalItemCount(res.data.totalItem);
+        if (res.data.statusCounts) {
+          setStatusCounts(res.data.statusCounts);
         }
-      } else {
-        var offLineCustomer1 = yield _dexieDb__WEBPACK_IMPORTED_MODULE_47__/* ["default"] */ .A.paymentSchema.toArray();
-        var _formatDate = offLineCustomer1.map(item => {
-          var _item$referenceNumber2;
-          return _objectSpread(_objectSpread({}, item), {}, {
-            id: item._id,
-            dateField: dayjs__WEBPACK_IMPORTED_MODULE_39___default()(item.paymentDate).format('DD/MM/YYYY'),
-            reference: (_item$referenceNumber2 = item.referenceNumber) === null || _item$referenceNumber2 === void 0 ? void 0 : _item$referenceNumber2.map(row1 => 'INV-' + String(row1).padStart(6, '0'))
-          });
-        });
-        var _sortedPayments = [..._formatDate].sort((a, b) => Number(b.paymentNumber || 0) - Number(a.paymentNumber || 0));
-        setPayment(_sortedPayments);
+        setInvoice(invoices);
+        setLoadingData(false);
+
+        // Auto-repair status mismatch for zero-balance invoices
+        var mismatchedInvoices = invoices.filter(inv => (inv.status === 'Partially-Paid' || inv.status === 'Sent' || inv.status === 'Draft' || inv.status === 'Pending') && parseFloat(inv.balanceDue) <= 0 && parseFloat(inv.totalInvoice) > 0);
+        if (mismatchedInvoices.length > 0) {
+          console.log("Repairing status for ".concat(mismatchedInvoices.length, " invoices sequentially..."));
+          _asyncToGenerator(function* () {
+            for (var inv of mismatchedInvoices) {
+              try {
+                yield axios/* default */.A.put("".concat(apiConfig/* ENDPOINT_URL */.m, "/update-invoice/").concat(inv._id), {
+                  status: 'Paid'
+                });
+                // Small delay to prevent rate limiting
+                yield new Promise(resolve => setTimeout(resolve, 100));
+              } catch (err) {
+                console.error("Failed to repair invoice ".concat(inv.invoiceNumber, ":"), err);
+              }
+            }
+          })();
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        react_toastify_esm/* toast */.oR.error('Failed to fetch invoices.');
         setLoadingData(false);
       }
     });
-    return function fetchData() {
+    return function fetchItems(_x, _x2, _x3, _x4, _x5) {
       return _ref1.apply(this, arguments);
     };
   }();
-  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState8 = _slicedToArray(_useState7, 2),
-    loading = _useState8[0],
-    setLoading = _useState8[1];
-  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState0 = _slicedToArray(_useState9, 2),
-    loadingOpenModal = _useState0[0],
-    setLoadingOpenModal = _useState0[1];
-  var _useState1 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState10 = _slicedToArray(_useState1, 2),
-    ErrorOpenModal = _useState10[0],
-    setErrorOpenModal = _useState10[1];
+  var FilterInvoiceWith = invoice.filter(row => Array.isArray(row.items) && row.items.every(item => parseFloat(item.itemOut) === parseFloat(item.itemQty)));
+  (0,react.useEffect)(() => {
+    fetchItems(page, debouncedSearchTerm, filterField, filterValue, statusFilter);
+  }, [page, debouncedSearchTerm, filterField, filterValue, statusFilter]);
+  var handleStatusClick = statusKey => {
+    if (statusFilter.toLowerCase() === statusKey.toLowerCase() && statusKey !== 'ALL') {
+      setStatusFilter('ALL');
+    } else {
+      setStatusFilter(statusKey);
+    }
+    setPage(0);
+  };
+  var handlePageChange = newPage => {
+    setPage(newPage); // Update page state (convert to 0-based index)
+  };
+  var handleRefreshSearch = () => {
+    setSearchTerm('');
+    setDebouncedSearchTerm('');
+    setFilterModel({
+      items: [],
+      quickFilterExcludeHiddenColumns: true,
+      quickFilterValues: []
+    });
+    setPage(0);
+    fetchItems(0, '', filterField, filterValue, statusFilter);
+  };
+
+  // --- WhatsApp Invoice Dispatch Pipeline ---
+  var DEFAULT_WA_MESSAGE = 'Dear Valued Customer, please find attached your official invoice from Global Gate SARL. Thank you for your business!';
+  var _useState35 = (0,react.useState)({}),
+    _useState36 = _slicedToArray(_useState35, 2),
+    customerPhoneMap = _useState36[0],
+    setCustomerPhoneMap = _useState36[1];
+  var _useState37 = (0,react.useState)(false),
+    _useState38 = _slicedToArray(_useState37, 2),
+    openWhatsAppModal = _useState38[0],
+    setOpenWhatsAppModal = _useState38[1];
+  var _useState39 = (0,react.useState)({
+      status: 'DISCONNECTED',
+      phone: '+243 827 722 222',
+      name: 'Global Gate S.A.R.L',
+      qrCode: null,
+      isReady: false
+    }),
+    _useState40 = _slicedToArray(_useState39, 2),
+    cloudWaStatus = _useState40[0],
+    setCloudWaStatus = _useState40[1];
+  var _useState41 = (0,react.useState)(false),
+    _useState42 = _slicedToArray(_useState41, 2),
+    openQrDialog = _useState42[0],
+    setOpenQrDialog = _useState42[1];
+  var _useState43 = (0,react.useState)(false),
+    _useState44 = _slicedToArray(_useState43, 2),
+    refreshingQr = _useState44[0],
+    setRefreshingQr = _useState44[1];
+  var fetchCloudStatus = /*#__PURE__*/function () {
+    var _ref11 = _asyncToGenerator(function* () {
+      try {
+        var _res$data2;
+        var res = yield axios/* default */.A.get("".concat(apiConfig/* ENDPOINT_URL */.m, "/invoice-whatsapp/cloud-status"));
+        if (res !== null && res !== void 0 && (_res$data2 = res.data) !== null && _res$data2 !== void 0 && _res$data2.success) {
+          setCloudWaStatus(res.data);
+        }
+      } catch (err) {
+        console.warn('[InvoiceWhatsApp] Status fetch warning:', err);
+      }
+    });
+    return function fetchCloudStatus() {
+      return _ref11.apply(this, arguments);
+    };
+  }();
+  var handleReconnectCloud = /*#__PURE__*/function () {
+    var _ref12 = _asyncToGenerator(function* () {
+      setRefreshingQr(true);
+      try {
+        var _res$data3;
+        var res = yield axios/* default */.A.post("".concat(apiConfig/* ENDPOINT_URL */.m, "/invoice-whatsapp/cloud-reconnect"));
+        if (res !== null && res !== void 0 && (_res$data3 = res.data) !== null && _res$data3 !== void 0 && _res$data3.success) {
+          setCloudWaStatus(res.data);
+          react_toastify_esm/* toast */.oR.info('Cloud WhatsApp reconnect requested. If QR code appears, scan it with your phone.');
+        }
+      } catch (err) {
+        react_toastify_esm/* toast */.oR.error('Failed to reconnect Cloud WhatsApp: ' + err.message);
+      } finally {
+        setRefreshingQr(false);
+      }
+    });
+    return function handleReconnectCloud() {
+      return _ref12.apply(this, arguments);
+    };
+  }();
+  (0,react.useEffect)(() => {
+    var interval = null;
+    if (openWhatsAppModal) {
+      fetchCloudStatus();
+      interval = setInterval(fetchCloudStatus, 5000);
+    }
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, [openWhatsAppModal]);
+  var _useState45 = (0,react.useState)([]),
+    _useState46 = _slicedToArray(_useState45, 2),
+    whatsAppInvoicesList = _useState46[0],
+    setWhatsAppInvoicesList = _useState46[1];
+  var _useState47 = (0,react.useState)(new Set()),
+    _useState48 = _slicedToArray(_useState47, 2),
+    selectedWhatsAppInvoiceIds = _useState48[0],
+    setSelectedWhatsAppInvoiceIds = _useState48[1];
+  var _useState49 = (0,react.useState)(DEFAULT_WA_MESSAGE),
+    _useState50 = _slicedToArray(_useState49, 2),
+    whatsAppMessage = _useState50[0],
+    setWhatsAppMessage = _useState50[1];
+  var _useState51 = (0,react.useState)(false),
+    _useState52 = _slicedToArray(_useState51, 2),
+    savingTemplate = _useState52[0],
+    setSavingTemplate = _useState52[1];
+  var _useState53 = (0,react.useState)({}),
+    _useState54 = _slicedToArray(_useState53, 2),
+    phoneOverrides = _useState54[0],
+    setPhoneOverrides = _useState54[1];
+  var _useState55 = (0,react.useState)(false),
+    _useState56 = _slicedToArray(_useState55, 2),
+    dispatchingWhatsApp = _useState56[0],
+    setDispatchingWhatsApp = _useState56[1];
+  var _useState57 = (0,react.useState)(null),
+    _useState58 = _slicedToArray(_useState57, 2),
+    dispatchResult = _useState58[0],
+    setDispatchResult = _useState58[1];
+  var _useState59 = (0,react.useState)(false),
+    _useState60 = _slicedToArray(_useState59, 2),
+    loadingSentInvoices = _useState60[0],
+    setLoadingSentInvoices = _useState60[1];
+  var _useState61 = (0,react.useState)(0),
+    _useState62 = _slicedToArray(_useState61, 2),
+    modalTab = _useState62[0],
+    setModalTab = _useState62[1]; // 0: Send Queue, 1: Sent History
+  var _useState63 = (0,react.useState)(''),
+    _useState64 = _slicedToArray(_useState63, 2),
+    queueSearchTerm = _useState64[0],
+    setQueueSearchTerm = _useState64[1];
+  var _useState65 = (0,react.useState)([]),
+    _useState66 = _slicedToArray(_useState65, 2),
+    historyList = _useState66[0],
+    setHistoryList = _useState66[1];
+  var _useState67 = (0,react.useState)(false),
+    _useState68 = _slicedToArray(_useState67, 2),
+    loadingHistory = _useState68[0],
+    setLoadingHistory = _useState68[1];
+  var _useState69 = (0,react.useState)(''),
+    _useState70 = _slicedToArray(_useState69, 2),
+    historySearchTerm = _useState70[0],
+    setHistorySearchTerm = _useState70[1];
+  var isEligibleInvoiceStatus = st => {
+    var s = String(st || '').toUpperCase().trim();
+    return s === 'SENT' || s === 'PARTIALLY-PAID' || s === 'PARTIALLY PAID' || s === 'PARTIALLY_PAID' || s === 'FREE OF CHARGE' || s === 'FREE-OF-CHARGE';
+  };
+  var renderInvoiceStatusChip = status => {
+    var s = String(status || '').toUpperCase().trim();
+    if (s === 'SENT') {
+      return /*#__PURE__*/react.createElement(Chip/* default */.A, {
+        label: "SENT",
+        size: "small",
+        sx: {
+          bgcolor: '#e0f2fe',
+          color: '#0369a1',
+          fontWeight: 700,
+          height: 20,
+          fontSize: '0.7rem'
+        }
+      });
+    }
+    if (s === 'PARTIALLY-PAID' || s === 'PARTIALLY PAID' || s === 'PARTIALLY_PAID') {
+      return /*#__PURE__*/react.createElement(Chip/* default */.A, {
+        label: "PARTIALLY-PAID",
+        size: "small",
+        sx: {
+          bgcolor: '#ffedd5',
+          color: '#c2410c',
+          fontWeight: 700,
+          height: 20,
+          fontSize: '0.7rem'
+        }
+      });
+    }
+    if (s === 'FREE OF CHARGE' || s === 'FREE-OF-CHARGE') {
+      return /*#__PURE__*/react.createElement(Chip/* default */.A, {
+        label: "FREE OF CHARGE",
+        size: "small",
+        sx: {
+          bgcolor: '#f3e8ff',
+          color: '#7e22ce',
+          fontWeight: 700,
+          height: 20,
+          fontSize: '0.7rem'
+        }
+      });
+    }
+    return /*#__PURE__*/react.createElement(Chip/* default */.A, {
+      label: s || 'UNKNOWN',
+      size: "small",
+      sx: {
+        bgcolor: '#f1f5f9',
+        color: '#475569',
+        fontWeight: 700,
+        height: 20,
+        fontSize: '0.7rem'
+      }
+    });
+  };
+  var getInvoicePhone = function getInvoicePhone(inv) {
+    var phoneMap = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    if (!inv) return '';
+    var cust = inv.customerName || {};
+    if (typeof cust === 'object' && cust !== null) {
+      var direct = cust.customerCompanyPhone || cust.customerPhone || cust.phone || cust.mobile;
+      if (direct && String(direct).trim()) return String(direct).trim();
+      if (cust._id && phoneMap[cust._id]) return String(phoneMap[cust._id]).trim();
+      var name = cust.Customer || cust.customerName || cust.customerFullName;
+      if (name && phoneMap[String(name).toUpperCase()]) return String(phoneMap[String(name).toUpperCase()]).trim();
+    } else if (typeof cust === 'string' && phoneMap[cust.toUpperCase()]) {
+      return String(phoneMap[cust.toUpperCase()]).trim();
+    }
+    return '';
+  };
+  var fetchSentHistory = /*#__PURE__*/function () {
+    var _ref13 = _asyncToGenerator(function* () {
+      try {
+        var _res$data4;
+        setLoadingHistory(true);
+        var res = yield axios/* default */.A.get("".concat(apiConfig/* ENDPOINT_URL */.m, "/invoice-whatsapp/history"));
+        if ((_res$data4 = res.data) !== null && _res$data4 !== void 0 && _res$data4.success && Array.isArray(res.data.history)) {
+          setHistoryList(res.data.history);
+        }
+      } catch (err) {
+        console.warn('Failed to fetch WhatsApp sent history:', err);
+      } finally {
+        setLoadingHistory(false);
+      }
+    });
+    return function fetchSentHistory() {
+      return _ref13.apply(this, arguments);
+    };
+  }();
+  var sentHistoryMap = (0,react.useMemo)(() => {
+    var map = {};
+    (historyList || []).forEach(h => {
+      var num = Number(h.invoiceNumber);
+      if (num && !map[num]) {
+        map[num] = h;
+      }
+    });
+    return map;
+  }, [historyList]);
+  var filteredQueueInvoices = (0,react.useMemo)(() => {
+    if (!queueSearchTerm.trim()) return whatsAppInvoicesList;
+    var q = queueSearchTerm.toLowerCase().trim();
+    return whatsAppInvoicesList.filter(inv => {
+      var invNum = String(inv.invoiceNumber || '').toLowerCase();
+      var invFormatted = "inv-".concat(String(inv.invoiceNumber || '').padStart(6, '0')).toLowerCase();
+      var cust = inv.customerName || {};
+      var clientName = String(typeof cust === 'string' ? cust : cust.Customer || cust.customerName || cust.customerFullName || '').toLowerCase();
+      var rawPhone = phoneOverrides[inv._id || inv.id] !== undefined ? phoneOverrides[inv._id || inv.id] : getInvoicePhone(inv, customerPhoneMap);
+      var phone = String(rawPhone || '').toLowerCase();
+      var st = String(inv.status || '').toLowerCase();
+      return invNum.includes(q) || invFormatted.includes(q) || clientName.includes(q) || phone.includes(q) || st.includes(q);
+    });
+  }, [whatsAppInvoicesList, queueSearchTerm, phoneOverrides, customerPhoneMap]);
+  var handleSelectFiltered = () => {
+    setSelectedWhatsAppInvoiceIds(prev => {
+      var next = new Set(prev);
+      filteredQueueInvoices.forEach(inv => next.add(inv._id || inv.id));
+      return next;
+    });
+  };
+  var handleUncheckFiltered = () => {
+    setSelectedWhatsAppInvoiceIds(prev => {
+      var next = new Set(prev);
+      filteredQueueInvoices.forEach(inv => next.delete(inv._id || inv.id));
+      return next;
+    });
+  };
+  var filteredHistoryList = (0,react.useMemo)(() => {
+    if (!historySearchTerm.trim()) return historyList;
+    var q = historySearchTerm.toLowerCase().trim();
+    return historyList.filter(h => {
+      var invNum = String(h.invoiceNumber || '').toLowerCase();
+      var invFormatted = "inv-".concat(String(h.invoiceNumber || '').padStart(6, '0')).toLowerCase();
+      var client = String(h.customerName || '').toLowerCase();
+      var phone = String(h.phone || '').toLowerCase();
+      var user = String(h.sentBy || '').toLowerCase();
+      return invNum.includes(q) || invFormatted.includes(q) || client.includes(q) || phone.includes(q) || user.includes(q);
+    });
+  }, [historyList, historySearchTerm]);
+  (0,react.useEffect)(() => {
+    var fetchCustomers = /*#__PURE__*/function () {
+      var _ref14 = _asyncToGenerator(function* () {
+        try {
+          var _res$data5;
+          var res = yield (0,apiCache/* cachedGet */.Fe)("".concat(apiConfig/* ENDPOINT_URL */.m, "/customer"));
+          if ((_res$data5 = res.data) !== null && _res$data5 !== void 0 && _res$data5.data) {
+            var map = {};
+            res.data.data.forEach(c => {
+              var p = (c.customerCompanyPhone || c.customerPhone || c.phone || c.mobile || '').trim();
+              if (p) {
+                if (c._id) map[c._id] = p;
+                if (c.Customer) map[c.Customer.toUpperCase()] = p;
+                if (c.customerName) map[c.customerName.toUpperCase()] = p;
+                if (c.customerFullName) map[c.customerFullName.toUpperCase()] = p;
+              }
+            });
+            setCustomerPhoneMap(map);
+          }
+        } catch (_) {}
+      });
+      return function fetchCustomers() {
+        return _ref14.apply(this, arguments);
+      };
+    }();
+    fetchCustomers();
+  }, []);
+  (0,react.useEffect)(() => {
+    var fetchTemplate = /*#__PURE__*/function () {
+      var _ref15 = _asyncToGenerator(function* () {
+        try {
+          var _res$data6, _res$data7;
+          var res = yield axios/* default */.A.get("".concat(apiConfig/* ENDPOINT_URL */.m, "/invoice-whatsapp/template"));
+          if ((_res$data6 = res.data) !== null && _res$data6 !== void 0 && _res$data6.success && (_res$data7 = res.data) !== null && _res$data7 !== void 0 && _res$data7.templateMessage) {
+            setWhatsAppMessage(res.data.templateMessage);
+          }
+        } catch (_) {}
+      });
+      return function fetchTemplate() {
+        return _ref15.apply(this, arguments);
+      };
+    }();
+    fetchTemplate();
+  }, []);
+  var handleSaveTemplateAsDefault = /*#__PURE__*/function () {
+    var _ref16 = _asyncToGenerator(function* () {
+      if (!whatsAppMessage.trim()) {
+        react_toastify_esm/* toast */.oR.warn('Message cannot be empty');
+        return;
+      }
+      setSavingTemplate(true);
+      try {
+        var _user$data2, _res$data8;
+        var res = yield axios/* default */.A.post("".concat(apiConfig/* ENDPOINT_URL */.m, "/invoice-whatsapp/template"), {
+          templateMessage: whatsAppMessage.trim(),
+          updatedBy: (user === null || user === void 0 || (_user$data2 = user.data) === null || _user$data2 === void 0 ? void 0 : _user$data2.userName) || 'GG'
+        });
+        if ((_res$data8 = res.data) !== null && _res$data8 !== void 0 && _res$data8.success) {
+          react_toastify_esm/* toast */.oR.success('Default WhatsApp message saved successfully!');
+        }
+      } catch (err) {
+        react_toastify_esm/* toast */.oR.error('Failed to save default message: ' + (err.message || ''));
+      } finally {
+        setSavingTemplate(false);
+      }
+    });
+    return function handleSaveTemplateAsDefault() {
+      return _ref16.apply(this, arguments);
+    };
+  }();
+  var handleOpenWhatsAppBatchModal = /*#__PURE__*/function () {
+    var _ref17 = _asyncToGenerator(function* () {
+      if (!canSendWhatsAppInvoice) {
+        react_toastify_esm/* toast */.oR.error('Permission denied. WhatsApp Invoice Dispatch is restricted in Grant Access.');
+        return;
+      }
+      setDispatchResult(null);
+      setLoadingSentInvoices(true);
+      setQueueSearchTerm('');
+      setModalTab(0);
+      setOpenWhatsAppModal(true);
+      fetchSentHistory();
+      try {
+        var _yield$Promise$allSet = yield Promise.allSettled([axios/* default */.A.get("".concat(apiConfig/* ENDPOINT_URL */.m, "/invoice-Information?page=1&limit=200&status=SENT")), axios/* default */.A.get("".concat(apiConfig/* ENDPOINT_URL */.m, "/invoice-Information?page=1&limit=200&status=PARTIALLY-PAID")), axios/* default */.A.get("".concat(apiConfig/* ENDPOINT_URL */.m, "/invoice-Information?page=1&limit=200&status=FREE OF CHARGE"))]),
+          _yield$Promise$allSet2 = _slicedToArray(_yield$Promise$allSet, 3),
+          resSent = _yield$Promise$allSet2[0],
+          resPartial = _yield$Promise$allSet2[1],
+          resFoc = _yield$Promise$allSet2[2];
+        var pool = [];
+        [resSent, resPartial, resFoc].forEach(r => {
+          var _r$value;
+          if (r.status === 'fulfilled' && Array.isArray((_r$value = r.value) === null || _r$value === void 0 || (_r$value = _r$value.data) === null || _r$value === void 0 ? void 0 : _r$value.itemI)) {
+            pool.push(...r.value.data.itemI);
+          }
+        });
+        var seen = new Set();
+        var combined = pool.filter(r => {
+          var id = r._id || r.id;
+          if (!id || seen.has(id)) return false;
+          seen.add(id);
+          return isEligibleInvoiceStatus(r.status);
+        }).map(r => _objectSpread(_objectSpread({}, r), {}, {
+          id: r._id,
+          dateField: r.invoiceDate ? dayjs_min_default()(r.invoiceDate).format('DD/MM/YYYY') : ''
+        }));
+        if (combined.length === 0) {
+          combined = invoice.filter(inv => isEligibleInvoiceStatus(inv.status));
+        }
+        setWhatsAppInvoicesList(combined);
+        setSelectedWhatsAppInvoiceIds(new Set()); // Default to 0 checked on open
+
+        var initPhones = {};
+        combined.forEach(inv => {
+          var id = inv._id || inv.id;
+          initPhones[id] = getInvoicePhone(inv, customerPhoneMap);
+        });
+        setPhoneOverrides(initPhones);
+      } catch (err) {
+        console.error('Error fetching eligible invoices:', err);
+        var localEligible = invoice.filter(inv => isEligibleInvoiceStatus(inv.status));
+        setWhatsAppInvoicesList(localEligible);
+        setSelectedWhatsAppInvoiceIds(new Set()); // Default to 0 checked on open
+        var _initPhones = {};
+        localEligible.forEach(inv => {
+          var id = inv._id || inv.id;
+          _initPhones[id] = getInvoicePhone(inv, customerPhoneMap);
+        });
+        setPhoneOverrides(_initPhones);
+      } finally {
+        setLoadingSentInvoices(false);
+      }
+    });
+    return function handleOpenWhatsAppBatchModal() {
+      return _ref17.apply(this, arguments);
+    };
+  }();
+  var handleOpenWhatsAppSingleModal = row => {
+    if (!canSendWhatsAppInvoice) {
+      react_toastify_esm/* toast */.oR.error('Permission denied. WhatsApp Invoice Dispatch is restricted in Grant Access.');
+      return;
+    }
+    if (!isEligibleInvoiceStatus(row.status)) {
+      react_toastify_esm/* toast */.oR.warn('Only invoices with status SENT, PARTIALLY-PAID, or FREE OF CHARGE can be sent via WhatsApp.');
+      return;
+    }
+    setDispatchResult(null);
+    setQueueSearchTerm('');
+    setModalTab(0);
+    setWhatsAppInvoicesList([row]);
+    setSelectedWhatsAppInvoiceIds(new Set([row._id || row.id]));
+    var initialPhone = getInvoicePhone(row, customerPhoneMap);
+    setPhoneOverrides({
+      [row._id || row.id]: initialPhone
+    });
+    fetchSentHistory();
+    setOpenWhatsAppModal(true);
+  };
+  var handleToggleWhatsAppInvoice = id => {
+    setSelectedWhatsAppInvoiceIds(prev => {
+      var next = new Set(prev);
+      if (next.has(id)) next.delete(id);else next.add(id);
+      return next;
+    });
+  };
+  var handleToggleSelectAllWhatsApp = () => {
+    if (selectedWhatsAppInvoiceIds.size === whatsAppInvoicesList.length) {
+      setSelectedWhatsAppInvoiceIds(new Set());
+    } else {
+      setSelectedWhatsAppInvoiceIds(new Set(whatsAppInvoicesList.map(inv => inv._id || inv.id)));
+    }
+  };
+  var handleExecuteWhatsAppDispatch = /*#__PURE__*/function () {
+    var _ref18 = _asyncToGenerator(function* () {
+      var selectedInvoices = whatsAppInvoicesList.filter(inv => selectedWhatsAppInvoiceIds.has(inv._id || inv.id)).map(inv => {
+        var totalAmount = Number(inv.totalInvoice || inv.total || 0).toFixed(2);
+        var hasValidBalance = inv.balanceDue !== undefined && inv.balanceDue !== null && !isNaN(parseFloat(inv.balanceDue));
+        var balanceDueAmount = hasValidBalance ? parseFloat(inv.balanceDue).toFixed(2) : totalAmount;
+        return _objectSpread(_objectSpread({}, inv), {}, {
+          balanceDue: balanceDueAmount
+        });
+      });
+      if (selectedInvoices.length === 0) {
+        react_toastify_esm/* toast */.oR.warn('Please select at least one invoice to send.');
+        return;
+      }
+      setDispatchingWhatsApp(true);
+      setDispatchResult(null);
+      var payload = {
+        invoices: selectedInvoices,
+        templateMessage: whatsAppMessage.trim(),
+        phoneOverrides
+      };
+      try {
+        var _ref19, _result$sent, _result, _result2, _ref20, _result$failed, _result3, _result4, _ref21, _result$total, _result5, _result6, _result7, _result8;
+        var result = null;
+
+        // 1. Primary Master: Railway 24/7 Cloud WhatsApp Engine
+        var cloudSuccess = false;
+        try {
+          var res = yield axios/* default */.A.post("".concat(apiConfig/* ENDPOINT_URL */.m, "/invoice-whatsapp/send"), payload);
+          if (res !== null && res !== void 0 && res.data) {
+            result = res.data;
+            cloudSuccess = true;
+          }
+        } catch (cloudErr) {
+          var _cloudErr$response, _cloudErr$response2;
+          console.warn('[InvoiceWhatsApp] Cloud dispatch attempt note:', (cloudErr === null || cloudErr === void 0 || (_cloudErr$response = cloudErr.response) === null || _cloudErr$response === void 0 ? void 0 : _cloudErr$response.data) || cloudErr.message);
+          if (cloudErr !== null && cloudErr !== void 0 && (_cloudErr$response2 = cloudErr.response) !== null && _cloudErr$response2 !== void 0 && (_cloudErr$response2 = _cloudErr$response2.data) !== null && _cloudErr$response2 !== void 0 && _cloudErr$response2.cloudStatus) {
+            setCloudWaStatus(prev => _objectSpread(_objectSpread({}, prev), {}, {
+              status: cloudErr.response.data.cloudStatus,
+              qrCode: cloudErr.response.data.qrCode || prev.qrCode
+            }));
+          }
+        }
+
+        // 2. Secondary Fallback: Local HTTP daemon if active on this PC
+        if (!cloudSuccess) {
+          try {
+            var localCheck = yield axios/* default */.A.get('http://127.0.0.1:5055/status', {
+              timeout: 1500
+            });
+            if (localCheck.status === 200) {
+              var localRes = yield axios/* default */.A.post('http://127.0.0.1:5055/send-invoices', payload, {
+                timeout: 180000
+              });
+              if (localRes !== null && localRes !== void 0 && localRes.data) {
+                result = localRes.data;
+              }
+            }
+          } catch (_) {}
+        }
+
+        // 3. Tertiary Fallback: Desktop Electron IPC
+        if (!result) {
+          if (typeof window !== 'undefined' && window.electron && typeof window.electron.sendInvoiceWhatsApp === 'function') {
+            result = yield window.electron.sendInvoiceWhatsApp(payload);
+          }
+        }
+        if (!result) {
+          throw new Error('Cloud WhatsApp Master is not connected. Please click the status badge to link the company phone via QR code.');
+        }
+        setDispatchResult(result);
+
+        // Support BOTH top-level format and nested report format
+        var sentCount = Number((_ref19 = (_result$sent = (_result = result) === null || _result === void 0 ? void 0 : _result.sent) !== null && _result$sent !== void 0 ? _result$sent : (_result2 = result) === null || _result2 === void 0 || (_result2 = _result2.report) === null || _result2 === void 0 ? void 0 : _result2.sent) !== null && _ref19 !== void 0 ? _ref19 : 0);
+        var failedCount = Number((_ref20 = (_result$failed = (_result3 = result) === null || _result3 === void 0 ? void 0 : _result3.failed) !== null && _result$failed !== void 0 ? _result$failed : (_result4 = result) === null || _result4 === void 0 || (_result4 = _result4.report) === null || _result4 === void 0 ? void 0 : _result4.failed) !== null && _ref20 !== void 0 ? _ref20 : Math.max(0, selectedInvoices.length - sentCount));
+        var totalCount = Number((_ref21 = (_result$total = (_result5 = result) === null || _result5 === void 0 ? void 0 : _result5.total) !== null && _result$total !== void 0 ? _result$total : (_result6 = result) === null || _result6 === void 0 || (_result6 = _result6.report) === null || _result6 === void 0 ? void 0 : _result6.total) !== null && _ref21 !== void 0 ? _ref21 : selectedInvoices.length);
+
+        // Determine the exact invoices that actually succeeded
+        var detailsList = Array.isArray((_result7 = result) === null || _result7 === void 0 ? void 0 : _result7.details) ? result.details : Array.isArray((_result8 = result) === null || _result8 === void 0 || (_result8 = _result8.report) === null || _result8 === void 0 ? void 0 : _result8.details) ? result.report.details : [];
+        var sentDetails = detailsList.filter(d => d.status === 'sent');
+        var actuallySentInvoices = [];
+        if (sentDetails.length > 0) {
+          actuallySentInvoices = selectedInvoices.filter(inv => {
+            var invNum = String(inv.invoiceNumber);
+            var invId = String(inv._id || inv.id);
+            return sentDetails.some(d => String(d.invoiceNumber) === invNum || String(d.invoiceId) === invId);
+          });
+        } else if (sentCount > 0 && sentCount === selectedInvoices.length) {
+          actuallySentInvoices = selectedInvoices;
+        } else if (sentCount > 0) {
+          actuallySentInvoices = selectedInvoices.slice(0, sentCount);
+        }
+
+        // ALWAYS record history in MongoDB for any invoice that actually delivered!
+        if (actuallySentInvoices.length > 0) {
+          try {
+            var _user$data3;
+            yield axios/* default */.A.post("".concat(apiConfig/* ENDPOINT_URL */.m, "/invoice-whatsapp/record-history"), {
+              records: actuallySentInvoices.map(inv => {
+                var _inv$customerName, _inv$customerName2;
+                return {
+                  invoiceId: inv._id || inv.id,
+                  invoiceNumber: inv.invoiceNumber,
+                  customerName: typeof inv.customerName === 'object' ? ((_inv$customerName = inv.customerName) === null || _inv$customerName === void 0 ? void 0 : _inv$customerName.Customer) || ((_inv$customerName2 = inv.customerName) === null || _inv$customerName2 === void 0 ? void 0 : _inv$customerName2.customerName) || '' : inv.customerName,
+                  phone: phoneOverrides[inv._id || inv.id] || getInvoicePhone(inv, customerPhoneMap),
+                  amount: Number(inv.balanceDue !== undefined ? inv.balanceDue : inv.totalInvoice || inv.total || 0),
+                  caption: whatsAppMessage.trim(),
+                  status: 'sent'
+                };
+              }),
+              sentBy: (user === null || user === void 0 || (_user$data3 = user.data) === null || _user$data3 === void 0 ? void 0 : _user$data3.userName) || 'GG'
+            });
+            fetchSentHistory();
+          } catch (histErr) {
+            console.warn('[InvoiceWhatsApp] History record warning:', histErr);
+          }
+        }
+        if (sentCount > 0 && failedCount === 0) {
+          react_toastify_esm/* toast */.oR.success("WhatsApp dispatch complete: ".concat(sentCount, " of ").concat(totalCount, " invoice(s) sent!"));
+          fetchItems(page, debouncedSearchTerm, filterField, filterValue, statusFilter);
+        } else if (sentCount > 0 && failedCount > 0) {
+          react_toastify_esm/* toast */.oR.warn("WhatsApp dispatch partial: ".concat(sentCount, " sent, ").concat(failedCount, " failed. Recorded in Sent History."));
+          fetchItems(page, debouncedSearchTerm, filterField, filterValue, statusFilter);
+        } else {
+          var _result9;
+          react_toastify_esm/* toast */.oR.error(((_result9 = result) === null || _result9 === void 0 ? void 0 : _result9.error) || "Failed to dispatch WhatsApp invoices (0 of ".concat(totalCount, " sent)."));
+        }
+      } catch (err) {
+        var _err$response;
+        console.error('WhatsApp dispatch error:', err);
+        var errMsg = (err === null || err === void 0 || (_err$response = err.response) === null || _err$response === void 0 || (_err$response = _err$response.data) === null || _err$response === void 0 ? void 0 : _err$response.error) || err.message;
+        setDispatchResult({
+          success: false,
+          error: errMsg
+        });
+        react_toastify_esm/* toast */.oR.error('Dispatch failed: ' + errMsg);
+      } finally {
+        setDispatchingWhatsApp(false);
+      }
+    });
+    return function handleExecuteWhatsAppDispatch() {
+      return _ref18.apply(this, arguments);
+    };
+  }();
+  var _useState71 = (0,react.useState)(false),
+    _useState72 = _slicedToArray(_useState71, 2),
+    loading = _useState72[0],
+    setLoading = _useState72[1];
+  var _useState73 = (0,react.useState)(false),
+    _useState74 = _slicedToArray(_useState73, 2),
+    ErrorOpenModal = _useState74[0],
+    setErrorOpenModal = _useState74[1];
+  var _useState75 = (0,react.useState)(false),
+    _useState76 = _slicedToArray(_useState75, 2),
+    loadingOpenModal = _useState76[0],
+    setLoadingOpenModal = _useState76[1];
+  var _useState77 = (0,react.useState)(false),
+    _useState78 = _slicedToArray(_useState77, 2),
+    modalDeleteOpenLoading = _useState78[0],
+    setModalDeleteOpenLoading = _useState78[1];
+  {/** Loading Update View Start */}
+  var handleOpenLoading = () => {
+    setLoadingOpenModal(true);
+    setLoading(true);
+    handleCloseUpdate();
+    setTimeout(() => {
+      setLoading(false);
+    }, 500);
+  };
+  var handleCloseLoading = () => {
+    setLoadingOpenModal(false);
+    setLoading(false);
+    fetchItems(page, searchTerm, filterField, filterValue);
+  };
+  {/** Loading Update View End */}
+  {/** Loading Delete View Start */}
+  var handleDeleteOpenLoading = () => {
+    setModalDeleteOpenLoading(true);
+    setLoading(true);
+    handleClose();
+    setTimeout(() => {
+      setLoading(false);
+    }, 500);
+  };
+  var handleDeleteCloseLoading = () => {
+    setModalDeleteOpenLoading(false);
+    setLoading(false);
+    fetchItems(page, searchTerm, filterField, filterValue);
+  };
   var handleOpenOffline = () => {
     setLoadingOpenModal(true);
     setLoading(true);
@@ -1786,243 +3730,29 @@ function PaymentView() {
       setLoading(false);
     }, 500);
   };
-  var handleCloseModal = () => {
-    fetchData();
-  };
-  var handleCreateNotificationOffline = /*#__PURE__*/function () {
-    var _ref10 = _asyncToGenerator(function* (ReferenceInfo, ReferenceInfoNumber, ReferenceInfoName) {
-      var data = {
-        idInfo: ReferenceInfo,
-        person: user.data.userName + ' Created ',
-        reason: "PAY-".concat(String(ReferenceInfoNumber).padStart(6, '0'), " For ").concat(ReferenceInfoName),
-        dateNotification: new Date()
-      };
-      try {
-        yield axios__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_48__/* .ENDPOINT_URL */ .m, "/create-notification"), data);
-      } catch (error) {
-        console.log(error);
-      }
-    });
-    return function handleCreateNotificationOffline(_x, _x2, _x3) {
-      return _ref10.apply(this, arguments);
-    };
-  }();
-  var syncOff = /*#__PURE__*/function () {
-    var _ref11 = _asyncToGenerator(function* () {
-      if (navigator.onLine) {
-        var syncedPayment = yield _dexieDb__WEBPACK_IMPORTED_MODULE_47__/* ["default"] */ .A.paymentSchema.toArray();
-        var paymentToSynced = syncedPayment.filter(row => row.synced === false);
-        for (var paymentInfo of paymentToSynced) {
-          try {
-            var res = yield axios__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_48__/* .ENDPOINT_URL */ .m, "/create-payment"), paymentInfo);
-            if (res) {
-              var ReferenceInfo = res.data.data._id;
-              var ReferenceInfoNumber = res.data.data.paymentNumber;
-              var rawCust = res.data.data.customerName;
-              var ReferenceInfoName = typeof rawCust === 'string' ? rawCust : (rawCust === null || rawCust === void 0 ? void 0 : rawCust.Customer) || (rawCust === null || rawCust === void 0 ? void 0 : rawCust.customerName) || (rawCust === null || rawCust === void 0 ? void 0 : rawCust.name) || '';
-              handleCreateNotificationOffline(ReferenceInfo, ReferenceInfoNumber, ReferenceInfoName);
-              handleOpenOffline();
-            }
-          } catch (error) {
-            console.log(error);
-          }
-        }
-      }
-      fetchData();
-    });
-    return function syncOff() {
-      return _ref11.apply(this, arguments);
-    };
-  }();
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    fetchData();
-    window.addEventListener('online', syncOff);
-    if (navigator.onLine) {
-      syncOff();
-    }
-    return () => {
-      window.removeEventListener('online', syncOff);
-    };
-  }, []);
-  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
-    _useState12 = _slicedToArray(_useState11, 2),
-    loadingData = _useState12[0],
-    setLoadingData = _useState12[1];
-  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
-    _useState14 = _slicedToArray(_useState13, 2),
-    invoice = _useState14[0],
-    setInvoice = _useState14[1];
-  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
-    _useState16 = _slicedToArray(_useState15, 2),
-    hidden = _useState16[0],
-    setHidden = _useState16[1];
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    var fetchData = /*#__PURE__*/function () {
-      var _ref12 = _asyncToGenerator(function* () {
+  (0,react.useEffect)(() => {
+    var fetchDataHidden = /*#__PURE__*/function () {
+      var _ref22 = _asyncToGenerator(function* () {
         try {
-          var res = yield (0,_utils_apiCache__WEBPACK_IMPORTED_MODULE_26__/* .cachedGet */ .Fe)("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_48__/* .ENDPOINT_URL */ .m, "/customer"));
-          var CustomerInfo = res.data.data.map(item => _objectSpread(_objectSpread({}, item), {}, {
-            id: item._id
-          }));
-          setCustomer(CustomerInfo.filter(row => row.credit !== undefined && row.credit > 0));
-          // Stop loading spinner immediately after customer loads — don't block on invoice-Overdue
-          /* setLoadingData(false) disabled here to fix race */
-          // Load overdue invoices in background — if this endpoint is slow/missing it won't freeze the UI
-          try {
-            var _resOverdue$data;
-            var resOverdue = yield (0,_utils_apiCache__WEBPACK_IMPORTED_MODULE_26__/* .cachedGet */ .Fe)("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_48__/* .ENDPOINT_URL */ .m, "/invoice-Overdue"));
-            var overdueList = Array.isArray(resOverdue.data) ? resOverdue.data : Array.isArray((_resOverdue$data = resOverdue.data) === null || _resOverdue$data === void 0 ? void 0 : _resOverdue$data.data) ? resOverdue.data.data : [];
-            setInvoice(overdueList);
-            try {
-              localStorage.setItem('InvoiceOverdue', JSON.stringify(overdueList));
-            } catch (storageErr) {
-              console.warn('Could not cache InvoiceOverdue in localStorage:', storageErr);
-            }
-          } catch (fetchErr) {
-            console.error('Error fetching invoice-Overdue:', fetchErr);
-            try {
-              var storedCustomer = JSON.parse(localStorage.getItem('InvoiceOverdue')) || [];
-              if (Array.isArray(storedCustomer) && storedCustomer.length > 0) {
-                setInvoice(storedCustomer.reverse());
-              }
-            } catch (_) {}
-          }
+          var res = yield axios/* default */.A.get("".concat(apiConfig/* ENDPOINT_URL */.m, "/hidden"));
+          setHiddenRow(res.data.data.map(row => row.idRow));
+          setHidden(res.data.data);
+          localStorage.removeItem('Hidden');
         } catch (error) {
           console.error('Error fetching data:', error);
-          var _storedCustomer = JSON.parse(localStorage.getItem('InvoiceOverdue')) || [];
-          if (Array.isArray(_storedCustomer)) {
-            setInvoice(_storedCustomer.reverse());
-          } else {
-            setInvoice([]);
-          }
-          /* setLoadingData(false) disabled here to fix race */
-        }
-      });
-      return function fetchData() {
-        return _ref12.apply(this, arguments);
-      };
-    }();
-    fetchData();
-  }, []);
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    var fetchDataHidden = /*#__PURE__*/function () {
-      var _ref13 = _asyncToGenerator(function* () {
-        if (navigator.onLine) {
-          try {
-            var res = yield (0,_utils_apiCache__WEBPACK_IMPORTED_MODULE_26__/* .cachedGet */ .Fe)("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_48__/* .ENDPOINT_URL */ .m, "/hidden"));
-            setHidden(res.data.data);
-            localStorage.removeItem('Hidden');
-            yield _dexieDb__WEBPACK_IMPORTED_MODULE_47__/* ["default"] */ .A.hiddenSchema.clear();
-            var validItems = res.data.data.filter(item => item.hiddenNumber).map(item => _objectSpread(_objectSpread({}, item), {}, {
-              synced: true,
-              updateS: true
-            }));
-            yield _dexieDb__WEBPACK_IMPORTED_MODULE_47__/* ["default"] */ .A.hiddenSchema.bulkPut(validItems);
-          } catch (error) {
-            console.error('Error fetching data:', error);
-          }
-        } else {
-          var offLineCustomer1 = yield _dexieDb__WEBPACK_IMPORTED_MODULE_47__/* ["default"] */ .A.hiddenSchema.toArray();
-          setHidden(offLineCustomer1);
+          react_toastify_esm/* toast */.oR.error('Failed to fetch hidden rows.');
         }
       });
       return function fetchDataHidden() {
-        return _ref13.apply(this, arguments);
+        return _ref22.apply(this, arguments);
       };
     }();
     fetchDataHidden();
   }, []);
-  var invoicePaymentRow = (Array.isArray(invoice) ? invoice : []).filter(row => row && (row.status === "Sent" || row.status === "Partially-Paid")).map(row => _objectSpread(_objectSpread({}, row), {}, {
-    id: row._id || row.id || 'INV-' + row.invoiceNumber,
-    invoiceNumber: row.invoiceNumber ? String(row.invoiceNumber).startsWith('INV-') ? row.invoiceNumber : "INV-".concat(String(row.invoiceNumber).padStart(6, '0')) : 'INV-000000',
-    dateField: dayjs__WEBPACK_IMPORTED_MODULE_39___default()(row.invoiceDate).format('DD/MM/YYYY'),
-    dueDateField: dayjs__WEBPACK_IMPORTED_MODULE_39___default()(row.invoiceDueDate).format('DD/MM/YYYY')
-  }));
-  {/** search start */}
-  var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
-    _useState18 = _slicedToArray(_useState17, 2),
-    searchInvoice = _useState18[0],
-    setSearchInvoice = _useState18[1];
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(() => {
-    var storedValue = localStorage.getItem('QuickFilterInvoicePayment');
-    if (storedValue) {
-      setSearchInvoice(storedValue);
-    }
-  });
-  var _React$useState3 = react__WEBPACK_IMPORTED_MODULE_0__.useState({
-      items: [],
-      quickFilterExcludeHiddenColumns: true,
-      quickFilterValues: []
-    }),
-    _React$useState4 = _slicedToArray(_React$useState3, 2),
-    filterModel = _React$useState4[0],
-    setFilterModel = _React$useState4[1];
-  var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({}),
-    _useState20 = _slicedToArray(_useState19, 2),
-    columnVisibilityModel = _useState20[0],
-    setColumnVisibilityModel = _useState20[1];
-  var handelHiddenColumn = newHidden => {
-    setColumnVisibilityModel(newHidden);
-    localStorage.setItem('HiddenColumnsInvoicePayment', JSON.stringify(newHidden));
-  };
-  var handleFilter = newModel => {
-    setFilterModel(newModel);
-  };
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    var storedQuick = JSON.parse(localStorage.getItem('QuickFilterInvoicePaymentTst'));
-    if (storedQuick) {
-      setFilterModel(storedQuick);
-    }
-    var storedColumns = JSON.parse(localStorage.getItem('HiddenColumnsInvoicePayment'));
-    if (storedColumns) {
-      setColumnVisibilityModel(storedColumns);
-    }
-  }, [searchInvoice]);
-  {/** search end */}
-  {/** Payment Received start */}
-  var _useState21 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
-    _useState22 = _slicedToArray(_useState21, 2),
-    searchPayment = _useState22[0],
-    setPaymentInfo = _useState22[1];
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(() => {
-    var storedValue = localStorage.getItem('QuickFilterPaymentInfo');
-    if (storedValue) {
-      setPaymentInfo(storedValue);
-    }
-  });
-  var _React$useState5 = react__WEBPACK_IMPORTED_MODULE_0__.useState({
-      items: [],
-      quickFilterExcludeHiddenColumns: true,
-      quickFilterValues: []
-    }),
-    _React$useState6 = _slicedToArray(_React$useState5, 2),
-    filterModelPayment = _React$useState6[0],
-    setFilterModelPayment = _React$useState6[1];
-  var _useState23 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({}),
-    _useState24 = _slicedToArray(_useState23, 2),
-    columnVisibilityModelPayment = _useState24[0],
-    setColumnVisibilityModelPayment = _useState24[1];
-  var handelHiddenColumnPayment = newHidden => {
-    setColumnVisibilityModelPayment(newHidden);
-    localStorage.setItem('HiddenColumnsPayment', JSON.stringify(newHidden));
-  };
-  var handleFilterPayment = newModel => {
-    setFilterModelPayment(newModel);
-  };
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    var storedQuick = JSON.parse(localStorage.getItem('QuickFilterPaymentInfoTst'));
-    if (storedQuick) {
-      setFilterModelPayment(storedQuick);
-    }
-    var storedColumns = JSON.parse(localStorage.getItem('HiddenColumnsPayment'));
-    if (storedColumns) {
-      setColumnVisibilityModelPayment(storedColumns);
-    }
-  }, []);
-  var _useState25 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState26 = _slicedToArray(_useState25, 2),
-    openReasonDelete = _useState26[0],
-    setOpenReasonDelete = _useState26[1];
+  var _useState79 = (0,react.useState)(false),
+    _useState80 = _slicedToArray(_useState79, 2),
+    openReasonDelete = _useState80[0],
+    setOpenReasonDelete = _useState80[1];
   var handleOpenReasonDelete = e => {
     e.preventDefault();
     setOpenReasonDelete(true);
@@ -2030,38 +3760,15 @@ function PaymentView() {
   var handleCloseReasonDelete = () => {
     setOpenReasonDelete(false);
   };
-  var _useState27 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState28 = _slicedToArray(_useState27, 2),
-    open = _useState28[0],
-    setOpen = _useState28[1];
-  var _useState29 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
-    _useState30 = _slicedToArray(_useState29, 2),
-    DeleteId = _useState30[0],
-    setDeleteId = _useState30[1];
-  var _useState31 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
-    _useState32 = _slicedToArray(_useState31, 2),
-    relatedInvoice = _useState32[0],
-    setRelatedInvoice = _useState32[1];
-  var _useState33 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
-    _useState34 = _slicedToArray(_useState33, 2),
-    relatedCredit = _useState34[0],
-    setRelatedCredit = _useState34[1];
-  var _useState35 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
-    _useState36 = _slicedToArray(_useState35, 2),
-    modes = _useState36[0],
-    setModes = _useState36[1];
-  var _useState37 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
-    _useState38 = _slicedToArray(_useState37, 2),
-    amount = _useState38[0],
-    setAmount = _useState38[1];
-  var _useState39 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
-    _useState40 = _slicedToArray(_useState39, 2),
-    relatedCustomerID = _useState40[0],
-    setRelatedCustomerID = _useState40[1];
-  var _useState41 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
-    _useState42 = _slicedToArray(_useState41, 2),
-    reason = _useState42[0],
-    setReason = _useState42[1];
+  {/** End Get Invoice */}
+  var _useState81 = (0,react.useState)(false),
+    _useState82 = _slicedToArray(_useState81, 2),
+    open = _useState82[0],
+    setOpen = _useState82[1];
+  var _useState83 = (0,react.useState)(null),
+    _useState84 = _slicedToArray(_useState83, 2),
+    DeleteId = _useState84[0],
+    setDeleteId = _useState84[1];
   var handleOpen = id => {
     setOpen(true);
     setDeleteId(id);
@@ -2069,342 +3776,396 @@ function PaymentView() {
   var handleClose = () => {
     setLoadingOpenModal(false);
     setOpen(false);
-    setRelatedInvoice([]);
   };
-  var _useState43 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
-    _useState44 = _slicedToArray(_useState43, 2),
-    relatedNumber = _useState44[0],
-    setRelatedNumber = _useState44[1];
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    var fetchId = /*#__PURE__*/function () {
-      var _ref14 = _asyncToGenerator(function* () {
-        if (DeleteId) {
-          if (navigator.onLine) {
-            try {
-              var _res$data2, _res$data3;
-              var res = yield axios__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_48__/* .ENDPOINT_URL */ .m, "/get-payment/").concat(DeleteId));
-              setRelatedInvoice(res.data.data.TotalAmount);
-              setRelatedCredit(res.data.data.remaining);
-              setModes(res.data.data.modes);
-              setAmount(res.data.data.amount);
-              setRelatedCustomerID(res.data.data.customerName._id);
-              setRelatedNumber(Number(((_res$data2 = res.data) === null || _res$data2 === void 0 || (_res$data2 = _res$data2.data) === null || _res$data2 === void 0 ? void 0 : _res$data2.paymentNumber) || ((_res$data3 = res.data) === null || _res$data3 === void 0 ? void 0 : _res$data3.paymentNumber) || 0));
-            } catch (error) {
-              console.error('Error fetching data:', error);
-            }
-          } else {
-            var resLocal = yield _dexieDb__WEBPACK_IMPORTED_MODULE_47__/* ["default"] */ .A.paymentSchema.get({
-              _id: DeleteId
-            });
-            setRelatedInvoice(resLocal.TotalAmount);
-            setRelatedCredit(resLocal.remaining);
-            setRelatedCustomerID(resLocal.customerName._id);
-            setRelatedNumber(resLocal.paymentNumber);
-            setModes(resLocal.modes);
-            setAmount(resLocal.amount);
-          }
-        }
-      });
-      return function fetchId() {
-        return _ref14.apply(this, arguments);
-      };
-    }();
-    fetchId();
-  }, [DeleteId]);
-  var _useState45 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
-    _useState46 = _slicedToArray(_useState45, 2),
-    invoiceInfo = _useState46[0],
-    setInvoiceInfo = _useState46[1];
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    var fetchInvoice = /*#__PURE__*/function () {
-      var _ref15 = _asyncToGenerator(function* () {
-        if (relatedInvoice.length > 0) {
-          if (navigator.onLine) {
-            var getInvoice = relatedInvoice.map(row => {
-              return axios__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_48__/* .ENDPOINT_URL */ .m, "/get-invoice/").concat(row.id));
-            });
-            try {
-              var res = yield Promise.all(getInvoice);
-              setInvoiceInfo(res.map(row => row.data.data));
-            } catch (error) {
-              console.log('An error as occur');
-            }
-          } else {
-            var _getInvoice = relatedInvoice.map(row => {
-              return _dexieDb__WEBPACK_IMPORTED_MODULE_47__/* ["default"] */ .A.invoiceSchema.get({
-                _id: row.id
-              });
-            });
-            var _res = yield Promise.all(_getInvoice);
-            setInvoiceInfo(_res);
-          }
-        }
-      });
-      return function fetchInvoice() {
-        return _ref15.apply(this, arguments);
-      };
-    }();
-    fetchInvoice();
-  }, [relatedInvoice]);
-  var _useState47 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
-    _useState48 = _slicedToArray(_useState47, 2),
-    oldCredit = _useState48[0],
-    setOldCredit = _useState48[1];
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    var fetchCustomer = /*#__PURE__*/function () {
-      var _ref16 = _asyncToGenerator(function* () {
-        if (relatedCustomerID) {
-          if (navigator.onLine) {
-            try {
-              var _resPay$data;
-              var _yield$Promise$all = yield Promise.all([axios__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_48__/* .ENDPOINT_URL */ .m, "/get-customer/").concat(relatedCustomerID)), axios__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_48__/* .ENDPOINT_URL */ .m, "/payment?customerId=").concat(relatedCustomerID))]),
-                _yield$Promise$all2 = _slicedToArray(_yield$Promise$all, 2),
-                resCust = _yield$Promise$all2[0],
-                resPay = _yield$Promise$all2[1];
-              var paymentsList = ((_resPay$data = resPay.data) === null || _resPay$data === void 0 ? void 0 : _resPay$data.data) || [];
-              var calcCredit = 0;
-              paymentsList.forEach(row => {
-                if (row.modes === 'Credit' || row.modes === 'Cash' && row.remaining > 0 || row.modes === 'Bank Transfer' && row.remaining > 0) {
-                  calcCredit += parseFloat(row.remaining !== undefined && row.remaining !== null ? row.remaining : row.amount || 0);
-                } else if (row.modes === 'Credit-Account') {
-                  calcCredit -= parseFloat(row.amount || 0);
-                }
-              });
-              setOldCredit(Math.max(0, calcCredit));
-            } catch (error) {
-              console.error('Error fetching data:', error);
-            }
-          } else {
-            var resLocal = yield _dexieDb__WEBPACK_IMPORTED_MODULE_47__/* ["default"] */ .A.customerSchema.get({
-              _id: relatedCustomerID
-            });
-            setOldCredit(resLocal.credit !== null && resLocal.credit !== undefined ? resLocal.credit : 0);
-          }
-        }
-      });
-      return function fetchCustomer() {
-        return _ref16.apply(this, arguments);
-      };
-    }();
-    fetchCustomer();
-  }, [relatedCustomerID]);
-  var totalR = modes === 'Credit-Account' ? Math.max(0, parseFloat(oldCredit + amount)) : Math.max(0, parseFloat(oldCredit - (relatedCredit || amount)));
-  var updateInvoiceAmount = relatedInvoice ? relatedInvoice.map(row => {
-    var status = '';
-    var relatedI = invoiceInfo === null || invoiceInfo === void 0 ? void 0 : invoiceInfo.find(row2 => (row2 === null || row2 === void 0 ? void 0 : row2._id) === row.id);
-    if (relatedI) {
-      var rawTotal = parseFloat(relatedI.total) - parseFloat(row.total);
-      var total = Math.round(rawTotal * 100) / 100;
-      var balanceDueRaw = parseFloat(relatedI.totalInvoice) - total;
-      var balanceDue = Math.round(balanceDueRaw * 100) / 100;
-      if (total > 0) {
-        status = 'Partially-Paid';
-      } else {
-        status = 'Sent';
-      }
-      return {
-        id: row.id,
-        number: relatedI.invoiceNumber,
-        data: {
-          total: total <= 0 ? "0" : total,
-          balanceDue,
-          status
-        }
-      };
-    }
-  }) : null;
-  var handleUpdateInvoice = /*#__PURE__*/function () {
-    var _ref17 = _asyncToGenerator(function* () {
-      if (!navigator.onLine) return;
-      if (!relatedInvoice || relatedInvoice.length === 0) return;
+  var _useState85 = (0,react.useState)(false),
+    _useState86 = _slicedToArray(_useState85, 2),
+    open1 = _useState86[0],
+    setOpen1 = _useState86[1];
+  var _useState87 = (0,react.useState)(null),
+    _useState88 = _slicedToArray(_useState87, 2),
+    updateId = _useState88[0],
+    setUpdateId = _useState88[1];
+  var _useState89 = (0,react.useState)(""),
+    _useState90 = _slicedToArray(_useState89, 2),
+    status = _useState90[0],
+    setStatus = _useState90[1];
+  var handleOpenUpdate = id => {
+    setOpen1(true);
+    setUpdateId(id);
+  };
+  var handleCloseUpdate = () => {
+    setOpen1(false);
+    setUpdateId(null);
+  };
+  {/** delete multiple && all modal start */}
+  var _useState91 = (0,react.useState)(false),
+    _useState92 = _slicedToArray(_useState91, 2),
+    openDeleteMultiple = _useState92[0],
+    setOpenDeleteMultiple = _useState92[1];
+  var handleOpenMultiple = () => {
+    setOpenDeleteMultiple(true);
+  };
+  var handleCloseMultiple = () => {
+    setOpenDeleteMultiple(false);
+  };
+  var _useState93 = (0,react.useState)(false),
+    _useState94 = _slicedToArray(_useState93, 2),
+    openDeleteAll = _useState94[0],
+    setOpenDeleteAll = _useState94[1];
+  var handleOpenAll = () => {
+    setOpenDeleteAll(true);
+  };
+  var handleCloseAll = () => {
+    setOpenDeleteAll(false);
+  };
+  {/** Delete Function */}
+  var handleDelete = /*#__PURE__*/function () {
+    var _ref23 = _asyncToGenerator(function* () {
+      setLoading(true);
+      setModalDeleteOpenLoading(true);
+      handleClose();
       try {
-        var _allPaymentsRes$data;
-        // Fetch ALL remaining payments and each invoice's current state
-        var _yield$Promise$all3 = yield Promise.all([axios__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_48__/* .ENDPOINT_URL */ .m, "/payment")), ...relatedInvoice.map(row => axios__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_48__/* .ENDPOINT_URL */ .m, "/get-invoice/").concat(row.id)))]),
-          _yield$Promise$all4 = _toArray(_yield$Promise$all3),
-          allPaymentsRes = _yield$Promise$all4[0],
-          freshInvoiceResponses = _arrayLikeToArray(_yield$Promise$all4).slice(1);
-        var allPayments = ((_allPaymentsRes$data = allPaymentsRes.data) === null || _allPaymentsRes$data === void 0 ? void 0 : _allPaymentsRes$data.data) || [];
-        var updates = relatedInvoice.map((row, idx) => {
-          var _freshInvoiceResponse;
-          var invoice = (_freshInvoiceResponse = freshInvoiceResponses[idx]) === null || _freshInvoiceResponse === void 0 || (_freshInvoiceResponse = _freshInvoiceResponse.data) === null || _freshInvoiceResponse === void 0 ? void 0 : _freshInvoiceResponse.data;
-          if (!invoice) return null;
-
-          // Sum all remaining payments still linked to this invoice
-          var totalPaid = 0;
-          allPayments.forEach(payment => {
-            if (payment.TotalAmount && Array.isArray(payment.TotalAmount)) {
-              payment.TotalAmount.forEach(ta => {
-                if (ta.id === row.id) {
-                  totalPaid += parseFloat(ta.total || 0);
-                }
-              });
-            }
-          });
-          totalPaid = Math.round(totalPaid * 100) / 100;
-          var invoiceTotal = parseFloat(invoice.totalInvoice || 0);
-          var balanceDue = Math.round((invoiceTotal - totalPaid) * 100) / 100;
-          var status = totalPaid <= 0 ? 'Sent' : totalPaid >= invoiceTotal ? 'Paid' : 'Partially-Paid';
-          return {
-            id: row.id,
-            data: {
-              total: totalPaid,
-              balanceDue,
-              status
-            }
-          };
-        }).filter(Boolean);
-        yield Promise.all(updates.map(_ref18 => {
-          var id = _ref18.id,
-            data = _ref18.data;
-          return axios__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .A.put("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_48__/* .ENDPOINT_URL */ .m, "/update-invoice/").concat(id), data);
-        }));
-        yield Promise.all(updates.map(/*#__PURE__*/function () {
-          var _ref20 = _asyncToGenerator(function* (_ref19) {
-            var id = _ref19.id,
-              data = _ref19.data;
-            yield _dexieDb__WEBPACK_IMPORTED_MODULE_47__/* ["default"] */ .A.invoiceSchema.update(id, _objectSpread(_objectSpread({}, data), {}, {
-              updateS: true
-            }));
-          });
-          return function (_x4) {
-            return _ref20.apply(this, arguments);
-          };
-        }()));
-        (0,_utils_apiCache__WEBPACK_IMPORTED_MODULE_26__/* .invalidateCache */ .gm)('/invoice');
-      } catch (error) {
-        console.log('An error occurred during invoice update:', error);
-      }
-    });
-    return function handleUpdateInvoice() {
-      return _ref17.apply(this, arguments);
-    };
-  }();
-  var handleUpdateCredit = /*#__PURE__*/function () {
-    var _ref21 = _asyncToGenerator(function* () {
-      var data = {
-        credit: totalR
-      };
-      if (navigator.onLine) {
-        try {
-          yield axios__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .A.put("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_48__/* .ENDPOINT_URL */ .m, "/update-customer/").concat(relatedCustomerID), data);
-          yield _dexieDb__WEBPACK_IMPORTED_MODULE_47__/* ["default"] */ .A.customerSchema.update(relatedCustomerID, _objectSpread(_objectSpread({}, data), {}, {
-            updateS: true
-          }));
-        } catch (error) {
-          console.error('Error fetching data:', error);
+        var invToDelete = invoice.find(inv => inv._id === DeleteId);
+        if (invToDelete && invToDelete.ReferenceName && invToDelete.Position === 'Maintenance') {
+          try {
+            yield axios/* default */.A.put("".concat(apiConfig/* ENDPOINT_URL */.m, "/update-maintenance/").concat(invToDelete.ReferenceName), {
+              Converted: false,
+              ReferenceName: '',
+              status: 'Close'
+            });
+          } catch (e) {
+            console.error('Failed to update maintenance order', e);
+          }
         }
+        var res = yield axios/* default */.A.delete("".concat(apiConfig/* ENDPOINT_URL */.m, "/delete-invoice/").concat(DeleteId));
+        if (res) {
+          setLoading(false);
+        }
+      } catch (error) {
+        console.error(error);
+        setLoading(false);
+        react_toastify_esm/* toast */.oR.error('Failed to delete invoice.');
+        handleError();
       }
     });
-    return function handleUpdateCredit() {
-      return _ref21.apply(this, arguments);
+    return function handleDelete() {
+      return _ref23.apply(this, arguments);
     };
   }();
-  {/** delete multiple && all modal end */}
-  var _useState49 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState50 = _slicedToArray(_useState49, 2),
-    modalDeleteOpenLoading = _useState50[0],
-    setModalDeleteOpenLoading = _useState50[1];
-  {/** Loading Delete View Start */}
-  var handleDeleteOpenLoading = () => {
-    setModalDeleteOpenLoading(true);
-    setLoading(true);
-    handleClose();
-    setTimeout(() => {
-      setLoading(false);
-    }, 500);
-  };
-  var handleDeleteCloseLoading = () => {
-    setModalDeleteOpenLoading(false);
-    fetchData();
-  };
-  {/** Loading Delete View End */}
+  var _useState95 = (0,react.useState)([]),
+    _useState96 = _slicedToArray(_useState95, 2),
+    InvoiceDeleted = _useState96[0],
+    setInvoiceDeleted = _useState96[1];
+  (0,react.useEffect)(() => {
+    var fetchFunction = /*#__PURE__*/function () {
+      var _ref24 = _asyncToGenerator(function* () {
+        var deletePromises = selectedRows.map(/*#__PURE__*/function () {
+          var _ref25 = _asyncToGenerator(function* (idToDelete) {
+            return axios/* default */.A.get("".concat(apiConfig/* ENDPOINT_URL */.m, "/get-invoice/").concat(idToDelete));
+          });
+          return function (_x6) {
+            return _ref25.apply(this, arguments);
+          };
+        }());
+        try {
+          var res = yield Promise.all(deletePromises);
+          setInvoiceDeleted(res.map(row => 'INV-' + String(row.data.data.invoiceNumber).padStart(6, '0')));
+        } catch (error) {
+          console.error('Fetch error:', error);
+        }
+      });
+      return function fetchFunction() {
+        return _ref24.apply(this, arguments);
+      };
+    }();
+    fetchFunction();
+  }, [selectedRows]);
+  var related = InvoiceDeleted.map(row => row);
+  var info = related.toString();
   var handleCreateNotification = /*#__PURE__*/function () {
-    var _ref22 = _asyncToGenerator(function* () {
+    var _ref26 = _asyncToGenerator(function* () {
       var data = {
         idInfo: '',
-        person: user.data.userName + ' Deleted ' + "PAY-".concat(String(relatedNumber).padStart(6, '0')),
+        person: user.data.userName + ' Deleted ' + info,
         reason,
         dateNotification: new Date()
       };
       try {
-        yield axios__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_48__/* .ENDPOINT_URL */ .m, "/create-notification"), data);
+        yield axios/* default */.A.post("".concat(apiConfig/* ENDPOINT_URL */.m, "/create-notification"), data);
       } catch (error) {
-        console.log(error);
+        console.error('Notification error:', error);
       }
     });
     return function handleCreateNotification() {
-      return _ref22.apply(this, arguments);
+      return _ref26.apply(this, arguments);
     };
   }();
-  var handleDelete = /*#__PURE__*/function () {
-    var _ref23 = _asyncToGenerator(function* (e) {
+  var handleDeleteMany = /*#__PURE__*/function () {
+    var _ref27 = _asyncToGenerator(function* (e) {
       e.preventDefault();
-      if (navigator.onLine) {
+      setLoading(true);
+      setModalDeleteOpenLoading(true);
+      handleCloseMultiple();
+      handleCloseAll();
+      handleCloseReasonDelete();
+      var deletePromises = selectedRows.map(/*#__PURE__*/function () {
+        var _ref28 = _asyncToGenerator(function* (idToDelete) {
+          var invToDelete = invoice.find(inv => inv._id === idToDelete);
+          if (invToDelete && invToDelete.ReferenceName && invToDelete.Position === 'Maintenance') {
+            try {
+              yield axios/* default */.A.put("".concat(apiConfig/* ENDPOINT_URL */.m, "/update-maintenance/").concat(invToDelete.ReferenceName), {
+                Converted: false,
+                ReferenceName: '',
+                status: 'Close'
+              });
+            } catch (e) {
+              console.error('Failed to update maintenance order', e);
+            }
+          }
+          return axios/* default */.A.delete("".concat(apiConfig/* ENDPOINT_URL */.m, "/delete-invoice/").concat(idToDelete));
+        });
+        return function (_x8) {
+          return _ref28.apply(this, arguments);
+        };
+      }());
+      try {
+        var res = yield Promise.all(deletePromises);
+        if (res) {
+          handleCreateNotification();
+          setLoading(false);
+          setSelectedRows([]);
+        }
+      } catch (error) {
+        console.error('Delete Many error:', error);
+        setLoading(false);
+        react_toastify_esm/* toast */.oR.error('Failed to delete multiple invoices.');
+        handleError();
+      }
+    });
+    return function handleDeleteMany(_x7) {
+      return _ref27.apply(this, arguments);
+    };
+  }();
+  {/** End Delete Function */}
+  {/** Update Invoice Status start */}
+  var _useState97 = (0,react.useState)(0),
+    _useState98 = _slicedToArray(_useState97, 2),
+    invoiceN = _useState98[0],
+    setInvoiceN = _useState98[1];
+  (0,react.useEffect)(() => {
+    var fetchId = /*#__PURE__*/function () {
+      var _ref29 = _asyncToGenerator(function* () {
+        if (updateId !== null) {
+          try {
+            var res = yield axios/* default */.A.get("".concat(apiConfig/* ENDPOINT_URL */.m, "/get-invoice/").concat(updateId));
+            setStatus(res.data.data.status);
+            setInvoiceN(res.data.data.invoiceNumber);
+          } catch (error) {
+            console.error('Error fetching data:', error);
+            react_toastify_esm/* toast */.oR.error('Failed to fetch invoice detail.');
+          }
+        }
+      });
+      return function fetchId() {
+        return _ref29.apply(this, arguments);
+      };
+    }();
+    fetchId();
+  }, [updateId]);
+  var handleCreateComment = /*#__PURE__*/function () {
+    var _ref30 = _asyncToGenerator(function* () {
+      var data = {
+        idInfo: updateId,
+        person: user.data.userName,
+        reason: status + ' INV-' + String(invoiceN).padStart(6, '0'),
+        dateNotification: new Date()
+      };
+      try {
+        yield axios/* default */.A.post("".concat(apiConfig/* ENDPOINT_URL */.m, "/create-notification/"), data);
+      } catch (error) {
+        console.error('Notification error:', error);
+      }
+    });
+    return function handleCreateComment() {
+      return _ref30.apply(this, arguments);
+    };
+  }();
+  var handleSubmitUpdateStatus = /*#__PURE__*/function () {
+    var _ref31 = _asyncToGenerator(function* (e) {
+      e.preventDefault();
+      var data = {
+        status
+      };
+      try {
+        var res = yield axios/* default */.A.put("".concat(apiConfig/* ENDPOINT_URL */.m, "/update-invoice/").concat(updateId), data);
+        if (res) {
+          handleCreateComment();
+          handleOpenLoading();
+        }
+      } catch (error) {
+        console.error('Error making PUT request:', error);
+        react_toastify_esm/* toast */.oR.error('Failed to update invoice status.');
+      }
+    });
+    return function handleSubmitUpdateStatus(_x9) {
+      return _ref31.apply(this, arguments);
+    };
+  }();
+  {/** Update Invoice Status End */}
+  var handleHideRow = /*#__PURE__*/function () {
+    var _ref32 = _asyncToGenerator(function* (id) {
+      if (user.data.role === 'CEO') {
         try {
-          var res = yield axios__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .A.delete("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_48__/* .ENDPOINT_URL */ .m, "/delete-payment/").concat(DeleteId));
-          if (res) {
-            yield handleUpdateInvoice();
-            yield handleUpdateCredit();
-            yield handleCreateNotification();
-            (0,_utils_apiCache__WEBPACK_IMPORTED_MODULE_26__/* .invalidateCache */ .gm)('/payment');
-            handleCloseReasonDelete();
-            handleDeleteOpenLoading();
+          if (hiddenRow.includes(id)) {
+            setHiddenRow(hiddenRow.filter(row => row !== id));
+            var result = hidden.filter(row => row.idRow === id).map(row => row._id);
+            var hiddenId = result.toString();
+            yield axios/* default */.A.delete("".concat(apiConfig/* ENDPOINT_URL */.m, "/delete-hidden/").concat(hiddenId));
+          } else {
+            setHiddenRow([...hiddenRow, id]);
+            yield axios/* default */.A.post("".concat(apiConfig/* ENDPOINT_URL */.m, "/create-hidden"), {
+              idRow: id,
+              hiddenByCEO: true
+            });
           }
         } catch (error) {
-          console.error(error);
+          console.error('Hide error:', error);
+          react_toastify_esm/* toast */.oR.error('Failed to update row visibility.');
         }
       }
     });
-    return function handleDelete(_x5) {
-      return _ref23.apply(this, arguments);
+    return function handleHideRow(_x0) {
+      return _ref32.apply(this, arguments);
     };
   }();
-  {/** search end */}
-  var _React$useState7 = react__WEBPACK_IMPORTED_MODULE_0__.useState(true),
-    _React$useState8 = _slicedToArray(_React$useState7, 2),
-    sideBar = _React$useState8[0],
-    setSideBar = _React$useState8[1];
+  var rowRenderer = params => {
+    if (hiddenRow.includes(params.row._id)) {
+      return null;
+    }
+    return /*#__PURE__*/react.createElement("div", null, params.row[params.field]);
+  };
+  var _useState99 = (0,react.useState)([]),
+    _useState100 = _slicedToArray(_useState99, 2),
+    filteredRows = _useState100[0],
+    setFilteredRows = _useState100[1];
+  (0,react.useEffect)(() => {
+    var Inv = invoice.filter(row => !hiddenRow.includes(row._id));
+    setFilteredRows(Inv);
+  }, [invoice, hiddenRow]);
+  {/** search start */}
+  var _useState101 = (0,react.useState)(""),
+    _useState102 = _slicedToArray(_useState101, 2),
+    searchInvoice = _useState102[0],
+    setSearchInvoice = _useState102[1];
+  (0,react.useEffect)(() => {
+    var storedValue = localStorage.getItem('QuickFilterInvoice');
+    if (storedValue) {
+      setSearchInvoice(storedValue);
+    }
+  }, []);
+  var _React$useState = react.useState({
+      items: [],
+      quickFilterExcludeHiddenColumns: true,
+      quickFilterValues: []
+    }),
+    _React$useState2 = _slicedToArray(_React$useState, 2),
+    filterModel = _React$useState2[0],
+    setFilterModel = _React$useState2[1];
+  var _useState103 = (0,react.useState)({}),
+    _useState104 = _slicedToArray(_useState103, 2),
+    columnVisibilityModel = _useState104[0],
+    setColumnVisibilityModel = _useState104[1];
+  var handelHiddenColumn = newHidden => {
+    setColumnVisibilityModel(newHidden);
+    localStorage.setItem('HiddenColumnsInvoice', JSON.stringify(newHidden));
+  };
+  var handleFilter = newModel => {
+    var _newModel$quickFilter;
+    var searchTerm = ((_newModel$quickFilter = newModel.quickFilterValues) === null || _newModel$quickFilter === void 0 ? void 0 : _newModel$quickFilter.join(' ')) || '';
+    setSearchTerm(searchTerm);
+    setFilterModel(newModel);
+    setPage(0);
+  };
+  (0,react.useEffect)(() => {
+    var storedQuick = JSON.parse(localStorage.getItem('QuickFilterInvoiceTst'));
+    if (storedQuick) {
+      var _storedQuick$quickFil;
+      var _searchTerm = ((_storedQuick$quickFil = storedQuick.quickFilterValues) === null || _storedQuick$quickFil === void 0 ? void 0 : _storedQuick$quickFil.join(' ')) || '';
+      setSearchTerm(_searchTerm);
+      setFilterModel(storedQuick);
+    }
+    var storedColumns = JSON.parse(localStorage.getItem('HiddenColumnsInvoice'));
+    if (storedColumns) {
+      setColumnVisibilityModel(storedColumns);
+    }
+  }, [searchInvoice]);
+  var _React$useState3 = react.useState(true),
+    _React$useState4 = _slicedToArray(_React$useState3, 2),
+    sideBar = _React$useState4[0],
+    setSideBar = _React$useState4[1];
   var toggleDrawer = () => {
     setSideBar(!sideBar);
   };
-  var filteredRows = invoicePaymentRow.filter(row => !hidden.some(row2 => row2.idRow === row._id));
+  {/** search end */}
   var columns = [{
     field: 'invoiceNumber',
     headerName: 'Invoice#',
-    width: 140
+    minWidth: 100,
+    flex: 1,
+    renderCell: params => /*#__PURE__*/react.createElement("div", null, " ", /*#__PURE__*/react.createElement("span", null, "INV-", String(params.row.invoiceNumber).padStart(6, '0')), " ")
   }, {
     field: 'customer',
     headerName: 'Customer Name',
-    width: sideBar ? 240 : 350,
+    minWidth: 200,
+    flex: 2,
     valueGetter: params => {
       var _params$row, _params$row2, _params$row3;
-      return (((_params$row = params.row) === null || _params$row === void 0 || (_params$row = _params$row.customerName) === null || _params$row === void 0 ? void 0 : _params$row.Customer) || ((_params$row2 = params.row) === null || _params$row2 === void 0 || (_params$row2 = _params$row2.customerName) === null || _params$row2 === void 0 ? void 0 : _params$row2.customerName) || (typeof ((_params$row3 = params.row) === null || _params$row3 === void 0 ? void 0 : _params$row3.customerName) === 'string' ? params.row.customerName : '') || '').toUpperCase();
+      var raw = ((_params$row = params.row) === null || _params$row === void 0 ? void 0 : _params$row.customerName) || ((_params$row2 = params.row) === null || _params$row2 === void 0 ? void 0 : _params$row2.Customer) || ((_params$row3 = params.row) === null || _params$row3 === void 0 ? void 0 : _params$row3.customer);
+      if (!raw) return '';
+      if (typeof raw === 'string') return raw.toUpperCase();
+      var fullName = [raw.customerFirstName, raw.customerLastName].filter(Boolean).join(' ');
+      var name = raw.Customer || raw.customerName || raw.customerFullName || raw.companyName || fullName || raw.name || raw.clientName || '';
+      return String(name).toUpperCase();
     }
   }, {
     field: 'status',
     headerName: 'Status',
-    width: 140,
-    renderCell: params => (0,_utils_formatUtils__WEBPACK_IMPORTED_MODULE_31__/* .renderStatusBadge */ .UM)(params.row.status)
-  }, {
-    field: 'daysPastDue',
-    headerName: 'Period',
-    width: 240,
-    renderCell: params => params.row.overdue === true ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
-      color: params.row.daysPastDue > 0 ? "red" : "black"
-    }, "Overdue: ", params.row.daysPastDue, " Days Past Due") : 'ON TIME'
-  }, {
-    field: 'subTotal',
-    headerName: 'I-Amount',
-    width: 120,
+    minWidth: 100,
+    flex: 1,
     renderCell: params => {
-      var _params$row$subTotal;
-      return "$".concat((_params$row$subTotal = params.row.subTotal) === null || _params$row$subTotal === void 0 ? void 0 : _params$row$subTotal.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+      var isActuallyPaid = parseFloat(params.row.balanceDue) <= 0 && parseFloat(params.row.totalInvoice) > 0;
+      var fallbackStatus = parseFloat(params.row.total) > 0 && parseFloat(params.row.balanceDue) > 0 ? 'Partially-Paid' : 'Sent';
+      var displayStatus = isActuallyPaid ? "Paid" : params.row.status || fallbackStatus;
+      return (0,formatUtils/* renderStatusBadge */.UM)(displayStatus);
+    }
+  }, {
+    field: 'invoiceSubject',
+    headerName: 'Subject',
+    minWidth: 150,
+    flex: 1,
+    valueGetter: params => {
+      var _params$row4, _params$row5;
+      return ((_params$row4 = params.row) === null || _params$row4 === void 0 ? void 0 : _params$row4.invoiceSubject) || (((_params$row5 = params.row) === null || _params$row5 === void 0 ? void 0 : _params$row5.invoiceNumber) === 2673 ? 'CCTV & POS INSTALLATION' : '');
+    }
+  }, {
+    field: 'dateField',
+    headerName: 'Date',
+    minWidth: 100,
+    flex: 1
+  }, {
+    field: 'totalInvoice',
+    headerName: 'I-Amount',
+    minWidth: 100,
+    flex: 1,
+    renderCell: params => {
+      var _params$row$totalInvo;
+      return "$".concat((_params$row$totalInvo = params.row.totalInvoice) === null || _params$row$totalInvo === void 0 ? void 0 : _params$row$totalInvo.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
     }
   }, {
     field: 'total',
     headerName: 'A-Paid',
-    width: 120,
+    minWidth: 100,
+    flex: 1,
     renderCell: params => {
       var _params$row$total;
       return "$".concat((_params$row$total = params.row.total) === null || _params$row$total === void 0 ? void 0 : _params$row$total.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
@@ -2412,171 +4173,25 @@ function PaymentView() {
   }, {
     field: 'balanceDue',
     headerName: 'B-Due',
-    width: 120,
+    minWidth: 100,
+    flex: 1,
     renderCell: params => {
       var _params$row$balanceDu;
       return "$".concat((_params$row$balanceDu = params.row.balanceDue) === null || _params$row$balanceDu === void 0 ? void 0 : _params$row$balanceDu.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
     }
-  }];
-  var columnsPayment = [{
-    field: 'paymentNumber',
-    headerName: 'Payment#',
-    width: 130,
-    renderCell: params => "PAY-".concat(String(params.row.paymentNumber).padStart(6, '0'))
-  }, {
-    field: 'customer',
-    headerName: 'Customer Name',
-    width: sideBar ? 260 : 340,
-    valueGetter: params => {
-      var _params$row4, _params$row5, _params$row6;
-      return (((_params$row4 = params.row) === null || _params$row4 === void 0 || (_params$row4 = _params$row4.customerName) === null || _params$row4 === void 0 ? void 0 : _params$row4.Customer) || ((_params$row5 = params.row) === null || _params$row5 === void 0 || (_params$row5 = _params$row5.customerName) === null || _params$row5 === void 0 ? void 0 : _params$row5.customerName) || (typeof ((_params$row6 = params.row) === null || _params$row6 === void 0 ? void 0 : _params$row6.customerName) === 'string' ? params.row.customerName : '') || '').toUpperCase();
-    }
-  }, {
-    field: 'transactionType',
-    headerName: 'Type',
-    width: 110,
-    renderCell: params => {
-      var isRefund = params.row.transactionType === 'Refund';
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
-        style: {
-          backgroundColor: isRefund ? '#fee2e2' : '#dcfce7',
-          color: isRefund ? '#b91c1c' : '#166534',
-          padding: '3px 8px',
-          borderRadius: '4px',
-          fontSize: '11px',
-          fontWeight: 'bold',
-          display: 'inline-block',
-          whiteSpace: 'nowrap'
-        }
-      }, isRefund ? 'REFUND' : 'PAYMENT');
-    }
-  }, {
-    field: 'status',
-    headerName: 'Status',
-    width: 110,
-    renderCell: params => (0,_utils_formatUtils__WEBPACK_IMPORTED_MODULE_31__/* .renderStatusBadge */ .UM)(params.row.status || 'Cleared')
-  }, {
-    field: 'description',
-    headerName: 'Description',
-    width: sideBar ? 180 : 220
-  }, {
-    field: 'dateField',
-    headerName: 'Date',
-    width: 130
-  }, {
-    field: 'modes',
-    headerName: 'Mode',
-    width: 130,
-    renderCell: params => {
-      var mode = params.row.modes || '';
-      if (mode === 'Credit-Account') {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
-          style: {
-            backgroundColor: '#e0e7ff',
-            color: '#3730a3',
-            padding: '3px 8px',
-            borderRadius: '4px',
-            fontSize: '11px',
-            fontWeight: 'bold',
-            display: 'inline-block',
-            whiteSpace: 'nowrap'
-          }
-        }, "CREDIT APPLIED");
-      }
-      if (mode === 'Credit') {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
-          style: {
-            backgroundColor: '#dcfce7',
-            color: '#166534',
-            padding: '3px 8px',
-            borderRadius: '4px',
-            fontSize: '11px',
-            fontWeight: 'bold',
-            display: 'inline-block',
-            whiteSpace: 'nowrap'
-          }
-        }, "CREDIT DEPOSIT");
-      }
-      if (mode === 'Cash') {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
-          style: {
-            backgroundColor: '#fef3c7',
-            color: '#92400e',
-            padding: '3px 8px',
-            borderRadius: '4px',
-            fontSize: '11px',
-            fontWeight: 'bold',
-            display: 'inline-block',
-            whiteSpace: 'nowrap'
-          }
-        }, "CASH");
-      }
-      if (mode === 'Bank Transfer') {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
-          style: {
-            backgroundColor: '#e0f2fe',
-            color: '#0369a1',
-            padding: '3px 8px',
-            borderRadius: '4px',
-            fontSize: '11px',
-            fontWeight: 'bold',
-            display: 'inline-block',
-            whiteSpace: 'nowrap'
-          }
-        }, "BANK TRANSFER");
-      }
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
-        style: {
-          backgroundColor: '#f1f5f9',
-          color: '#334155',
-          padding: '3px 8px',
-          borderRadius: '4px',
-          fontSize: '11px',
-          fontWeight: 'bold',
-          display: 'inline-block',
-          whiteSpace: 'nowrap'
-        }
-      }, mode.toUpperCase());
-    }
-  }, {
-    field: 'amount',
-    headerName: 'A-Paid',
-    width: 130,
-    renderCell: params => {
-      var isRefund = params.row.transactionType === 'Refund';
-      var isVoided = params.row.status === 'Voided';
-      var amtNum = parseFloat(params.row.amount || 0);
-      var amtStr = amtNum.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-      if (isVoided) {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
-          style: {
-            color: '#94a3b8',
-            textDecoration: 'line-through'
-          }
-        }, "$", amtStr);
-      }
-      if (isRefund) {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
-          style: {
-            color: '#b91c1c',
-            fontWeight: 'bold'
-          }
-        }, "-$", amtStr);
-      }
-      return "$".concat(amtStr);
-    }
   }, {
     field: 'view',
     headerName: 'View',
-    width: 50,
-    renderCell: params => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(ViewTooltip, {
+    width: 60,
+    minWidth: 60,
+    renderCell: params => /*#__PURE__*/react.createElement(ViewTooltip, {
       title: "View"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
-      disabled: PaymentInfoV.length === 0
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_7__/* .NavLink */ .k2, {
-      to: "/PaymentInformationView/".concat(params.row._id),
+    }, /*#__PURE__*/react.createElement("span", null, /*#__PURE__*/react.createElement(IconButton/* default */.A, {
+      disabled: InvoiceInfoV.length === 0
+    }, /*#__PURE__*/react.createElement(react_router_dom_dist/* NavLink */.k2, {
+      to: "/InvoiceViewAdminAll/".concat(params.row._id),
       className: "LinkName"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Visibility__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react.createElement(Visibility/* default */.A, {
       style: {
         color: '#202a5a'
       }
@@ -2585,100 +4200,144 @@ function PaymentView() {
     field: 'edit',
     headerName: 'Edit',
     width: 50,
-    renderCell: params => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(EditTooltip, {
+    renderCell: params => /*#__PURE__*/react.createElement(EditTooltip, {
       title: "Edit"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
-      disabled: PaymentInfoU.length === 0
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_7__/* .NavLink */ .k2, {
-      to: "/PaymentInformationUpdate/".concat(params.row._id),
-      className: "LinkName"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Edit__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react.createElement("span", null, /*#__PURE__*/react.createElement(IconButton/* default */.A, {
+      onClick: () => handleOpenUpdate(params.row._id),
+      disabled: params.row.status !== 'Draft' && InvoiceInfoU.length === 0
+    }, /*#__PURE__*/react.createElement(Edit/* default */.A, {
       style: {
         color: 'gray'
       }
-    })))))
+    }))))
   }, {
     field: 'Delete',
     headerName: 'Delete',
     width: 50,
-    renderCell: params => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(DeleteTooltip, {
+    renderCell: params => /*#__PURE__*/react.createElement(DeleteTooltip, {
       title: "Delete"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, "                  ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react.createElement("span", null, "                                ", /*#__PURE__*/react.createElement(IconButton/* default */.A, {
       onClick: () => handleOpen(params.row._id),
-      hidden: PaymentInfoD.length === 0
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Delete__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+      disabled: InvoiceInfoD.length === 0
+    }, /*#__PURE__*/react.createElement(Delete/* default */.A, {
       style: {
         cursor: 'pointer',
         color: 'red'
       }
     }))))
-  }];
-  var columnCustomer = [{
-    field: 'customer',
-    headerName: 'Customer Name',
-    width: open ? 600 : 700,
-    valueGetter: params => params.row.Customer
   }, {
-    field: 'credit',
-    headerName: 'Credit',
-    width: 300,
+    field: 'whatsapp',
+    headerName: 'WhatsApp',
+    width: 60,
+    sortable: false,
     renderCell: params => {
-      var _params$row$credit;
-      return "$".concat((_params$row$credit = params.row.credit) === null || _params$row$credit === void 0 ? void 0 : _params$row$credit.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+      var isEligible = isEligibleInvoiceStatus(params.row.status);
+      if (!canSendWhatsAppInvoice) return null;
+      if (!isEligible) {
+        return /*#__PURE__*/react.createElement(Tooltip/* default */.A, {
+          title: "Only invoices with status SENT, PARTIALLY-PAID, or FREE OF CHARGE can be sent via WhatsApp"
+        }, /*#__PURE__*/react.createElement("span", null, /*#__PURE__*/react.createElement(IconButton/* default */.A, {
+          size: "small",
+          disabled: true,
+          sx: {
+            color: '#cbd5e1'
+          }
+        }, /*#__PURE__*/react.createElement(WhatsApp, {
+          sx: {
+            fontSize: 18
+          }
+        }))));
+      }
+      return /*#__PURE__*/react.createElement(Tooltip/* default */.A, {
+        title: "Send ".concat(params.row.invoiceName || 'invoice', " via WhatsApp")
+      }, /*#__PURE__*/react.createElement("span", null, /*#__PURE__*/react.createElement(IconButton/* default */.A, {
+        size: "small",
+        onClick: () => handleOpenWhatsAppSingleModal(params.row),
+        sx: {
+          color: '#25D366',
+          '&:hover': {
+            color: '#1ebe5d',
+            backgroundColor: '#f0fdf4'
+          }
+        }
+      }, /*#__PURE__*/react.createElement(WhatsApp, {
+        sx: {
+          fontSize: 20
+        }
+      }))));
     }
   }, {
-    field: 'view',
-    headerName: 'View',
+    field: 'hide',
+    headerName: 'Action',
+    sortable: false,
     width: 40,
-    renderCell: params => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(ViewTooltip, {
-      title: "View"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
-      disabled: user.data.role === 'User'
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_7__/* .NavLink */ .k2, {
-      to: "/CustomerInformationView/".concat(params.row._id),
-      className: "LinkName"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Visibility__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
-      style: {
-        color: '#202a5a'
+    renderCell: params => {
+      if (user.data.role === 'CEO') {
+        return /*#__PURE__*/react.createElement("div", null, hiddenRow.includes(params.row._id) ? /*#__PURE__*/react.createElement(ViewTooltip, {
+          title: "UnHide"
+        }, /*#__PURE__*/react.createElement("span", null, /*#__PURE__*/react.createElement(IconButton/* default */.A, {
+          onClick: () => handleHideRow(params.row._id)
+        }, /*#__PURE__*/react.createElement(PersonOffRounded/* default */.A, {
+          style: {
+            color: '#202a5a'
+          }
+        })))) : /*#__PURE__*/react.createElement(ViewTooltip, {
+          title: "Hide"
+        }, /*#__PURE__*/react.createElement("span", null, /*#__PURE__*/react.createElement(IconButton/* default */.A, {
+          onClick: () => handleHideRow(params.row._id)
+        }, /*#__PURE__*/react.createElement(Person2Outlined/* default */.A, {
+          style: {
+            color: '#202a5a'
+          }
+        })))));
       }
-    })))))
+    }
   }];
+  {/** Search View End */}
   if (isMobile) {
-    return loadingData ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    return loadingData ? /*#__PURE__*/react.createElement("div", {
       style: {
         position: 'relative',
         top: '120px',
         textAlign: 'center'
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_36__/* ["default"] */ .A, null)) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react.createElement(Loader/* default */.A, null)) : /*#__PURE__*/react.createElement(Box/* default */.A, {
       sx: {
         width: '100%',
         py: 1
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_MobileCardList__WEBPACK_IMPORTED_MODULE_50__/* ["default"] */ .A, {
-      type: "payments",
-      data: payment,
-      searchPlaceholder: "Search payments, clients, modes, amounts...",
-      totalCount: payment.length
+    }, /*#__PURE__*/react.createElement(MobileCardList/* default */.A, {
+      type: "invoices",
+      data: invoice,
+      searchPlaceholder: "Search invoices, clients, items, amounts...",
+      searchValue: searchTerm,
+      onSearchChange: setSearchTerm,
+      page: page,
+      totalCount: totalItemCount,
+      onPageChange: setPage,
+      loading: loadingData,
+      statusFilter: statusFilter,
+      onStatusFilterChange: handleStatusClick,
+      statusCounts: statusCounts
     }));
   }
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+  return /*#__PURE__*/react.createElement("div", {
     className: "Homeemployee"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react.createElement(Box/* default */.A, {
     sx: {
       display: 'flex'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_CssBaseline__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .Ay, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(AppBar, {
+  }, /*#__PURE__*/react.createElement(CssBaseline/* default */.Ay, null), /*#__PURE__*/react.createElement(InvoiceViewAdmin_AppBar, {
     position: "absolute",
     open: sideBar,
     sx: {
       backgroundColor: '#30368a'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react.createElement(Toolbar/* default */.A, {
     sx: {
       pr: '24px' // keep right padding when drawer closed
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react.createElement(IconButton/* default */.A, {
     edge: "start",
     color: "inherit",
     "aria-label": "open drawer",
@@ -2688,7 +4347,7 @@ function PaymentView() {
     }, sideBar && {
       display: 'none'
     })
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Menu__WEBPACK_IMPORTED_MODULE_28__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react.createElement(Menu/* default */.A, null)), /*#__PURE__*/react.createElement(Typography/* default */.A, {
     component: "h1",
     variant: "h6",
     color: "inherit",
@@ -2696,33 +4355,35 @@ function PaymentView() {
     sx: {
       flexGrow: 1
     }
-  }, "Payment"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_46__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_MessageAdminView__WEBPACK_IMPORTED_MODULE_42__/* ["default"] */ .A, {
+  }, "Invoice"), /*#__PURE__*/react.createElement(NotificationVIewInfo/* default */.A, null), /*#__PURE__*/react.createElement(MessageAdminView/* default */.A, {
     name: user.data.userName,
     role: user.data.role
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+  }), /*#__PURE__*/react.createElement(IconButton/* default */.A, {
     color: "inherit",
     onClick: handleLogout
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_38__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react.createElement(NetworkLogoutIcon/* default */.A, {
     style: {
       color: 'white'
     }
-  })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(Drawer, {
+  })))), /*#__PURE__*/react.createElement(InvoiceViewAdmin_Drawer, {
     variant: "permanent",
-    open: sideBar
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
+    open: sideBar,
+    onMouseEnter: () => setSideBar(true),
+    onMouseLeave: () => setSideBar(false)
+  }, /*#__PURE__*/react.createElement(Toolbar/* default */.A, {
     sx: {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'flex-end',
       px: [1]
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react.createElement(IconButton/* default */.A, {
     onClick: toggleDrawer
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_ChevronLeft__WEBPACK_IMPORTED_MODULE_29__/* ["default"] */ .A, null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Divider__WEBPACK_IMPORTED_MODULE_25__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_List__WEBPACK_IMPORTED_MODULE_24__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react.createElement(ChevronLeft/* default */.A, null))), /*#__PURE__*/react.createElement(Divider/* default */.A, null), /*#__PURE__*/react.createElement(List/* default */.A, {
     sx: {
       height: '700px'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_SidebarDash__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react.createElement(SidebarDash/* default */.A, null))), /*#__PURE__*/react.createElement(Box/* default */.A, {
     component: "main",
     sx: {
       backgroundColor: theme => theme.palette.mode === 'light' ? theme.palette.grey[100] : theme.palette.grey[900],
@@ -2731,123 +4392,297 @@ function PaymentView() {
       height: '100vh',
       overflow: 'auto'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Container__WEBPACK_IMPORTED_MODULE_27__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react.createElement(Toolbar/* default */.A, null), /*#__PURE__*/react.createElement(Container/* default */.A, {
     maxWidth: "none",
     sx: {
-      mt: 1
+      mt: 0.5,
+      px: {
+        xs: 1,
+        sm: 2
+      }
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, null, loadingData ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+  }, /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      display: 'grid',
+      gridTemplateColumns: {
+        xs: 'repeat(2, 1fr)',
+        sm: 'repeat(4, 1fr)',
+        md: 'repeat(8, 1fr)'
+      },
+      gap: 1,
+      mb: 0.75,
+      mt: 0.25
+    }
+  }, [{
+    key: 'ALL',
+    label: 'ALL ORDERS',
+    count: statusCounts.all,
+    color: '#30368a',
+    bgLight: '#eef2ff',
+    icon: /*#__PURE__*/react.createElement(Assignment/* default */.A, {
+      sx: {
+        fontSize: 15,
+        color: '#30368a'
+      }
+    })
+  }, {
+    key: 'Paid',
+    label: 'PAID',
+    count: statusCounts.paid,
+    color: '#16a34a',
+    bgLight: '#dcfce7',
+    icon: /*#__PURE__*/react.createElement(CheckCircle/* default */.A, {
+      sx: {
+        fontSize: 15,
+        color: '#16a34a'
+      }
+    })
+  }, {
+    key: 'Partially-Paid',
+    label: 'PARTIALLY-PAID',
+    count: statusCounts.partiallyPaid,
+    color: '#d97706',
+    bgLight: '#fef3c7',
+    icon: /*#__PURE__*/react.createElement(Payments, {
+      sx: {
+        fontSize: 15,
+        color: '#d97706'
+      }
+    })
+  }, {
+    key: 'Draft',
+    label: 'DRAFT',
+    count: statusCounts.draft,
+    color: '#78909c',
+    bgLight: '#eceff1',
+    icon: /*#__PURE__*/react.createElement(EditNote/* default */.A, {
+      sx: {
+        fontSize: 15,
+        color: '#78909c'
+      }
+    })
+  }, {
+    key: 'Sent',
+    label: 'SENT',
+    count: statusCounts.sent,
+    color: '#1976d2',
+    bgLight: '#e3f2fd',
+    icon: /*#__PURE__*/react.createElement(Send/* default */.A, {
+      sx: {
+        fontSize: 15,
+        color: '#1976d2'
+      }
+    })
+  }, {
+    key: 'Pending',
+    label: 'PENDING',
+    count: statusCounts.pending,
+    color: '#801313',
+    bgLight: '#fbe9e7',
+    icon: /*#__PURE__*/react.createElement(HourglassEmpty/* default */.A, {
+      sx: {
+        fontSize: 15,
+        color: '#801313'
+      }
+    })
+  }, {
+    key: 'Decline',
+    label: 'DECLINE',
+    count: statusCounts.decline,
+    color: '#d32f2f',
+    bgLight: '#ffebee',
+    icon: /*#__PURE__*/react.createElement(Cancel/* default */.A, {
+      sx: {
+        fontSize: 15,
+        color: '#d32f2f'
+      }
+    })
+  }, {
+    key: 'Free of Charge',
+    label: 'FREE OF CHARGE',
+    count: statusCounts.freeOfCharge,
+    color: '#9c27b0',
+    bgLight: '#f3e5f5',
+    icon: /*#__PURE__*/react.createElement(CardGiftcard, {
+      sx: {
+        fontSize: 15,
+        color: '#9c27b0'
+      }
+    })
+  }].map(card => {
+    var isSelected = statusFilter.toLowerCase() === card.key.toLowerCase();
+    return /*#__PURE__*/react.createElement(Box/* default */.A, {
+      key: card.key,
+      onClick: () => handleStatusClick(card.key),
+      sx: {
+        backgroundColor: '#ffffff',
+        borderRadius: '8px',
+        p: '6px 10px',
+        cursor: 'pointer',
+        position: 'relative',
+        overflow: 'hidden',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        border: isSelected ? "2px solid ".concat(card.color) : '1px solid #e2e8f0',
+        boxShadow: isSelected ? "0 4px 12px -2px ".concat(card.color, "33, 0 2px 4px -1px rgba(0, 0, 0, 0.06)") : '0 1px 2px 0 rgba(0, 0, 0, 0.04)',
+        transform: isSelected ? 'translateY(-1px)' : 'none',
+        transition: 'all 0.15s ease-in-out',
+        '&:hover': {
+          boxShadow: "0 4px 10px -2px ".concat(card.color, "25, 0 2px 4px -1px rgba(0, 0, 0, 0.06)"),
+          transform: 'translateY(-1px)',
+          borderColor: card.color
+        }
+      }
+    }, isSelected && /*#__PURE__*/react.createElement(Box/* default */.A, {
+      sx: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        height: '3px',
+        backgroundColor: card.color
+      }
+    }), /*#__PURE__*/react.createElement(Box/* default */.A, {
+      sx: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        mb: 0.25
+      }
+    }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
+      sx: {
+        fontSize: '9.5px',
+        fontWeight: 700,
+        letterSpacing: '0.4px',
+        color: isSelected ? card.color : '#64748b',
+        textTransform: 'uppercase'
+      }
+    }, card.label), /*#__PURE__*/react.createElement(Box/* default */.A, {
+      sx: {
+        width: 22,
+        height: 22,
+        borderRadius: '50%',
+        backgroundColor: card.bgLight,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
+      }
+    }, card.icon)), /*#__PURE__*/react.createElement(Box/* default */.A, {
+      sx: {
+        display: 'flex',
+        alignItems: 'baseline',
+        gap: 1
+      }
+    }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
+      sx: {
+        fontSize: '16px',
+        fontWeight: 800,
+        color: isSelected ? card.color : '#1e293b',
+        lineHeight: 1.1
+      }
+    }, (card.count || 0).toLocaleString())));
+  })), loadingData ? /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement("div", {
     style: {
       position: 'relative',
       top: '120px'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_36__/* ["default"] */ .A, null))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_lab__WEBPACK_IMPORTED_MODULE_43__/* ["default"] */ .Ay, {
-    value: value3
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_lab__WEBPACK_IMPORTED_MODULE_44__/* ["default"] */ .A, {
-    onChange: handleChange3,
-    "aria-label": "lab API tabs example",
-    sx: {
-      '& .MuiTabs-indicator': {
-        backgroundColor: 'white',
-        height: '0px'
-      }
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
-    label: "Payment",
-    value: "1",
-    sx: {
-      '&.Mui-selected': {
-        color: 'white',
-        backgroundColor: 'gray',
-        borderRadius: '10px'
-      },
-      '&:hover': {
-        color: 'gray',
-        bgcolor: 'white',
-        border: '1px solid gray',
-        borderRadius: '10px'
-      }
-    }
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
-    label: "Payment Received",
-    value: "2",
-    sx: {
-      '&.Mui-selected': {
-        color: 'white',
-        backgroundColor: 'gray',
-        borderRadius: '10px'
-      },
-      '&:hover': {
-        color: 'gray',
-        bgcolor: 'white',
-        border: '1px solid gray',
-        borderRadius: '10px'
-      }
-    }
-  }), user.data.role === 'CEO' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
-    label: "Credit",
-    value: "3",
-    sx: {
-      '&.Mui-selected': {
-        color: 'white',
-        backgroundColor: 'gray',
-        borderRadius: '10px'
-      },
-      '&:hover': {
-        color: 'gray',
-        bgcolor: 'white',
-        border: '1px solid gray',
-        borderRadius: '10px'
-      }
-    }
-  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_lab__WEBPACK_IMPORTED_MODULE_45__/* ["default"] */ .A, {
-    value: "1",
-    sx: {
-      p: {
-        xs: 1,
-        sm: 2
-      },
-      width: '100%',
-      minWidth: 0,
-      boxSizing: 'border-box'
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
-    sx: {
-      width: '100%',
-      minWidth: 0
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react.createElement(Loader/* default */.A, null))) : /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement(Box/* default */.A, {
     sx: {
       display: 'flex',
-      justifyContent: 'flex-end',
-      mb: 1,
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      mb: 0.5,
+      mt: 0.25
+    }
+  }, /*#__PURE__*/react.createElement(Box/* default */.A, null, invoice.length > 0 && selectedRows.length > 1 && selectedRows.length < invoice.length && /*#__PURE__*/react.createElement("button", {
+    disabled: user.data.role !== 'CEO',
+    onClick: handleOpenAll,
+    className: "btnCustomer2"
+  }, "Delete multiple"), invoice.length > 0 && selectedRows.length === invoice.length && /*#__PURE__*/react.createElement("button", {
+    onClick: handleOpenAll,
+    disabled: user.data.role !== 'CEO',
+    className: "btnCustomer2"
+  }, "Delete all")), !(0,utils_isMobile/* isNativeMobile */.g1)() && /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: 1
+    }
+  }, /*#__PURE__*/react.createElement(ViewTooltip, null, /*#__PURE__*/react.createElement("span", null, /*#__PURE__*/react.createElement(IconButton/* default */.A, {
+    disabled: InvoiceInfoC.length === 0,
+    size: "small"
+  }, /*#__PURE__*/react.createElement(react_router_dom_dist/* NavLink */.k2, {
+    to: '/InvoiceForm',
+    className: "LinkName"
+  }, /*#__PURE__*/react.createElement("span", {
+    className: "btnCustomerAdding"
+  }, /*#__PURE__*/react.createElement(Add/* default */.A, {
+    sx: {
+      fontSize: 18
+    }
+  })))))), /*#__PURE__*/react.createElement("button", {
+    onClick: handleRefreshSearch,
+    className: "btnCustomer2",
+    style: {
+      height: '32px',
+      lineHeight: '32px',
+      padding: '0 12px'
+    }
+  }, "Refresh Search"), canSendWhatsAppInvoice && /*#__PURE__*/react.createElement(Button/* default */.A, {
+    variant: "contained",
+    size: "small",
+    startIcon: /*#__PURE__*/react.createElement(WhatsApp, {
+      sx: {
+        fontSize: 18
+      }
+    }),
+    onClick: handleOpenWhatsAppBatchModal,
+    sx: {
+      backgroundColor: '#25D366',
+      '&:hover': {
+        backgroundColor: '#1ebe5d'
+      },
+      color: '#fff',
+      fontWeight: 700,
+      textTransform: 'none',
+      height: '32px',
+      px: 1.5,
+      borderRadius: '4px',
+      boxShadow: '0 2px 4px rgba(37,211,102,0.25)'
+    }
+  }, "Send WhatsApp Invoices"))), /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      height: (0,utils_isMobile/* isNativeMobile */.g1)() ? 'auto' : 'calc(100vh - 200px)',
+      minHeight: 380,
       width: '100%'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(ViewTooltip, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
-    hidden: PaymentInfoC.length === 0
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_7__/* .NavLink */ .k2, {
-    to: '/PaymentInformationForm',
-    className: "LinkName"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
-    className: "btnCustomerAdding"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A, null))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
-    sx: {
-      height: (0,_utils_isMobile__WEBPACK_IMPORTED_MODULE_49__/* .isNativeMobile */ .g1)() ? 'auto' : 580,
-      width: '100%',
-      minWidth: 0,
-      display: 'flex',
-      flexDirection: 'column'
-    }
-  }, (0,_utils_isMobile__WEBPACK_IMPORTED_MODULE_49__/* .isNativeMobile */ .g1)() ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_MobileCardList__WEBPACK_IMPORTED_MODULE_50__/* ["default"] */ .A, {
-    type: "payments",
-    data: payment,
-    searchPlaceholder: "Search payments, clients, modes, amounts...",
-    totalCount: payment.length
-  }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_x_data_grid__WEBPACK_IMPORTED_MODULE_40__/* .DataGrid */ .zh, {
-    rows: user.data.role === 'CEO' ? invoicePaymentRow : filteredRows,
+  }, (0,utils_isMobile/* isNativeMobile */.g1)() ? /*#__PURE__*/react.createElement(MobileCardList/* default */.A, {
+    type: "invoices",
+    data: invoice,
+    searchPlaceholder: "Search invoices, clients, items, amounts...",
+    searchValue: searchTerm,
+    onSearchChange: setSearchTerm,
+    page: page,
+    totalCount: totalItemCount,
+    onPageChange: setPage,
+    loading: loadingData,
+    statusFilter: statusFilter,
+    onStatusFilterChange: handleStatusClick,
+    statusCounts: statusCounts
+  }) : user.data.role === 'CEO' ? /*#__PURE__*/react.createElement(react.Fragment, null, /*#__PURE__*/react.createElement(DataGrid/* DataGrid */.zh, {
+    paginationMode: "server",
+    filterMode: "server",
+    rowCount: totalItemCount,
+    paginationModel: {
+      page: page,
+      pageSize: limit
+    },
+    onPaginationModelChange: newModel => handlePageChange(newModel.page),
+    rows: invoice,
     columns: columns,
     slots: {
-      toolbar: _mui_x_data_grid__WEBPACK_IMPORTED_MODULE_41__/* .GridToolbar */ .O
+      toolbar: GridToolbar/* GridToolbar */.O
     },
     slotProps: {
       toolbar: {
@@ -2860,43 +4695,52 @@ function PaymentView() {
         }
       }
     },
+    getRowClassName: params => FilterInvoiceWith.some(filteredRow => filteredRow.id === params.row.id) ? 'new-Purchase' : '',
+    onRowSelectionModelChange: newSelection => setSelectedRows(newSelection),
+    rowRenderer: rowRenderer,
     checkboxSelection: true,
+    disableColumnFilter: true,
     disableDensitySelector: true,
+    rowSelectionModel: selectedRows,
     filterModel: filterModel,
     onFilterModelChange: newModel => handleFilter(newModel),
     columnVisibilityModel: columnVisibilityModel,
     onColumnVisibilityModelChange: handelHiddenColumn,
     sx: {
       width: '100%',
-      minWidth: 0,
-      flexGrow: 1,
       backgroundColor: 'white',
-      padding: '10px'
+      padding: '10px',
+      '& .new-Purchase': {
+        backgroundColor: '#e3f2fd'
+      }
     }
-  })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_lab__WEBPACK_IMPORTED_MODULE_45__/* ["default"] */ .A, {
-    value: "2",
+  }), /*#__PURE__*/react.createElement(Pagination/* default */.A, {
+    count: totalPage,
+    page: page + 1,
+    onChange: (e, value) => setPage(value - 1),
+    color: "primary",
     sx: {
-      p: {
-        xs: 1,
-        sm: 2
-      },
-      width: '100%',
-      minWidth: 0,
-      boxSizing: 'border-box'
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
-    sx: {
-      height: 630,
-      width: '100%',
-      minWidth: 0,
+      position: 'relative',
+      top: '-52px',
+      zIndex: 1000,
       display: 'flex',
-      flexDirection: 'column'
+      justifyContent: 'center',
+      width: 'fit-content',
+      margin: '0 auto'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_x_data_grid__WEBPACK_IMPORTED_MODULE_40__/* .DataGrid */ .zh, {
-    rows: payment,
-    columns: columnsPayment,
+  })) : /*#__PURE__*/react.createElement(react.Fragment, null, /*#__PURE__*/react.createElement(DataGrid/* DataGrid */.zh, {
+    paginationMode: "server",
+    filterMode: "server",
+    rowCount: totalItemCount,
+    paginationModel: {
+      page: page,
+      pageSize: limit
+    },
+    onPaginationModelChange: newModel => handlePageChange(newModel.page),
+    rows: filteredRows,
+    columns: columns,
     slots: {
-      toolbar: _mui_x_data_grid__WEBPACK_IMPORTED_MODULE_41__/* .GridToolbar */ .O
+      toolbar: GridToolbar/* GridToolbar */.O
     },
     slotProps: {
       toolbar: {
@@ -2909,166 +4753,173 @@ function PaymentView() {
         }
       }
     },
+    getRowClassName: params => FilterInvoiceWith.some(filteredRow => filteredRow.id === params.row.id) ? 'new-Purchase' : '',
+    onRowSelectionModelChange: newSelection => setSelectedRows(newSelection),
     checkboxSelection: true,
+    disableColumnFilter: true,
     disableDensitySelector: true,
-    filterModel: filterModelPayment,
-    onFilterModelChange: newModel => handleFilterPayment(newModel),
-    columnVisibilityModel: columnVisibilityModelPayment,
-    onColumnVisibilityModelChange: handelHiddenColumnPayment,
+    rowSelectionModel: selectedRows,
+    filterModel: filterModel,
+    onFilterModelChange: newModel => handleFilter(newModel),
+    columnVisibilityModel: columnVisibilityModel,
+    onColumnVisibilityModelChange: handelHiddenColumn,
     sx: {
       width: '100%',
-      minWidth: 0,
-      flexGrow: 1,
       backgroundColor: 'white',
-      padding: '10px'
+      padding: '10px',
+      '& .new-Purchase': {
+        backgroundColor: '#e3f2fd'
+      }
     }
-  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_lab__WEBPACK_IMPORTED_MODULE_45__/* ["default"] */ .A, {
-    value: "3",
+  }), /*#__PURE__*/react.createElement(Pagination/* default */.A, {
+    count: totalPage,
+    page: page + 1,
+    onChange: (e, value) => setPage(value - 1),
+    color: "primary",
     sx: {
-      p: {
-        xs: 1,
-        sm: 2
-      },
-      width: '100%',
-      minWidth: 0,
-      boxSizing: 'border-box'
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
-    sx: {
-      height: 630,
-      width: '100%',
-      minWidth: 0,
+      position: 'relative',
+      top: '-52px',
+      zIndex: 1000,
       display: 'flex',
-      flexDirection: 'column'
+      justifyContent: 'center',
+      width: 'fit-content',
+      margin: '0 auto'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_x_data_grid__WEBPACK_IMPORTED_MODULE_40__/* .DataGrid */ .zh, {
-    rows: customer,
-    columns: columnCustomer,
-    sx: {
-      borderRadius: '5px',
-      backgroundColor: '#fff',
-      width: '100%',
-      minWidth: 0,
-      flexGrow: 1
-    }
-  })))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, {
+  }))), /*#__PURE__*/react.createElement(Modal/* default */.A, {
     open: open,
     onClose: handleClose,
     "aria-labelledby": "modal-modal-title",
     "aria-describedby": "modal-modal-description"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react.createElement(Box/* default */.A, {
     sx: _objectSpread(_objectSpread({}, style), {}, {
       width: 500
     })
-  }, DeleteId ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .Ay, {
-    container: true,
-    style: {
-      alignItems: 'center',
-      padding: '15px'
-    },
-    spacing: 2
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .Ay, {
-    item: true,
-    xs: 12,
-    style: {
-      width: '100%',
-      textAlign: 'center'
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
-    id: "modal-modal-title",
-    variant: "h6",
-    component: "h2"
-  }, "Do you Want to delete?")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .Ay, {
-    item: true,
-    xs: 6
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
-    type: "button",
-    onClick: handleClose,
-    className: "btnCustomer",
-    style: {
-      width: '100%'
-    }
-  }, "Cancel")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .Ay, {
-    item: true,
-    xs: 6
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
-    onClick: handleOpenReasonDelete,
-    className: "btnCustomer2",
-    style: {
-      width: '100%'
-    }
-  }, "Delete"))) : '')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, {
-    open: modalDeleteOpenLoading,
-    onClose: handleDeleteCloseLoading,
-    BackdropComponent: _mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A,
-    BackdropProps: {
-      timeout: 500
-    },
-    "aria-labelledby": "modal-modal-title",
-    "aria-describedby": "modal-modal-description"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
-    sx: _objectSpread(_objectSpread({}, style), {}, {
-      width: 500
-    })
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_36__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+  }, /*#__PURE__*/react.createElement("div", {
     style: {
       justifyContent: 'center',
       textAlign: 'center'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_37__/* ["default"] */ .A, {
-    style: {
-      color: 'green',
-      height: '40px',
-      width: '40px'
-    }
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", null, " Data successfully deleted"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+  }, /*#__PURE__*/react.createElement("h2", null, "Do you want to Delete ?"), /*#__PURE__*/react.createElement("div", {
     style: {
       display: 'flex',
       gap: '60px',
       justifyContent: 'center'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+  }, /*#__PURE__*/react.createElement("button", {
+    className: "btnCustomer2",
+    onClick: handleDelete
+  }, "Delete"), /*#__PURE__*/react.createElement("button", {
+    className: "btnCustomer",
+    onClick: handleClose
+  }, "Cancel"))))), /*#__PURE__*/react.createElement(Modal/* default */.A, {
+    open: modalDeleteOpenLoading,
+    onClose: handleDeleteCloseLoading,
+    "aria-labelledby": "modal-modal-title",
+    "aria-describedby": "modal-modal-description"
+  }, /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: _objectSpread(_objectSpread({}, style), {}, {
+      width: 500
+    })
+  }, /*#__PURE__*/react.createElement("div", {
+    style: {
+      justifyContent: 'center',
+      textAlign: 'center'
+    }
+  }, loading ? /*#__PURE__*/react.createElement(Loader/* default */.A, null) : /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement("p", null, /*#__PURE__*/react.createElement(CheckCircle/* default */.A, {
+    style: {
+      color: 'green',
+      height: '40px',
+      width: '40px'
+    }
+  })), /*#__PURE__*/react.createElement("h2", null, " Done Successfully"), /*#__PURE__*/react.createElement("div", {
+    style: {
+      display: 'flex',
+      gap: '60px',
+      justifyContent: 'center'
+    }
+  }, /*#__PURE__*/react.createElement("button", {
     onClick: handleDeleteCloseLoading,
     className: "btnCustomer"
-  }, "Close")))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, {
+  }, "Close")))))), /*#__PURE__*/react.createElement(Modal/* default */.A, {
+    open: openDeleteAll,
+    onClose: handleCloseAll,
+    "aria-labelledby": "modal-modal-title",
+    "aria-describedby": "modal-modal-description"
+  }, /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: _objectSpread(_objectSpread({}, style), {}, {
+      width: 500
+    })
+  }, /*#__PURE__*/react.createElement("div", {
+    style: {
+      justifyContent: 'center',
+      textAlign: 'center'
+    }
+  }, /*#__PURE__*/react.createElement("h2", null, "Do you want to Delete ?"), selectedRows.length === 1 && /*#__PURE__*/react.createElement("p", null, /*#__PURE__*/react.createElement("span", {
+    className: "txt2",
+    style: {
+      color: 'red'
+    }
+  }, "Note:"), " Selected rows will be deleted"), selectedRows.length > 1 && selectedRows.length < invoice.length && /*#__PURE__*/react.createElement("p", null, /*#__PURE__*/react.createElement("span", {
+    className: "txt2",
+    style: {
+      color: 'red'
+    }
+  }, "Note:"), " All selected rows will be deleted"), selectedRows.length === invoice.length && /*#__PURE__*/react.createElement("p", null, /*#__PURE__*/react.createElement("span", {
+    className: "txt2",
+    style: {
+      color: 'red'
+    }
+  }, "Note:"), " All rows will be deleted"), /*#__PURE__*/react.createElement("div", {
+    style: {
+      display: 'flex',
+      gap: '60px',
+      justifyContent: 'center'
+    }
+  }, /*#__PURE__*/react.createElement("button", {
+    className: "btnCustomer2",
+    onClick: handleOpenReasonDelete
+  }, "Delete"), /*#__PURE__*/react.createElement("button", {
+    className: "btnCustomer",
+    onClick: handleCloseAll
+  }, "Cancel"))))), /*#__PURE__*/react.createElement(Modal/* default */.A, {
     open: openReasonDelete,
     onClose: handleCloseReasonDelete,
     "aria-labelledby": "modal-modal-title",
     "aria-describedby": "modal-modal-description"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react.createElement(Box/* default */.A, {
     sx: _objectSpread(_objectSpread({}, style), {}, {
       width: 500
     })
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(ViewTooltip, {
+  }, /*#__PURE__*/react.createElement(ViewTooltip, {
     title: "Close",
     placement: "left"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react.createElement(IconButton/* default */.A, {
     onClick: handleCloseReasonDelete,
     style: {
       position: 'relative',
       float: 'right'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_33__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react.createElement(Close/* default */.A, {
     style: {
       color: '#202a5a'
     }
-  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
+  }))), /*#__PURE__*/react.createElement(Typography/* default */.A, {
     id: "modal-modal-title",
     variant: "h6",
     component: "h2"
-  }, "Why do you want to delete: PAY-", relatedNumber, "?"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("form", {
-    onSubmit: handleDelete
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .Ay, {
+  }, "Why do you want to delete: ", info, "?"), /*#__PURE__*/react.createElement("form", {
+    onSubmit: handleDeleteMany
+  }, /*#__PURE__*/react.createElement(Grid/* default */.Ay, {
     container: true,
     style: {
       alignItems: 'center',
       padding: '15px'
     },
     spacing: 2
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .Ay, {
+  }, /*#__PURE__*/react.createElement(Grid/* default */.Ay, {
     item: true,
     xs: 12
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react.createElement(TextField/* default */.A, {
     required: true,
     id: "reason",
     name: "reason",
@@ -3082,56 +4933,885 @@ function PaymentView() {
       width: '100%',
       backgroundColor: 'white'
     }
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .Ay, {
+  })), /*#__PURE__*/react.createElement("br", null), /*#__PURE__*/react.createElement(Grid/* default */.Ay, {
     item: true,
     xs: 12
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+  }, /*#__PURE__*/react.createElement("button", {
     type: "submit",
     className: "btnCustomer",
     style: {
       width: '100%'
     }
-  }, "Save")))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, {
-    open: loadingOpenModal,
-    onClose: handleCloseModal,
-    closeAfterTransition: true,
-    BackdropComponent: _mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A,
-    BackdropProps: {
-      timeout: 500
-    },
+  }, "Save")))))), /*#__PURE__*/react.createElement(Modal/* default */.A, {
+    open: open1,
+    onClose: handleCloseUpdate,
     "aria-labelledby": "modal-modal-title",
     "aria-describedby": "modal-modal-description"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: style
+  }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    id: "modal-modal-title",
+    variant: "h6",
+    component: "h2"
+  }, "Update Invoice Status"), /*#__PURE__*/react.createElement("br", null), /*#__PURE__*/react.createElement("form", {
+    onSubmit: handleSubmitUpdateStatus
+  }, /*#__PURE__*/react.createElement(FormControl/* default */.A, {
+    fullWidth: true
+  }, /*#__PURE__*/react.createElement(InputLabel/* default */.A, {
+    id: "demo-simple-select-label"
+  }, "Status"), /*#__PURE__*/react.createElement(Select/* default */.A, {
+    labelId: "demo-simple-select-label",
+    id: "demo-simple-select",
+    value: status,
+    label: "Status",
+    onChange: e => setStatus(e.target.value)
+  }, /*#__PURE__*/react.createElement(MenuItem/* default */.A, {
+    value: 'Draft'
+  }, "Draft"), /*#__PURE__*/react.createElement(MenuItem/* default */.A, {
+    value: 'Sent'
+  }, "Sent"), /*#__PURE__*/react.createElement(MenuItem/* default */.A, {
+    value: 'Pending'
+  }, "Pending"), /*#__PURE__*/react.createElement(MenuItem/* default */.A, {
+    value: 'Decline'
+  }, "Decline"), /*#__PURE__*/react.createElement(MenuItem/* default */.A, {
+    value: 'Free of Charge'
+  }, "Free of Charge"))), /*#__PURE__*/react.createElement("br", null), /*#__PURE__*/react.createElement("br", null), /*#__PURE__*/react.createElement("button", {
+    type: "submit",
+    className: "btnCustomer6",
+    style: {
+      width: '100%'
+    }
+  }, "Update")))), /*#__PURE__*/react.createElement(Modal/* default */.A, {
+    open: loadingOpenModal,
+    onClose: handleCloseLoading,
+    "aria-labelledby": "modal-modal-title",
+    "aria-describedby": "modal-modal-description"
+  }, /*#__PURE__*/react.createElement(Box/* default */.A, {
     sx: _objectSpread(_objectSpread({}, style), {}, {
       width: 500
     })
-  }, loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_36__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+  }, /*#__PURE__*/react.createElement("div", {
     style: {
       justifyContent: 'center',
       textAlign: 'center'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_37__/* ["default"] */ .A, {
+  }, loading ? /*#__PURE__*/react.createElement(Loader/* default */.A, null) : /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement("p", null, /*#__PURE__*/react.createElement(CheckCircle/* default */.A, {
     style: {
       color: 'green',
       height: '40px',
       width: '40px'
     }
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", null, " Data Saved successfully"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+  })), /*#__PURE__*/react.createElement("h2", null, " Done Successfully"), /*#__PURE__*/react.createElement("div", {
     style: {
       display: 'flex',
       gap: '60px',
       justifyContent: 'center'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
-    onClick: handleCloseModal,
+  }, /*#__PURE__*/react.createElement("button", {
+    onClick: handleCloseLoading,
     className: "btnCustomer"
-  }, "Close"))))));
+  }, "Close")))))), /*#__PURE__*/react.createElement(Modal/* default */.A, {
+    open: ErrorOpenModal,
+    onClose: () => setErrorOpenModal(false),
+    "aria-labelledby": "modal-modal-title",
+    "aria-describedby": "modal-modal-description"
+  }, /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: _objectSpread(_objectSpread({}, style), {}, {
+      width: 500
+    })
+  }, /*#__PURE__*/react.createElement("div", {
+    style: {
+      justifyContent: 'center',
+      textAlign: 'center'
+    }
+  }, /*#__PURE__*/react.createElement("h2", null, " Error Occured"), /*#__PURE__*/react.createElement("p", null, "Please try again later"), /*#__PURE__*/react.createElement("div", {
+    style: {
+      display: 'flex',
+      gap: '60px',
+      justifyContent: 'center'
+    }
+  }, /*#__PURE__*/react.createElement("button", {
+    onClick: () => setErrorOpenModal(false),
+    className: "btnCustomer"
+  }, "Close"))))), /*#__PURE__*/react.createElement(Dialog/* default */.A, {
+    open: openWhatsAppModal,
+    onClose: () => !dispatchingWhatsApp && setOpenWhatsAppModal(false),
+    maxWidth: "lg",
+    fullWidth: true,
+    PaperProps: {
+      sx: {
+        borderRadius: 2,
+        p: 1,
+        maxWidth: 980,
+        width: '100%'
+      }
+    }
+  }, /*#__PURE__*/react.createElement(DialogTitle/* default */.A, {
+    sx: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      pb: 0.5,
+      flexWrap: 'wrap',
+      gap: 1
+    }
+  }, /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: 1.2,
+      flexWrap: 'wrap'
+    }
+  }, /*#__PURE__*/react.createElement(WhatsApp, {
+    sx: {
+      color: '#25D366',
+      fontSize: 28
+    }
+  }), /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    variant: "h6",
+    sx: {
+      fontWeight: 800,
+      color: '#0f172a'
+    }
+  }, "Send Invoices via WhatsApp (+243 827 722 222)"), /*#__PURE__*/react.createElement(Chip/* default */.A, {
+    size: "small",
+    clickable: true,
+    onClick: () => setOpenQrDialog(true),
+    label: cloudWaStatus.isReady ? "\u25CF Cloud Master: Connected" : cloudWaStatus.status === 'QR_READY' ? "\u25CF Cloud Master: Scan QR to Link" : cloudWaStatus.status === 'CONNECTING' ? "\u25CF Cloud Master: Connecting..." : "\u25CF Cloud Master: Offline (Click to Link)",
+    sx: {
+      fontWeight: 700,
+      fontSize: '0.72rem',
+      cursor: 'pointer',
+      bgcolor: cloudWaStatus.isReady ? '#dcfce7' : cloudWaStatus.status === 'QR_READY' ? '#fef3c7' : '#fee2e2',
+      color: cloudWaStatus.isReady ? '#15803d' : cloudWaStatus.status === 'QR_READY' ? '#b45309' : '#b91c1c',
+      border: '1px solid',
+      borderColor: cloudWaStatus.isReady ? '#86efac' : cloudWaStatus.status === 'QR_READY' ? '#fcd34d' : '#fca5a5'
+    }
+  })), /*#__PURE__*/react.createElement(IconButton/* default */.A, {
+    size: "small",
+    onClick: () => !dispatchingWhatsApp && setOpenWhatsAppModal(false),
+    disabled: dispatchingWhatsApp
+  }, /*#__PURE__*/react.createElement(Close/* default */.A, null))), /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      px: 3,
+      pt: 1,
+      borderBottom: 1,
+      borderColor: 'divider'
+    }
+  }, /*#__PURE__*/react.createElement(Tabs/* default */.A, {
+    value: modalTab,
+    onChange: (e, val) => setModalTab(val),
+    textColor: "primary",
+    indicatorColor: "primary"
+  }, /*#__PURE__*/react.createElement(Tab/* default */.A, {
+    icon: /*#__PURE__*/react.createElement(WhatsApp, {
+      sx: {
+        fontSize: 18
+      }
+    }),
+    iconPosition: "start",
+    label: "Send Queue (".concat(whatsAppInvoicesList.length, ")"),
+    sx: {
+      textTransform: 'none',
+      fontWeight: 700
+    }
+  }), /*#__PURE__*/react.createElement(Tab/* default */.A, {
+    icon: /*#__PURE__*/react.createElement(History, {
+      sx: {
+        fontSize: 18
+      }
+    }),
+    iconPosition: "start",
+    label: "Sent History (".concat(historyList.length, ")"),
+    sx: {
+      textTransform: 'none',
+      fontWeight: 700
+    }
+  }))), /*#__PURE__*/react.createElement(DialogContent/* default */.A, {
+    dividers: true,
+    sx: {
+      pt: 1.5,
+      pb: 2
+    }
+  }, modalTab === 0 ? /*#__PURE__*/react.createElement(react.Fragment, null, /*#__PURE__*/react.createElement(Alert/* default */.A, {
+    severity: "info",
+    sx: {
+      mb: 2,
+      fontSize: '0.85rem'
+    }
+  }, /*#__PURE__*/react.createElement("strong", null, "Eligible Invoices:"), " Invoices with status ", /*#__PURE__*/react.createElement("strong", null, "SENT"), ", ", /*#__PURE__*/react.createElement("strong", null, "PARTIALLY-PAID"), ", or ", /*#__PURE__*/react.createElement("strong", null, "FREE OF CHARGE"), " are listed and eligible for WhatsApp dispatch. Dispatches are sent one-by-one from official company line ", /*#__PURE__*/react.createElement("strong", null, "+243 827 722 222"), "."), /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      mb: 2,
+      p: 2,
+      border: '1px solid #e2e8f0',
+      borderRadius: 1.5,
+      backgroundColor: '#f8fafc'
+    }
+  }, /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      mb: 1
+    }
+  }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    variant: "subtitle2",
+    sx: {
+      fontWeight: 700,
+      color: '#1e293b'
+    }
+  }, "Customizable Short Message (English)"), /*#__PURE__*/react.createElement(Button/* default */.A, {
+    size: "small",
+    variant: "outlined",
+    startIcon: /*#__PURE__*/react.createElement(Save, null),
+    onClick: handleSaveTemplateAsDefault,
+    disabled: savingTemplate || dispatchingWhatsApp,
+    sx: {
+      textTransform: 'none',
+      py: 0.25,
+      fontSize: '0.78rem'
+    }
+  }, savingTemplate ? 'Saving...' : 'Save as Default')), /*#__PURE__*/react.createElement(TextField/* default */.A, {
+    fullWidth: true,
+    multiline: true,
+    rows: 4.5,
+    value: whatsAppMessage,
+    onChange: e => setWhatsAppMessage(e.target.value),
+    placeholder: "Type short message in English...",
+    disabled: dispatchingWhatsApp,
+    sx: {
+      backgroundColor: '#fff',
+      '& .MuiInputBase-root': {
+        fontSize: '0.92rem',
+        lineHeight: 1.6,
+        p: 1.5
+      }
+    }
+  }), /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    variant: "caption",
+    sx: {
+      color: '#64748b',
+      mt: 0.5,
+      display: 'block'
+    }
+  }, "* When a client has multiple invoices, this short message is attached to the first invoice PDF, followed sequentially by subsequent invoices.")), /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      mb: 1.5,
+      display: 'flex',
+      flexWrap: 'wrap',
+      gap: 1,
+      alignItems: 'center',
+      justifyContent: 'space-between'
+    }
+  }, /*#__PURE__*/react.createElement(TextField/* default */.A, {
+    size: "small",
+    placeholder: "Search by customer, invoice #, phone...",
+    value: queueSearchTerm,
+    onChange: e => setQueueSearchTerm(e.target.value),
+    disabled: dispatchingWhatsApp,
+    InputProps: {
+      startAdornment: /*#__PURE__*/react.createElement(InputAdornment/* default */.A, {
+        position: "start"
+      }, /*#__PURE__*/react.createElement(Search/* default */.A, {
+        sx: {
+          color: '#94a3b8',
+          fontSize: 20
+        }
+      })),
+      endAdornment: queueSearchTerm ? /*#__PURE__*/react.createElement(InputAdornment/* default */.A, {
+        position: "end"
+      }, /*#__PURE__*/react.createElement(IconButton/* default */.A, {
+        size: "small",
+        onClick: () => setQueueSearchTerm('')
+      }, /*#__PURE__*/react.createElement(Close/* default */.A, {
+        sx: {
+          fontSize: 16
+        }
+      }))) : null
+    },
+    sx: {
+      minWidth: 280,
+      flex: 1,
+      backgroundColor: '#fff'
+    }
+  }), /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      display: 'flex',
+      gap: 0.5,
+      alignItems: 'center'
+    }
+  }, queueSearchTerm.trim() && /*#__PURE__*/react.createElement(react.Fragment, null, /*#__PURE__*/react.createElement(Button/* default */.A, {
+    size: "small",
+    variant: "outlined",
+    onClick: handleSelectFiltered,
+    disabled: dispatchingWhatsApp || filteredQueueInvoices.length === 0,
+    sx: {
+      textTransform: 'none',
+      fontSize: '0.75rem',
+      py: 0.3
+    }
+  }, "Select Filtered (", filteredQueueInvoices.length, ")"), /*#__PURE__*/react.createElement(Button/* default */.A, {
+    size: "small",
+    variant: "outlined",
+    onClick: handleUncheckFiltered,
+    disabled: dispatchingWhatsApp || filteredQueueInvoices.length === 0,
+    sx: {
+      textTransform: 'none',
+      fontSize: '0.75rem',
+      py: 0.3
+    }
+  }, "Uncheck Filtered")), /*#__PURE__*/react.createElement(Button/* default */.A, {
+    size: "small",
+    onClick: handleToggleSelectAllWhatsApp,
+    disabled: dispatchingWhatsApp || whatsAppInvoicesList.length === 0,
+    sx: {
+      textTransform: 'none',
+      fontSize: '0.78rem'
+    }
+  }, selectedWhatsAppInvoiceIds.size === whatsAppInvoicesList.length ? 'Uncheck All' : 'Select All'))), /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      mb: 1
+    }
+  }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    variant: "caption",
+    sx: {
+      fontWeight: 700,
+      color: '#475569'
+    }
+  }, "Showing ", filteredQueueInvoices.length, " of ", whatsAppInvoicesList.length, " Invoices (", selectedWhatsAppInvoiceIds.size, " Selected to Send)")), loadingSentInvoices ? /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      py: 4,
+      textAlign: 'center'
+    }
+  }, /*#__PURE__*/react.createElement(Loader/* default */.A, null), /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    variant: "caption",
+    sx: {
+      color: '#64748b',
+      mt: 1,
+      display: 'block'
+    }
+  }, "Loading eligible invoices (SENT, PARTIALLY-PAID, FREE OF CHARGE)...")) : whatsAppInvoicesList.length === 0 ? /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      py: 4,
+      textAlign: 'center',
+      color: '#64748b'
+    }
+  }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    variant: "body2"
+  }, "No invoices with status SENT, PARTIALLY-PAID, or FREE OF CHARGE found.")) : filteredQueueInvoices.length === 0 ? /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      py: 3,
+      textAlign: 'center',
+      color: '#64748b'
+    }
+  }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    variant: "body2"
+  }, "No invoices match your search term \"", queueSearchTerm, "\".")) : /*#__PURE__*/react.createElement(TableContainer/* default */.A, {
+    component: Paper/* default */.A,
+    variant: "outlined",
+    sx: {
+      maxHeight: 310,
+      borderRadius: 1.5
+    }
+  }, /*#__PURE__*/react.createElement(Table/* default */.A, {
+    size: "small",
+    stickyHeader: true
+  }, /*#__PURE__*/react.createElement(TableHead/* default */.A, null, /*#__PURE__*/react.createElement(TableRow/* default */.A, {
+    sx: {
+      '& th': {
+        fontWeight: 700,
+        backgroundColor: '#f1f5f9'
+      }
+    }
+  }, /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+    padding: "checkbox",
+    sx: {
+      width: 40
+    }
+  }, /*#__PURE__*/react.createElement(Checkbox/* default */.A, {
+    size: "small",
+    checked: filteredQueueInvoices.length > 0 && filteredQueueInvoices.every(inv => selectedWhatsAppInvoiceIds.has(inv._id || inv.id)),
+    indeterminate: filteredQueueInvoices.some(inv => selectedWhatsAppInvoiceIds.has(inv._id || inv.id)) && !filteredQueueInvoices.every(inv => selectedWhatsAppInvoiceIds.has(inv._id || inv.id)),
+    onChange: () => {
+      var allFilteredSelected = filteredQueueInvoices.every(inv => selectedWhatsAppInvoiceIds.has(inv._id || inv.id));
+      if (allFilteredSelected) {
+        handleUncheckFiltered();
+      } else {
+        handleSelectFiltered();
+      }
+    },
+    disabled: dispatchingWhatsApp
+  })), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+    sx: {
+      width: 110
+    }
+  }, "Invoice #"), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+    sx: {
+      width: 95
+    }
+  }, "Date"), /*#__PURE__*/react.createElement(TableCell/* default */.A, null, "Customer Name"), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+    sx: {
+      width: 165
+    }
+  }, "WhatsApp Phone (Editable)"), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+    sx: {
+      width: 125,
+      textAlign: 'right'
+    }
+  }, "Balance Due"), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+    sx: {
+      width: 110,
+      textAlign: 'center'
+    }
+  }, "Status"), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+    sx: {
+      width: 110,
+      textAlign: 'center'
+    }
+  }, "Sent History"))), /*#__PURE__*/react.createElement(TableBody/* default */.A, null, filteredQueueInvoices.map(inv => {
+    var id = inv._id || inv.id;
+    var isChecked = selectedWhatsAppInvoiceIds.has(id);
+    var cust = inv.customerName || {};
+    var clientName = (typeof cust === 'string' ? cust : cust.Customer || cust.customerName || cust.customerFullName || 'Customer').toUpperCase();
+    var phoneVal = phoneOverrides[id] !== undefined ? phoneOverrides[id] : getInvoicePhone(inv, customerPhoneMap);
+    var totalAmount = Number(inv.totalInvoice || inv.total || 0).toFixed(2);
+    var hasValidBalance = inv.balanceDue !== undefined && inv.balanceDue !== null && !isNaN(parseFloat(inv.balanceDue));
+    var balanceDueAmount = hasValidBalance ? parseFloat(inv.balanceDue).toFixed(2) : totalAmount;
+    var isPartial = String(inv.status || '').toUpperCase().includes('PARTIAL');
+    var isFree = String(inv.status || '').toUpperCase().includes('FREE');
+    var amount = isFree ? '0.00' : balanceDueAmount;
+    var prevSent = sentHistoryMap[Number(inv.invoiceNumber)];
+    return /*#__PURE__*/react.createElement(TableRow/* default */.A, {
+      key: id,
+      hover: true,
+      selected: isChecked,
+      sx: {
+        '&.Mui-selected': {
+          backgroundColor: 'rgba(37,211,102,0.06)'
+        }
+      }
+    }, /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+      padding: "checkbox"
+    }, /*#__PURE__*/react.createElement(Checkbox/* default */.A, {
+      size: "small",
+      checked: isChecked,
+      onChange: () => handleToggleWhatsAppInvoice(id),
+      disabled: dispatchingWhatsApp
+    })), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+      sx: {
+        fontWeight: 700,
+        color: '#0f172a'
+      }
+    }, "INV-", String(inv.invoiceNumber).padStart(6, '0')), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+      sx: {
+        fontSize: '0.8rem',
+        color: '#64748b'
+      }
+    }, inv.dateField || (inv.invoiceDate ? dayjs_min_default()(inv.invoiceDate).format('DD/MM/YYYY') : '')), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+      sx: {
+        fontWeight: 600
+      }
+    }, clientName), /*#__PURE__*/react.createElement(TableCell/* default */.A, null, /*#__PURE__*/react.createElement(TextField/* default */.A, {
+      size: "small",
+      value: phoneVal,
+      onChange: e => setPhoneOverrides(prev => _objectSpread(_objectSpread({}, prev), {}, {
+        [id]: e.target.value
+      })),
+      placeholder: "+243 xxx xxx xxx",
+      disabled: dispatchingWhatsApp,
+      sx: {
+        '& input': {
+          py: 0.5,
+          px: 1,
+          fontSize: '0.8rem'
+        },
+        width: '100%'
+      }
+    })), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+      sx: {
+        textAlign: 'right'
+      }
+    }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
+      variant: "body2",
+      sx: {
+        fontWeight: 700,
+        color: isPartial ? '#b45309' : isFree ? '#15803d' : '#0f172a'
+      }
+    }, "$", amount), isPartial && Number(totalAmount) > Number(balanceDueAmount) && /*#__PURE__*/react.createElement(Typography/* default */.A, {
+      variant: "caption",
+      sx: {
+        color: '#64748b',
+        fontSize: '0.72rem',
+        display: 'block'
+      }
+    }, "Total: $", totalAmount)), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+      sx: {
+        textAlign: 'center'
+      }
+    }, renderInvoiceStatusChip(inv.status)), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+      sx: {
+        textAlign: 'center'
+      }
+    }, prevSent ? /*#__PURE__*/react.createElement(Tooltip/* default */.A, {
+      title: "Previously sent on ".concat(dayjs_min_default()(prevSent.sentAt).format('DD/MM/YYYY HH:mm'), " by ").concat(prevSent.sentBy || 'GG')
+    }, /*#__PURE__*/react.createElement(Chip/* default */.A, {
+      size: "small",
+      icon: /*#__PURE__*/react.createElement(History, {
+        sx: {
+          fontSize: '12px !important'
+        }
+      }),
+      label: "Sent ".concat(dayjs_min_default()(prevSent.sentAt).format('DD/MM HH:mm')),
+      sx: {
+        bgcolor: '#ecfdf5',
+        color: '#047857',
+        fontWeight: 600,
+        fontSize: '0.68rem',
+        height: 20
+      }
+    })) : /*#__PURE__*/react.createElement(Typography/* default */.A, {
+      variant: "caption",
+      sx: {
+        color: '#94a3b8'
+      }
+    }, "-")));
+  })))), dispatchingWhatsApp && /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      mt: 2
+    }
+  }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    variant: "body2",
+    sx: {
+      fontWeight: 600,
+      color: '#166534',
+      mb: 0.5
+    }
+  }, "\u23F3 Dispatching invoice PDFs via WhatsApp Web client... Please wait (do not close this window)."), /*#__PURE__*/react.createElement(LinearProgress/* default */.A, {
+    color: "success"
+  })), dispatchResult && /*#__PURE__*/react.createElement(Alert/* default */.A, {
+    severity: dispatchResult.success && (!((_dispatchResult$repor = dispatchResult.report) !== null && _dispatchResult$repor !== void 0 && _dispatchResult$repor.failed) || dispatchResult.report.failed === 0) ? 'success' : ((_dispatchResult$repor2 = dispatchResult.report) === null || _dispatchResult$repor2 === void 0 ? void 0 : _dispatchResult$repor2.sent) > 0 ? 'warning' : 'error',
+    sx: {
+      mt: 2,
+      fontSize: '0.85rem'
+    }
+  }, /*#__PURE__*/react.createElement("strong", null, dispatchResult.success && (!((_dispatchResult$repor3 = dispatchResult.report) !== null && _dispatchResult$repor3 !== void 0 && _dispatchResult$repor3.failed) || dispatchResult.report.failed === 0) ? '✅ Dispatch Completed:' : ((_dispatchResult$repor4 = dispatchResult.report) === null || _dispatchResult$repor4 === void 0 ? void 0 : _dispatchResult$repor4.sent) > 0 ? '⚠️ Partial Dispatch Result:' : '❌ Dispatch Failed:'), ' ', ((_dispatchResult$repor5 = dispatchResult.report) === null || _dispatchResult$repor5 === void 0 ? void 0 : _dispatchResult$repor5.sent) !== undefined ? "".concat(dispatchResult.report.sent, " sent, ").concat(dispatchResult.report.failed || 0, " failed.") : dispatchResult.error || 'Finished processing.', Array.isArray((_dispatchResult$repor6 = dispatchResult.report) === null || _dispatchResult$repor6 === void 0 ? void 0 : _dispatchResult$repor6.details) && dispatchResult.report.details.length > 0 && /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      mt: 1,
+      display: 'flex',
+      flexWrap: 'wrap',
+      gap: 0.5
+    }
+  }, dispatchResult.report.details.map((d, i) => /*#__PURE__*/react.createElement(Chip/* default */.A, {
+    key: i,
+    size: "small",
+    label: "#".concat(d.invoiceNumber, ": ").concat(d.status).concat(d.error ? " (".concat(d.error, ")") : ''),
+    color: d.status === 'sent' ? 'success' : 'error',
+    variant: "outlined",
+    sx: {
+      fontSize: '0.72rem'
+    }
+  }))))) :
+  /*#__PURE__*/
+  /* Modal Tab 1: Sent History (3-Month Retention) */
+  react.createElement(react.Fragment, null, /*#__PURE__*/react.createElement(Alert/* default */.A, {
+    severity: "success",
+    sx: {
+      mb: 2,
+      fontSize: '0.85rem'
+    }
+  }, /*#__PURE__*/react.createElement("strong", null, "3-Month Auto-Retention:"), " Dispatched invoices are tracked here with the exact date and time sent. Records are automatically purged after 3 months (90 days) via MongoDB TTL."), /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      mb: 1.5,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between'
+    }
+  }, /*#__PURE__*/react.createElement(TextField/* default */.A, {
+    size: "small",
+    placeholder: "Search history by invoice #, customer name, phone, sent by...",
+    value: historySearchTerm,
+    onChange: e => setHistorySearchTerm(e.target.value),
+    InputProps: {
+      startAdornment: /*#__PURE__*/react.createElement(InputAdornment/* default */.A, {
+        position: "start"
+      }, /*#__PURE__*/react.createElement(Search/* default */.A, {
+        sx: {
+          color: '#94a3b8',
+          fontSize: 20
+        }
+      })),
+      endAdornment: historySearchTerm ? /*#__PURE__*/react.createElement(InputAdornment/* default */.A, {
+        position: "end"
+      }, /*#__PURE__*/react.createElement(IconButton/* default */.A, {
+        size: "small",
+        onClick: () => setHistorySearchTerm('')
+      }, /*#__PURE__*/react.createElement(Close/* default */.A, {
+        sx: {
+          fontSize: 16
+        }
+      }))) : null
+    },
+    sx: {
+      minWidth: 320,
+      flex: 1,
+      backgroundColor: '#fff'
+    }
+  }), /*#__PURE__*/react.createElement(Button/* default */.A, {
+    size: "small",
+    onClick: fetchSentHistory,
+    disabled: loadingHistory,
+    sx: {
+      textTransform: 'none',
+      ml: 1.5
+    }
+  }, "Refresh History")), loadingHistory ? /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      py: 4,
+      textAlign: 'center'
+    }
+  }, /*#__PURE__*/react.createElement(Loader/* default */.A, null), /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    variant: "caption",
+    sx: {
+      color: '#64748b',
+      mt: 1,
+      display: 'block'
+    }
+  }, "Loading dispatched history...")) : historyList.length === 0 ? /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      py: 4,
+      textAlign: 'center',
+      color: '#64748b'
+    }
+  }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    variant: "body2"
+  }, "No WhatsApp invoices have been dispatched in the last 3 months.")) : filteredHistoryList.length === 0 ? /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      py: 3,
+      textAlign: 'center',
+      color: '#64748b'
+    }
+  }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    variant: "body2"
+  }, "No sent records match your search term \"", historySearchTerm, "\".")) : /*#__PURE__*/react.createElement(TableContainer/* default */.A, {
+    component: Paper/* default */.A,
+    variant: "outlined",
+    sx: {
+      maxHeight: 360,
+      borderRadius: 1.5
+    }
+  }, /*#__PURE__*/react.createElement(Table/* default */.A, {
+    size: "small",
+    stickyHeader: true
+  }, /*#__PURE__*/react.createElement(TableHead/* default */.A, null, /*#__PURE__*/react.createElement(TableRow/* default */.A, {
+    sx: {
+      '& th': {
+        fontWeight: 700,
+        backgroundColor: '#f1f5f9'
+      }
+    }
+  }, /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+    sx: {
+      width: 140
+    }
+  }, "Date & Time Sent"), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+    sx: {
+      width: 110
+    }
+  }, "Invoice #"), /*#__PURE__*/react.createElement(TableCell/* default */.A, null, "Customer Name"), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+    sx: {
+      width: 150
+    }
+  }, "WhatsApp Phone"), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+    sx: {
+      width: 100,
+      textAlign: 'right'
+    }
+  }, "Amount"), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+    sx: {
+      width: 100,
+      textAlign: 'center'
+    }
+  }, "Sent By"), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+    sx: {
+      width: 80,
+      textAlign: 'center'
+    }
+  }, "Status"))), /*#__PURE__*/react.createElement(TableBody/* default */.A, null, filteredHistoryList.map((h, idx) => /*#__PURE__*/react.createElement(TableRow/* default */.A, {
+    key: h._id || idx,
+    hover: true
+  }, /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+    sx: {
+      fontSize: '0.8rem',
+      color: '#334155',
+      fontWeight: 600
+    }
+  }, dayjs_min_default()(h.sentAt).format('DD/MM/YYYY HH:mm')), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+    sx: {
+      fontWeight: 700,
+      color: '#0f172a'
+    }
+  }, "INV-", String(h.invoiceNumber).padStart(6, '0')), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+    sx: {
+      fontWeight: 600,
+      color: '#1e293b'
+    }
+  }, h.customerName), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+    sx: {
+      fontSize: '0.82rem',
+      color: '#475569'
+    }
+  }, h.phone), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+    sx: {
+      textAlign: 'right',
+      fontWeight: 700,
+      color: '#0f172a'
+    }
+  }, "$", Number(h.amount || 0).toFixed(2)), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+    sx: {
+      textAlign: 'center',
+      fontSize: '0.8rem',
+      color: '#64748b'
+    }
+  }, h.sentBy || 'GG'), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+    sx: {
+      textAlign: 'center'
+    }
+  }, /*#__PURE__*/react.createElement(Chip/* default */.A, {
+    label: "SENT",
+    size: "small",
+    sx: {
+      bgcolor: '#ecfdf5',
+      color: '#047857',
+      fontWeight: 700,
+      height: 20,
+      fontSize: '0.7rem'
+    }
+  }))))))))), /*#__PURE__*/react.createElement(DialogActions/* default */.A, {
+    sx: {
+      px: 2,
+      py: 1.5
+    }
+  }, /*#__PURE__*/react.createElement(Button/* default */.A, {
+    onClick: () => setOpenWhatsAppModal(false),
+    disabled: dispatchingWhatsApp,
+    color: "inherit",
+    sx: {
+      textTransform: 'none'
+    }
+  }, dispatchResult || modalTab === 1 ? 'Close' : 'Cancel'), modalTab === 0 && /*#__PURE__*/react.createElement(Button/* default */.A, {
+    variant: "contained",
+    onClick: handleExecuteWhatsAppDispatch,
+    disabled: dispatchingWhatsApp || selectedWhatsAppInvoiceIds.size === 0,
+    startIcon: /*#__PURE__*/react.createElement(WhatsApp, null),
+    sx: {
+      backgroundColor: '#25D366',
+      '&:hover': {
+        backgroundColor: '#1ebe5d'
+      },
+      color: '#fff',
+      fontWeight: 700,
+      textTransform: 'none',
+      px: 2.5
+    }
+  }, dispatchingWhatsApp ? 'Dispatching...' : "Send ".concat(selectedWhatsAppInvoiceIds.size, " Invoice(s) via WhatsApp")))), /*#__PURE__*/react.createElement(Dialog/* default */.A, {
+    open: openQrDialog,
+    onClose: () => setOpenQrDialog(false),
+    maxWidth: "xs",
+    fullWidth: true,
+    PaperProps: {
+      sx: {
+        borderRadius: 2,
+        p: 2,
+        textAlign: 'center'
+      }
+    }
+  }, /*#__PURE__*/react.createElement(DialogTitle/* default */.A, {
+    sx: {
+      fontWeight: 800,
+      pb: 1
+    }
+  }, "WhatsApp Cloud Master Pairing"), /*#__PURE__*/react.createElement(DialogContent/* default */.A, {
+    sx: {
+      pt: 1
+    }
+  }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    variant: "body2",
+    color: "text.secondary",
+    sx: {
+      mb: 2
+    }
+  }, "Official Company WhatsApp Line: ", /*#__PURE__*/react.createElement("strong", null, "+243 827 722 222")), cloudWaStatus.isReady ? /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      p: 2,
+      bgcolor: '#f0fdf4',
+      borderRadius: 2,
+      border: '1px solid #86efac',
+      mb: 2
+    }
+  }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    variant: "subtitle1",
+    sx: {
+      color: '#16a34a',
+      fontWeight: 800
+    }
+  }, "\u2705 Cloud Master is Online & Connected!"), /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    variant: "caption",
+    sx: {
+      color: '#15803d'
+    }
+  }, "Linked Device: ", cloudWaStatus.name || 'Global Gate SARL', " (", cloudWaStatus.phone, ")")) : cloudWaStatus.qrCode ? /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      mb: 2
+    }
+  }, /*#__PURE__*/react.createElement("img", {
+    src: cloudWaStatus.qrCode,
+    alt: "WhatsApp QR Code",
+    style: {
+      width: 240,
+      height: 240,
+      borderRadius: 8,
+      border: '1px solid #cbd5e1'
+    }
+  }), /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    variant: "caption",
+    sx: {
+      mt: 1.5,
+      color: '#475569',
+      fontWeight: 600
+    }
+  }, "1. Open WhatsApp on +243 827 722 222", /*#__PURE__*/react.createElement("br", null), "2. Tap ", /*#__PURE__*/react.createElement("strong", null, "Linked Devices"), " > ", /*#__PURE__*/react.createElement("strong", null, "Link a Device"), /*#__PURE__*/react.createElement("br", null), "3. Point your camera at this QR code")) : /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      p: 3,
+      bgcolor: '#f8fafc',
+      borderRadius: 2,
+      mb: 2
+    }
+  }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    variant: "body2",
+    color: "text.secondary"
+  }, cloudWaStatus.status === 'CONNECTING' ? 'Connecting to WhatsApp Cloud Master...' : 'Ready to link device.'))), /*#__PURE__*/react.createElement(DialogActions/* default */.A, {
+    sx: {
+      justifyContent: 'space-between',
+      px: 2
+    }
+  }, /*#__PURE__*/react.createElement(Button/* default */.A, {
+    size: "small",
+    variant: "outlined",
+    onClick: handleReconnectCloud,
+    disabled: refreshingQr
+  }, refreshingQr ? 'Refreshing...' : 'Refresh QR / Reconnect'), /*#__PURE__*/react.createElement(Button/* default */.A, {
+    size: "small",
+    variant: "contained",
+    onClick: () => setOpenQrDialog(false)
+  }, "Close"))))))));
 }
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (PaymentView);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, [
-/* harmony export */   "default", 0, /* export default binding */ __WEBPACK_DEFAULT_EXPORT__
-/* harmony export */ ]);
-
+/* harmony default export */ const AdminView1_InvoiceViewAdmin = (InvoiceViewAdmin);
 
 /***/ },
 
@@ -3149,10 +5829,10 @@ function PaymentView() {
 /* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(14073);
 /* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(56655);
 /* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(11641);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(86990);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(22477);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(73357);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(60538);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(22477);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(73357);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(60538);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(86990);
 /* harmony import */ var _mui_icons_material_Close__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(39781);
 /* harmony import */ var _mui_icons_material_Print__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(45234);
 /* harmony import */ var _mui_icons_material_Download__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(10609);
@@ -3265,160 +5945,129 @@ function AttachmentPreviewDialog(_ref) {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, {
     sx: {
       m: 0,
-      p: '10px 20px',
+      p: {
+        xs: '8px 12px',
+        sm: '10px 20px'
+      },
       bgcolor: '#0f172a',
       color: '#f8fafc',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'space-between',
-      borderBottom: '1px solid #334155'
+      borderBottom: '1px solid #334155',
+      gap: 1
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, {
     sx: {
       display: 'flex',
       alignItems: 'center',
       gap: 1.5,
-      minWidth: 0
+      minWidth: 0,
+      flex: 1
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, {
+    sx: {
+      width: 32,
+      height: 32,
+      borderRadius: '6px',
+      bgcolor: isPdf ? 'rgba(239, 68, 68, 0.15)' : isImage ? 'rgba(56, 189, 248, 0.15)' : 'rgba(148, 163, 184, 0.15)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      flexShrink: 0
     }
   }, isPdf ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_PictureAsPdf__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
     sx: {
       color: '#ef4444',
-      fontSize: 24
+      fontSize: 20
     }
   }) : isImage ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Image__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
     sx: {
       color: '#38bdf8',
-      fontSize: 24
+      fontSize: 20
     }
   }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_InsertDriveFile__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
     sx: {
       color: '#94a3b8',
-      fontSize: 24
+      fontSize: 20
     }
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
-    variant: "subtitle1",
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, {
     sx: {
-      fontWeight: 600,
-      fontSize: '15px',
+      minWidth: 0,
+      flex: 1
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
+    variant: "subtitle2",
+    sx: {
+      fontWeight: 700,
+      fontSize: {
+        xs: '0.85rem',
+        sm: '0.95rem'
+      },
+      color: '#f8fafc',
       whiteSpace: 'nowrap',
       overflow: 'hidden',
-      textOverflow: 'ellipsis',
-      maxWidth: {
-        xs: '200px',
-        sm: '350px',
-        md: '500px'
-      }
+      textOverflow: 'ellipsis'
     },
     title: fileName
-  }, fileName)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, {
-    sx: {
-      display: 'flex',
-      alignItems: 'center',
-      gap: 1
-    }
-  }, isImage && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, {
-    sx: {
-      display: 'flex',
-      alignItems: 'center',
-      bgcolor: '#1e293b',
-      borderRadius: '4px',
-      p: '2px 6px',
-      mr: 1
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
-    title: "Zoom Out"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
-    size: "small",
-    onClick: handleZoomOut,
-    sx: {
-      color: '#94a3b8',
-      '&:hover': {
-        color: '#ffffff'
-      }
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_ZoomOut__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, {
-    fontSize: "small"
-  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
+  }, fileName), attachment !== null && attachment !== void 0 && attachment.fileSize ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
     variant: "caption",
     sx: {
-      color: '#cbd5e1',
-      px: 1,
-      minWidth: '42px',
-      textAlign: 'center',
-      fontWeight: 600
-    }
-  }, Math.round(zoom * 100), "%"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
-    title: "Zoom In"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
-    size: "small",
-    onClick: handleZoomIn,
-    sx: {
       color: '#94a3b8',
-      '&:hover': {
-        color: '#ffffff'
-      }
+      display: 'block',
+      fontSize: '0.72rem',
+      lineHeight: 1.1
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_ZoomIn__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
-    fontSize: "small"
-  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
-    title: "Reset Zoom"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
-    size: "small",
-    onClick: handleResetZoom,
+  }, (attachment.fileSize / (1024 * 1024)).toFixed(1), " MB", attachment.uploadedBy ? " \u2022 By ".concat(attachment.uploadedBy) : '') : null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, {
     sx: {
-      color: '#94a3b8',
-      '&:hover': {
-        color: '#ffffff'
-      }
+      display: 'flex',
+      alignItems: 'center',
+      gap: 0.8,
+      flexShrink: 0
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_RestartAlt__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, {
-    fontSize: "small"
-  })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
     title: "Print Attachment"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
-    variant: "outlined",
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
     size: "small",
     onClick: handlePrint,
-    startIcon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Print__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, null),
     sx: {
       color: '#f8fafc',
-      borderColor: '#475569',
-      textTransform: 'none',
-      fontWeight: 600,
+      bgcolor: 'rgba(255,255,255,0.08)',
       '&:hover': {
-        bgcolor: '#334155',
-        borderColor: '#94a3b8'
+        bgcolor: 'rgba(255,255,255,0.18)'
       }
     }
-  }, "Print")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Print__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+    fontSize: "small"
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
     title: "Download File"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
-    variant: "outlined",
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
     size: "small",
     onClick: handleDownload,
-    startIcon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Download__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, null),
     sx: {
       color: '#f8fafc',
-      borderColor: '#475569',
-      textTransform: 'none',
-      fontWeight: 600,
+      bgcolor: 'rgba(255,255,255,0.08)',
       '&:hover': {
-        bgcolor: '#334155',
-        borderColor: '#94a3b8'
+        bgcolor: 'rgba(255,255,255,0.18)'
       }
     }
-  }, "Download")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Download__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
+    fontSize: "small"
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
     "aria-label": "close",
     onClick: onClose,
     sx: {
       color: '#94a3b8',
-      ml: 1,
+      bgcolor: 'rgba(255,255,255,0.04)',
+      ml: 0.5,
       '&:hover': {
         color: '#ffffff',
-        bgcolor: '#334155'
+        bgcolor: 'rgba(239, 68, 68, 0.2)'
       }
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Close__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, null)))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Close__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+    fontSize: "small"
+  })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
     sx: {
       p: 0,
       flex: 1,
@@ -3449,7 +6098,7 @@ function AttachmentPreviewDialog(_ref) {
       bgcolor: '#0b1120',
       zIndex: 1
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
     color: "primary"
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
     variant: "body2",
@@ -3485,7 +6134,7 @@ function AttachmentPreviewDialog(_ref) {
       flexDirection: 'column',
       alignItems: 'center'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
     color: "primary"
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
     src: fileUrl,
@@ -3500,7 +6149,7 @@ function AttachmentPreviewDialog(_ref) {
       boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.5)',
       borderRadius: '4px'
     }
-  })) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+  })) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
     elevation: 4,
     sx: {
       p: 4,
@@ -3528,7 +6177,7 @@ function AttachmentPreviewDialog(_ref) {
       color: '#94a3b8',
       mb: 3
     }
-  }, "Preview is not available for this file type. You can download and open it on your device."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+  }, "Preview is not available for this file type. You can download and open it on your device."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
     variant: "contained",
     color: "primary",
     onClick: handleDownload,
@@ -3537,7 +6186,76 @@ function AttachmentPreviewDialog(_ref) {
       textTransform: 'none',
       fontWeight: 600
     }
-  }, "Download to View"))));
+  }, "Download to View")), isImage && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, {
+    sx: {
+      position: 'absolute',
+      bottom: {
+        xs: 16,
+        sm: 24
+      },
+      left: '50%',
+      transform: 'translateX(-50%)',
+      zIndex: 10,
+      display: 'flex',
+      alignItems: 'center',
+      bgcolor: 'rgba(15, 23, 42, 0.88)',
+      backdropFilter: 'blur(8px)',
+      borderRadius: '24px',
+      px: 1.5,
+      py: 0.5,
+      boxShadow: '0 8px 30px rgba(0,0,0,0.5)',
+      border: '1px solid rgba(255,255,255,0.12)'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+    title: "Zoom Out"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+    size: "small",
+    onClick: handleZoomOut,
+    sx: {
+      color: '#94a3b8',
+      '&:hover': {
+        color: '#fff'
+      }
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_ZoomOut__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, {
+    fontSize: "small"
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
+    variant: "caption",
+    sx: {
+      color: '#fff',
+      px: 1.2,
+      fontWeight: 700,
+      minWidth: '44px',
+      textAlign: 'center',
+      userSelect: 'none'
+    }
+  }, Math.round(zoom * 100), "%"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+    title: "Zoom In"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+    size: "small",
+    onClick: handleZoomIn,
+    sx: {
+      color: '#94a3b8',
+      '&:hover': {
+        color: '#fff'
+      }
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_ZoomIn__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
+    fontSize: "small"
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+    title: "Reset Zoom"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+    size: "small",
+    onClick: handleResetZoom,
+    sx: {
+      color: '#94a3b8',
+      '&:hover': {
+        color: '#fff'
+      }
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_RestartAlt__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, {
+    fontSize: "small"
+  }))))));
 }
 
 /***/ },
@@ -3567,19 +6285,18 @@ function AttachmentPreviewDialog(_ref) {
 /* harmony import */ var _mui_icons_material_CloudUpload__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(61561);
 /* harmony import */ var _mui_icons_material_AttachFile__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(40530);
 /* harmony import */ var _mui_icons_material_PictureAsPdf__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(8845);
-/* harmony import */ var _mui_icons_material_Image__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(55072);
-/* harmony import */ var _mui_icons_material_InsertDriveFile__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(46000);
-/* harmony import */ var _mui_icons_material_Visibility__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(5673);
-/* harmony import */ var _mui_icons_material_Print__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(45234);
-/* harmony import */ var _mui_icons_material_Download__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(10609);
-/* harmony import */ var _mui_icons_material_DeleteOutline__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(81730);
-/* harmony import */ var react_toastify__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(99571);
-/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(74353);
-/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_25___default = /*#__PURE__*/__webpack_require__.n(dayjs__WEBPACK_IMPORTED_MODULE_25__);
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(13561);
-/* harmony import */ var _features_auth_authSlice__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(32005);
-/* harmony import */ var _apiConfig__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(71510);
-/* harmony import */ var _AttachmentPreviewDialog__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(12699);
+/* harmony import */ var _mui_icons_material_InsertDriveFile__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(46000);
+/* harmony import */ var _mui_icons_material_Visibility__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(5673);
+/* harmony import */ var _mui_icons_material_Print__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(45234);
+/* harmony import */ var _mui_icons_material_Download__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(10609);
+/* harmony import */ var _mui_icons_material_DeleteOutline__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(81730);
+/* harmony import */ var react_toastify__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(99571);
+/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(74353);
+/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_24___default = /*#__PURE__*/__webpack_require__.n(dayjs__WEBPACK_IMPORTED_MODULE_24__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(13561);
+/* harmony import */ var _features_auth_authSlice__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(32005);
+/* harmony import */ var _apiConfig__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(71510);
+/* harmony import */ var _AttachmentPreviewDialog__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(12699);
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
 function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
@@ -3616,7 +6333,7 @@ function DocumentAttachmentsModal(_ref) {
     _ref$documentNumber = _ref.documentNumber,
     documentNumber = _ref$documentNumber === void 0 ? '' : _ref$documentNumber,
     onAttachmentCountChange = _ref.onAttachmentCountChange;
-  var user = (0,react_redux__WEBPACK_IMPORTED_MODULE_26__/* .useSelector */ .d4)(_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_27__/* .selectCurrentUser */ .xu);
+  var user = (0,react_redux__WEBPACK_IMPORTED_MODULE_25__/* .useSelector */ .d4)(_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_26__/* .selectCurrentUser */ .xu);
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState2 = _slicedToArray(_useState, 2),
     attachments = _useState2[0],
@@ -3650,7 +6367,7 @@ function DocumentAttachmentsModal(_ref) {
       try {
         var _res$data;
         setLoading(true);
-        var res = yield axios__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_28__/* .ENDPOINT_URL */ .m, "/attachments/").concat(documentId));
+        var res = yield axios__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_27__/* .ENDPOINT_URL */ .m, "/attachments/").concat(documentId));
         var list = ((_res$data = res.data) === null || _res$data === void 0 ? void 0 : _res$data.data) || [];
         setAttachments(list);
         if (onAttachmentCountChange) {
@@ -3695,7 +6412,7 @@ function DocumentAttachmentsModal(_ref) {
       var validFiles = [];
       for (var i = 0; i < files.length; i++) {
         if (files[i].size > MAX_SIZE) {
-          react_toastify__WEBPACK_IMPORTED_MODULE_24__/* .toast */ .oR.error("File \"".concat(files[i].name, "\" exceeds the 15MB limit."));
+          react_toastify__WEBPACK_IMPORTED_MODULE_23__/* .toast */ .oR.error("File \"".concat(files[i].name, "\" exceeds the 15MB limit."));
           return;
         }
         validFiles.push(files[i]);
@@ -3712,16 +6429,16 @@ function DocumentAttachmentsModal(_ref) {
       try {
         var _res$data2;
         setUploading(true);
-        var res = yield axios__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_28__/* .ENDPOINT_URL */ .m, "/upload-attachment"), formData);
-        react_toastify__WEBPACK_IMPORTED_MODULE_24__/* .toast */ .oR.success(((_res$data2 = res.data) === null || _res$data2 === void 0 ? void 0 : _res$data2.message) || 'Attachment(s) uploaded successfully');
+        var res = yield axios__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_27__/* .ENDPOINT_URL */ .m, "/upload-attachment"), formData);
+        react_toastify__WEBPACK_IMPORTED_MODULE_23__/* .toast */ .oR.success(((_res$data2 = res.data) === null || _res$data2 === void 0 ? void 0 : _res$data2.message) || 'Attachment(s) uploaded successfully');
         fetchAttachments();
       } catch (err) {
         var _err$response2;
         console.error('Error uploading attachment:', err);
         if (((_err$response2 = err.response) === null || _err$response2 === void 0 ? void 0 : _err$response2.status) === 404) {
-          react_toastify__WEBPACK_IMPORTED_MODULE_24__/* .toast */ .oR.warning('Railway deployment is currently pending (builds queued due to Railway infrastructure incident). The endpoint will activate once Railway finishes redeploying.');
+          react_toastify__WEBPACK_IMPORTED_MODULE_23__/* .toast */ .oR.warning('Railway deployment is currently pending (builds queued due to Railway infrastructure incident). The endpoint will activate once Railway finishes redeploying.');
         } else {
-          react_toastify__WEBPACK_IMPORTED_MODULE_24__/* .toast */ .oR.error('Failed to upload attachment. Please try again.');
+          react_toastify__WEBPACK_IMPORTED_MODULE_23__/* .toast */ .oR.error('Failed to upload attachment. Please try again.');
         }
       } finally {
         setUploading(false);
@@ -3757,7 +6474,7 @@ function DocumentAttachmentsModal(_ref) {
 
   // Direct print handler for item
   var handleDirectPrint = att => {
-    var fileUrl = "".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_28__/* .ENDPOINT_URL */ .m, "/attachment-file/").concat(att._id);
+    var fileUrl = "".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_27__/* .ENDPOINT_URL */ .m, "/attachment-file/").concat(att._id);
     var contentType = (att.contentType || '').toLowerCase();
     var isPdf = contentType.includes('pdf') || (att.fileName || '').toLowerCase().endsWith('.pdf');
     if (isPdf) {
@@ -3779,7 +6496,7 @@ function DocumentAttachmentsModal(_ref) {
 
   // Direct download handler
   var handleDownload = att => {
-    var downloadUrl = "".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_28__/* .ENDPOINT_URL */ .m, "/attachment-file/").concat(att._id, "?download=true");
+    var downloadUrl = "".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_27__/* .ENDPOINT_URL */ .m, "/attachment-file/").concat(att._id, "?download=true");
     var link = document.createElement('a');
     link.href = downloadUrl;
     link.download = att.fileName;
@@ -3793,13 +6510,13 @@ function DocumentAttachmentsModal(_ref) {
     var _ref4 = _asyncToGenerator(function* () {
       if (!deleteConfirmId) return;
       try {
-        yield axios__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A.delete("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_28__/* .ENDPOINT_URL */ .m, "/delete-attachment/").concat(deleteConfirmId));
-        react_toastify__WEBPACK_IMPORTED_MODULE_24__/* .toast */ .oR.success('Attachment deleted successfully');
+        yield axios__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A.delete("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_27__/* .ENDPOINT_URL */ .m, "/delete-attachment/").concat(deleteConfirmId));
+        react_toastify__WEBPACK_IMPORTED_MODULE_23__/* .toast */ .oR.success('Attachment deleted successfully');
         setDeleteConfirmId(null);
         fetchAttachments();
       } catch (err) {
         console.error('Error deleting attachment:', err);
-        react_toastify__WEBPACK_IMPORTED_MODULE_24__/* .toast */ .oR.error('Failed to delete attachment');
+        react_toastify__WEBPACK_IMPORTED_MODULE_23__/* .toast */ .oR.error('Failed to delete attachment');
       }
     });
     return function handleDeleteConfirm() {
@@ -3915,13 +6632,29 @@ function DocumentAttachmentsModal(_ref) {
       key: att._id,
       variant: "outlined",
       sx: {
-        p: '12px 16px',
+        p: {
+          xs: 1.5,
+          sm: 2
+        },
+        mb: 1.5,
         display: 'flex',
-        alignItems: 'center',
+        flexDirection: {
+          xs: 'column',
+          sm: 'row'
+        },
+        alignItems: {
+          xs: 'stretch',
+          sm: 'center'
+        },
         justifyContent: 'space-between',
-        borderRadius: '8px',
+        gap: {
+          xs: 1.2,
+          sm: 1.5
+        },
+        borderRadius: '10px',
         borderColor: '#e2e8f0',
         bgcolor: '#ffffff',
+        boxShadow: '0 1px 3px rgba(0, 0, 0, 0.02)',
         transition: 'all 0.2s ease',
         '&:hover': {
           borderColor: '#cbd5e1',
@@ -3940,29 +6673,37 @@ function DocumentAttachmentsModal(_ref) {
       onClick: () => setPreviewAttachment(att)
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
       sx: {
-        width: 38,
-        height: 38,
-        borderRadius: '6px',
+        width: 44,
+        height: 44,
+        borderRadius: '8px',
         bgcolor: isPdf ? '#fee2e2' : isImage ? '#e0f2fe' : '#f1f5f9',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        flexShrink: 0
+        flexShrink: 0,
+        overflow: 'hidden',
+        border: '1px solid #e2e8f0'
       }
-    }, isPdf ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_PictureAsPdf__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
+    }, isImage ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
+      src: "".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_27__/* .ENDPOINT_URL */ .m, "/attachment-file/").concat(att._id),
+      alt: att.fileName,
+      style: {
+        width: '100%',
+        height: '100%',
+        objectFit: 'cover'
+      },
+      onError: e => {
+        e.target.style.display = 'none';
+      }
+    }) : isPdf ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_PictureAsPdf__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
       sx: {
         color: '#dc2626',
-        fontSize: 22
+        fontSize: 24
       }
-    }) : isImage ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Image__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
-      sx: {
-        color: '#0284c7',
-        fontSize: 22
-      }
-    }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_InsertDriveFile__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
+    }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_InsertDriveFile__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
       sx: {
         color: '#64748b',
-        fontSize: 22
+        fontSize: 24
       }
     })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
       sx: {
@@ -3972,30 +6713,44 @@ function DocumentAttachmentsModal(_ref) {
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
       variant: "body2",
       sx: {
-        fontWeight: 600,
+        fontWeight: 700,
         color: '#1e293b',
-        whiteSpace: 'nowrap',
-        overflow: 'hidden',
-        textOverflow: 'ellipsis',
+        fontSize: '0.9rem',
+        lineHeight: 1.3,
+        wordBreak: 'break-word',
         '&:hover': {
           color: '#2563eb',
           textDecoration: 'underline'
         }
       },
       title: att.fileName
-    }, att.fileName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+    }, att.fileName || 'Attachment File'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
       variant: "caption",
       sx: {
         color: '#64748b',
         display: 'block',
-        lineHeight: 1.2
+        mt: 0.3,
+        fontSize: '0.78rem',
+        lineHeight: 1.3
       }
-    }, "File Size: ", formatFileSize(att.fileSize), att.uploadedBy ? " \u2022 By ".concat(att.uploadedBy) : '', att.createdAt ? " \u2022 ".concat(dayjs__WEBPACK_IMPORTED_MODULE_25___default()(att.createdAt).format('DD/MM/YYYY')) : ''))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
+    }, formatFileSize(att.fileSize), att.uploadedBy ? " \u2022 By ".concat(att.uploadedBy) : '', att.createdAt ? " \u2022 ".concat(dayjs__WEBPACK_IMPORTED_MODULE_24___default()(att.createdAt).format('DD/MM/YYYY')) : ''))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
       sx: {
         display: 'flex',
         alignItems: 'center',
-        gap: 0.5,
-        ml: 1
+        justifyContent: {
+          xs: 'flex-end',
+          sm: 'flex-end'
+        },
+        gap: 0.8,
+        pt: {
+          xs: 1,
+          sm: 0
+        },
+        borderTop: {
+          xs: '1px dashed #e2e8f0',
+          sm: 'none'
+        },
+        flexShrink: 0
       }
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
       title: "Preview"
@@ -4004,12 +6759,13 @@ function DocumentAttachmentsModal(_ref) {
       onClick: () => setPreviewAttachment(att),
       sx: {
         color: '#475569',
+        bgcolor: '#f8fafc',
         '&:hover': {
           color: '#2563eb',
           bgcolor: '#eff6ff'
         }
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Visibility__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Visibility__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
       fontSize: "small"
     }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
       title: "Direct Print"
@@ -4018,12 +6774,13 @@ function DocumentAttachmentsModal(_ref) {
       onClick: () => handleDirectPrint(att),
       sx: {
         color: '#475569',
+        bgcolor: '#f8fafc',
         '&:hover': {
           color: '#0f766e',
           bgcolor: '#f0fdfa'
         }
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Print__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Print__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
       fontSize: "small"
     }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
       title: "Download"
@@ -4032,12 +6789,13 @@ function DocumentAttachmentsModal(_ref) {
       onClick: () => handleDownload(att),
       sx: {
         color: '#475569',
+        bgcolor: '#f8fafc',
         '&:hover': {
           color: '#2563eb',
           bgcolor: '#eff6ff'
         }
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Download__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Download__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
       fontSize: "small"
     }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
       title: "Delete"
@@ -4046,12 +6804,13 @@ function DocumentAttachmentsModal(_ref) {
       onClick: () => setDeleteConfirmId(att._id),
       sx: {
         color: '#94a3b8',
+        bgcolor: '#f8fafc',
         '&:hover': {
           color: '#dc2626',
           bgcolor: '#fee2e2'
         }
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_DeleteOutline__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_DeleteOutline__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .A, {
       fontSize: "small"
     })))));
   })) :
@@ -4221,7 +6980,7 @@ function DocumentAttachmentsModal(_ref) {
       textTransform: 'none',
       fontWeight: 600
     }
-  }, "Delete"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_AttachmentPreviewDialog__WEBPACK_IMPORTED_MODULE_29__/* ["default"] */ .A, {
+  }, "Delete"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_AttachmentPreviewDialog__WEBPACK_IMPORTED_MODULE_28__/* ["default"] */ .A, {
     open: Boolean(previewAttachment),
     onClose: () => setPreviewAttachment(null),
     attachment: previewAttachment
@@ -5511,8 +8270,9 @@ function MobileDetailSheet(_ref) {
       var documentType = typeMapping[type] || 'Invoice';
       var docNumber = '';
       if (type === 'invoices') docNumber = "INV-".concat(String((record === null || record === void 0 ? void 0 : record.invoiceNumber) || '').padStart(6, '0'));else if (type === 'quotations' || type === 'estimates') docNumber = "Q-".concat(String((record === null || record === void 0 ? void 0 : record.estimateNumber) || '').padStart(6, '0'));else if (type === 'maintenance' || type === 'maintenance_orders') docNumber = MobileDetailSheet_safeText((record === null || record === void 0 ? void 0 : record.serviceNumber) || (record === null || record === void 0 ? void 0 : record.orderNumber) || (record === null || record === void 0 ? void 0 : record.maintenanceNumber));else if (type === 'projects') docNumber = "P-".concat(String((record === null || record === void 0 ? void 0 : record.projectNumber) || '').padStart(6, '0'));
+      var finalFileName = file.name && file.name !== 'image.jpg' && file.name !== 'input_file.jpg' ? file.name : "".concat(docNumber || 'Photo', "_").concat(dayjs().format('YYYYMMDD_HHmmss'), ".jpg");
       var formData = new FormData();
-      formData.append('files', file);
+      formData.append('files', file, finalFileName);
       formData.append('documentId', docId);
       formData.append('documentType', documentType);
       formData.append('documentNumber', docNumber);
@@ -8870,108 +11630,6 @@ function MobileCardList(_ref) {
 
 /***/ },
 
-/***/ 33613
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-
-// EXPORTS
-__webpack_require__.d(__webpack_exports__, {
-  A: () => (/* binding */ dexieDb)
-});
-
-// EXTERNAL MODULE: ./node_modules/dexie/dist/dexie.min.js
-var dexie_min = __webpack_require__(23744);
-;// ./node_modules/dexie/import-wrapper-prod.mjs
-// Making the module version consumable via require - to prohibit
-// multiple occurrancies of the same module in the same app
-// (dual package hazard, https://nodejs.org/api/packages.html#dual-package-hazard)
-
-const DexieSymbol = Symbol.for("Dexie");
-const Dexie = globalThis[DexieSymbol] || (globalThis[DexieSymbol] = dexie_min);
-if (dexie_min.semVer !== Dexie.semVer) {
-    throw new Error(`Two different versions of Dexie loaded in the same app: ${dexie_min.semVer} and ${Dexie.semVer}`);
-}
-const {
-    liveQuery, mergeRanges, rangesOverlap, RangeSet, cmp, Entity,
-    PropModification, replacePrefix, add, remove,
-    DexieYProvider } = Dexie;
-
-/* harmony default export */ const import_wrapper_prod = (Dexie);
-
-;// ./src/js/dexieDb.js
-
-var db = new import_wrapper_prod('GlobalGate');
-db.version(1).stores({
-  customerSchema: '++id,Customer,_id,customerType,designation,customerFirstName, customerLastName,customerFullName,companyName,customerEmail,customerCompanyPhone,customerPhone,currency,paymentTerms, billingAddress,billingCity,credit,shippingAddress,shippingCity,customerDescription,synced,updateS',
-  supplierSchema: '++id,_id,supplierName,storeName,customerPhone1,customerPhone2,address,description,synced',
-  itemSchema: '++id,itemName,_id,itemUpc,typeItem,itemStore,unit,itemDimension,itemWeight,itemCategory,itemManufacturer,itemBrand,itemCostPrice,itemQuantity,itemSellingPrice,itemDescription,stockOnHand,synced,updateS',
-  itemSchemaView: '++id,_id',
-  dailyExpenseSchema: '++expenseNumber,_id,expenseCategory,accountName,description,expenseDate,amount,employeeName,rate,total,accountNameInfo,reason,Create,synced,updateS',
-  dailyExpenseViewSchema: '++expenseNumber,_id',
-  hiddenSchema: '++id,_id,idRow,hiddenByCEO',
-  itemCodeSchema: '++id,itemCategory,_id,itemCode',
-  itemUnitSchema: '++id,itemUnit,_id',
-  departmentSchema: '++id,department,_id',
-  estimateSchema: '++estimateNumber,_id,customerName,estimateDate,estimateDefect,estimateSubject,status,items,subTotal,total,totalW,note,estimateName,Create,balanceDue,terms,shipping,noteInfo,adjustment,adjustmentNumber,totalInvoice,Ref,ReferenceName,synced,updateS',
-  invoiceSchema: '++invoiceNumber,_id,customerName,invoiceDate,invoiceDueDate,invoiceSubject,invoicePurchase,invoiceDefect,status,items,subTotal,ReferenceName,ReferenceName2,total,noteInfo,balanceDue,totalW,actionTaken,invoiceName,Position,note,Create,shipping,adjustment,adjustmentNumber,totalInvoice,terms,Ref,synced,updateS',
-  invoiceViewSchema: '++invoiceNumber,_id',
-  posSchema: '++factureNumber,_id,customerName,invoiceDate,time,status,items,subTotal,totalFC,totalUSD,rate,Create,balanceDue,note,totalInvoice,synced,updateS',
-  paymentSchema: '++paymentNumber,_id,customerName,amount,bankCharge,modes,paymentDate,referenceNumber,description,remaining,Create,PaymentReceivedFC,PaymentReceivedUSD,TotalAmount,synced,updateS',
-  projectSchema: '++projectNumber,_id,customerName,projectName,status,phase,description,startDate,visitDate,synced,updateS',
-  purchaseSchema: '++purchaseNumber,_id,customerName,noteInfo,estimateDefect,estimateSubject,purchaseName,projectName,description,Position,purchaseDate,status,statusInfo,items,purchaseAmount1,purchaseAmount2,ReferenceName,ReferenceName2,synced,updateS',
-  purchaseSchemaView: '++purchaseNumber,_id',
-  maintenanceSchema: '++serviceNumber,customerName,_id,action,serviceName,serviceDate,laborQty,totalLaborFeesGenerale,technicianAssign,note,totalLaborFees,laborPercentage,totalDiscount,laborDiscount,visitDate,status,items,itemDescriptionInfo,brand,actionTaken,model,warranty,serialNo,defectDescription,adjustment,adjustmentNumber,totalInvoice,subTotal,Converted,ReferenceName,synced,updateS',
-  maintenanceViewSchema: '++serviceNumber,_id',
-  employeeSchema: '++employeeId,_id,joinDate,employeeName,employeeAddress,employeeEmail,employeePhone,employeeRole,department,dateOfBirth,Gender,status,statusMarital,identifier,identifierNumber,expireDate,salary,reason1,description,bankAccountNumber,bankName,other,bounceAllowances,foodBasic,basicTransport,synced,updateS',
-  payRollSchema: '++payNumber,_id,payDate,month,daysW,status,daysOpen,Lops,basicSalary,earningSalary,advancedSalary,basicTransport,transportEarning,transportDeduction,foodBasic,foodEarning,itemLost,foodDeduction,bounceAllowances,bounceAllowancesEarning,other,otherEarning,loan,bonus,totalActualSalary,totalActualEarning,totalActualDeduction,totalNet,totalPaid,rate,totalPaidDollars,words,employeeName,amountPayUSD,amountPayFC,CreditFC,CreditUSD,synced,updateS',
-  employeeUserSchema: '_id,employeeName,employeeEmail,role,password,verificationCode,codeExpiration,synced,updateS',
-  userAccount: 'idInfo,employeeName,password',
-  grantAccessSchema: '++id,employeeName,_id,userID,modules',
-  cashSchema: '++cashNumber,_id,cashDate,status,totalCash,amount,totalItemPurchaseUSD,totalPayrollUSD,totalExpensesUSD,totalExpensesFC,totalCashUSD,totalCashFC,returnAmountFC,returnAmountUSD,RemainingAmountFC,RemainingAmountUSD,Create,synced,updateS',
-  rateSchema: '++id,_id,rate',
-  paymentRateSchema: '++id,_id,paymentRate',
-  dailyExpensesCategorySchema: '++id,_id,expensesCategory',
-  employeeAttendanceSchema: '++idInfo,_id,id,timeIn,timeOut,name,observation,note,daysWN,synced,updateS',
-  itemPurchaseSchema: '++itemPurchaseNumber,_id,itemPurchaseDate,manufacturer,manufacturerNumber,description,note,Create,total,totalFC,items,reason,projectName',
-  itemPurchaseViewSchema: '++itemPurchaseNumber,_id',
-  itemReturn: '++outNumber,_id,itemOutDate,reason,reference,itemsQtyArray,description,Create,synced,updateS',
-  itemReturnView: '++outNumber,_id',
-  itemOutSchema: '++idInfo,outNumber,_id,itemOutDate,reason,reference,itemsQtyArray,description,Create,synced,updateS',
-  itemOutViewSchema: '++idInfo,_id',
-  purchaseOrder: '++outNumber,_id,totalUSD,total,totalFC,itemOutDate,reason,reference,itemsQtyArray,manufacturer,status,Converted,manufacturerNumber,description,IpRelated,synced,updateS',
-  purchaseOrderView: '++outNumber,_id',
-  planingSchema: '++idInfo,planingDate,employeeName,employeeID,projectName,dayPayUSd,workNumber,status,planingDescription,planingTask',
-  rateReturnSchema: '++id, _id, rateR',
-  // Cache tables for hybrid architecture (v2.4.0)
-  // These store full datasets locally for instant queries
-  itemPurchaseCache: '_id, itemPurchaseDate, items, manufacturer',
-  itemOutCache: '_id, itemOutDate, itemsQtyArray',
-  posCache: '_id, invoiceDate, items, customerName',
-  itemReturnCache: '_id, itemOutDate, itemsQtyArray',
-  invoiceCache: '_id, invoiceNumber, customerName, invoiceDate, items',
-  estimateCache: '_id, estimateNumber, customerName, estimateDate, items',
-  customerCache: '_id, customerFullName, companyName, customerEmail',
-  supplierCache: '_id, supplierName, storeName',
-  projectCache: '_id, projectNumber, projectName, customerName',
-  maintenanceCache: '_id, serviceNumber, serviceName, customerName, items',
-  employeeCache: '_id, employeeName, employeeEmail, employeeRole, department',
-  payrollCache: '_id, payNumber, payDate, month, employeeName',
-  rateCache: '_id, rate',
-  userCache: '_id, employeeName, role',
-  grantAccessCache: '_id, userID, employeeName, modules',
-  companyProfileCache: '_id',
-  purchaseOrderCache: '_id, outNumber, manufacturer, status',
-  paymentCache: '_id, paymentNumber, customerName, paymentDate',
-  cashCache: '_id, cashNumber, cashDate, status',
-  dailyExpenseCache: '_id, expenseNumber, expenseCategory, expenseDate',
-  // Sync metadata
-  syncMetadata: '++id, tableName, lastSync, recordCount'
-});
-/* harmony default export */ const dexieDb = (db);
-
-/***/ },
-
 /***/ 37402
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
@@ -9243,15 +11901,10 @@ var renderStatusBadge = (status, customLabel) => {
 
 /***/ },
 
-/***/ 23744
+/***/ 20453
 (module) {
 
-((e,t)=>{ true?module.exports=t():0})(this,function(){var B=function(e,t){return(B=Object.setPrototypeOf||({__proto__:[]}instanceof Array?function(e,t){e.__proto__=t}:function(e,t){for(var n in t)Object.prototype.hasOwnProperty.call(t,n)&&(e[n]=t[n])}))(e,t)};var _=function(){return(_=Object.assign||function(e){for(var t,n=1,r=arguments.length;n<r;n++)for(var i in t=arguments[n])Object.prototype.hasOwnProperty.call(t,i)&&(e[i]=t[i]);return e}).apply(this,arguments)};function R(e,t,n){if(n||2===arguments.length)for(var r,i=0,o=t.length;i<o;i++)!r&&i in t||((r=r||Array.prototype.slice.call(t,0,i))[i]=t[i]);return e.concat(r||Array.prototype.slice.call(t))}var f="undefined"!=typeof globalThis?globalThis:"undefined"!=typeof self?self:"undefined"!=typeof window?window:globalThis,O=Object.keys,x=Array.isArray;function a(t,n){return"object"==typeof n&&O(n).forEach(function(e){t[e]=n[e]}),t}"undefined"==typeof Promise||f.Promise||(f.Promise=Promise);var F=Object.getPrototypeOf,N={}.hasOwnProperty;function m(e,t){return N.call(e,t)}function M(t,n){"function"==typeof n&&(n=n(F(t))),("undefined"==typeof Reflect?O:Reflect.ownKeys)(n).forEach(function(e){u(t,e,n[e])})}var L=Object.defineProperty;function u(e,t,n,r){L(e,t,a(n&&m(n,"get")&&"function"==typeof n.get?{get:n.get,set:n.set,configurable:!0}:{value:n,configurable:!0,writable:!0},r))}function U(t){return{from:function(e){return t.prototype=Object.create(e.prototype),u(t.prototype,"constructor",t),{extend:M.bind(null,t.prototype)}}}}var z=Object.getOwnPropertyDescriptor;var V=[].slice;function W(e,t,n){return V.call(e,t,n)}function Y(e,t){return t(e)}function $(e){if(!e)throw new Error("Assertion Failed")}function Q(e){f.setImmediate?setImmediate(e):setTimeout(e,0)}function c(e,t){if("string"==typeof t&&m(e,t))return e[t];if(!t)return e;if("string"!=typeof t){for(var n=[],r=0,i=t.length;r<i;++r){var o=c(e,t[r]);n.push(o)}return n}var a,u=t.indexOf(".");return-1===u||null==(a=e[t.substr(0,u)])?void 0:c(a,t.substr(u+1))}function b(e,t,n){if(e&&void 0!==t&&!("isFrozen"in Object&&Object.isFrozen(e)))if("string"!=typeof t&&"length"in t){$("string"!=typeof n&&"length"in n);for(var r=0,i=t.length;r<i;++r)b(e,t[r],n[r])}else{var o=t.indexOf(".");if(-1!==o){var a=t.substr(0,o),o=t.substr(o+1);if(""===o)void 0===n?x(e)&&!isNaN(parseInt(a))?e.splice(a,1):delete e[a]:e[a]=n;else{var u=e[a];if(!u||!m(e,a)){if(void 0===n)return;u=e[a]={}}b(u,o,n)}}else void 0===n?x(e)&&!isNaN(parseInt(t))?e.splice(t,1):delete e[t]:e[t]=n}}function G(e){var t,n={};for(t in e)m(e,t)&&(n[t]=e[t]);return n}var X=[].concat;function H(e){return X.apply([],e)}var e="BigUint64Array,BigInt64Array,Array,Boolean,String,Date,RegExp,Blob,File,FileList,FileSystemFileHandle,FileSystemDirectoryHandle,ArrayBuffer,DataView,Uint8ClampedArray,ImageBitmap,ImageData,Map,Set,CryptoKey".split(",").concat(H([8,16,32,64].map(function(t){return["Int","Uint","Float"].map(function(e){return e+t+"Array"})}))).filter(function(e){return f[e]}),J=new Set(e.map(function(e){return f[e]}));var Z=null;function ee(e){Z=new WeakMap;e=function e(t){if(!t||"object"!=typeof t)return t;var n=Z.get(t);if(n)return n;if(x(t)){n=[],Z.set(t,n);for(var r=0,i=t.length;r<i;++r)n.push(e(t[r]))}else if(J.has(t.constructor))n=t;else{var o,a=F(t);for(o in n=a===Object.prototype?{}:Object.create(a),Z.set(t,n),t)m(t,o)&&(n[o]=e(t[o]))}return n}(e);return Z=null,e}var te={}.toString;function ne(e){return te.call(e).slice(8,-1)}var re="undefined"!=typeof Symbol?Symbol.iterator:"@@iterator",ie="symbol"==typeof re?function(e){var t;return null!=e&&(t=e[re])&&t.apply(e)}:function(){return null};function oe(e,t){t=e.indexOf(t);0<=t&&e.splice(t,1)}var ae={};function n(e){var t,n,r,i;if(1===arguments.length){if(x(e))return e.slice();if(this===ae&&"string"==typeof e)return[e];if(i=ie(e))for(n=[];!(r=i.next()).done;)n.push(r.value);else{if(null==e)return[e];if("number"!=typeof(t=e.length))return[e];for(n=new Array(t);t--;)n[t]=e[t]}}else for(t=arguments.length,n=new Array(t);t--;)n[t]=arguments[t];return n}var ue="undefined"!=typeof Symbol?function(e){return"AsyncFunction"===e[Symbol.toStringTag]}:function(){return!1},e=["Unknown","Constraint","Data","TransactionInactive","ReadOnly","Version","NotFound","InvalidState","InvalidAccess","Abort","Timeout","QuotaExceeded","Syntax","DataClone"],t=["Modify","Bulk","OpenFailed","VersionChange","Schema","Upgrade","InvalidTable","MissingAPI","NoSuchDatabase","InvalidArgument","SubTransaction","Unsupported","Internal","DatabaseClosed","PrematureCommit","ForeignAwait"].concat(e),se={VersionChanged:"Database version changed by other database connection",DatabaseClosed:"Database has been closed",Abort:"Transaction aborted",TransactionInactive:"Transaction has already completed or failed",MissingAPI:"IndexedDB API missing. Please visit https://tinyurl.com/y2uuvskb"};function ce(e,t){this.name=e,this.message=t}function le(e,t){return e+". Errors: "+Object.keys(t).map(function(e){return t[e].toString()}).filter(function(e,t,n){return n.indexOf(e)===t}).join("\n")}function fe(e,t,n,r){this.failures=t,this.failedKeys=r,this.successCount=n,this.message=le(e,t)}function he(e,t){this.name="BulkError",this.failures=Object.keys(t).map(function(e){return t[e]}),this.failuresByPos=t,this.message=le(e,this.failures)}U(ce).from(Error).extend({toString:function(){return this.name+": "+this.message}}),U(fe).from(ce),U(he).from(ce);var de=t.reduce(function(e,t){return e[t]=t+"Error",e},{}),pe=ce,k=t.reduce(function(e,n){var r=n+"Error";function t(e,t){this.name=r,e?"string"==typeof e?(this.message="".concat(e).concat(t?"\n "+t:""),this.inner=t||null):"object"==typeof e&&(this.message="".concat(e.name," ").concat(e.message),this.inner=e):(this.message=se[n]||r,this.inner=null)}return U(t).from(pe),e[n]=t,e},{}),ye=(k.Syntax=SyntaxError,k.Type=TypeError,k.Range=RangeError,e.reduce(function(e,t){return e[t+"Error"]=k[t],e},{}));e=t.reduce(function(e,t){return-1===["Syntax","Type","Range"].indexOf(t)&&(e[t+"Error"]=k[t]),e},{});function g(){}function ve(e){return e}function me(t,n){return null==t||t===ve?n:function(e){return n(t(e))}}function be(e,t){return function(){e.apply(this,arguments),t.apply(this,arguments)}}function ge(i,o){return i===g?o:function(){var e=i.apply(this,arguments),t=(void 0!==e&&(arguments[0]=e),this.onsuccess),n=this.onerror,r=(this.onsuccess=null,this.onerror=null,o.apply(this,arguments));return t&&(this.onsuccess=this.onsuccess?be(t,this.onsuccess):t),n&&(this.onerror=this.onerror?be(n,this.onerror):n),void 0!==r?r:e}}function we(n,r){return n===g?r:function(){n.apply(this,arguments);var e=this.onsuccess,t=this.onerror;this.onsuccess=this.onerror=null,r.apply(this,arguments),e&&(this.onsuccess=this.onsuccess?be(e,this.onsuccess):e),t&&(this.onerror=this.onerror?be(t,this.onerror):t)}}function _e(i,o){return i===g?o:function(e){var t=i.apply(this,arguments),e=(a(e,t),this.onsuccess),n=this.onerror,r=(this.onsuccess=null,this.onerror=null,o.apply(this,arguments));return e&&(this.onsuccess=this.onsuccess?be(e,this.onsuccess):e),n&&(this.onerror=this.onerror?be(n,this.onerror):n),void 0===t?void 0===r?void 0:r:a(t,r)}}function xe(e,t){return e===g?t:function(){return!1!==t.apply(this,arguments)&&e.apply(this,arguments)}}function ke(i,o){return i===g?o:function(){var e=i.apply(this,arguments);if(e&&"function"==typeof e.then){for(var t=this,n=arguments.length,r=new Array(n);n--;)r[n]=arguments[n];return e.then(function(){return o.apply(t,r)})}return o.apply(this,arguments)}}e.ModifyError=fe,e.DexieError=ce,e.BulkError=he;var l="undefined"!=typeof location&&/^(http|https):\/\/(localhost|127\.0\.0\.1)/.test(location.href);function Oe(e){l=e}var Pe={},Ke=100,Ee="undefined"==typeof Promise?[]:(t=Promise.resolve(),"undefined"!=typeof crypto&&crypto.subtle?[Ee=crypto.subtle.digest("SHA-512",new Uint8Array([0])),F(Ee),t]:[t,F(t),t]),t=Ee[0],Se=Ee[1],Se=Se&&Se.then,Ae=t&&t.constructor,Ce=!!Ee[2];var je=function(e,t){Re.push([e,t]),Ie&&(queueMicrotask(Ye),Ie=!1)},Te=!0,Ie=!0,qe=[],De=[],Be=ve,s={id:"global",global:!0,ref:0,unhandleds:[],onunhandled:g,pgp:!1,env:{},finalize:g},P=s,Re=[],Fe=0,Ne=[];function K(e){if("object"!=typeof this)throw new TypeError("Promises must be constructed via new");this._listeners=[],this._lib=!1;var t=this._PSD=P;if("function"!=typeof e){if(e!==Pe)throw new TypeError("Not a function");this._state=arguments[1],this._value=arguments[2],!1===this._state&&Ue(this,this._value)}else this._state=null,this._value=null,++t.ref,function t(r,e){try{e(function(n){if(null===r._state){if(n===r)throw new TypeError("A promise cannot be resolved with itself.");var e=r._lib&&$e();n&&"function"==typeof n.then?t(r,function(e,t){n instanceof K?n._then(e,t):n.then(e,t)}):(r._state=!0,r._value=n,ze(r)),e&&Qe()}},Ue.bind(null,r))}catch(e){Ue(r,e)}}(this,e)}var Me={get:function(){var u=P,t=et;function e(n,r){var i=this,o=!u.global&&(u!==P||t!==et),a=o&&!w(),e=new K(function(e,t){Ve(i,new Le(ut(n,u,o,a),ut(r,u,o,a),e,t,u))});return this._consoleTask&&(e._consoleTask=this._consoleTask),e}return e.prototype=Pe,e},set:function(e){u(this,"then",e&&e.prototype===Pe?Me:{get:function(){return e},set:Me.set})}};function Le(e,t,n,r,i){this.onFulfilled="function"==typeof e?e:null,this.onRejected="function"==typeof t?t:null,this.resolve=n,this.reject=r,this.psd=i}function Ue(e,t){var n,r;De.push(t),null===e._state&&(n=e._lib&&$e(),t=Be(t),e._state=!1,e._value=t,r=e,qe.some(function(e){return e._value===r._value})||qe.push(r),ze(e),n)&&Qe()}function ze(e){var t=e._listeners;e._listeners=[];for(var n=0,r=t.length;n<r;++n)Ve(e,t[n]);var i=e._PSD;--i.ref||i.finalize(),0===Fe&&(++Fe,je(function(){0==--Fe&&Ge()},[]))}function Ve(e,t){if(null===e._state)e._listeners.push(t);else{var n=e._state?t.onFulfilled:t.onRejected;if(null===n)return(e._state?t.resolve:t.reject)(e._value);++t.psd.ref,++Fe,je(We,[n,e,t])}}function We(e,t,n){try{var r,i=t._value;!t._state&&De.length&&(De=[]),r=l&&t._consoleTask?t._consoleTask.run(function(){return e(i)}):e(i),t._state||-1!==De.indexOf(i)||(e=>{for(var t=qe.length;t;)if(qe[--t]._value===e._value)return qe.splice(t,1)})(t),n.resolve(r)}catch(e){n.reject(e)}finally{0==--Fe&&Ge(),--n.psd.ref||n.psd.finalize()}}function Ye(){at(s,function(){$e()&&Qe()})}function $e(){var e=Te;return Ie=Te=!1,e}function Qe(){var e,t,n;do{for(;0<Re.length;)for(e=Re,Re=[],n=e.length,t=0;t<n;++t){var r=e[t];r[0].apply(null,r[1])}}while(0<Re.length);Ie=Te=!0}function Ge(){for(var e=qe,t=(qe=[],e.forEach(function(e){e._PSD.onunhandled.call(null,e._value,e)}),Ne.slice(0)),n=t.length;n;)t[--n]()}function Xe(e){return new K(Pe,!1,e)}function E(n,r){var i=P;return function(){var e=$e(),t=P;try{return h(i,!0),n.apply(this,arguments)}catch(e){r&&r(e)}finally{h(t,!1),e&&Qe()}}}M(K.prototype,{then:Me,_then:function(e,t){Ve(this,new Le(null,null,e,t,P))},catch:function(e){var t,n;return 1===arguments.length?this.then(null,e):(t=e,n=arguments[1],"function"==typeof t?this.then(null,function(e){return(e instanceof t?n:Xe)(e)}):this.then(null,function(e){return(e&&e.name===t?n:Xe)(e)}))},finally:function(t){return this.then(function(e){return K.resolve(t()).then(function(){return e})},function(e){return K.resolve(t()).then(function(){return Xe(e)})})},timeout:function(r,i){var o=this;return r<1/0?new K(function(e,t){var n=setTimeout(function(){return t(new k.Timeout(i))},r);o.then(e,t).finally(clearTimeout.bind(null,n))}):this}}),"undefined"!=typeof Symbol&&Symbol.toStringTag&&u(K.prototype,Symbol.toStringTag,"Dexie.Promise"),s.env=ot(),M(K,{all:function(){var o=n.apply(null,arguments).map(rt);return new K(function(n,r){0===o.length&&n([]);var i=o.length;o.forEach(function(e,t){return K.resolve(e).then(function(e){o[t]=e,--i||n(o)},r)})})},resolve:function(n){return n instanceof K?n:n&&"function"==typeof n.then?new K(function(e,t){n.then(e,t)}):new K(Pe,!0,n)},reject:Xe,race:function(){var e=n.apply(null,arguments).map(rt);return new K(function(t,n){e.map(function(e){return K.resolve(e).then(t,n)})})},PSD:{get:function(){return P},set:function(e){return P=e}},totalEchoes:{get:function(){return et}},newPSD:v,usePSD:at,scheduler:{get:function(){return je},set:function(e){je=e}},rejectionMapper:{get:function(){return Be},set:function(e){Be=e}},follow:function(i,n){return new K(function(e,t){return v(function(n,r){var e=P;e.unhandleds=[],e.onunhandled=r,e.finalize=be(function(){var t,e=this;t=function(){0===e.unhandleds.length?n():r(e.unhandleds[0])},Ne.push(function e(){t(),Ne.splice(Ne.indexOf(e),1)}),++Fe,je(function(){0==--Fe&&Ge()},[])},e.finalize),i()},n,e,t)})}}),Ae&&(Ae.allSettled&&u(K,"allSettled",function(){var e=n.apply(null,arguments).map(rt);return new K(function(n){0===e.length&&n([]);var r=e.length,i=new Array(r);e.forEach(function(e,t){return K.resolve(e).then(function(e){return i[t]={status:"fulfilled",value:e}},function(e){return i[t]={status:"rejected",reason:e}}).then(function(){return--r||n(i)})})})}),Ae.any&&"undefined"!=typeof AggregateError&&u(K,"any",function(){var e=n.apply(null,arguments).map(rt);return new K(function(n,r){0===e.length&&r(new AggregateError([]));var i=e.length,o=new Array(i);e.forEach(function(e,t){return K.resolve(e).then(function(e){return n(e)},function(e){o[t]=e,--i||r(new AggregateError(o))})})})}),Ae.withResolvers)&&(K.withResolvers=Ae.withResolvers);var o={awaits:0,echoes:0,id:0},He=0,Je=[],Ze=0,et=0,tt=0;function v(e,t,n,r){var i=P,o=Object.create(i),t=(o.parent=i,o.ref=0,o.global=!1,o.id=++tt,s.env,o.env=Ce?{Promise:K,PromiseProp:{value:K,configurable:!0,writable:!0},all:K.all,race:K.race,allSettled:K.allSettled,any:K.any,resolve:K.resolve,reject:K.reject}:{},t&&a(o,t),++i.ref,o.finalize=function(){--this.parent.ref||this.parent.finalize()},at(o,e,n,r));return 0===o.ref&&o.finalize(),t}function nt(){return o.id||(o.id=++He),++o.awaits,o.echoes+=Ke,o.id}function w(){return!!o.awaits&&(0==--o.awaits&&(o.id=0),o.echoes=o.awaits*Ke,!0)}function rt(e){return o.echoes&&e&&e.constructor===Ae?(nt(),e.then(function(e){return w(),e},function(e){return w(),S(e)})):e}function it(){var e=Je[Je.length-1];Je.pop(),h(e,!1)}function h(e,t){var n,r,i=P;(t?!o.echoes||Ze++&&e===P:!Ze||--Ze&&e===P)||queueMicrotask(t?function(e){++et,o.echoes&&0!=--o.echoes||(o.echoes=o.awaits=o.id=0),Je.push(P),h(e,!0)}.bind(null,e):it),e!==P&&(P=e,i===s&&(s.env=ot()),Ce)&&(n=s.env.Promise,r=e.env,i.global||e.global)&&(Object.defineProperty(f,"Promise",r.PromiseProp),n.all=r.all,n.race=r.race,n.resolve=r.resolve,n.reject=r.reject,r.allSettled&&(n.allSettled=r.allSettled),r.any)&&(n.any=r.any)}function ot(){var e=f.Promise;return Ce?{Promise:e,PromiseProp:Object.getOwnPropertyDescriptor(f,"Promise"),all:e.all,race:e.race,allSettled:e.allSettled,any:e.any,resolve:e.resolve,reject:e.reject}:{}}function at(e,t,n,r,i){var o=P;try{return h(e,!0),t(n,r,i)}finally{h(o,!1)}}function ut(t,n,r,i){return"function"!=typeof t?t:function(){var e=P;r&&nt(),h(n,!0);try{return t.apply(this,arguments)}finally{h(e,!1),i&&queueMicrotask(w)}}}function st(e){Promise===Ae&&0===o.echoes?0===Ze?e():enqueueNativeMicroTask(e):setTimeout(e,0)}-1===(""+Se).indexOf("[native code]")&&(nt=w=g);var S=K.reject;var ct=String.fromCharCode(65535),A="Invalid key provided. Keys must be of type string, number, Date or Array<string | number | Date>.",lt="String expected.",ft="__dbnames",ht="readonly",dt="readwrite";function pt(e,t){return e?t?function(){return e.apply(this,arguments)&&t.apply(this,arguments)}:e:t}var yt={type:3,lower:-1/0,lowerOpen:!1,upper:[[]],upperOpen:!1};function vt(t){return"string"!=typeof t||/\./.test(t)?function(e){return e}:function(e){return void 0===e[t]&&t in e&&delete(e=ee(e))[t],e}}function mt(){throw k.Type("Entity instances must never be new:ed. Instances are generated by the framework bypassing the constructor.")}function C(e,t){try{var n=bt(e),r=bt(t);if(n!==r)return"Array"===n?1:"Array"===r?-1:"binary"===n?1:"binary"===r?-1:"string"===n?1:"string"===r?-1:"Date"===n?1:"Date"!==r?NaN:-1;switch(n){case"number":case"Date":case"string":return t<e?1:e<t?-1:0;case"binary":for(var i=gt(e),o=gt(t),a=i.length,u=o.length,s=a<u?a:u,c=0;c<s;++c)if(i[c]!==o[c])return i[c]<o[c]?-1:1;return a===u?0:a<u?-1:1;case"Array":for(var l=e,f=t,h=l.length,d=f.length,p=h<d?h:d,y=0;y<p;++y){var v=C(l[y],f[y]);if(0!==v)return v}return h===d?0:h<d?-1:1}}catch(e){}return NaN}function bt(e){var t=typeof e;return"object"==t&&(ArrayBuffer.isView(e)||"ArrayBuffer"===(t=ne(e)))?"binary":t}function gt(e){return e instanceof Uint8Array?e:ArrayBuffer.isView(e)?new Uint8Array(e.buffer,e.byteOffset,e.byteLength):new Uint8Array(e)}function wt(t,n,r){var e=t.schema.yProps;return e?(n&&0<r.numFailures&&(n=n.filter(function(e,t){return!r.failures[t]})),Promise.all(e.map(function(e){e=e.updatesTable;return n?t.db.table(e).where("k").anyOf(n).delete():t.db.table(e).clear()})).then(function(){return r})):r}xt.prototype.execute=function(e){var t=this["@@propmod"];if(void 0!==t.add){var n=t.add;if(x(n))return R(R([],x(e)?e:[],!0),n,!0).sort();if("number"==typeof n)return(Number(e)||0)+n;if("bigint"==typeof n)try{return BigInt(e)+n}catch(e){return BigInt(0)+n}throw new TypeError("Invalid term ".concat(n))}if(void 0!==t.remove){var r=t.remove;if(x(r))return x(e)?e.filter(function(e){return!r.includes(e)}).sort():[];if("number"==typeof r)return Number(e)-r;if("bigint"==typeof r)try{return BigInt(e)-r}catch(e){return BigInt(0)-r}throw new TypeError("Invalid subtrahend ".concat(r))}n=null==(n=t.replacePrefix)?void 0:n[0];return n&&"string"==typeof e&&e.startsWith(n)?t.replacePrefix[1]+e.substring(n.length):e};var _t=xt;function xt(e){this["@@propmod"]=e}function kt(e,t){for(var n=O(t),r=n.length,i=!1,o=0;o<r;++o){var a=n[o],u=t[a],s=c(e,a);u instanceof _t?(b(e,a,u.execute(s)),i=!0):s!==u&&(b(e,a,u),i=!0)}return i}r.prototype._trans=function(e,r,t){var n=this._tx||P.trans,i=this.name,o=l&&"undefined"!=typeof console&&console.createTask&&console.createTask("Dexie: ".concat("readonly"===e?"read":"write"," ").concat(this.name));function a(e,t,n){if(n.schema[i])return r(n.idbtrans,n);throw new k.NotFound("Table "+i+" not part of transaction")}var u=$e();try{var s=n&&n.db._novip===this.db._novip?n===P.trans?n._promise(e,a,t):v(function(){return n._promise(e,a,t)},{trans:n,transless:P.transless||P}):function t(n,r,i,o){if(n.idbdb&&(n._state.openComplete||P.letThrough||n._vip)){var a=n._createTransaction(r,i,n._dbSchema);try{a.create(),n._state.PR1398_maxLoop=3}catch(e){return e.name===de.InvalidState&&n.isOpen()&&0<--n._state.PR1398_maxLoop?(console.warn("Dexie: Need to reopen db"),n.close({disableAutoOpen:!1}),n.open().then(function(){return t(n,r,i,o)})):S(e)}return a._promise(r,function(e,t){return v(function(){return P.trans=a,o(e,t,a)})}).then(function(e){if("readwrite"===r)try{a.idbtrans.commit()}catch(e){}return"readonly"===r?e:a._completion.then(function(){return e})})}if(n._state.openComplete)return S(new k.DatabaseClosed(n._state.dbOpenError));if(!n._state.isBeingOpened){if(!n._state.autoOpen)return S(new k.DatabaseClosed);n.open().catch(g)}return n._state.dbReadyPromise.then(function(){return t(n,r,i,o)})}(this.db,e,[this.name],a);return o&&(s._consoleTask=o,s=s.catch(function(e){return console.trace(e),S(e)})),s}finally{u&&Qe()}},r.prototype.get=function(t,e){var n=this;return t&&t.constructor===Object?this.where(t).first(e):null==t?S(new k.Type("Invalid argument to Table.get()")):this._trans("readonly",function(e){return n.core.get({trans:e,key:t}).then(function(e){return n.hook.reading.fire(e)})}).then(e)},r.prototype.where=function(o){if("string"==typeof o)return new this.db.WhereClause(this,o);if(x(o))return new this.db.WhereClause(this,"[".concat(o.join("+"),"]"));var n=O(o);if(1===n.length)return this.where(n[0]).equals(o[n[0]]);var e=this.schema.indexes.concat(this.schema.primKey).filter(function(t){if(t.compound&&n.every(function(e){return 0<=t.keyPath.indexOf(e)})){for(var e=0;e<n.length;++e)if(-1===n.indexOf(t.keyPath[e]))return!1;return!0}return!1}).sort(function(e,t){return e.keyPath.length-t.keyPath.length})[0];if(e&&this.db._maxKey!==ct)return t=e.keyPath.slice(0,n.length),this.where(t).equals(t.map(function(e){return o[e]}));!e&&l&&console.warn("The query ".concat(JSON.stringify(o)," on ").concat(this.name," would benefit from a ")+"compound index [".concat(n.join("+"),"]"));var a=this.schema.idxByName;function u(e,t){return 0===C(e,t)}var t=n.reduce(function(e,t){var n=e[0],e=e[1],r=a[t],i=o[t];return[n||r,n||!r?pt(e,r&&r.multi?function(e){e=c(e,t);return x(e)&&e.some(function(e){return u(i,e)})}:function(e){return u(i,c(e,t))}):e]},[null,null]),r=t[0],t=t[1];return r?this.where(r.name).equals(o[r.keyPath]).filter(t):e?this.filter(t):this.where(n).equals("")},r.prototype.filter=function(e){return this.toCollection().and(e)},r.prototype.count=function(e){return this.toCollection().count(e)},r.prototype.offset=function(e){return this.toCollection().offset(e)},r.prototype.limit=function(e){return this.toCollection().limit(e)},r.prototype.each=function(e){return this.toCollection().each(e)},r.prototype.toArray=function(e){return this.toCollection().toArray(e)},r.prototype.toCollection=function(){return new this.db.Collection(new this.db.WhereClause(this))},r.prototype.orderBy=function(e){return new this.db.Collection(new this.db.WhereClause(this,x(e)?"[".concat(e.join("+"),"]"):e))},r.prototype.reverse=function(){return this.toCollection().reverse()},r.prototype.mapToClass=function(r){for(var o=this.db,a=this.name,i=((this.schema.mappedClass=r).prototype instanceof mt&&(r=(e=>{var t=i,n=e;if("function"!=typeof n&&null!==n)throw new TypeError("Class extends value "+String(n)+" is not a constructor or null");function r(){this.constructor=t}function i(){return null!==e&&e.apply(this,arguments)||this}return B(t,n),t.prototype=null===n?Object.create(n):(r.prototype=n.prototype,new r),Object.defineProperty(i.prototype,"db",{get:function(){return o},enumerable:!1,configurable:!0}),i.prototype.table=function(){return a},i})(r)),new Set),e=r.prototype;e;e=F(e))Object.getOwnPropertyNames(e).forEach(function(e){return i.add(e)});function t(e){if(!e)return e;var t,n=Object.create(r.prototype);for(t in e)if(!i.has(t))try{n[t]=e[t]}catch(e){}return n}return this.schema.readHook&&this.hook.reading.unsubscribe(this.schema.readHook),this.schema.readHook=t,this.hook("reading",t),r},r.prototype.defineClass=function(){return this.mapToClass(function(e){a(this,e)})},r.prototype.add=function(t,n){var r=this,e=this.schema.primKey,i=e.auto,o=e.keyPath,a=t;return o&&i&&(a=vt(o)(t)),this._trans("readwrite",function(e){return r.core.mutate({trans:e,type:"add",keys:null!=n?[n]:null,values:[a]})}).then(function(e){return e.numFailures?K.reject(e.failures[0]):e.lastResult}).then(function(e){if(o)try{b(t,o,e)}catch(e){}return e})},r.prototype.upsert=function(r,i){var o=this,a=this.schema.primKey.keyPath;return this._trans("readwrite",function(n){return o.core.get({trans:n,key:r}).then(function(t){var e=null!=t?t:{};return kt(e,i),a&&b(e,a,r),o.core.mutate({trans:n,type:"put",values:[e],keys:[r],upsert:!0,updates:{keys:[r],changeSpecs:[i]}}).then(function(e){return e.numFailures?K.reject(e.failures[0]):!!t})})})},r.prototype.update=function(e,t){return"object"!=typeof e||x(e)?this.where(":id").equals(e).modify(t):void 0===(e=c(e,this.schema.primKey.keyPath))?S(new k.InvalidArgument("Given object does not contain its primary key")):this.where(":id").equals(e).modify(t)},r.prototype.put=function(t,n){var r=this,e=this.schema.primKey,i=e.auto,o=e.keyPath,a=t;return o&&i&&(a=vt(o)(t)),this._trans("readwrite",function(e){return r.core.mutate({trans:e,type:"put",values:[a],keys:null!=n?[n]:null})}).then(function(e){return e.numFailures?K.reject(e.failures[0]):e.lastResult}).then(function(e){if(o)try{b(t,o,e)}catch(e){}return e})},r.prototype.delete=function(t){var n=this;return this._trans("readwrite",function(e){return n.core.mutate({trans:e,type:"delete",keys:[t]}).then(function(e){return wt(n,[t],e)}).then(function(e){return e.numFailures?K.reject(e.failures[0]):void 0})})},r.prototype.clear=function(){var t=this;return this._trans("readwrite",function(e){return t.core.mutate({trans:e,type:"deleteRange",range:yt}).then(function(e){return wt(t,null,e)})}).then(function(e){return e.numFailures?K.reject(e.failures[0]):void 0})},r.prototype.bulkGet=function(t){var n=this;return this._trans("readonly",function(e){return n.core.getMany({keys:t,trans:e}).then(function(e){return e.map(function(e){return n.hook.reading.fire(e)})})})},r.prototype.bulkAdd=function(i,e,t){var o=this,a=Array.isArray(e)?e:void 0,u=(t=t||(a?void 0:e))?t.allKeys:void 0;return this._trans("readwrite",function(e){var t=o.schema.primKey,n=t.auto,t=t.keyPath;if(t&&a)throw new k.InvalidArgument("bulkAdd(): keys argument invalid on tables with inbound keys");if(a&&a.length!==i.length)throw new k.InvalidArgument("Arguments objects and keys must have the same length");var r=i.length,n=t&&n?i.map(vt(t)):i;return o.core.mutate({trans:e,type:"add",keys:a,values:n,wantResults:u}).then(function(e){var t=e.numFailures,n=e.failures;if(0===t)return u?e.results:e.lastResult;throw new he("".concat(o.name,".bulkAdd(): ").concat(t," of ").concat(r," operations failed"),n)})})},r.prototype.bulkPut=function(i,e,t){var o=this,a=Array.isArray(e)?e:void 0,u=(t=t||(a?void 0:e))?t.allKeys:void 0;return this._trans("readwrite",function(e){var t=o.schema.primKey,n=t.auto,t=t.keyPath;if(t&&a)throw new k.InvalidArgument("bulkPut(): keys argument invalid on tables with inbound keys");if(a&&a.length!==i.length)throw new k.InvalidArgument("Arguments objects and keys must have the same length");var r=i.length,n=t&&n?i.map(vt(t)):i;return o.core.mutate({trans:e,type:"put",keys:a,values:n,wantResults:u}).then(function(e){var t=e.numFailures,n=e.failures;if(0===t)return u?e.results:e.lastResult;throw new he("".concat(o.name,".bulkPut(): ").concat(t," of ").concat(r," operations failed"),n)})})},r.prototype.bulkUpdate=function(t){var h=this,n=this.core,r=t.map(function(e){return e.key}),i=t.map(function(e){return e.changes}),d=[];return this._trans("readwrite",function(e){return n.getMany({trans:e,keys:r,cache:"clone"}).then(function(c){var l=[],f=[],s=(t.forEach(function(e,t){var n=e.key,r=e.changes,i=c[t];if(i){for(var o=0,a=Object.keys(r);o<a.length;o++){var u=a[o],s=r[u];if(u===h.schema.primKey.keyPath){if(0!==C(s,n))throw new k.Constraint("Cannot update primary key in bulkUpdate()")}else b(i,u,s)}d.push(t),l.push(n),f.push(i)}}),l.length);return n.mutate({trans:e,type:"put",keys:l,values:f,updates:{keys:r,changeSpecs:i}}).then(function(e){var t=e.numFailures,n=e.failures;if(0===t)return s;for(var r=0,i=Object.keys(n);r<i.length;r++){var o,a=i[r],u=d[Number(a)];null!=u&&(o=n[a],delete n[a],n[u]=o)}throw new he("".concat(h.name,".bulkUpdate(): ").concat(t," of ").concat(s," operations failed"),n)})})})},r.prototype.bulkDelete=function(t){var r=this,i=t.length;return this._trans("readwrite",function(e){return r.core.mutate({trans:e,type:"delete",keys:t}).then(function(e){return wt(r,t,e)})}).then(function(e){var t=e.numFailures,n=e.failures;if(0===t)return e.lastResult;throw new he("".concat(r.name,".bulkDelete(): ").concat(t," of ").concat(i," operations failed"),n)})};var Ot=r;function r(){}function Pt(i){function t(e,t){if(t){for(var n=arguments.length,r=new Array(n-1);--n;)r[n-1]=arguments[n];return a[e].subscribe.apply(null,r),i}if("string"==typeof e)return a[e]}var a={};t.addEventType=u;for(var e=1,n=arguments.length;e<n;++e)u(arguments[e]);return t;function u(e,n,r){var i,o;if("object"!=typeof e)return n=n||xe,o={subscribers:[],fire:r=r||g,subscribe:function(e){-1===o.subscribers.indexOf(e)&&(o.subscribers.push(e),o.fire=n(o.fire,e))},unsubscribe:function(t){o.subscribers=o.subscribers.filter(function(e){return e!==t}),o.fire=o.subscribers.reduce(n,r)}},a[e]=t[e]=o;O(i=e).forEach(function(e){var t=i[e];if(x(t))u(e,i[e][0],i[e][1]);else{if("asap"!==t)throw new k.InvalidArgument("Invalid event config");var n=u(e,ve,function(){for(var e=arguments.length,t=new Array(e);e--;)t[e]=arguments[e];n.subscribers.forEach(function(e){Q(function(){e.apply(null,t)})})})}})}}function Kt(e,t){return U(t).from({prototype:e}),t}function Et(e,t){return!(e.filter||e.algorithm||e.or)&&(t?e.justLimit:!e.replayFilter)}function St(e,t){e.filter=pt(e.filter,t)}function At(e,t,n){var r=e.replayFilter;e.replayFilter=r?function(){return pt(r(),t())}:t,e.justLimit=n&&!r}function Ct(e,t){if(e.isPrimKey)return t.primaryKey;var n=t.getIndexByKeyPath(e.index);if(n)return n;throw new k.Schema("KeyPath "+e.index+" on object store "+t.name+" is not indexed")}function jt(e,t,n){var r=Ct(e,t.schema);return t.openCursor({trans:n,values:!e.keysOnly,reverse:"prev"===e.dir,unique:!!e.unique,query:{index:r,range:e.range}})}function Tt(e,o,t,n){var a,r,u=e.replayFilter?pt(e.filter,e.replayFilter()):e.filter;return e.or?(a={},r=function(e,t,n){var r,i;u&&!u(t,n,function(e){return t.stop(e)},function(e){return t.fail(e)})||("[object ArrayBuffer]"===(i=""+(r=t.primaryKey))&&(i=""+new Uint8Array(r)),m(a,i))||(a[i]=!0,o(e,t,n))},Promise.all([e.or._iterate(r,t),It(jt(e,n,t),e.algorithm,r,!e.keysOnly&&e.valueMapper)])):It(jt(e,n,t),pt(e.algorithm,u),o,!e.keysOnly&&e.valueMapper)}function It(e,r,i,o){var a=E(o?function(e,t,n){return i(o(e),t,n)}:i);return e.then(function(n){if(n)return n.start(function(){var t=function(){return n.continue()};r&&!r(n,function(e){return t=e},function(e){n.stop(e),t=g},function(e){n.fail(e),t=g})||a(n.value,n,function(e){return t=e}),t()})})}i.prototype._read=function(e,t){var n=this._ctx;return n.error?n.table._trans(null,S.bind(null,n.error)):n.table._trans("readonly",e).then(t)},i.prototype._write=function(e){var t=this._ctx;return t.error?t.table._trans(null,S.bind(null,t.error)):t.table._trans("readwrite",e,"locked")},i.prototype._addAlgorithm=function(e){var t=this._ctx;t.algorithm=pt(t.algorithm,e)},i.prototype._iterate=function(e,t){return Tt(this._ctx,e,t,this._ctx.table.core)},i.prototype.clone=function(e){var t=Object.create(this.constructor.prototype),n=Object.create(this._ctx);return e&&a(n,e),t._ctx=n,t},i.prototype.raw=function(){return this._ctx.valueMapper=null,this},i.prototype.each=function(t){var n=this._ctx;return this._read(function(e){return Tt(n,t,e,n.table.core)})},i.prototype.count=function(e){var i=this;return this._read(function(e){var t,n=i._ctx,r=n.table.core;return Et(n,!0)?r.count({trans:e,query:{index:Ct(n,r.schema),range:n.range}}).then(function(e){return Math.min(e,n.limit)}):(t=0,Tt(n,function(){return++t,!1},e,r).then(function(){return t}))}).then(e)},i.prototype.sortBy=function(e,t){var n=e.split(".").reverse(),r=n[0],i=n.length-1;function o(e,t){return t?o(e[n[t]],t-1):e[r]}var a="next"===this._ctx.dir?1:-1;function u(e,t){return C(o(e,i),o(t,i))*a}return this.toArray(function(e){return e.slice().sort(u)}).then(t)},i.prototype.toArray=function(e){var o=this;return this._read(function(e){var t,n,r,i=o._ctx;return Et(i,!0)&&0<i.limit?(t=i.valueMapper,n=Ct(i,i.table.core.schema),i.table.core.query({trans:e,limit:i.limit,values:!0,direction:"prev"===i.dir?"prev":void 0,query:{index:n,range:i.range}}).then(function(e){e=e.result;return t?e.map(t):e})):(r=[],Tt(i,function(e){return r.push(e)},e,i.table.core).then(function(){return r}))},e)},i.prototype.offset=function(t){var e=this._ctx;return t<=0||(e.offset+=t,Et(e)?At(e,function(){var n=t;return function(e,t){return 0===n||(1===n?--n:t(function(){e.advance(n),n=0}),!1)}}):At(e,function(){var e=t;return function(){return--e<0}})),this},i.prototype.limit=function(e){return this._ctx.limit=Math.min(this._ctx.limit,e),At(this._ctx,function(){var r=e;return function(e,t,n){return--r<=0&&t(n),0<=r}},!0),this},i.prototype.until=function(r,i){return St(this._ctx,function(e,t,n){return!r(e.value)||(t(n),i)}),this},i.prototype.first=function(e){return this.limit(1).toArray(function(e){return e[0]}).then(e)},i.prototype.last=function(e){return this.reverse().first(e)},i.prototype.filter=function(t){var e;return St(this._ctx,function(e){return t(e.value)}),(e=this._ctx).isMatch=pt(e.isMatch,t),this},i.prototype.and=function(e){return this.filter(e)},i.prototype.or=function(e){return new this.db.WhereClause(this._ctx.table,e,this)},i.prototype.reverse=function(){return this._ctx.dir="prev"===this._ctx.dir?"next":"prev",this._ondirectionchange&&this._ondirectionchange(this._ctx.dir),this},i.prototype.desc=function(){return this.reverse()},i.prototype.eachKey=function(n){var e=this._ctx;return e.keysOnly=!e.isMatch,this.each(function(e,t){n(t.key,t)})},i.prototype.eachUniqueKey=function(e){return this._ctx.unique="unique",this.eachKey(e)},i.prototype.eachPrimaryKey=function(n){var e=this._ctx;return e.keysOnly=!e.isMatch,this.each(function(e,t){n(t.primaryKey,t)})},i.prototype.keys=function(e){var t=this._ctx,n=(t.keysOnly=!t.isMatch,[]);return this.each(function(e,t){n.push(t.key)}).then(function(){return n}).then(e)},i.prototype.primaryKeys=function(e){var n=this._ctx;if(Et(n,!0)&&0<n.limit)return this._read(function(e){var t=Ct(n,n.table.core.schema);return n.table.core.query({trans:e,values:!1,limit:n.limit,direction:"prev"===n.dir?"prev":void 0,query:{index:t,range:n.range}})}).then(function(e){return e.result}).then(e);n.keysOnly=!n.isMatch;var r=[];return this.each(function(e,t){r.push(t.primaryKey)}).then(function(){return r}).then(e)},i.prototype.uniqueKeys=function(e){return this._ctx.unique="unique",this.keys(e)},i.prototype.firstKey=function(e){return this.limit(1).keys(function(e){return e[0]}).then(e)},i.prototype.lastKey=function(e){return this.reverse().firstKey(e)},i.prototype.distinct=function(){var n,e=this._ctx,e=e.index&&e.table.schema.idxByName[e.index];return e&&e.multi&&(n={},St(this._ctx,function(e){var e=e.primaryKey.toString(),t=m(n,e);return n[e]=!0,!t})),this},i.prototype.modify=function(x){var n=this,k=this._ctx;return this._write(function(p){function y(e,t){var n=t.failures;u+=e-t.numFailures;for(var r=0,i=O(n);r<i.length;r++){var o=i[r];a.push(n[o])}}var v="function"==typeof x?x:function(e){return kt(e,x)},m=k.table.core,e=m.schema.primaryKey,b=e.outbound,g=e.extractKey,w=200,e=n.db._options.modifyChunkSize,a=(e&&(w="object"==typeof e?e[m.name]||e["*"]||200:e),[]),u=0,t=[],_=x===Dt;return n.clone().primaryKeys().then(function(f){function h(s){var c=Math.min(w,f.length-s),l=f.slice(s,s+c);return(_?Promise.resolve([]):m.getMany({trans:p,keys:l,cache:"immutable"})).then(function(e){var n=[],t=[],r=b?[]:null,i=_?l:[];if(!_)for(var o=0;o<c;++o){var a=e[o],u={value:ee(a),primKey:f[s+o]};!1!==v.call(u,u.value,u)&&(null==u.value?i.push(f[s+o]):b||0===C(g(a),g(u.value))?(t.push(u.value),b&&r.push(f[s+o])):(i.push(f[s+o]),n.push(u.value)))}return Promise.resolve(0<n.length&&m.mutate({trans:p,type:"add",values:n}).then(function(e){for(var t in e.failures)i.splice(parseInt(t),1);y(n.length,e)})).then(function(){return(0<t.length||d&&"object"==typeof x)&&m.mutate({trans:p,type:"put",keys:r,values:t,criteria:d,changeSpec:"function"!=typeof x&&x,isAdditionalChunk:0<s}).then(function(e){return y(t.length,e)})}).then(function(){return(0<i.length||d&&_)&&m.mutate({trans:p,type:"delete",keys:i,criteria:d,isAdditionalChunk:0<s}).then(function(e){return wt(k.table,i,e)}).then(function(e){return y(i.length,e)})}).then(function(){return f.length>s+c&&h(s+w)})})}var d=Et(k)&&k.limit===1/0&&("function"!=typeof x||_)&&{index:k.index,range:k.range};return h(0).then(function(){if(0<a.length)throw new fe("Error modifying one or more objects",a,u,t);return f.length})})})},i.prototype.delete=function(){var i=this._ctx,n=i.range;return!Et(i)||i.table.schema.yProps||!i.isPrimKey&&3!==n.type?this.modify(Dt):this._write(function(e){var t=i.table.core.schema.primaryKey,r=n;return i.table.core.count({trans:e,query:{index:t,range:r}}).then(function(n){return i.table.core.mutate({trans:e,type:"deleteRange",range:r}).then(function(e){var t=e.failures,e=e.numFailures;if(e)throw new fe("Could not delete some values",Object.keys(t).map(function(e){return t[e]}),n-e);return n-e})})})};var qt=i;function i(){}var Dt=function(e,t){return t.value=null};function Bt(e,t){return e<t?-1:e===t?0:1}function Rt(e,t){return t<e?-1:e===t?0:1}function j(e,t,n){e=e instanceof Lt?new e.Collection(e):e;return e._ctx.error=new(n||TypeError)(t),e}function Ft(e){return new e.Collection(e,function(){return Mt("")}).limit(0)}function Nt(e,s,n,r){var i,c,l,f,h,d,p,y=n.length;if(!n.every(function(e){return"string"==typeof e}))return j(e,lt);function t(e){i="next"===e?function(e){return e.toUpperCase()}:function(e){return e.toLowerCase()},c="next"===e?function(e){return e.toLowerCase()}:function(e){return e.toUpperCase()},l="next"===e?Bt:Rt;var t=n.map(function(e){return{lower:c(e),upper:i(e)}}).sort(function(e,t){return l(e.lower,t.lower)});f=t.map(function(e){return e.upper}),h=t.map(function(e){return e.lower}),p="next"===(d=e)?"":r}t("next");var e=new e.Collection(e,function(){return T(f[0],h[y-1]+r)}),v=(e._ondirectionchange=function(e){t(e)},0);return e._addAlgorithm(function(e,t,n){var r=e.key;if("string"==typeof r){var i=c(r);if(s(i,h,v))return!0;for(var o=null,a=v;a<y;++a){var u=((e,t,n,r,i,o)=>{for(var a=Math.min(e.length,r.length),u=-1,s=0;s<a;++s){var c=t[s];if(c!==r[s])return i(e[s],n[s])<0?e.substr(0,s)+n[s]+n.substr(s+1):i(e[s],r[s])<0?e.substr(0,s)+r[s]+n.substr(s+1):0<=u?e.substr(0,u)+t[u]+n.substr(u+1):null;i(e[s],c)<0&&(u=s)}return a<r.length&&"next"===o?e+n.substr(e.length):a<e.length&&"prev"===o?e.substr(0,n.length):u<0?null:e.substr(0,u)+r[u]+n.substr(u+1)})(r,i,f[a],h[a],l,d);null===u&&null===o?v=a+1:(null===o||0<l(o,u))&&(o=u)}t(null!==o?function(){e.continue(o+p)}:n)}return!1}),e}function T(e,t,n,r){return{type:2,lower:e,upper:t,lowerOpen:n,upperOpen:r}}function Mt(e){return{type:1,lower:e,upper:e}}Object.defineProperty(d.prototype,"Collection",{get:function(){return this._ctx.table.db.Collection},enumerable:!1,configurable:!0}),d.prototype.between=function(e,t,n,r){n=!1!==n,r=!0===r;try{return 0<this._cmp(e,t)||0===this._cmp(e,t)&&(n||r)&&(!n||!r)?Ft(this):new this.Collection(this,function(){return T(e,t,!n,!r)})}catch(e){return j(this,A)}},d.prototype.equals=function(e){return null==e?j(this,A):new this.Collection(this,function(){return Mt(e)})},d.prototype.above=function(e){return null==e?j(this,A):new this.Collection(this,function(){return T(e,void 0,!0)})},d.prototype.aboveOrEqual=function(e){return null==e?j(this,A):new this.Collection(this,function(){return T(e,void 0,!1)})},d.prototype.below=function(e){return null==e?j(this,A):new this.Collection(this,function(){return T(void 0,e,!1,!0)})},d.prototype.belowOrEqual=function(e){return null==e?j(this,A):new this.Collection(this,function(){return T(void 0,e)})},d.prototype.startsWith=function(e){return"string"!=typeof e?j(this,lt):this.between(e,e+ct,!0,!0)},d.prototype.startsWithIgnoreCase=function(e){return""===e?this.startsWith(e):Nt(this,function(e,t){return 0===e.indexOf(t[0])},[e],ct)},d.prototype.equalsIgnoreCase=function(e){return Nt(this,function(e,t){return e===t[0]},[e],"")},d.prototype.anyOfIgnoreCase=function(){var e=n.apply(ae,arguments);return 0===e.length?Ft(this):Nt(this,function(e,t){return-1!==t.indexOf(e)},e,"")},d.prototype.startsWithAnyOfIgnoreCase=function(){var e=n.apply(ae,arguments);return 0===e.length?Ft(this):Nt(this,function(t,e){return e.some(function(e){return 0===t.indexOf(e)})},e,ct)},d.prototype.anyOf=function(){var e,i,t=this,o=n.apply(ae,arguments),a=this._cmp;try{o.sort(a)}catch(e){return j(this,A)}return 0===o.length?Ft(this):((e=new this.Collection(this,function(){return T(o[0],o[o.length-1])}))._ondirectionchange=function(e){a="next"===e?t._ascending:t._descending,o.sort(a)},i=0,e._addAlgorithm(function(e,t,n){for(var r=e.key;0<a(r,o[i]);)if(++i===o.length)return t(n),!1;return 0===a(r,o[i])||(t(function(){e.continue(o[i])}),!1)}),e)},d.prototype.notEqual=function(e){return this.inAnyRange([[-1/0,e],[e,this.db._maxKey]],{includeLowers:!1,includeUppers:!1})},d.prototype.noneOf=function(){var e=n.apply(ae,arguments);if(0===e.length)return new this.Collection(this);try{e.sort(this._ascending)}catch(e){return j(this,A)}var t=e.reduce(function(e,t){return e?e.concat([[e[e.length-1][1],t]]):[[-1/0,t]]},null);return t.push([e[e.length-1],this.db._maxKey]),this.inAnyRange(t,{includeLowers:!1,includeUppers:!1})},d.prototype.inAnyRange=function(e,t){var o=this,a=this._cmp,u=this._ascending,n=this._descending,s=this._min,c=this._max;if(0===e.length)return Ft(this);if(!e.every(function(e){return void 0!==e[0]&&void 0!==e[1]&&u(e[0],e[1])<=0}))return j(this,"First argument to inAnyRange() must be an Array of two-value Arrays [lower,upper] where upper must not be lower than lower",k.InvalidArgument);var r=!t||!1!==t.includeLowers,i=t&&!0===t.includeUppers;var l,f=u;function h(e,t){return f(e[0],t[0])}try{(l=e.reduce(function(e,t){for(var n=0,r=e.length;n<r;++n){var i=e[n];if(a(t[0],i[1])<0&&0<a(t[1],i[0])){i[0]=s(i[0],t[0]),i[1]=c(i[1],t[1]);break}}return n===r&&e.push(t),e},[])).sort(h)}catch(e){return j(this,A)}var d=0,p=i?function(e){return 0<u(e,l[d][1])}:function(e){return 0<=u(e,l[d][1])},y=r?function(e){return 0<n(e,l[d][0])}:function(e){return 0<=n(e,l[d][0])};var v=p,t=new this.Collection(this,function(){return T(l[0][0],l[l.length-1][1],!r,!i)});return t._ondirectionchange=function(e){f="next"===e?(v=p,u):(v=y,n),l.sort(h)},t._addAlgorithm(function(e,t,n){for(var r,i=e.key;v(i);)if(++d===l.length)return t(n),!1;return!p(r=i)&&!y(r)||(0===o._cmp(i,l[d][1])||0===o._cmp(i,l[d][0])||t(function(){f===u?e.continue(l[d][0]):e.continue(l[d][1])}),!1)}),t},d.prototype.startsWithAnyOf=function(){var e=n.apply(ae,arguments);return e.every(function(e){return"string"==typeof e})?0===e.length?Ft(this):this.inAnyRange(e.map(function(e){return[e,e+ct]})):j(this,"startsWithAnyOf() only works with strings")};var Lt=d;function d(){}function I(t){return E(function(e){return Ut(e),t(e.target.error),!1})}function Ut(e){e.stopPropagation&&e.stopPropagation(),e.preventDefault&&e.preventDefault()}var zt="storagemutated",Vt="x-storagemutated-1",Wt=Pt(null,zt),Yt=(p.prototype._lock=function(){return $(!P.global),++this._reculock,1!==this._reculock||P.global||(P.lockOwnerFor=this),this},p.prototype._unlock=function(){if($(!P.global),0==--this._reculock)for(P.global||(P.lockOwnerFor=null);0<this._blockedFuncs.length&&!this._locked();){var e=this._blockedFuncs.shift();try{at(e[1],e[0])}catch(e){}}return this},p.prototype._locked=function(){return this._reculock&&P.lockOwnerFor!==this},p.prototype.create=function(t){var n=this;if(this.mode){var e=this.db.idbdb,r=this.db._state.dbOpenError;if($(!this.idbtrans),!t&&!e)switch(r&&r.name){case"DatabaseClosedError":throw new k.DatabaseClosed(r);case"MissingAPIError":throw new k.MissingAPI(r.message,r);default:throw new k.OpenFailed(r)}if(!this.active)throw new k.TransactionInactive;$(null===this._completion._state),(t=this.idbtrans=t||(this.db.core||e).transaction(this.storeNames,this.mode,{durability:this.chromeTransactionDurability})).onerror=E(function(e){Ut(e),n._reject(t.error)}),t.onabort=E(function(e){Ut(e),n.active&&n._reject(new k.Abort(t.error)),n.active=!1,n.on("abort").fire(e)}),t.oncomplete=E(function(){n.active=!1,n._resolve(),"mutatedParts"in t&&Wt.storagemutated.fire(t.mutatedParts)})}return this},p.prototype._promise=function(n,r,i){var e,o=this;return"readwrite"===n&&"readwrite"!==this.mode?S(new k.ReadOnly("Transaction is readonly")):this.active?this._locked()?new K(function(e,t){o._blockedFuncs.push([function(){o._promise(n,r,i).then(e,t)},P])}):i?v(function(){var e=new K(function(e,t){o._lock();var n=r(e,t,o);n&&n.then&&n.then(e,t)});return e.finally(function(){return o._unlock()}),e._lib=!0,e}):((e=new K(function(e,t){var n=r(e,t,o);n&&n.then&&n.then(e,t)}))._lib=!0,e):S(new k.TransactionInactive)},p.prototype._root=function(){return this.parent?this.parent._root():this},p.prototype.waitFor=function(e){var t,r=this._root(),i=K.resolve(e),o=(r._waitingFor?r._waitingFor=r._waitingFor.then(function(){return i}):(r._waitingFor=i,r._waitingQueue=[],t=r.idbtrans.objectStore(r.storeNames[0]),function e(){for(++r._spinCount;r._waitingQueue.length;)r._waitingQueue.shift()();r._waitingFor&&(t.get(-1/0).onsuccess=e)}()),r._waitingFor);return new K(function(t,n){i.then(function(e){return r._waitingQueue.push(E(t.bind(null,e)))},function(e){return r._waitingQueue.push(E(n.bind(null,e)))}).finally(function(){r._waitingFor===o&&(r._waitingFor=null)})})},p.prototype.abort=function(){this.active&&(this.active=!1,this.idbtrans&&this.idbtrans.abort(),this._reject(new k.Abort))},p.prototype.table=function(e){var t=this._memoizedTables||(this._memoizedTables={});if(m(t,e))return t[e];var n=this.schema[e];if(n)return(n=new this.db.Table(e,n,this)).core=this.db.core.table(e),t[e]=n;throw new k.NotFound("Table "+e+" not part of transaction")},p);function p(){}function $t(e,t,n,r,i,o,a,u){return{name:e,keyPath:t,unique:n,multi:r,auto:i,compound:o,src:(n&&!a?"&":"")+(r?"*":"")+(i?"++":"")+Qt(t),type:u}}function Qt(e){return"string"==typeof e?e:e?"["+[].join.call(e,"+")+"]":""}function Gt(e,t,n){return{name:e,primKey:t,indexes:n,mappedClass:null,idxByName:(r=function(e){return[e.name,e]},n.reduce(function(e,t,n){t=r(t,n);return t&&(e[t[0]]=t[1]),e},{}))};// removed by dead control flow
- var r; }var Xt=function(e){try{return e.only([[]]),Xt=function(){return[[]]},[[]]}catch(e){return Xt=function(){return ct},ct}};function Ht(t){return null==t?function(){}:"string"==typeof t?1===(n=t).split(".").length?function(e){return e[n]}:function(e){return c(e,n)}:function(e){return c(e,t)};// removed by dead control flow
- var n; }function Jt(e){return[].slice.call(e)}var Zt=0;function en(e){return null==e?":id":"string"==typeof e?e:"[".concat(e.join("+"),"]")}function tn(e,i,t){function _(e){if(3===e.type)return null;if(4===e.type)throw new Error("Cannot convert never type to IDBKeyRange");var t=e.lower,n=e.upper,r=e.lowerOpen,e=e.upperOpen;return void 0===t?void 0===n?null:i.upperBound(n,!!e):void 0===n?i.lowerBound(t,!!r):i.bound(t,n,!!r,!!e)}function n(e){var p,y,w=e.name;return{name:w,schema:e,mutate:function(e){var y=e.trans,v=e.type,m=e.keys,b=e.values,g=e.range;return new Promise(function(t,e){t=E(t);var n=y.objectStore(w),r=null==n.keyPath,i="put"===v||"add"===v;if(!i&&"delete"!==v&&"deleteRange"!==v)throw new Error("Invalid operation type: "+v);var o,a=(m||b||{length:1}).length;if(m&&b&&m.length!==b.length)throw new Error("Given keys array must have same length as given values array.");if(0===a)return t({numFailures:0,failures:{},results:[],lastResult:void 0});function u(e){++l,Ut(e)}var s=[],c=[],l=0;if("deleteRange"===v){if(4===g.type)return t({numFailures:l,failures:c,results:[],lastResult:void 0});3===g.type?s.push(o=n.clear()):s.push(o=n.delete(_(g)))}else{var r=i?r?[b,m]:[b,null]:[m,null],f=r[0],h=r[1];if(i)for(var d=0;d<a;++d)s.push(o=h&&void 0!==h[d]?n[v](f[d],h[d]):n[v](f[d])),o.onerror=u;else for(d=0;d<a;++d)s.push(o=n[v](f[d])),o.onerror=u}function p(e){e=e.target.result,s.forEach(function(e,t){return null!=e.error&&(c[t]=e.error)}),t({numFailures:l,failures:c,results:"delete"===v?m:s.map(function(e){return e.result}),lastResult:e})}o.onerror=function(e){u(e),p(e)},o.onsuccess=p})},getMany:function(e){var f=e.trans,h=e.keys;return new Promise(function(t,e){t=E(t);for(var n,r=f.objectStore(w),i=h.length,o=new Array(i),a=0,u=0,s=function(e){e=e.target;o[e._pos]=e.result,++u===a&&t(o)},c=I(e),l=0;l<i;++l)null!=h[l]&&((n=r.get(h[l]))._pos=l,n.onsuccess=s,n.onerror=c,++a);0===a&&t(o)})},get:function(e){var r=e.trans,i=e.key;return new Promise(function(t,e){t=E(t);var n=r.objectStore(w).get(i);n.onsuccess=function(e){return t(e.target.result)},n.onerror=I(e)})},query:(p=a,y=u,function(d){return new Promise(function(t,e){t=E(t);var n,r,i,o,a=d.trans,u=d.values,s=d.limit,c=d.query,l=null!=(l=d.direction)?l:"next",f=s===1/0?void 0:s,h=c.index,c=c.range,a=a.objectStore(w),a=h.isPrimaryKey?a:a.index(h.name),h=_(c);if(0===s)return t({result:[]});y?(c={query:h,count:f,direction:l},(n=u?a.getAll(c):a.getAllKeys(c)).onsuccess=function(e){return t({result:e.target.result})},n.onerror=I(e)):p&&"next"===l?((n=u?a.getAll(h,f):a.getAllKeys(h,f)).onsuccess=function(e){return t({result:e.target.result})},n.onerror=I(e)):(r=0,i=!u&&"openKeyCursor"in a?a.openKeyCursor(h,l):a.openCursor(h,l),o=[],i.onsuccess=function(){var e=i.result;return!e||(o.push(u?e.value:e.primaryKey),++r===s)?t({result:o}):void e.continue()},i.onerror=I(e))})}),openCursor:function(e){var c=e.trans,o=e.values,a=e.query,u=e.reverse,l=e.unique;return new Promise(function(t,n){t=E(t);var e=a.index,r=a.range,i=c.objectStore(w),i=e.isPrimaryKey?i:i.index(e.name),e=u?l?"prevunique":"prev":l?"nextunique":"next",s=!o&&"openKeyCursor"in i?i.openKeyCursor(_(r),e):i.openCursor(_(r),e);s.onerror=I(n),s.onsuccess=E(function(e){var r,i,o,a,u=s.result;u?(u.___id=++Zt,u.done=!1,r=u.continue.bind(u),i=(i=u.continuePrimaryKey)&&i.bind(u),o=u.advance.bind(u),a=function(){throw new Error("Cursor not stopped")},u.trans=c,u.stop=u.continue=u.continuePrimaryKey=u.advance=function(){throw new Error("Cursor not started")},u.fail=E(n),u.next=function(){var e=this,t=1;return this.start(function(){return t--?e.continue():e.stop()}).then(function(){return e})},u.start=function(e){function t(){if(s.result)try{e()}catch(e){u.fail(e)}else u.done=!0,u.start=function(){throw new Error("Cursor behind last entry")},u.stop()}var n=new Promise(function(t,e){t=E(t),s.onerror=I(e),u.fail=e,u.stop=function(e){u.stop=u.continue=u.continuePrimaryKey=u.advance=a,t(e)}});return s.onsuccess=E(function(e){s.onsuccess=t,t()}),u.continue=r,u.continuePrimaryKey=i,u.advance=o,t(),n},t(u)):t(null)},n)})},count:function(e){var t=e.query,i=e.trans,o=t.index,a=t.range;return new Promise(function(t,e){var n=i.objectStore(w),n=o.isPrimaryKey?n:n.index(o.name),r=_(a),r=r?n.count(r):n.count();r.onsuccess=E(function(e){return t(e.target.result)}),r.onerror=I(e)})}}}r=t,o=Jt((t=e).objectStoreNames),s=0<o.length?r.objectStore(o[0]):{};var r,t={schema:{name:t.name,tables:o.map(function(e){return r.objectStore(e)}).map(function(t){var e=t.keyPath,n=t.autoIncrement,r=x(e),i={},r={name:t.name,primaryKey:{name:null,isPrimaryKey:!0,outbound:null==e,compound:r,keyPath:e,autoIncrement:n,unique:!0,extractKey:Ht(e)},indexes:Jt(t.indexNames).map(function(e){return t.index(e)}).map(function(e){var t=e.name,n=e.unique,r=e.multiEntry,e=e.keyPath,t={name:t,compound:x(e),keyPath:e,unique:n,multiEntry:r,extractKey:Ht(e)};return i[en(e)]=t}),getIndexByKeyPath:function(e){return i[en(e)]}};return i[":id"]=r.primaryKey,null!=e&&(i[en(e)]=r.primaryKey),r})},hasGetAll:0<o.length&&"getAll"in s&&!("undefined"!=typeof navigator&&/Safari/.test(navigator.userAgent)&&!/(Chrome\/|Edge\/)/.test(navigator.userAgent)&&[].concat(navigator.userAgent.match(/Safari\/(\d*)/))[1]<604),hasIdb3Features:"getAllRecords"in s},o=t.schema,a=t.hasGetAll,u=t.hasIdb3Features,s=o.tables.map(n),c={};return s.forEach(function(e){return c[e.name]=e}),{stack:"dbcore",transaction:e.transaction.bind(e),table:function(e){if(c[e])return c[e];throw new Error("Table '".concat(e,"' not found"))},MIN_KEY:-1/0,MAX_KEY:Xt(i),schema:o}}function nn(e,t,n,r){n=n.IDBKeyRange;return t=tn(t,n,r),{dbcore:e.dbcore.reduce(function(e,t){t=t.create;return _(_({},e),t(e))},t)}}function rn(n,e){var t=e.db,t=nn(n._middlewares,t,n._deps,e);n.core=t.dbcore,n.tables.forEach(function(e){var t=e.name;n.core.schema.tables.some(function(e){return e.name===t})&&(e.core=n.core.table(t),n[t]instanceof n.Table)&&(n[t].core=e.core)})}function on(i,e,t,o){t.forEach(function(n){var r=o[n];e.forEach(function(e){var t=function e(t,n){return z(t,n)||(t=F(t))&&e(t,n)}(e,n);(!t||"value"in t&&void 0===t.value)&&(e===i.Transaction.prototype||e instanceof i.Transaction?u(e,n,{get:function(){return this.table(n)},set:function(e){L(this,n,{value:e,writable:!0,configurable:!0,enumerable:!0})}}):e[n]=new i.Table(n,r))})})}function an(n,e){e.forEach(function(e){for(var t in e)e[t]instanceof n.Table&&delete e[t]})}function un(e,t){return e._cfg.version-t._cfg.version}function sn(n,r,i,e){var o=n._dbSchema,a=(i.objectStoreNames.contains("$meta")&&!o.$meta&&(o.$meta=Gt("$meta",vn("")[0],[]),n._storeNames.push("$meta")),n._createTransaction("readwrite",n._storeNames,o)),u=(a.create(i),a._completion.catch(e),a._reject.bind(a)),s=P.transless||P;v(function(){if(P.trans=a,P.transless=s,0!==r)return rn(n,i),t=r,((e=a).storeNames.includes("$meta")?e.table("$meta").get("version").then(function(e){return null!=e?e:t}):K.resolve(t)).then(function(e){var s=n,c=e,l=a,f=i,t=[],e=s._versions,h=s._dbSchema=pn(0,s.idbdb,f);return 0===(e=e.filter(function(e){return e._cfg.version>=c})).length?K.resolve():(e.forEach(function(u){t.push(function(){var t,n,r,i=h,e=u._cfg.dbschema,o=(yn(s,i,f),yn(s,e,f),h=s._dbSchema=e,ln(i,e)),a=(o.add.forEach(function(e){fn(f,e[0],e[1].primKey,e[1].indexes)}),o.change.forEach(function(e){if(e.recreate)throw new k.Upgrade("Not yet support for changing primary key");var t=f.objectStore(e.name);e.add.forEach(function(e){return dn(t,e)}),e.change.forEach(function(e){t.deleteIndex(e.name),dn(t,e)}),e.del.forEach(function(e){return t.deleteIndex(e)})}),u._cfg.contentUpgrade);if(a&&u._cfg.version>c)return rn(s,f),l._memoizedTables={},t=G(e),o.del.forEach(function(e){t[e]=i[e]}),an(s,[s.Transaction.prototype]),on(s,[s.Transaction.prototype],O(t),t),l.schema=t,(n=ue(a))&&nt(),e=K.follow(function(){var e;(r=a(l))&&n&&(e=w.bind(null,null),r.then(e,e))}),r&&"function"==typeof r.then?K.resolve(r):e.then(function(){return r})}),t.push(function(e){var t,n,r=u._cfg.dbschema;t=r,n=e,[].slice.call(n.db.objectStoreNames).forEach(function(e){return null==t[e]&&n.db.deleteObjectStore(e)}),an(s,[s.Transaction.prototype]),on(s,[s.Transaction.prototype],s._storeNames,s._dbSchema),l.schema=s._dbSchema}),t.push(function(e){s.idbdb.objectStoreNames.contains("$meta")&&(Math.ceil(s.idbdb.version/10)===u._cfg.version?(s.idbdb.deleteObjectStore("$meta"),delete s._dbSchema.$meta,s._storeNames=s._storeNames.filter(function(e){return"$meta"!==e})):e.objectStore("$meta").put(u._cfg.version,"version"))})}),function e(){return t.length?K.resolve(t.shift()(l.idbtrans)).then(e):K.resolve()}().then(function(){hn(h,f)}))}).catch(u);var e,t;O(o).forEach(function(e){fn(i,e,o[e].primKey,o[e].indexes)}),rn(n,i),K.follow(function(){return n.on.populate.fire(a)}).catch(u)})}function cn(e,r){hn(e._dbSchema,r),r.db.version%10!=0||r.objectStoreNames.contains("$meta")||r.db.createObjectStore("$meta").add(Math.ceil(r.db.version/10-1),"version");var t=pn(0,e.idbdb,r);yn(e,e._dbSchema,r);for(var n=0,i=ln(t,e._dbSchema).change;n<i.length;n++){var o=(t=>{if(t.change.length||t.recreate)return console.warn("Unable to patch indexes of table ".concat(t.name," because it has changes on the type of index or primary key.")),{value:void 0};var n=r.objectStore(t.name);t.add.forEach(function(e){l&&console.debug("Dexie upgrade patch: Creating missing index ".concat(t.name,".").concat(e.src)),dn(n,e)})})(i[n]);if("object"==typeof o)return o.value}}function ln(e,t){var n,r={del:[],add:[],change:[]};for(n in e)t[n]||r.del.push(n);for(n in t){var i=e[n],o=t[n];if(i){var a={name:n,def:o,recreate:!1,del:[],add:[],change:[]};if(""+(i.primKey.keyPath||"")!=""+(o.primKey.keyPath||"")||i.primKey.auto!==o.primKey.auto)a.recreate=!0,r.change.push(a);else{var u=i.idxByName,s=o.idxByName,c=void 0;for(c in u)s[c]||a.del.push(c);for(c in s){var l=u[c],f=s[c];l?l.src!==f.src&&a.change.push(f):a.add.push(f)}(0<a.del.length||0<a.add.length||0<a.change.length)&&r.change.push(a)}}else r.add.push([n,o])}return r}function fn(e,t,n,r){var i=e.db.createObjectStore(t,n.keyPath?{keyPath:n.keyPath,autoIncrement:n.auto}:{autoIncrement:n.auto});r.forEach(function(e){return dn(i,e)})}function hn(t,n){O(t).forEach(function(e){n.db.objectStoreNames.contains(e)||(l&&console.debug("Dexie: Creating missing table",e),fn(n,e,t[e].primKey,t[e].indexes))})}function dn(e,t){e.createIndex(t.name,t.keyPath,{unique:t.unique,multiEntry:t.multi})}function pn(e,t,u){var s={};return W(t.objectStoreNames,0).forEach(function(e){for(var t=u.objectStore(e),n=$t(Qt(a=t.keyPath),a||"",!0,!1,!!t.autoIncrement,a&&"string"!=typeof a,!0),r=[],i=0;i<t.indexNames.length;++i){var o=t.index(t.indexNames[i]),a=o.keyPath,o=$t(o.name,a,!!o.unique,!!o.multiEntry,!1,a&&"string"!=typeof a,!1);r.push(o)}s[e]=Gt(e,n,r)}),s}function yn(e,t,n){for(var r=n.db.objectStoreNames,i=0;i<r.length;++i){var o=r[i],a=n.objectStore(o);e._hasGetAll="getAll"in a;for(var u=0;u<a.indexNames.length;++u){var s,c=a.indexNames[u],l=a.index(c).keyPath,l="string"==typeof l?l:"["+W(l).join("+")+"]";t[o]&&(s=t[o].idxByName[l])&&(s.name=c,delete t[o].idxByName[l],t[o].idxByName[c]=s)}}"undefined"!=typeof navigator&&/Safari/.test(navigator.userAgent)&&!/(Chrome\/|Edge\/)/.test(navigator.userAgent)&&f.WorkerGlobalScope&&f instanceof f.WorkerGlobalScope&&[].concat(navigator.userAgent.match(/Safari\/(\d*)/))[1]<604&&(e._hasGetAll=!1)}function vn(e){return e.split(",").map(function(e,t){var n=e.split(":"),r=null==(r=n[1])?void 0:r.trim(),n=(e=n[0].trim()).replace(/([&*]|\+\+)/g,""),i=/^\[/.test(n)?n.match(/^\[(.*)\]$/)[1].split("+"):n;return $t(n,i||null,/\&/.test(e),/\*/.test(e),/\+\+/.test(e),x(i),0===t,r)})}bn.prototype._createTableSchema=Gt,bn.prototype._parseIndexSyntax=vn,bn.prototype._parseStoresSpec=function(r,i){var o=this;O(r).forEach(function(e){if(null!==r[e]){var t=o._parseIndexSyntax(r[e]),n=t.shift();if(!n)throw new k.Schema("Invalid schema for table "+e+": "+r[e]);if(n.unique=!0,n.multi)throw new k.Schema("Primary key cannot be multiEntry*");t.forEach(function(e){if(e.auto)throw new k.Schema("Only primary key can be marked as autoIncrement (++)");if(!e.keyPath)throw new k.Schema("Index must have a name and cannot be an empty string")});n=o._createTableSchema(e,n,t);i[e]=n}})},bn.prototype.stores=function(e){var t=this.db,e=(this._cfg.storesSource=this._cfg.storesSource?a(this._cfg.storesSource,e):e,t._versions),n={},r={};return e.forEach(function(e){a(n,e._cfg.storesSource),r=e._cfg.dbschema={},e._parseStoresSpec(n,r)}),t._dbSchema=r,an(t,[t._allTables,t,t.Transaction.prototype]),on(t,[t._allTables,t,t.Transaction.prototype,this._cfg.tables],O(r),r),t._storeNames=O(r),this},bn.prototype.upgrade=function(e){return this._cfg.contentUpgrade=ke(this._cfg.contentUpgrade||g,e),this};var mn=bn;function bn(){}var gn=(()=>{var i,o,t;return"undefined"!=typeof FinalizationRegistry&&"undefined"!=typeof WeakRef?(i=new Set,o=new FinalizationRegistry(function(e){i.delete(e)}),{toArray:function(){return Array.from(i).map(function(e){return e.deref()}).filter(function(e){return void 0!==e})},add:function(e){var t=new WeakRef(e._novip);i.add(t),o.register(e._novip,t,t),i.size>e._options.maxConnections&&(t=i.values().next().value,i.delete(t),o.unregister(t))},remove:function(e){if(e)for(var t=i.values(),n=t.next();!n.done;){var r=n.value;if(r.deref()===e._novip)return i.delete(r),void o.unregister(r);n=t.next()}}}):(t=[],{toArray:function(){return t},add:function(e){t.push(e._novip)},remove:function(e){e&&-1!==(e=t.indexOf(e._novip))&&t.splice(e,1)}})})();function wn(e,t){var n=e._dbNamesDB;return n||(n=e._dbNamesDB=new y(ft,{addons:[],indexedDB:e,IDBKeyRange:t})).version(1).stores({dbnames:"name"}),n.table("dbnames")}function _n(e){return e&&"function"==typeof e.databases}function xn(e){return v(function(){return P.letThrough=!0,e()})}function kn(e){return!("from"in e)}var q=function(e,t){var n;if(!this)return n=new q,e&&"d"in e&&a(n,e),n;a(this,arguments.length?{d:1,from:e,to:1<arguments.length?t:e}:{d:0})};function On(e,t,n){var r=C(t,n);if(!isNaN(r)){if(0<r)throw RangeError();if(kn(e))return a(e,{from:t,to:n,d:1});var r=e.l,i=e.r;if(C(n,e.from)<0)return r?On(r,t,n):e.l={from:t,to:n,d:1,l:null,r:null},Sn(e);if(0<C(t,e.to))return i?On(i,t,n):e.r={from:t,to:n,d:1,l:null,r:null},Sn(e);C(t,e.from)<0&&(e.from=t,e.l=null,e.d=i?i.d+1:1),0<C(n,e.to)&&(e.to=n,e.r=null,e.d=e.l?e.l.d+1:1);t=!e.r;r&&!e.l&&Pn(e,r),i&&t&&Pn(e,i)}}function Pn(e,t){kn(t)||function e(t,n){var r=n.from,i=n.l,o=n.r;On(t,r,n.to),i&&e(t,i),o&&e(t,o)}(e,t)}function Kn(e,t){var n=En(t),r=n.next();if(!r.done)for(var i=r.value,o=En(e),a=o.next(i.from),u=a.value;!r.done&&!a.done;){if(C(u.from,i.to)<=0&&0<=C(u.to,i.from))return!0;C(i.from,u.from)<0?i=(r=n.next(u.from)).value:u=(a=o.next(i.from)).value}return!1}function En(e){var n=kn(e)?null:{s:0,n:e};return{next:function(e){for(var t=0<arguments.length;n;)switch(n.s){case 0:if(n.s=1,t)for(;n.n.l&&C(e,n.n.from)<0;)n={up:n,n:n.n.l,s:1};else for(;n.n.l;)n={up:n,n:n.n.l,s:1};case 1:if(n.s=2,!t||C(e,n.n.to)<=0)return{value:n.n,done:!1};case 2:if(n.n.r){n.s=3,n={up:n,n:n.n.r,s:0};continue}case 3:n=n.up}return{done:!0}}}}function Sn(e){var t,n,r,i=((null==(i=e.r)?void 0:i.d)||0)-((null==(i=e.l)?void 0:i.d)||0),i=1<i?"r":i<-1?"l":"";i&&(t="r"==i?"l":"r",n=_({},e),r=e[i],e.from=r.from,e.to=r.to,e[i]=r[i],n[i]=r[t],(e[t]=n).d=An(n)),e.d=An(e)}function An(e){var t=e.r,e=e.l;return(t?e?Math.max(t.d,e.d):t.d:e?e.d:0)+1}function Cn(t,n){return O(n).forEach(function(e){t[e]?Pn(t[e],n[e]):t[e]=function e(t){var n,r,i={};for(n in t)m(t,n)&&(r=t[n],i[n]=!r||"object"!=typeof r||J.has(r.constructor)?r:e(r));return i}(n[e])}),t}function jn(t,n){return t.all||n.all||Object.keys(t).some(function(e){return n[e]&&Kn(n[e],t[e])})}M(q.prototype,((t={add:function(e){return Pn(this,e),this},addKey:function(e){return On(this,e,e),this},addKeys:function(e){var t=this;return e.forEach(function(e){return On(t,e,e)}),this},hasKey:function(e){var t=En(this).next(e).value;return t&&C(t.from,e)<=0&&0<=C(t.to,e)}})[re]=function(){return En(this)},t));var Tn={},In={},qn=!1;function Dn(e){Cn(In,e),qn||(qn=!0,setTimeout(function(){qn=!1,Bn(In,!(In={}))},0))}function Bn(e,t){void 0===t&&(t=!1);var n=new Set;if(e.all)for(var r=0,i=Object.values(Tn);r<i.length;r++)Rn(u=i[r],e,n,t);else for(var o in e){var a,u,o=/^idb\:\/\/(.*)\/(.*)\//.exec(o);o&&(a=o[1],o=o[2],u=Tn["idb://".concat(a,"/").concat(o)])&&Rn(u,e,n,t)}n.forEach(function(e){return e()})}function Rn(e,t,n,r){for(var i=[],o=0,a=Object.entries(e.queries.query);o<a.length;o++){for(var u=a[o],s=u[0],c=[],l=0,f=u[1];l<f.length;l++){var h=f[l];jn(t,h.obsSet)?h.subscribers.forEach(function(e){return n.add(e)}):r&&c.push(h)}r&&i.push([s,c])}if(r)for(var d=0,p=i;d<p.length;d++){var y=p[d],s=y[0],c=y[1];e.queries.query[s]=c}}function Fn(h){var d=h._state,r=h._deps.indexedDB;if(d.isBeingOpened||h.idbdb)return d.dbReadyPromise.then(function(){return d.dbOpenError?S(d.dbOpenError):h});d.isBeingOpened=!0,d.dbOpenError=null,d.openComplete=!1;var t=d.openCanceller,p=Math.round(10*h.verno),y=!1;function e(){if(d.openCanceller!==t)throw new k.DatabaseClosed("db.open() was cancelled")}function v(){return new K(function(c,n){if(e(),!r)throw new k.MissingAPI;var l=h.name,f=d.autoSchema||!p?r.open(l):r.open(l,p);if(!f)throw new k.MissingAPI;f.onerror=I(n),f.onblocked=E(h._fireOnBlocked),f.onupgradeneeded=E(function(e){var t;m=f.transaction,d.autoSchema&&!h._options.allowEmptyDB?(f.onerror=Ut,m.abort(),f.result.close(),(t=r.deleteDatabase(l)).onsuccess=t.onerror=E(function(){n(new k.NoSuchDatabase("Database ".concat(l," doesnt exist")))})):(m.onerror=I(n),t=e.oldVersion>Math.pow(2,62)?0:e.oldVersion,b=t<1,h.idbdb=f.result,y&&cn(h,m),sn(h,t/10,m,n))},n),f.onsuccess=E(function(){m=null;var e,t,n,r,i,o,a=h.idbdb=f.result,u=W(a.objectStoreNames);if(0<u.length)try{var s=a.transaction(1===(i=u).length?i[0]:i,"readonly");if(d.autoSchema)o=a,r=s,(n=h).verno=o.version/10,r=n._dbSchema=pn(0,o,r),n._storeNames=W(o.objectStoreNames,0),on(n,[n._allTables],O(r),r);else if(yn(h,h._dbSchema,s),t=s,((t=ln(pn(0,(e=h).idbdb,t),e._dbSchema)).add.length||t.change.some(function(e){return e.add.length||e.change.length}))&&!y)return console.warn("Dexie SchemaDiff: Schema was extended without increasing the number passed to db.version(). Dexie will add missing parts and increment native version number to workaround this."),a.close(),p=a.version+1,y=!0,c(v());rn(h,s)}catch(e){}gn.add(h),a.onversionchange=E(function(e){d.vcFired=!0,h.on("versionchange").fire(e)}),a.onclose=E(function(){h.close({disableAutoOpen:!1})}),b&&(u=h._deps,i=l,_n(o=u.indexedDB)||i===ft||wn(o,u.IDBKeyRange).put({name:i}).catch(g)),c()},n)}).catch(function(e){switch(null==e?void 0:e.name){case"UnknownError":if(0<d.PR1398_maxLoop)return d.PR1398_maxLoop--,console.warn("Dexie: Workaround for Chrome UnknownError on open()"),v();break;case"VersionError":if(0<p)return p=0,v()}return K.reject(e)})}var n,i=d.dbReadyResolve,m=null,b=!1;return K.race([t,("undefined"==typeof navigator?K.resolve():!navigator.userAgentData&&/Safari\//.test(navigator.userAgent)&&!/Chrom(e|ium)\//.test(navigator.userAgent)&&indexedDB.databases?new Promise(function(e){function t(){return indexedDB.databases().finally(e)}n=setInterval(t,100),t()}).finally(function(){return clearInterval(n)}):Promise.resolve()).then(v)]).then(function(){return e(),d.onReadyBeingFired=[],K.resolve(xn(function(){return h.on.ready.fire(h.vip)})).then(function e(){var t;if(0<d.onReadyBeingFired.length)return t=d.onReadyBeingFired.reduce(ke,g),d.onReadyBeingFired=[],K.resolve(xn(function(){return t(h.vip)})).then(e)})}).finally(function(){d.openCanceller===t&&(d.onReadyBeingFired=null,d.isBeingOpened=!1)}).catch(function(e){d.dbOpenError=e;try{m&&m.abort()}catch(e){}return t===d.openCanceller&&h._close(),S(e)}).finally(function(){d.openComplete=!0,i()}).then(function(){var n;return b&&(n={},h.tables.forEach(function(t){t.schema.indexes.forEach(function(e){e.name&&(n["idb://".concat(h.name,"/").concat(t.name,"/").concat(e.name)]=new q(-1/0,[[[]]]))}),n["idb://".concat(h.name,"/").concat(t.name,"/")]=n["idb://".concat(h.name,"/").concat(t.name,"/:dels")]=new q(-1/0,[[[]]])}),Wt(zt).fire(n),Bn(n,!0)),h})}function Nn(t){function e(e){return t.next(e)}var r=n(e),i=n(function(e){return t.throw(e)});function n(n){return function(e){var e=n(e),t=e.value;return e.done?t:t&&"function"==typeof t.then?t.then(r,i):x(t)?Promise.all(t).then(r,i):r(t)}}return n(e)()}function Mn(e,t,n){for(var r=x(e)?e.slice():[e],i=0;i<n;++i)r.push(t);return r}var Ln={stack:"dbcore",name:"VirtualIndexMiddleware",level:1,create:function(l){return _(_({},l),{table:function(e){var o=l.table(e),e=o.schema,u={},s=[];function c(e,t,n){var r=en(e),i=u[r]=u[r]||[],o=null==e?0:"string"==typeof e?1:e.length,a=0<t,r=_(_({},n),{name:a?"".concat(r,"(virtual-from:").concat(n.name,")"):n.name,lowLevelIndex:n,isVirtual:a,keyTail:t,keyLength:o,extractKey:Ht(e),unique:!a&&n.unique});return i.push(r),r.isPrimaryKey||s.push(r),1<o&&c(2===o?e[0]:e.slice(0,o-1),t+1,n),i.sort(function(e,t){return e.keyTail-t.keyTail}),r}var t=c(e.primaryKey.keyPath,0,e.primaryKey);u[":id"]=[t];for(var n=0,r=e.indexes;n<r.length;n++){var i=r[n];c(i.keyPath,0,i)}function a(e){var t,n=e.query.index;return n.isVirtual?_(_({},e),{query:{index:n.lowLevelIndex,range:(t=e.query.range,n=n.keyTail,{type:1===t.type?2:t.type,lower:Mn(t.lower,t.lowerOpen?l.MAX_KEY:l.MIN_KEY,n),lowerOpen:!0,upper:Mn(t.upper,t.upperOpen?l.MIN_KEY:l.MAX_KEY,n),upperOpen:!0})}}):e}return _(_({},o),{schema:_(_({},e),{primaryKey:t,indexes:s,getIndexByKeyPath:function(e){return(e=u[en(e)])&&e[0]}}),count:function(e){return o.count(a(e))},query:function(e){return o.query(a(e))},openCursor:function(t){var e=t.query.index,r=e.keyTail,i=e.keyLength;return e.isVirtual?o.openCursor(a(t)).then(function(e){return e&&n(e)}):o.openCursor(t);function n(n){return Object.create(n,{continue:{value:function(e){null!=e?n.continue(Mn(e,t.reverse?l.MAX_KEY:l.MIN_KEY,r)):t.unique?n.continue(n.key.slice(0,i).concat(t.reverse?l.MIN_KEY:l.MAX_KEY,r)):n.continue()}},continuePrimaryKey:{value:function(e,t){n.continuePrimaryKey(Mn(e,l.MAX_KEY,r),t)}},primaryKey:{get:function(){return n.primaryKey}},key:{get:function(){var e=n.key;return 1===i?e[0]:e.slice(0,i)}},value:{get:function(){return n.value}}})}}})}})}};function Un(i,o,a,u){return a=a||{},u=u||"",O(i).forEach(function(e){var t,n,r;m(o,e)?(t=i[e],n=o[e],"object"==typeof t&&"object"==typeof n&&t&&n?(r=ne(t))!==ne(n)?a[u+e]=o[e]:"Object"===r?Un(t,n,a,u+e+"."):t!==n&&(a[u+e]=o[e]):t!==n&&(a[u+e]=o[e])):a[u+e]=void 0}),O(o).forEach(function(e){m(i,e)||(a[u+e]=o[e])}),a}function zn(e,t){return"delete"===t.type?t.keys:t.keys||t.values.map(e.extractKey)}var Vn={stack:"dbcore",name:"HooksMiddleware",level:2,create:function(e){return _(_({},e),{table:function(r){var y=e.table(r),v=y.schema.primaryKey;return _(_({},y),{mutate:function(e){var t=P.trans,n=t.table(r).hook,h=n.deleting,d=n.creating,p=n.updating;switch(e.type){case"add":if(d.fire===g)break;return t._promise("readwrite",function(){return a(e)},!0);case"put":if(d.fire===g&&p.fire===g)break;return t._promise("readwrite",function(){return a(e)},!0);case"delete":if(h.fire===g)break;return t._promise("readwrite",function(){return a(e)},!0);case"deleteRange":if(h.fire===g)break;return t._promise("readwrite",function(){return function n(r,i,o){return y.query({trans:r,values:!1,query:{index:v,range:i},limit:o}).then(function(e){var t=e.result;return a({type:"delete",keys:t,trans:r}).then(function(e){return 0<e.numFailures?Promise.reject(e.failures[0]):t.length<o?{failures:[],numFailures:0,lastResult:void 0}:n(r,_(_({},i),{lower:t[t.length-1],lowerOpen:!0}),o)})})}(e.trans,e.range,1e4)},!0)}return y.mutate(e);function a(c){var e,t,n,l=P.trans,f=c.keys||zn(v,c);if(f)return"delete"!==(c="add"===c.type||"put"===c.type?_(_({},c),{keys:f}):_({},c)).type&&(c.values=R([],c.values,!0)),c.keys&&(c.keys=R([],c.keys,!0)),e=y,n=f,("add"===(t=c).type?Promise.resolve([]):e.getMany({trans:t.trans,keys:n,cache:"immutable"})).then(function(u){var s=f.map(function(e,t){var n,r,i,o=u[t],a={onerror:null,onsuccess:null};return"delete"===c.type?h.fire.call(a,e,o,l):"add"===c.type||void 0===o?(n=d.fire.call(a,e,c.values[t],l),null==e&&null!=n&&(c.keys[t]=e=n,v.outbound||b(c.values[t],v.keyPath,e))):(n=Un(o,c.values[t]),(r=p.fire.call(a,n,e,o,l))&&(i=c.values[t],Object.keys(r).forEach(function(e){m(i,e)?i[e]=r[e]:b(i,e,r[e])}))),a});return y.mutate(c).then(function(e){for(var t=e.failures,n=e.results,r=e.numFailures,e=e.lastResult,i=0;i<f.length;++i){var o=(n||f)[i],a=s[i];null==o?a.onerror&&a.onerror(t[i]):a.onsuccess&&a.onsuccess("put"===c.type&&u[i]?c.values[i]:o)}return{failures:t,results:n,numFailures:r,lastResult:e}}).catch(function(t){return s.forEach(function(e){return e.onerror&&e.onerror(t)}),Promise.reject(t)})});throw new Error("Keys missing")}}})}})}};function Wn(e,t,n){try{if(!t)return null;if(t.keys.length<e.length)return null;for(var r=[],i=0,o=0;i<t.keys.length&&o<e.length;++i)0===C(t.keys[i],e[o])&&(r.push(n?ee(t.values[i]):t.values[i]),++o);return r.length===e.length?r:null}catch(e){return null}}var Yn={stack:"dbcore",level:-1,create:function(t){return{table:function(e){var n=t.table(e);return _(_({},n),{getMany:function(t){var e;return t.cache?(e=Wn(t.keys,t.trans._cache,"clone"===t.cache))?K.resolve(e):n.getMany(t).then(function(e){return t.trans._cache={keys:t.keys,values:"clone"===t.cache?ee(e):e},e}):n.getMany(t)},mutate:function(e){return"add"!==e.type&&(e.trans._cache=null),n.mutate(e)}})}}}};function $n(e,t){return"readonly"===e.trans.mode&&!!e.subscr&&!e.trans.explicit&&"disabled"!==e.trans.db._options.cache&&!t.schema.primaryKey.outbound}function Qn(e,t){switch(e){case"query":return t.values&&!t.unique;case"get":case"getMany":case"count":case"openCursor":return!1}}var Gn={stack:"dbcore",level:0,name:"Observability",create:function(b){var g=b.schema.name,w=new q(b.MIN_KEY,b.MAX_KEY);return _(_({},b),{transaction:function(e,t,n){if(P.subscr&&"readonly"!==t)throw new k.ReadOnly("Readwrite transaction in liveQuery context. Querier source: ".concat(P.querier));return b.transaction(e,t,n)},table:function(d){function e(e){var t,e=e.query;return[t=e.index,new q(null!=(t=(e=e.range).lower)?t:b.MIN_KEY,null!=(t=e.upper)?t:b.MAX_KEY)]}var p=b.table(d),y=p.schema,v=y.primaryKey,t=y.indexes,c=v.extractKey,l=v.outbound,m=v.autoIncrement&&t.filter(function(e){return e.compound&&e.keyPath.includes(v.keyPath)}),n=_(_({},p),{mutate:function(a){function u(e){return e="idb://".concat(g,"/").concat(d,"/").concat(e),n[e]||(n[e]=new q)}var e,o,s,t=a.trans,n=a.mutatedParts||(a.mutatedParts={}),r=u(""),i=u(":dels"),c=a.type,l="deleteRange"===a.type?[a.range]:"delete"===a.type?[a.keys]:a.values.length<50?[zn(v,a).filter(function(e){return e}),a.values]:[],f=l[0],l=l[1],h=a.trans._cache;return x(f)?(r.addKeys(f),(c="delete"===c||f.length===l.length?Wn(f,h):null)||i.addKeys(f),(c||l)&&(e=u,o=c,s=l,y.indexes.forEach(function(t){var n=e(t.name||"");function r(e){return null!=e?t.extractKey(e):null}function i(e){t.multiEntry&&x(e)?e.forEach(function(e){return n.addKey(e)}):n.addKey(e)}(o||s).forEach(function(e,t){var n=o&&r(o[t]),t=s&&r(s[t]);0!==C(n,t)&&(null!=n&&i(n),null!=t)&&i(t)})}))):f?(l={from:null!=(h=f.lower)?h:b.MIN_KEY,to:null!=(c=f.upper)?c:b.MAX_KEY},i.add(l),r.add(l)):(r.add(w),i.add(w),y.indexes.forEach(function(e){return u(e.name).add(w)})),p.mutate(a).then(function(o){return!f||"add"!==a.type&&"put"!==a.type||(r.addKeys(o.results),m&&m.forEach(function(t){for(var e=a.values.map(function(e){return t.extractKey(e)}),n=t.keyPath.findIndex(function(e){return e===v.keyPath}),r=0,i=o.results.length;r<i;++r)e[r][n]=o.results[r];u(t.name).addKeys(e)})),t.mutatedParts=Cn(t.mutatedParts||{},n),o})}}),f={get:function(e){return[v,new q(e.key)]},getMany:function(e){return[v,(new q).addKeys(e.keys)]},count:e,query:e,openCursor:e};return O(f).forEach(function(s){n[s]=function(i){var e=P.subscr,t=!!e,n=$n(P,p)&&Qn(s,i)?i.obsSet={}:e;if(t){var o,e=function(e){e="idb://".concat(g,"/").concat(d,"/").concat(e);return n[e]||(n[e]=new q)},a=e(""),u=e(":dels"),t=f[s](i),r=t[0],t=t[1];if(("query"===s&&r.isPrimaryKey&&!i.values?u:e(r.name||"")).add(t),!r.isPrimaryKey){if("count"!==s)return o="query"===s&&l&&i.values&&p.query(_(_({},i),{values:!1})),p[s].apply(this,arguments).then(function(t){if("query"===s){if(l&&i.values)return o.then(function(e){e=e.result;return a.addKeys(e),t});var e=i.values?t.result.map(c):t.result;(i.values?a:u).addKeys(e)}else{var n,r;if("openCursor"===s)return r=i.values,(n=t)&&Object.create(n,{key:{get:function(){return u.addKey(n.primaryKey),n.key}},primaryKey:{get:function(){var e=n.primaryKey;return u.addKey(e),e}},value:{get:function(){return r&&a.addKey(n.primaryKey),n.value}}})}return t});u.add(w)}}return p[s].apply(this,arguments)}}),n}})}};function Xn(e,t,n){var r;return 0===n.numFailures?t:"deleteRange"===t.type||(r=t.keys?t.keys.length:"values"in t&&t.values?t.values.length:1,n.numFailures===r)?null:(r=_({},t),x(r.keys)&&(r.keys=r.keys.filter(function(e,t){return!(t in n.failures)})),"values"in r&&x(r.values)&&(r.values=r.values.filter(function(e,t){return!(t in n.failures)})),r)}function Hn(e,t){return n=e,(void 0===(r=t).lower||(r.lowerOpen?0<C(n,r.lower):0<=C(n,r.lower)))&&(n=e,void 0===(r=t).upper||(r.upperOpen?C(n,r.upper)<0:C(n,r.upper)<=0));// removed by dead control flow
- var n, r; }function Jn(e,d,t,n,r,i){var o,p,y,v,m,a,u;return!t||0===t.length||(o=d.query.index,p=o.multiEntry,y=d.query.range,v=n.schema.primaryKey.extractKey,m=o.extractKey,a=(o.lowLevelIndex||o).extractKey,(n=t.reduce(function(e,t){var n=e,r=[];if("add"===t.type||"put"===t.type)for(var i=new q,o=t.values.length-1;0<=o;--o){var a,u=t.values[o],s=v(u);!i.hasKey(s)&&(a=m(u),p&&x(a)?a.some(function(e){return Hn(e,y)}):Hn(a,y))&&(i.addKey(s),r.push(u))}switch(t.type){case"add":var c=(new q).addKeys(d.values?e.map(function(e){return v(e)}):e),n=e.concat(d.values?r.filter(function(e){e=v(e);return!c.hasKey(e)&&(c.addKey(e),!0)}):r.map(function(e){return v(e)}).filter(function(e){return!c.hasKey(e)&&(c.addKey(e),!0)}));break;case"put":var l=(new q).addKeys(t.values.map(function(e){return v(e)}));n=e.filter(function(e){return!l.hasKey(d.values?v(e):e)}).concat(d.values?r:r.map(function(e){return v(e)}));break;case"delete":var f=(new q).addKeys(t.keys);n=e.filter(function(e){return!f.hasKey(d.values?v(e):e)});break;case"deleteRange":var h=t.range;n=e.filter(function(e){return!Hn(v(e),h)})}return n},e))===e)?e:(u=function(e,t){return C(a(e),a(t))||C(v(e),v(t))},n.sort("prev"===d.direction||"prevunique"===d.direction?function(e,t){return u(t,e)}:u),d.limit&&d.limit<1/0&&(n.length>d.limit?n.length=d.limit:e.length===d.limit&&n.length<d.limit&&(r.dirty=!0)),i?Object.freeze(n):n)}function Zn(e,t){return 0===C(e.lower,t.lower)&&0===C(e.upper,t.upper)&&!!e.lowerOpen==!!t.lowerOpen&&!!e.upperOpen==!!t.upperOpen}function er(e,t){return((e,t,n,r)=>{if(void 0===e)return void 0!==t?-1:0;if(void 0===t)return 1;if(0===(e=C(e,t))){if(n&&r)return 0;if(n)return 1;if(r)return-1}return e})(e.lower,t.lower,e.lowerOpen,t.lowerOpen)<=0&&0<=((e,t,n,r)=>{if(void 0===e)return void 0!==t?1:0;if(void 0===t)return-1;if(0===(e=C(e,t))){if(n&&r)return 0;if(n)return-1;if(r)return 1}return e})(e.upper,t.upper,e.upperOpen,t.upperOpen)}function tr(n,r,i,e){n.subscribers.add(i),e.addEventListener("abort",function(){var e,t;n.subscribers.delete(i),0===n.subscribers.size&&(e=n,t=r,setTimeout(function(){0===e.subscribers.size&&oe(t,e)},3e3))})}var nr={stack:"dbcore",level:0,name:"Cache",create:function(k){var O=k.schema.name;return _(_({},k),{transaction:function(g,w,e){var _,t,x=k.transaction(g,w,e);return"readwrite"===w&&(e=(_=new AbortController).signal,x.addEventListener("abort",(t=function(b){return function(){if(_.abort(),"readwrite"===w){for(var t=new Set,e=0,n=g;e<n.length;e++){var r=n[e],i=Tn["idb://".concat(O,"/").concat(r)];if(i){var o=k.table(r),a=i.optimisticOps.filter(function(e){return e.trans===x});if(x._explicit&&b&&x.mutatedParts)for(var u=0,s=Object.values(i.queries.query);u<s.length;u++)for(var c=0,l=(d=s[u]).slice();c<l.length;c++)jn((p=l[c]).obsSet,x.mutatedParts)&&(oe(d,p),p.subscribers.forEach(function(e){return t.add(e)}));else if(0<a.length){i.optimisticOps=i.optimisticOps.filter(function(e){return e.trans!==x});for(var f=0,h=Object.values(i.queries.query);f<h.length;f++)for(var d,p,y,v=0,m=(d=h[f]).slice();v<m.length;v++)null!=(p=m[v]).res&&x.mutatedParts&&(b&&!p.dirty?(y=Object.isFrozen(p.res),y=Jn(p.res,p.req,a,o,p,y),p.dirty?(oe(d,p),p.subscribers.forEach(function(e){return t.add(e)})):y!==p.res&&(p.res=y,p.promise=K.resolve({result:y}))):(p.dirty&&oe(d,p),p.subscribers.forEach(function(e){return t.add(e)})))}}}t.forEach(function(e){return e()})}}})(!1),{signal:e}),x.addEventListener("error",t(!1),{signal:e}),x.addEventListener("complete",t(!0),{signal:e})),x},table:function(s){var c=k.table(s),i=c.schema.primaryKey;return _(_({},c),{mutate:function(t){var n,e=P.trans;return!i.outbound&&"disabled"!==e.db._options.cache&&!e.explicit&&"readwrite"===e.idbtrans.mode&&(n=Tn["idb://".concat(O,"/").concat(s)])?(e=c.mutate(t),"add"!==t.type&&"put"!==t.type||!(50<=t.values.length||zn(i,t).some(function(e){return null==e}))?(n.optimisticOps.push(t),t.mutatedParts&&Dn(t.mutatedParts),e.then(function(e){0<e.numFailures&&(oe(n.optimisticOps,t),(e=Xn(0,t,e))&&n.optimisticOps.push(e),t.mutatedParts)&&Dn(t.mutatedParts)}),e.catch(function(){oe(n.optimisticOps,t),t.mutatedParts&&Dn(t.mutatedParts)})):e.then(function(r){var e=Xn(0,_(_({},t),{values:t.values.map(function(e,t){var n;return r.failures[t]?e:(b(n=null!=(n=i.keyPath)&&n.includes(".")?ee(e):_({},e),i.keyPath,r.results[t]),n)})}),r);n.optimisticOps.push(e),queueMicrotask(function(){return t.mutatedParts&&Dn(t.mutatedParts)})}),e):c.mutate(t)},query:function(t){var i,e,n,r,o,a,u;return $n(P,c)&&Qn("query",t)?(i="immutable"===(null==(n=P.trans)?void 0:n.db._options.cache),e=(n=P).requery,n=n.signal,a=((e,t,n,r)=>{var i=Tn["idb://".concat(e,"/").concat(t)];if(!i)return[];if(!(e=i.queries[n]))return[null,!1,i,null];var o=e[(r.query?r.query.index.name:null)||""];if(!o)return[null,!1,i,null];switch(n){case"query":var a=null!=(u=r.direction)?u:"next",u=o.find(function(e){var t;return e.req.limit===r.limit&&e.req.values===r.values&&(null!=(t=e.req.direction)?t:"next")===a&&Zn(e.req.query.range,r.query.range)});return u?[u,!0,i,o]:[o.find(function(e){var t;return("limit"in e.req?e.req.limit:1/0)>=r.limit&&(null!=(t=e.req.direction)?t:"next")===a&&(!r.values||e.req.values)&&er(e.req.query.range,r.query.range)}),!1,i,o];case"count":u=o.find(function(e){return Zn(e.req.query.range,r.query.range)});return[u,!!u,i,o]}})(O,s,"query",t),u=a[0],r=a[2],o=a[3],u&&a[1]?u.obsSet=t.obsSet:(a=c.query(t).then(function(e){var t=e.result;if(u&&(u.res=t),i){for(var n=0,r=t.length;n<r;++n)Object.freeze(t[n]);Object.freeze(t)}return e}).catch(function(e){return o&&u&&oe(o,u),Promise.reject(e)}),u={obsSet:t.obsSet,promise:a,subscribers:new Set,type:"query",req:t,dirty:!1},o?o.push(u):(o=[u],(r=r||(Tn["idb://".concat(O,"/").concat(s)]={queries:{query:{},count:{}},objs:new Map,optimisticOps:[],unsignaledParts:{}})).queries.query[t.query.index.name||""]=o)),tr(u,o,e,n),u.promise.then(function(e){e=Jn(e.result,t,null==r?void 0:r.optimisticOps,c,u,i);return{result:i?e:ee(e)}})):c.query(t)}})}})}};function rr(e,r){return new Proxy(e,{get:function(e,t,n){return"db"===t?r:Reflect.get(e,t,n)}})}D.prototype.version=function(t){if(isNaN(t)||t<.1)throw new k.Type("Given version is not a positive number");if(t=Math.round(10*t)/10,this.idbdb||this._state.isBeingOpened)throw new k.Schema("Cannot add version when database is open");this.verno=Math.max(this.verno,t);var e=this._versions,n=e.filter(function(e){return e._cfg.version===t})[0];return n||(n=new this.Version(t),e.push(n),e.sort(un),n.stores({}),this._state.autoSchema=!1),n},D.prototype._whenReady=function(e){var n=this;return this.idbdb&&(this._state.openComplete||P.letThrough||this._vip)?e():new K(function(e,t){if(n._state.openComplete)return t(new k.DatabaseClosed(n._state.dbOpenError));if(!n._state.isBeingOpened){if(!n._state.autoOpen)return void t(new k.DatabaseClosed);n.open().catch(g)}n._state.dbReadyPromise.then(e,t)}).then(e)},D.prototype.use=function(e){var t=e.stack,n=e.create,r=e.level,e=e.name,i=(e&&this.unuse({stack:t,name:e}),this._middlewares[t]||(this._middlewares[t]=[]));return i.push({stack:t,create:n,level:null==r?10:r,name:e}),i.sort(function(e,t){return e.level-t.level}),this},D.prototype.unuse=function(e){var t=e.stack,n=e.name,r=e.create;return t&&this._middlewares[t]&&(this._middlewares[t]=this._middlewares[t].filter(function(e){return r?e.create!==r:!!n&&e.name!==n})),this},D.prototype.open=function(){var e=this;return at(s,function(){return Fn(e)})},D.prototype._close=function(){this.on.close.fire(new CustomEvent("close"));var n=this._state;if(gn.remove(this),this.idbdb){try{this.idbdb.close()}catch(e){}this.idbdb=null}n.isBeingOpened||(n.dbReadyPromise=new K(function(e){n.dbReadyResolve=e}),n.openCanceller=new K(function(e,t){n.cancelOpen=t}))},D.prototype.close=function(e){var e=(void 0===e?{disableAutoOpen:!0}:e).disableAutoOpen,t=this._state;e?(t.isBeingOpened&&t.cancelOpen(new k.DatabaseClosed),this._close(),t.autoOpen=!1,t.dbOpenError=new k.DatabaseClosed):(this._close(),t.autoOpen=this._options.autoOpen||t.isBeingOpened,t.openComplete=!1,t.dbOpenError=null)},D.prototype.delete=function(n){var i=this,o=(void 0===n&&(n={disableAutoOpen:!0}),0<arguments.length&&"object"!=typeof arguments[0]),a=this._state;return new K(function(r,t){function e(){i.close(n);var e=i._deps.indexedDB.deleteDatabase(i.name);e.onsuccess=E(function(){var e,t,n;e=i._deps,t=i.name,_n(n=e.indexedDB)||t===ft||wn(n,e.IDBKeyRange).delete(t).catch(g),r()}),e.onerror=I(t),e.onblocked=i._fireOnBlocked}if(o)throw new k.InvalidArgument("Invalid closeOptions argument to db.delete()");a.isBeingOpened?a.dbReadyPromise.then(e):e()})},D.prototype.backendDB=function(){return this.idbdb},D.prototype.isOpen=function(){return null!==this.idbdb},D.prototype.hasBeenClosed=function(){var e=this._state.dbOpenError;return e&&"DatabaseClosed"===e.name},D.prototype.hasFailed=function(){return null!==this._state.dbOpenError},D.prototype.dynamicallyOpened=function(){return this._state.autoSchema},Object.defineProperty(D.prototype,"tables",{get:function(){var t=this;return O(this._allTables).map(function(e){return t._allTables[e]})},enumerable:!1,configurable:!0}),D.prototype.transaction=function(){var e=function(e,t,n){var r=arguments.length;if(r<2)throw new k.InvalidArgument("Too few arguments");for(var i=new Array(r-1);--r;)i[r-1]=arguments[r];return n=i.pop(),[e,H(i),n]}.apply(this,arguments);return this._transaction.apply(this,e)},D.prototype._transaction=function(e,t,n){var r,i,o=this,a=P.trans,u=(a&&a.db===this&&-1===e.indexOf("!")||(a=null),-1!==e.indexOf("?"));e=e.replace("!","").replace("?","");try{if(i=t.map(function(e){e=e instanceof o.Table?e.name:e;if("string"!=typeof e)throw new TypeError("Invalid table argument to Dexie.transaction(). Only Table or String are allowed");return e}),"r"==e||e===ht)r=ht;else{if("rw"!=e&&e!=dt)throw new k.InvalidArgument("Invalid transaction mode: "+e);r=dt}if(a){if(a.mode===ht&&r===dt){if(!u)throw new k.SubTransaction("Cannot enter a sub-transaction with READWRITE mode when parent transaction is READONLY");a=null}a&&i.forEach(function(e){if(a&&-1===a.storeNames.indexOf(e)){if(!u)throw new k.SubTransaction("Table "+e+" not included in parent transaction.");a=null}}),u&&a&&!a.active&&(a=null)}}catch(n){return a?a._promise(null,function(e,t){t(n)}):S(n)}var s=function i(o,a,u,s,c){return K.resolve().then(function(){var e=P.transless||P,t=o._createTransaction(a,u,o._dbSchema,s),e=(t.explicit=!0,{trans:t,transless:e});if(s)t.idbtrans=s.idbtrans;else try{t.create(),t.idbtrans._explicit=!0,o._state.PR1398_maxLoop=3}catch(e){return e.name===de.InvalidState&&o.isOpen()&&0<--o._state.PR1398_maxLoop?(console.warn("Dexie: Need to reopen db"),o.close({disableAutoOpen:!1}),o.open().then(function(){return i(o,a,u,null,c)})):S(e)}var n,r=ue(c),e=(r&&nt(),K.follow(function(){var e;(n=c.call(t,t))&&(r?(e=w.bind(null,null),n.then(e,e)):"function"==typeof n.next&&"function"==typeof n.throw&&(n=Nn(n)))},e));return(n&&"function"==typeof n.then?K.resolve(n).then(function(e){return t.active?e:S(new k.PrematureCommit("Transaction committed too early. See http://bit.ly/2kdckMn"))}):e.then(function(){return n})).then(function(e){return s&&t._resolve(),t._completion.then(function(){return e})}).catch(function(e){return t._reject(e),S(e)})})}.bind(null,this,r,i,a,n);return a?a._promise(r,s,"lock"):P.trans?at(P.transless,function(){return o._whenReady(s)}):this._whenReady(s)},D.prototype.table=function(e){if(m(this._allTables,e))return this._allTables[e];throw new k.InvalidTable("Table ".concat(e," does not exist"))};var y=D;function D(e,t){var o,r,a,n,i,u=this,s=(this._middlewares={},this.verno=0,D.dependencies),s=(this._options=t=_({addons:D.addons,autoOpen:!0,indexedDB:s.indexedDB,IDBKeyRange:s.IDBKeyRange,cache:"cloned",maxConnections:1e3},t),this._deps={indexedDB:t.indexedDB,IDBKeyRange:t.IDBKeyRange},t.addons),c=(this._dbSchema={},this._versions=[],this._storeNames=[],this._allTables={},this.idbdb=null,this._novip=this,{dbOpenError:null,isBeingOpened:!1,onReadyBeingFired:null,openComplete:!1,dbReadyResolve:g,dbReadyPromise:null,cancelOpen:g,openCanceller:null,autoSchema:!0,PR1398_maxLoop:3,autoOpen:t.autoOpen}),l=(c.dbReadyPromise=new K(function(e){c.dbReadyResolve=e}),c.openCanceller=new K(function(e,t){c.cancelOpen=t}),this._state=c,this.name=e,this.on=Pt(this,"populate","blocked","versionchange","close",{ready:[ke,g]}),this.once=function(n,r){var i=function(){for(var e=[],t=0;t<arguments.length;t++)e[t]=arguments[t];u.on(n).unsubscribe(i),r.apply(u,e)};return u.on(n,i)},this.on.ready.subscribe=Y(this.on.ready.subscribe,function(i){return function(n,r){D.vip(function(){var t,e=u._state;e.openComplete?(e.dbOpenError||K.resolve().then(n),r&&i(n)):e.onReadyBeingFired?(e.onReadyBeingFired.push(n),r&&i(n)):(i(n),t=u,r||i(function e(){t.on.ready.unsubscribe(n),t.on.ready.unsubscribe(e)}))})}}),this.Collection=(o=this,Kt(qt.prototype,function(e,t){this.db=o;var n=yt,r=null;if(t)try{n=t()}catch(e){r=e}var t=e._ctx,e=t.table,i=e.hook.reading.fire;this._ctx={table:e,index:t.index,isPrimKey:!t.index||e.schema.primKey.keyPath&&t.index===e.schema.primKey.name,range:n,keysOnly:!1,dir:"next",unique:"",algorithm:null,filter:null,replayFilter:null,justLimit:!0,isMatch:null,offset:0,limit:1/0,error:r,or:t.or,valueMapper:i!==ve?i:null}})),this.Table=(r=this,Kt(Ot.prototype,function(e,t,n){this.db=r,this._tx=n,this.name=e,this.schema=t,this.hook=r._allTables[e]?r._allTables[e].hook:Pt(null,{creating:[ge,g],reading:[me,ve],updating:[_e,g],deleting:[we,g]})})),this.Transaction=(a=this,Kt(Yt.prototype,function(e,t,n,r,i){var o=this;"readonly"!==e&&t.forEach(function(e){e=null==(e=n[e])?void 0:e.yProps;e&&(t=t.concat(e.map(function(e){return e.updatesTable})))}),this.db=a,this.mode=e,this.storeNames=t,this.schema=n,this.chromeTransactionDurability=r,this.idbtrans=null,this.on=Pt(this,"complete","error","abort"),this.parent=i||null,this.active=!0,this._reculock=0,this._blockedFuncs=[],this._resolve=null,this._reject=null,this._waitingFor=null,this._waitingQueue=null,this._spinCount=0,this._completion=new K(function(e,t){o._resolve=e,o._reject=t}),this._completion.then(function(){o.active=!1,o.on.complete.fire()},function(e){var t=o.active;return o.active=!1,o.on.error.fire(e),o.parent?o.parent._reject(e):t&&o.idbtrans&&o.idbtrans.abort(),S(e)})})),this.Version=(n=this,Kt(mn.prototype,function(e){this.db=n,this._cfg={version:e,storesSource:null,dbschema:{},tables:{},contentUpgrade:null}})),this.WhereClause=(i=this,Kt(Lt.prototype,function(e,t,n){if(this.db=i,this._ctx={table:e,index:":id"===t?null:t,or:n},this._cmp=this._ascending=C,this._descending=function(e,t){return C(t,e)},this._max=function(e,t){return 0<C(e,t)?e:t},this._min=function(e,t){return C(e,t)<0?e:t},this._IDBKeyRange=i._deps.IDBKeyRange,!this._IDBKeyRange)throw new k.MissingAPI})),this.on("versionchange",function(e){0<e.newVersion?console.warn("Another connection wants to upgrade database '".concat(u.name,"'. Closing db now to resume the upgrade.")):console.warn("Another connection wants to delete database '".concat(u.name,"'. Closing db now to resume the delete request.")),u.close({disableAutoOpen:!1})}),this.on("blocked",function(e){!e.newVersion||e.newVersion<e.oldVersion?console.warn("Dexie.delete('".concat(u.name,"') was blocked")):console.warn("Upgrade '".concat(u.name,"' blocked by other connection holding version ").concat(e.oldVersion/10))}),this._maxKey=Xt(t.IDBKeyRange),this._createTransaction=function(e,t,n,r){return new u.Transaction(e,t,n,u._options.chromeTransactionDurability,r)},this._fireOnBlocked=function(t){u.on("blocked").fire(t),gn.toArray().filter(function(e){return e.name===u.name&&e!==u&&!e._state.vcFired}).map(function(e){return e.on("versionchange").fire(t)})},this.use(Yn),this.use(nr),this.use(Gn),this.use(Ln),this.use(Vn),new Proxy(this,{get:function(e,t,n){var r;return"_vip"===t||("table"===t?function(e){return rr(u.table(e),l)}:(r=Reflect.get(e,t,n))instanceof Ot?rr(r,l):"tables"===t?r.map(function(e){return rr(e,l)}):"_createTransaction"===t?function(){return rr(r.apply(this,arguments),l)}:r)}}));this.vip=l,s.forEach(function(e){return e(u)})}var ir,Se="undefined"!=typeof Symbol&&"observable"in Symbol?Symbol.observable:"@@observable",or=(ar.prototype.subscribe=function(e,t,n){return this._subscribe(e&&"function"!=typeof e?e:{next:e,error:t,complete:n})},ar.prototype[Se]=function(){return this},ar);function ar(e){this._subscribe=e}try{ir={indexedDB:f.indexedDB||f.mozIndexedDB||f.webkitIndexedDB||f.msIndexedDB,IDBKeyRange:f.IDBKeyRange||f.webkitIDBKeyRange}}catch(e){ir={indexedDB:null,IDBKeyRange:null}}function ur(d){var p,y=!1,e=new or(function(r){var i=ue(d);var o,a=!1,u={},s={},e={get closed(){return a},unsubscribe:function(){a||(a=!0,o&&o.abort(),c&&Wt.storagemutated.unsubscribe(h))}},c=(r.start&&r.start(e),!1),l=function(){return st(t)};function f(){return jn(s,u)}var h=function(e){Cn(u,e),f()&&l()},t=function(){var t,n,e;!a&&ir.indexedDB&&(u={},t={},o&&o.abort(),o=new AbortController,e=(e=>{var t=$e();try{i&&nt();var n=v(d,e);return n=i?n.finally(w):n}finally{t&&Qe()}})(n={subscr:t,signal:o.signal,requery:l,querier:d,trans:null}),c||(Wt.storagemutated.subscribe(h),c=!0),Promise.resolve(e).then(function(e){y=!0,p=e,a||n.signal.aborted||(f()||(s=t,f())?l():(u={},st(function(){return!a&&r.next&&r.next(e)})))},function(e){y=!1,["DatabaseClosedError","AbortError"].includes(null==e?void 0:e.name)||a||st(function(){a||r.error&&r.error(e)})}))};return setTimeout(l,0),e});return e.hasValue=function(){return y},e.getValue=function(){return p},e}var sr=y;function cr(e){var t=fr;try{fr=!0,Wt.storagemutated.fire(e),Bn(e,!0)}finally{fr=t}}M(sr,_(_({},e),{delete:function(e){return new sr(e,{addons:[]}).delete()},exists:function(e){return new sr(e,{addons:[]}).open().then(function(e){return e.close(),!0}).catch("NoSuchDatabaseError",function(){return!1})},getDatabaseNames:function(e){try{return t=sr.dependencies,n=t.indexedDB,t=t.IDBKeyRange,(_n(n)?Promise.resolve(n.databases()).then(function(e){return e.map(function(e){return e.name}).filter(function(e){return e!==ft})}):wn(n,t).toCollection().primaryKeys()).then(e)}catch(e){return S(new k.MissingAPI)}// removed by dead control flow
- var t, n; },defineClass:function(){return function(e){a(this,e)}},ignoreTransaction:function(e){return P.trans?at(P.transless||s,e):e()},vip:xn,async:function(t){return function(){try{var e=Nn(t.apply(this,arguments));return e&&"function"==typeof e.then?e:K.resolve(e)}catch(e){return S(e)}}},spawn:function(e,t,n){try{var r=Nn(e.apply(n,t||[]));return r&&"function"==typeof r.then?r:K.resolve(r)}catch(e){return S(e)}},currentTransaction:{get:function(){return P.trans||null}},waitFor:function(e,t){e=K.resolve("function"==typeof e?sr.ignoreTransaction(e):e).timeout(t||6e4);return P.trans?P.trans.waitFor(e):e},Promise:K,debug:{get:function(){return l},set:function(e){Oe(e)}},derive:U,extend:a,props:M,override:Y,Events:Pt,on:Wt,liveQuery:ur,extendObservabilitySet:Cn,getByKeyPath:c,setByKeyPath:b,delByKeyPath:function(t,e){"string"==typeof e?b(t,e,void 0):"length"in e&&[].map.call(e,function(e){b(t,e,void 0)})},shallowClone:G,deepClone:ee,getObjectDiff:Un,cmp:C,asap:Q,minKey:-1/0,addons:[],connections:{get:gn.toArray},errnames:de,dependencies:ir,cache:Tn,semVer:"4.4.4",version:"4.4.4".split(".").map(function(e){return parseInt(e)}).reduce(function(e,t,n){return e+t/Math.pow(10,2*n)})})),sr.maxKey=Xt(sr.dependencies.IDBKeyRange),"undefined"!=typeof dispatchEvent&&"undefined"!=typeof addEventListener&&(Wt(zt,function(e){fr||(e=new CustomEvent(Vt,{detail:e}),fr=!0,dispatchEvent(e),fr=!1)}),addEventListener(Vt,function(e){e=e.detail;fr||cr(e)}));var lr,fr=!1,hr=function(){};return"undefined"!=typeof BroadcastChannel&&((hr=function(){(lr=new BroadcastChannel(Vt)).onmessage=function(e){return e.data&&cr(e.data)}})(),"function"==typeof lr.unref&&lr.unref(),Wt(zt,function(e){fr||lr.postMessage(e)})),"undefined"!=typeof addEventListener&&(addEventListener("pagehide",function(e){if(!y.disableBfCache&&e.persisted){l&&console.debug("Dexie: handling persisted pagehide"),null!=lr&&lr.close();for(var t=0,n=gn.toArray();t<n.length;t++)n[t].close({disableAutoOpen:!1})}}),addEventListener("pageshow",function(e){!y.disableBfCache&&e.persisted&&(l&&console.debug("Dexie: handling persisted pageshow"),hr(),cr({all:new q(-1/0,[[]])}))})),K.rejectionMapper=function(e,t){return!e||e instanceof ce||e instanceof TypeError||e instanceof SyntaxError||!e.name||!ye[e.name]?e:(t=new ye[e.name](t||e.message,e),"stack"in e&&u(t,"stack",{get:function(){return this.inner.stack}}),t)},Oe(l),_(y,Object.freeze({__proto__:null,DEFAULT_MAX_CONNECTIONS:1e3,Dexie:y,Entity:mt,PropModification:_t,RangeSet:q,add:function(e){return new _t({add:e})},cmp:C,default:y,liveQuery:ur,mergeRanges:Pn,rangesOverlap:Kn,remove:function(e){return new _t({remove:e})},replacePrefix:function(e,t){return new _t({replacePrefix:[e,t]})}}),{default:y}),y});
-//# sourceMappingURL=dexie.min.js.map
+module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAyAAAAJYCAIAAAAVFBUnAAB1tklEQVR42u3d6VcbZ4Lv8ZKEFkAgVrHL7BiwsbFjG++JEztLp7d0T889M/Nq/o7+W+ace86990Xf6U7PdNJJHHecYDvGeMHG7BYGS6xiEYsA7bovnptKWQIhiQIEfD8nJ4cqSqWnHpWon5/nqac0GxsbEgAAANSjpQoAAADURcACAABQGQELAABAZQQsAAAAlRGwAAAAVEbAAgAAUBkBCwAAQGUELAAAAJURsAAAAFRGwAIAAFAZAQsAAEBlBCwAAACVEbAAAABURsACAABQGQELAABAZQQsAAAAlRGwAAAAVEbAAgAAUBkBCwAAQGUELAAAAJURsAAAAFRGwAIAAFAZAQsAAEBlBCwAAACVEbAAAABURsACAABQGQELAABAZQQsAAAAlRGwAAAAVEbAAgAAUBkBCwAAQGUELAAAAJURsAAAAFRGwAIAAFAZAQsAAEBlBCwAAACVEbAAAABURsACAABQGQELAABAZQQsAAAAlRGwAAAAVEbAAgAAUBkBCwAAQGUELAAAAJURsAAAAFRGwAIAAFAZAQsAAEBlBCwAAACVEbAAAABURsACAABQGQELAABAZQQsAAAAlRGwAAAAVEbAAgAAUBkBCwAAQGUELAAAAJURsAAAAFRGwAIAAFAZAQsAAEBlBCwAAACVEbAAAABURsACAABQGQELAABAZQQsAAAAlRGwAAAAVEbAAgAAUBkBCwAAQGUELAAAAJURsAAAAFRGwAIAAFAZAQsAAEBlBCwAAACVEbAAAABURsACAABQGQELAABAZQQsAAAAlRGwAAAAVJZBFQDYL4FAYHV11ePxeL1er9fr8/l8Pp/X6/X7/aFQKBQKSZLk9/vl7fV6vUaj0Wq1GRkZGRkZRqPRZDKZTCaj0Wg0Gs1mc05OjslkomIB7DsCFoC9EA6Hl5eXFxcX3W738vKyx+PxeDw+n0/1N9LpdDk5OWazOTc3N/8ner2ejwDAXtJsbGxQCwBUF4lEFhcXXS6Xy+VaXFxcXl4Oh8P7VRiz2VxQUFBcXGy1WouLizMy+LclgN1FwAKgmnA4PDs7Oz09LXJVMBhMw0JqNJrCwkKr1VpaWlpeXm4wGPjgAKiOgAVgp1ZXVycnJycmJqanpwOBQMr70el0YkyVwWAQnXp6vV6r1Wo0Go1GEw6HI5GI3++XJE0wGPD5/T6fz7vhDQZTf0eNRmO1WisqKiorKwsLCzUaDZ8mAFUQsACkyO12j42NjY2NLS8vJ/XCnJyc3NxcMVJKZjQadTpdCsUIhkLr6xtr6+srKytrHs/a2tr62trammdlZSWpTkmTyVRdXV1dXV1WVkbSArBDBCwAyVleXn79+vXr168TzFUZGRnFxcUFBQX5+fkFBQV5eXm7NwQqFAoHQ6FgKByJRCKRyOrqyvLS0tLS0vLy0uLCgtfrTWQnImnV1NSUlpaStACkhoAFICGBQGBsbGxkZMTlcm27sdlstlqtJSUlVqu1oKBg72NKOBwOBP9/0pJXrnk88/Pz8/Nz8/Nzy0tLiRxFY2NjQ0NDdnY2JwCApBCwAGxjbm5ueHh4bGws/viqjIyMsrIyMZ4pNzc3TQofCoUDoVAwGIpa7/P5ZmdmZqanZmam47dsaTSaioqKxsZGm82m1TI5M4CEELAAbC4cDr9586avr29ubi7OZllZWdXV1TabraSkJLVBVHsgEokEgqFgMBRWNGjJ3G739NSk0+FYXl6KsxOz2dzc3NzU1MSNhwC2RcACEC0QCAwPDw8MDHg8nq22EbmqpqbGarUeoIFKwVA4EAiGthj8vrqy4nQ64ictvV7f2NjY2tpqNps5VQBshYAF4Gd+v7+/v7+/v1/5gBolrVZrs9mamprKy8sP7gDwUDgcCASDoS3vMVxeWnr9evTN+NhW9aDRaOrr60+dOpU+naEA0goBC4AkSVIgEOjv7+/r69sqUuTl5TU2NtbX1x+ah/2FwxF/IBgMhbbeIDzhdL5+bXfNzm66ATELwFYIWMBRFwqFBgYGent7t3oyYGVl5YkTJ8rLyw/n4YfDfv+WnYbC6urKyPDQ+NhYaLM0ptVqGxsbT58+nZWVxekEQCBgAUfa2NjY48ePNx1rpdPp6urqTpw4kZeXd+jrIRQK+wKBcDgSZxufzzdqf2V/NbLpXYcZGRmnTp06ceJE2o70B7CXCFjAETU/P//o0aPZzTq/dDpdc3NzW1vboekNTJA/EAwEg5F4KUsKh8Njr0cH+vs3NtZjf5udnX3u3Lna2lpOMOCII2ABR47P53v8+PHIyEjsr3Q63fHjx0+ePHlke7sikYgvEIydNytKKBQatb8aGhzYtDXLarVevnw5Pz+fkw04sghYwNHy+vXrrq6u2Fig0WiOHz9+6tQpBhJJkhQMhX3+QCR+W9ZPMau/vy8Qc2eAVqtta2s7deoUPYbA0UTAAo4Kj8fz4MGDycnJ2F9VVFScP3+eFhelSETyBwKB7ZqyJDG3RV+v/dWr2EBmsVguXbpUVlZGfQJHDQELOBKGhoa6u7uDwWDUeovFcuHChcrKSqpoU6FQ2JtAU5YkSSsrKy+eP5uemor9VXNz87lz53bvEdcA0hABCzjkvF7vvXv3nE5n1HqdTtfe3n7ixAmerxdfJBLx+gOhUDiRjacmJ549fbK+Hj3+3WKxvPvuu4WFhdQncEQQsIDDzOl03rt3L3bEVXl5+eXLl3NycqiiBPkDQX8gmMiWwWDgZe+L2B5DrVbb3t7e1tZ2cGfAB5A4AhZwOIXD4e7u7oGBgaj1RqPxwoUL9fX1VFGyQuGw15dQd6EkSYsLC48fP1peWopaX1pa+t5772VmZlKfwOFGwAIOofX19e+++87lckWtr6ysvHLlCvcJpiwSiWz4AuFwQt2F4XC472Xv0GB0xs3MzLxx40ZJSQn1CRxiBCzgsJmenr57925Ut6BOpzt37lxLSwv1s3NefyCYwN2Fgss12931MGpUllarPXfuXGtrK5UJHFYELOBQefny5ZMnT6K6sQoLC69fv34UnnizZxIfkiVJUsDvf/r0sePNm6j1NTU1V69e5e5C4FAiYAGHRDgc/vHHH2PnZ29sbLx48SLTXaouEAz5/IHEtx+1v+p59jSqe7GoqOjmzZsMyQIOHwIWcBj4/f7vvvtu6u1JmHQ63aVLlxoaGqifXRIKhb0+fyTh7RcXFn58cH99fU250mw237x5k1legUOGgAUceKurq7dv315eXlauzMnJuXHjBhMv7bZQOOz1+SMJhyy/z9f18MeZmWnlSr1ef+PGjYqKCuoTODQIWMDB5na7v/7666gvcklJyQcffGA0GqmfPZDU9A2SJEUikec9z16NDCtXajSaa9eu1dXVUZ/A4UDAAg6wubm527dv+3w+5cq6urqrV68yP/teCocjGz5/4hlLkiT7q5GeZ0+jXnLp0qXjx49Tn8AhQMACDqrp6ek7d+4EAm+Nsz5z5szp06epnL2XQsaanpp6+OP9qAdEvvPOO21tbdQncNARsIADyeFw3L17NxT6eTYmjUZz9epVpmjfR8mOx5Ikacnt7vwhetKytra2d955h/oEDjQCFnDwTE5Ofvvtt8ob/rVa7Y0bN2w2G5Wzv0Kh8IbPn9RLPJ7V77/7R9RMpKdOnTp79iz1CRxcjNIADhjRM6hMVzqd7sMPPyRdpQOdTmsyGpJ6idmc8/4Ht8xvP3j7xYsXvb291CdwcBGwgIPE5XLdvn1b2TOo1+s/+eSTsrIyKidNZOi0RoM+qZdkZmW9/8Ety9tT7T958qSvr4/6BA4oAhZwYMzPz3/zzTdR6eqjjz4qLi6mctKKPkOnz0hu6nyj0fjue+9bLHnKld3d3cPDw9QncBARsICDwePxfPvtt8p7BkXPIOkqPRkN+gxdcn9gjUbjuzfez8nNVa788ccfHQ4H9QkcOAQs4ADw+XzffPON8pYUnU5369Ytq9VK5aQto8Gg1WqSe4nR+O67N8xms7wmEoncvXt3bm6O+gQOFgIWkO5CodCdO3eUT8LRarXvv/8+467SnEYjmQwGTZKvyszKeu/GB5lZWcoT4Ntvv11dXaVKgQOEgAWku87OztnZWeWay5cvV1ZWUjPpT6vVGI36ZF+VmZV17fp7ev3PL/R6vbFT9gNI668/VQCksxcvXoyNjSnXnDlzpqGhgZo5KDJ0On1GRrKvslgsl69cUz7vaHl5+YcffkhqpngA+4iABaSvycnJZ8+eKdc0NDTwJJwDx2jISOHRkNaSknPnO5RrJiYmos4HAGmLgAWkqdXV1e+//17ZYlFeXn758mVq5iAyGfQpvOpYdfWJk289l/DFixfj4+PUJ5D+CFhAOgoGg3fu3FGOuTGbze+9914KDSFIB1qtxphSxmppPVHx9ni7e/fuLS0tUaVAun/rqQIgDT169MjtdsuLOp3ugw8+MBqN1MzBpc/Q6XSp/Mm90HExVzE5ViAQiHrON4A0RMAC0s74+HjU/N1XrlwpKCigZg46k0Gv0ST9qowM/eWr15U3Fbrd7u7ubuoTSGcELCC9rK2tPXjwQLmmtbW1rq6OmjkENBqNQZ9KR2FOTs75jovKNYODg8zwDqQzAhaQRiKRyA8//KAcelVQUPDOO+9QM4eGPkOnS2kgXUVFZX1Do3LNvXv31tfXqVIgPRGwgDTS19c3MzMjL2ZkZLz33ns6ne4IV8khlNpod0mSTp1ut+TlyYs+n+/+/fvUJ5CeCFhAulhZWYma5ejChQsWi4WaOWS0Wo1en5HCC3U6XcfFy8rAPTEx8erVK6oUSMdvOlUApIn79+8rbw2rrq5uamqiWg4lQ0aGJoXh7pJksVhOnW5Xrunu7lY+BRxAmiBgAWlhaGhI2TloNBovXbpEtRxWGo1kSKkRS5Kk+oZGq7VEXvT5fA8fPqRKgXRDwAL239ra2uPHj5VrOjo6TCYTNXOI6TN0Wq0mtde+c/68sqNwfHz8zZs3VCmQVghYwP7r7u4OBALyYmVlJfMyHAVGfYqj3c3mnKhH6Dx69IipR4G0QsAC9tnMzMzY2Ji8qNfr6Rw8InQ6rS7VZx81Nh0vKCiUFz0eT29vL1UKpA8CFrCfIpFIV1eXcs2ZM2fMZjM1c0QYDCmOxNJoNGfPnVeu6e3t9Xg8VCmQJghYwH4aHh5eXFyUFy0WS3NzM9VydOi02tQeUChJUn5+fm1dvbwYCoWiRvIB2EcELGDfBAKBqImvOjo6tFq+lUdLyrcTSpJ0su2U3mCQF8fGxmZnZ6lSIB3wpxzYN319fV6vV1602WwVFRVUy1Gj06Y+EstoNJ44cVK55unTp1QpkA4IWMD+8Pl8/f39P38VtdoLFy5QLUeTXp/605DqGxpzcnPlxZmZmcnJSaoU2HcELGB/vHz50u/3y4uNjY05OTlUy9GUoUt9TiyNRhM1ZUNUvzOAfUHAAvbB+vq6svlKp9OdPn2aajnK9Bmpj8SqqrLl5efLi3Nzc8w7Cuw7AhawD/r6+pTTQh4/fjwrK4tqOcoydDrNDl5+8uQp5eLz58+pUmB/EbCAveb3+4eHh+XFjIyMU6dOUS1HnEYjZWSkPhKrrLy8sLBIXlxYWJiamqJWgX1EwAL22tDQkPLBOM3NzTx2ENLOegklSWp9+3bCly9fUqXAPiJgAXsqHA4PDAz8/A3UaltbW6kWSJKk1Wp0O5gFrbSszJKXJy9OTk4q57AFsNffaKoA2Et2u319fV1erKurY/QVZDvpJZQk6fjxFuUijVjAPiJgAXtK2XwlSdKJEyeoE8gydDv6m1xlsynz+tjY2MbGBrUK7AsCFrB35ubmlL02VVVV+Yq76wGNRrOTjKXVahsam+TFcDg8MjJCrQL7goAF7B3lzYOSJPFcZ8TaYS9hbW2dTvfzHkZGRiKRCLUK7D0CFrBHAoHA69ev5UWz2cyTBxFLGY9SoDcYqmzH5MXV1VXmawD2BQEL2CN2uz0YDMqLjY2NGo3mCNcHNqfZ8Uis2rp65WJUuymAvUHAAvaI3W6Xf9ZoNI2NjdQJNrXDRqyioiKLJU9edDgcPp+PWgX2GAEL2Aurq6tzc3PyYlVVFbMzYCs7bMGS3m7ECofDPJoQ2HsELGAvKEdfSZJUV1dHnWArGo1Gq93RH2ebzabsgB4dHaVWgT1GwAL2gjJgZWRk2Gw26gRx7LARy2gyWa0l8uLMzIzX66VWgb1EwAJ23dLSktvtlhdtNtsOB9ng0NNpd/rH2Xbs53sJI5FIVBsqgN1GwAJ23fj4uHKxtraWOkF8uh0Pw6qorFL2M0adhAB2GwEL2HUTExPyz3q9numvkIgdZiyDwVBSWiovulyuQCBArQJ7hoAF7C6v1+tyueTFyspK+geRiJ33EpaX/xzlw+Hw5OQktQrsGQIWsLuirmqVlZXUCRKx84BVVl6uXHQ6ndQqsGcIWMDuUvYPSgQsJEyr3elE/1lZ2RaLRV6kBQvY068wVQDsKmXAKiwszMzMpE6QCI1Go93xw5RKy35uxFpfX19cXKRigb1BwAJ20dLSkvIpJVVVVdQJEqdVu5dwZmaGWgX26PtLFQC7J+p6VlJSQp0gcTvvJSwsLFKmtNnZWWoV2KPvL1UA7B7l9Uyj0VitVuoEidt5wNLpdPn5BZuekAB29/tLFQC7R3k9Kygo0Ov11AkSt/MuQkmSioqL5Z/X19dXV1epWGAvvr9UAbBL1tfXPR6PvEj/IJK180Hu0tsBS5Ik5axsAHZPBlUA7JL5+XnlYjoErPn5+aWlJZ1OV1ZWZjKZ+Iz22Pr6+uzsbDgczs/PLygoSOQlWq0mHI7s5E2LioqjzoG6ujo+C2C3EbCA3RJ1S3xRUdE+Fsbj8fzwww9yl6VWq21raztz5gwf096IRCJPnjzp6+uLRP5/WiovL79+/fq203ZoNZqwtKOAZTQas7Kz19fWNj0tAewSugiB3aK8kun1+pycnP0qSTAY/Oabb5QDwsLh8PPnz3t6eviY9sbjx49fvnwppytJkqampr755ptwOBz/hRo1egnz8vI3PS0B7B4CFrBblFey/Pz8fSzJyMjI8vJy7Pre3l7lNF3YJevr6/39/ZueIaOjo/Ffq1LAypN/9vl8az+1ZgHYPQQsYFcEg8GVlRV5McEBN7tkenp60/WhUGhubo4Pa7fNzs4q264S+WhkO5+pQXo7YEmS5Ha7+VCA3UbAAnbF0tKScnF/A1acfqhtu6iwv/WvSguWJe+tBlQCFrAHCFjAroiabUj5zN29V/z2jfpK+zv0/oiIU8lxPhpBlYBlNpuV+2EqLGAPELCAXaGcAUuSpH0c4S5J0vHjx41GY+z6xsbGrKwsPqzdZrFYampqYtdnZWU1NjbGf61GjQJoNJrs7Gx5kYAF7AECFrArlNcwrVarvLztPZPJ9OGHH0Zlqerq6osXL/JJ7Y0rV65UVlYq1+Tk5Hz44YfbTu6vSguWJEnZ2eZNT04Au4R5sIBdobyGZWdnq3WZTFlRUdE//dM/jY2Nud1uvV5fXl7OgxH3kl6vv3Xr1szMzNTUVDgcLigoOHbsmE6nS+S1Go0Uiey0ANlms/TTNB0ejycSiez7OQkcbgQsYFcoA9b+9g/KdDpdfX09H80+Ki0tLS0tTf51GknaacJStqGGw+H19fX9bVUFDj26CIFdsb6+Lv9sNpupEKRMlZYmZRehJEkbGxtULLCrCFiA+kKhUDAYlBd56h/2ncFoUC56vV7qBNhVBCxAfVHTo296Bx+QMBWasIwGY5xTFIDqCFiA+qKuXrRgYSdUGYtufPskpAUL2G0ELEB9UQNcCFjYd0a6CIG9RcAC1Of3+5WLdBFi3+l0GcpZIegiBHYbAQtQXyAQUC5mZDAfCvafVvvzH/xQKESFALv7jaMKgN2W4HySwKYiO54ES9Drf+4ljEQiB7U6gAOCgAWoL6oFi4CFnVAtCylGy0f1YgNQHQELUF9U8wDPJMEOzydVdqPTEvSBvUPAAtQXDoeVi9s+0BfYSkSS1GrAUrakMgYL2G0ELEB9ymncgZ2IhHdlsBQBC9htBCxAfQbDW3MOMaAYKdulk4c7W4HdRsACdl3UmHcgcWH1AlYw+PN5qJyyAcBu4DsGqC+qBYuAhZRFjefbCeV5yLhAYLcRsAD1RQUsHkuClKnYgqWcmoGnCwC7jYAFqC8zM1O5uL6+Tp0gNWGVBrlvbGwoh3NFnaIAVEfAAtRnNpuVi6urq9QJUhCJRNQa5L62thbnFAWgOgIWoL6srCzlIGKPx0OdIAUh9QZgra29dRISsIDdRsACdkV2drb8My1YSE1YvUmw1t5O+crzE8BuIGABuyInJ0f+mYCF1IRC6rVgKQKWVqslYAG7jYAF7AqLxSL/7PF4fD4fdYJkqdhFuLTkln/Ozc3l+ZjAbiNgAbuisLBQubiwsECdICkqNl+Fw+GlpaWtTk4Au4GABewKAhZ2KBhSs/lKeTdiQUEB1QvsNgIWsCvy8vKUNxLOz89TJ0hKKKza85jdi4vKRVqwgD1AwAJ2hU6ny8vLkxcJWEhKJBJR8RZCt5uABew1AhawW4qKiuSfV1dXo2Z6BOJQcQCWJEmu2Vn555ycHJ6TA+wBAhawW8rKypSLU1NT1AkSpOIArPX1NeVUt1GnJYBdQsACdkt5eblykYCFxIVCqg3AUjZfSQQsYK8QsIDdkpmZqZwNa3p6mjpBIoKhUES9vc3OzCgXS0tLqWFgDxCwgF2kbC1YX19XzkUEbCWo6gCs2dmfA5bFYmEOd2BvELCAXRTVHTMxMUGdYFsq9g+63W6v17vVCQlg9xCwgF1UUVGhnA1rfHycOkF8wVA4ol4H4eSEU7lYWVlJDQN7g4AF7CKDwaAc8uJyuTY2NqgWxBEMhlTc26Si0TQjI6OiooIaBvYGAQvYXTabTbn45s0b6gRbiUSkoHr9g57V1eXlJXmxoqJCp9NRycDeIGABu+vYsWPKRQIW4lAxXUmSNPF2/2DUqQhgVxGwgN2VnZ2tfDLJ9PS03++nWrAptfsHfw5YGo2mqqqKGgb2DAEL2HXKloNwODw2NkadIFY4EgmFVZugwbO6urCwIC+WlpbyhBxgLxGwgF1XV1enXHz16hV1gljqNl+Nj7+V42tra6lhYC8RsIBdl5OTY7Va5UWXy7WyskK1IEpg1wKWTqerqamhhoG9RMAC9kJ9fb1y0W63UydQCoZCEfXmv3K5ZtfX1uRFm81mMBioZGAvEbCAvVBTU6OccZSAhSjqNl+9eXucX1QnNYA9kEEVAHvAaDRWVVXJczR4PJ6ZmRkeu7uwsPDy5ctIJNLa2qrsRU3Z9PT04OCgTqc7depUXl7eQamHcDgSUu/5g8Fg0Ol0Ks89JnAH9h4BC9gjdXV1ykmwhoaGjnjACgQCX3/9tc/nkyTpzZs3169f3+E4oZGRkQcPHoiOtunp6T/84Q/KVsO0ropgUMW9Od68CQYD8mJtbe1BqQfgMOFbB+wRm82WlZUlL46Pjx/xx+YsLy+LdCVJUjgcvnv37uPHj8MpzVMQCoV+/PHH+/fvy8OY1tfXPR7PgagHdWdvlyTJbh9RLjY1NfHtA/YeAQvYqy+bVtvY2CgvhsPhkZGRo1whFoslamamly9f/vWvf52cnExqPw6H4y9/+cvQ0JByZVZWltlsPhD1EAyFVHy688L8/JLbLS9ardaCggK+fcDeI2ABe6epqUmj0ciLQ0NDKt44duDo9foPP/zQZDIpVy4tLX3zzTd/+9vf7HZ7IBCI83K/3z8yMvLXv/71zp07q6uryl9lZWV9+OGHB6Z/MKBm/2BU89Xx48f53gH7gjFYwN7Jzs6uqqpyOBxicW1tzel0Rj0N+kgpKir69NNP79y5s7S0pFw/Nzc3Nzen0+mKi4uLi4tFW5derw8EAl6vd3l5WWywaX9iYWHhBx98kJ2dfSBqIBgKhdUL2T6fz/nT2SVJktFoZPorYL8QsIA9dfz4cYfiEjg4OHiUA5YkSbm5ub/+9a8fPXoU1ccnSVIoFJqZmZmZmUlwVxqN5sSJE2fPnj1AY7oDATVHX429HlWGzsbGRp1Ox5cO2BcELGBPVVRU5OTkyF1ak5OTbrc7Pz//KNeJTqe7dOlSQ0PDo0ePXC5XajspKyu7cOHCwRpvFAqHVXz4YDgcfvWK/kEgXej++Mc/UgvAnhFjsJTjuEOhkPJp0EdWdnZ2Y2NjaWmp3+9fXV1NcHSaVqs9duzYlStXTp8+nZmZebAO2e8Pqtg/6HgzPq6YX7Sqqqq5uZnzCtgvtGABe62xsbGnp8fv94vF0dHRs2fPKmdwOMrKysrKysp8Pp/D4ZiZmXG5XKurq1FjrbRabW5urtVqLSsrq6qqOqAPgQmHI+rOzjA0NKhcPHHiBKcTsI8IWMBe0+v1TU1NL1++FIvhcLi/v//cuXPUjMxoNDY0NDQ0NIj62djYEDNmaTQag8GQlZWlvBnzgPKrOrnozPT0suJGgaKiorKyMk4kYB8xTQOwD1paWpQDsYeHh+NPSXCUabXa7OzsgoKCgoKC/Pz87OzsQ5CuIpFIUNWHDw7TfAWkGQIWsA+ys7OV98/7/f7h4WGq5ejwqzr3ldvtnp39+V5Ls9lcXV1NJQP7i4AF7I+TJ08qF/v7+8Pq3VCGdBaJRAKqNl8NDQ4oF1tbW3n4ILDv+BIC+6OgoKCiokJeXFtbO+JPzjk61G2+WllZdjp+foi4wWBQPpEJwH4hYAH7pq2tTbn44sULGrEOPdWbrwb6+pSLra2ter2eegb2HQEL2DdlZWWlpaXyIo1YR4G6zVcez6rT+fODAQwGQ2trK5UMpAMCFrCf2tvblYu9vb00Yh1i6jdf9fcrZ2Q9fvz4AZ0VDDh8CFjAfiorK7NarfKix+MZHR2lWg4r1Zuv3oz/PHV7RkYGszMA6YOABeyz06dPKxefP39OI9ahFN7l5quWlhaTyUQ9A2mCgAXss8rKyuLiYnlxdXXVbrdTLYePys1XqzRfAWmNgAXsv6iRWD09PSFVn1KHfRcOqzx1+8veF8rmq+bmZpqvgLRCwAL2X2VlZUlJiby4trY2ODhItRwmflUfheR2LypvHtTr9VHz1gLYdwQsIC288847ysUXL174/X6q5XAIhcPBkJrj6npfPFcunjhxguYrIN0QsIC0UFJSUlVVJS/6fL6+tyeQxMHl96s5+srlmp2d+fnJgyaTidFXQBoiYAHp4uzZs8rFvr6+jY0NquWgC4ZCofAuNl+dOnWKqduBNETAAtJFQUFBbW2tvBgMBl+8eEG1HHTqNl9NTDgXFxbkxezs7ObmZioZSEMELCCNnDlzRqPRyItDQ0MrKytUy8EVCIbCinv9digSibx8O3OfOXNGq+XPOJCO+GYCaSQ3N7epqUleDIfDjx8/ploOqEhE5bmvRu2vVld/Dtx5eXn19fXUM5CeCFhAejlz5oxySM2bN29mFCOacYAEgsGIes1XAb+/72Wvcs25c+eU7Z0A0goBC0gvJpPp1KlTyjWPHj1S8TqNvRGJRNRtvurv71PO3FFeXq687RRAuiFgAWmntbXVbDbLiwsLCzw858Dx+VV+rrP91Yi8qNFozp8/TyUD6YyABaQdnU4XNe/o06dPg8HgUa2PgycUDgdVfdjRi7cfAd7Y2FhQUEA9A+mMgAWko9raWqvVKi+ur6+/fPmSajko1G2+mnO5Jiec8qJerz9z5gyVDKQ5AhaQpqL6gF6+fLm2tka1pL9AMBRWb2bRSCTyvOepck1bW1tmZib1DKQ5AhaQpqxWa01NjbwYDAa7u7upljSn+tQMr0ftbrdbXjSbzTwYBzgQCFhA+jp37pxOp5MXx8bGpqenqZZ0pu7UDH6//2XvWzOLvvPOO8pTAkDaImAB6ctsNp8+fVq55uHDh2FVH2wHFYXDKk/N8LL3uXJqhrKyMuXDlACkMwIWkNZOnDiRk5MjLy4tLQ0MDFAt6ckXCKi4t8XFxVHF9Bwajaajo4NKBg4KAhaQ1nQ6XdRltaenZ319nZpJN8FQKBRSs3Gx5+kT5WJLS0t+fj71DBwUBCwg3VVVVVVWVsqLgUDgyZMnVEtaiag9NcPY69GFhXl5MTMzk6kZgIOFgAUcABcvXlQObbbb7bOzs1RL+ggEVB7b3vviuXLNuXPnlE+oBJD+CFjAAZCTkxN1c/6PP/7IaPc0sQtj21/4fD55saSkpL6+nnoGDhYCFnAwnDp1SvmAQrfb3dfXR7WkA3XHti8szI/aX8mLGo3m4sWLVDJw4BCwgIMhIyMj6kLb09OzurpKzeyvYFDNse2RSOTJ47emk21paeGxg8BBRMACDoyqqqrq6mp5MRQKPXz4kGrZR5FIxKdq5+Dw0ODy0pK8mJ2dzdh24IAiYAEHyYULF5SDnScmJsbGxqiW/eJXdWz72tpaf99bj/Tu6OhgbDtwQBGwgIMkOzv77NmzyjVdXV3Kyb6xZ0LhcCAYUnGHz548DoV+3qHNZjt27Bj1DBxQBCzggGlubi4qKpIXNzY2mBZrX/j8ao5tdzoc09NT8qJer2dsO3CgEbCAA0aj0Vy+fFmj0chrhoaGXC4XNbOX/IFgOKxa52AgEOh59lZKPnPmTHZ2NvUMHFwELODgKSwsbGlpUa558OCBsncJuyocUXniqxfPe7xeb5zPF8CBQ8ACDqSoFg632/3ixQuqZW+o2znocs2+Hn3roc5RLZQADiICFnAg6fX6y5cvK9f09vYuLi5SM7stoOrEV6FQ8HH3I+WaEydOKMfYATigCFjAQVVZWal8gko4HL5//z7Pz9lVkUjEr+q87S97e9c8HnkxNze3vb2degYOAQIWcIBduHAhMzNTXpyfn+/v76dado/PH1Rv3itpYWH+1ciwcs2VK1cyMjKoZ+AQIGABB5jRaIy6mf/Zs2fLy8vUzG4IhkJB9e4kCIfDjx89Us5T2tzcXFpaSj0DhwMBCzjYqqurldNRhkKh+/fvUy2qi0QiPr+adw72971cWfk5CmdnZ7/zzjvUM3Bo0BYNHHiXLl2amZnx+XxicXZ2dnBwsLm5eW/ePRAILC4uut1uj8fj9Xrl6Qa0Wq3JZMrKyrJYLHl5eXl5eft1Z5zf719YWFheXvZ4POvr6/LE9zqdzmg0Zmdn5+bm5ufnWyyWOCX0qfpUnCW3e2hwQLnmypUrPBUHOEwIWMCBl5mZef78+Xv37slrHj9+XFlZmZOTs3tv6nK53rx5Mz09vbCwkEjy0Ov1JSUllZWVx44d24MpNCORyMzMjMPhmJqacrvdibxEr9eXlpZWVFRUV1dnZWUpfxUKhYNBNTsHux91KSutoaGhoqKCMxk4TDQbGxvUAnAIfPPNN5OTk/JiSUnJJ598onqj0cbGxvDw8MjIiEdx71uyysrKmpqaqqurtVr1Ryl4PJ7h4eFXr16tr6/vpITNzc02m02r1UYi0rrXp2LzVd/L3oH+PnkxMzPzs88+MxqNnMPAYULAAg6JtbW1zz//XPng5/Pnz584cULF/b948eLVq1dqTRmfnZ196tSpxsZGtWLW6urq8+fP7Xa7WmEoJyfn9OnTlbZjKk58tbi4+I9vv1GW8P333+ehzsDhQ8ACDo9Xr14pOwp1Ot1vfvMbi8Wyw92GQqHe3t7e3t740Uqr1WZlZRkMBr1eHwqFgsGgckjWViwWS0dHxw47yAKBwIsXL/r6+uJPAxZVwlAotL6+Lo9di1PC9jPvWEtKdv4BhUKhb7/5amVlRV5TX19/7do1Tl3g8CFgAYfKnTt3HA6HvFhcXPyLX/xiJ01Ec3NznZ2dW039kJOTU1lZWVpaWlBQkJubG9sjGQgElpaW5ubmpqenp6amAlvM0tnQ0HDhwgWDwZBCCaenp+/du7dVl6XFYqmsrCwpKSksLDSbzZuW0O12yyUMBje/VbC2ru50+9kdTlL14nnP8NCgvJiVlfXZZ5+ldtQA0hwBCzhUNjY2/vKXvyhbZc6ePXvq1KnU9tbX1/f48ePYHjej0VhfX9/Y2Jifn5/43kKh0MTExPDw8MTEROxvc3Nzb9y4UVBQkFQJnz9/3tPTE1tCk8nU2NhYX1+fl5eXVAmdTufw8LByNJvMbDZfvnrNYslLrTLn5lx3/3FHuebDDz9kbDtwWBGwgMNmbGzs7t278qJWq/3Vr36VbHAJh8P37t0bHR2NWm80GltbW1tbW3cyp8DS0lJPT8/Y2FjU+oyMjHfffddmsyWyk1Ao1NnZGbuTzMzMtra248eP63S6lEs4NTXV2dkZO0w+IyOj4+Kl8orKZHcYDAZvf/2Vx7Mqr2lqaop6miSAw0T3xz/+kVoADpP8/Hy32720tCQWI5GIy+VqbGxM/I7CYDD47bffKrsaBYvFsra2Njc3ZzabCwsLUy6hyWSqqamprKxcXFxUhphwODw2Npabm7ttHBQldDqdypUajebkyZM3btwoLS3dSa9oJBL5/vvvN+0VDYfDTqcjKzs7qaY7SZKe9zydmZmWF81m8wcffLCTCAggzRGwgEOovLzcbrfLw4k2NjbC4XB5eXkirxXZZXp6WrnSbDa3tbWJ5qJwODwxMVFXV7fDmQWys7MbGho0Gs3s7KxyvcPhiJ+xNi1hTk7Ohx9+2NDQsPPUMjIyMjz88yMCi4uLo1r6pyYnzGZzXl6iGWt2Zqbn2VPlmg8++GDnNx8ASGc8Kgc4hIxG46VLl5RrXr58OTMzs+0LReNNVHapqKj49a9/rZx7MxwOd3V17bycWq22vb391q1byg7HSCRy7969TUdBid/+8MMPUSWsrKz89a9/XVRUtPMi+Xy+J0+eKNeIEkalye5HXdNTU4ns0O/zdT96qFzT2trKMweBQ4+ABRxOx44da2hokBcjkUhnZ+dWN/HJnj59GtUz2NDQcPPmTaPRaLPZlCHD6XRulYGSVVFR8ctf/jIqwN29e1c5nYGsp6fnzZs3yjWNjY03b95U6168N2/eKG8RqKysrKysrKio+OSTT5QljEQiD398sLpZCaM8edKtbACzWCw8cxA4CghYwKHV0dGhfFqOx+N5+PBhnO0nJiZ6e3uVa+rr669evSrGMxkMhrNnz0Ztr1ZR8/LyPvnkE5PJJK/x+/3fffdd1MxbExMTz58/V65pbGy8cuWKihPWK8ug0+kuXrwofs7Pz//kk08yMzPl3waDgQf378WfG2x87PWEYqCYVqu9fv06Q6+Ao4CABRxaer3+2rVryvBht9tjb7sTfD5fZ2enck1VVdXVq1eVa5qampRj25OaAWFbubm5H374oXKiqcXFxZ6eHmUJ79+/H1VC1W/Eq6ysrKmpkSQpIyPj0qVLyoQqSqjszVxZWX7Z+2KrXa15PM+eRvc2qtKPCSD9McgdOMzMZnM4HFaOIp+enq6vr4+dZKGrq0u5WV5e3ocffhjV1qLRaCoqKpaWliKRSH19fVtbm7rPOszKysrNzR0fH5fXzM7OajSa7Ozs5eXlH374QXlnn8ViiS3hToTDYZfLFQ6Hjx8/3tzcfPr06dgwlJmZmZeXpwypCwvz5eUVypYtIRKJ3L/3g3L605KSEnUb2wCkM+bBAg65cDj8xRdfzM/Py2vKy8s/+ugj5Tbz8/P//d//LS/qdLpf/vKX286V4HQ6V1dXq6qqlM08O3f//v2RkZH422i12l/+8pc7mSoiis/n++KLL0SA23Zq1ocPHw4O/jwhe2Fh0fs3b0VtM9Df1/fy5/5WvV7/29/+1mw2c0ICRwRdhMBh/5LHjPuZmprq6+tTbvP06VuTCJw6dWrbdNXT0/Ptt992dXX95S9/Uaa3nbtw4UJubm78bc6cOaNiuhI1IDePRQ3zinXu3DllVFpYmJ95+67GxYWF/r6XyjUXL14kXQFHCgELOPwsFsuFCxeUa54+fSp3CI6OjirvB8zJyTl58uS2+5RnigqFQg8fPox9WE3K9Hr9rVu3srOzt9qgubm5ra1NxfqZn58fGhqSF7VabfzDycjIiKpPZWNVMBjs6vpRuYeampr6+nrOQ+BIYQwWcCQUFRXNz8/LEx9EIhG73T49PT08PDwwMKDc8uLFi4k0DtntdnmAwfr6ek5OjopNSuJZh16v1+12K9dnZ2dfvHgx5UcrbuXu3btra2vyYltb27aTsubl5U1MTMjT0G9sbKytrZlzctbX1h53P3K7F+Uts7Kybt26tcOnRAM4cBiDBRwVGxsbn3/+udfrjbNNYWHhr371q0QGYjscjjt3fn50cVZW1j//8z+rPoLb6/XOzMysra3pdLqCgoLi4uLdGCT+P//n/5RnWzCbzb/73e8SGTs/MTFx+/btbTf76KOPEpxDH8BhQhchcFRkZma+9957caKD0Wi8fv16ggnGZrNVVFTIi+vr6+FwWPUym0ym6urq1tbW48ePW63WXboFr6ysTP754sWLCd6ZWFlZue1zqU+ePEm6Ao4mugiBIyQnJ6e8vHx6etrv90f9qqCg4NatW0lNbVVcXPzq1SuRq6qqqg7uMKPKyspQKJSVlXXmzJljx44l9ULRwLbpb+vq6i5evMi8DMDRRBchcOSEw+GxsbGJiYmVlRWNRmOxWKqqqo4dO5ZCFFhaWhodHTWZTE1NTQdumJHP53v58uXa2lpdXV1lZWVqOwmFQr29vf39/crMajabT58+3djYyMkGHFkELAAqGBkZGRkZyc7OPnPmjMViUWu3kUjk4cOHr1+/zs7Ovnz5stVqVXHPX375pcvlkiRJo9H86le/2skg/fUNn2vOtba2lqHTFhUWFhQU0HAFHHGMwQKOOp/Pt7i4uJMRVLOzs/fv33e5XGNjY99++238x/Ml5fXr10NDQ36/3+1237t3T8WjHhkZEelKkqRIJDI1NZXyriKRyNraqtmcU1Nd09jYWFhYSLoCwJ3DwJE2OTn53XffBQKB7Ozsjz/+eNsZPjelnGh0ZWWlr69PrZkU5HklJElSPidnh3w+35Mnbz0lMOXmK6/X+/e//31paUmr1V66fLmxoYGTCoBECxZwxD1//jwQCEiStLa29v3336fWjqW8C0+SpBcvXsgTRKWn4eFhn88nL1ZWVqZ8r9/9+/eXlpYkSQqHwz3PnnFGARAIWMCRppxwfH5+vqenJ4WdFBQUNChaboLB4LYPE0yfo9bpdBcvXkxtP8PDww6HQ17cjYkqABxQBCzgSDtx4oRysbe3N7WeuHfeeUev18uLCU4ltS3lnYnK/e9QfX19ZmamXPLUHlbt8/m6u7uVaxJ5xBCAI4KABRxp1dXVyvmrIpGI6PBKVmZm5qVLl7RarSRJeXl5as1QUF1dLeeqBpWGN4kpr37/+9/fvHnzt7/9bWtra2r7WVtbE72rQllZWcq7AnD4MMgdOOouXrw4MzPj8XgkScrIyCguLk5tP2I2qfX19by8vGAwuLa2FueBzQnKycn57LPPJicns7OzlRPHpyYQCNy9e3diYiIrK+u9996rqqrayd4sFktmZqaY6cZoNF67do2bBwHImAcLgLS2tvby5ctgMHj8+PGioqId7m18fPyHH34IhUJWq/XWrVsGg2GHO9zY2DAYDDvvdnz48OHg4KD4uaio6Fe/+tUOd7i8vDwwMBAOh1taWvLz8zmRAMhowQIgZWdnd3R0SJLk9Xpv377tcrlKSkquXr1qMplS2Ft3d7eYCsvlcj179kzsOTWBQODbb7+dmZnJyMi4du1adXV1yrtaWFgYGhqSF1P+t2UwGHzw4MHExITFYrl+/XrKA+QBHG6MwQLws2fPnk1MTPj9fqfTeffu3dR2ohyZNDg46Ha7Uy7P6OjozMyMJEnBYPDRo0c7ObSHDx8qbx5MeUTXw4cPR0dHfT6fy+V6+PAh5wyATRGwAPxMjMQSpqen+/r6UtjJ8ePH5Z8jkchOgpGynWmrZyonQuQhedFsNre1taWwn/Hx8VevXqlSJACHGwELwM9qamqUi0+fPk1h1oZTp05lZWXJizt5Co1a9Hq9PC+DJEkXLlxI4dHUPp/vwYMHyjXHjh3jnAGwKQIWgJ81NDQo760LhUKTk5PJ7iQjI+P8+fPyYjqM/tZqte+9915BQUF2dva5c+dSC0azs7PK+d8LCwtPnz7NOQNgUwxyB/CWq1ev/uUvf/F6vWIxtacT1tbWrq+vj4yMZGdnX7hwIeXCKO9ANBqNKewhHA6PjY0FAoHq6urf/OY3O6kZ5XykOp3u+vXrYt4vAIjFNA0Aos3Pz//444/r6+tNTU3t7e073Nvy8vL4+Hhubu6xY8eSTSRer/eLL74Qj3y+cOFCCjN5fvXVV9PT05IkZWdnf/bZZzucDn5oaKi3t1c00VVWVnKqANgKAQtAPMPDwxMTE4WFhSdOnEhh3NLKysrnn38uZm2oq6u7fv16snsIhUILCwtZWVlmsznZ146MjNy/f19evHHjRgoTPUQikYGBgZmZmeLi4pMnTzKbKIBE0EUIYEujo6NiWPebN2/cbvd7772X7B7evHkj0pXYW2NjY1lZWVJ7iEQioVBI3knifD7fkydPlGtSm9bryZMnL1++FMcSiUROnTrFiQFgWwwgALAl5Q2AY2NjyhkKEqS8nVCSpK6urnA4nPjLvV7vX/7yl6+++urPf/6zSDmJ6+/vl0eSSZJUUVFRWlqabPmnp6eV75sOd0QCOBAIWAC2FPVcwq6uLuVEWYmoqalR3kXodrvHxsYSf/no6Kj8jr29vUm9tbKoWq02hSnX/X5/Z2encs3OnyME4IggYAHYUlNTk9VqlRcDgcDw8HBSe9BqtVGPyklqck6/3y//rJwiIRHKOb1Onz6dwu2Q4+PjytLm5uYyLwOABBGwAGxJo9Fcv35deeddCuPcy8rK6urqxM86nW4nzxNMSlVV1SeffHL69On33nsvtWCkfLx0bFUAQBwMcgcQT05OzrVr177//vtQKFRQUNDU1JTCTq5du1ZRUbG2tnbs2LHUJtZKXDAYfPLkyfT0dEFBQUdHRwrjrmTV1dUjIyPT09MajaajoyOqwxQA4mCaBgDbCwQCa2trFotlbW1tYmLCbDanNgvU0tLSo0ePvF5vfX19IpNaDQ8Py0+nyc7O/ud//udtX/Lw4cPBwUHxc1NT0+XLl1Mo5+zs7OLiYmlpaX5+/srKitFoTG2aUwBHFi1YALan1+vz8vJWVlb+67/+KxAISJLU0tISNbgqET/88MPCwoIkSQsLCyaTSe463Ep9ff3Y2NjU1JTBYEjk7RYWFoaGhuTFxcXFFA62r6+vu7tbkiStVvvxxx+XlJRwAgBIFgELQKLEM2fEzwMDA+Xl5TabLak9iHQlPH782GazxR/VpNPpPvroI5/PZzAYEpnh8+HDh5FIRF6sqKhI9hgXFhbk2bPC4bDdbidgAUgBg9wBJCqqm+z+/fvKiaYSoUw86+vricy8sLq6+vr1a4fDoUxOm1paWnK5XPJidnZ2W1tbUsULBoPff/+9cqYuegYBpIaABSBRDQ0NykmtvF5vspN/nj9/XtkQpezO29Ty8vJf//rXhw8f/uMf/+jq6oq/cdQdjufPn0/2nsdXr14tLy/Li1lZWSdPnuRzB5ACAhaAROl0uuvXrysf2JxsC1Z+fn5zc7O8uO2sBw6HQ+6U3HYeebPZfOrUKRHgWlpalPNgJSjqpp+rV6/SggUgNYzBApCEgoKCCxcuPHz4UJIkjUZTX1+f7B7Onj07Nzc3Nzen0+nOnz8ff+NgMLjpz7GWlpbC4fDZs2dPnDgRiURSe+xgbW1tX1+feKOTJ0+mMIQLAAQCFoDkNDc3FxQULCwslJeX5+Xlra2tZWRkJN7So9frf/nLX66urppMJp1O53a7s7OzDQbDTop09+5d8QSe2trad999N4U9BAIBn89nsVg+++wzp9OZk5OT2jwUACAQsID04na7V1dXfT5fZmamxWLJyclJw0KWlJSUlJSEQqGvvvpqenpaq9WeO3cukXmtZDk5OT6f74svvnC73Tqd7sqVK9tO2bAVu90uP9/w9evXp0+fzsvLS2oPY2NjnZ2dYibVjz/+WNmJCQCpIWABaSEUCg0MDAwODkY9TTk/P//EiRP19fWJTFKwxyYmJqanpyVJCofD3d3dRUVFSc1o8OrVK7fbLY79xx9/LC8vz8zMjNrGYrEoqyJ2J36/X8xZJdv2ZsMoKysr9+7dC4VCkiQtLi7a7fakkiIAbIpB7sD+m5+f//Of//z48eOodCVJktvtvnfv3t/+9reknpG8N0QoESKRyA8//CAPSE/25YFAQJ59Sqmmpqa1tTUzM7O4uPjq1auxG7x48UI50L6iomLTHLaVcDj8/fffJz7S68ARd3r29fVF3Y6w1XoAatH98Y9/pBaAfTQ/P//VV1/Fv86tr6+PjY3V1tam1cOGzWbz69ev/X6/WPT7/aFQKPGhS7m5uUNDQ/KkU4uLi8eOHYtqxNJoNJWVlSdPnmxqasrKyordyYsXL+RUqtVqb968mdTw9oGBAeXNiQaD4cqVK3tcyZFIZHV1dWlpaX19PRKJ7HA4mlIoFPqv//qvsbGxycnJ169f22w2MVRuZWXliy++GB8fn5ycfPPmTUtLC19DQHV0EQL7KRAI3LlzJ5GGn/X19e++++4Xv/hF+vQV6vX669ev//3vf5d75ZQTtW8rKyvr1KlTT58+ldeIJzRHbTY9PT0+Pp6VldXS0hIbfaxW68zMjPj55MmTyi7FREQ9S+fSpUubxrhd4vF4Xrx48ebNG2W8zs3Nra2tPXHixM6T1sLCwurqqvh5bW3t73//+yeffCJJ0t///vf19XWxfmVlha8hsBsIWMB+evHihXypkyRJo9E0NzfX1dVlZmaurq4ODQ3Jw7clSXK5XHa7vaGhIX3KX1JScurUqefPn4vF0tLSpF5+4sSJV69eydf4wsLCqA3m5ua+/vprEeDm5uY++OCDqA3OnDmj1Wrn5uZESZItf2lpqdyCVVdXV1tbu2dV9/Lly6dPnypnjRdWVlaeP38+NDR05cqVZJ9EFMVsNms0Gjn+rq+vf/nll9Lb032l4dg+4HCgixDYN2LckjzoR6PR3Lx5s6WlRUxbkJOTU1NTYzAYJicn5Zf4fL7Gxsa0OorS0lKj0ZiRkdHY2NjW1pbUBVur1VZWVq6trRmNxvb29mPHjkVtYLfbp6amxM+rq6unT5+Wq25wcHBoaCgQCIibAEpLS1PICoWFhVlZWTqdrqam5ty5c8o5VHfVw4cPX7x4EWc8fjAYHBsbM5vNsaEzcXq9PjMz0+l0KncbNcjs0qVLRUVFfBkB1dGCBeyb+fl5Zd9Qc3Nz7ACm1tZWp9MphwyXy+X3+1UcprNzGo2mtbVV3Hk3PDzc19en0+k2TUubys3Nff/99yVJCoVC/f39gUCgpqZG7ulTNvAof378+HFfX5/00/Tuybbqzc7Odnd3e73ehoaG06dPNzU17WWNDQ8PDw4ObrtZJBJ58OBBfn7+TgLQ8ePHJUn68ccfN/3tpUuXxAYAVMddhMC+kcfHCFv1TynXRyKR2DsN08Ty8vKDBw+Wl5cXFxe///77qOFN27p79+6jR4+ePXv217/+VflAwFiLi4v9/f3y4sTERFJvtL6+fufOnbm5udXV1WfPnikbCPeA3+9//Pixck1WVta5c+d+8YtffPTRRydPnlQ+PzEcDm/7BMZtHT9+XG75Uzp79izpCtg9BCxg38j33wmxs0AJUbfFRb0qfShTUSgU+uGHH5QTMcQXCoUcDof8s5wqlL1+8s8PHz5Udq7FjouP7969ez6fb9Ni7wHlfZeSJBUXF3/22WdtbW2lpaUVFRXnz5//9a9/rTwTXC5XUrcOxHK73Zs+VLu/v1/MQwZgNxCwgH0TlZy2utotLS0pF7fKYfuutLRUeURut7unpyfB12q1WuXte5OTkyJvKXvHiouLJUmamZmZnZ2VV2ZnZyc1L+jQ0JCyyUqn01VVVe1lLck5Uhz1jRs3op4ylJeXd/ny5a1ekiy3273VJCBer/err74iYwG7hIAF7Juo8cvKbi9ZMBhUNj/o9fr0fHiO9NMkUso1ylsg49NoNGfPnlWuefbsmSRJlZWVly9fLisra2hoeO+996S3pyeVJOn8+fPKPrVtRRXp/Pnze1yfygaz8vJys9kcu43NZlMOs0u5jS0QCMSfYs3r9X799dd8E4HdQMAC9k1OTo6ye2t6evrHH39UDuUOBALfffedctBVZWXlnt3plgKbzaYc1pNUdmloaBBtVIIcC5qamj7++OOrV69mZ2dLklRWViZXWk1NTU1NTbJ1rqzMvX/soLJ3cqs5tzQajTJ4KV+SlMXFRWW60mg0169fv379urLjVTllAwAVcRchsJ9OnDjR2dkpL4oOrOrq6qysrNXV1dHR0aiL64kTJ5J9C6/Xq9frdTpdgut36MKFC4FAYGJiIi8v79KlS0m99tKlS1988YVoo9rqxkCtVvvLX/5ycnJSr9cnO+2WJEnvvPPO+vq6y+UqKSnZ9Nk7u81kMsljsKLucpCFw2Hlr5Kam17JYrFotVoR2UV3pDyxVmdnpxjHpvoJAEDQ8M8XYH/dvn07wfvgWltbL1y4kPieQ6HQt99+OzU1pdPpLl68KE+g5ff7v/vuO7H+ypUrdXV1u3RoKysrot/z+PHjCT4icHl5eWJiIicnJ3aOze7u7oGBgYyMjIsXLyZbZo/H09/fHwwGm5qa9nfapzt37shjqjQazWeffZaXlxe1jd1u/+GHH+TFs2fPpjCHqjA5Odnb2ytJ0qlTp8rLy7ddD0AtBCxgn/n9/m+++WZubi7+ZtXV1e+9915Sc2m+evXq3r178qKY9Cjq7YxG47/+67/uxnGFw+E//elPYp56g8Hw61//OvEew0gk0t3d7XA4LBZLR0dHbm7u6OionDkyMjL+9V//NfGmF7/f/9e//lX0tGZkZPzhD39IuU1o56I+lLy8vI8++kj0fgoul+vrr79WPj3pt7/9bVJPsAaQDpjJHdjvL6FOV1dX5/P5trobX6fTnTlzpqOjI9mZyl0ul7JtzOl06vX6J0+eRIW5U6dO7cbzUtxu98uXL8XPoVBofn6+oaEhwTd69erV06dP/X7/ysrK7OxsTU3NnTt35CnIw+Fwc3Nz4o9k7uzsdLlc8mtLSkqSfWShinJzc0dGRuRj8Xq9w8PDXq83EAgsLCy8fPny0aNHyoH8ZWVlJ0+e5GsCHDiMwQLS4HuYkXHp0qWWlpbh4WGn0+nxeMLhsFarzcvLE8PGU3sCcU1NTW9v79ramrymu7s7apvW1tZdehqd2WzW6/VyS4zL5ert7U2wq0s5d8DCwsLdu3eVbe3l5eWJV8jr16+Vdw5qNJrYLrm9pNfrL168ePfuXXlNIBAQs9JvdWLwBQEOIroIgXSk1vNwVlZW/v73vyufJ610/PjxXb1+R3WHGQyGf/u3f0vkhVNTU8rpA5RPLNZqtb/5zW8SD0l//etflXPKnzlzZtNpzffY8+fPxTwUcUQNSwdwsBCwgENuZWXl66+/jn3AzsmTJ8+dO7eTPU9MTLx8+TL+JAIej0e+aU60ySW489XVVeU4JJnJZEqqPW95eVnuccvIyMjNzU3whRkZGQ0NDbv3mMKRkZHu7u6t5uXPycm5du1aSUkJJzBwQNFFCBxyBoNh0/HgUROIJ2tjY+POnTvKWbu2FQ6Hk31AYSyv1xtn5sz4gsFgUgVwuVwWiyWFySAS0djYeOzYsf7+/vHxceVk/Varta6urqmpKZ0nPAOwLQIWcJiJx6FsOhX4kydPJElqa2tLbc/z8/NJpasDanZ2dpcCliRJRqPxzJkzZ86cCQQC6+vrGo0mOzubiamAw4GABRxafr8//sPmnjx5otPpknqWn+wopKs9O0y9Xr+PNzYC2A0ELOBgUA70TtDY2FhUumpubp6YmFDOEv7s2bOWlpad30hYaZAyD0XLSzgijXoPw4EA2F8ELCCtKaOP/HOySUsQE4Kvra198803ykE/qmjL1pQZpEPAH5FGvZHDcCQA9hWDKIH0tVXDUoINTrW1tfJzkc+dOyfmoMrOzv7kk0/k9WfOnNmlebAA4CijBQtIU/FzTyI9hnq9/te//rXb7Y6a2sBkMm26HgCgFgIWkI4SaVVKJGNpNBq5sSqR9QAAVdBFCAAAoDICFgAAgMoIWAAAACpjDBYAFSwGpVBEWglJB3f6UY0k5TCJOgCVELAAqKBrlbmjAOBnBCwgHUUikW1vJExtulEcboFAoLe3d2Vlpba29tixY1QIsF8IWECaip+x9j1dmc3mo/Ap5OTkHKwCd3Z2vnnzRpKksbGxDz/8sKKigq8SsC8Y5A6kHYfD8fz585mZma1SVDq0XRUWFtbV1R3uD6KkpKS6uvoAFdjn8zkcDnnRbrfzbQL2Cy1YQHrp6+vr7u4WP9+6dauysjJti3r9+vWzZ8/6/X5Jkp49eyZf2nVS5KLWc4Dq/GU4a1n6/+Pbi4qKrly5IklSRkZGTk7OwXqO0NTUlDJ8T0xMJNLXDGA3ELCA9NLf36/8OZ0DlqToKDQajfJKrSQdk3wHqM5HJJP0U8DKyMg4uHPcT0xMKBd9Pt/8/HxxcTFfK2Dv0UUIpBG32722tiYvzszMBINBqgUJigpYkiRNTk5SLcC+IGABaSTqAhkKhWZmZqgWJGJhYWFjYyP+GQVgz9BFCKSR2MvhxMREmvcSYluRSGRoaGh0dHRjYyM/P7+trc1qte7BySNJ0tzcnM/nU3bgAtgbtGAB6SIYDM7OzkatdDqd1MxBd//+/YcPH7pcrtXVVYfD8eWXXyrv9VPLpgErEolMTU3xEQB7j4AFpIupqalwOPpJM6urq6urqwfvYDSaA/XfLtbE7Ozsq1evlGsikciPP/6o7lwbfr/f5XJt+it6CYF9QRchkC62uhA6nc6WlpbdeEePx7O+vp6bm2symVTcrUajMRUVHaCa17ojkn+3di43IGVlZR0/fvzZs2eSJK2vr6+srFgsFhVPnq0S28TERCgU0ul4ziKwpwhYQLrY6oavyclJ1QPW2tpaZ2fn9PS0JEkajaaxsbGjo4Nr8G6QazUUCnk8P08PptXutANB3AMxOTk5OTnpdruVv6qpqRkbGxM/b2xs/O///b9LS0srKysrKipUTHUA4iBgAWlheXl5q67AqakpdVsgwuHw7du35UtyJBIZHh6ORCJigk2oq7Ky8smTJ5Ik+Xy+kZERsdJisaT8EB632z01NTUxMTEzMxMKhWI3sFgsx48flwOWJEnBYHBiYkI0kZrN5vLy8srKyrKyMga/A7uHgAXsJ6/XOzU1JRohlOtLS0vlCRpCodDnn39eWVlZXl5eVlam1+t3+KYOhyOqwUOSpJGRkXfeeUfdvkJIklRQUHD69Onnz5/La/R6/dWrV5Pdz9ra2osXL5xOp3KmtE1VV1eXlJSYTCav1xv7W4/HMzIyMjIyotFoiouL6+rqmpub+ZgA1RGwgL0WDoddLpcIVfPz87Eb6HS6c+fO/e1vf5PXrKysDAwMDAwMaLXakpIS0QJRUFCQ2lNQVlZWxA9ms/njjz/+v//3/8rrCVi74cyZM1arVZ6moaWlJdnmq0gk8vXXXy8vL8ffTKvVVldXt7W1abXaGzduPHjwIM5LIpGIy+VyuVwELGA3ELCAPRIOh+12u8PhmJ6eDgQCcbYsKysrLi42m83KITvyTqanp6enp58+fWoymSoqKmpqamw2W1Ilyc7OFj94PB5ljMvKyuJj2iWVlZU7mc9sfX09frrKyMhoa2trbW2VGzhLS0t/97vfLS4uPn78mPncgb1HwAL2yIMHD6Ju19+U2Ww+f/68JEmXL1/+/vvvfb4tH+rn9XpHR0dHR0fPnTt38uTJxEtis9mysrLW19fFTsTKqqoq+cGCSDeZmZnZ2dlxOgeDweCzZ88GBgbq6urOnTun1WoXFxcfPXo0OzsbO/cHgD3APFjAHhkdHY33VdRqW1paPv3003/6p3/Ky8uTJKmiouJ//I//8dFHH9XU1MTfs91uT6oker3+1q1byjhVVlZ27do1PqO0pdVqb926ZbPZ4t/r4PV6+/v7X758GYlE7ty5Mz09HT9dmc3m06dPU73AbqAFC9gjOTk5cXp5wuHwwMCAy+Wqra1taWnRarWBQODFixcOh2NpaWnbPSdbmIKCgt///vfT09MbGxsWi6W4uJgPKM3l5+d/8MEHoVBodnZWDOBbXFzcdMuxsbGysrLY/mUhIyOjrKysoqKCKRuAXUXAAvbItWvXHjx4sNVFUZifn5+fn/f7/WfOnOns7Hzz5s22uy0rK7t48WIK5dFqtRUVFXwuB4tOpysvLy8vLz937tzGxsbkT5Q3DC4uLsrzQcgKCwtFqCopKdn5FFwAtkXAAvZIcXHxb37zG4/HI66IU1NTfv/m04e/evWqtbU1zuPqsrKyKioqysvLKyoquO/vyMrMzKyvr6+vr49EIoODg11dXcpTSP7ZaDT+7ne/4zwB9hgBC9hTZrO5qampqakpEonMzc2JsDU3N6d8zsna2lp/f3/Uk090Ol1JSYlohCgoKKAmIdNoNLW1tcqApTx5SOHAviBgAftDo9FYrVar1dre3i7m+H78+LH825cvXyo3fv/99ysqKjIy+MJicyaTqbi4eG5uLvZXdAQD+4KeeGD/GY3GlpYW5Q1iykeg5OfnHzt2jHSF+LaaZ2sn828BSBkBC0gLYvDypr+iBQKJ2PQ8KSwszMzMpHKAvUfAAtLFVkGqqqqKysG2iouLYx/eTPMVsF8IWEC62PRamJGRUVJSIklSao8dxNGh0WhiMzrNn8B+IWAB6SI3Nzd2ytDy8nJmLUKCouKUwWCwWq1UC7Av+MMNpJHY3kC6eBAlTltm1NlCOgf2Ed89II3EduiIS6a4ptJLiPjnQGZmpvJWidraWmoM2C/c+A2kkbKyMp1OJ8/RYLFYlI9kBrZ1/fr1J0+erK6u1tTUVFdXUyHAfiFgAen0hczIqKyslB9ByAUSycrMzLx69Sr1AOw7AhaQXjo6OgKBwMLCQnl5+alTp6S3e4U0Gk3UI3RwdMhnAqcBkP4IWEB6yc7O/uijj6gHADjQGOQOAACgMlqwgLQWe9dY+ncPBSLSl+6D1IG1GDiQJwa9hEA6I2AB6Sj+3fjyb/f+Eqt8x6h3V0655AomdCAp1Ilah/zWfjSSVvPzu4TD4U0Lv7/TZDBJB3CwELCAdJHCFVT5km2Th7zBViEpkZ+3otPp9mZOS7Vyxlb70el0wWAwqdcqx55vus2mG+y8qOomTgDqImAB+28noUFcX+WrrGh9ic1Su30Ztlqtdrv9EHwWRUVFCdb5VouJf9xR88cqFzUaTYJnRVIhG8CeIWAB+0++LsZeU5X5KRKJRMWpZNuZdo/NZvP5fFNTU3L/2oGj0WiKiopaWlr27OOO+sg2HW8nxUSuONP672PfMYDo7+PGxga1AOw7ZXiKSlHbvpDaOzSSasuMDV4CpwSQDmjBAvZBJMZWW256xeUKeohPjDif+6Ybx7aHaRSkt28+ALBnCFjAXhApKhwOx49Tm76Q28eO5gkj/xznBNj0XIo9x+S8pdVqOZ2AvUHAAnZROBxOIVTFR/PVUSM+8a3G5yW4B7FxKBSSkxYtW8CuImABuyIUColoRVUgrciNqdJPk2vQpgXsBv4FA6gvGAyGQqFdmRITUE8oFNp20i8AqSFgAepTPRJx+z12OPnWnp2rAAQCFqC+jIwMdQe4cBXEbtBoNBkZDBQBdgVfLUB94rolRrqoMhKLewmhPA12eEYxzh3YAwQsYLdoNBqdTqfT6VKeoyEK7VjYydnITA3AXiJgAbtOvrCJRblNK+q5gYDqZ13UpKMA9gwBC9hrctLS6XTS288ZjHpaDrCtqOfkSMk8KBrA7iFgAftsq2f3xj6aUH7MHPHryJ4hmz7+GUAaImABaWqr4CUok1bU0+hiH06HdP6IYz/r2CwF4MAhYAEHUuJX3zipK/5KJPtxRP0cfyXJCTjcCFjAIZdyQ0j81LXVY4YT2SyRF+7weFPYbNMXxl9JSAKwFQIWgM1t2gADAEgEs8wBAACojIAFAACgMgIWAACAyghYAAAAKiNgAQAAqIyABQAAoDICFgAAgMoIWAAAACojYAEAAKiMgAUAAKAyAhYAAIDKCFgAAAAqI2ABAACojIAFAACgMgIWAACAyghYAAAAKiNgAQAAqIyABQAAoDICFgAAgMoIWAAAACojYAEAAKiMgAUAAKAyAhYAAIDKCFgAAAAqI2ABAACojIAFAACgMgIWAACAyghYAAAAKiNgAQAAqIyABQAAoDICFgAAgMoIWAAAACojYAEAAKiMgAUAAKAyAhYAAIDKMqgCHAhut1uv15vN5gNU5m+//dZoNJ45c+ZgFTttdXZ22u32+vr6a9euyWfFkydPioqK2tvbt1qT8nv5fL6LFy8e8c+OegBSRsBCWhsYGHj9+rXL5ZLXWK3W48eP19fXp3/hnU6nJElFRUUtLS18lDtnt9vF/+WA5ff7nU6n0+msrq7Oz8/fdM1O3mvnQe1w1Dn1AKSAgIU05ff7b9++rYxWgsvlcrlcQ0NDt27dMhgMVNQe8Hg8/f39OTk5+5sUOzo6JicnKyoqNj1btl2Tgvn5eT596gFIDQELaaqnp0ekq/r6+qamppKSEr/fPzMzMzw87HQ6XS6X3W6nZWhvOByO/v5+SZL2t8JbWlr4xAEcFAQspCO/3y+u6MoBNwaDwWaz2Wy2gYGBrq4uBoUAANIWAQvpyO12ix+Kiopif9vS0mKz2aICltvtnp6enpycFIu5ubnV1dUlJSXKDcbHxwsLC202W+w+HQ7HwsKCcuCO3++32+3z8/M+n0+UpLy8XLlDJbvdPjU1JW/Z0NCQeP6bnZ2dmpoSvTBGo7GoqKi+vl7u/Uy22NvuUBgYGJAkSayfnZ0dHx9fWVmJLbyoBLlWxaskSTKbzcry2O32hYUFsQdJkioqKmLfUblDKbHGMHHscrU7HI7p6emojzU1iRdY1OdW9RNbWrk3raKiIuos3cmxb1r+1tbW2JIMDAysrq4qf9XT02M0GsUBut3ukZERcSyx35FtT9RE6iGRL45cJEmS+vv75+fnjUbjyZMnladxUl9AIA0RsJCO5Eud+NsaK+ov+6NHj0SLl1J/f39ra+uFCxfE4vT0dE9PjyRJf/jDH6Je7vF47ty5I0mS0WgUf+LdbvdXX33l9XrlbZxOZ09PT3t7e9Ro39ixYmJLueEtvtiS2+32wcHBGzduiJIkVexEdih0dXXJNSz2Lxd+cHDw448/Fhvb7XZ5S+WrJEn693//d2mLoXJOp/P58+fvv/9+7OXQ4XCInURFtE09ePDA5XJNTk5++umnkiSJ3uGVlZWbN2+mfGolW2DRXLpV/cj77Onpiap2p9PZ1dXV0dEhx6mdHHuUzs5OSZI2HRUn3kL5K/nzNRgM4oVbfUfiSKQeEv/iyEVS3sLi8/nkTzbxLyCQtghYSEf5+fkWi2V5eVn8IY7fIDQwMCCubVVVVRUVFYWFhQsLC+IPt3Jots1mE1eIV69eRf2Ndjgc4gdx2XO73Z9//rkkSVarta2tzWg0SpI0Pj7e398v/uUtX7qUV+uqqqqampqcnJyFhYXBwcGoK9mmxLwDkiR1dHQUFhZKkrS6uvrixYvl5eWvvvrq97//vegVTbDYCe5QuYfnz597vV6LxdLc3CxJ0uTkpNPp9Hq98sZlZWViaLm4I7Kjo0O8UN5Pf3+/y+UymUznz5/PyckR7zg2NuZ0Ont7e2OTUGlpqfhhYWFBLrbf7//b3/62vLysjCOSJImK3XRUe8qSKvDc3JzT6dy0fv7lX/5F3qyrq0tUe9Q5sLy8LD47cVD7e+ziG6H8jogSiu9O/IyVYD0k/sURRAEsFktubu7KyorYPoX9AOmJgIU0de7cOdE809PT09PTY7FYKisrRU9ZVEpYXV2VJEn5D/GSkpL6+npx3RocHBR/js1mc319vd1uf/36dVRSGRwcFHsQMe67776T3h7+JfaZk5PT1dXV1dUld/3Y7XZxIVReHcW7b3oLpJLdbhdX5d/+9rdyM0BJSYnNZvvP//xPr9fb09Nz4cKFxIud4A6Ve/B6vcomgZaWFtEA5vV6HQ5HfX19fn6+2JUIWLEXNlGG06dPyxNniMN/9OiRSHhRzGaz1WoVbTPy+9rt9uXlZUmSurq65K662dlZ8dtN95OypArs9XqV55WyfsSMXMpqjz0HRPCST5j9PXaXyxX7HRFnaX9/f2NjY5xZLRKph6S+OMLy8rJyY/nGz2T3A6QnZnJHmrLZbL/4xS8sFotYFP/U7uzs/F//6389evRIeRN+e3v7tWvXoqKDwWAQ/9oWVy+hurparJEvYJIkud1usY34rcPhEItnzpyJKpJ8IZGbjl6/fi1JktVqjUoeBoPh3XffjX+AQ0NDkiS1trZGXdjkko+OjiZe7KR2KLNarVGhrbW1VfyQ1DQHsbfxX7hwYau5ykSrjDJ9ymO8lHW7sLAgnwmqn10JFthkMm1bP6Laq6qqYs+Bjo4Ok8kkSdKrV6/2/dgtFkvsd0Q+S8fHx+O8NpF6SOqLI1NuLMJlavsB0hAtWEhfJSUlv/vd7+TR66IRRZKk/v7+ubk5eR4sg8Eg/+V1u91+v19cn+RL1+zsrBhbY7PZRM/j+Pi4PNpmZGREkiSLxSLWeDwesbi2tra2thZVJNECIV+exZWytrY2tvDb/gtbvDYnJ0cZmwTRJ+L1et1ud35+fiLFTmqHUes3LbZoF9xWXV1df3+/3W6fm5urra0tLCwsLS2NPz9ZeXm56PkVn4uYGlSSpI6Ojq6urqmpKfFpikquqqpS96RKqsDFxcVRv4qtH1HtNTU1sS83GAzi7eQTZh+PPTc3d9OztKqqyul0xp/pKpF6SOqLI6+M/ZqksB8gPRGwkO5EL5VoHrDb7UNDQ2KuUWWHl7g3Knace6zm5uaurq7R0VH5taJdR7TxSD9d25aXl7/88sutdiKG3su3OqbQjyO/VjlwOJbcPLBtsZPd4bbkO+zia29vX1lZcTqd8oA56aehM1u1vsiJcGFhoaSkRLRG1NfXi9Fm8kTtExMTktoDsFIrcJz6katdDOeKJdbL/zbY32OPY6u7SRI/TxL/4shi831q+wHSEwELB4m4FIkRRRMTEyJt2O12MaLcYrGINgmj0WgwGKanp2PThhgZI8YY2Ww2u90u7lSS28DEFVEez7spkaiys7PForhYJnUg8mtbW1u3ujZLkiS3Nm1b7GR3qBaDwXDz5k25lXFubs7r9bpcrjt37kSN2o76FMQd+JIkTU1NSZJUXl4uD1FyOBwFBQXiAMvKytKhwNt+jvHJPd37e+xxbJp1kpL4F2dv9gPsOwIW0pTcrxfFYDAUFxeLFgix5sWLF5IkWa3WqIfnTE9Pb/ry1tbW/v7+8fFxm80mrnCtra3yC8WVxufzbXutlV+yaW9a/LYig8FgMpm8Xm+Cz5/ZttjJ7lBdylZGh8PR29vrcrm6urq2KklRUZHdbp+YmJCnhhKtR7W1tS6Xa3p6WtSexWJRPRGmVuBtP8epqalNT1cxSq+4uHg3jj3Bblxhq1Yf0QS184CV+Bdnb/YD7DsGuSMdDQwMfPnll/K0lkp+v19cEqxWqyRJHo9HJK3a2tqoYSLK4cNKYlS43W73eDziCiePE5d+utp5vd5N3312dlY5a5RoQBodHRUDR5TEnuOoq6uTJGlwcHDTKPbo0SO5+ymRYqewQ1XEHqbNZjt+/Lj4ObZaoipZvFy+e0602YyOjoroUFlZmSYFTuRzjH2tw+EQI7TKy8vVPXbRJCZ6EqO+OFu9xOVyxQ7Ok+9hVJYwNUl9cfZgP8C+I2AhfXV1dXV2diqvCh6Pp6urS05UkmKwbdS410ePHskDX6KUlJSI69P3338vvT1OXOxQ3CHV1dUV9Sfe4XD84x//6OnpkYvU1NQkSZLX6/3+++/llX6/P2pWxk2Jd1leXr59+7by2uz3+zs7O/v7+588eZJ4sVPYYeLk5CqnE1Ezs7OznZ2d3377bVS2EA1sJpNpq5H+ZrNZHIuYNEG+uov5z7xer1ivek9QygWO/zmKRqxvvvlGea7a7fb79+9LkmS1WpX3J6py7CJ+LS8vy3fUJnLW/eMf/1DmS7vd3t3dLc6lrW75TFxSXxy19jMwMPAf//Eficw5B+w9ugiRjurr68W8iPIkQ+IaJm+gnBlB9J3Z7faVlZWKigq/3z8xMbG8vCzWb7p/MWZctC7EDvVob2+fm5sTfUbPnz8X/TsrKysi2FmtVjnZlJSUiPu/XC7Xl19+KaZMFMEuzrsLZrP52rVrnZ2dLpfrT3/6k9VqFZ0jci4U6S3xYqewwwTZbDZR/52dnWNjY2Lcks1my8/PN5lMTqfT6XTKbydX1OnTp+Pss7a2tqenR2ypHF0u1ovPWvUJGnZS4Dif4/nz5zs7O8W4bHEOiCoS5+3ly5dVP/bW1tbR0VGv19vf3688zeKcdVardWVlpbOzs7u7u7i4WFnCGzduqFK9iX9x1NqPCKNzc3P8zUQa0v3xj3+kFpB256VO19jYaDQaV1dXxdiRYDAofmWxWNrb25UXLavVGgqF5ubm1tbWZmZm5ubmrFbr1atXKyoqRkdHg8HgiRMnMjMzlfu3WCwjIyPBYNBkMl25ckWn02367vPz816vd2VlZWVlxefzmUymd95559y5c8rti4uLxbzYPp/P5/OJ7suOjo729vb5+fmVlZXKykrlEBylgoKC6urqtbW1lZUV8X/x8qqqKlH+qO3jFzupHYqytbS0xJYt9lc6nS4zM3N2djYYDK6srASDwdbW1traWp1OJ6YnEJUvV5T4jOKPodFqtWJ2qNbW1mPHjsnrTSaTPLNUY2NjVMHm5uaqqqqU3WciT7S3tysnl49ao/xkEyxwUvWjrHZxDojTtbW19f33349tFUvh2KMYDIbKysrFxUV5IgNxcra3t/v9/rm5OeVZJ/rUCgoKPvnkE7fbvbi4KJewqqrq+vXrcQZ7JXueJPjFibPbxPfjdrufP38uPuutvmLAPtJsbGxQC0hnHo9HvooYDIatLgZ+v1+MMcrOzo56wm6ch/hu+09qMbFW/LeO2jI/Pz/+RFBxCp/IyxMpdlI7TLaQm1aF3GuzbUUpd7i2tha78Vbr1ZVCgZP6HON/RmodeyJn3X/8x39IklRVVSUeBCR/oaK+KepK/IuT8n5El6jFYvnd737H30mkIQIWABxmUQHr0Pjiiy9cLtcvfvGLZCdJAfYGg9wBAAeMx+NxuVzt7e2kK6QtBrkDAA4Ys9n8wQcflJaWUhVIW7RgAcBhJp5puJcP3tkbNptNlcGFwC5hDBYAAIDKaMECAABQGQELAABAZQQsAAAAlRGwAAAAVEbAAgAAUBkBCwAAQGUELAAAAJURsAAAAFRGwAIAAFAZAQsAAEBlPOwZwCZmZ2f/8Y9/SJL0/vvvl5SUSJLkdrufPHlSVFTU3t6+N2Xo7Oy02+319fXXrl1Lz1rq7Oz0+XwXL140m83p/Gk6HI7h4eGKioqWlpb0P/f2/kwDdgMtWAA2sbCw4PV6vV7vwsKCWOP3+51OZ09Pj9vt3psy2O12+f/pyW63O53OV69epfmn6fF4nE5nV1eX3+9P/3Nv7880YDfQggVgEzabbX5+XvwQ9as9u0h3dHRMTk5WVFTsb1XY7fapqamTJ0/m5+dvuoGoqAPB7XaL9sgDIbUzzePx9Pf35+TkHIjmOhxiBCwAmzCbzfveMdfS0pIO18jOzk5JkoqKirYKWEgrDoejv79fnD/UBvYRXYQAAAAqowULibLb7QsLCysrK2KxoqKivr7eYDBEbeb3+x0Ox9TUlM/nkyQpNze3rKwstptJ5na7x8fHCwsLN93G4XAsLCxUV1crGw/ES+R+mYqKCpvNFjXKWHQTFBYW1tfXx77jyMjIpr+KfyBb7W16enpyclIs5ubmVldXR/XCzM7OTk1NlZeXl5SU+P1+u90utjcajeXl5fGLIRfGbrfPz8+LwhQVFYm9bVqf25ZH1I/D4Yizmd/vF80AcQYaDwwM+Hy+1tbWTU+D/v5+o9EY24qQ+KscDsf09PSm5RdVKs4Bo9FYVFSkPBtFdUmJtWGI02nT+nQ4HB6PR/ws15UkSZue+bOzs+Pj4+ILUlRU1NDQsOnI9/gll6tIfhfRQSk+95qaGvlsEWe4eLutPuU451IiZ+C2RRUbiC+vw+EYHx/3+XyxQ+kTOeREbHtuKw9NrkZJksxms/LPSyLfpgQPDYiDgIXt+f3+27dvu1wu5Uqn0/n8+XP5FjNB3Hrm9XqVW/b391ut1nfffXfT68309HRPT48kSX/4wx9iQ9KdO3ckSTIajSJg+f3+np4eceFXlqSrq6ujo0P5t0/uJoi9eExPT2/1K+WB3L9/f3l5OWr90NDQrVu35GvDo0ePogojjre1tfXChQvymoWFhZ6ensHBwY8//vi7775T7lbEVuXGsdxu91dffaWsVTEEuL29PSr9JFgeu90uur2iNlPer+d2u8XnslWS8/v9z58/93q9fr8/tvziYzKZTFGX0qReNTw87HQ6V1ZWbt68Gf8w7Xb74ODgjRs3xHnicDi6urqkmCvrph48eOByuSYnJz/99NOoX4nTT65zp9MpL0ZdaAcGBsQ7yhuLjzuqV3HbkgvyrlZXV5XbO53OoaGhTz/9NPYT7O/vv3bt2rZhfXV1NerE3uoMTKSo4sQ2mUxXrlyR68rpdBYWFsrnTIKHvK1Ezm273a78FJQ///u//3tS36ZEDg2Ij4CF7fX397tcLpPJdP78+ZycHEmSVldXx8bGnE5nb2+vfPFzu91ffvmlJEkmk6m5ubm8vNzn84k043K5vvnmm1/+8pex/2ytr68Xfwf7+/uj/srLN2fJ18iuri7RMlFVVVVTU5OTk7OwsDA4OLi8vCx2osq/L+UDkSSptbW1sLBQkqSFhQVxILdv3xZX4oGBAfEXv6qqqqKiorCwcGFh4fXr1y6Xa9Mxtl6vV/xlb21tzcnJ8fl8g4ODXq83/oBct9v9+eefS5JktVrb2tqMRqMkSePj4/39/T09PcomogTL4/F4uru7Rc03NTWJ105NTQ0ODtrt9qampgSvHwaDobm5WUSi1tZWZTiWW7/q6uqiPnGDwVBXV9ff39/f39/e3h6VvUZHRzd9lZKYu0GSpI6ODvHRrK6uvnjxYnl5+auvvvr9739vMBhKS0vFxgsLC/LJ4/f7//a3vy0vL0dlcfEvh02H0nd0dEg/XadFrUadkMLc3JzT6bRYLM3NzZIkTU5OOp1O8XH/y7/8S1IlV+5WJFH5fcV57nK5enp6xLW/ubnZaDTKIay7u9tms8VvGeru7k7kDEyqqF6v9/Hjx6KKJElyOp3yb5M95K0keG6XlZWJGyNEFBYfnzjrkv02bXtowLYIWNje4OCgJEmnT5+W/31cUlJSX1//6NEj8UdT+O677yRJslgsH374oXy5tdls1dXVX3755fLyck9PT+w/lA0GQ2tra39//+joaNQV9/Xr15IkVVVVib3Z7Xb5j7X8d1CURASvrq6u2L7CFIgDMZlMyhaI+vr6xsbGr776yuVyud3u/Pz81dVVSZKU/4AWhRFX8cHBwdjMZDQalfusrq4WkWvTjZWFiZoLqqSkJCcnp6urS3nICZbH4XCIf75H7bC6uvrJkydJNSo0NDSIVi6HwxHVfCgfYOyrGhsbxcXS4XAoW1zkgrW2tm71jvI58Nvf/lYuaklJic1m+8///E+v1yvOMbPZbLVaRbuU3Cxht9tFy01XV5fcrjY7Oyt+qzyTZeKgRMCK0z0kIotc7S0tLaK5xev1inm8Ei951G6VjVL19fXyllarVdmSKk4G8Xbb/htDWYBNz8AUirq8vCxv7Pf7RcFS2M9WEjy38/PzxRuJgBVbFYl/m+IfGpAIBrkjUbH3ol+4cEH+6+9wOMTV68qVK1F/oUpKSsQ/Jfv7+ze971pchr1er3xhliTJ7XaLHdbU1Ig1Q0NDkiRVVVVF/d00GAwdHR0mk0lSNHqlTD6Q8+fPR6WN/Pz806dPt7e3i/Xt7e3Xrl2LukKIdh1JkmK7FyVJOnfunHKf+fn5dXV1W22sLMyZM2eifqWsefFDsuWJmmQoPz//5s2bSV0/zGaz+Je9iOCyqakpSZIsFsumjWH5+flWq1WSpLGxsdhXyXl6U+IcaG1tjfpo5MMUbWDSTy1Syn5t5SAqudLkWb627UmMw2QyRfXVyhlRPuETL7nMarUqA6i8pSRJbW1tyk8qkWF8wunTp7c9A1MoqnJjuWAp7GcrKXzXdvhtin9oQCJowcL2RJ+O3W6fm5urra0tLCwsLS2N+lsjxgJvdU212WyiGWDTaXhKSkpEe8PY2Jj8l258fFySJDEcR6wRF0s5bynJHU87n5FIHIjyfZWU2c5gMMjbuN1uv98vrtbyhXx2djbqYEWXhJLochXvGxss5FpdW1tbW1uL+q2oNPmQEyyP/Fl8/vnn9fX1RUVFZWVlKU9A0NTU5HQ6l5eX5YOVB5jLaSDW8ePHXS6X0+mUj9rj8YhXbfr5ysQ5kJOTI7c8RdWt1+sV7Yvl5eWidU0UTMxdKUlSR0dHV1fX1NSUqCtReyImpqy4uDjq6yB/lKLpJamSxzlb5DVRv5LffXJyMn4LVmxDXewZmEJRy8rKdvJhbVvDKXzXtvpqJ/htin9oQCIIWNhee3v7ysqKuI6Ki5b00yAG+d/94g9Tbm7upnuQrzcLCwub/h2MveKK/kHxz2tJ0dwiXw+iiPXKYcipEQdSXFycyMbihsTYsbcpWFtbiw1YojDLy8vymLBY4k6oxMsjJrgSY3HkThyTyVRXVxfVRZsIm81msViWl5fHx8fFJyu3AcRpE6qvrxcFkPsWxau2yrVR54By8HIs0Wgkn2bilBP7r6+vF/nSbreLTqKJiQlpiwFYqhB3+SVV8v0izsDUihqbBVU/5J1/15L9Nm11aECCCFjYnsFguHnzpnyP9NzcnNfrdblcd+7ckYdDbZV7Yne16Xr5ivvq1av29na5Mb+xsVFskJ2dncj+LRbLDg9WHEjs39lY8p1cFotFNOwZjUaDwTA9PR3/opJsYeTR05uS2yQSL4/IGWIKjLm5OZfLJUY6j46OJj7uWNbc3NzV1SUPWhcdQ/X19fEHw4kB8q9fvxbnj+hkjHOYynNAjNHeajPlsDlxN770U/9jeXm5PDzL4XAUFBSIUV+73UqRbMn3kVpFVfeQVfmuJfVtAnaOgIVEiQGkcntDb2+vy+Xq6uoSa8S/85xO56bjQOVWjTh/v06fPt3V1TU4ONje3j49PS1JksViUY5+MJlMXq93ampq0zYw0eIV2/K0addbHOJAXC5XnD47sf7FixeSJEUNN5YkSRReFaIwPp8vkbsjkyqP6HMRzUViTqzER0lHqa+vF/e72e12m80mOobKy8vjv0oMkBd3DEg/DaNpaGiI8xL5HEjwKShFRUV2u31iYkLutRSNarW1tS6Xa3p6WjSfKE+zXZJsyfeRWkVV95BV+a4l9W0Cdo5B7the7NN2bTbb8ePHxc8ic8j9QZu24ff29krbXcnEHsR1Wox+jfqHpuguHBwclOd+lDkcjqjruvxXeGZmRrmlmIcpzsHKB/Ls2bPY3z58+PC///u/PR6Px+MRmaC2tjYqUCoHU++QXCfylIlKs7Ozco9t4uVxu91Rw9vNZnNLS4to/JPHDCVODIATH00iPX3ym4qRT+Pj42K8Xfzh7VHnwKZdS48ePVIemvKMkhSzg4r2qtHRUXGwlZWVe/AlSqrk+0utoqq1H7W+a4l/mwBVELCwjdnZ2c7Ozm+//TYq1og+F5PJJC6KZrNZ3EglJumR/6R6PJ7Ozk6Rfs6dOxfnjcxms7j3SvQVSjGDeFpbW8W/ib/55hvlsFm73X7//n3p7buu5JmQuru75Y1nZ2dv374dNQ9qbDHEgdjt9kePHkUdiJjfyGAwyFEgalTso0ePdj4OLLZOurq6oq4KDofjH//4R09Pjzi6xMvz5MmTr776Kmpv8j2bCXb1RhGFXF5eFuFVHjkXnxjP/vr1a9E/GH94e9Qb3b59W3lC+v3+zs7O/v7+J0+eKGtPpEaxfzl85+fnWywWMTeBlECvkNjJ69evxcngdrtj7zVTt+T7S62iqrWfZL9rcgiT/2UozvbEv01xOByO//N//s+f//zn9AnESFt0EWIb+fn5JpNJTGNttVpFM/vKyoq4Hp8+fVresrW1dXJyUp4IsaqqyufzyffJt7a2bnsnfHV1tZg9SNpsEI/ZbD5//nxnZ6cYpmqxWHJzc8WAMEmSTCbT5cuXlRu3t7f39PR4vV7lmFbRuBLbJqfU3t4+Pz/vdDrFfJhiTgH5QK5duyb+govpu+x2+8rKSkVFhd/vn5iYWF5eFuvVqv/29nYxTKqrq+v58+eiD1Suf6vVKneYJlieiooKMfe9vDfpp5sDEml52pRojhLpU1KMnItPDLwTB5LgW4sR+iKy/+lPf5JPSPlCK0+dKtTW1vb09Ii3UJ5+Yv2mOT6WGGTmcrn+9re/GY1Gl8uVyMm8w5LvI7WKquIhJ/Vds9ls4l9inZ2dY2Nj4k+EmOAq8W/TVoaHh71er9frnZ6e5uHfiI+AhW0YDIZf/epXImooZxUSY0Wjpi349NNPBwYGxIgc+c+oxWI5d+5cIhekkpIS8RdZ2mIQT319fWFh4ZMnT8QtjfL8N62trbF3wLW3txuNRuUY2KqqqnfeeUeSpImJifjtWDdv3pQPRD7qqAMRDV2iWsQ2VVVVV65cyc7OHh0dFQ1dYkvRRmIymWL/fMf5VfxaNZlMyqlfEy9PS0uLwWAQs2krGwDq6+vPnDkjl1kepBznB6Xr16+L5yklNaRJDLyT3k7qMnFTatStqcpzQHlCVlVVtbW1RVWjPFlD1KMPq6urxfqqqqptB/XX19eLycHlLCgnSBErN70JMfZXiZd8q93GOVvilCSFMzDBom579ib1Ycliz7TEv2viK3P+/HnREC7OcPlJA4l/m7Y6NPHvE0nRrgZsRbOxsUEtIEFy+7nBYIh/ERVz1UiSlJ2dndRfIjEFtslkUj5jJJbf75eb6OP/o1Pectsyp3Yg8v6jNtiNSZ/lwsQ5lsTL4/F45NmA8vPzd1haj8fzpz/9SXp7nv0EXyildLlSngNxyu/3+9fW1mKra6v121b+zusqwZKnA7WKqsp+kvqubfvFT+TbtNWZoNfrCVjYFgELacTv94tnaMQ+xhhpTn7a8b/9278x4TUAMMgdaUR+Gt2mz7BDOhMDxuU79QDgiCNgIY2IOSqtViujRw8WeWJYkjEACAQspAu/3+/z+UwmU1tbG7VxsIhxVFVVVTt5ZDIAHCaMwQIAAFAZLVgAAAAqI2ABAACojIAFAACgMgIWAACAyghYAAAAKiNgAQAAqIyABQAAoDICFgAAgMoIWAAAACojYAEAAKiMgAUAAKAyAhYAAIDKCFgAAAAqI2ABAACojIAFAACgMgIWAACAyghYAAAAKiNgAQAAqIyABQAAoDICFgAAgMoIWAAAACojYAEAAKiMgAUAAKAyAhYAAIDKCFgAAAAqI2ABAACojIAFAACgMgIWAACAyghYAAAAKiNgAQAAqIyABQAAoDICFgAAgMoIWAAAACojYAEAAKiMgAUAAKAyAhYAAIDKCFgAAAAqI2ABAACojIAFAACgMgIWAACAyghYAAAAKiNgAQAAqIyABQAAoDICFgAAgMoIWAAAACojYAEAAKiMgAUAAKAyAhYAAIDKCFgAAAAqI2ABAACojIAFAACgMgIWAACAyghYAAAAKiNgAQAAqIyABQAAoDICFgAAgMoIWAAAACojYAEAAKiMgAUAAKAyAhYAAIDKCFgAAAAqI2ABAACojIAFAACgMgIWAACAyghYAAAAKiNgAQAAqIyABQAAoDICFgAAgMoIWAAAACojYAEAAKiMgAUAAKAyAhYAAIDKCFgAAAAqI2ABAACojIAFAACgMgIWAACAyghYAAAAKiNgAQAAqIyABQAAoDICFgAAgMoIWAAAACojYAEAAKiMgAUAAKAyAhYAAIDKCFgAAAAqI2ABAACo7P8B1Ga+DiQEXXsAAAAZdEVYdFNvZnR3YXJlAEFkb2JlIEltYWdlUmVhZHlxyWU8AAAAEnRFWHRFWElGOk9yaWVudGF0aW9uADGEWOzvAAAAAElFTkSuQmCC"
 
 /***/ }
 

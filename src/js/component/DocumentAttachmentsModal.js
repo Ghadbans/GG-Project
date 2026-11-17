@@ -307,13 +307,17 @@ export default function DocumentAttachmentsModal({
                         key={att._id}
                         variant="outlined"
                         sx={{
-                          p: '12px 16px',
+                          p: { xs: 1.5, sm: 2 },
+                          mb: 1.5,
                           display: 'flex',
-                          alignItems: 'center',
+                          flexDirection: { xs: 'column', sm: 'row' },
+                          alignItems: { xs: 'stretch', sm: 'center' },
                           justifyContent: 'space-between',
-                          borderRadius: '8px',
+                          gap: { xs: 1.2, sm: 1.5 },
+                          borderRadius: '10px',
                           borderColor: '#e2e8f0',
                           bgcolor: '#ffffff',
+                          boxShadow: '0 1px 3px rgba(0, 0, 0, 0.02)',
                           transition: 'all 0.2s ease',
                           '&:hover': {
                             borderColor: '#cbd5e1',
@@ -335,54 +339,73 @@ export default function DocumentAttachmentsModal({
                         >
                           <Box
                             sx={{
-                              width: 38,
-                              height: 38,
-                              borderRadius: '6px',
+                              width: 44,
+                              height: 44,
+                              borderRadius: '8px',
                               bgcolor: isPdf ? '#fee2e2' : isImage ? '#e0f2fe' : '#f1f5f9',
                               display: 'flex',
                               alignItems: 'center',
                               justifyContent: 'center',
-                              flexShrink: 0
+                              flexShrink: 0,
+                              overflow: 'hidden',
+                              border: '1px solid #e2e8f0'
                             }}
                           >
-                            {isPdf ? (
-                              <PictureAsPdfIcon sx={{ color: '#dc2626', fontSize: 22 }} />
-                            ) : isImage ? (
-                              <ImageIcon sx={{ color: '#0284c7', fontSize: 22 }} />
+                            {isImage ? (
+                              <img
+                                src={`${ENDPOINT_URL}/attachment-file/${att._id}`}
+                                alt={att.fileName}
+                                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                                onError={(e) => {
+                                  e.target.style.display = 'none';
+                                }}
+                              />
+                            ) : isPdf ? (
+                              <PictureAsPdfIcon sx={{ color: '#dc2626', fontSize: 24 }} />
                             ) : (
-                              <InsertDriveFileIcon sx={{ color: '#64748b', fontSize: 22 }} />
+                              <InsertDriveFileIcon sx={{ color: '#64748b', fontSize: 24 }} />
                             )}
                           </Box>
                           <Box sx={{ minWidth: 0, flex: 1 }}>
                             <Typography
                               variant="body2"
                               sx={{
-                                fontWeight: 600,
+                                fontWeight: 700,
                                 color: '#1e293b',
-                                whiteSpace: 'nowrap',
-                                overflow: 'hidden',
-                                textOverflow: 'ellipsis',
+                                fontSize: '0.9rem',
+                                lineHeight: 1.3,
+                                wordBreak: 'break-word',
                                 '&:hover': { color: '#2563eb', textDecoration: 'underline' }
                               }}
                               title={att.fileName}
                             >
-                              {att.fileName}
+                              {att.fileName || 'Attachment File'}
                             </Typography>
-                            <Typography variant="caption" sx={{ color: '#64748b', display: 'block', lineHeight: 1.2 }}>
-                              File Size: {formatFileSize(att.fileSize)}
+                            <Typography variant="caption" sx={{ color: '#64748b', display: 'block', mt: 0.3, fontSize: '0.78rem', lineHeight: 1.3 }}>
+                              {formatFileSize(att.fileSize)}
                               {att.uploadedBy ? ` • By ${att.uploadedBy}` : ''}
                               {att.createdAt ? ` • ${dayjs(att.createdAt).format('DD/MM/YYYY')}` : ''}
                             </Typography>
                           </Box>
                         </Box>
 
-                        {/* Action Buttons */}
-                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, ml: 1 }}>
+                        {/* Action Buttons Toolbar */}
+                        <Box
+                          sx={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: { xs: 'flex-end', sm: 'flex-end' },
+                            gap: 0.8,
+                            pt: { xs: 1, sm: 0 },
+                            borderTop: { xs: '1px dashed #e2e8f0', sm: 'none' },
+                            flexShrink: 0
+                          }}
+                        >
                           <Tooltip title="Preview">
                             <IconButton
                               size="small"
                               onClick={() => setPreviewAttachment(att)}
-                              sx={{ color: '#475569', '&:hover': { color: '#2563eb', bgcolor: '#eff6ff' } }}
+                              sx={{ color: '#475569', bgcolor: '#f8fafc', '&:hover': { color: '#2563eb', bgcolor: '#eff6ff' } }}
                             >
                               <VisibilityIcon fontSize="small" />
                             </IconButton>
@@ -392,7 +415,7 @@ export default function DocumentAttachmentsModal({
                             <IconButton
                               size="small"
                               onClick={() => handleDirectPrint(att)}
-                              sx={{ color: '#475569', '&:hover': { color: '#0f766e', bgcolor: '#f0fdfa' } }}
+                              sx={{ color: '#475569', bgcolor: '#f8fafc', '&:hover': { color: '#0f766e', bgcolor: '#f0fdfa' } }}
                             >
                               <PrintIcon fontSize="small" />
                             </IconButton>
@@ -402,7 +425,7 @@ export default function DocumentAttachmentsModal({
                             <IconButton
                               size="small"
                               onClick={() => handleDownload(att)}
-                              sx={{ color: '#475569', '&:hover': { color: '#2563eb', bgcolor: '#eff6ff' } }}
+                              sx={{ color: '#475569', bgcolor: '#f8fafc', '&:hover': { color: '#2563eb', bgcolor: '#eff6ff' } }}
                             >
                               <DownloadIcon fontSize="small" />
                             </IconButton>
@@ -412,7 +435,7 @@ export default function DocumentAttachmentsModal({
                             <IconButton
                               size="small"
                               onClick={() => setDeleteConfirmId(att._id)}
-                              sx={{ color: '#94a3b8', '&:hover': { color: '#dc2626', bgcolor: '#fee2e2' } }}
+                              sx={{ color: '#94a3b8', bgcolor: '#f8fafc', '&:hover': { color: '#dc2626', bgcolor: '#fee2e2' } }}
                             >
                               <DeleteOutlineIcon fontSize="small" />
                             </IconButton>

@@ -5857,3 +5857,39 @@ In **v3.6.66**, two financial calculation discrepancies and a layout squash bug 
    - Android APK compiled via Gradle and mirrored to `server/public/downloads/GlobalGate-v3.6.67.apk` & `GlobalGate.apk` (17.9 MB).
    - Windows Desktop Installer packaged via electron-builder and mirrored to `server/public/downloads/Global Gate Setup 3.6.67.exe` & `Global Gate Setup.exe` (99.9 MB).
    - Cleaned `dist/win-unpacked` to preserve disk headroom.
+
+### Rule 88: Today's Planning Maintenance Scoping & Mobile Attachments / Image Viewer Modernization (Ver 3.6.68)
+
+#### Architectural Background & Motivation
+In **v3.6.67**, field testing highlighted three operational usability and formatting issues:
+1. **Today's Planning / Assignment Dropdown Limited to "Open" Orders**:
+   - In `EmployeePlaningForm.js` and `EmployeePlaningFormUpdate.js`, maintenance orders fetched for assignment were filtered strictly by `row.status === "Open"`.
+   - Consequently, all `PENDING` maintenance orders (e.g., `M-001301` for `NOVOTEL`) were completely excluded from the dropdown and search returned "No options".
+2. **Mobile Attachments List Word Squashing Bug**:
+   - In `DocumentAttachmentsModal.js`, the attachment row placed 4 action icon buttons and the file icon on the same horizontal row inside a mobile viewport (~300px available width).
+   - This left only ~60px width for file details, causing file metadata (`File Size: 3 MB • By AHMAD SALAH AL AAZEB • 16/11/2026`) to wrap word-by-word into a 12-line vertical sliver, overlapping buttons.
+3. **Image / Document Preview Viewer Overflow on Mobile**:
+   - In `AttachmentPreviewDialog.js`, the top toolbar crammed zoom controls, text buttons (`Print`, `Download`), filename, and close button into a single horizontal row (~560px width required).
+   - On a mobile screen, this resulted in horizontal clipping (`Dow...`), pushed the close button off-screen, and squashed the filename.
+
+#### Implementation Details (v3.6.68)
+1. **`src/js/AdminView1/PageView/EmployeeView/EmployeePlaningForm.js` & `EmployeePlaningFormUpdate.js`**:
+   - **Expanded Status Filter**: Updated maintenance fetching filter from `row.status === "Open"` to `['open', 'pending'].includes(String(row.status || '').trim().toLowerCase())`. Both `OPEN` and `PENDING` orders now populate the dropdown.
+   - **Enhanced Autocomplete Filter & Null-Safety**: Autocomplete `filterOptions` now searches across `customerName`, `serviceName` (`M-001301`), `serviceNumber` (`1301`), and `orderNumber` with safe object navigation.
+2. **`src/js/component/DocumentAttachmentsModal.js`**:
+   - **Responsive Cardlet Architecture**: Replaced the cramped horizontal row with a responsive layout (`flexDirection: { xs: 'column', sm: 'row' }`).
+   - On mobile, file name and metadata get 100% full width (`wordBreak: 'break-word'`), completely eliminating word-by-word squashing.
+   - For images, displays an actual 44x44 thumbnail photo preview; for documents, displays a styled icon.
+   - Actions (Preview, Direct Print, Download, Delete) sit cleanly in a dedicated bottom action strip with `borderTop: '1px dashed #e2e8f0'`.
+3. **`src/js/component/AttachmentPreviewDialog.js`**:
+   - **Clean, Responsive Header**: Top bar displays the file icon, bold title, and size/author subtitle on the left, and compact action icon buttons (Print, Download, Close) on the right with zero overflow.
+   - **Floating Glassmorphic Zoom Controls**: Detached zoom controls from the top header and relocated them into an elegant floating pill bar (`backdropFilter: 'blur(8px)'`, `bgcolor: 'rgba(15, 23, 42, 0.88)'`) at the bottom center of the image viewport.
+4. **`src/js/component/MobileDetailSheet.js`**:
+   - In `handleDirectCameraCapture`, auto-generates descriptive filenames (`${docNumber}_${dayjs().format('YYYYMMDD_HHmmss')}.jpg`) for captured camera photos instead of generic `image.jpg`.
+5. **Universal Multi-Platform Release (v3.6.68)**:
+   - Version bumped across `package.json`, `server/package.json`, `server/index.js`, and `server/routes/downloadRoutes.js`.
+   - Web Portal bundle compiled via Webpack into `dist_web/` and synced with cache busting.
+   - Desktop Electron bundle compiled via `webpack.prod.js` with 0 errors.
+   - Android APK compiled via Gradle and mirrored to `server/public/downloads/GlobalGate-v3.6.68.apk` & `GlobalGate.apk` (17.11 MB).
+   - Windows Desktop Installer packaged via electron-builder and mirrored to `server/public/downloads/Global Gate Setup 3.6.68.exe` & `Global Gate Setup.exe` (99.99 MB).
+   - Removed `dist/win-unpacked` to preserve disk headroom.
