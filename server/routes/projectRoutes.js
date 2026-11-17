@@ -166,6 +166,8 @@ Route.route("/get-projects/:id").get(async (req, res, next) => {
 Route.route("/update-projects/:id").put(async (req, res, next) => {
   const id = req.params.id;
   const updatePayload = { ...req.body };
+  delete updatePayload._id;
+  delete updatePayload.__v;
   if ('customerName' in updatePayload && !isValidCustomer(updatePayload.customerName)) {
     delete updatePayload.customerName;
   }
@@ -175,9 +177,14 @@ Route.route("/update-projects/:id").put(async (req, res, next) => {
       $set: updatePayload,
     }, { new: true });
     
+    const purchaseUpdateSet = {};
+    if (projectName !== undefined) purchaseUpdateSet['projectName.projectName'] = projectName;
+    if (status !== undefined) purchaseUpdateSet['statusInfo'] = status;
+    if (description !== undefined) purchaseUpdateSet['description'] = description;
+
     await Promise.all([
       projectName ? itemPurchaseSchema.updateMany({'projectName._id': id},{$set:{'projectName.name':projectName}}) : Promise.resolve(),
-      (projectName || status || description) ? purchaseSchema.updateMany({'projectName._id': id},{$set:{'projectName.projectName':projectName,'statusInfo':status,'description':description}}) : Promise.resolve(),
+      Object.keys(purchaseUpdateSet).length > 0 ? purchaseSchema.updateMany({'projectName._id': id},{$set:purchaseUpdateSet}) : Promise.resolve(),
       projectName ? itemOutSchema.updateMany({'reference._id': id},{$set:{'reference.referenceName':projectName}}) : Promise.resolve(),
       projectName ? itemReturnSchema.updateMany({'reference._id': id},{$set:{'reference.referenceName':projectName}}) : Promise.resolve(),
       projectName ? expenseSchema.updateMany({'accountNameInfo._id': id},{$set:{'accountNameInfo.name':projectName}}) : Promise.resolve(),

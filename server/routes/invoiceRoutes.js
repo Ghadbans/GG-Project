@@ -97,11 +97,15 @@ Route.route("/invoice", cors(corsOptionsDelegate)).get(
         total: 1, 
         subTotal: 1,
         balanceDue: 1, 
+        totalW: 1,
+        CheckTvA: 1,
         status: 1, 
         customerName: 1, 
         items: 1, 
         ReferenceName: 1,
         ReferenceName2: 1, 
+        projectId: 1,
+        Ref: 1,
         branchId: 1, 
         _id: 1,
         totalFC: 1,
@@ -118,8 +122,18 @@ Route.route("/invoice", cors(corsOptionsDelegate)).get(
         shipping: 1,
         Position: 1
       } : {};
-      const filter = req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {};
-      if (req.query.projectId || req.query.purchaseIds || req.query.purchaseNames || req.query.projectName || req.query.projectNumber) {
+      const filter = {};
+      const andConditions = [];
+      if (req.query.branchId && req.query.branchId !== 'ALL') {
+        if (req.query.branchId === 'HQ') {
+          andConditions.push({
+            $or: [{ branchId: 'HQ' }, { branchId: { $exists: false } }, { branchId: null }, { branchId: '' }]
+          });
+        } else {
+          filter.branchId = req.query.branchId;
+        }
+      }
+      if (req.query.projectId || req.query.purchaseIds || req.query.invoiceIds || req.query.purchaseNames || req.query.projectName || req.query.projectNumber) {
         let orConditions = [];
         if (req.query.projectId) {
           let objectId = null;
@@ -127,7 +141,9 @@ Route.route("/invoice", cors(corsOptionsDelegate)).get(
           const pIds = objectId ? [req.query.projectId, objectId] : [req.query.projectId];
           orConditions.push(
             { 'ReferenceName2': { $in: pIds } },
-            { 'Ref._id': { $in: pIds } }
+            { 'ReferenceName': { $in: pIds } },
+            { 'Ref._id': { $in: pIds } },
+            { 'projectId': { $in: pIds } }
           );
         }
         if (req.query.purchaseIds) {
@@ -139,15 +155,32 @@ Route.route("/invoice", cors(corsOptionsDelegate)).get(
           const allPIds = [...pIds, ...objIds];
           orConditions.push(
             { 'ReferenceName2': { $in: allPIds } },
+            { 'ReferenceName': { $in: allPIds } },
             { 'Ref._id': { $in: allPIds } }
           );
+        }
+        if (req.query.invoiceIds) {
+          const invIds = req.query.invoiceIds.split(',').map(id => id.trim()).filter(Boolean);
+          const objIds = [];
+          invIds.forEach(id => {
+            try { objIds.push(new require('mongoose').Types.ObjectId(id)); } catch (e) {}
+          });
+          const allInvIds = [...invIds, ...objIds];
+          if (allInvIds.length > 0) {
+            orConditions.push(
+              { '_id': { $in: allInvIds } },
+              { 'ReferenceName': { $in: allInvIds } },
+              { 'ReferenceName2': { $in: allInvIds } }
+            );
+          }
         }
         if (req.query.purchaseNames) {
           const pNames = req.query.purchaseNames.split(',').map(n => n.trim()).filter(Boolean);
           if (pNames.length > 0) {
             orConditions.push(
               { 'invoicePurchase': { $in: pNames } },
-              { 'ReferenceName': { $in: pNames } }
+              { 'ReferenceName': { $in: pNames } },
+              { 'ReferenceName2': { $in: pNames } }
             );
           }
         }
@@ -156,7 +189,8 @@ Route.route("/invoice", cors(corsOptionsDelegate)).get(
           const escapedName = rawName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
           orConditions.push(
             { 'Ref.projectName': new RegExp('^' + escapedName + '$', 'i') },
-            { 'ReferenceName': new RegExp('^' + escapedName + '$', 'i') }
+            { 'ReferenceName': new RegExp('^' + escapedName + '$', 'i') },
+            { 'invoiceSubject': new RegExp('^' + escapedName + '$', 'i') }
           );
         }
         if (req.query.projectNumber) {
@@ -164,13 +198,19 @@ Route.route("/invoice", cors(corsOptionsDelegate)).get(
           if (!isNaN(pNum)) {
             orConditions.push(
               { 'ReferenceName': 'P-' + String(pNum).padStart(6, '0') },
+              { 'ReferenceName': 'P-00' + pNum },
               { 'ReferenceName': 'P-' + pNum }
             );
           }
         }
         if (orConditions.length > 0) {
-          filter['$or'] = orConditions;
+          andConditions.push({ $or: orConditions });
         }
+      }
+      if (andConditions.length === 1) {
+        Object.assign(filter, andConditions[0]);
+      } else if (andConditions.length > 1) {
+        filter.$and = andConditions;
       }
 
       if (req.query.customerId) {

@@ -268,13 +268,29 @@ function ProjectViewInformation() {
       const pNumQuery = targetPNum ? `&projectNumber=${targetPNum}` : '';
       const resPurchases = await axios.get(`${ENDPOINT_URL}/purchase?summary=true&projectId=${targetId}${pNameQuery}${pNumQuery}`);
       const relatedPurchases = resPurchases.data?.data || [];
-      const projectPurchaseIds = relatedPurchases.map(p => p._id);
-      const projectPurchaseNames = relatedPurchases.map(p => p.purchaseName || `PUR-${String(p.purchaseNumber).padStart(6, '0')}`).filter(Boolean);
+      const projectPurchaseIds = relatedPurchases.map(p => p._id).filter(Boolean);
+      const linkedInvoiceAndRefIds = [...new Set(
+        relatedPurchases
+          .flatMap(p => [p.ReferenceName2, p.ReferenceName])
+          .map(v => (typeof v === 'object' && v !== null ? v._id : v))
+          .map(v => String(v || '').trim())
+          .filter(Boolean)
+      )];
+      const projectPurchaseNames = [...new Set(
+        relatedPurchases
+          .flatMap(p => [
+            p.purchaseName,
+            p.purchaseNumber !== undefined && p.purchaseNumber !== null ? `PUR-${String(p.purchaseNumber).padStart(6, '0')}` : null,
+            p.purchaseNumber !== undefined && p.purchaseNumber !== null ? `PUR-00${p.purchaseNumber}` : null
+          ])
+          .filter(Boolean)
+      )];
 
-      // Filter Invoices: linked either via Purchase ID, Purchase Name, or directly via Project ID / Project Name
+      // Filter Invoices: linked via Purchase ID, Purchase's ReferenceName2/ReferenceName (Invoice/Quotation ID), Purchase Name, or directly via Project ID / Project Name
       const pIdsQuery = projectPurchaseIds.length > 0 ? `&purchaseIds=${projectPurchaseIds.join(',')}` : '';
+      const invIdsQuery = linkedInvoiceAndRefIds.length > 0 ? `&invoiceIds=${encodeURIComponent(linkedInvoiceAndRefIds.join(','))}` : '';
       const pNamesQuery = projectPurchaseNames.length > 0 ? `&purchaseNames=${encodeURIComponent(projectPurchaseNames.join(','))}` : '';
-      const resInvoices = await axios.get(`${ENDPOINT_URL}/invoice?summary=true&projectId=${targetId}${pIdsQuery}${pNamesQuery}${pNameQuery}${pNumQuery}`);
+      const resInvoices = await axios.get(`${ENDPOINT_URL}/invoice?summary=true&projectId=${targetId}${pIdsQuery}${invIdsQuery}${pNamesQuery}${pNameQuery}${pNumQuery}`);
       const relatedInvoices = resInvoices.data?.data || [];
 
       const allProjectItems = relatedPurchases.flatMap((row) => (row.items || []).map((Item) => ({

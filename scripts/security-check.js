@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * scripts/security-check.js (v3.6.69)
+ * scripts/security-check.js (v3.7.1)
  *
  * Automated defensive security test suite.
  * Tests:

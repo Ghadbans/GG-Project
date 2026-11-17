@@ -418,20 +418,26 @@ function PurchasesViewAdminAll() {
   useEffect(() => {
     const fetchDataRelated = async () => {
       try {
-        const [resEstimate, resInvoice, resOut, resReturn, resPrec] = await Promise.all([
+        const [resEstimate, resInvoice, resOut, resReturn, resPrec, res] = await Promise.all([
           axios.get(`${ENDPOINT_URL}/estimation?summary=true`),
           axios.get(`${ENDPOINT_URL}/invoice?summary=true`),
           axios.get(`${ENDPOINT_URL}/itemOut`),
           axios.get(`${ENDPOINT_URL}/itemReturn`),
-          axios.get(`${ENDPOINT_URL}/itemPurchase`)
+          axios.get(`${ENDPOINT_URL}/itemPurchase`),
+          axios.get(`${ENDPOINT_URL}/get-purchase/${id}`)
         ]);
-        const filteredEstimate = resEstimate.data?.data?.filter((row) => row.ReferenceName === id);
+        const currentPurchase = res.data?.data || {};
+        const filteredEstimate = resEstimate.data?.data?.filter(
+          (row) => row.ReferenceName === id || (currentPurchase.ReferenceName && String(row._id) === String(currentPurchase.ReferenceName))
+        );
         setEstimate(filteredEstimate);
-        const filteredInvoice = resInvoice.data?.data?.filter((row) => row.ReferenceName2 === id);
+        const filteredInvoice = resInvoice.data?.data?.filter(
+          (row) =>
+            row.ReferenceName2 === id ||
+            (currentPurchase.ReferenceName2 && String(row._id) === String(currentPurchase.ReferenceName2)) ||
+            (currentPurchase.ReferenceName && row.ReferenceName && String(row.ReferenceName) === String(currentPurchase.ReferenceName))
+        );
         setInvoice(filteredInvoice);
-
-        const res = await axios.get(`${ENDPOINT_URL}/get-purchase/${id}`);
-        const currentPurchase = res.data.data;
         
         setItems(currentPurchase.items || []);
 

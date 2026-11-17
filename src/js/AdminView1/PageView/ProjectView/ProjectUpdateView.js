@@ -373,18 +373,7 @@ function ProjectUpdateView() {
     };
 
     try {
-      // Fetch fresh state from server
-      const currentRes = await axios.get(`${ENDPOINT_URL}/get-projects/${id}`);
-      const currentProject = currentRes.data.data;
-
-      // Merge local changes with server state
-      const updatedData = {
-        ...currentProject,
-        ...data,
-        updateS: false
-      };
-
-      const res = await axios.put(`${ENDPOINT_URL}/update-projects/${id}`, updatedData);
+      const res = await axios.put(`${ENDPOINT_URL}/update-projects/${id}`, data, lockConfig);
       if (res) {
         handleCreateComment();
         handleOpen();

@@ -687,20 +687,20 @@ function PurchasesViewAdminAll() {
     var fetchDataRelated = /*#__PURE__*/function () {
       var _ref11 = _asyncToGenerator(function* () {
         try {
-          var _resEstimate$data, _resInvoice$data, _currentPurchase$cust, _currentPurchase$cust2, _currentPurchase$proj, _currentPurchase$proj2, _resOut$data, _resReturn$data, _resPrec$data;
-          var _yield$Promise$all = yield Promise.all([axios__WEBPACK_IMPORTED_MODULE_34__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_38__/* .ENDPOINT_URL */ .m, "/estimation?summary=true")), axios__WEBPACK_IMPORTED_MODULE_34__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_38__/* .ENDPOINT_URL */ .m, "/invoice?summary=true")), axios__WEBPACK_IMPORTED_MODULE_34__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_38__/* .ENDPOINT_URL */ .m, "/itemOut")), axios__WEBPACK_IMPORTED_MODULE_34__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_38__/* .ENDPOINT_URL */ .m, "/itemReturn")), axios__WEBPACK_IMPORTED_MODULE_34__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_38__/* .ENDPOINT_URL */ .m, "/itemPurchase"))]),
-            _yield$Promise$all2 = _slicedToArray(_yield$Promise$all, 5),
+          var _res$data2, _resEstimate$data, _resInvoice$data, _currentPurchase$cust, _currentPurchase$cust2, _currentPurchase$proj, _currentPurchase$proj2, _resOut$data, _resReturn$data, _resPrec$data;
+          var _yield$Promise$all = yield Promise.all([axios__WEBPACK_IMPORTED_MODULE_34__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_38__/* .ENDPOINT_URL */ .m, "/estimation?summary=true")), axios__WEBPACK_IMPORTED_MODULE_34__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_38__/* .ENDPOINT_URL */ .m, "/invoice?summary=true")), axios__WEBPACK_IMPORTED_MODULE_34__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_38__/* .ENDPOINT_URL */ .m, "/itemOut")), axios__WEBPACK_IMPORTED_MODULE_34__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_38__/* .ENDPOINT_URL */ .m, "/itemReturn")), axios__WEBPACK_IMPORTED_MODULE_34__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_38__/* .ENDPOINT_URL */ .m, "/itemPurchase")), axios__WEBPACK_IMPORTED_MODULE_34__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_38__/* .ENDPOINT_URL */ .m, "/get-purchase/").concat(id))]),
+            _yield$Promise$all2 = _slicedToArray(_yield$Promise$all, 6),
             resEstimate = _yield$Promise$all2[0],
             resInvoice = _yield$Promise$all2[1],
             resOut = _yield$Promise$all2[2],
             resReturn = _yield$Promise$all2[3],
-            resPrec = _yield$Promise$all2[4];
-          var filteredEstimate = (_resEstimate$data = resEstimate.data) === null || _resEstimate$data === void 0 || (_resEstimate$data = _resEstimate$data.data) === null || _resEstimate$data === void 0 ? void 0 : _resEstimate$data.filter(row => row.ReferenceName === id);
+            resPrec = _yield$Promise$all2[4],
+            res = _yield$Promise$all2[5];
+          var currentPurchase = ((_res$data2 = res.data) === null || _res$data2 === void 0 ? void 0 : _res$data2.data) || {};
+          var filteredEstimate = (_resEstimate$data = resEstimate.data) === null || _resEstimate$data === void 0 || (_resEstimate$data = _resEstimate$data.data) === null || _resEstimate$data === void 0 ? void 0 : _resEstimate$data.filter(row => row.ReferenceName === id || currentPurchase.ReferenceName && String(row._id) === String(currentPurchase.ReferenceName));
           setEstimate(filteredEstimate);
-          var filteredInvoice = (_resInvoice$data = resInvoice.data) === null || _resInvoice$data === void 0 || (_resInvoice$data = _resInvoice$data.data) === null || _resInvoice$data === void 0 ? void 0 : _resInvoice$data.filter(row => row.ReferenceName2 === id);
+          var filteredInvoice = (_resInvoice$data = resInvoice.data) === null || _resInvoice$data === void 0 || (_resInvoice$data = _resInvoice$data.data) === null || _resInvoice$data === void 0 ? void 0 : _resInvoice$data.filter(row => row.ReferenceName2 === id || currentPurchase.ReferenceName2 && String(row._id) === String(currentPurchase.ReferenceName2) || currentPurchase.ReferenceName && row.ReferenceName && String(row.ReferenceName) === String(currentPurchase.ReferenceName));
           setInvoice(filteredInvoice);
-          var res = yield axios__WEBPACK_IMPORTED_MODULE_34__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_38__/* .ENDPOINT_URL */ .m, "/get-purchase/").concat(id));
-          var currentPurchase = res.data.data;
           setItems(currentPurchase.items || []);
           setCustomerName((typeof currentPurchase.customerName === 'string' ? currentPurchase.customerName : ((_currentPurchase$cust = currentPurchase.customerName) === null || _currentPurchase$cust === void 0 ? void 0 : _currentPurchase$cust.Customer) || ((_currentPurchase$cust2 = currentPurchase.customerName) === null || _currentPurchase$cust2 === void 0 ? void 0 : _currentPurchase$cust2.customerName) || '').replace(/\s+/g, '_').replace(/\./g, ''));
           var currentPurchaseNo = Number(currentPurchase.purchaseNumber || 0);
@@ -816,9 +816,9 @@ function PurchasesViewAdminAll() {
     var fetchComment = /*#__PURE__*/function () {
       var _ref12 = _asyncToGenerator(function* () {
         try {
-          var _res$data2, _resNotification$data;
+          var _res$data3, _resNotification$data;
           var res = yield axios__WEBPACK_IMPORTED_MODULE_34__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_38__/* .ENDPOINT_URL */ .m, "/comment"));
-          var resp = (_res$data2 = res.data) === null || _res$data2 === void 0 || (_res$data2 = _res$data2.data) === null || _res$data2 === void 0 ? void 0 : _res$data2.filter(row => row.CommentInfo.idInfo === id);
+          var resp = (_res$data3 = res.data) === null || _res$data3 === void 0 || (_res$data3 = _res$data3.data) === null || _res$data3 === void 0 ? void 0 : _res$data3.filter(row => row.CommentInfo.idInfo === id);
           setComments(resp);
           var resNotification = yield axios__WEBPACK_IMPORTED_MODULE_34__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_38__/* .ENDPOINT_URL */ .m, "/notification"));
           setNotification((_resNotification$data = resNotification.data) === null || _resNotification$data === void 0 || (_resNotification$data = _resNotification$data.data) === null || _resNotification$data === void 0 ? void 0 : _resNotification$data.filter(row => row.idInfo === id));

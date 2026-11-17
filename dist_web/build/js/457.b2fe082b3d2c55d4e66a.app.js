@@ -1896,15 +1896,7 @@ function ProjectUpdateView() {
         updateS: false
       };
       try {
-        // Fetch fresh state from server
-        var currentRes = yield axios__WEBPACK_IMPORTED_MODULE_33__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_36__/* .ENDPOINT_URL */ .m, "/get-projects/").concat(id));
-        var currentProject = currentRes.data.data;
-
-        // Merge local changes with server state
-        var updatedData = _objectSpread(_objectSpread(_objectSpread({}, currentProject), data), {}, {
-          updateS: false
-        });
-        var res = yield axios__WEBPACK_IMPORTED_MODULE_33__/* ["default"] */ .A.put("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_36__/* .ENDPOINT_URL */ .m, "/update-projects/").concat(id), updatedData);
+        var res = yield axios__WEBPACK_IMPORTED_MODULE_33__/* ["default"] */ .A.put("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_36__/* .ENDPOINT_URL */ .m, "/update-projects/").concat(id), data, lockConfig);
         if (res) {
           handleCreateComment();
           handleOpen();

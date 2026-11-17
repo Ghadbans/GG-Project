@@ -182,20 +182,40 @@ Route.route("/purchase", cors(corsOptionsDelegate)).get(
       const summary = req.query.summary === 'true';
       const projection = summary ? {
         purchaseNumber: 1,
+        purchaseName: 1,
         purchaseDate: 1,
+        purchaseAmount1: 1,
+        purchaseAmount2: 1,
         total: 1,
         totalFC: 1,
         totalUSD: 1,
         status: 1,
+        statusInfo: 1,
         customerName: 1,
         projectName: 1,
+        description: 1,
+        noteInfo: 1,
+        estimateDefect: 1,
+        estimateSubject: 1,
+        ReferenceName: 1,
+        ReferenceName2: 1,
         items: 1,
         branchId: 1,
         _id: 1,
         supplierName: 1,
         payments: 1
       } : {};
-      const filter = req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {};
+      const filter = {};
+      const andConditions = [];
+      if (req.query.branchId && req.query.branchId !== 'ALL') {
+        if (req.query.branchId === 'HQ') {
+          andConditions.push({
+            $or: [{ branchId: 'HQ' }, { branchId: { $exists: false } }, { branchId: null }, { branchId: '' }]
+          });
+        } else {
+          filter.branchId = req.query.branchId;
+        }
+      }
       if (req.query.projectId || req.query.projectName || req.query.projectNumber) {
         let pConditions = [];
         if (req.query.projectId) {
@@ -228,8 +248,13 @@ Route.route("/purchase", cors(corsOptionsDelegate)).get(
           }
         }
         if (pConditions.length > 0) {
-          filter['$or'] = pConditions;
+          andConditions.push({ $or: pConditions });
         }
+      }
+      if (andConditions.length === 1) {
+        Object.assign(filter, andConditions[0]);
+      } else if (andConditions.length > 1) {
+        filter.$and = andConditions;
       }
 
       if (req.query.customerId) {

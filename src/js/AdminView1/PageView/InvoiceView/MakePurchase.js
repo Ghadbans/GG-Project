@@ -538,11 +538,16 @@ const handleCreateItem = (newItem)=> {
   }      
   const invoicePurchase = 'Make'
   const handleSubmitStatusUpdate = (ReferenceInfo) => {
+      const pId = projectName?._id || (typeof projectName === 'string' ? projectName : '');
+      const pTitle = projectName?.projectName || projectName?.name || '';
       const data = {
         invoicePurchase,
-        ReferenceName2:ReferenceInfo
+        ReferenceName2: ReferenceInfo,
+        ...(pId ? { projectId: pId, Ref: { _id: pId, projectName: pTitle } } : {})
       }; 
-      axios.put(`${ENDPOINT_URL}/update-invoice/${id}`,data)
+      return axios.put(`${ENDPOINT_URL}/update-invoice/${id}`, data, {
+        headers: { 'x-system-bypass': 'true' }
+      });
    }
    const handleCreateNotification = async (ReferenceInfo,ReferenceInfoNumber) => {
     const data = {

@@ -2058,11 +2058,23 @@ function MakePurchase() {
   };
   var invoicePurchase = 'Make';
   var handleSubmitStatusUpdate = ReferenceInfo => {
-    var data = {
+    var pId = (projectName === null || projectName === void 0 ? void 0 : projectName._id) || (typeof projectName === 'string' ? projectName : '');
+    var pTitle = (projectName === null || projectName === void 0 ? void 0 : projectName.projectName) || (projectName === null || projectName === void 0 ? void 0 : projectName.name) || '';
+    var data = _objectSpread({
       invoicePurchase,
       ReferenceName2: ReferenceInfo
-    };
-    axios__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .A.put("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_31__/* .ENDPOINT_URL */ .m, "/update-invoice/").concat(id), data);
+    }, pId ? {
+      projectId: pId,
+      Ref: {
+        _id: pId,
+        projectName: pTitle
+      }
+    } : {});
+    return axios__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .A.put("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_31__/* .ENDPOINT_URL */ .m, "/update-invoice/").concat(id), data, {
+      headers: {
+        'x-system-bypass': 'true'
+      }
+    });
   };
   var handleCreateNotification = /*#__PURE__*/function () {
     var _ref14 = _asyncToGenerator(function* (ReferenceInfo, ReferenceInfoNumber) {
