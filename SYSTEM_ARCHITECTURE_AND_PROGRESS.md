@@ -5982,16 +5982,28 @@ In **v3.7.0**, field testing revealed two critical issues in the Project module:
 1. **Missing Linked Invoices & Overview Profit in Project View**:
    - Certain Projects (such as `P-000161 | KREAM | PHASE FURNITURE REFINISHING` linked to `PUR-00155` & `INV-002408`, and `KREAM | PHASE APPLIANCES MAINTENANCE` linked to `PUR-00154` & `INV-002403`) displayed a blank **INVOICE** tab and omitted the `Invoiced Profit` row in the **OVERVIEW** financial summary card, whereas other Projects (such as `P-000137` linked to `INV-002273`) displayed their linked Invoice normally.
    - **Root Cause (Unidirectional vs. Bidirectional Link Storage + Projection Omissions)**:
-     - When a Purchase is converted to an Invoice via `ConvertToInvoice.js`, `invoice.ReferenceName2` is set to `purchase._id`.
-     - However, when an Invoice is created first (or converted from a Quotation via `EstimateViewConvertToInvoice.js`) and then converted to a Purchase via `MakePurchase.js`, the link pointer is saved on the **Purchase** document (`purchase.ReferenceName2 = invoice._id` and `purchase.purchaseName = "PUR-00155"`), while `invoice.invoiceSubject` holds the project name (`"KREAM | PHASE FURNITURE REFINISHING"`).
-     - Meanwhile, `GET /endpoint/purchase?summary=true` in `server/routes/purchaseRoutes.js` omitted `ReferenceName2`, `ReferenceName`, `purchaseName`, `purchaseAmount1`, and `purchaseAmount2` from its MongoDB projection; `ProjectViewInformation.js` never extracted `purchase.ReferenceName2` to query `GET /endpoint/invoice`; and `GET /endpoint/invoice` in `server/routes/invoiceRoutes.js` did not accept `invoiceIds` or match `{ projectId: { $in: pIds } }` / `{ invoiceSubject: regex }`.
+     - **Workflow A (`ConvertToInvoice.js` — Purchase → Invoice)**: Sets `invoice.ReferenceName2 = purchase._id`. This was the only link direction previously queried by `ProjectViewInformation.js`.
+     - **Workflow B (`MakePurchase.js` — Invoice / Quotation → Purchase)**: Sets the link pointer on the **Purchase** document (`purchase.ReferenceName2 = invoice._id` and `purchase.purchaseName = "PUR-00155"`), while `invoice.invoiceSubject` holds the project name (`"KREAM | PHASE FURNITURE REFINISHING"`).
+     - On `InvoiceViewAdminAll.js`, the view checked `purchase.ReferenceName2 === invoice._id`, so `INV-002408` properly displayed `Reference PUR-00155, KREAM | PHASE FURNITURE REFINISHING`.
+     - However, in `ProjectViewInformation.js` (`fetchInvoicesAndPurchases`):
+       1. `GET /endpoint/purchase?summary=true` in `server/routes/purchaseRoutes.js` omitted `ReferenceName2`, `ReferenceName`, `purchaseName`, `purchaseAmount1`, and `purchaseAmount2` from its MongoDB projection.
+       2. `ProjectViewInformation.js` never extracted `purchase.ReferenceName2` (the linked Invoice `_id`) or `purchase.ReferenceName` (the shared Quotation `_id`) to pass to `GET /endpoint/invoice`.
+       3. `GET /endpoint/invoice` in `server/routes/invoiceRoutes.js` did not accept an `invoiceIds` parameter (`_id` / `ReferenceName` / `ReferenceName2`), did not match `{ projectId: { $in: pIds } }` or `{ invoiceSubject: regex }`, and omitted `totalW`, `CheckTvA`, `projectId`, and `Ref` when `summary=true`.
 2. **Project `Description` & `Phase` Updates Not Saving (`ProjectUpdateView.js` / `server/model/projectSchema.js`)**:
    - When editing a project (e.g., `P-000162 | KREAM | PHASE SIGN BOARD UPGRADING`), changing `Description` from `SIGN BOARD & ALUMINUM` to `SIGN BOARD` and clicking `Save` showed `"Data Saved successfully"`, but upon returning to Project Information, the description remained `SIGN BOARD & ALUMINUM`.
-   - **Root Cause**: In `v3.6.21` (commit `7f543009`), when the `status` setter was added to `server/model/projectSchema.js`, the `description: { type: String, trim: true }` and `phase: []` fields were accidentally omitted from `projectSchema.js`. Because Mongoose defaults to `strict: true`, `projectSchema.findByIdAndUpdate(id, { $set: updatePayload })` silently stripped `description` and `phase` from `$set` before executing the MongoDB update, returning `200 OK` without updating `description` in the database.
+   - **Root Cause**: In `v3.6.21` (commit `7f543009`), when the `status` normalization setter was added to `server/model/projectSchema.js`, the `description: { type: String, trim: true }` and `phase: []` fields were accidentally omitted from `projectSchema.js`. Because Mongoose defaults to `strict: true`, `projectSchema.findByIdAndUpdate(id, { $set: updatePayload })` silently stripped `description` and `phase` from `$set` before executing the MongoDB update, returning `200 OK` without updating `description` in the database.
+   - **Full Schema Audit (`server/model/*`)**: Audited all model schemas against `7f543009~1` (`ExpenseSchema.js`, `invoiceSchema.js`, `purchaseSchema.js`, `projectSchema.js`, etc.) and confirmed `projectSchema.js` was the sole remaining schema missing fields from that refactor.
+
+#### Permanent Architectural Invariants (Rule 91)
+- **Invariant 91.1 (Bidirectional Link Resolution):** Whenever querying Invoices linked to a Project or Purchase (`ProjectViewInformation.js`, `PurchasesViewAdminAll.js`, `invoiceRoutes.js`), ALWAYS resolve links in **both** directions:
+  1. Forward (`invoice.ReferenceName2 === purchase._id`, `invoice.ReferenceName === purchase._id`, `invoice.projectId === project._id`, `invoice.Ref` containing `PUR-xxxxx`, or `invoice.invoiceSubject` matching `project.projectName`).
+  2. Reverse (`invoice._id === purchase.ReferenceName2`, `invoice._id === purchase.ReferenceName`, or shared Estimate ID `invoice.ReferenceName === purchase.ReferenceName`).
+- **Invariant 91.2 (`?summary=true` Projection Completeness):** Summary projections on `/endpoint/purchase` and `/endpoint/invoice` MUST ALWAYS include relational link fields (`ReferenceName`, `ReferenceName2`, `purchaseName`, `projectName`, `projectId`, `Ref`, `invoiceSubject`) and financial summary fields (`purchaseAmount1`, `purchaseAmount2`, `totalInvoice`, `balanceDue`, `amountPaid`, `subTotal`, `total`, `totalW`, `shipping`, `adjustmentNumber`, `CheckTvA`).
+- **Invariant 91.3 (Mongoose Schema Field Preservation):** Never remove fields from Mongoose schemas in `server/model/*` when adding setters or indexes, and keep `strict: false` on `projectSchema.js` so dynamic or historical fields (`description`, `phase`, `ReferenceName`, `ReferenceName2`, `updateS`) are never silently stripped on `$set`.
 
 #### Implementation Details (v3.7.1)
-1. **`server/model/projectSchema.js` & `server/routes/projectRoutes.js` & `ProjectUpdateView.js`**:
-   - Restored `description`, `phase`, `ReferenceName`, `ReferenceName2`, and `updateS` fields and enabled `strict: false` in `server/model/projectSchema.js` so Mongoose never strips project fields on create or update.
+1. **`server/model/projectSchema.js` & `server/routes/projectRoutes.js` & `src/js/AdminView1/PageView/ProjectView/ProjectUpdateView.js`**:
+   - Restored `description`, `phase`, `ReferenceName`, `ReferenceName2`, and `updateS` fields and enabled `strict: false` in `server/model/projectSchema.js`.
    - Updated `PUT /endpoint/update-projects/:id` in `server/routes/projectRoutes.js` to strip immutable `_id`/`__v` before `$set` and propagate `description`, `status`, and `projectName` cleanly to linked `purchaseSchema` records.
    - Updated `ProjectUpdateView.js` (`handleSubmit`) to send `data` directly with `lockConfig` to `PUT /endpoint/update-projects/:id`.
 2. **`server/routes/purchaseRoutes.js`**:
@@ -6005,7 +6017,7 @@ In **v3.7.0**, field testing revealed two critical issues in the Project module:
 5. **`src/js/AdminView1/PageView/PurchasesView/PurchasesViewAdminAll.js` & `src/js/AdminView1/PageView/InvoiceView/MakePurchase.js`**:
    - Updated `PurchasesViewAdminAll.js` to match linked Invoices and Estimates bidirectionally (`row.ReferenceName2 === id || String(row._id) === String(currentPurchase.ReferenceName2)`).
    - Updated `MakePurchase.js` `handleSubmitStatusUpdate` to return the `axios.put` promise with `x-system-bypass: 'true'` and persist `projectId` and `Ref` onto the Invoice document.
-6. **Universal Multi-Platform Release (v3.7.1)**:
+6. **Universal Multi-Platform Release (v3.7.1 — Commit `b68ddc66`)**:
    - Verified 0 AST errors across all 245 source files via `node scripts/pre-build-check.js`.
-   - Synchronized version **`3.7.1`** across `package.json`, `server/package.json`, `server/index.js`, and `server/routes/downloadRoutes.js`.
+   - Synchronized version **`3.7.1`** across `package.json`, `server/package.json`, `server/index.js`, `server/routes/downloadRoutes.js`, and `scripts/security-check.js`.
    - Built Web Portal (`dist_web/`), Electron Desktop (`build/` & `dist/Global Gate Setup 3.7.1.exe`), and Capacitor Android APK (`GlobalGate-v3.7.1.apk`), synced installers to `server/public/downloads/`, and pushed to `origin main`.
