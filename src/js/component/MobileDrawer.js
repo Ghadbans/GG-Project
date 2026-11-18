@@ -167,12 +167,22 @@ function MobileDrawer({ open, onClose }) {
 
           {/* 3. Items / Store */}
           {(canAccess('Store') || canAccess('Item') || canAccess('Point-Of-Sell')) && (
-            <ListItemButton onClick={() => handleNav('/ItemViewAdmin')} sx={{ py: 1, px: 2 }}>
-              <ListItemIcon sx={{ minWidth: 38, color: '#64748b' }}>
-                <InventoryIcon fontSize="small" />
-              </ListItemIcon>
-              <ListItemText primary="Items / Store" primaryTypographyProps={{ fontSize: '0.9rem' }} />
-            </ListItemButton>
+            <>
+              <ListItemButton onClick={() => handleNav('/ItemViewAdmin')} sx={{ py: 1, px: 2 }}>
+                <ListItemIcon sx={{ minWidth: 38, color: '#64748b' }}>
+                  <InventoryIcon fontSize="small" />
+                </ListItemIcon>
+                <ListItemText primary="Items / Store" primaryTypographyProps={{ fontSize: '0.9rem' }} />
+              </ListItemButton>
+              {(canAccess('Delivery-Note') || canAccess('Item-Out') || canAccess('Store')) && (
+                <ListItemButton onClick={() => handleNav('/DeliveryNoteViewAdmin')} sx={{ py: 1, px: 2 }}>
+                  <ListItemIcon sx={{ minWidth: 38, color: '#64748b' }}>
+                    <ReceiptIcon fontSize="small" />
+                  </ListItemIcon>
+                  <ListItemText primary="Delivery Note" primaryTypographyProps={{ fontSize: '0.9rem' }} />
+                </ListItemButton>
+              )}
+            </>
           )}
 
           <Divider sx={{ my: 0.5 }} />

@@ -17,6 +17,7 @@ const ROUTE_MODULE_PREFIXES = [
   { prefix: '/Maintenance', module: 'maintenance' },
   { prefix: '/Estimate', module: 'estimate' },
   { prefix: '/ItemOut', module: 'itemOut' },
+  { prefix: '/DeliveryNote', module: 'deliveryNote' },
   { prefix: '/ItemReturn', module: 'itemReturn' },
   { prefix: '/ItemPurchase', module: 'itemPurchase' },
   { prefix: '/Item', module: 'item' },

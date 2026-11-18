@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * scripts/regression-check.js (v3.7.2)
+ * scripts/regression-check.js (v3.7.3)
  *
  * Automated Cross-Module Regression & Data-Safety Verification Suite.
  * Verifies:
@@ -103,7 +103,7 @@ async function ensureServerRunning() {
 
 async function runTests() {
   console.log('==========================================================');
-  console.log(' GLOBAL GATE - REGRESSION & DATA-SAFETY SUITE (v3.7.2)');
+  console.log(' GLOBAL GATE - REGRESSION & DATA-SAFETY SUITE (v3.7.3)');
   console.log('==========================================================\n');
 
   // 1. Unit Tests: ObjectId Sanitization
@@ -171,7 +171,8 @@ async function runTests() {
   const nullIdRoutes = [
     '/endpoint/invoice?summary=true&projectId=null&purchaseIds=null&invoiceIds=null&purchaseNames=null&branchId=HQ',
     '/endpoint/purchase?summary=true&projectId=null&branchId=HQ',
-    '/endpoint/expense?summary=true&projectId=null&maintenanceId=null&branchId=HQ'
+    '/endpoint/expense?summary=true&projectId=null&maintenanceId=null&branchId=HQ',
+    '/endpoint/deliveryNote?referenceId=null&branchId=HQ'
   ];
   for (const r of nullIdRoutes) {
     const res = await request({ path: r, method: 'GET', headers: authHeaders });
@@ -198,6 +199,7 @@ async function runTests() {
     { name: 'Payroll', path: '/endpoint/payRoll-Information?page=1&limit=10&branchId=HQ', key: 'itemI' },
     { name: 'Fleet', path: '/endpoint/fleet?page=1&limit=10&branchId=HQ', key: 'data' },
     { name: 'Block Factory', path: '/endpoint/block-production?branchId=HQ', key: 'data' },
+    { name: 'Delivery Notes', path: '/endpoint/deliveryNote-Information?page=1&limit=10&branchId=HQ', key: 'itemI' },
   ];
 
   for (const chk of moduleChecks) {

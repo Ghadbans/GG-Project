@@ -2031,6 +2031,16 @@ const isItemMatch = (item1, item2) => {
                                             </NavLink>
                                           )}
                                         </MenuItem>
+                                        <MenuItem>
+                                          <NavLink
+                                            to="/DeliveryNoteForm"
+                                            state={{ reason: 'Project', referenceId: id }}
+                                            className='LinkName'
+                                            style={{ color: '#202a5a', fontWeight: 600 }}
+                                          >
+                                            <span>Create Delivery Note</span>
+                                          </NavLink>
+                                        </MenuItem>
                                       </Menu>
                                     </div>
                                   </header>

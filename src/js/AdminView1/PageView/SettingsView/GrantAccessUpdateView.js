@@ -211,6 +211,13 @@ function GrantAccessUpdateView() {
             access: { readM: false, createM: false, viewM: false, editM: false, deleteM: false }
           });
         }
+        if (!fetchedModules.find(m => m.moduleName === 'Delivery-Note')) {
+          fetchedModules.push({
+            id: 28,
+            moduleName: 'Delivery-Note',
+            access: { readM: false, createM: false, viewM: false, editM: false, deleteM: false }
+          });
+        }
 
         // Ensure Reports module is present even for old records
         if (!fetchedModules.find(m => m.moduleName === 'Reports')) {

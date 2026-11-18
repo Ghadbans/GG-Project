@@ -6059,3 +6059,33 @@ In **v3.7.1**, production inspection uncovered three critical data-integrity and
    - Verified **0 AST errors** (`scripts/pre-build-check.js`), **21 PASSED / 0 FAILED** (`scripts/security-check.js`), and **11 PASSED / 0 FAILED** (`scripts/regression-check.js`).
    - Synchronized version **`3.7.2`** across `package.json`, `server/package.json`, `server/index.js`, `server/routes/downloadRoutes.js`, and `scripts/security-check.js`.
    - Built Web Portal (`dist_web/`), Electron Desktop (`build/` & `dist/Global Gate Setup 3.7.2.exe`), and Capacitor Android APK (`GlobalGate-v3.7.2.apk`), synced installers to `server/public/downloads/`, and pushed to `origin main`.
+
+
+### Rule 93: Store Delivery Note (`Bordereau de Livraison`) Module (Ver 3.7.3)
+
+#### Architectural Overview & Motivation
+Added a dedicated **Delivery Note (`DN-000001`)** sub-module inside the **Store** module, modeled directly on the `Item Out` / `Item Return` `Reason` → `Reference` workflow while keeping inventory counts isolated (zero stock double-deduction):
+1. **Source Linking (`Invoice` or `Project`)**:
+   - Selecting `Reason` (`Invoice` or `Project`) and choosing the specific Invoice (`INV-xxxxxx`) or Project (`P-xxxxxx`) loads all non-divider line items, auto-fills customer info, and computes `Prev. Delivered` from prior non-cancelled Delivery Notes (`GET /endpoint/deliveryNote?referenceId=...`).
+2. **Per-Item Checkbox Selection & Adjustable Quantities**:
+   - Users check `[✓]` only the items being delivered on this trip.
+   - Both **`Total Qty`** (`orderedQty`) and **`Deliver Qty`** (`deliverQty`) are adjustable by the user.
+   - Only checked items (`deliverQty > 0`) are persisted and printed.
+3. **Zero Stock Double-Deduction**:
+   - Delivery Notes do **not** attach `stockUtils` hooks or mutate `Item` stock quantities, preserving authoritative stock calculations from `Item Purchase`, `Item Out`, `Item Return`, and `POS`.
+4. **Professional A4 Printout & Signed POD Attachments**:
+   - `DeliveryNotePrintTemplate.js` renders a price-free A4 `DELIVERY NOTE / BORDEREAU DE LIVRAISON` containing only the checked items and quantities, plus a 3-box signature footer (`Prepared By (Store)`, `Driver / Carrier`, `Received By (Client)`).
+   - `DeliveryNoteViewInformation.js` integrates `useReactToPrint`, quick `Mark Delivered` status action, and `DocumentAttachmentsModal` for uploading signed client POD photos/PDFs.
+
+#### Implementation & Verification Details (v3.7.3)
+1. **Backend**:
+   - `server/model/deliveryNoteSchema.js` (per-branch unique `DN-000001` numbering, `strict: false`).
+   - `server/routes/deliveryNoteRoutes.js` (mounted under `/endpoint` in `server/index.js`, sanitized with `server/utils/objectIdUtils.js`, server-side search/pagination/status counts).
+2. **Frontend**:
+   - `src/js/AdminView1/PageView/DeliveryNote/`: `DeliveryNoteViewAdmin.js`, `DeliveryNoteForm.js`, `DeliveryNoteUpdate.js`, `DeliveryNoteViewInformation.js`, `DeliveryNotePrintTemplate.js`.
+   - Navigation, Permissions & Search State: `App.js`, `SideMaintenance.js`, `MobileDrawer.js`, `useModuleSearchState.js` (`'deliveryNote'`), `GrantAccessFormView.js`, `GrantAccessUpdateView.js` (`'Delivery-Note'`).
+   - Direct `"Create Delivery Note"` shortcuts in `InvoiceViewAdminAll.js` and `ProjectViewInformation.js` `OPTIONS` menus.
+3. **Verification & Multi-Platform Release (v3.7.3)**:
+   - Verified `pre-build-check.js` (0 AST errors), `security-check.js` (21/21), and `regression-check.js` (11/11).
+   - Synchronized version **`3.7.3`** across `package.json`, `server/package.json`, `server/index.js`, `server/routes/downloadRoutes.js`, `scripts/security-check.js`, and `scripts/regression-check.js`.
+   - Built Web Portal (`dist_web/`), Electron Desktop (`dist/Global Gate Setup 3.7.3.exe`), and Capacitor Android APK (`GlobalGate-v3.7.3.apk`), synced installers to `server/public/downloads/`, and pushed to `origin main`.

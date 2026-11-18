@@ -522,6 +522,16 @@ function GrantAccessFormView() {
         editM: false,
         deleteM: false
       }
+    }, {
+      id: 28,
+      moduleName: 'Delivery-Note',
+      access: {
+        readM: false,
+        createM: false,
+        viewM: false,
+        editM: false,
+        deleteM: false
+      }
     }]),
     _useState8 = _slicedToArray(_useState7, 2),
     modules = _useState8[0],

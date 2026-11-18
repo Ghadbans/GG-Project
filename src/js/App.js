@@ -87,6 +87,10 @@ const CustomerViewAdmin = React.lazy(() => import('./AdminView1/CustomerViewAdmi
 const ItemViewAdmin = React.lazy(() => import('./AdminView1/ItemViewAdmin'))
 const InvoiceViewAdmin = React.lazy(() => import('./AdminView1/InvoiceViewAdmin'))
 const ItemOutViewAdmin = React.lazy(() => import('./AdminView1/ItemOutViewAdmin'))
+const DeliveryNoteViewAdmin = React.lazy(() => import('./AdminView1/PageView/DeliveryNote/DeliveryNoteViewAdmin'))
+const DeliveryNoteForm = React.lazy(() => import('./AdminView1/PageView/DeliveryNote/DeliveryNoteForm'))
+const DeliveryNoteUpdate = React.lazy(() => import('./AdminView1/PageView/DeliveryNote/DeliveryNoteUpdate'))
+const DeliveryNoteViewInformation = React.lazy(() => import('./AdminView1/PageView/DeliveryNote/DeliveryNoteViewInformation'))
 const ItemReturnAdminView = React.lazy(() => import('./AdminView1/ItemReturnAdminView'))
 const PurchaseOrderViewAdmin = React.lazy(() => import('./AdminView1/PurchaseOrderViewAdmin'))
 const MaintenanceViewAdmin = React.lazy(() => import('./AdminView1/MaintenanceViewAdmin'))
@@ -370,8 +374,12 @@ function App() {
             <Route path='PaymentInformationView/:id' element={<PaymentInformationView />}></Route>
             <Route path='PaymentInformationUpdate/:id' element={<PaymentInformationUpdate />}></Route>
 
-            {/**Item Out/Return */}
+            {/**Item Out/Return & Delivery Note */}
             <Route path='ItemOutViewAdmin' element={<ItemOutViewAdmin />}></Route>
+            <Route path='DeliveryNoteViewAdmin' element={<DeliveryNoteViewAdmin />}></Route>
+            <Route path='DeliveryNoteForm' element={<DeliveryNoteForm />}></Route>
+            <Route path='DeliveryNoteUpdate/:id' element={<DeliveryNoteUpdate />}></Route>
+            <Route path='DeliveryNoteViewInformation/:id' element={<DeliveryNoteViewInformation />}></Route>
             <Route path='ItemOutViewForm' element={<ItemOutViewForm />}></Route>
             <Route path='ItemOutViewUpdate/:id' element={<ItemOutViewUpdate />}></Route>
             <Route path='ItemReturnAdminView' element={<ItemReturnAdminView />}></Route>

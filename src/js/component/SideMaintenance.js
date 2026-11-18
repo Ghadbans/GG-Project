@@ -11,6 +11,7 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import PostAddIcon from '@mui/icons-material/PostAdd';
 import ListAltIcon from '@mui/icons-material/ListAlt';
 import ContentPasteGoIcon from '@mui/icons-material/ContentPasteGo';
+import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import SidebarDash from './SidebarDash';
 import Close from '@mui/icons-material/Close';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
@@ -88,6 +89,7 @@ function SideMaintenance({ onView, isSubmenu }) {
   const ItemInfo = grantAccess.filter((row) => row.moduleName === "Item" && row.access.readM === true);
   const SupplierInfo = grantAccess.filter((row) => row.moduleName === "Supplier" && row.access.readM === true);
   const ItemOInfo = grantAccess.filter((row) => row.moduleName === "Item-Out" && row.access.readM === true);
+  const DeliveryNoteInfo = grantAccess.filter((row) => row.moduleName === "Delivery-Note" && row.access.readM === true);
   const ReturnInfo = grantAccess.filter((row) => row.moduleName === "Item-Return" && row.access.readM === true);
   const IPurchaseInfo = grantAccess.filter((row) => row.moduleName === "Item-Purchase" && row.access.readM === true);
   const PurchaseOrderInfo = grantAccess.filter((row) => row.moduleName === "Purchase-Order" && row.access.readM === true);
@@ -131,6 +133,12 @@ function SideMaintenance({ onView, isSubmenu }) {
               <ContentPasteGoIcon />
             </ListItemIcon>
             <ListItemText primary="Item Out" />
+          </ListItemButton>
+          <ListItemButton disabled={user.data?.userName !== 'GG' && DeliveryNoteInfo.length === 0 && ItemOInfo.length === 0} sx={{ color: 'gray' }} component={NavLink} to="/DeliveryNoteViewAdmin" onClick={handleNavClick} style={isActive('/DeliveryNoteViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
+            <ListItemIcon sx={{ color: 'gray' }} style={isActive('/DeliveryNoteViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
+              <LocalShippingIcon />
+            </ListItemIcon>
+            <ListItemText primary="Delivery Note" />
           </ListItemButton>
           <ListItemButton disabled={user.data?.userName !== 'GG' && ReturnInfo.length === 0} sx={{ color: 'gray' }} component={NavLink} to="/ItemReturnAdminView" onClick={handleNavClick} style={isActive('/ItemReturnAdminView') ? { backgroundColor: '#30368a', color: 'white' } : null}>
             <ListItemIcon sx={{ color: 'gray' }} style={isActive('/ItemReturnAdminView') ? { backgroundColor: '#30368a', color: 'white' } : null}>

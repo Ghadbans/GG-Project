@@ -140,6 +140,7 @@ const customerRoutes = require("./routes/customerRoutes");
 const estimationRoutes = require("./routes/estimationRoutes");
 const projectRoutes = require("./routes/projectRoutes");
 const attachmentRoutes = require("./routes/attachmentRoutes");
+const deliveryNoteRoutes = require("./routes/deliveryNoteRoutes");
 
 
 // ---- Security hardening & JWT enforcement (v3.7.0) ----
@@ -252,6 +253,7 @@ app.use("/endpoint", customerRoutes);
 app.use("/endpoint", estimationRoutes);
 app.use("/endpoint", projectRoutes);
 app.use("/endpoint", attachmentRoutes);
+app.use("/endpoint", deliveryNoteRoutes);
 
 const downloadRoutes = require("./routes/downloadRoutes");
 app.use("/download", downloadRoutes);
@@ -273,14 +275,14 @@ const inspectionReportRoutes = require('./routes/inspectionReportRoutes');
 app.use('/api/inspection-reports', inspectionReportRoutes);
 app.use('/endpoint/inspection-reports', inspectionReportRoutes);
 
-app.get('/', (req, res) => res.json({ name: 'Global Gate API', version: '3.7.2', status: 'online', uptime: process.uptime(), cloudWhatsApp: true }));
+app.get('/', (req, res) => res.json({ name: 'Global Gate API', version: '3.7.3', status: 'online', uptime: process.uptime(), cloudWhatsApp: true }));
 app.get('/robots.txt', (req, res) => {
   res.type('text/plain');
   res.send("User-agent: *\nDisallow: /\n");
 });
 app.get('/favicon.ico', (req, res) => res.status(204).end());
-app.get('/test', (req, res) => res.send('Backend is LIVE and UPDATED! [v3.7.2-project-linked-invoice-fix]'));
-app.get('/status', (req, res) => res.json({ status: 'ok', version: '3.7.2', attachments: true, cloudWhatsApp: true, uptime: process.uptime() })); // health check
+app.get('/test', (req, res) => res.send('Backend is LIVE and UPDATED! [v3.7.3-project-linked-invoice-fix]'));
+app.get('/status', (req, res) => res.json({ status: 'ok', version: '3.7.3', attachments: true, cloudWhatsApp: true, uptime: process.uptime() })); // health check
 
 // SECURITY GUARD FOR INTERNAL INIT & DEBUG ROUTES
 // Key comes ONLY from env (ADMIN_SETUP_KEY, else SECRET_KEY). No hardcoded fallback; timing-safe compare.
@@ -370,7 +372,7 @@ app.get('/init-permissions', verifyInternalSetupKey, async (req, res) => {
   }
 });
 
-// One-time protected Invoice Subject Recovery endpoint (v3.7.2)
+// One-time protected Invoice Subject Recovery endpoint (v3.7.3)
 app.post('/api/admin/recover-invoice-subjects', verifyInternalSetupKey, async (req, res) => {
   try {
     const { runInvoiceSubjectRecovery } = require('./scripts/recover_invoice_subjects');
