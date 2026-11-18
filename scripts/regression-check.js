@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * scripts/regression-check.js (v3.7.3)
+ * scripts/regression-check.js (v3.7.4)
  *
  * Automated Cross-Module Regression & Data-Safety Verification Suite.
  * Verifies:
@@ -103,7 +103,7 @@ async function ensureServerRunning() {
 
 async function runTests() {
   console.log('==========================================================');
-  console.log(' GLOBAL GATE - REGRESSION & DATA-SAFETY SUITE (v3.7.3)');
+  console.log(' GLOBAL GATE - REGRESSION & DATA-SAFETY SUITE (v3.7.4)');
   console.log('==========================================================\n');
 
   // 1. Unit Tests: ObjectId Sanitization

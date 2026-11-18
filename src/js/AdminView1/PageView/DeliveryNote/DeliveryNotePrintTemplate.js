@@ -1,10 +1,8 @@
 import React from 'react';
 import dayjs from 'dayjs';
-import useCompanyProfile from '../../../hooks/useCompanyProfile';
+import PrintHeader from '../../../component/PrintHeader';
 
 const DeliveryNotePrintTemplate = React.forwardRef(({ deliveryNote }, ref) => {
-  const { profile } = useCompanyProfile();
-
   if (!deliveryNote) return null;
 
   const checkedItems = (deliveryNote.itemsQtyArray || []).filter(
@@ -53,63 +51,34 @@ const DeliveryNotePrintTemplate = React.forwardRef(({ deliveryNote }, ref) => {
       }}
     >
       <div>
-        {/* Company Header */}
+        {/* Official Company Header & Logo */}
+        <PrintHeader branchId={deliveryNote.branchId} />
+
+        {/* Navy Title Banner */}
         <div
           style={{
+            backgroundColor: '#202a5a',
+            color: '#ffffff',
+            padding: '8px 14px',
+            borderRadius: '4px',
             display: 'flex',
             justifyContent: 'space-between',
-            alignItems: 'flex-start',
-            borderBottom: '2px solid #202a5a',
-            paddingBottom: '12px',
-            marginBottom: '16px'
+            alignItems: 'center',
+            marginTop: '6px',
+            marginBottom: '14px'
           }}
         >
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            {profile?.logoUrl && (
-              <img
-                src={profile.logoUrl}
-                alt="Company Logo"
-                style={{ maxHeight: '58px', maxWidth: '140px', objectFit: 'contain' }}
-              />
-            )}
-            <div>
-              <div style={{ fontSize: '18px', fontWeight: 800, color: '#202a5a' }}>
-                {profile?.companyName || 'GLOBAL GATE SARL'}
-              </div>
-              {profile?.rccm && <div>RCCM: {profile.rccm}</div>}
-              {profile?.idNat && <div>ID NAT: {profile.idNat}</div>}
-              {profile?.address && <div>{profile.address}</div>}
-              {profile?.phone && <div>Tel: {profile.phone}</div>}
-            </div>
+          <div style={{ fontSize: '15px', fontWeight: 800, letterSpacing: '0.5px' }}>
+            DELIVERY NOTE / BORDEREAU DE LIVRAISON
           </div>
-
-          <div style={{ textAlign: 'right' }}>
-            <div
-              style={{
-                fontSize: '20px',
-                fontWeight: 800,
-                color: '#202a5a',
-                letterSpacing: '0.5px'
-              }}
-            >
-              DELIVERY NOTE
-            </div>
-            <div style={{ fontSize: '11px', color: '#64748b', marginBottom: '6px' }}>
-              BORDEREAU DE LIVRAISON
-            </div>
-            <div style={{ fontWeight: 700, fontSize: '14px' }}>
-              {deliveryNote.deliveryName ||
-                `DN-${String(deliveryNote.deliveryNumber || 0).padStart(6, '0')}`}
-            </div>
-            <div>
-              <strong>Date:</strong>{' '}
-              {deliveryNote.deliveryDate
-                ? dayjs(deliveryNote.deliveryDate).format('DD/MM/YYYY')
-                : ''}
-            </div>
-            <div>
-              <strong>Status:</strong> {deliveryNote.status || 'Dispatched'}
-            </div>
+          <div style={{ textAlign: 'right', fontSize: '12px', fontWeight: 700 }}>
+            {deliveryNote.deliveryName ||
+              `DN-${String(deliveryNote.deliveryNumber || 0).padStart(6, '0')}`}{' '}
+            &nbsp;|&nbsp;{' '}
+            {deliveryNote.deliveryDate
+              ? dayjs(deliveryNote.deliveryDate).format('DD/MM/YYYY')
+              : ''}
+            {deliveryNote.status ? ` (${deliveryNote.status})` : ''}
           </div>
         </div>
 
@@ -374,6 +343,20 @@ const DeliveryNotePrintTemplate = React.forwardRef(({ deliveryNote }, ref) => {
               Client Name, Signature, Stamp & Date
             </div>
           </div>
+        </div>
+
+        {/* Contact Footer */}
+        <div
+          style={{
+            marginTop: '16px',
+            paddingTop: '8px',
+            borderTop: '1px solid #cbd5e1',
+            textAlign: 'center',
+            fontSize: '10px',
+            color: '#64748b'
+          }}
+        >
+          contact@globalgate.sarl &nbsp;&nbsp;|&nbsp;&nbsp; +243 827 722 222 &nbsp;&nbsp;|&nbsp;&nbsp; www.GlobalGate.sarl
         </div>
       </div>
     </div>

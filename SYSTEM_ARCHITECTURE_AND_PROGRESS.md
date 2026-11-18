@@ -6089,3 +6089,16 @@ Added a dedicated **Delivery Note (`DN-000001`)** sub-module inside the **Store*
    - Verified `pre-build-check.js` (0 AST errors), `security-check.js` (21/21), and `regression-check.js` (11/11).
    - Synchronized version **`3.7.3`** across `package.json`, `server/package.json`, `server/index.js`, `server/routes/downloadRoutes.js`, `scripts/security-check.js`, and `scripts/regression-check.js`.
    - Built Web Portal (`dist_web/`), Electron Desktop (`dist/Global Gate Setup 3.7.3.exe`), and Capacitor Android APK (`GlobalGate-v3.7.3.apk`), synced installers to `server/public/downloads/`, and pushed to `origin main`.
+
+
+### Rule 94: Delivery Note Official Logo Header (`PrintHeader`) & Store Menu Placement (Ver 3.7.4)
+
+1. **`src/js/AdminView1/PageView/DeliveryNote/DeliveryNotePrintTemplate.js`**:
+   - Replaced custom text-only header with `<PrintHeader branchId={deliveryNote.branchId} />` so the official **GG Global Gate General Services** logo and branch RCCM/ID NAT/address block render identically to `Item Out Voucher`, `Invoices`, and `Purchase Requests`.
+   - Added a navy `DELIVERY NOTE / BORDEREAU DE LIVRAISON` title banner and contact footer (`contact@globalgate.sarl | +243 827 722 222 | www.GlobalGate.sarl`).
+2. **`src/js/component/SideMaintenance.js`**:
+   - Moved `Delivery Note` to the bottom of the Store menu, directly below `Purchase Order`.
+3. **Verification & Multi-Platform Release (v3.7.4)**:
+   - Verified `pre-build-check.js` (0 AST errors), `security-check.js` (21/21), and `regression-check.js` (11/11).
+   - Synchronized version **`3.7.4`** across `package.json`, `server/package.json`, `server/index.js`, `server/routes/downloadRoutes.js`, `scripts/security-check.js`, and `scripts/regression-check.js`.
+   - Built Web Portal (`dist_web/`), Electron Desktop (`dist/Global Gate Setup 3.7.4.exe`), and Capacitor Android APK (`GlobalGate-v3.7.4.apk`), synced installers to `server/public/downloads/`, and pushed to `origin main`.

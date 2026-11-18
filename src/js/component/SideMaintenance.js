@@ -134,12 +134,6 @@ function SideMaintenance({ onView, isSubmenu }) {
             </ListItemIcon>
             <ListItemText primary="Item Out" />
           </ListItemButton>
-          <ListItemButton disabled={user.data?.userName !== 'GG' && DeliveryNoteInfo.length === 0 && ItemOInfo.length === 0} sx={{ color: 'gray' }} component={NavLink} to="/DeliveryNoteViewAdmin" onClick={handleNavClick} style={isActive('/DeliveryNoteViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
-            <ListItemIcon sx={{ color: 'gray' }} style={isActive('/DeliveryNoteViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
-              <LocalShippingIcon />
-            </ListItemIcon>
-            <ListItemText primary="Delivery Note" />
-          </ListItemButton>
           <ListItemButton disabled={user.data?.userName !== 'GG' && ReturnInfo.length === 0} sx={{ color: 'gray' }} component={NavLink} to="/ItemReturnAdminView" onClick={handleNavClick} style={isActive('/ItemReturnAdminView') ? { backgroundColor: '#30368a', color: 'white' } : null}>
             <ListItemIcon sx={{ color: 'gray' }} style={isActive('/ItemReturnAdminView') ? { backgroundColor: '#30368a', color: 'white' } : null}>
               <PostAddIcon />
@@ -157,6 +151,12 @@ function SideMaintenance({ onView, isSubmenu }) {
               <InventoryOutlined />
             </ListItemIcon>
             <ListItemText primary="Purchase Order" />
+          </ListItemButton>
+          <ListItemButton disabled={user.data?.userName !== 'GG' && DeliveryNoteInfo.length === 0 && ItemOInfo.length === 0} sx={{ color: 'gray' }} component={NavLink} to="/DeliveryNoteViewAdmin" onClick={handleNavClick} style={isActive('/DeliveryNoteViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
+            <ListItemIcon sx={{ color: 'gray' }} style={isActive('/DeliveryNoteViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
+              <LocalShippingIcon />
+            </ListItemIcon>
+            <ListItemText primary="Delivery Note" />
           </ListItemButton>
         </div>
         : null}

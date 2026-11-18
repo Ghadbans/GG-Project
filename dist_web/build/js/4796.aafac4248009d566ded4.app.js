@@ -655,8 +655,8 @@ var DocumentAttachmentsModal = __webpack_require__(44124);
 // EXTERNAL MODULE: ./node_modules/dayjs/dayjs.min.js
 var dayjs_min = __webpack_require__(74353);
 var dayjs_min_default = /*#__PURE__*/__webpack_require__.n(dayjs_min);
-// EXTERNAL MODULE: ./src/js/hooks/useCompanyProfile.js
-var useCompanyProfile = __webpack_require__(86200);
+// EXTERNAL MODULE: ./src/js/component/PrintHeader.js
+var PrintHeader = __webpack_require__(77438);
 ;// ./src/js/AdminView1/PageView/DeliveryNote/DeliveryNotePrintTemplate.js
 
 
@@ -664,8 +664,6 @@ var useCompanyProfile = __webpack_require__(86200);
 var DeliveryNotePrintTemplate = /*#__PURE__*/react.forwardRef((_ref, ref) => {
   var _deliveryNote$custome, _deliveryNote$custome2, _deliveryNote$custome3, _deliveryNote$custome4, _deliveryNote$referen, _deliveryNote$referen2, _deliveryNote$referen3, _deliveryNote$Create;
   var deliveryNote = _ref.deliveryNote;
-  var _useCompanyProfile = (0,useCompanyProfile/* default */.A)(),
-    profile = _useCompanyProfile.profile;
   if (!deliveryNote) return null;
   var checkedItems = (deliveryNote.itemsQtyArray || []).filter(item => {
     var _ref2, _item$deliverQty;
@@ -698,58 +696,33 @@ var DeliveryNotePrintTemplate = /*#__PURE__*/react.forwardRef((_ref, ref) => {
       justifyContent: 'space-between',
       boxSizing: 'border-box'
     }
-  }, /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement("div", {
+  }, /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement(PrintHeader/* default */.A, {
+    branchId: deliveryNote.branchId
+  }), /*#__PURE__*/react.createElement("div", {
     style: {
+      backgroundColor: '#202a5a',
+      color: '#ffffff',
+      padding: '8px 14px',
+      borderRadius: '4px',
       display: 'flex',
       justifyContent: 'space-between',
-      alignItems: 'flex-start',
-      borderBottom: '2px solid #202a5a',
-      paddingBottom: '12px',
-      marginBottom: '16px'
-    }
-  }, /*#__PURE__*/react.createElement("div", {
-    style: {
-      display: 'flex',
       alignItems: 'center',
-      gap: '12px'
-    }
-  }, (profile === null || profile === void 0 ? void 0 : profile.logoUrl) && /*#__PURE__*/react.createElement("img", {
-    src: profile.logoUrl,
-    alt: "Company Logo",
-    style: {
-      maxHeight: '58px',
-      maxWidth: '140px',
-      objectFit: 'contain'
-    }
-  }), /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement("div", {
-    style: {
-      fontSize: '18px',
-      fontWeight: 800,
-      color: '#202a5a'
-    }
-  }, (profile === null || profile === void 0 ? void 0 : profile.companyName) || 'GLOBAL GATE SARL'), (profile === null || profile === void 0 ? void 0 : profile.rccm) && /*#__PURE__*/react.createElement("div", null, "RCCM: ", profile.rccm), (profile === null || profile === void 0 ? void 0 : profile.idNat) && /*#__PURE__*/react.createElement("div", null, "ID NAT: ", profile.idNat), (profile === null || profile === void 0 ? void 0 : profile.address) && /*#__PURE__*/react.createElement("div", null, profile.address), (profile === null || profile === void 0 ? void 0 : profile.phone) && /*#__PURE__*/react.createElement("div", null, "Tel: ", profile.phone))), /*#__PURE__*/react.createElement("div", {
-    style: {
-      textAlign: 'right'
+      marginTop: '6px',
+      marginBottom: '14px'
     }
   }, /*#__PURE__*/react.createElement("div", {
     style: {
-      fontSize: '20px',
+      fontSize: '15px',
       fontWeight: 800,
-      color: '#202a5a',
       letterSpacing: '0.5px'
     }
-  }, "DELIVERY NOTE"), /*#__PURE__*/react.createElement("div", {
+  }, "DELIVERY NOTE / BORDEREAU DE LIVRAISON"), /*#__PURE__*/react.createElement("div", {
     style: {
-      fontSize: '11px',
-      color: '#64748b',
-      marginBottom: '6px'
+      textAlign: 'right',
+      fontSize: '12px',
+      fontWeight: 700
     }
-  }, "BORDEREAU DE LIVRAISON"), /*#__PURE__*/react.createElement("div", {
-    style: {
-      fontWeight: 700,
-      fontSize: '14px'
-    }
-  }, deliveryNote.deliveryName || "DN-".concat(String(deliveryNote.deliveryNumber || 0).padStart(6, '0'))), /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement("strong", null, "Date:"), ' ', deliveryNote.deliveryDate ? dayjs_min_default()(deliveryNote.deliveryDate).format('DD/MM/YYYY') : ''), /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement("strong", null, "Status:"), " ", deliveryNote.status || 'Dispatched'))), /*#__PURE__*/react.createElement("div", {
+  }, deliveryNote.deliveryName || "DN-".concat(String(deliveryNote.deliveryNumber || 0).padStart(6, '0')), ' ', "\xA0|\xA0", ' ', deliveryNote.deliveryDate ? dayjs_min_default()(deliveryNote.deliveryDate).format('DD/MM/YYYY') : '', deliveryNote.status ? " (".concat(deliveryNote.status, ")") : '')), /*#__PURE__*/react.createElement("div", {
     style: {
       display: 'grid',
       gridTemplateColumns: '1fr 1fr',
@@ -974,7 +947,16 @@ var DeliveryNotePrintTemplate = /*#__PURE__*/react.forwardRef((_ref, ref) => {
       paddingTop: '4px',
       fontSize: '10px'
     }
-  }, "Client Name, Signature, Stamp & Date")))));
+  }, "Client Name, Signature, Stamp & Date"))), /*#__PURE__*/react.createElement("div", {
+    style: {
+      marginTop: '16px',
+      paddingTop: '8px',
+      borderTop: '1px solid #cbd5e1',
+      textAlign: 'center',
+      fontSize: '10px',
+      color: '#64748b'
+    }
+  }, "contact@globalgate.sarl \xA0\xA0|\xA0\xA0 +243 827 722 222 \xA0\xA0|\xA0\xA0 www.GlobalGate.sarl")));
 });
 /* harmony default export */ const DeliveryNote_DeliveryNotePrintTemplate = (DeliveryNotePrintTemplate);
 ;// ./src/js/AdminView1/PageView/DeliveryNote/DeliveryNoteViewInformation.js
