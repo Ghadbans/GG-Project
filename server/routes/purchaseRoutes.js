@@ -223,6 +223,7 @@ Route.route("/purchase", cors(corsOptionsDelegate)).get(
 
       if (cleanProjectId || cleanProjectName || cleanProjectNumber) {
         let pConditions = [];
+        let fallbackConditions = [];
         if (cleanProjectId) {
           const objectId = toSafeObjectId(cleanProjectId);
           const pIds = objectId ? [cleanProjectId, objectId] : [cleanProjectId];
@@ -234,7 +235,7 @@ Route.route("/purchase", cors(corsOptionsDelegate)).get(
         }
         if (cleanProjectName) {
           const escapedName = cleanProjectName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-          pConditions.push(
+          fallbackConditions.push(
             { 'projectName.projectName': new RegExp('^' + escapedName + '$', 'i') },
             { 'projectName.name': new RegExp('^' + escapedName + '$', 'i') },
             { 'projectName': new RegExp('^' + escapedName + '$', 'i') },
@@ -244,10 +245,29 @@ Route.route("/purchase", cors(corsOptionsDelegate)).get(
         if (cleanProjectNumber) {
           const pNum = Number(cleanProjectNumber);
           if (!isNaN(pNum)) {
-            pConditions.push(
+            fallbackConditions.push(
               { 'ReferenceName': 'P-' + String(pNum).padStart(6, '0') },
               { 'ReferenceName': 'P-' + pNum }
             );
+          }
+        }
+        if (fallbackConditions.length > 0) {
+          if (cleanProjectId) {
+            // Never pull purchases whose projectName._id belongs to a different project with the same name
+            pConditions.push({
+              $and: [
+                {
+                  $or: [
+                    { 'projectName._id': { $exists: false } },
+                    { 'projectName._id': null },
+                    { 'projectName._id': '' }
+                  ]
+                },
+                { $or: fallbackConditions }
+              ]
+            });
+          } else {
+            pConditions.push(...fallbackConditions);
           }
         }
         if (pConditions.length > 0) {

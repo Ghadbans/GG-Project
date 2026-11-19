@@ -6185,3 +6185,14 @@ Implemented a zero-manual-intervention in-app update pipeline across Electron Wi
    - Verified `pre-build-check.js` (252 files, 0 errors), `security-check.js --auto-start` (21/21 passed), and `regression-check.js --auto-start` (12/12 passed).
    - Built Web Portal (`dist_web/`), Electron Desktop (`dist/Global Gate Setup 3.7.8.exe` + `latest.yml`), and Capacitor Android APK (`GlobalGate-v3.7.8.apk`), synced to `server/public/downloads/` via `scripts/sync-releases.js`, and pushed to `origin main`.
    - Fixed `.dockerignore` and `server/.dockerignore` to whitelist `latest.yml`, `version.json`, and `Global Gate Setup*.exe` (and updated `scripts/sync-releases.js` to also refresh `GlobalGateSetup.exe`) so Railway's Docker image serves `latest.yml`, `version.json`, and the latest Windows installer.
+
+
+### Rule 100: Strict Project-ID Scoping for Purchases & Invoices (Preventing Cross-Project Leakage on Same Name)
+
+#### Root Cause & Fix
+1. **Cross-Project Name Collision (`server/routes/purchaseRoutes.js` & `server/routes/invoiceRoutes.js`)**:
+   - Previously, when `ProjectViewInformation` queried `/endpoint/purchase` or `/endpoint/invoice` with `projectId`, `projectName`, and `projectNumber`, the backend `OR`-combined `projectId` with `projectName` regex matching. When multiple projects (e.g., `KREAM RESTAURANT` `P-000157`–`P-000164`) shared the same `projectName`, purchases or invoices linked by `_id` to another project could leak into the viewed project.
+   - Updated both `purchaseRoutes.js` and `invoiceRoutes.js` so that when `cleanProjectId` is provided, `cleanProjectName` / `cleanProjectNumber` fallback matching applies **only** to legacy records that lack a `projectName._id` (in `purchaseRoutes.js`) or `Ref._id` (in `invoiceRoutes.js`). Any record explicitly linked to a different project `_id` can never cross-contaminate another project.
+2. **Verification & Deployment**:
+   - Verified `pre-build-check.js` (252 files, 0 errors), `security-check.js --auto-start` (21/21 passed), and `regression-check.js --auto-start` (12/12 passed).
+   - Deployed backend-only fix to `origin main` (Railway `api.globalgate.sarl`).
