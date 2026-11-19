@@ -6125,3 +6125,21 @@ Implemented a zero-manual-intervention in-app update pipeline across Electron Wi
    - Created `scripts/sync-releases.js` to sync `latest.yml`, `Global Gate Setup 3.7.5.exe`, `Global Gate Setup.exe`, and `version.json` to `server/public/downloads/`.
    - Verified `pre-build-check.js` (0 AST errors), `security-check.js` (21/21), and `regression-check.js` (12/12).
    - Built Web Portal (`dist_web/`), Electron Desktop (`dist/Global Gate Setup 3.7.5.exe` + `latest.yml`), and Capacitor Android APK (`GlobalGate-v3.7.5.apk`), synced to `server/public/downloads/`, and pushed to `origin main`.
+
+
+### Rule 96: Marketing Instagram Publishing Fix — Photo ID Lookup, Raster MIME Cache & Async Container Polling (Ver 3.7.5 Hotfix)
+
+#### Root Causes Resolved
+1. **Facebook Photo ID vs. Feed Post ID Lookup (`server/routes/marketingRoutes.js`)**:
+   - Instagram publishing previously queried `fbResult.postId` (a Page Feed Post ID, which lacks the `images` field) instead of `fbResult.photoId`, causing `pData.images?.[0]?.source` to be `undefined` and forcing a fallback to `/api/marketing/flyer`.
+   - Updated the Graph API lookup to prefer `fbResult?.photoId || fbResult?.postId`, supplying Instagram with the direct Facebook CDN JPEG URL.
+2. **Ready-Made Flyer Buffer & MIME Caching (`GET /api/marketing/flyer`)**:
+   - In Ready-Made Flyer Mode, `generateSvgFlyerBase64` returns a raster `data:image/...;base64,...` string directly, but `POST /publish` previously only stripped `data:image/svg+xml;base64,` and hardcoded `image/png` in `GET /flyer`, corrupting the cached buffer.
+   - Added `latestFlyerMime` alongside `latestFlyerBuffer`, stripped any `data:image/<type>;base64,` prefix properly, and updated `latestFlyerBuffer` / `latestFlyerMime` from `photoBuffer` / `photoMime` when a raster flyer is published.
+3. **Async Instagram Media Container Polling (`media_publish`)**:
+   - Meta's `POST /{igAccountId}/media` creates containers asynchronously; calling `media_publish` immediately triggered `"Media ID is not available"`.
+   - Added a status polling loop on `GET /{cData.id}?fields=status_code,status` (up to 10 attempts × 1.5s) until `status_code === 'FINISHED'`, plus a 2s single retry on transient `"not available"` / `"not ready"` responses.
+
+#### Verification & Deployment
+- Verified `pre-build-check.js` (252 files, 0 errors), `security-check.js --auto-start` (21/21 passed), and `regression-check.js --auto-start` (12/12 passed).
+- Deployed backend-only hotfix commits `d68f9887` and `b07a3b5d` to `origin main` (Railway `api.globalgate.sarl`); confirmed working in production alongside Facebook Page and Cloud WhatsApp.
