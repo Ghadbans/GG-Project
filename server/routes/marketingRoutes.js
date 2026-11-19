@@ -16,6 +16,7 @@ const AGENT_FLYER = path.join(AGENT_DIR, 'generated_flyer.png');
 
 // In-memory cache for latest generated flyer
 let latestFlyerBuffer = null;
+let latestFlyerMime = 'image/png';
 
 // Fallback Facebook credentials if running on remote server
 const FB_PAGE_ID = process.env.FB_PAGE_ID || '200999390054494';
@@ -481,7 +482,7 @@ router.put('/recipients', verifyMarketingAccess, async (req, res) => {
 router.get('/flyer', (req, res) => {
   if (latestFlyerBuffer) {
     const isSvg = latestFlyerBuffer.toString('utf8', 0, 100).includes('<svg');
-    res.setHeader('Content-Type', isSvg ? 'image/svg+xml' : 'image/png');
+    res.setHeader('Content-Type', isSvg ? 'image/svg+xml' : (latestFlyerMime || 'image/png'));
     return res.end(latestFlyerBuffer);
   }
   if (fs.existsSync(AGENT_FLYER)) {
@@ -681,8 +682,16 @@ router.post('/publish', verifyMarketingAccess, async (req, res) => {
     const flyerBase64 = generateSvgFlyerBase64(copyData, '', copyData.badge, productImage, theme, isFullFlyer, customSlogan);
     const caption = copyData.caption;
 
-    const svgBuffer = Buffer.from(flyerBase64.replace(/^data:image\/svg\+xml;base64,/, ''), 'base64');
-    latestFlyerBuffer = svgBuffer;
+    const dataUrlMatch = typeof flyerBase64 === 'string'
+      ? flyerBase64.match(/^data:(image\/[a-zA-Z0-9+.-]+);base64,(.+)$/)
+      : null;
+    if (dataUrlMatch) {
+      latestFlyerMime = dataUrlMatch[1];
+      latestFlyerBuffer = Buffer.from(dataUrlMatch[2], 'base64');
+    } else {
+      latestFlyerMime = 'image/svg+xml';
+      latestFlyerBuffer = Buffer.from(flyerBase64.replace(/^data:image\/svg\+xml;base64,/, ''), 'base64');
+    }
 
     // IF PREVIEW ONLY: DO NOT DISPATCH TO SOCIAL MEDIA PLATFORMS
     if (previewOnly) {
@@ -727,6 +736,11 @@ router.post('/publish', verifyMarketingAccess, async (req, res) => {
         photoExt = photoMime.includes('jpeg') || photoMime.includes('jpg') ? 'jpg' : 'png';
         photoBuffer = Buffer.from(match[2], 'base64');
       }
+    }
+
+    if (photoBuffer) {
+      latestFlyerBuffer = photoBuffer;
+      latestFlyerMime = photoMime || 'image/png';
     }
 
     // DISPATCH STAGE: User clicked "Approve & Publish"
@@ -791,9 +805,10 @@ router.post('/publish', verifyMarketingAccess, async (req, res) => {
       try {
         const igAccountId = process.env.IG_ACCOUNT_ID || '17841454469800173';
         let imageUrl = null;
-        if (fbResult?.postId) {
+        const fbLookupId = fbResult?.photoId || fbResult?.postId;
+        if (fbLookupId) {
           try {
-            const photoRes = await fetch(`https://graph.facebook.com/v21.0/${fbResult.postId}?fields=images&access_token=${FB_PAGE_ACCESS_TOKEN}`);
+            const photoRes = await fetch(`https://graph.facebook.com/v21.0/${fbLookupId}?fields=images&access_token=${FB_PAGE_ACCESS_TOKEN}`);
             const pData = await photoRes.json();
             imageUrl = pData.images?.[0]?.source;
           } catch (_) {}
