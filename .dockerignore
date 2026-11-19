@@ -12,3 +12,6 @@ server/public/downloads/*
 !server/public/downloads/GlobalGateSetup.exe
 !server/public/downloads/GlobalGate-v*.apk
 !server/public/downloads/GlobalGate-v*.exe
+!server/public/downloads/Global Gate Setup*.exe
+!server/public/downloads/latest.yml
+!server/public/downloads/version.json

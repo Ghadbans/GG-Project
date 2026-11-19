@@ -37,6 +37,10 @@ copyIfExists(
   path.join(downloadsDir, 'Global Gate Setup.exe')
 );
 copyIfExists(
+  path.join(distDir, `Global Gate Setup ${version}.exe`),
+  path.join(downloadsDir, 'GlobalGateSetup.exe')
+);
+copyIfExists(
   path.join(distDir, 'latest.yml'),
   path.join(downloadsDir, 'latest.yml')
 );

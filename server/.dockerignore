@@ -6,3 +6,6 @@ public/downloads/*
 !public/downloads/GlobalGateSetup.exe
 !public/downloads/GlobalGate-v*.apk
 !public/downloads/GlobalGate-v*.exe
+!public/downloads/Global Gate Setup*.exe
+!public/downloads/latest.yml
+!public/downloads/version.json
