@@ -819,12 +819,36 @@ router.post('/publish', verifyMarketingAccess, async (req, res) => {
         const cRes = await fetch(`https://graph.facebook.com/v21.0/${igAccountId}/media?image_url=${encodeURIComponent(imageUrl)}&caption=${encodeURIComponent(caption)}&access_token=${FB_PAGE_ACCESS_TOKEN}`, { method: 'POST' });
         const cData = await cRes.json();
         if (cData.id) {
-          const pRes = await fetch(`https://graph.facebook.com/v21.0/${igAccountId}/media_publish?creation_id=${cData.id}&access_token=${FB_PAGE_ACCESS_TOKEN}`, { method: 'POST' });
-          const pData = await pRes.json();
-          if (pData.id) {
-            igResult = { success: true, postId: pData.id, postUrl: `https://www.instagram.com/p/${pData.id}` };
+          // Wait for Meta's async media container to finish processing before calling media_publish
+          let containerError = null;
+          for (let attempt = 0; attempt < 10; attempt++) {
+            await new Promise((r) => setTimeout(r, 1500));
+            try {
+              const sRes = await fetch(`https://graph.facebook.com/v21.0/${cData.id}?fields=status_code,status&access_token=${FB_PAGE_ACCESS_TOKEN}`);
+              const sData = await sRes.json();
+              if (sData.status_code === 'FINISHED') break;
+              if (sData.status_code === 'ERROR' || sData.status_code === 'EXPIRED') {
+                containerError = sData.status || `Instagram media container ${sData.status_code.toLowerCase()}`;
+                break;
+              }
+            } catch (_) {}
+          }
+
+          if (containerError) {
+            igResult = { success: false, error: containerError };
           } else {
-            igResult = { success: false, error: pData.error?.message || 'Instagram publish failed' };
+            let pRes = await fetch(`https://graph.facebook.com/v21.0/${igAccountId}/media_publish?creation_id=${cData.id}&access_token=${FB_PAGE_ACCESS_TOKEN}`, { method: 'POST' });
+            let pData = await pRes.json();
+            if (!pData.id && /not available|not ready/i.test(pData.error?.message || '')) {
+              await new Promise((r) => setTimeout(r, 2000));
+              pRes = await fetch(`https://graph.facebook.com/v21.0/${igAccountId}/media_publish?creation_id=${cData.id}&access_token=${FB_PAGE_ACCESS_TOKEN}`, { method: 'POST' });
+              pData = await pRes.json();
+            }
+            if (pData.id) {
+              igResult = { success: true, postId: pData.id, postUrl: `https://www.instagram.com/p/${pData.id}` };
+            } else {
+              igResult = { success: false, error: pData.error?.message || 'Instagram publish failed' };
+            }
           }
         } else {
           igResult = { success: false, error: cData.error?.message || 'Instagram container creation failed' };
