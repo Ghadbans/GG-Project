@@ -779,7 +779,7 @@ function DeliveryNoteForm() {
       width: '120px',
       textAlign: 'center'
     }
-  }, "Total Qty (Adjustable)"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("th", {
+  }, "Total Qty"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("th", {
     style: {
       padding: '8px',
       width: '120px',
@@ -831,21 +831,13 @@ function DeliveryNoteForm() {
       padding: '6px',
       textAlign: 'center'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
-    type: "number",
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, {
+    label: row.orderedQty,
     size: "small",
-    value: row.orderedQty,
-    onChange: e => handleRowChange(row.idRow, 'orderedQty', e.target.value),
-    inputProps: {
-      min: 0,
-      step: 'any',
-      style: {
-        textAlign: 'center'
-      }
-    },
+    variant: "outlined",
     sx: {
-      width: '95px',
-      backgroundColor: '#fff'
+      minWidth: '56px',
+      fontWeight: 700
     }
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
     style: {

@@ -16,7 +16,8 @@ import {
   Checkbox,
   Button,
   Grid,
-  Divider
+  Divider,
+  Chip
 } from '@mui/material';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -343,7 +344,7 @@ function DeliveryNoteUpdate() {
                         <th style={{ padding: '8px', width: '44px', textAlign: 'center' }}>Include</th>
                         <th style={{ padding: '8px', textAlign: 'left' }}>Item & Description</th>
                         <th style={{ padding: '8px', width: '130px', textAlign: 'center' }}>
-                          Total Qty (Adjustable)
+                          Total Qty
                         </th>
                         <th style={{ padding: '8px', width: '130px', textAlign: 'center' }}>
                           Deliver Qty
@@ -372,13 +373,11 @@ function DeliveryNoteUpdate() {
                             )}
                           </td>
                           <td style={{ textAlign: 'center', padding: '6px' }}>
-                            <TextField
-                              type="number"
+                            <Chip
+                              label={row.orderedQty}
                               size="small"
-                              value={row.orderedQty}
-                              onChange={(e) => handleRowChange(row.idRow, 'orderedQty', e.target.value)}
-                              inputProps={{ min: 0, step: 'any', style: { textAlign: 'center' } }}
-                              sx={{ width: '95px' }}
+                              variant="outlined"
+                              sx={{ minWidth: '56px', fontWeight: 700 }}
                             />
                           </td>
                           <td style={{ textAlign: 'center', padding: '6px' }}>

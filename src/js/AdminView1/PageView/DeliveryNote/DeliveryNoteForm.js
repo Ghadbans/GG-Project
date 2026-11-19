@@ -612,7 +612,7 @@ function DeliveryNoteForm() {
                           </th>
                           <th style={{ padding: '8px', textAlign: 'left' }}>Item & Description</th>
                           <th style={{ padding: '8px', width: '120px', textAlign: 'center' }}>
-                            Total Qty (Adjustable)
+                            Total Qty
                           </th>
                           <th style={{ padding: '8px', width: '120px', textAlign: 'center' }}>
                             Prev. Delivered
@@ -659,15 +659,11 @@ function DeliveryNoteForm() {
                                 )}
                               </td>
                               <td style={{ padding: '6px', textAlign: 'center' }}>
-                                <TextField
-                                  type="number"
+                                <Chip
+                                  label={row.orderedQty}
                                   size="small"
-                                  value={row.orderedQty}
-                                  onChange={(e) =>
-                                    handleRowChange(row.idRow, 'orderedQty', e.target.value)
-                                  }
-                                  inputProps={{ min: 0, step: 'any', style: { textAlign: 'center' } }}
-                                  sx={{ width: '95px', backgroundColor: '#fff' }}
+                                  variant="outlined"
+                                  sx={{ minWidth: '56px', fontWeight: 700 }}
                                 />
                               </td>
                               <td style={{ padding: '6px', textAlign: 'center' }}>

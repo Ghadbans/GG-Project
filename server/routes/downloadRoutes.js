@@ -3,11 +3,11 @@ const router = express.Router();
 const path = require('path');
 const fs = require('fs');
 
-const APP_VERSION = '3.7.5';
+const APP_VERSION = '3.7.6';
 const MIN_SUPPORTED_VERSION = '3.7.0';
 const RELEASE_NOTES = [
+  'Delivery Note: Total Qty from Invoice/Project is now read-only; only Deliver Qty is adjustable.',
   'Automatic in-app updates for Windows Desktop (.exe) and Android Mobile (.apk).',
-  'Mandatory security enforcement for outdated pre-v3.7.0 clients.',
   'Includes Store Delivery Note module, ObjectId cast safety, and persistent module search state.'
 ];
 

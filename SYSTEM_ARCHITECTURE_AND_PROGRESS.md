@@ -6143,3 +6143,16 @@ Implemented a zero-manual-intervention in-app update pipeline across Electron Wi
 #### Verification & Deployment
 - Verified `pre-build-check.js` (252 files, 0 errors), `security-check.js --auto-start` (21/21 passed), and `regression-check.js --auto-start` (12/12 passed).
 - Deployed backend-only hotfix commits `d68f9887` and `b07a3b5d` to `origin main` (Railway `api.globalgate.sarl`); confirmed working in production alongside Facebook Page and Cloud WhatsApp.
+
+
+### Rule 97: Delivery Note Read-Only `Total Qty` & `Deliver Qty`-Only Adjustment (Ver 3.7.6)
+
+#### Architectural & UI Changes
+1. **Create & Edit Delivery Note Forms (`DeliveryNoteForm.js` & `DeliveryNoteUpdate.js`)**:
+   - Renamed the table column header from `Total Qty (Adjustable)` to `Total Qty`.
+   - Replaced the editable `<TextField type="number">` for `row.orderedQty` (the original quantity on the Invoice / Project) with a read-only `<Chip label={row.orderedQty} size="small" variant="outlined" />` matching `Prev. Delivered`.
+   - Kept `Deliver Qty` as the sole adjustable numeric field so operators cannot accidentally alter the source Invoice/Project ordered quantity.
+2. **Version Synchronization & Multi-Platform Release (`v3.7.6`)**:
+   - Synchronized `3.7.6` across `package.json`, `server/package.json`, `server/index.js`, `server/routes/downloadRoutes.js`, and `android/app/build.gradle` (`versionCode 30706`).
+   - Verified `pre-build-check.js` (252 files, 0 errors), `security-check.js --auto-start` (21/21 passed), and `regression-check.js --auto-start` (12/12 passed).
+   - Built Web Portal (`dist_web/`), Electron Desktop (`dist/Global Gate Setup 3.7.6.exe` + `latest.yml`), and Capacitor Android APK (`GlobalGate-v3.7.6.apk`), synced to `server/public/downloads/` via `scripts/sync-releases.js`, and pushed to `origin main`.

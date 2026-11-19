@@ -1,8 +1,8 @@
-version: 3.7.5
+version: 3.7.6
 files:
-  - url: Global Gate Setup 3.7.5.exe
-    sha512: G7f5wk7G11sT5XJdFlQel4v4m/4dMP4OmRUSDSVhqFZ35CL/h5tQIQLDw2b3otbp6LVUhQ0+CJHM1+OK0ijFFg==
-    size: 100419531
-path: Global Gate Setup 3.7.5.exe
-sha512: G7f5wk7G11sT5XJdFlQel4v4m/4dMP4OmRUSDSVhqFZ35CL/h5tQIQLDw2b3otbp6LVUhQ0+CJHM1+OK0ijFFg==
-releaseDate: '2026-11-19T05:45:58.968Z'
+  - url: Global Gate Setup 3.7.6.exe
+    sha512: Hxn89Zg1JuBTnOhndlfhGJW7ToD8L2NoEYo87ywL9E6UhXULh7nyQiux7pTR9Ir9JIpqKhhyp14zcKOoHsTtFg==
+    size: 100420130
+path: Global Gate Setup 3.7.6.exe
+sha512: Hxn89Zg1JuBTnOhndlfhGJW7ToD8L2NoEYo87ywL9E6UhXULh7nyQiux7pTR9Ir9JIpqKhhyp14zcKOoHsTtFg==
+releaseDate: '2026-11-19T12:24:40.966Z'

@@ -41,32 +41,33 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(2071);
 /* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(73896);
 /* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(27558);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(86990);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(11848);
-/* harmony import */ var _mui_material_AppBar__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(89828);
-/* harmony import */ var _mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(8532);
-/* harmony import */ var _mui_material_CssBaseline__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(14519);
-/* harmony import */ var _mui_material_Drawer__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(88248);
-/* harmony import */ var _mui_material_List__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(49799);
-/* harmony import */ var _mui_material_Container__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(97834);
-/* harmony import */ var _mui_icons_material_Menu__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(62274);
-/* harmony import */ var _mui_icons_material_ChevronLeft__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(8451);
-/* harmony import */ var _mui_icons_material_ArrowBack__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(92659);
-/* harmony import */ var _mui_icons_material_Save__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(98984);
-/* harmony import */ var _mui_x_date_pickers_LocalizationProvider__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(75737);
-/* harmony import */ var _mui_x_date_pickers_AdapterDayjs__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(601);
-/* harmony import */ var _mui_x_date_pickers_DatePicker__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(48484);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(99380);
-/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(74353);
-/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_32___default = /*#__PURE__*/__webpack_require__.n(dayjs__WEBPACK_IMPORTED_MODULE_32__);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(47767);
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(13561);
-/* harmony import */ var react_toastify__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(99571);
-/* harmony import */ var _apiConfig__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(71510);
-/* harmony import */ var _features_auth_authSlice__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(32005);
-/* harmony import */ var _component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(40301);
-/* harmony import */ var _NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(95236);
-/* harmony import */ var _MessageAdminView__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(83818);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(82022);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(86990);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(11848);
+/* harmony import */ var _mui_material_AppBar__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(89828);
+/* harmony import */ var _mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(8532);
+/* harmony import */ var _mui_material_CssBaseline__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(14519);
+/* harmony import */ var _mui_material_Drawer__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(88248);
+/* harmony import */ var _mui_material_List__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(49799);
+/* harmony import */ var _mui_material_Container__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(97834);
+/* harmony import */ var _mui_icons_material_Menu__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(62274);
+/* harmony import */ var _mui_icons_material_ChevronLeft__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(8451);
+/* harmony import */ var _mui_icons_material_ArrowBack__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(92659);
+/* harmony import */ var _mui_icons_material_Save__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(98984);
+/* harmony import */ var _mui_x_date_pickers_LocalizationProvider__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(75737);
+/* harmony import */ var _mui_x_date_pickers_AdapterDayjs__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(601);
+/* harmony import */ var _mui_x_date_pickers_DatePicker__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(48484);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(99380);
+/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(74353);
+/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_33___default = /*#__PURE__*/__webpack_require__.n(dayjs__WEBPACK_IMPORTED_MODULE_33__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(47767);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(13561);
+/* harmony import */ var react_toastify__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(99571);
+/* harmony import */ var _apiConfig__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(71510);
+/* harmony import */ var _features_auth_authSlice__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(32005);
+/* harmony import */ var _component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(40301);
+/* harmony import */ var _NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(95236);
+/* harmony import */ var _MessageAdminView__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(83818);
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
 function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
@@ -109,7 +110,7 @@ function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = 
 
 
 var drawerWidth = 240;
-var AppBar = (0,_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .Ay)(_mui_material_AppBar__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
+var AppBar = (0,_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .Ay)(_mui_material_AppBar__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
   shouldForwardProp: prop => prop !== 'open'
 })(_ref => {
   var theme = _ref.theme,
@@ -129,7 +130,7 @@ var AppBar = (0,_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .Ay
     })
   });
 });
-var Drawer = (0,_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .Ay)(_mui_material_Drawer__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .Ay, {
+var Drawer = (0,_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .Ay)(_mui_material_Drawer__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .Ay, {
   shouldForwardProp: prop => prop !== 'open'
 })(_ref2 => {
   var theme = _ref2.theme,
@@ -158,11 +159,11 @@ var Drawer = (0,_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .Ay
   };
 });
 function DeliveryNoteUpdate() {
-  var _useParams = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_33__/* .useParams */ .g)(),
+  var _useParams = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_34__/* .useParams */ .g)(),
     id = _useParams.id;
-  var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_33__/* .useNavigate */ .Zp)();
-  var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_34__/* .useDispatch */ .wA)();
-  var user = (0,react_redux__WEBPACK_IMPORTED_MODULE_34__/* .useSelector */ .d4)(_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_37__/* .selectCurrentUser */ .xu);
+  var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_34__/* .useNavigate */ .Zp)();
+  var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_35__/* .useDispatch */ .wA)();
+  var user = (0,react_redux__WEBPACK_IMPORTED_MODULE_35__/* .useSelector */ .d4)(_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_38__/* .selectCurrentUser */ .xu);
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
     _useState2 = _slicedToArray(_useState, 2),
     sideBar = _useState2[0],
@@ -174,8 +175,8 @@ function DeliveryNoteUpdate() {
       var _ref3 = _asyncToGenerator(function* () {
         if (storesUserId && storesUserId !== 'null') {
           try {
-            var res = yield axios__WEBPACK_IMPORTED_MODULE_31__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_36__/* .ENDPOINT_URL */ .m, "/get-employeeuser/").concat(storesUserId));
-            dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_37__/* .setUser */ .gV)({
+            var res = yield axios__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_37__/* .ENDPOINT_URL */ .m, "/get-employeeuser/").concat(storesUserId));
+            dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_38__/* .setUser */ .gV)({
               userName: res.data.data.employeeName,
               role: res.data.data.role,
               id: res.data.data._id
@@ -195,14 +196,14 @@ function DeliveryNoteUpdate() {
   }, [dispatch, navigate]);
   var handleLogout = () => {
     localStorage.removeItem('user');
-    dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_37__/* .logOut */ .je)());
+    dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_38__/* .logOut */ .je)());
     navigate('/');
   };
   var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
     _useState4 = _slicedToArray(_useState3, 2),
     deliveryName = _useState4[0],
     setDeliveryName = _useState4[1];
-  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(dayjs__WEBPACK_IMPORTED_MODULE_32___default()()),
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(dayjs__WEBPACK_IMPORTED_MODULE_33___default()()),
     _useState6 = _slicedToArray(_useState5, 2),
     deliveryDate = _useState6[0],
     setDeliveryDate = _useState6[1];
@@ -251,11 +252,11 @@ function DeliveryNoteUpdate() {
       var _ref4 = _asyncToGenerator(function* () {
         try {
           var _res$data, _dn$reference, _dn$reference2, _dn$customerName;
-          var res = yield axios__WEBPACK_IMPORTED_MODULE_31__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_36__/* .ENDPOINT_URL */ .m, "/get-deliveryNote/").concat(id));
+          var res = yield axios__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_37__/* .ENDPOINT_URL */ .m, "/get-deliveryNote/").concat(id));
           var dn = (_res$data = res.data) === null || _res$data === void 0 ? void 0 : _res$data.data;
           if (!dn) return;
           setDeliveryName(dn.deliveryName || "DN-".concat(String(dn.deliveryNumber || 0).padStart(6, '0')));
-          setDeliveryDate(dn.deliveryDate ? dayjs__WEBPACK_IMPORTED_MODULE_32___default()(dn.deliveryDate) : dayjs__WEBPACK_IMPORTED_MODULE_32___default()());
+          setDeliveryDate(dn.deliveryDate ? dayjs__WEBPACK_IMPORTED_MODULE_33___default()(dn.deliveryDate) : dayjs__WEBPACK_IMPORTED_MODULE_33___default()());
           setStatus(dn.status || 'Dispatched');
           setReason(dn.reason || '');
           setReferenceName(((_dn$reference = dn.reference) === null || _dn$reference === void 0 ? void 0 : _dn$reference.referenceNumber) || ((_dn$reference2 = dn.reference) === null || _dn$reference2 === void 0 ? void 0 : _dn$reference2.referenceName) || '');
@@ -300,12 +301,12 @@ function DeliveryNoteUpdate() {
       e.preventDefault();
       var checkedRows = rows.filter(r => r.checked && Number(r.deliverQty) > 0);
       if (checkedRows.length === 0) {
-        react_toastify__WEBPACK_IMPORTED_MODULE_35__/* .toast */ .oR.error('Please keep at least one checked item with Deliver Qty > 0.');
+        react_toastify__WEBPACK_IMPORTED_MODULE_36__/* .toast */ .oR.error('Please keep at least one checked item with Deliver Qty > 0.');
         return;
       }
       try {
         setSaving(true);
-        yield axios__WEBPACK_IMPORTED_MODULE_31__/* ["default"] */ .A.put("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_36__/* .ENDPOINT_URL */ .m, "/update-deliveryNote/").concat(id), {
+        yield axios__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A.put("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_37__/* .ENDPOINT_URL */ .m, "/update-deliveryNote/").concat(id), {
           deliveryDate: deliveryDate ? deliveryDate.toDate() : new Date(),
           status,
           driverName: driverName.trim().toUpperCase(),
@@ -318,11 +319,11 @@ function DeliveryNoteUpdate() {
             checked: true
           }))
         });
-        react_toastify__WEBPACK_IMPORTED_MODULE_35__/* .toast */ .oR.success('Delivery Note updated successfully!');
+        react_toastify__WEBPACK_IMPORTED_MODULE_36__/* .toast */ .oR.success('Delivery Note updated successfully!');
         navigate("/DeliveryNoteViewInformation/".concat(id));
       } catch (err) {
         console.error('Update failed:', err);
-        react_toastify__WEBPACK_IMPORTED_MODULE_35__/* .toast */ .oR.error('Failed to update Delivery Note.');
+        react_toastify__WEBPACK_IMPORTED_MODULE_36__/* .toast */ .oR.error('Failed to update Delivery Note.');
       } finally {
         setSaving(false);
       }
@@ -337,13 +338,13 @@ function DeliveryNoteUpdate() {
     sx: {
       display: 'flex'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_CssBaseline__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .Ay, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(AppBar, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_CssBaseline__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .Ay, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(AppBar, {
     position: "absolute",
     open: sideBar,
     sx: {
       backgroundColor: '#30368a'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
     sx: {
       pr: '24px'
     }
@@ -356,13 +357,13 @@ function DeliveryNoteUpdate() {
     }, sideBar && {
       display: 'none'
     })
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Menu__WEBPACK_IMPORTED_MODULE_24__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Menu__WEBPACK_IMPORTED_MODULE_25__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
     color: "inherit",
     onClick: () => navigate(-1),
     sx: {
       mr: 1
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_ArrowBack__WEBPACK_IMPORTED_MODULE_26__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_ArrowBack__WEBPACK_IMPORTED_MODULE_27__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
     component: "h1",
     variant: "h6",
     color: "inherit",
@@ -370,16 +371,16 @@ function DeliveryNoteUpdate() {
     sx: {
       flexGrow: 1
     }
-  }, "Update Delivery Note (", deliveryName, ")"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_39__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_MessageAdminView__WEBPACK_IMPORTED_MODULE_40__/* ["default"] */ .A, {
+  }, "Update Delivery Note (", deliveryName, ")"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_40__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_MessageAdminView__WEBPACK_IMPORTED_MODULE_41__/* ["default"] */ .A, {
     name: user.data.userName,
     role: user.data.role
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
     color: "inherit",
     onClick: handleLogout
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_38__/* ["default"] */ .A, null)))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(Drawer, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_39__/* ["default"] */ .A, null)))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(Drawer, {
     variant: "permanent",
     open: sideBar
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
     sx: {
       display: 'flex',
       alignItems: 'center',
@@ -388,7 +389,7 @@ function DeliveryNoteUpdate() {
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
     onClick: toggleDrawer
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_ChevronLeft__WEBPACK_IMPORTED_MODULE_25__/* ["default"] */ .A, null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_List__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_ChevronLeft__WEBPACK_IMPORTED_MODULE_26__/* ["default"] */ .A, null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_List__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .A, {
     component: "nav"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_SidebarDash1__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
     component: "main",
@@ -398,7 +399,7 @@ function DeliveryNoteUpdate() {
       height: '100vh',
       overflow: 'auto'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Container__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Container__WEBPACK_IMPORTED_MODULE_24__/* ["default"] */ .A, {
     maxWidth: "lg",
     sx: {
       mt: 3,
@@ -428,9 +429,9 @@ function DeliveryNoteUpdate() {
     item: true,
     xs: 12,
     sm: 3
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_x_date_pickers_LocalizationProvider__WEBPACK_IMPORTED_MODULE_28__/* .LocalizationProvider */ .$, {
-    dateAdapter: _mui_x_date_pickers_AdapterDayjs__WEBPACK_IMPORTED_MODULE_29__/* .AdapterDayjs */ .R
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_x_date_pickers_DatePicker__WEBPACK_IMPORTED_MODULE_30__/* .DatePicker */ .l, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_x_date_pickers_LocalizationProvider__WEBPACK_IMPORTED_MODULE_29__/* .LocalizationProvider */ .$, {
+    dateAdapter: _mui_x_date_pickers_AdapterDayjs__WEBPACK_IMPORTED_MODULE_30__/* .AdapterDayjs */ .R
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_x_date_pickers_DatePicker__WEBPACK_IMPORTED_MODULE_31__/* .DatePicker */ .l, {
     label: "Delivery Date",
     value: deliveryDate,
     onChange: val => setDeliveryDate(val),
@@ -550,7 +551,7 @@ function DeliveryNoteUpdate() {
       width: '130px',
       textAlign: 'center'
     }
-  }, "Total Qty (Adjustable)"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("th", {
+  }, "Total Qty"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("th", {
     style: {
       padding: '8px',
       width: '130px',
@@ -590,20 +591,13 @@ function DeliveryNoteUpdate() {
         textAlign: 'center',
         padding: '6px'
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
-      type: "number",
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, {
+      label: row.orderedQty,
       size: "small",
-      value: row.orderedQty,
-      onChange: e => handleRowChange(row.idRow, 'orderedQty', e.target.value),
-      inputProps: {
-        min: 0,
-        step: 'any',
-        style: {
-          textAlign: 'center'
-        }
-      },
+      variant: "outlined",
       sx: {
-        width: '95px'
+        minWidth: '56px',
+        fontWeight: 700
       }
     })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
       style: {
@@ -633,14 +627,14 @@ function DeliveryNoteUpdate() {
       justifyContent: 'flex-end',
       gap: 2
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
     variant: "outlined",
     onClick: () => navigate(-1)
-  }, "Cancel"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, {
+  }, "Cancel"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
     type: "submit",
     variant: "contained",
     disabled: saving,
-    startIcon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Save__WEBPACK_IMPORTED_MODULE_27__/* ["default"] */ .A, null),
+    startIcon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Save__WEBPACK_IMPORTED_MODULE_28__/* ["default"] */ .A, null),
     sx: {
       backgroundColor: '#202a5a',
       '&:hover': {
