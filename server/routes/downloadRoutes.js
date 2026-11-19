@@ -3,7 +3,24 @@ const router = express.Router();
 const path = require('path');
 const fs = require('fs');
 
-const APP_VERSION = '3.7.4';
+const APP_VERSION = '3.7.5';
+const MIN_SUPPORTED_VERSION = '3.7.0';
+const RELEASE_NOTES = [
+  'Automatic in-app updates for Windows Desktop (.exe) and Android Mobile (.apk).',
+  'Mandatory security enforcement for outdated pre-v3.7.0 clients.',
+  'Includes Store Delivery Note module, ObjectId cast safety, and persistent module search state.'
+];
+
+const DOWNLOADS_DIR = path.join(__dirname, '../public/downloads');
+router.use(
+  express.static(DOWNLOADS_DIR, {
+    setHeaders: (res, filePath) => {
+      if (filePath.endsWith('.yml') || filePath.endsWith('.json')) {
+        res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate');
+      }
+    }
+  })
+);
 
 // Potential paths for APK file
 function getAndroidApkPath() {
@@ -90,18 +107,27 @@ router.get('/windows', (req, res) => {
 router.get('/version', (req, res) => {
   const apkPath = getAndroidApkPath();
   const exePath = getWindowsExePath();
+  const parts = APP_VERSION.split('.').map(n => parseInt(n, 10) || 0);
+  const versionCode = (parts[0] || 0) * 10000 + (parts[1] || 0) * 100 + (parts[2] || 0);
+  res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate');
   res.json({
     version: APP_VERSION,
+    minSupportedVersion: MIN_SUPPORTED_VERSION,
+    forceUpdate: false,
+    releaseNotes: RELEASE_NOTES,
     appName: 'Global Gate Management System',
     android: {
       available: !!apkPath,
       url: '/download/android',
+      directUrl: '/downloads/GlobalGate.apk',
       filename: `GlobalGate-v${APP_VERSION}.apk`,
+      versionCode,
       sizeMB: apkPath ? (fs.statSync(apkPath).size / 1024 / 1024).toFixed(2) : null
     },
     windows: {
       available: !!exePath,
       url: '/download/windows',
+      latestYmlUrl: '/downloads/latest.yml',
       filename: `GlobalGate-Setup-v${APP_VERSION}.exe`,
       sizeMB: exePath ? (fs.statSync(exePath).size / 1024 / 1024).toFixed(2) : null
     },

@@ -6102,3 +6102,26 @@ Added a dedicated **Delivery Note (`DN-000001`)** sub-module inside the **Store*
    - Verified `pre-build-check.js` (0 AST errors), `security-check.js` (21/21), and `regression-check.js` (11/11).
    - Synchronized version **`3.7.4`** across `package.json`, `server/package.json`, `server/index.js`, `server/routes/downloadRoutes.js`, `scripts/security-check.js`, and `scripts/regression-check.js`.
    - Built Web Portal (`dist_web/`), Electron Desktop (`dist/Global Gate Setup 3.7.4.exe`), and Capacitor Android APK (`GlobalGate-v3.7.4.apk`), synced installers to `server/public/downloads/`, and pushed to `origin main`.
+
+
+### Rule 95: Automatic In-App Update System for Windows Desktop (`.exe`) & Android Mobile (`.apk`) (Ver 3.7.5)
+
+#### Architectural Overview
+Implemented a zero-manual-intervention in-app update pipeline across Electron Windows and Capacitor Android while keeping the Cloudflare Pages Web Portal free of update prompts:
+1. **Backend Update Metadata & Static Hosting (`server/routes/downloadRoutes.js` & `server/index.js`)**:
+   - Mounted `express.static` on `server/public/downloads` inside `downloadRoutes.js` with `Cache-Control: no-store, no-cache, must-revalidate` for `.yml` and `.json` manifests (`latest.yml`, `version.json`).
+   - Enhanced `GET /download/version` and `GET /status` to expose `version`, `minSupportedVersion` (`3.7.0`), `forceUpdate`, `releaseNotes`, `android.directUrl`, `android.versionCode`, and `windows.latestYmlUrl`.
+2. **Windows Desktop Silent Auto-Updater (`main.js`, `preload.js`, `package.json`)**:
+   - Added `electron-updater` configured with generic HTTPS provider (`https://api.globalgate.sarl/downloads`) and `publish` config in `package.json` so `electron-builder --win` generates `dist/latest.yml`.
+   - Exposed `window.electron.updater` IPC bridge (`getVersion`, `checkForUpdates`, `downloadUpdate`, `installUpdate`, `onStatus`) for background download + silent `quitAndInstall(true, true)` with a Direct Download fallback.
+3. **Android Mobile Native APK Installer (`MainActivity.java`, `AndroidManifest.xml`, `file_paths.xml`, `scripts/build-apk.ps1`)**:
+   - Added `REQUEST_INSTALL_PACKAGES` permission and `<external-cache-path>` in `file_paths.xml`.
+   - Added `@JavascriptInterface` `AndroidAppUpdater` in `MainActivity.java` to stream `GlobalGate.apk` with live progress events (`android-update-progress`) and launch Android's native `ACTION_VIEW` installer via `FileProvider`.
+   - Updated `scripts/build-apk.ps1` to auto-sync `versionName` and `versionCode` (`30705`) in `android/app/build.gradle`.
+4. **Unified Update Modal (`src/js/component/AppUpdateModal.js` & `src/js/App.js`)**:
+   - Skips Web Portal completely; checks on app launch and login on Electron/Android.
+   - Enforces mandatory non-dismissible updates when `clientVersion < minSupportedVersion` (`3.7.0`), and offers `"Update Now"` / `"Later"` for optional updates.
+5. **Release Sync & Multi-Platform Build (`scripts/sync-releases.js`, `v3.7.5`)**:
+   - Created `scripts/sync-releases.js` to sync `latest.yml`, `Global Gate Setup 3.7.5.exe`, `Global Gate Setup.exe`, and `version.json` to `server/public/downloads/`.
+   - Verified `pre-build-check.js` (0 AST errors), `security-check.js` (21/21), and `regression-check.js` (12/12).
+   - Built Web Portal (`dist_web/`), Electron Desktop (`dist/Global Gate Setup 3.7.5.exe` + `latest.yml`), and Capacitor Android APK (`GlobalGate-v3.7.5.apk`), synced to `server/public/downloads/`, and pushed to `origin main`.

@@ -1,6 +1,6 @@
 {
   "name": "gg-management",
-  "version": "3.7.4",
+  "version": "3.7.5",
   "private": true,
   "description": "",
   "main": "main.js",
@@ -32,6 +32,12 @@
     "directories": {
       "output": "dist"
     },
+    "publish": [
+      {
+        "provider": "generic",
+        "url": "https://api.globalgate.sarl/downloads"
+      }
+    ],
     "files": [
       "build/**/*",
       "src/**/*",
@@ -99,6 +105,7 @@
     "dexie": "^4.0.4",
     "dexie-react-hooks": "^1.1.7",
     "electron-router-dom": "^1.0.5",
+    "electron-updater": "^6.8.11",
     "exceljs": "^4.4.0",
     "file-saver": "^2.0.5",
     "jsonwebtoken": "^9.0.2",

@@ -16,6 +16,7 @@ import useLayoutConfig from './hooks/useLayoutConfig';
 import { syncModuleRoute } from './hooks/useModuleSearchState';
 import MobileLayout from './component/MobileLayout';
 import NativeBackHandler from './component/NativeBackHandler';
+import AppUpdateModal from './component/AppUpdateModal';
 
 import { isNativeMobile, useIsMobile } from './utils/isMobile';
 
@@ -77,6 +78,7 @@ function AppLayoutWrapper({ children }) {
   return (
     <>
       <NativeBackHandler />
+      <AppUpdateModal />
       {isMobile ? <MobileLayout>{children}</MobileLayout> : children}
     </>
   );

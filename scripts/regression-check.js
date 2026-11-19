@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * scripts/regression-check.js (v3.7.4)
+ * scripts/regression-check.js (v3.7.5)
  *
  * Automated Cross-Module Regression & Data-Safety Verification Suite.
  * Verifies:
@@ -103,7 +103,7 @@ async function ensureServerRunning() {
 
 async function runTests() {
   console.log('==========================================================');
-  console.log(' GLOBAL GATE - REGRESSION & DATA-SAFETY SUITE (v3.7.4)');
+  console.log(' GLOBAL GATE - REGRESSION & DATA-SAFETY SUITE (v3.7.5)');
   console.log('==========================================================\n');
 
   // 1. Unit Tests: ObjectId Sanitization
@@ -131,6 +131,15 @@ async function runTests() {
 
   // 3. Boot / Connect Server & Obtain Valid Auth Token
   await ensureServerRunning();
+
+  // 3a. Public Auto-Update Metadata Endpoint Check (v3.7.5)
+  const verRes = await request({ path: '/download/version', method: 'GET' });
+  let verJson = null;
+  try { verJson = JSON.parse(verRes.body); } catch (_) {}
+  assert(
+    verRes.statusCode === 200 && verJson && verJson.version && verJson.minSupportedVersion,
+    `GET /download/version returns 200 OK with version & minSupportedVersion (got ${verRes.statusCode})`
+  );
   const mongoose = require('../server/node_modules/mongoose');
   const jwt = require('../server/node_modules/jsonwebtoken');
   const { getJwtSecret } = require('../server/Middleware/auth');

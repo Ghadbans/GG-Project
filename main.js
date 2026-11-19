@@ -832,4 +832,92 @@ ipcMain.handle('reconnect-whatsapp', async () => {
   }
 });
 
+// ===========================================================================
+// Automatic In-App Update System (v3.7.5)
+// ===========================================================================
+let autoUpdater = null;
+try {
+  ({ autoUpdater } = require('electron-updater'));
+  autoUpdater.autoDownload = false;
+  autoUpdater.autoInstallOnAppQuit = true;
+  autoUpdater.setFeedURL({
+    provider: 'generic',
+    url: 'https://api.globalgate.sarl/downloads'
+  });
+
+  const broadcastUpdaterStatus = (payload) => {
+    BrowserWindow.getAllWindows().forEach((w) => {
+      if (w && !w.isDestroyed() && w.webContents) {
+        w.webContents.send('updater-status', payload);
+      }
+    });
+  };
+
+  autoUpdater.on('checking-for-update', () => {
+    broadcastUpdaterStatus({ status: 'checking' });
+  });
+  autoUpdater.on('update-available', (info) => {
+    broadcastUpdaterStatus({ status: 'available', version: info?.version });
+  });
+  autoUpdater.on('update-not-available', (info) => {
+    broadcastUpdaterStatus({ status: 'up-to-date', version: info?.version });
+  });
+  autoUpdater.on('download-progress', (progress) => {
+    broadcastUpdaterStatus({
+      status: 'downloading',
+      percent: Math.round(progress?.percent || 0),
+      bytesPerSecond: progress?.bytesPerSecond || 0,
+      transferred: progress?.transferred || 0,
+      total: progress?.total || 0
+    });
+  });
+  autoUpdater.on('update-downloaded', (info) => {
+    broadcastUpdaterStatus({ status: 'downloaded', version: info?.version });
+  });
+  autoUpdater.on('error', (err) => {
+    broadcastUpdaterStatus({
+      status: 'error',
+      error: err ? (err.message || String(err)) : 'Unknown updater error'
+    });
+  });
+} catch (err) {
+  console.warn('[AutoUpdater] Not available in this environment:', err.message);
+}
+
+ipcMain.handle('updater-get-version', async () => {
+  return app.getVersion();
+});
+
+ipcMain.handle('updater-check', async () => {
+  if (!autoUpdater) return { ok: false, error: 'autoUpdater unavailable' };
+  if (!app.isPackaged) {
+    return { ok: false, devMode: true, error: 'Skipped in unpackaged dev mode' };
+  }
+  try {
+    const result = await autoUpdater.checkForUpdates();
+    return { ok: true, version: result?.updateInfo?.version || null };
+  } catch (err) {
+    return { ok: false, error: err.message };
+  }
+});
+
+ipcMain.handle('updater-download', async () => {
+  if (!autoUpdater) return { ok: false, error: 'autoUpdater unavailable' };
+  try {
+    await autoUpdater.downloadUpdate();
+    return { ok: true };
+  } catch (err) {
+    return { ok: false, error: err.message };
+  }
+});
+
+ipcMain.handle('updater-install', async () => {
+  if (!autoUpdater) return { ok: false, error: 'autoUpdater unavailable' };
+  setImmediate(() => {
+    autoUpdater.quitAndInstall(true, true);
+  });
+  return { ok: true };
+});
+
+
 

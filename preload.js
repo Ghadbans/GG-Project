@@ -6,6 +6,18 @@ const electronAPI = {
   sendInvoiceWhatsApp: (payload) => ipcRenderer.invoke('send-invoice-whatsapp', payload),
   getWhatsAppStatus: () => ipcRenderer.invoke('get-whatsapp-status'),
   reconnectWhatsApp: () => ipcRenderer.invoke('reconnect-whatsapp'),
+  updater: {
+    getVersion: () => ipcRenderer.invoke('updater-get-version'),
+    checkForUpdates: () => ipcRenderer.invoke('updater-check'),
+    downloadUpdate: () => ipcRenderer.invoke('updater-download'),
+    installUpdate: () => ipcRenderer.invoke('updater-install'),
+    onStatus: (callback) => {
+      if (typeof callback !== 'function') return () => {};
+      const listener = (_event, payload) => callback(payload);
+      ipcRenderer.on('updater-status', listener);
+      return () => ipcRenderer.removeListener('updater-status', listener);
+    },
+  },
 };
 
 try {

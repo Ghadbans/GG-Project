@@ -7,12 +7,26 @@ $ErrorActionPreference = "Stop"
 $root = "D:\GG\GG-Managment2026\ancient-kepler Pro"
 $androidDir = "$root\android"
 
-# Set environment paths
+# Sync Android versionCode and versionName from root package.json
+$pkgMeta = Get-Content "$root\package.json" | ConvertFrom-Json
+$verStr = $pkgMeta.version
+$verParts = $verStr.Split('.')
+$verCode = ([int]$verParts[0] * 10000) + ([int]$verParts[1] * 100) + ([int]$verParts[2])
+$gradlePath = "$androidDir\app\build.gradle"
+if (Test-Path $gradlePath) {
+    $gradleContent = Get-Content $gradlePath -Raw
+    $gradleContent = $gradleContent -replace 'versionCode\s+\d+', "versionCode $verCode"
+    $gradleContent = $gradleContent -replace 'versionName\s+"[^"]+"', "versionName `"$verStr`""
+    Set-Content -Path $gradlePath -Value $gradleContent -NoNewline
+    Write-Host "Synced Android build.gradle -> versionName $verStr (versionCode $verCode)" -ForegroundColor Cyan
+}
+
+# Set environment paths (prefer Java 21 / 17 over Java 25 for AGP compatibility)
 $possibleJavaHomes = @(
-    "C:\Program Files\Android\Android Studio\jbr",
     "C:\Users\GG\.jdks\jbr-21.0.11",
     "C:\Program Files\Java\jdk-21",
-    "C:\Program Files\Java\jdk-17"
+    "C:\Program Files\Java\jdk-17",
+    "C:\Program Files\Android\Android Studio\jbr"
 )
 foreach ($jh in $possibleJavaHomes) {
     if (Test-Path "$jh\bin\java.exe") {
