@@ -187,28 +187,11 @@ Route.route("/invoice", cors(corsOptionsDelegate)).get(
         }
         if (cleanProjectName) {
           const escapedName = cleanProjectName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-          const nameOr = [
+          orConditions.push(
             { 'Ref.projectName': new RegExp('^' + escapedName + '$', 'i') },
             { 'ReferenceName': new RegExp('^' + escapedName + '$', 'i') },
             { 'invoiceSubject': new RegExp('^' + escapedName + '$', 'i') }
-          ];
-          if (cleanProjectId) {
-            // Never pull invoices whose Ref._id belongs to a different project with the same name
-            orConditions.push({
-              $and: [
-                {
-                  $or: [
-                    { 'Ref._id': { $exists: false } },
-                    { 'Ref._id': null },
-                    { 'Ref._id': '' }
-                  ]
-                },
-                { $or: nameOr }
-              ]
-            });
-          } else {
-            orConditions.push(...nameOr);
-          }
+          );
         }
         if (cleanProjectNumber) {
           const pNum = Number(cleanProjectNumber);
