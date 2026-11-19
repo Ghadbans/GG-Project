@@ -124592,7 +124592,7 @@ Object.assign(esm_lookup, {
 (module) {
 
 "use strict";
-module.exports = {"rE":"3.7.6"};
+module.exports = {"rE":"3.7.7"};
 
 /***/ },
 
@@ -140988,8 +140988,14 @@ function AppUpdateModal() {
     }
   };
   var handleDirectDownload = () => {
+    var _window$electron5;
     var path = isAndroid ? '/download/android' : '/download/windows';
-    window.open("".concat(apiConfig/* API_BASE_URL */.J).concat(path), '_blank');
+    var targetUrl = "".concat(apiConfig/* API_BASE_URL */.J).concat(path);
+    if (isElectron && (_window$electron5 = window.electron) !== null && _window$electron5 !== void 0 && (_window$electron5 = _window$electron5.updater) !== null && _window$electron5 !== void 0 && _window$electron5.openDownloadUrl) {
+      window.electron.updater.openDownloadUrl(targetUrl);
+      return;
+    }
+    window.open(targetUrl, '_blank');
   };
   var handleLater = () => {
     if (mandatory) return;

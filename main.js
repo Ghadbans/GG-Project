@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Menu, ipcMain, Notification, nativeImage } = require('electron')
+const { app, BrowserWindow, Menu, ipcMain, Notification, nativeImage, shell } = require('electron')
 const path = require('path')
 const url = require('url');
 
@@ -916,6 +916,14 @@ ipcMain.handle('updater-install', async () => {
   setImmediate(() => {
     autoUpdater.quitAndInstall(true, true);
   });
+  return { ok: true };
+});
+
+ipcMain.handle('updater-open-external', async (_event, targetUrl) => {
+  if (typeof targetUrl !== 'string' || !targetUrl.startsWith('https://api.globalgate.sarl/')) {
+    return { ok: false, error: 'Invalid download URL' };
+  }
+  await shell.openExternal(targetUrl);
   return { ok: true };
 });
 

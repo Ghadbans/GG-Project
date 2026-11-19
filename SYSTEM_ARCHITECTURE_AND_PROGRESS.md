@@ -6156,3 +6156,18 @@ Implemented a zero-manual-intervention in-app update pipeline across Electron Wi
    - Synchronized `3.7.6` across `package.json`, `server/package.json`, `server/index.js`, `server/routes/downloadRoutes.js`, and `android/app/build.gradle` (`versionCode 30706`).
    - Verified `pre-build-check.js` (252 files, 0 errors), `security-check.js --auto-start` (21/21 passed), and `regression-check.js --auto-start` (12/12 passed).
    - Built Web Portal (`dist_web/`), Electron Desktop (`dist/Global Gate Setup 3.7.6.exe` + `latest.yml`), and Capacitor Android APK (`GlobalGate-v3.7.6.apk`), synced to `server/public/downloads/` via `scripts/sync-releases.js`, and pushed to `origin main`.
+
+
+### Rule 98: Electron Auto-Updater `app.asar` Bundling & External Direct Download Fix (Ver 3.7.7)
+
+#### Root Causes Resolved
+1. **`electron-updater` Excluded from `app.asar` (`package.json`)**:
+   - `build.files` previously contained `"!node_modules"`, which excluded `electron-updater` and its runtime dependencies from the packaged Windows `.exe`, causing `require('electron-updater')` in `main.js` to fail with `autoUpdater unavailable`.
+   - Replaced `"!node_modules"` with `"!node_modules/**/*"` plus explicit inclusions for `electron-updater` and its 15 runtime dependencies (`argparse`, `builder-util-runtime`, `debug`, `fs-extra`, `graceful-fs`, `js-yaml`, `jsonfile`, `lazy-val`, `lodash.escaperegexp`, `lodash.isequal`, `ms`, `sax`, `semver`, `tiny-typed-emitter`, `universalify`).
+2. **External Browser Direct Download (`main.js`, `preload.js`, `AppUpdateModal.js`)**:
+   - `AppUpdateModal.js` previously used `window.open(..., '_blank')` for `DIRECT DOWNLOAD`, which spawned a blank Electron child `BrowserWindow`.
+   - Added `updater-open-external` IPC handler in `main.js` (using `shell.openExternal`, restricted to `https://api.globalgate.sarl/`) and exposed `window.electron.updater.openDownloadUrl` in `preload.js`.
+3. **Multi-Platform Release (`v3.7.7`)**:
+   - Synchronized `3.7.7` across `package.json`, `server/package.json`, `server/index.js`, `server/routes/downloadRoutes.js`, and `android/app/build.gradle` (`versionCode 30707`).
+   - Verified `pre-build-check.js` (252 files, 0 errors), `security-check.js --auto-start` (21/21 passed), and `regression-check.js --auto-start` (12/12 passed).
+   - Built Web Portal (`dist_web/`), Electron Desktop (`dist/Global Gate Setup 3.7.7.exe` + `latest.yml`), and Capacitor Android APK (`GlobalGate-v3.7.7.apk`), synced to `server/public/downloads/`, and pushed to `origin main`.

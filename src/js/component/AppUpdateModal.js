@@ -187,7 +187,12 @@ export default function AppUpdateModal() {
 
   const handleDirectDownload = () => {
     const path = isAndroid ? '/download/android' : '/download/windows';
-    window.open(`${API_BASE_URL}${path}`, '_blank');
+    const targetUrl = `${API_BASE_URL}${path}`;
+    if (isElectron && window.electron?.updater?.openDownloadUrl) {
+      window.electron.updater.openDownloadUrl(targetUrl);
+      return;
+    }
+    window.open(targetUrl, '_blank');
   };
 
   const handleLater = () => {

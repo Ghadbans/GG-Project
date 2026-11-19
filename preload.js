@@ -11,6 +11,7 @@ const electronAPI = {
     checkForUpdates: () => ipcRenderer.invoke('updater-check'),
     downloadUpdate: () => ipcRenderer.invoke('updater-download'),
     installUpdate: () => ipcRenderer.invoke('updater-install'),
+    openDownloadUrl: (url) => ipcRenderer.invoke('updater-open-external', url),
     onStatus: (callback) => {
       if (typeof callback !== 'function') return () => {};
       const listener = (_event, payload) => callback(payload);
