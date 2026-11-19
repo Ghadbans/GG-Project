@@ -331,12 +331,21 @@ function DeliveryNoteForm() {
     setRows((prev) =>
       prev.map((r) => {
         if (r.idRow !== idRow) return r;
-        if (field === 'orderedQty') {
-          const nextTotal = value === '' ? '' : Math.max(0, Number(value) || 0);
-          return { ...r, orderedQty: nextTotal };
-        }
         if (field === 'deliverQty') {
-          const nextDeliv = value === '' ? '' : Math.max(0, Number(value) || 0);
+          const maxAllowed = Math.max(
+            0,
+            Number(r.orderedQty || 0) - Number(r.previouslyDeliveredQty || 0)
+          );
+          if (value === '') {
+            return { ...r, deliverQty: '', checked: false };
+          }
+          let nextDeliv = Math.max(0, Number(value) || 0);
+          if (nextDeliv > maxAllowed) {
+            nextDeliv = maxAllowed;
+            toast.warning(`Deliver Qty cannot exceed remaining Total Qty (${maxAllowed}).`, {
+              toastId: `dn-max-${idRow}`
+            });
+          }
           return { ...r, deliverQty: nextDeliv, checked: Number(nextDeliv) > 0 };
         }
         return { ...r, [field]: value };
@@ -353,6 +362,14 @@ function DeliveryNoteForm() {
     const checkedRows = rows.filter((r) => r.checked && Number(r.deliverQty) > 0);
     if (checkedRows.length === 0) {
       toast.error('Please check at least one item with Deliver Qty > 0.');
+      return;
+    }
+    const overRow = checkedRows.find((r) => {
+      const maxAllowed = Math.max(0, Number(r.orderedQty || 0) - Number(r.previouslyDeliveredQty || 0));
+      return Number(r.deliverQty) > maxAllowed;
+    });
+    if (overRow) {
+      toast.error('Deliver Qty cannot exceed remaining Total Qty.');
       return;
     }
 
@@ -681,7 +698,15 @@ function DeliveryNoteForm() {
                                   onChange={(e) =>
                                     handleRowChange(row.idRow, 'deliverQty', e.target.value)
                                   }
-                                  inputProps={{ min: 0, step: 'any', style: { textAlign: 'center' } }}
+                                  inputProps={{
+                                    min: 0,
+                                    max: Math.max(
+                                      0,
+                                      Number(row.orderedQty || 0) - Number(row.previouslyDeliveredQty || 0)
+                                    ),
+                                    step: 'any',
+                                    style: { textAlign: 'center' }
+                                  }}
                                   sx={{ width: '105px', backgroundColor: '#fff' }}
                                 />
                               </td>

@@ -3,11 +3,11 @@ const router = express.Router();
 const path = require('path');
 const fs = require('fs');
 
-const APP_VERSION = '3.7.7';
+const APP_VERSION = '3.7.8';
 const MIN_SUPPORTED_VERSION = '3.7.0';
 const RELEASE_NOTES = [
+  'Delivery Note: Deliver Qty automatically clamps/resets to remaining Total Qty and cannot exceed it.',
   'Fixed Windows Desktop silent auto-updater bundling (electron-updater) and external Direct Download.',
-  'Delivery Note: Total Qty from Invoice/Project is now read-only; only Deliver Qty is adjustable.',
   'Automatic in-app updates for Windows Desktop (.exe) and Android Mobile (.apk).'
 ];
 

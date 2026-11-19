@@ -286,9 +286,24 @@ function DeliveryNoteUpdate() {
   var handleRowChange = (idRow, field, value) => {
     setRows(prev => prev.map(r => {
       if (r.idRow !== idRow) return r;
-      if (field === 'orderedQty' || field === 'deliverQty') {
+      if (field === 'deliverQty') {
+        var maxAllowed = Math.max(0, Number(r.orderedQty || 0));
+        if (value === '') {
+          return _objectSpread(_objectSpread({}, r), {}, {
+            deliverQty: '',
+            checked: false
+          });
+        }
+        var nextDeliv = Math.max(0, Number(value) || 0);
+        if (nextDeliv > maxAllowed) {
+          nextDeliv = maxAllowed;
+          react_toastify__WEBPACK_IMPORTED_MODULE_36__/* .toast */ .oR.warning("Deliver Qty cannot exceed Total Qty (".concat(maxAllowed, ")."), {
+            toastId: "dn-edit-max-".concat(idRow)
+          });
+        }
         return _objectSpread(_objectSpread({}, r), {}, {
-          [field]: value === '' ? '' : Math.max(0, Number(value) || 0)
+          deliverQty: nextDeliv,
+          checked: Number(nextDeliv) > 0
         });
       }
       return _objectSpread(_objectSpread({}, r), {}, {
@@ -302,6 +317,11 @@ function DeliveryNoteUpdate() {
       var checkedRows = rows.filter(r => r.checked && Number(r.deliverQty) > 0);
       if (checkedRows.length === 0) {
         react_toastify__WEBPACK_IMPORTED_MODULE_36__/* .toast */ .oR.error('Please keep at least one checked item with Deliver Qty > 0.');
+        return;
+      }
+      var overRow = checkedRows.find(r => Number(r.deliverQty) > Math.max(0, Number(r.orderedQty || 0)));
+      if (overRow) {
+        react_toastify__WEBPACK_IMPORTED_MODULE_36__/* .toast */ .oR.error('Deliver Qty cannot exceed Total Qty.');
         return;
       }
       try {
@@ -611,6 +631,7 @@ function DeliveryNoteUpdate() {
       onChange: e => handleRowChange(row.idRow, 'deliverQty', e.target.value),
       inputProps: {
         min: 0,
+        max: Math.max(0, Number(row.orderedQty || 0)),
         step: 'any',
         style: {
           textAlign: 'center'

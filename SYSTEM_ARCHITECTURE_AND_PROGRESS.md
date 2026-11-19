@@ -6171,3 +6171,16 @@ Implemented a zero-manual-intervention in-app update pipeline across Electron Wi
    - Synchronized `3.7.7` across `package.json`, `server/package.json`, `server/index.js`, `server/routes/downloadRoutes.js`, and `android/app/build.gradle` (`versionCode 30707`).
    - Verified `pre-build-check.js` (252 files, 0 errors), `security-check.js --auto-start` (21/21 passed), and `regression-check.js --auto-start` (12/12 passed).
    - Built Web Portal (`dist_web/`), Electron Desktop (`dist/Global Gate Setup 3.7.7.exe` + `latest.yml`), and Capacitor Android APK (`GlobalGate-v3.7.7.apk`), synced to `server/public/downloads/`, and pushed to `origin main`.
+
+
+### Rule 99: Delivery Note `Deliver Qty` Upper-Bound Clamping & Reset (Ver 3.7.8)
+
+#### Changes Implemented
+1. **Create & Edit Delivery Note Validation (`DeliveryNoteForm.js` & `DeliveryNoteUpdate.js`)**:
+   - Enforced `maxAllowed = Math.max(0, Number(r.orderedQty || 0) - Number(r.previouslyDeliveredQty || 0))` in `DeliveryNoteForm.js` (and `Math.max(0, Number(r.orderedQty || 0))` in `DeliveryNoteUpdate.js`).
+   - When an operator enters a `Deliver Qty` greater than `maxAllowed`, it automatically resets/clamps to `maxAllowed` and shows a `toast.warning`, while `inputProps.max` prevents spinner arrows from stepping past `maxAllowed`.
+   - Added a `handleSubmit` guard rejecting any row where `Number(r.deliverQty) > maxAllowed`.
+2. **Version Synchronization & Multi-Platform Release (`v3.7.8`)**:
+   - Synchronized `3.7.8` across `package.json`, `server/package.json`, `server/index.js`, `server/routes/downloadRoutes.js`, and `android/app/build.gradle` (`versionCode 30708`).
+   - Verified `pre-build-check.js` (252 files, 0 errors), `security-check.js --auto-start` (21/21 passed), and `regression-check.js --auto-start` (12/12 passed).
+   - Built Web Portal (`dist_web/`), Electron Desktop (`dist/Global Gate Setup 3.7.8.exe` + `latest.yml`), and Capacitor Android APK (`GlobalGate-v3.7.8.apk`), synced to `server/public/downloads/` via `scripts/sync-releases.js`, and pushed to `origin main`.
