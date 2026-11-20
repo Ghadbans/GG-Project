@@ -373,6 +373,13 @@ Route.route("/update-purchase/:id").put(async (req, res, next) => {
   if (req.body.items) {
     req.body.items = uppercaseItemsList(req.body.items);
   }
+  if (req.body.purchaseNumber !== undefined && req.body.purchaseNumber !== null && req.body.purchaseNumber !== '') {
+    const num = Number(req.body.purchaseNumber);
+    if (!isNaN(num) && num > 0) {
+      req.body.purchaseNumber = num;
+      req.body.purchaseName = 'PUR-' + String(num).padStart(6, '0');
+    }
+  }
   await purchaseSchema
     .findByIdAndUpdate(req.params.id, {
       $set: req.body,

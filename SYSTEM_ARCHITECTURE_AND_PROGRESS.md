@@ -6205,3 +6205,16 @@ Implemented a zero-manual-intervention in-app update pipeline across Electron Wi
 3. **Verification & Deployment**:
    - Verified `pre-build-check.js` (252 files, 0 errors), `security-check.js --auto-start` (21/21 passed), and `regression-check.js --auto-start` (12/12 passed).
    - Deployed backend-only fix to `origin main` (Railway `api.globalgate.sarl`).
+
+
+### Rule 102: Synchronize Document `*Number` & `*Name` Across All `PUT /update-*` Routes
+
+#### Changes Implemented
+1. **Guaranteed Document Number/Code Consistency on Edit**:
+   - `server/routes/estimationRoutes.js` (`PUT /update-estimation/:id`): Whenever `estimateNumber` is provided, automatically synchronizes `estimateName = 'QT-' + String(num).padStart(6, '0')`.
+   - `server/routes/invoiceRoutes.js` (`PUT /update-invoice/:id`): Whenever `invoiceNumber` is provided, automatically synchronizes `invoiceName = 'INV-' + String(num).padStart(6, '0')`.
+   - `server/routes/purchaseRoutes.js` (`PUT /update-purchase/:id`): Whenever `purchaseNumber` is provided, automatically synchronizes `purchaseName = 'PUR-' + String(num).padStart(6, '0')`.
+   - `server/routes/deliveryNoteRoutes.js` (`PUT /update-deliveryNote/:id`): Whenever `deliveryNumber` is provided, automatically synchronizes `deliveryName = 'DN-' + String(num).padStart(6, '0')`.
+2. **Verification & Deployment**:
+   - Verified `pre-build-check.js` (252 files, 0 errors), `security-check.js --auto-start` (21/21 passed), and `regression-check.js --auto-start` (12/12 passed).
+   - Deployed backend-only fix to `origin main` (Railway `api.globalgate.sarl`).

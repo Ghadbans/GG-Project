@@ -674,6 +674,13 @@ Route.route("/update-invoice/:id").put(async (req, res, next) => {
     if ('customerName' in updatePayload && !isValidCustomer(updatePayload.customerName)) {
       delete updatePayload.customerName;
     }
+    if (updatePayload.invoiceNumber !== undefined && updatePayload.invoiceNumber !== null && updatePayload.invoiceNumber !== '') {
+      const num = Number(updatePayload.invoiceNumber);
+      if (!isNaN(num) && num > 0) {
+        updatePayload.invoiceNumber = num;
+        updatePayload.invoiceName = 'INV-' + String(num).padStart(6, '0');
+      }
+    }
     const result = await invoiceSchema.findByIdAndUpdate(
       req.params.id,
       { $set: updatePayload },

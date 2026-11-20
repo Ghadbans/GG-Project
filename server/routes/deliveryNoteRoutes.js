@@ -216,6 +216,13 @@ Route.route("/update-deliveryNote/:id").put(async (req, res, next) => {
     const updatePayload = { ...req.body };
     delete updatePayload._id;
     delete updatePayload.__v;
+    if (updatePayload.deliveryNumber !== undefined && updatePayload.deliveryNumber !== null && updatePayload.deliveryNumber !== '') {
+      const num = Number(updatePayload.deliveryNumber);
+      if (!isNaN(num) && num > 0) {
+        updatePayload.deliveryNumber = num;
+        updatePayload.deliveryName = 'DN-' + String(num).padStart(6, '0');
+      }
+    }
     const result = await deliveryNoteSchema.findByIdAndUpdate(
       req.params.id,
       { $set: updatePayload },

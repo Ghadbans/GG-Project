@@ -234,6 +234,13 @@ Route.route("/update-estimation/:id").put(async (req, res, next) => {
         if ('customerName' in updatePayload && !isValidCustomer(updatePayload.customerName)) {
             delete updatePayload.customerName;
         }
+        if (updatePayload.estimateNumber !== undefined && updatePayload.estimateNumber !== null && updatePayload.estimateNumber !== '') {
+            const num = Number(updatePayload.estimateNumber);
+            if (!isNaN(num) && num > 0) {
+                updatePayload.estimateNumber = num;
+                updatePayload.estimateName = 'QT-' + String(num).padStart(6, '0');
+            }
+        }
         const est = await estimationSchema.findById(req.params.id);
         if (est && (est.ReferenceName || (est.Ref && est.Ref._id))) {
             updatePayload.status = 'Converted';
