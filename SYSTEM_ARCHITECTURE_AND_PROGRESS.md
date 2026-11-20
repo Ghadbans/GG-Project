@@ -6192,3 +6192,16 @@ Implemented a zero-manual-intervention in-app update pipeline across Electron Wi
 - **Observation**: Restricting `projectName` fallback in `purchaseRoutes.js` / `invoiceRoutes.js` to records without `projectName._id` / `Ref._id` caused `P-000166 | ELECTRIC ROOM CONSTRUCTION` (whose `PUR-000159` was converted from Quotation `Q-001676` and linked by `projectName` string rather than `P-000166._id`) to appear empty, while `P-000159` still showed its own `08/07/2026` `PUR-000159` (meaning that record is genuinely linked to `P-000159` in MongoDB).
 - **Action**: Reverted the `projectName._id` / `Ref._id` restriction in `server/routes/purchaseRoutes.js` and `server/routes/invoiceRoutes.js` so quotation-converted projects (`P-000166`, etc.) continue to display their linked purchases and invoices.
 - **Verification**: Verified `pre-build-check.js` (252 files, 0 errors), `security-check.js --auto-start` (21/21), and `regression-check.js --auto-start` (12/12). Confirmed live in production: `v3.7.7 -> v3.7.8` silent Windows Desktop auto-update downloaded (`latest.yml` + `Global Gate Setup 3.7.8.exe`) and prompted `RESTART & INSTALL` cleanly.
+
+
+### Rule 101: Cloudflare+Railway Rate-Limit Keying (`429` Fix) & Quotation `E11000` Retry (`500` Fix)
+
+#### Changes Implemented
+1. **Cloudflare + Railway Real Client IP & Auth-Aware Rate Limiting (`server/Middleware/security.js` & `server/Middleware/rateLimiter.js`)**:
+   - Updated `getClientIp(req)` to honor `cf-connecting-ip` whenever `isCloudflareIp(peer)` OR `req.headers['x-railway-edge']` / valid `x-origin-verify` is present, preventing Railway's second reverse-proxy hop from collapsing all clients into one IP bucket.
+   - Added `authAwareKeyGenerator` on `globalLimiter` (keying authenticated requests by `ip:sha256(token)` and raising `max` to `10000` per 15 min) so office NAT users and external API clients do not trigger false `429` responses.
+2. **Quotation Creation Duplicate-Key Resilience (`server/routes/estimationRoutes.js`)**:
+   - Coerced `Number(estimateNumber)` and added up to 3 automatic retries on `E11000` duplicate-key collisions in `POST /endpoint/create-estimation` so concurrent saves or stale client numbers do not return `500`.
+3. **Verification & Deployment**:
+   - Verified `pre-build-check.js` (252 files, 0 errors), `security-check.js --auto-start` (21/21 passed), and `regression-check.js --auto-start` (12/12 passed).
+   - Deployed backend-only fix to `origin main` (Railway `api.globalgate.sarl`).

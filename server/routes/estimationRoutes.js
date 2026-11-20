@@ -167,40 +167,46 @@ Route.route("/create-estimation").post(async (req, res, next) => {
  try {
   const branchId = req.body.branchId || req.query.branchId;
   
-      const matchStage = branchId ? { branchId } : {};
-      const aggResult = await estimationSchema.aggregate([
-        { $match: matchStage },
-        { $group: { _id: null, maxNum: { $max: '$estimateNumber' } } }
-      ]);
-      const maxNum = aggResult.length > 0 ? (aggResult[0].maxNum || 0) : 0;
-      const finalNumber = (estimateNumber && estimateNumber > maxNum) ? estimateNumber : maxNum + 1;
-      req.body.estimateNumber = finalNumber;
-      req.body.estimateName = 'QT-' + String(finalNumber).padStart(6, '0');
-  
-  
-        await estimationSchema.create({
-          branchId,
-          customerName,
-          estimateNumber: finalNumber,
-          estimateDate,
-          estimateDefect,
-          estimateSubject,
-          status,
-          items,
-          subTotal,
-          total,
-          totalW,
-          note,
-          estimateName: 'QT-' + String(finalNumber).padStart(6, '0'),
-          Create,balanceDue,
-          terms,shipping,noteInfo,
-          adjustment,adjustmentNumber,
-          totalInvoice,Ref,ReferenceName
-        }).then((result)=>{
-          res.json({ data: result, message: "Data successfully added.", status: 200 });
-        }).catch((err)=>{
-          return next(err);
-        });
+  const requestedNum = Number(estimateNumber) || 0;
+  let savedResult = null;
+  for (let attempt = 0; attempt < 3; attempt++) {
+    const matchStage = branchId ? { branchId } : {};
+    const aggResult = await estimationSchema.aggregate([
+      { $match: matchStage },
+      { $group: { _id: null, maxNum: { $max: '$estimateNumber' } } }
+    ]);
+    const maxNum = aggResult.length > 0 ? (Number(aggResult[0].maxNum) || 0) : 0;
+    const finalNumber = (attempt === 0 && requestedNum > maxNum) ? requestedNum : maxNum + 1 + attempt;
+    const finalName = 'QT-' + String(finalNumber).padStart(6, '0');
+    req.body.estimateNumber = finalNumber;
+    req.body.estimateName = finalName;
+    try {
+      savedResult = await estimationSchema.create({
+        branchId,
+        customerName,
+        estimateNumber: finalNumber,
+        estimateDate,
+        estimateDefect,
+        estimateSubject,
+        status,
+        items,
+        subTotal,
+        total,
+        totalW,
+        note,
+        estimateName: finalName,
+        Create,balanceDue,
+        terms,shipping,noteInfo,
+        adjustment,adjustmentNumber,
+        totalInvoice,Ref,ReferenceName
+      });
+      break;
+    } catch (createErr) {
+      if (createErr && createErr.code === 11000 && attempt < 2) continue;
+      throw createErr;
+    }
+  }
+  return res.json({ data: savedResult, message: 'Data successfully added.', status: 200 });
 
  } catch (error) {
   next(error);

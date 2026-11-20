@@ -66,7 +66,11 @@ function isCloudflareIp(rawIp) {
 function getClientIp(req) {
   const peer = req.ip || (req.socket && req.socket.remoteAddress) || '127.0.0.1';
   const cf = req.headers['cf-connecting-ip'];
-  if (cf && isCloudflareIp(peer)) return String(cf).trim();
+  const originSecret = process.env.ORIGIN_VERIFY_SECRET;
+  const hasOriginVerify = originSecret && safeEqual(req.headers['x-origin-verify'], originSecret);
+  if (cf && (isCloudflareIp(peer) || req.headers['x-railway-edge'] || hasOriginVerify)) {
+    return String(cf).trim();
+  }
   return peer;
 }
 

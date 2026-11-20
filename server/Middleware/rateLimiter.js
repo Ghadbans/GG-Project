@@ -1,3 +1,4 @@
+const crypto = require('crypto');
 const rateLimit = require('express-rate-limit');
 const { ipKeyGenerator } = require('express-rate-limit');
 const { getClientIp } = require('./security');
@@ -11,13 +12,23 @@ const keyGenerator = (req) => {
   return typeof ipKeyGenerator === 'function' ? ipKeyGenerator(ip) : ip;
 };
 
-const makeLimiter = ({ windowMs, max, message, skip, skipSuccessfulRequests = false }) =>
+const authAwareKeyGenerator = (req) => {
+  const baseIp = keyGenerator(req);
+  const auth = req.headers && req.headers.authorization;
+  if (auth && typeof auth === 'string' && auth.toLowerCase().startsWith('bearer ')) {
+    const tokenHash = crypto.createHash('sha256').update(auth.slice(7).trim()).digest('hex').slice(0, 16);
+    return `${baseIp}:${tokenHash}`;
+  }
+  return baseIp;
+};
+
+const makeLimiter = ({ windowMs, max, message, skip, skipSuccessfulRequests = false, keyGen = keyGenerator }) =>
   rateLimit({
     windowMs,
     max,
     skip,
     skipSuccessfulRequests,
-    keyGenerator,
+    keyGenerator: keyGen,
     standardHeaders: 'draft-7',
     legacyHeaders: false,
     message: { message },
@@ -50,7 +61,8 @@ const isSafeMethod = (req) => req.method === 'OPTIONS' || req.method === 'HEAD';
  */
 const globalLimiter = makeLimiter({
   windowMs: MIN15,
-  max: 2000,
+  max: 10000,
+  keyGen: authAwareKeyGenerator,
   skip: (req) => isSafeMethod(req) || PUBLIC_PATHS.has(req.path),
   message: 'Too many requests from this IP. Please slow down and try again shortly.'
 });
