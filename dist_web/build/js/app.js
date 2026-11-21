@@ -82079,7 +82079,7 @@ var style = {
   pb: 3
 };
 function MessageAdminView(_ref) {
-  var _user$data3;
+  var _user$data3, _user$data5;
   var name = _ref.name,
     role = _ref.role;
   var user = (0,es/* useSelector */.d4)(authSlice/* selectCurrentUser */.xu);
@@ -82156,9 +82156,13 @@ function MessageAdminView(_ref) {
     anchorEl = _React$useState2[0],
     setAnchorEl = _React$useState2[1];
   var handleClick = event => {
+    var _messageInfo$;
     setAnchorEl(event.currentTarget);
     setBadgeNumber(0);
     localStorage.removeItem('badgeMessage');
+    if (messageInfo.length > 0 && (_messageInfo$ = messageInfo[0]) !== null && _messageInfo$ !== void 0 && _messageInfo$._id) {
+      localStorage.setItem('lastSeenMessageId', String(messageInfo[0]._id));
+    }
   };
   var handleClose = () => {
     setLoadingOpenModal(false);
@@ -82172,11 +82176,41 @@ function MessageAdminView(_ref) {
       setMessageInfo([]);
       return;
     }
+    var computeUnread = list => {
+      var _user$data4;
+      var currentUser = String(name || (user === null || user === void 0 || (_user$data4 = user.data) === null || _user$data4 === void 0 ? void 0 : _user$data4.userName) || '').trim().toLowerCase();
+      var lastSeenId = localStorage.getItem('lastSeenMessageId');
+      if (lastSeenId) {
+        var idx = list.findIndex(m => String(m._id) === String(lastSeenId));
+        if (idx === -1) {
+          return list.filter(m => String(m.userName || '').trim().toLowerCase() !== currentUser).length;
+        }
+        return list.slice(0, idx).filter(m => String(m.userName || '').trim().toLowerCase() !== currentUser).length;
+      }
+      return list.filter(m => {
+        if (String(m.userName || '').trim().toLowerCase() === currentUser) return false;
+        var d = m.createdAt || m.nowDate;
+        return d ? dayjs_min_default()(d).isSame(dayjs_min_default()(), 'day') : false;
+      }).length;
+    };
     var fetchComment = /*#__PURE__*/function () {
       var _ref3 = _asyncToGenerator(function* () {
         try {
+          var _res$data2, _list$;
           var res = yield axios/* default */.A.get("".concat(apiConfig/* ENDPOINT_URL */.m, "/message"));
-          setMessageInfo(res.data.data.reverse());
+          var list = (((_res$data2 = res.data) === null || _res$data2 === void 0 ? void 0 : _res$data2.data) || []).slice().reverse();
+          setMessageInfo(list);
+          if (!anchorEl) {
+            var unread = computeUnread(list);
+            setBadgeNumber(unread);
+            if (unread > 0) {
+              localStorage.setItem('badgeMessage', String(unread));
+            } else {
+              localStorage.removeItem('badgeMessage');
+            }
+          } else if ((_list$ = list[0]) !== null && _list$ !== void 0 && _list$._id) {
+            localStorage.setItem('lastSeenMessageId', String(list[0]._id));
+          }
         } catch (error) {
           console.error('Error fetching data:', error);
         }
@@ -82186,7 +82220,9 @@ function MessageAdminView(_ref) {
       };
     }();
     fetchComment();
-  }, [canViewMessage]);
+    var pollTimer = setInterval(fetchComment, 30000);
+    return () => clearInterval(pollTimer);
+  }, [canViewMessage, anchorEl, name, user === null || user === void 0 || (_user$data5 = user.data) === null || _user$data5 === void 0 ? void 0 : _user$data5.userName]);
   (0,react.useEffect)(() => {
     if (!canViewMessage) {
       setBadgeNumber(0);
@@ -82206,17 +82242,21 @@ function MessageAdminView(_ref) {
     });
     socket.on('newMessage', newMessage => {
       setMessageInfo(prev => [newMessage, ...prev]);
-      setBadgeNumber(prev => prev + 1);
-      react_toastify_esm/* toast */.oR.success("new message from ".concat(newMessage.userName + ' On ' + dayjs_min_default()(newMessage.nowDate).format('DD/MMMM') + ' At ' + newMessage.nowTime));
-      var message = "new message from ".concat(newMessage.userName + ' On ' + dayjs_min_default()(newMessage.nowDate).format('DD/MMMM') + ' At ' + newMessage.nowTime);
+      setBadgeNumber(prev => {
+        var next = prev + 1;
+        localStorage.setItem('badgeMessage', String(next));
+        return next;
+      });
+      var timeLabel = newMessage.nowTime || (newMessage.createdAt ? dayjs_min_default()(newMessage.createdAt).format('h:mm:ss A') : '');
+      var msgText = "new message from ".concat(newMessage.userName + ' On ' + dayjs_min_default()(newMessage.nowDate || newMessage.createdAt).format('DD/MMMM') + (timeLabel ? ' At ' + timeLabel : ''));
+      react_toastify_esm/* toast */.oR.success(msgText);
       if (window.electron && window.electron.sendNotification) {
-        window.electron.sendNotification(message);
+        window.electron.sendNotification(msgText);
       } else if (window.Notification && window.Notification.permission === "granted") {
         new window.Notification("Global Gate", {
-          body: message
+          body: msgText
         });
       }
-      localStorage.setItem('badgeMessage', badgeNumber + 1);
     });
     return () => {
       socket.off('newMessage');
@@ -82397,7 +82437,7 @@ function MessageAdminView(_ref) {
     onClick: handleClick
   }, /*#__PURE__*/react.createElement(Badge/* default */.A, {
     badgeContent: badgeNumber,
-    color: "secondary"
+    color: "error"
   }, /*#__PURE__*/react.createElement(MailOutline, {
     sx: {
       color: 'white'
@@ -82509,7 +82549,7 @@ function MessageAdminView(_ref) {
       color: 'rgba(255,255,255,0.85)',
       fontSize: '11px'
     }
-  }, ' On ' + dayjs_min_default()(row.nowDate).format('DD/MMMM') + ' At ' + row.nowTime)), row.replyTo && /*#__PURE__*/react.createElement(Box/* default */.A, {
+  }, ' On ' + dayjs_min_default()(row.nowDate || row.createdAt).format('DD/MMMM') + (row.nowTime ? ' At ' + row.nowTime : row.createdAt ? ' At ' + dayjs_min_default()(row.createdAt).format('h:mm:ss A') : ''))), row.replyTo && /*#__PURE__*/react.createElement(Box/* default */.A, {
     sx: {
       p: '6px 10px',
       mb: 1,
@@ -124592,7 +124632,7 @@ Object.assign(esm_lookup, {
 (module) {
 
 "use strict";
-module.exports = {"rE":"3.7.8"};
+module.exports = {"rE":"3.7.9"};
 
 /***/ },
 
@@ -124724,7 +124764,7 @@ module.exports = /*#__PURE__*/JSON.parse('{"--header-logo-width":"240px","--glob
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames based on template
-/******/ 			return "" + chunkId + "." + {"67":"bda03ce315bef7c62fb3","100":"4b3fdc2462e0d9a430a6","116":"47fa8762f753762d291d","118":"67282ee0f46830583293","223":"11c50fcf642acaf01578","296":"f29e824f38522a627939","302":"f70abe321d5e2fa0e9d4","327":"c88df084641bfac45cdc","441":"c77d59f59ec78c1ec3ef","457":"9569479ab09e1d6a9858","483":"6fdf7d28f4a344461077","590":"28953f61605420ae99a4","614":"aa1a4baa485591a45a5d","712":"592eb43afd2ddc57322d","742":"3c7280819fde965ae055","778":"f8950b7fd584414ccde4","806":"1ea1e329c81432c76d9c","808":"7f3c3fe3c8d9a9288c1e","864":"ac9193b4bf40eb4964a0","885":"cc8a4df32b65323e1a80","956":"1824448f5e358187a171","1019":"1d406482e04e60bb652f","1096":"006e427f52a7560b8be1","1168":"b2f690e1d5399977dcaf","1195":"aa9a35c5d0c98e89ee94","1223":"7aa1f69e403b594d5336","1251":"9da50dc8470bc764d3b6","1364":"062c816f6a5af008f5d3","1390":"a28f1a9c7193c75a2232","1500":"c35a723a13db44680af6","1624":"1e1d88c032094f247d47","1645":"a8f0d3cc2222d339decb","1679":"27301f1f59d20b017f6b","1722":"5aacfbdbf20395aae3a9","1853":"d87ffdbd183011dc2319","1861":"b7634fa92c4aa00d7ec7","1919":"f3153d7afd993a995536","1985":"e7dabafac7bfb5ca1e6d","2120":"260136f37f71dde36ba1","2122":"8bc2ef01f6cfb302413d","2153":"dfaa809d81b011fe402a","2400":"3afb63aa83cecc6bd8b4","2410":"554304aa37fccb43a7c2","2495":"ad95bf3c600489d6711c","2517":"956f7558989fb2a45d33","2529":"42fd28fddfb8eb0f7f6b","2533":"19eb2da5d7015e61eb3c","2572":"74ee33ffccbef324dccd","2605":"6da45bf0a374acc6b637","2608":"a86e0ce81d9f46c9b9e6","2611":"21b2cd175be9359600da","2756":"2e4d9a6b9a21c6a4e68d","2757":"68776b517befffb1bc05","2778":"cdd44eceb38686d06a9b","2821":"d40aee3e8cd86fb5bbff","2835":"cb586f1aed058e586821","2982":"74d3e173fba1b1abe085","2992":"e2ce4fd5d1911fd7a1db","3009":"039655ae8b90cc3dc664","3058":"e26f92240c2a283a7753","3094":"9608277b9f1b21b145b5","3229":"e5b450ccf074fbd38dab","3426":"bfabe6a073b863c03ba6","3502":"cda9bc65c6ceae919360","3547":"1e2de2721983f1041975","3636":"9c7533cd2c4d2daa9142","3697":"875c18fc1a739183b741","3741":"37d03a8a510f8bda1f4a","3808":"adfa327a9d2258460ce0","3970":"396fecaabf382a5f1a39","3976":"c6c4d900d8043e884ea2","4001":"96409a9cac9abf8daab9","4006":"147579618437a692fc14","4107":"78bb8e93491e33a3e285","4184":"dd46f5c3c3f89966fe16","4237":"ae9e77c6d4f5a70c297a","4270":"ae94c7a86d7d810dfd56","4444":"ff598fcb043ae64f3c70","4783":"f419a9163eb350212f2e","4796":"4150ed1226f6589bfe3c","5059":"0c82fc8853d0143df171","5117":"a4ccc6a72a408e70314b","5194":"41d92fae3dffb5613d08","5391":"fc5d71f8b96dcb0cc632","5394":"875bc1cb2e5e22ca7f6d","5646":"6a57c318facfce5b2863","5669":"7dd77c65e44c3dc05cd9","5754":"8e63db711cee747f1391","5824":"5b0b22047b9e46f0781f","5881":"1b229fbf1b0bff87b387","5910":"d18dd51498ab4a2bfa9d","5919":"2ebbeceef8b03aefddce","5934":"0206dab131e6379b890f","6155":"7e601e5022751c241b17","6226":"74b7c7db0abf1a090d6c","6619":"da19331cff7f3dfae6d4","6671":"1ca23ca7768d1c931aee","6685":"1ef5575a72b652f74b7d","6725":"d5bbd273d7711f446924","6744":"c01d52eb99441e4e3afa","7120":"fbec0e4401c2f3946a30","7171":"918e19a0ed17fcdfa115","7269":"ff4ddba0d139d575c9da","7270":"aef71d036742a212ea6b","7384":"78a1f59ffc7924fc8f70","7405":"53dd5e5077e4f953ad70","7444":"b53c12d6ba889fd7ff49","7445":"e0551bf4db68727568ce","7539":"a814c7e2536f3a2ded57","7592":"b2cbea05232b51c85f6d","7612":"435034c09fadd37c9666","7645":"8d59712268ea3994cd6e","7757":"85e98f9c623305a9666a","7801":"31435af205e48581d2b3","7897":"f1114c1e5b5644a78301","7941":"77183a283e09af360dd6","7997":"2e21126ab3301ab4a2fa","8011":"6e467f8105662710240b","8017":"202c22fa5c083f25a457","8027":"2fd27db018ae2e8c16db","8060":"b1a2c50de159b26e8a34","8117":"25756ad53d0d4449d1f8","8282":"eb3cd32d33e0774585b8","8354":"176023e85ee8d67dc8c1","8442":"4dc34606f2dc199c6158","8520":"bd678456cc879023807e","8646":"c4ae69ca90e142009ade","8685":"2e4858ba3af14fde840a","8838":"43934310530795354dca","8849":"3abd0e829d47f2d034a6","8970":"110c16bdc91946671e41","8979":"4805158afa23d0486340","9220":"861c86c07129ab78a89d","9246":"b46d76330431170b4b44","9250":"739e41027b099328904d","9260":"ebf3b7b938e195a708ee","9419":"a1be3f58d9a6ab061cb9","9528":"4dd9c43eb666c40b578c","9564":"746623511c55650ec60b","9573":"b678c343d6414af5522c","9575":"e9bf1fcbb360227bdd13","9670":"012e43f63f6fefe161c8","9762":"2b4c7cd7446953ac1c72","9773":"7c6f426d143d3c93d1ee","9846":"305acfa47d491e196677","9971":"6e4ad54b31693561b0e5"}[chunkId] + ".app.js";
+/******/ 			return "" + chunkId + "." + {"67":"bda03ce315bef7c62fb3","100":"4b3fdc2462e0d9a430a6","116":"47fa8762f753762d291d","118":"67282ee0f46830583293","223":"11c50fcf642acaf01578","296":"f29e824f38522a627939","302":"f70abe321d5e2fa0e9d4","327":"c88df084641bfac45cdc","441":"c77d59f59ec78c1ec3ef","457":"9569479ab09e1d6a9858","483":"6fdf7d28f4a344461077","590":"28953f61605420ae99a4","614":"aa1a4baa485591a45a5d","712":"592eb43afd2ddc57322d","742":"3c7280819fde965ae055","778":"f8950b7fd584414ccde4","806":"1ea1e329c81432c76d9c","808":"7f3c3fe3c8d9a9288c1e","864":"ac9193b4bf40eb4964a0","885":"cc8a4df32b65323e1a80","956":"1824448f5e358187a171","1019":"1d406482e04e60bb652f","1096":"006e427f52a7560b8be1","1168":"b2f690e1d5399977dcaf","1195":"aa9a35c5d0c98e89ee94","1223":"7aa1f69e403b594d5336","1251":"9da50dc8470bc764d3b6","1364":"062c816f6a5af008f5d3","1390":"a28f1a9c7193c75a2232","1500":"c35a723a13db44680af6","1624":"1e1d88c032094f247d47","1645":"a8f0d3cc2222d339decb","1679":"27301f1f59d20b017f6b","1722":"5aacfbdbf20395aae3a9","1853":"d87ffdbd183011dc2319","1861":"b7634fa92c4aa00d7ec7","1919":"f3153d7afd993a995536","1985":"e7dabafac7bfb5ca1e6d","2120":"260136f37f71dde36ba1","2122":"8bc2ef01f6cfb302413d","2153":"dfaa809d81b011fe402a","2400":"3afb63aa83cecc6bd8b4","2410":"554304aa37fccb43a7c2","2495":"ad95bf3c600489d6711c","2517":"956f7558989fb2a45d33","2529":"42fd28fddfb8eb0f7f6b","2533":"19eb2da5d7015e61eb3c","2572":"74ee33ffccbef324dccd","2605":"6da45bf0a374acc6b637","2608":"a86e0ce81d9f46c9b9e6","2611":"21b2cd175be9359600da","2756":"2e4d9a6b9a21c6a4e68d","2757":"68776b517befffb1bc05","2778":"cdd44eceb38686d06a9b","2821":"d40aee3e8cd86fb5bbff","2835":"cb586f1aed058e586821","2982":"74d3e173fba1b1abe085","2992":"e2ce4fd5d1911fd7a1db","3009":"039655ae8b90cc3dc664","3058":"e26f92240c2a283a7753","3094":"9608277b9f1b21b145b5","3229":"e5b450ccf074fbd38dab","3426":"bfabe6a073b863c03ba6","3502":"cda9bc65c6ceae919360","3547":"1e2de2721983f1041975","3636":"9c7533cd2c4d2daa9142","3697":"875c18fc1a739183b741","3741":"37d03a8a510f8bda1f4a","3808":"adfa327a9d2258460ce0","3970":"396fecaabf382a5f1a39","3976":"c6c4d900d8043e884ea2","4001":"96409a9cac9abf8daab9","4006":"147579618437a692fc14","4107":"78bb8e93491e33a3e285","4184":"dd46f5c3c3f89966fe16","4237":"ae9e77c6d4f5a70c297a","4270":"ae94c7a86d7d810dfd56","4444":"ff598fcb043ae64f3c70","4783":"f419a9163eb350212f2e","4796":"4150ed1226f6589bfe3c","5059":"0c82fc8853d0143df171","5117":"a4ccc6a72a408e70314b","5194":"41d92fae3dffb5613d08","5391":"fc5d71f8b96dcb0cc632","5394":"875bc1cb2e5e22ca7f6d","5646":"6a57c318facfce5b2863","5669":"7dd77c65e44c3dc05cd9","5754":"8e63db711cee747f1391","5824":"5b0b22047b9e46f0781f","5881":"1b229fbf1b0bff87b387","5910":"d18dd51498ab4a2bfa9d","5919":"2ebbeceef8b03aefddce","5934":"0206dab131e6379b890f","6155":"7e601e5022751c241b17","6226":"74b7c7db0abf1a090d6c","6619":"da19331cff7f3dfae6d4","6671":"1ca23ca7768d1c931aee","6685":"1ef5575a72b652f74b7d","6725":"d5bbd273d7711f446924","6744":"c01d52eb99441e4e3afa","7120":"fbec0e4401c2f3946a30","7171":"918e19a0ed17fcdfa115","7269":"ff4ddba0d139d575c9da","7270":"aef71d036742a212ea6b","7384":"78a1f59ffc7924fc8f70","7405":"53dd5e5077e4f953ad70","7444":"b53c12d6ba889fd7ff49","7445":"e0551bf4db68727568ce","7539":"a814c7e2536f3a2ded57","7592":"b2cbea05232b51c85f6d","7612":"435034c09fadd37c9666","7645":"8d59712268ea3994cd6e","7757":"85e98f9c623305a9666a","7801":"31435af205e48581d2b3","7897":"f1114c1e5b5644a78301","7941":"77183a283e09af360dd6","7997":"2e21126ab3301ab4a2fa","8011":"6e467f8105662710240b","8017":"202c22fa5c083f25a457","8027":"2fd27db018ae2e8c16db","8060":"b1a2c50de159b26e8a34","8117":"25756ad53d0d4449d1f8","8282":"eb3cd32d33e0774585b8","8354":"176023e85ee8d67dc8c1","8442":"4dc34606f2dc199c6158","8520":"bd678456cc879023807e","8646":"c4ae69ca90e142009ade","8685":"2e4858ba3af14fde840a","8838":"43934310530795354dca","8849":"3abd0e829d47f2d034a6","8970":"00b266a1466d85112396","8979":"4805158afa23d0486340","9220":"861c86c07129ab78a89d","9246":"b46d76330431170b4b44","9250":"739e41027b099328904d","9260":"ebf3b7b938e195a708ee","9419":"a1be3f58d9a6ab061cb9","9528":"4dd9c43eb666c40b578c","9564":"746623511c55650ec60b","9573":"b678c343d6414af5522c","9575":"e9bf1fcbb360227bdd13","9670":"012e43f63f6fefe161c8","9762":"2b4c7cd7446953ac1c72","9773":"7c6f426d143d3c93d1ee","9846":"305acfa47d491e196677","9971":"6e4ad54b31693561b0e5"}[chunkId] + ".app.js";
 /******/ 		};
 /******/ 	})();
 /******/ 	

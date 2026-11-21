@@ -83,6 +83,9 @@ function MessageAdminView({ name, role }) {
     setAnchorEl(event.currentTarget);
     setBadgeNumber(0);
     localStorage.removeItem('badgeMessage');
+    if (messageInfo.length > 0 && messageInfo[0]?._id) {
+      localStorage.setItem('lastSeenMessageId', String(messageInfo[0]._id));
+    }
   };
 
   const handleClose = () => {
@@ -98,16 +101,49 @@ function MessageAdminView({ name, role }) {
       setMessageInfo([]);
       return;
     }
+    const computeUnread = (list) => {
+      const currentUser = String(name || user?.data?.userName || '').trim().toLowerCase();
+      const lastSeenId = localStorage.getItem('lastSeenMessageId');
+      if (lastSeenId) {
+        const idx = list.findIndex((m) => String(m._id) === String(lastSeenId));
+        if (idx === -1) {
+          return list.filter((m) => String(m.userName || '').trim().toLowerCase() !== currentUser).length;
+        }
+        return list
+          .slice(0, idx)
+          .filter((m) => String(m.userName || '').trim().toLowerCase() !== currentUser).length;
+      }
+      return list.filter((m) => {
+        if (String(m.userName || '').trim().toLowerCase() === currentUser) return false;
+        const d = m.createdAt || m.nowDate;
+        return d ? dayjs(d).isSame(dayjs(), 'day') : false;
+      }).length;
+    };
+
     const fetchComment = async () => {
       try {
         const res = await axios.get(`${ENDPOINT_URL}/message`)
-        setMessageInfo(res.data.data.reverse())
+        const list = (res.data?.data || []).slice().reverse();
+        setMessageInfo(list);
+        if (!anchorEl) {
+          const unread = computeUnread(list);
+          setBadgeNumber(unread);
+          if (unread > 0) {
+            localStorage.setItem('badgeMessage', String(unread));
+          } else {
+            localStorage.removeItem('badgeMessage');
+          }
+        } else if (list[0]?._id) {
+          localStorage.setItem('lastSeenMessageId', String(list[0]._id));
+        }
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     }
-    fetchComment()
-  }, [canViewMessage])
+    fetchComment();
+    const pollTimer = setInterval(fetchComment, 30000);
+    return () => clearInterval(pollTimer);
+  }, [canViewMessage, anchorEl, name, user?.data?.userName])
   useEffect(() => {
     if (!canViewMessage) {
       setBadgeNumber(0);
@@ -125,15 +161,19 @@ function MessageAdminView({ name, role }) {
     })
     socket.on('newMessage', (newMessage) => {
       setMessageInfo((prev) => [newMessage, ...prev])
-      setBadgeNumber((prev) => prev + 1)
-      toast.success(`new message from ${newMessage.userName + ' On ' + dayjs(newMessage.nowDate).format('DD/MMMM') + ' At ' + newMessage.nowTime}`)
-      const message = `new message from ${newMessage.userName + ' On ' + dayjs(newMessage.nowDate).format('DD/MMMM') + ' At ' + newMessage.nowTime}`
+      setBadgeNumber((prev) => {
+        const next = prev + 1;
+        localStorage.setItem('badgeMessage', String(next));
+        return next;
+      });
+      const timeLabel = newMessage.nowTime || (newMessage.createdAt ? dayjs(newMessage.createdAt).format('h:mm:ss A') : '');
+      const msgText = `new message from ${newMessage.userName + ' On ' + dayjs(newMessage.nowDate || newMessage.createdAt).format('DD/MMMM') + (timeLabel ? ' At ' + timeLabel : '')}`;
+      toast.success(msgText);
       if (window.electron && window.electron.sendNotification) {
-        window.electron.sendNotification(message)
+        window.electron.sendNotification(msgText)
       } else if (window.Notification && window.Notification.permission === "granted") {
-        new window.Notification("Global Gate", { body: message });
+        new window.Notification("Global Gate", { body: msgText });
       }
-      localStorage.setItem('badgeMessage', badgeNumber + 1)
     });
     return () => {
       socket.off('newMessage')
@@ -286,7 +326,7 @@ function MessageAdminView({ name, role }) {
   return (
     <>
       <IconButton aria-describedby={id} variant="contained" onClick={handleClick}>
-        <Badge badgeContent={badgeNumber} color="secondary">
+        <Badge badgeContent={badgeNumber} color="error">
           <MailOutline sx={{ color: 'white' }} />
         </Badge>
       </IconButton>
@@ -326,7 +366,7 @@ function MessageAdminView({ name, role }) {
                       <ListItemText sx={row.userName === name ? { padding: '12px', lineHeight: 'normal', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '16px', margin: '10px 0', backgroundColor: '#30368a', color: 'white', boxShadow: '0 2px 4px rgba(0,0,0,0.1)' } : { padding: '12px', lineHeight: 'normal', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '16px', margin: '10px 0', backgroundColor: '#2e7d32', color: 'white', boxShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>
                         <List style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '6px', padding: 0 }}>
                           <span className="txt2" style={{ color: 'white', fontWeight: 'bold' }}>{row.userName}</span>
-                          <span className="txt2" style={{ color: 'rgba(255,255,255,0.85)', fontSize: '11px' }}>{' On ' + dayjs(row.nowDate).format('DD/MMMM') + ' At ' + row.nowTime}</span>
+                          <span className="txt2" style={{ color: 'rgba(255,255,255,0.85)', fontSize: '11px' }}>{' On ' + dayjs(row.nowDate || row.createdAt).format('DD/MMMM') + (row.nowTime ? ' At ' + row.nowTime : (row.createdAt ? ' At ' + dayjs(row.createdAt).format('h:mm:ss A') : ''))}</span>
                         </List>
 
                         {/* Quoted Reply Block */}

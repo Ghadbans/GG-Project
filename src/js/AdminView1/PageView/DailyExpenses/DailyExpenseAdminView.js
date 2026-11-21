@@ -631,13 +631,10 @@ function DailyExpenseAdminView() {
         if (payUSD === 0 && payFC === 0) {
           grossUSD = rem > 0 ? rem : amt;
         } else {
-          grossUSD = payUSD + rem;
+          grossUSD = payUSD;
         }
         credit = rem > 0 ? rem : amt;
       } else {
-        if ((row.modes === 'Cash' || row.modes === 'Bank Transfer' || !row.modes) && rem > 0) {
-          grossUSD = payUSD + rem;
-        }
         if (grossUSD === 0 && grossFC === 0 && amt > 0) {
           grossUSD = amt;
         }

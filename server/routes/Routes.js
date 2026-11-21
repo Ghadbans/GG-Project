@@ -153,8 +153,13 @@ Route.route("/message", cors(corsOptionsDelegate)).get(
 
 Route.route("/create-message").post(async (req, res, next) => {
   try {
-    const branchId = req.body.branchId;
-    const message = new messageSchema(req.body);
+    const now = new Date();
+    const payload = {
+      ...req.body,
+      nowDate: req.body.nowDate || now.toLocaleDateString(),
+      nowTime: req.body.nowTime || now.toLocaleTimeString()
+    };
+    const message = new messageSchema(payload);
     await message.save();
     req.io.emit('newMessage',message);
     res.status(201).send('Message Saved Successfully');

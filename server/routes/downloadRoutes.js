@@ -3,12 +3,12 @@ const router = express.Router();
 const path = require('path');
 const fs = require('fs');
 
-const APP_VERSION = '3.7.8';
+const APP_VERSION = '3.7.9';
 const MIN_SUPPORTED_VERSION = '3.7.0';
 const RELEASE_NOTES = [
-  'Delivery Note: Deliver Qty automatically clamps/resets to remaining Total Qty and cannot exceed it.',
-  'Fixed Windows Desktop silent auto-updater bundling (electron-updater) and external Direct Download.',
-  'Automatic in-app updates for Windows Desktop (.exe) and Android Mobile (.apk).'
+  'Message Center: Red unread badge with live count and fallback polling + timestamp fix.',
+  'Daily Expenses: Fixed Customer Credit payment double-counting in Payment Received totals.',
+  'Delivery Note: Deliver Qty automatically clamps/resets to remaining Total Qty.'
 ];
 
 const DOWNLOADS_DIR = path.join(__dirname, '../public/downloads');
