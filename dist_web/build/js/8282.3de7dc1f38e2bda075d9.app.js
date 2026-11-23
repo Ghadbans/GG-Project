@@ -1956,7 +1956,7 @@ function InvoiceFormUpdate() {
           setTerms(res.data.data.terms);
           setNoteInfo(res.data.data.noteInfo);
           setActionTaken(res.data.data.actionTaken);
-          setCheckTvA(Boolean(res.data.data.CheckTvA));
+          setCheckTvA(Boolean(res.data.data.CheckTvA || Number(res.data.data.tax || 0) > 0));
           setTax(Number(res.data.data.tax || 0));
         } catch (error) {
           console.error('Error fetching data:', error);
@@ -1982,6 +1982,8 @@ function InvoiceFormUpdate() {
         setTerms(resLocal.terms);
         setNoteInfo(resLocal.noteInfo);
         setActionTaken(resLocal.actionTaken);
+        setCheckTvA(Boolean(resLocal.CheckTvA || Number(resLocal.tax || 0) > 0));
+        setTax(Number(resLocal.tax || 0));
       }
     });
     return function fetchData() {
@@ -2540,11 +2542,13 @@ function InvoiceFormUpdate() {
   ;(0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     var result1 = items.reduce((sum, row) => sum + (parseFloat(row.itemAmount) || 0), 0);
     setSubTotal(result1.toFixed(2));
-    var newTotal = Math.round((parseFloat(result1) + parseFloat(shipping || 0) + parseFloat(adjustmentNumber || 0)) * 100) / 100;
+    var calculatedTax = CheckTvA ? Math.round(result1 * 0.16 * 100) / 100 : 0;
+    setTax(calculatedTax);
+    var newTotal = Math.round((parseFloat(result1) + calculatedTax + parseFloat(shipping || 0) + parseFloat(adjustmentNumber || 0)) * 100) / 100;
     setTotalInvoice(newTotal);
     var newBalance = Math.round((newTotal - (parseFloat(total) || 0)) * 100) / 100;
     setBalanceDue(newBalance);
-  }, [items, shipping, adjustmentNumber, total]);
+  }, [items, CheckTvA, shipping, adjustmentNumber, total]);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     if (totalInvoice) {
       var wholePart = Math.floor(totalInvoice);

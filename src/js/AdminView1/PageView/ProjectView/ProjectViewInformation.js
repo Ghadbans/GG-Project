@@ -1843,7 +1843,7 @@ const isItemMatch = (item1, item2) => {
                                           <tr style={{ borderBottom: '1px solid black' }}>
                                             <th style={{ textAlign: 'center' }}>
                                               <span> Sub Total</span>
-                                              <br /><span className='txt1'>{row.CheckTvA ? '(Tax Inclusive)' : '(Tax Excluded)'}</span>
+                                              {!(row.CheckTvA || Number(row.tax || 0) > 0) && <><br /><span className='txt1'>(Tax Excluded)</span></>}
                                             </th>
                                             <td style={{ textAlign: 'right' }}><span data-prefix>$</span><span>{(parseFloat(row.subTotal) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
                                           </tr>

@@ -520,7 +520,7 @@ export default function MobileDocumentPrintModal({ open, onClose, record, type =
               <Box sx={{ width: '50%' }}>
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', py: 0.5, borderBottom: '1px solid #e2e8f0', fontSize: '12px' }}>
                   <Typography variant="caption" sx={{ color: '#475569' }}>
-                    Sub Total <span style={{ color: '#94a3b8' }}>{doc?.CheckTvA ? '(Tax Inclusive)' : '(Tax Excluded)'}</span>
+                    Sub Total {!(doc?.CheckTvA || Number(doc?.tax || 0) > 0) && <span style={{ color: '#94a3b8' }}>(Tax Excluded)</span>}
                   </Typography>
                   <Typography variant="caption" sx={{ fontWeight: 700, color: '#0f172a' }}>
                     {formatMoney(subTotal)}
@@ -538,6 +538,13 @@ export default function MobileDocumentPrintModal({ open, onClose, record, type =
                   <Box sx={{ display: 'flex', justifyContent: 'space-between', py: 0.5, borderBottom: '1px solid #e2e8f0', fontSize: '12px' }}>
                     <Typography variant="caption" sx={{ color: '#475569' }}>Shipping</Typography>
                     <Typography variant="caption" sx={{ fontWeight: 700, color: '#0f172a' }}>{formatMoney(shipping)}</Typography>
+                  </Box>
+                )}
+
+                {(doc?.CheckTvA || Number(doc?.tax || 0) > 0) && (
+                  <Box sx={{ display: 'flex', justifyContent: 'space-between', py: 0.5, borderBottom: '1px solid #e2e8f0', fontSize: '12px' }}>
+                    <Typography variant="caption" sx={{ color: '#475569' }}>TVA @ 16%</Typography>
+                    <Typography variant="caption" sx={{ fontWeight: 700, color: '#0f172a' }}>{formatMoney(doc?.tax || 0)}</Typography>
                   </Box>
                 )}
 

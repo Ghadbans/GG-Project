@@ -237,6 +237,12 @@ Route.route("/update-estimation/:id").put(async (req, res, next) => {
         if ('customerName' in updatePayload && !isValidCustomer(updatePayload.customerName)) {
             delete updatePayload.customerName;
         }
+        if ('CheckTvA' in updatePayload) {
+            updatePayload.CheckTvA = Boolean(updatePayload.CheckTvA);
+        }
+        if ('tax' in updatePayload) {
+            updatePayload.tax = Number(updatePayload.tax || 0);
+        }
         if (updatePayload.estimateNumber !== undefined && updatePayload.estimateNumber !== null && updatePayload.estimateNumber !== '') {
             const num = Number(updatePayload.estimateNumber);
             if (!isNaN(num) && num > 0) {

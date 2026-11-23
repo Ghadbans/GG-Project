@@ -6264,3 +6264,24 @@ Implemented a zero-manual-intervention in-app update pipeline across Electron Wi
    - Synchronized `3.7.11` across `package.json`, `server/package.json`, `server/index.js`, `server/routes/downloadRoutes.js`, and `android/app/build.gradle` (`versionCode 30711`).
    - Verified `pre-build-check.js` (253 files, 0 errors), `security-check.js --auto-start` (21/21 passed), and `regression-check.js --auto-start` (12/12 passed).
    - Built Web Portal (`dist_web/`), Electron Desktop (`dist/Global Gate Setup 3.7.11.exe` + `latest.yml`), and Capacitor Android APK (`GlobalGate-v3.7.11.apk`), synced to `server/public/downloads/` via `scripts/sync-releases.js`, and pushed to `origin main`.
+
+
+### Rule 106: Overview/Print Tax Display, Invoice Edit Recalculation, Paid-Only VAT Statement & FR Note Rule (Ver 3.7.12)
+
+#### Changes Implemented
+1. **Overview & Print Tax Display (`InvoiceViewAdminAll.js`, `EstimateViewAdminAll.js`, `ProjectViewInformation.js`, `MobileDocumentPrintModal.js`)**:
+   - Removed the inverted `(Tax Inclusive)` label from Overview and Print views.
+   - Untaxed documents (`!CheckTvA && Number(tax || 0) === 0`) display **`(Tax Excluded)`** (FR: `(Hors Taxe)`) under `SUB TOTAL`.
+   - Taxed documents (`CheckTvA || Number(tax || 0) > 0`) display `SUB TOTAL` **alone** (no `(Tax Inclusive)`), followed by the `TVA @ 16%` row on its own line, followed by `TOTAL`.
+2. **French Print Note Rule (`src/js/utils/frenchPrintHelper.js`)**:
+   - Added `translateNoteToFrench(note)`: translates `"THANKS FOR YOUR BUSINESS."` to `"MERCI POUR VOTRE CONFIANCE."` on French Invoice prints while preserving `"WE LOOK FORWARD TO THE OPPORTUNITY TO DO BUSINESS WITH YOU."` in English on French Quotation prints.
+3. **Invoice Edit Form Recalculation & Backend Coercion (`InvoiceFormUpdate.js`, `server/routes/invoiceRoutes.js`, `server/routes/estimationRoutes.js`)**:
+   - Updated `InvoiceFormUpdate.js` (online API & offline Dexie load) to initialize `CheckTvA` from `Boolean(data.CheckTvA || Number(data.tax || 0) > 0)` and updated the calculation `useEffect` to depend on `CheckTvA`, compute `tax = CheckTvA ? Math.round(subTotal * 0.16 * 100) / 100 : 0`, and include `tax` in `totalInvoice` and `balanceDue`.
+   - Coerced `CheckTvA` (Boolean) and `tax` (Number) in `PUT /update-invoice/:id` and `PUT /update-estimation/:id`.
+4. **VAT Account Statement Paid-Only Invoices & POS Link (`AdminHome.js`, `VatAccountView.js`)**:
+   - Restricted Invoice VAT Collected (`TVA +`) to **Paid** invoices only (`String(inv.status || '').toLowerCase() === 'paid'`), keeping Quotations excluded and avoiding double-counting when a payment record already carries tax.
+   - Passed `posInvoices={posInvoice}` into `VatAccountView` and included Paid POS sales with `tax > 0` (converted from FC to USD by `rate`) alongside Daily Expenses (`TVA -`) and Item Purchases (`TVA -`) so `Net VAT Balance` reflects collected vs. paid TVA accurately.
+5. **Version Synchronization & Multi-Platform Release (`v3.7.12`)**:
+   - Synchronized `3.7.12` across `package.json`, `server/package.json`, `server/index.js`, `server/routes/downloadRoutes.js`, and `android/app/build.gradle` (`versionCode 30712`).
+   - Verified `pre-build-check.js` (253 files, 0 errors), `security-check.js --auto-start` (21/21 passed), and `regression-check.js --auto-start` (12/12 passed).
+   - Built Web Portal (`dist_web/`), Electron Desktop (`dist/Global Gate Setup 3.7.12.exe` + `latest.yml`), and Capacitor Android APK (`GlobalGate-v3.7.12.apk`), synced to `server/public/downloads/` via `scripts/sync-releases.js`, and pushed to `origin main`.

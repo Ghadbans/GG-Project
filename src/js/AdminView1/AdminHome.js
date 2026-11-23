@@ -769,7 +769,7 @@ function AdminHome() {
   };
   const vatCollectedPayments = (payment || []).filter(p => p.status !== 'Voided').reduce((sum, p) => sum + getVatValue(p), 0);
   const vatCollectedInvoices = (allInvoices || [])
-    .filter(inv => !['Draft', 'Voided', 'Void', 'Decline'].includes(inv.status))
+    .filter(inv => String(inv.status || '').toLowerCase() === 'paid')
     .reduce((sum, inv) => {
       const invVat = getVatValue(inv);
       if (invVat <= 0) return sum;
@@ -778,7 +778,13 @@ function AdminHome() {
       );
       return paymentRecordedVat ? sum : sum + invVat;
     }, 0);
-  const vatCollected = vatCollectedPayments + vatCollectedInvoices;
+  const vatCollectedPos = (posInvoice || []).reduce((sum, p) => {
+    const posTax = Number(p.tax || 0);
+    if (posTax <= 0) return sum;
+    const posRate = Number(p.rate || 1) || 1;
+    return sum + (posTax / posRate);
+  }, 0);
+  const vatCollected = vatCollectedPayments + vatCollectedInvoices + vatCollectedPos;
   const vatPaidExpenses = (expenses || []).reduce((sum, e) => sum + getVatValue(e), 0);
   const vatPaidPurchases = (itemPurchase || []).filter(p => p.status !== 'Voided').reduce((sum, p) => sum + getVatValue(p), 0);
   const vatPaid = vatPaidExpenses + vatPaidPurchases;
@@ -2326,6 +2332,7 @@ function AdminHome() {
                               payments={payment}
                               expenses={expenses}
                               allInvoices={allInvoices}
+                              posInvoices={posInvoice}
                               itemPurchase={itemPurchase}
                               onAction={setShowInfo}
                             />

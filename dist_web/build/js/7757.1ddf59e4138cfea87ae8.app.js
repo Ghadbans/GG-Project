@@ -2379,7 +2379,7 @@ function InvoiceViewAdminAll() {
       background: 'white'
     }
   }, invoice === null || invoice === void 0 || (_invoice$filter = invoice.filter(row => row._id === id)) === null || _invoice$filter === void 0 ? void 0 : _invoice$filter.map(row => {
-    var _row$items, _row$shipping, _row$adjustmentNumber, _row$tax, _row$totalInvoice, _row$total, _row$balanceDue, _data, _data2, _row$items2, _row$shipping2, _row$adjustmentNumber2, _row$tax2, _row$totalInvoice2, _row$total2, _row$balanceDue2, _parseFloat2, _parseFloat3, _parseFloat4;
+    var _row$items, _row$shipping, _row$adjustmentNumber, _row$totalInvoice, _row$total, _row$balanceDue, _data, _data2, _row$items2, _row$shipping2, _row$adjustmentNumber2, _row$totalInvoice2, _row$total2, _row$balanceDue2, _parseFloat2, _parseFloat3, _parseFloat4;
     return /*#__PURE__*/react.createElement("div", {
       key: row._id
     }, /*#__PURE__*/react.createElement("header", {
@@ -3186,17 +3186,17 @@ function InvoiceViewAdminAll() {
         width: '200px'
       },
       colSpan: 3
-    }, row.note), /*#__PURE__*/react.createElement("td", {
+    }, printLang === 'fr' ? (0,frenchPrintHelper/* translateNoteToFrench */.Cm)(row.note) : row.note), /*#__PURE__*/react.createElement("td", {
       style: {
         textAlign: 'right',
         borderBottom: '1px solid #DDD'
       },
       colSpan: 2
-    }, /*#__PURE__*/react.createElement("span", null, L.subTotal, /*#__PURE__*/react.createElement("br", null), /*#__PURE__*/react.createElement("span", {
+    }, /*#__PURE__*/react.createElement("span", null, L.subTotal, !(row.CheckTvA || Number(row.tax || 0) > 0) && /*#__PURE__*/react.createElement(react.Fragment, null, /*#__PURE__*/react.createElement("br", null), /*#__PURE__*/react.createElement("span", {
       style: {
         color: 'gray'
       }
-    }, row.CheckTvA ? L.taxIncludedLabel : L.taxExcludedLabel))), /*#__PURE__*/react.createElement("td", {
+    }, L.taxExcludedLabel)))), /*#__PURE__*/react.createElement("td", {
       style: {
         textAlign: 'right',
         borderBottom: '1px solid #DDD'
@@ -3244,7 +3244,7 @@ function InvoiceViewAdminAll() {
       colSpan: 2
     }, /*#__PURE__*/react.createElement("span", {
       "data-prefix": true
-    }, "$"), /*#__PURE__*/react.createElement("span", null, (_row$adjustmentNumber = row.adjustmentNumber) === null || _row$adjustmentNumber === void 0 ? void 0 : _row$adjustmentNumber.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')))) : '', row.CheckTvA ? /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", {
+    }, "$"), /*#__PURE__*/react.createElement("span", null, (_row$adjustmentNumber = row.adjustmentNumber) === null || _row$adjustmentNumber === void 0 ? void 0 : _row$adjustmentNumber.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')))) : '', row.CheckTvA || Number(row.tax || 0) > 0 ? /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", {
       style: {
         textAlign: 'left',
         width: '200px'
@@ -3264,7 +3264,7 @@ function InvoiceViewAdminAll() {
       colSpan: 2
     }, /*#__PURE__*/react.createElement("span", {
       "data-prefix": true
-    }, "$"), /*#__PURE__*/react.createElement("span", null, (_row$tax = row.tax) === null || _row$tax === void 0 ? void 0 : _row$tax.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')))) : '', /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", {
+    }, "$"), /*#__PURE__*/react.createElement("span", null, Number(row.tax || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')))) : '', /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", {
       style: {
         textAlign: 'left',
         width: '200px'
@@ -3690,11 +3690,11 @@ function InvoiceViewAdminAll() {
         borderBottom: '1px solid #DDD'
       },
       colSpan: 2
-    }, /*#__PURE__*/react.createElement("span", null, "Sub Total", row.CheckTvA ? '' : /*#__PURE__*/react.createElement(react.Fragment, null, /*#__PURE__*/react.createElement("br", null), /*#__PURE__*/react.createElement("span", {
+    }, /*#__PURE__*/react.createElement("span", null, "Sub Total", !(row.CheckTvA || Number(row.tax || 0) > 0) && /*#__PURE__*/react.createElement(react.Fragment, null, /*#__PURE__*/react.createElement("br", null), /*#__PURE__*/react.createElement("span", {
       style: {
         color: 'gray'
       }
-    }, "(Tax Inclusive)")))), /*#__PURE__*/react.createElement("td", {
+    }, "(Tax Excluded)")))), /*#__PURE__*/react.createElement("td", {
       style: {
         textAlign: 'right',
         borderBottom: '1px solid #DDD'
@@ -3742,7 +3742,7 @@ function InvoiceViewAdminAll() {
       colSpan: 2
     }, /*#__PURE__*/react.createElement("span", {
       "data-prefix": true
-    }, "$"), /*#__PURE__*/react.createElement("span", null, (_row$adjustmentNumber2 = row.adjustmentNumber) === null || _row$adjustmentNumber2 === void 0 ? void 0 : _row$adjustmentNumber2.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')))) : '', row.CheckTvA ? /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", {
+    }, "$"), /*#__PURE__*/react.createElement("span", null, (_row$adjustmentNumber2 = row.adjustmentNumber) === null || _row$adjustmentNumber2 === void 0 ? void 0 : _row$adjustmentNumber2.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')))) : '', row.CheckTvA || Number(row.tax || 0) > 0 ? /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", {
       style: {
         textAlign: 'left',
         width: '200px'
@@ -3762,7 +3762,7 @@ function InvoiceViewAdminAll() {
       colSpan: 2
     }, /*#__PURE__*/react.createElement("span", {
       "data-prefix": true
-    }, "$"), /*#__PURE__*/react.createElement("span", null, (_row$tax2 = row.tax) === null || _row$tax2 === void 0 ? void 0 : _row$tax2.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')))) : '', /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", {
+    }, "$"), /*#__PURE__*/react.createElement("span", null, Number(row.tax || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')))) : '', /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", {
       style: {
         textAlign: 'left',
         width: '200px'
@@ -6199,6 +6199,7 @@ function DocumentAttachmentsModal(_ref) {
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   Am: () => (/* binding */ numberToFrenchWords),
+/* harmony export */   Cm: () => (/* binding */ translateNoteToFrench),
 /* harmony export */   Fq: () => (/* binding */ translateTermsToFrench),
 /* harmony export */   w8: () => (/* binding */ PRINT_LABELS)
 /* harmony export */ });
@@ -6284,6 +6285,14 @@ var PRINT_LABELS = {
     taxExcludedLabel: '(Hors Taxe)'
   }
 };
+function translateNoteToFrench(note) {
+  if (!note) return '';
+  var upper = String(note).trim().toUpperCase();
+  if (upper === 'THANKS FOR YOUR BUSINESS.' || upper === 'THANK YOU FOR YOUR BUSINESS.') {
+    return 'MERCI POUR VOTRE CONFIANCE.';
+  }
+  return note;
+}
 function translateTermsToFrench(terms) {
   if (!terms) return '';
   var upper = String(terms).toUpperCase();

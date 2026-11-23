@@ -674,6 +674,12 @@ Route.route("/update-invoice/:id").put(async (req, res, next) => {
     if ('customerName' in updatePayload && !isValidCustomer(updatePayload.customerName)) {
       delete updatePayload.customerName;
     }
+    if ('CheckTvA' in updatePayload) {
+      updatePayload.CheckTvA = Boolean(updatePayload.CheckTvA);
+    }
+    if ('tax' in updatePayload) {
+      updatePayload.tax = Number(updatePayload.tax || 0);
+    }
     if (updatePayload.invoiceNumber !== undefined && updatePayload.invoiceNumber !== null && updatePayload.invoiceNumber !== '') {
       const num = Number(updatePayload.invoiceNumber);
       if (!isNaN(num) && num > 0) {

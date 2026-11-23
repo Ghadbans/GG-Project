@@ -31,6 +31,7 @@ import { saveAs } from 'file-saver';
 const VatAccountView = ({
     payments = [],
     allInvoices = [],
+    posInvoices = [],
     expenses = [],
     itemPurchase = [],
     onAction
@@ -86,12 +87,12 @@ const VatAccountView = ({
             }
         });
 
-        // Add Direct Invoices
+        // Add Paid Invoices (Quotations are never included)
         allInvoices.forEach(inv => {
             const totalVal = getItemAmount(inv);
             const taxAmount = getTaxAmount(inv, totalVal);
 
-            if (taxAmount > 0 && !['Draft', 'Voided', 'Void', 'Decline'].includes(inv.status)) {
+            if (taxAmount > 0 && String(inv.status || '').toLowerCase() === 'paid') {
                 const paymentRecordedTax = payments.some(
                     p => p.status !== 'Voided' && (p.invoiceNumber === inv.invoiceName || p.ReferenceNumber === inv.invoiceName) && getTaxAmount(p, getItemAmount(p)) > 0
                 );
@@ -103,10 +104,31 @@ const VatAccountView = ({
                         id: inv._id || inv.id,
                         date: inv.invoiceDate,
                         type: 'Collected (TVA +)',
-                        source: 'Direct Invoice',
+                        source: 'Paid Invoice',
                         reference: invRef,
                         amount: taxAmount,
                         rawDate: new Date(inv.invoiceDate),
+                        isPositive: true
+                    });
+                }
+            }
+        });
+
+        // Add Paid POS Sales
+        posInvoices.forEach(pos => {
+            const posTax = Number(pos.tax || 0);
+            if (posTax > 0 && String(pos.status || '').toLowerCase() === 'paid') {
+                const posRate = Number(pos.rate || 1) || 1;
+                const taxUsd = Math.round((posTax / posRate) * 100) / 100;
+                if (taxUsd > 0) {
+                    transactions.push({
+                        id: pos._id || pos.id,
+                        date: pos.invoiceDate || pos.createdAt,
+                        type: 'Collected (TVA +)',
+                        source: 'POS Sale',
+                        reference: pos.factureNumber || 'POS',
+                        amount: taxUsd,
+                        rawDate: new Date(pos.invoiceDate || pos.createdAt),
                         isPositive: true
                     });
                 }
@@ -180,7 +202,7 @@ const VatAccountView = ({
             sortedTransactions = sortedTransactions.filter(t => t.rawDate && t.rawDate.getTime() <= endLimit.getTime());
         }
         return sortedTransactions;
-    }, [payments, allInvoices, expenses, itemPurchase, startDate, endDate]);
+    }, [payments, allInvoices, posInvoices, expenses, itemPurchase, startDate, endDate]);
 
     const totalCollected = vatTransactions.filter(t => t.isPositive).reduce((sum, t) => sum + t.amount, 0);
     const totalPaid = vatTransactions.filter(t => !t.isPositive).reduce((sum, t) => sum + t.amount, 0);

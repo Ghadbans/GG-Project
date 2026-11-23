@@ -40,7 +40,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import dayjs from 'dayjs';
 import ReactToPrint, { useReactToPrint } from 'react-to-print';
-import { PRINT_LABELS, translateTermsToFrench, numberToFrenchWords } from '../../../utils/frenchPrintHelper';
+import { PRINT_LABELS, translateNoteToFrench, translateTermsToFrench, numberToFrenchWords } from '../../../utils/frenchPrintHelper';
 import { useDispatch, useSelector } from 'react-redux';
 import { logOut, selectCurrentUser, setUser } from '../../../features/auth/authSlice';
 import Logout from '../../../component/NetworkLogoutIcon';
@@ -1070,11 +1070,11 @@ function EstimateViewAdminAll() {
                                                   </thead>
                                                   <tbody>
                                                     <tr>
-                                                      <td style={{ textAlign: 'left', width: '200px' }} colSpan={3}>{row.note}</td>
+                                                      <td style={{ textAlign: 'left', width: '200px' }} colSpan={3}>{printLang === 'fr' ? translateNoteToFrench(row.note) : row.note}</td>
                                                       <td style={{ textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}>
                                                         <span>
                                                           {L.subTotal}
-                                                          <br /><span style={{ color: 'gray' }}>{row.CheckTvA ? L.taxIncludedLabel : L.taxExcludedLabel}</span>
+                                                          {!(row.CheckTvA || Number(row.tax || 0) > 0) && <><br /><span style={{ color: 'gray' }}>{L.taxExcludedLabel}</span></>}
                                                         </span>
                                                       </td>
                                                       <td style={{ textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span data-prefix>$</span><span>{row.subTotal}</span></td>
@@ -1102,7 +1102,7 @@ function EstimateViewAdminAll() {
                                                         : ''
                                                     }
                                                     {
-                                                      row.CheckTvA ?
+                                                      (row.CheckTvA || Number(row.tax || 0) > 0) ?
                                                         (
                                                           <tr>
                                                             <td style={{ textAlign: 'left', width: '200px' }} colSpan={3}></td>
@@ -1345,7 +1345,7 @@ function EstimateViewAdminAll() {
                                             <td style={{ textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}>
                                               <span>
                                                 Sub Total
-                                                {row.CheckTvA ? '' : <><br /><span style={{ color: 'gray' }}>(Tax Inclusive)</span></>}
+                                                {!(row.CheckTvA || Number(row.tax || 0) > 0) && <><br /><span style={{ color: 'gray' }}>(Tax Excluded)</span></>}
                                               </span>
                                             </td>
                                             <td style={{ textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span data-prefix>$</span><span>{row.subTotal}</span></td>
@@ -1373,7 +1373,7 @@ function EstimateViewAdminAll() {
                                               : ''
                                           }
                                           {
-                                            row.CheckTvA ?
+                                            (row.CheckTvA || Number(row.tax || 0) > 0) ?
                                               (
                                                 <tr>
                                                   <td style={{ textAlign: 'left', width: '200px' }} colSpan={3}></td>

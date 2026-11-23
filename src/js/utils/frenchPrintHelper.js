@@ -81,6 +81,15 @@ export const PRINT_LABELS = {
   },
 };
 
+export function translateNoteToFrench(note) {
+  if (!note) return '';
+  const upper = String(note).trim().toUpperCase();
+  if (upper === 'THANKS FOR YOUR BUSINESS.' || upper === 'THANK YOU FOR YOUR BUSINESS.') {
+    return 'MERCI POUR VOTRE CONFIANCE.';
+  }
+  return note;
+}
+
 export function translateTermsToFrench(terms) {
   if (!terms) return '';
   const upper = String(terms).toUpperCase();

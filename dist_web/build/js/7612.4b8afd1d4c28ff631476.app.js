@@ -3959,9 +3959,9 @@ function ProjectViewInformation() {
         style: {
           textAlign: 'center'
         }
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, " Sub Total"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, " Sub Total"), !(row.CheckTvA || Number(row.tax || 0) > 0) && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(react__WEBPACK_IMPORTED_MODULE_2__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
         className: "txt1"
-      }, row.CheckTvA ? '(Tax Inclusive)' : '(Tax Excluded)')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+      }, "(Tax Excluded)"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
         style: {
           textAlign: 'right'
         }

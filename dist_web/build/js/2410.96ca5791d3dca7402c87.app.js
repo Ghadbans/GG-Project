@@ -7053,7 +7053,7 @@ function formatMoney(val) {
   });
 }
 function MobileDocumentPrintModal(_ref) {
-  var _record$_id, _record$customerName, _record$customerName2, _record$customerName3, _record$createdAt, _ref8, _record$subTotal, _record$discount, _ref9, _record$shippingFee, _ref0, _ref1, _ref10, _record$totalInvoice, _record$balanceDue, _doc;
+  var _record$_id, _record$customerName, _record$customerName2, _record$customerName3, _record$createdAt, _ref8, _record$subTotal, _record$discount, _ref9, _record$shippingFee, _ref0, _ref1, _ref10, _record$totalInvoice, _record$balanceDue, _doc, _doc2, _doc3, _doc4, _doc5;
   var open = _ref.open,
     onClose = _ref.onClose,
     record = _ref.record,
@@ -7716,11 +7716,11 @@ function MobileDocumentPrintModal(_ref) {
     sx: {
       color: '#475569'
     }
-  }, "Sub Total ", /*#__PURE__*/react.createElement("span", {
+  }, "Sub Total ", !((_doc = doc) !== null && _doc !== void 0 && _doc.CheckTvA || Number(((_doc2 = doc) === null || _doc2 === void 0 ? void 0 : _doc2.tax) || 0) > 0) && /*#__PURE__*/react.createElement("span", {
     style: {
       color: '#94a3b8'
     }
-  }, (_doc = doc) !== null && _doc !== void 0 && _doc.CheckTvA ? '(Tax Inclusive)' : '(Tax Excluded)')), /*#__PURE__*/react.createElement(Typography/* default */.A, {
+  }, "(Tax Excluded)")), /*#__PURE__*/react.createElement(Typography/* default */.A, {
     variant: "caption",
     sx: {
       fontWeight: 700,
@@ -7764,7 +7764,26 @@ function MobileDocumentPrintModal(_ref) {
       fontWeight: 700,
       color: '#0f172a'
     }
-  }, formatMoney(shipping))), /*#__PURE__*/react.createElement(Box/* default */.A, {
+  }, formatMoney(shipping))), (((_doc3 = doc) === null || _doc3 === void 0 ? void 0 : _doc3.CheckTvA) || Number(((_doc4 = doc) === null || _doc4 === void 0 ? void 0 : _doc4.tax) || 0) > 0) && /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      py: 0.5,
+      borderBottom: '1px solid #e2e8f0',
+      fontSize: '12px'
+    }
+  }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    variant: "caption",
+    sx: {
+      color: '#475569'
+    }
+  }, "TVA @ 16%"), /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    variant: "caption",
+    sx: {
+      fontWeight: 700,
+      color: '#0f172a'
+    }
+  }, formatMoney(((_doc5 = doc) === null || _doc5 === void 0 ? void 0 : _doc5.tax) || 0))), /*#__PURE__*/react.createElement(Box/* default */.A, {
     sx: {
       display: 'flex',
       justifyContent: 'space-between',
