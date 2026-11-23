@@ -280,15 +280,19 @@ function EstimateViewAdminAll() {
     setAnchorEl(null);
   };
 
+  const [printLang, setPrintLang] = useState('en');
+  const L = PRINT_LABELS[printLang] || PRINT_LABELS.en;
   const componentRef = useRef();
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
-    documentTitle: 'Q-' + String(estimateNumber).padStart(6, '0') + ' For ' + customerName1,
+    documentTitle: (printLang === 'fr' ? 'DEVIS-' : 'Q-') + String(estimateNumber).padStart(6, '0') + ' For ' + customerName1,
+    onAfterPrint: () => setPrintLang('en'),
     pageStyle: `@page { size: A4 portrait; margin: 8mm 10mm 10mm 10mm; } @media print { body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }`,
   });
-  const handleOpenPrint = () => {
-    handlePrint()
+  const handleOpenPrint = (lang = 'en') => {
+    setPrintLang(lang);
     setAnchorEl(null);
+    setTimeout(() => handlePrint(), 60);
   };
   const [show1, setShow1] = useState(1);
   const handleShow1 = (e) => {
@@ -698,9 +702,13 @@ function EstimateViewAdminAll() {
                                         </NavLink>
                                       </MenuItem>
                                       <Divider />
-                                      <MenuItem onClick={handleOpenPrint} sx={{ display: 'flex', gap: '20px', color: 'gray' }}>
+                                      <MenuItem onClick={() => handleOpenPrint('en')} sx={{ display: 'flex', gap: '20px', color: 'gray' }}>
                                         <LocalPrintshopIcon />
-                                        <span>Print</span>
+                                        <span>Print (English)</span>
+                                      </MenuItem>
+                                      <MenuItem onClick={() => handleOpenPrint('fr')} sx={{ display: 'flex', gap: '20px', color: 'gray' }}>
+                                        <LocalPrintshopIcon />
+                                        <span>Print (French)</span>
                                       </MenuItem>
                                       <MenuItem onClick={exportToExcel} sx={{ display: 'flex', gap: '20px', color: 'gray' }}>
                                         <Explicit />

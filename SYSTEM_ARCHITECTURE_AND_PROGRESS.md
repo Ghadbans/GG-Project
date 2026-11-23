@@ -6250,3 +6250,17 @@ Implemented a zero-manual-intervention in-app update pipeline across Electron Wi
    - Synchronized `3.7.10` across `package.json`, `server/package.json`, `server/index.js`, `server/routes/downloadRoutes.js`, and `android/app/build.gradle` (`versionCode 30710`).
    - Verified `pre-build-check.js` (253 files, 0 errors), `security-check.js --auto-start` (21/21 passed), and `regression-check.js --auto-start` (12/12 passed).
    - Built Web Portal (`dist_web/`), Electron Desktop (`dist/Global Gate Setup 3.7.10.exe` + `latest.yml`), and Capacitor Android APK (`GlobalGate-v3.7.10.apk`), synced to `server/public/downloads/` via `scripts/sync-releases.js`, and pushed to `origin main`.
+
+
+### Rule 105: Quotation & Invoice `ReferenceError: L is not defined`, `CheckTvA`/`tax` Persistence & EN/FR Print Menu Fix (Ver 3.7.11)
+
+#### Changes Implemented
+1. **Fixed `ReferenceError: L is not defined` Crash (`EstimateViewAdminAll.js`, `InvoiceViewAdminAll.js`)**:
+   - Defined `printLang`, `L = PRINT_LABELS[printLang] || PRINT_LABELS.en`, and `handleOpenPrint = (lang = 'en') => ...` in both `EstimateViewAdminAll.js` and `InvoiceViewAdminAll.js` so opening any Quotation or Invoice no longer crashes.
+   - Wired `Print (English)` (`handleOpenPrint('en')`) and `Print (French)` (`handleOpenPrint('fr')`) menu items in the `OPTIONS` menu of both views.
+2. **Persisted `CheckTvA` & `tax` on Invoice and Quotation Creation (`server/routes/invoiceRoutes.js`, `server/routes/estimationRoutes.js`)**:
+   - Updated `POST /endpoint/create-invoice` (`invoiceRoutes.js`) and `POST /endpoint/create-estimation` (`estimationRoutes.js`) to destructure `CheckTvA` and `tax` from `req.body` and save `CheckTvA: Boolean(CheckTvA)` and `tax: Number(tax || 0)` to MongoDB so Dashboard `VAT Account Statement` (`TOTAL COLLECTED (TVA +)`) accurately reflects taxed invoices and quotations.
+3. **Version Synchronization & Multi-Platform Release (`v3.7.11`)**:
+   - Synchronized `3.7.11` across `package.json`, `server/package.json`, `server/index.js`, `server/routes/downloadRoutes.js`, and `android/app/build.gradle` (`versionCode 30711`).
+   - Verified `pre-build-check.js` (253 files, 0 errors), `security-check.js --auto-start` (21/21 passed), and `regression-check.js --auto-start` (12/12 passed).
+   - Built Web Portal (`dist_web/`), Electron Desktop (`dist/Global Gate Setup 3.7.11.exe` + `latest.yml`), and Capacitor Android APK (`GlobalGate-v3.7.11.apk`), synced to `server/public/downloads/` via `scripts/sync-releases.js`, and pushed to `origin main`.

@@ -1108,36 +1108,44 @@ function EstimateViewAdminAll() {
   var handleCloseMenu = () => {
     setAnchorEl(null);
   };
+  var _useState25 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('en'),
+    _useState26 = _slicedToArray(_useState25, 2),
+    printLang = _useState26[0],
+    setPrintLang = _useState26[1];
+  var L = _utils_frenchPrintHelper__WEBPACK_IMPORTED_MODULE_48__/* .PRINT_LABELS */ .w8[printLang] || _utils_frenchPrintHelper__WEBPACK_IMPORTED_MODULE_48__/* .PRINT_LABELS */ .w8.en;
   var componentRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
   var handlePrint = (0,react_to_print__WEBPACK_IMPORTED_MODULE_47__.useReactToPrint)({
     content: () => componentRef.current,
-    documentTitle: 'Q-' + String(estimateNumber).padStart(6, '0') + ' For ' + customerName1,
+    documentTitle: (printLang === 'fr' ? 'DEVIS-' : 'Q-') + String(estimateNumber).padStart(6, '0') + ' For ' + customerName1,
+    onAfterPrint: () => setPrintLang('en'),
     pageStyle: "@page { size: A4 portrait; margin: 8mm 10mm 10mm 10mm; } @media print { body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }"
   });
-  var handleOpenPrint = () => {
-    handlePrint();
+  var handleOpenPrint = function handleOpenPrint() {
+    var lang = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'en';
+    setPrintLang(lang);
     setAnchorEl(null);
+    setTimeout(() => handlePrint(), 60);
   };
-  var _useState25 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(1),
-    _useState26 = _slicedToArray(_useState25, 2),
-    show1 = _useState26[0],
-    setShow1 = _useState26[1];
+  var _useState27 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(1),
+    _useState28 = _slicedToArray(_useState27, 2),
+    show1 = _useState28[0],
+    setShow1 = _useState28[1];
   var handleShow1 = e => {
     setShow1(e);
     setAnchorEl(null);
   };
-  var _useState27 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
-    _useState28 = _slicedToArray(_useState27, 2),
-    reason = _useState28[0],
-    setReason = _useState28[1];
-  var _useState29 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+  var _useState29 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
     _useState30 = _slicedToArray(_useState29, 2),
-    Comments1 = _useState30[0],
-    setComments = _useState30[1];
+    reason = _useState30[0],
+    setReason = _useState30[1];
   var _useState31 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState32 = _slicedToArray(_useState31, 2),
-    notification = _useState32[0],
-    setNotification = _useState32[1];
+    Comments1 = _useState32[0],
+    setComments = _useState32[1];
+  var _useState33 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    _useState34 = _slicedToArray(_useState33, 2),
+    notification = _useState34[0],
+    setNotification = _useState34[1];
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     var fetchComment = /*#__PURE__*/function () {
       var _ref11 = _asyncToGenerator(function* () {
@@ -1166,18 +1174,18 @@ function EstimateViewAdminAll() {
     reason
   };
   {/** Loading Start */}
-  var _useState33 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState34 = _slicedToArray(_useState33, 2),
-    loading = _useState34[0],
-    setLoading = _useState34[1];
   var _useState35 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState36 = _slicedToArray(_useState35, 2),
-    loadingOpenModal = _useState36[0],
-    setLoadingOpenModal = _useState36[1];
+    loading = _useState36[0],
+    setLoading = _useState36[1];
   var _useState37 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState38 = _slicedToArray(_useState37, 2),
-    ErrorOpenModal = _useState38[0],
-    setErrorOpenModal = _useState38[1];
+    loadingOpenModal = _useState38[0],
+    setLoadingOpenModal = _useState38[1];
+  var _useState39 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState40 = _slicedToArray(_useState39, 2),
+    ErrorOpenModal = _useState40[0],
+    setErrorOpenModal = _useState40[1];
   var handleOpen = () => {
     setLoadingOpenModal(true);
     setLoading(true);
@@ -1230,10 +1238,10 @@ function EstimateViewAdminAll() {
     dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_50__/* .logOut */ .je)());
     navigate('/');
   };
-  var _useState39 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(1),
-    _useState40 = _slicedToArray(_useState39, 2),
-    showRef = _useState40[0],
-    setShowRef = _useState40[1];
+  var _useState41 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(1),
+    _useState42 = _slicedToArray(_useState41, 2),
+    showRef = _useState42[0],
+    setShowRef = _useState42[1];
   var handleShowRef = e => {
     setShowRef(e);
     setAnchorEl(null);
@@ -1633,13 +1641,20 @@ function EstimateViewAdminAll() {
         color: 'gray'
       }
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_60__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, null, "Clone"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, {
-      onClick: handleOpenPrint,
+      onClick: () => handleOpenPrint('en'),
       sx: {
         display: 'flex',
         gap: '20px',
         color: 'gray'
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_LocalPrintshop__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, "Print")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_LocalPrintshop__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, "Print (English)")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, {
+      onClick: () => handleOpenPrint('fr'),
+      sx: {
+        display: 'flex',
+        gap: '20px',
+        color: 'gray'
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_LocalPrintshop__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, "Print (French)")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, {
       onClick: exportToExcel,
       sx: {
         display: 'flex',
@@ -4436,16 +4451,16 @@ function DocumentAttachmentsModal(_ref) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   Am: () => (/* binding */ numberToFrenchWords),
-/* harmony export */   Fq: () => (/* binding */ translateTermsToFrench)
+/* harmony export */   Fq: () => (/* binding */ translateTermsToFrench),
+/* harmony export */   w8: () => (/* binding */ PRINT_LABELS)
 /* harmony export */ });
-/* unused harmony export PRINT_LABELS */
 /**
  * French / English Print Labels & Number-to-Words Helper
  * Used by Quotation (EstimateViewAdminAll) and Invoice (InvoiceViewAdminAll) print views.
  * Item names and item descriptions are intentionally preserved in English.
  */
 
-var PRINT_LABELS = (/* unused pure expression or super */ null && ({
+var PRINT_LABELS = {
   en: {
     invoiceTitle: 'INVOICE',
     quotationTitle: 'QUOTATION',
@@ -4520,7 +4535,7 @@ var PRINT_LABELS = (/* unused pure expression or super */ null && ({
     taxIncludedLabel: '(TVA Incluse)',
     taxExcludedLabel: '(Hors Taxe)'
   }
-}));
+};
 function translateTermsToFrench(terms) {
   if (!terms) return '';
   var upper = String(terms).toUpperCase();

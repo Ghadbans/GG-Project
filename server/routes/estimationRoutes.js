@@ -162,7 +162,8 @@ Route.route("/create-estimation").post(async (req, res, next) => {
   Create,balanceDue,
   terms,shipping,noteInfo,
   adjustment,adjustmentNumber,
-  totalInvoice,Ref,ReferenceName
+  totalInvoice,Ref,ReferenceName,
+  CheckTvA, tax
 } = req.body
  try {
   const branchId = req.body.branchId || req.query.branchId;
@@ -198,7 +199,9 @@ Route.route("/create-estimation").post(async (req, res, next) => {
         Create,balanceDue,
         terms,shipping,noteInfo,
         adjustment,adjustmentNumber,
-        totalInvoice,Ref,ReferenceName
+        totalInvoice,Ref,ReferenceName,
+        CheckTvA: Boolean(CheckTvA),
+        tax: Number(tax || 0)
       });
       break;
     } catch (createErr) {

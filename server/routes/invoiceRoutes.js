@@ -588,7 +588,7 @@ Route.route("/create-invoice").post(async (req, res, next) => {
     balanceDue,
     totalW,actionTaken,
     invoiceName,Position,
-    note,Create,shipping,adjustment,adjustmentNumber,totalInvoice,terms,Ref
+    note,Create,shipping,adjustment,adjustmentNumber,totalInvoice,CheckTvA,tax,terms,Ref
   } = req.body
   let finalStatus = (status && String(status).trim()) ? status : 'Sent';
   let finalSubject = (invoiceSubject && String(invoiceSubject).trim()) ? invoiceSubject : '';
@@ -636,7 +636,7 @@ Route.route("/create-invoice").post(async (req, res, next) => {
           balanceDue,
           totalW,actionTaken,
           invoiceName: 'INV-' + String(finalNumber).padStart(6, '0'),
-          note,Create,shipping,adjustment,adjustmentNumber,totalInvoice,terms,Ref,
+          note,Create,shipping,adjustment,adjustmentNumber,totalInvoice,CheckTvA: Boolean(CheckTvA),tax: Number(tax || 0),terms,Ref,
           branchId
         }).then(async (result)=>{
           if (result && result._id) {

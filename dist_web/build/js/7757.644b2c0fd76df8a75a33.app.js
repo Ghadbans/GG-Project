@@ -1525,44 +1525,52 @@ function InvoiceViewAdminAll() {
   var handleCloseMenu = () => {
     setAnchorEl(null);
   };
+  var _useState51 = (0,react.useState)('en'),
+    _useState52 = InvoiceViewAdminAll_slicedToArray(_useState51, 2),
+    printLang = _useState52[0],
+    setPrintLang = _useState52[1];
+  var L = frenchPrintHelper/* PRINT_LABELS */.w8[printLang] || frenchPrintHelper/* PRINT_LABELS */.w8.en;
   var componentRef = (0,react.useRef)();
   var handlePrint = (0,lib.useReactToPrint)({
     content: () => componentRef.current,
-    documentTitle: 'INV-' + String(invoiceNumber).padStart(6, '0') + ' For ' + customerName1,
+    documentTitle: (printLang === 'fr' ? 'FACTURE-' : 'INV-') + String(invoiceNumber).padStart(6, '0') + ' For ' + customerName1,
+    onAfterPrint: () => setPrintLang('en'),
     pageStyle: "@page { size: A4 portrait; margin: 8mm 10mm 10mm 10mm; } @media print { body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }"
   });
-  var handleOpenPrint = () => {
-    handlePrint();
+  var handleOpenPrint = function handleOpenPrint() {
+    var lang = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'en';
+    setPrintLang(lang);
     setAnchorEl(null);
+    setTimeout(() => handlePrint(), 60);
   };
-  var _useState51 = (0,react.useState)(1),
-    _useState52 = InvoiceViewAdminAll_slicedToArray(_useState51, 2),
-    show1 = _useState52[0],
-    setShow1 = _useState52[1];
+  var _useState53 = (0,react.useState)(1),
+    _useState54 = InvoiceViewAdminAll_slicedToArray(_useState53, 2),
+    show1 = _useState54[0],
+    setShow1 = _useState54[1];
   var handleShow1 = e => {
     setShow1(e);
     setAnchorEl(null);
   };
-  var _useState53 = (0,react.useState)(""),
-    _useState54 = InvoiceViewAdminAll_slicedToArray(_useState53, 2),
-    reason = _useState54[0],
-    setReason = _useState54[1];
-  var _useState55 = (0,react.useState)([]),
+  var _useState55 = (0,react.useState)(""),
     _useState56 = InvoiceViewAdminAll_slicedToArray(_useState55, 2),
-    Comments1 = _useState56[0],
-    setComments = _useState56[1];
+    reason = _useState56[0],
+    setReason = _useState56[1];
   var _useState57 = (0,react.useState)([]),
     _useState58 = InvoiceViewAdminAll_slicedToArray(_useState57, 2),
-    notification = _useState58[0],
-    setNotification = _useState58[1];
+    Comments1 = _useState58[0],
+    setComments = _useState58[1];
   var _useState59 = (0,react.useState)([]),
     _useState60 = InvoiceViewAdminAll_slicedToArray(_useState59, 2),
-    relatedPaymentInfo = _useState60[0],
-    setRelatedPaymentInfo = _useState60[1];
+    notification = _useState60[0],
+    setNotification = _useState60[1];
   var _useState61 = (0,react.useState)([]),
     _useState62 = InvoiceViewAdminAll_slicedToArray(_useState61, 2),
-    totalAmountPaidInvoice = _useState62[0],
-    setTotalAmountPaidInvoice = _useState62[1];
+    relatedPaymentInfo = _useState62[0],
+    setRelatedPaymentInfo = _useState62[1];
+  var _useState63 = (0,react.useState)([]),
+    _useState64 = InvoiceViewAdminAll_slicedToArray(_useState63, 2),
+    totalAmountPaidInvoice = _useState64[0],
+    setTotalAmountPaidInvoice = _useState64[1];
   (0,react.useEffect)(() => {
     var fetchComment = /*#__PURE__*/function () {
       var _ref20 = InvoiceViewAdminAll_asyncToGenerator(function* () {
@@ -1671,17 +1679,17 @@ function InvoiceViewAdminAll() {
     reason
   };
   {/** Payment Modal Start */}
-  var _useState63 = (0,react.useState)(() => {
+  var _useState65 = (0,react.useState)(() => {
       var date = new Date();
       return date;
     }),
-    _useState64 = InvoiceViewAdminAll_slicedToArray(_useState63, 2),
-    paymentDate = _useState64[0],
-    setPaymentDate = _useState64[1];
-  var _useState65 = (0,react.useState)(0),
     _useState66 = InvoiceViewAdminAll_slicedToArray(_useState65, 2),
-    paymentNumber = _useState66[0],
-    setPaymentNumber = _useState66[1];
+    paymentDate = _useState66[0],
+    setPaymentDate = _useState66[1];
+  var _useState67 = (0,react.useState)(0),
+    _useState68 = InvoiceViewAdminAll_slicedToArray(_useState67, 2),
+    paymentNumber = _useState68[0],
+    setPaymentNumber = _useState68[1];
   (0,react.useEffect)(() => {
     var fetchlastNumber = /*#__PURE__*/function () {
       var _ref22 = InvoiceViewAdminAll_asyncToGenerator(function* () {
@@ -1699,14 +1707,14 @@ function InvoiceViewAdminAll() {
     }();
     fetchlastNumber();
   }, []);
-  var _useState67 = (0,react.useState)(''),
-    _useState68 = InvoiceViewAdminAll_slicedToArray(_useState67, 2),
-    description = _useState68[0],
-    setDescription = _useState68[1];
-  var _useState69 = (0,react.useState)([]),
+  var _useState69 = (0,react.useState)(''),
     _useState70 = InvoiceViewAdminAll_slicedToArray(_useState69, 2),
-    referenceNumber = _useState70[0],
-    setReferenceNumber = _useState70[1];
+    description = _useState70[0],
+    setDescription = _useState70[1];
+  var _useState71 = (0,react.useState)([]),
+    _useState72 = InvoiceViewAdminAll_slicedToArray(_useState71, 2),
+    referenceNumber = _useState72[0],
+    setReferenceNumber = _useState72[1];
   var dateComment1 = dayjs_min_default()(Date.now()).format('DD/MM/YYYY');
   var Create = {
     person: user.data.userName + ' CREATED ',
@@ -1748,10 +1756,10 @@ function InvoiceViewAdminAll() {
   var PaymentReceivedUSD = invoiceInfo.length > 0 ? invoiceInfo.reduce((sum, row) => sum + parseFloat(row.amountPaidUSD), 0) : 0;
   var remainingInvoice = balanceDueInfo - PaymentInfo;
   var remaining = Math.max(0, Math.round((parseFloat(oldCredit) - PaymentInfo) * 100) / 100);
-  var _useState71 = (0,react.useState)(false),
-    _useState72 = InvoiceViewAdminAll_slicedToArray(_useState71, 2),
-    openPayment = _useState72[0],
-    setOpenPayment = _useState72[1];
+  var _useState73 = (0,react.useState)(false),
+    _useState74 = InvoiceViewAdminAll_slicedToArray(_useState73, 2),
+    openPayment = _useState74[0],
+    setOpenPayment = _useState74[1];
   var handleOpenPayment = () => {
     setOpenPayment(true);
   };
@@ -1762,22 +1770,22 @@ function InvoiceViewAdminAll() {
   };
   {/** Payment End */}
   {/** Loading Start */}
-  var _useState73 = (0,react.useState)(false),
-    _useState74 = InvoiceViewAdminAll_slicedToArray(_useState73, 2),
-    loading = _useState74[0],
-    setLoading = _useState74[1];
   var _useState75 = (0,react.useState)(false),
     _useState76 = InvoiceViewAdminAll_slicedToArray(_useState75, 2),
-    loadingOpenModal = _useState76[0],
-    setLoadingOpenModal = _useState76[1];
+    loading = _useState76[0],
+    setLoading = _useState76[1];
   var _useState77 = (0,react.useState)(false),
     _useState78 = InvoiceViewAdminAll_slicedToArray(_useState77, 2),
-    loadingOpenPayment = _useState78[0],
-    setLoadingOpenPayment = _useState78[1];
+    loadingOpenModal = _useState78[0],
+    setLoadingOpenModal = _useState78[1];
   var _useState79 = (0,react.useState)(false),
     _useState80 = InvoiceViewAdminAll_slicedToArray(_useState79, 2),
-    ErrorOpenModal = _useState80[0],
-    setErrorOpenModal = _useState80[1];
+    loadingOpenPayment = _useState80[0],
+    setLoadingOpenPayment = _useState80[1];
+  var _useState81 = (0,react.useState)(false),
+    _useState82 = InvoiceViewAdminAll_slicedToArray(_useState81, 2),
+    ErrorOpenModal = _useState82[0],
+    setErrorOpenModal = _useState82[1];
   var handleOpen = () => {
     setLoadingOpenModal(true);
     setLoading(true);
@@ -1866,10 +1874,10 @@ function InvoiceViewAdminAll() {
       return _ref24.apply(this, arguments);
     };
   }();
-  var _useState81 = (0,react.useState)(''),
-    _useState82 = InvoiceViewAdminAll_slicedToArray(_useState81, 2),
-    update = _useState82[0],
-    setUpdate = _useState82[1];
+  var _useState83 = (0,react.useState)(''),
+    _useState84 = InvoiceViewAdminAll_slicedToArray(_useState83, 2),
+    update = _useState84[0],
+    setUpdate = _useState84[1];
   var handleSubmitUpdateStatus = /*#__PURE__*/function () {
     var _ref26 = InvoiceViewAdminAll_asyncToGenerator(function* (e) {
       e.preventDefault();
@@ -1962,10 +1970,10 @@ function InvoiceViewAdminAll() {
       return _ref28.apply(this, arguments);
     };
   }();
-  var _useState83 = (0,react.useState)(1),
-    _useState84 = InvoiceViewAdminAll_slicedToArray(_useState83, 2),
-    showRef = _useState84[0],
-    setShowRef = _useState84[1];
+  var _useState85 = (0,react.useState)(1),
+    _useState86 = InvoiceViewAdminAll_slicedToArray(_useState85, 2),
+    showRef = _useState86[0],
+    setShowRef = _useState86[1];
   var handleShowRef = e => {
     setShowRef(e);
     setAnchorEl(null);
@@ -2478,13 +2486,20 @@ function InvoiceViewAdminAll() {
         color: 'gray'
       }
     }, /*#__PURE__*/react.createElement(FileCopy/* default */.A, null), /*#__PURE__*/react.createElement(Typography/* default */.A, null, "Clone"))), /*#__PURE__*/react.createElement(Divider/* default */.A, null), /*#__PURE__*/react.createElement(MenuItem/* default */.A, {
-      onClick: handleOpenPrint,
+      onClick: () => handleOpenPrint('en'),
       sx: {
         display: 'flex',
         gap: '20px',
         color: 'gray'
       }
-    }, /*#__PURE__*/react.createElement(LocalPrintshop/* default */.A, null), /*#__PURE__*/react.createElement("span", null, "Print")), /*#__PURE__*/react.createElement(MenuItem/* default */.A, {
+    }, /*#__PURE__*/react.createElement(LocalPrintshop/* default */.A, null), /*#__PURE__*/react.createElement("span", null, "Print (English)")), /*#__PURE__*/react.createElement(MenuItem/* default */.A, {
+      onClick: () => handleOpenPrint('fr'),
+      sx: {
+        display: 'flex',
+        gap: '20px',
+        color: 'gray'
+      }
+    }, /*#__PURE__*/react.createElement(LocalPrintshop/* default */.A, null), /*#__PURE__*/react.createElement("span", null, "Print (French)")), /*#__PURE__*/react.createElement(MenuItem/* default */.A, {
       onClick: exportToExcel,
       sx: {
         display: 'flex',
@@ -6184,16 +6199,16 @@ function DocumentAttachmentsModal(_ref) {
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   Am: () => (/* binding */ numberToFrenchWords),
-/* harmony export */   Fq: () => (/* binding */ translateTermsToFrench)
+/* harmony export */   Fq: () => (/* binding */ translateTermsToFrench),
+/* harmony export */   w8: () => (/* binding */ PRINT_LABELS)
 /* harmony export */ });
-/* unused harmony export PRINT_LABELS */
 /**
  * French / English Print Labels & Number-to-Words Helper
  * Used by Quotation (EstimateViewAdminAll) and Invoice (InvoiceViewAdminAll) print views.
  * Item names and item descriptions are intentionally preserved in English.
  */
 
-var PRINT_LABELS = (/* unused pure expression or super */ null && ({
+var PRINT_LABELS = {
   en: {
     invoiceTitle: 'INVOICE',
     quotationTitle: 'QUOTATION',
@@ -6268,7 +6283,7 @@ var PRINT_LABELS = (/* unused pure expression or super */ null && ({
     taxIncludedLabel: '(TVA Incluse)',
     taxExcludedLabel: '(Hors Taxe)'
   }
-}));
+};
 function translateTermsToFrench(terms) {
   if (!terms) return '';
   var upper = String(terms).toUpperCase();
