@@ -519,10 +519,7 @@ function PaymentInformationForm() {
                 if (transactionType === 'Refund') {
                   return currentPaid > 0.001 || st === 'paid' || st === 'partially-paid';
                 }
-                if (!isMobile) {
-                  return row.status === 'Sent' || row.status === 'Partially-Paid' || bal > 0.001;
-                }
-                return bal > 0.001 || ['draft', 'sent', 'pending', 'partially-paid', ''].includes(st);
+                return st === 'sent' || st === 'partially-paid';
               });
               setInvoice(targetInvoices.map(row => {
                 var _ref1, _row$totalInvoice2, _ref10, _row$total2;

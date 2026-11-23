@@ -584,9 +584,9 @@ function PaymentInformationUpdate() {
                   return currentPaid > 0.001 || st === 'paid' || st === 'partially-paid';
                 }
                 if (!isMobile) {
-                  return row.status === 'Sent' || row.status === 'Partially-Paid' || bal > 0.001;
+                  return st === 'sent' || st === 'partially-paid';
                 }
-                return bal > 0 || ['draft', 'sent', 'pending', 'partially-paid', ''].includes(st);
+                return st === 'sent' || st === 'partially-paid';
               }).map(row => {
                 var _ref11, _row$totalInvoice2, _ref12, _row$total2;
                 var totalInv = Number((_ref11 = (_row$totalInvoice2 = row.totalInvoice) !== null && _row$totalInvoice2 !== void 0 ? _row$totalInvoice2 : row.total) !== null && _ref11 !== void 0 ? _ref11 : 0);

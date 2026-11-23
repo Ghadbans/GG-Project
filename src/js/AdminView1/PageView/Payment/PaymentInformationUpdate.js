@@ -314,9 +314,9 @@ function PaymentInformationUpdate() {
               }
 
               if (!isMobile) {
-                return row.status === 'Sent' || row.status === 'Partially-Paid' || bal > 0.001;
+                return st === 'sent' || st === 'partially-paid';
               }
-              return bal > 0 || ['draft', 'sent', 'pending', 'partially-paid', ''].includes(st);
+              return st === 'sent' || st === 'partially-paid';
             }).map((row) => {
               const totalInv = Number(row.totalInvoice ?? row.total ?? 0);
               const currentPaid = Number(row.total ?? row.paidAmount ?? 0);

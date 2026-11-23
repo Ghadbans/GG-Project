@@ -6285,3 +6285,16 @@ Implemented a zero-manual-intervention in-app update pipeline across Electron Wi
    - Synchronized `3.7.12` across `package.json`, `server/package.json`, `server/index.js`, `server/routes/downloadRoutes.js`, and `android/app/build.gradle` (`versionCode 30712`).
    - Verified `pre-build-check.js` (253 files, 0 errors), `security-check.js --auto-start` (21/21 passed), and `regression-check.js --auto-start` (12/12 passed).
    - Built Web Portal (`dist_web/`), Electron Desktop (`dist/Global Gate Setup 3.7.12.exe` + `latest.yml`), and Capacitor Android APK (`GlobalGate-v3.7.12.apk`), synced to `server/public/downloads/` via `scripts/sync-releases.js`, and pushed to `origin main`.
+
+
+### Rule 107: Payment Form Invoice Filter Restricted to `Sent` & `Partially-Paid` (Ver 3.7.13)
+
+#### Changes Implemented
+1. **Strict Payment Invoice Status Filter (`PaymentInformationForm.js`, `PaymentInformationUpdate.js`)**:
+   - Removed the `|| bal > 0.001` and `draft`/`pending` fallback conditions from non-refund Payment invoice filtering on both desktop and mobile.
+   - Restricted non-refund Payment invoice lists strictly to `st === 'sent' || st === 'partially-paid'`, ensuring `Draft`, `Pending`, `Decline`, `Void`, `Free of Charge`, and `Paid` invoices never appear in **Add New Payment** or **Update Payment**.
+   - Preserved `Refund` filtering (`currentPaid > 0.001 || st === 'paid' || st === 'partially-paid'`).
+2. **Version Synchronization & Multi-Platform Release (`v3.7.13`)**:
+   - Synchronized `3.7.13` across `package.json`, `server/package.json`, `server/index.js`, `server/routes/downloadRoutes.js`, and `android/app/build.gradle` (`versionCode 30713`).
+   - Verified `pre-build-check.js` (253 files, 0 errors), `security-check.js --auto-start` (21/21 passed), and `regression-check.js --auto-start` (12/12 passed).
+   - Built Web Portal (`dist_web/`), Electron Desktop (`dist/Global Gate Setup 3.7.13.exe` + `latest.yml`), and Capacitor Android APK (`GlobalGate-v3.7.13.apk`), synced to `server/public/downloads/` via `scripts/sync-releases.js`, and pushed to `origin main`.

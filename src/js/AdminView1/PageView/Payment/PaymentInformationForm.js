@@ -271,10 +271,7 @@ function PaymentInformationForm() {
                 return currentPaid > 0.001 || st === 'paid' || st === 'partially-paid';
               }
 
-              if (!isMobile) {
-                return row.status === 'Sent' || row.status === 'Partially-Paid' || bal > 0.001;
-              }
-              return bal > 0.001 || ['draft', 'sent', 'pending', 'partially-paid', ''].includes(st);
+              return st === 'sent' || st === 'partially-paid';
             });
 
             setInvoice(
