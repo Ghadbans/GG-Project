@@ -3438,7 +3438,7 @@ function formatMoney(val) {
   });
 }
 function MobileDocumentPrintModal(_ref) {
-  var _record$_id, _record$customerName, _record$customerName2, _record$customerName3, _record$createdAt, _ref8, _record$subTotal, _record$discount, _ref9, _record$shippingFee, _ref0, _ref1, _ref10, _record$totalInvoice, _record$balanceDue;
+  var _record$_id, _record$customerName, _record$customerName2, _record$customerName3, _record$createdAt, _ref8, _record$subTotal, _record$discount, _ref9, _record$shippingFee, _ref0, _ref1, _ref10, _record$totalInvoice, _record$balanceDue, _doc;
   var open = _ref.open,
     onClose = _ref.onClose,
     record = _ref.record,
@@ -4101,11 +4101,11 @@ function MobileDocumentPrintModal(_ref) {
     sx: {
       color: '#475569'
     }
-  }, "Sub Total ", isEstimate && /*#__PURE__*/react.createElement("span", {
+  }, "Sub Total ", /*#__PURE__*/react.createElement("span", {
     style: {
       color: '#94a3b8'
     }
-  }, "(Tax Inclusive)")), /*#__PURE__*/react.createElement(Typography/* default */.A, {
+  }, (_doc = doc) !== null && _doc !== void 0 && _doc.CheckTvA ? '(Tax Inclusive)' : '(Tax Excluded)')), /*#__PURE__*/react.createElement(Typography/* default */.A, {
     variant: "caption",
     sx: {
       fontWeight: 700,

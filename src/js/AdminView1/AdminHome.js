@@ -767,7 +767,18 @@ function AdminHome() {
     }
     return 0;
   };
-  const vatCollected = (payment || []).filter(p => p.status !== 'Voided').reduce((sum, p) => sum + getVatValue(p), 0);
+  const vatCollectedPayments = (payment || []).filter(p => p.status !== 'Voided').reduce((sum, p) => sum + getVatValue(p), 0);
+  const vatCollectedInvoices = (allInvoices || [])
+    .filter(inv => !['Draft', 'Voided', 'Void', 'Decline'].includes(inv.status))
+    .reduce((sum, inv) => {
+      const invVat = getVatValue(inv);
+      if (invVat <= 0) return sum;
+      const paymentRecordedVat = (payment || []).some(
+        p => p.status !== 'Voided' && (p.invoiceNumber === inv.invoiceName || p.ReferenceNumber === inv.invoiceName) && getVatValue(p) > 0
+      );
+      return paymentRecordedVat ? sum : sum + invVat;
+    }, 0);
+  const vatCollected = vatCollectedPayments + vatCollectedInvoices;
   const vatPaidExpenses = (expenses || []).reduce((sum, e) => sum + getVatValue(e), 0);
   const vatPaidPurchases = (itemPurchase || []).filter(p => p.status !== 'Voided').reduce((sum, p) => sum + getVatValue(p), 0);
   const vatPaid = vatPaidExpenses + vatPaidPurchases;

@@ -760,6 +760,8 @@ var dayjs_min_default = /*#__PURE__*/__webpack_require__.n(dayjs_min);
 var NetworkLogoutIcon = __webpack_require__(40301);
 // EXTERNAL MODULE: ./node_modules/react-to-print/lib/index.js
 var lib = __webpack_require__(57240);
+// EXTERNAL MODULE: ./src/js/utils/frenchPrintHelper.js
+var frenchPrintHelper = __webpack_require__(33753);
 // EXTERNAL MODULE: ./src/js/component/Loader.js + 1 modules
 var Loader = __webpack_require__(65821);
 // EXTERNAL MODULE: ./node_modules/@mui/icons-material/CheckCircle.js
@@ -839,6 +841,7 @@ function InvoiceViewAdminAll_extends() { return InvoiceViewAdminAll_extends = Ob
 function InvoiceViewAdminAll_objectWithoutProperties(e, t) { if (null == e) return {}; var o, r, i = InvoiceViewAdminAll_objectWithoutPropertiesLoose(e, t); if (Object.getOwnPropertySymbols) { var n = Object.getOwnPropertySymbols(e); for (r = 0; r < n.length; r++) o = n[r], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]); } return i; }
 function InvoiceViewAdminAll_objectWithoutPropertiesLoose(r, e) { if (null == r) return {}; var t = {}; for (var n in r) if ({}.hasOwnProperty.call(r, n)) { if (-1 !== e.indexOf(n)) continue; t[n] = r[n]; } return t; }
 ;
+
 
 
 
@@ -2866,7 +2869,7 @@ function InvoiceViewAdminAll() {
       branchId: typeof row !== "undefined" ? row === null || row === void 0 ? void 0 : row.branchId : ""
     }))))), /*#__PURE__*/react.createElement("tbody", null, /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", null, /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement("p", {
       className: "invoicehr"
-    }, "INVOICE"), /*#__PURE__*/react.createElement("div", {
+    }, L.invoiceTitle), /*#__PURE__*/react.createElement("div", {
       className: "content",
       style: {
         marginBottom: '20px',
@@ -2894,7 +2897,7 @@ function InvoiceViewAdminAll() {
       style: {
         fontSize: '10px'
       }
-    }, "Bill To"), " ", /*#__PURE__*/react.createElement("br", null), /*#__PURE__*/react.createElement("span", {
+    }, L.billTo), " ", /*#__PURE__*/react.createElement("br", null), /*#__PURE__*/react.createElement("span", {
       style: {
         fontWeight: 'bold',
         fontSize: '15px'
@@ -2926,7 +2929,7 @@ function InvoiceViewAdminAll() {
         fontWeight: 'bold',
         textAlign: 'left'
       }
-    }, "Invoice #"), /*#__PURE__*/react.createElement("div", {
+    }, L.invoiceNo), /*#__PURE__*/react.createElement("div", {
       style: {
         textAlign: 'left'
       }
@@ -2935,7 +2938,7 @@ function InvoiceViewAdminAll() {
         fontWeight: 'bold',
         textAlign: 'left'
       }
-    }, "Date"), /*#__PURE__*/react.createElement("div", {
+    }, L.date), /*#__PURE__*/react.createElement("div", {
       style: {
         textAlign: 'left'
       }
@@ -2944,7 +2947,7 @@ function InvoiceViewAdminAll() {
         fontWeight: 'bold',
         textAlign: 'left'
       }
-    }, "Due Date"), /*#__PURE__*/react.createElement("div", {
+    }, L.dueDate), /*#__PURE__*/react.createElement("div", {
       style: {
         textAlign: 'left'
       }
@@ -2953,7 +2956,7 @@ function InvoiceViewAdminAll() {
         fontWeight: 'bold',
         textAlign: 'left'
       }
-    }, "Subject"), /*#__PURE__*/react.createElement("div", {
+    }, L.subject), /*#__PURE__*/react.createElement("div", {
       style: {
         textAlign: 'left',
         wordBreak: 'break-word',
@@ -2964,7 +2967,7 @@ function InvoiceViewAdminAll() {
         fontWeight: 'bold',
         textAlign: 'left'
       }
-    }, "Defect"), /*#__PURE__*/react.createElement("div", {
+    }, L.defect), /*#__PURE__*/react.createElement("div", {
       style: {
         textAlign: 'left',
         wordBreak: 'break-word',
@@ -2989,7 +2992,7 @@ function InvoiceViewAdminAll() {
         textAlign: 'left',
         width: '40px'
       }
-    }, "Action"), /*#__PURE__*/react.createElement("td", {
+    }, L.action), /*#__PURE__*/react.createElement("td", {
       style: {
         textAlign: 'left'
       }
@@ -3002,7 +3005,7 @@ function InvoiceViewAdminAll() {
         width: '50%',
         marginBottom: '5px'
       }
-    }, /*#__PURE__*/react.createElement("tbody", null, /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("th", null, "Note"), /*#__PURE__*/react.createElement("td", null, row.noteInfo !== undefined ? row.noteInfo : '')))) : '', /*#__PURE__*/react.createElement("table", {
+    }, /*#__PURE__*/react.createElement("tbody", null, /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("th", null, L.note), /*#__PURE__*/react.createElement("td", null, row.noteInfo !== undefined ? row.noteInfo : '')))) : '', /*#__PURE__*/react.createElement("table", {
       className: "secondTable",
       style: {
         fontSize: '70%',
@@ -3015,42 +3018,42 @@ function InvoiceViewAdminAll() {
         border: '1px solid #DDD',
         backgroundColor: '#e8f7fe'
       }
-    }, "#"), /*#__PURE__*/react.createElement("th", {
+    }, L.colIndex), /*#__PURE__*/react.createElement("th", {
       style: {
         textAlign: 'center',
         border: '1px solid #DDD',
         backgroundColor: '#e8f7fe'
       }
-    }, "Item"), /*#__PURE__*/react.createElement("th", {
+    }, L.colItem), /*#__PURE__*/react.createElement("th", {
       style: {
         border: '1px solid #DDD',
         backgroundColor: '#e8f7fe'
       }
-    }, "Description"), /*#__PURE__*/react.createElement("th", {
-      style: {
-        textAlign: 'right',
-        border: '1px solid #DDD',
-        backgroundColor: '#e8f7fe'
-      }
-    }, "Qty"), /*#__PURE__*/react.createElement("th", {
+    }, L.colDescription), /*#__PURE__*/react.createElement("th", {
       style: {
         textAlign: 'right',
         border: '1px solid #DDD',
         backgroundColor: '#e8f7fe'
       }
-    }, "Rate"), showDiscount && /*#__PURE__*/react.createElement("th", {
+    }, L.colQty), /*#__PURE__*/react.createElement("th", {
       style: {
         textAlign: 'right',
         border: '1px solid #DDD',
         backgroundColor: '#e8f7fe'
       }
-    }, "Discount"), /*#__PURE__*/react.createElement("th", {
+    }, L.colRate), showDiscount && /*#__PURE__*/react.createElement("th", {
       style: {
         textAlign: 'right',
         border: '1px solid #DDD',
         backgroundColor: '#e8f7fe'
       }
-    }, "Total"))), /*#__PURE__*/react.createElement("tbody", null, (_row$items = row.items) === null || _row$items === void 0 ? void 0 : _row$items.map((Item, i) => {
+    }, L.colDiscount), /*#__PURE__*/react.createElement("th", {
+      style: {
+        textAlign: 'right',
+        border: '1px solid #DDD',
+        backgroundColor: '#e8f7fe'
+      }
+    }, L.colTotal))), /*#__PURE__*/react.createElement("tbody", null, (_row$items = row.items) === null || _row$items === void 0 ? void 0 : _row$items.map((Item, i) => {
       var _Item$itemName4, _Item$itemName5, _Item$itemName6, _Item$itemName7;
       var relatedUnit = item.find(Item1 => {
         var _Item$itemName3;
@@ -3174,11 +3177,11 @@ function InvoiceViewAdminAll() {
         borderBottom: '1px solid #DDD'
       },
       colSpan: 2
-    }, /*#__PURE__*/react.createElement("span", null, "Sub Total", row.CheckTvA ? '' : /*#__PURE__*/react.createElement(react.Fragment, null, /*#__PURE__*/react.createElement("br", null), /*#__PURE__*/react.createElement("span", {
+    }, /*#__PURE__*/react.createElement("span", null, L.subTotal, /*#__PURE__*/react.createElement("br", null), /*#__PURE__*/react.createElement("span", {
       style: {
         color: 'gray'
       }
-    }, "(Tax Inclusive)")))), /*#__PURE__*/react.createElement("td", {
+    }, row.CheckTvA ? L.taxIncludedLabel : L.taxExcludedLabel))), /*#__PURE__*/react.createElement("td", {
       style: {
         textAlign: 'right',
         borderBottom: '1px solid #DDD'
@@ -3198,7 +3201,7 @@ function InvoiceViewAdminAll() {
         borderBottom: '1px solid #DDD'
       },
       colSpan: 2
-    }, /*#__PURE__*/react.createElement("span", null, "Shipping")), /*#__PURE__*/react.createElement("td", {
+    }, /*#__PURE__*/react.createElement("span", null, L.shipping)), /*#__PURE__*/react.createElement("td", {
       style: {
         textAlign: 'right',
         borderBottom: '1px solid #DDD'
@@ -3238,7 +3241,7 @@ function InvoiceViewAdminAll() {
         borderBottom: '1px solid #DDD'
       },
       colSpan: 2
-    }, /*#__PURE__*/react.createElement("span", null, "TVA @ 16%")), /*#__PURE__*/react.createElement("td", {
+    }, /*#__PURE__*/react.createElement("span", null, L.tvaLabel)), /*#__PURE__*/react.createElement("td", {
       style: {
         textAlign: 'right',
         borderBottom: '1px solid #DDD'
@@ -3258,7 +3261,7 @@ function InvoiceViewAdminAll() {
         borderBottom: '1px solid #DDD'
       },
       colSpan: 2
-    }, /*#__PURE__*/react.createElement("span", null, "Total")), /*#__PURE__*/react.createElement("td", {
+    }, /*#__PURE__*/react.createElement("span", null, L.total)), /*#__PURE__*/react.createElement("td", {
       style: {
         textAlign: 'right',
         borderBottom: '1px solid #DDD'
@@ -3278,7 +3281,7 @@ function InvoiceViewAdminAll() {
         borderBottom: '1px solid #DDD'
       },
       colSpan: 2
-    }, /*#__PURE__*/react.createElement("span", null, "Amount Paid")), /*#__PURE__*/react.createElement("td", {
+    }, /*#__PURE__*/react.createElement("span", null, L.amountPaid)), /*#__PURE__*/react.createElement("td", {
       style: {
         textAlign: 'right',
         borderBottom: '1px solid #DDD'
@@ -3300,7 +3303,7 @@ function InvoiceViewAdminAll() {
         fontWeight: 'bold'
       },
       colSpan: 2
-    }, /*#__PURE__*/react.createElement("span", null, "Balance Due")), /*#__PURE__*/react.createElement("td", {
+    }, /*#__PURE__*/react.createElement("span", null, L.balanceDue)), /*#__PURE__*/react.createElement("td", {
       style: {
         textAlign: 'right',
         borderBottom: '1px solid #DDD',
@@ -3321,13 +3324,13 @@ function InvoiceViewAdminAll() {
         textAlign: 'center'
       },
       colSpan: 2
-    }, /*#__PURE__*/react.createElement("span", null, "Total In Words")), /*#__PURE__*/react.createElement("td", {
+    }, /*#__PURE__*/react.createElement("span", null, L.totalInWords)), /*#__PURE__*/react.createElement("td", {
       style: {
         textAlign: 'left',
         width: '150px'
       },
       colSpan: 2
-    }, /*#__PURE__*/react.createElement("span", null, row.totalW))))), /*#__PURE__*/react.createElement("address", {
+    }, /*#__PURE__*/react.createElement("span", null, printLang === 'fr' ? (0,frenchPrintHelper/* numberToFrenchWords */.Am)(row.totalInvoice) : row.totalW))))), /*#__PURE__*/react.createElement("address", {
       style: {
         float: 'left',
         fontSize: '70%',
@@ -3338,11 +3341,11 @@ function InvoiceViewAdminAll() {
         lineHeight: '14px',
         fontWeight: 'bold'
       }
-    }, "Bank: SOFIBANQUE SA ", /*#__PURE__*/react.createElement("br", null), "Entitled: GLOBAL GATE SARL", /*#__PURE__*/react.createElement("br", null), "Bank Account: 00023233330214247020073", /*#__PURE__*/react.createElement("br", null), "Code Swift: SFBXCDKIXXX"), /*#__PURE__*/react.createElement("p", {
+    }, L.bank, ": SOFIBANQUE SA ", /*#__PURE__*/react.createElement("br", null), L.entitled, ": GLOBAL GATE SARL", /*#__PURE__*/react.createElement("br", null), L.bankAccount, ": 00023233330214247020073", /*#__PURE__*/react.createElement("br", null), L.codeSwift, ": SFBXCDKIXXX"), /*#__PURE__*/react.createElement("p", {
       style: {
         fontWeight: 'bold'
       }
-    }, "Terms & Conditions "), /*#__PURE__*/react.createElement("p", null, row.terms.toUpperCase())))))))), /*#__PURE__*/react.createElement("tfoot", null, /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", null, /*#__PURE__*/react.createElement("div", {
+    }, L.termsTitle, " "), /*#__PURE__*/react.createElement("p", null, printLang === 'fr' ? (0,frenchPrintHelper/* translateTermsToFrench */.Fq)(row.terms) : row.terms.toUpperCase())))))))), /*#__PURE__*/react.createElement("tfoot", null, /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", null, /*#__PURE__*/react.createElement("div", {
       style: {
         position: 'relative',
         marginTop: '20px'
@@ -6171,6 +6174,161 @@ function DocumentAttachmentsModal(_ref) {
     onClose: () => setPreviewAttachment(null),
     attachment: previewAttachment
   }));
+}
+
+/***/ },
+
+/***/ 33753
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Am: () => (/* binding */ numberToFrenchWords),
+/* harmony export */   Fq: () => (/* binding */ translateTermsToFrench)
+/* harmony export */ });
+/* unused harmony export PRINT_LABELS */
+/**
+ * French / English Print Labels & Number-to-Words Helper
+ * Used by Quotation (EstimateViewAdminAll) and Invoice (InvoiceViewAdminAll) print views.
+ * Item names and item descriptions are intentionally preserved in English.
+ */
+
+var PRINT_LABELS = (/* unused pure expression or super */ null && ({
+  en: {
+    invoiceTitle: 'INVOICE',
+    quotationTitle: 'QUOTATION',
+    billTo: 'Bill To',
+    invoiceNo: 'Invoice #',
+    quotationNo: 'Quotation #',
+    date: 'Date',
+    dueDate: 'Due Date',
+    subject: 'Subject',
+    defect: 'Defect',
+    action: 'ACTION',
+    note: 'NOTE',
+    colIndex: '#',
+    colItem: 'ITEM',
+    colDescription: 'DESCRIPTION',
+    colQty: 'QTY',
+    colRate: 'RATE',
+    colDiscount: 'DISCOUNT',
+    colTotal: 'TOTAL',
+    thanks: 'THANKS FOR YOUR BUSINESS.',
+    subTotal: 'SUB TOTAL',
+    taxInclusive: '(TAX INCLUSIVE)',
+    taxExcluded: '(TAX EXCLUDED)',
+    shipping: 'Shipping',
+    tvaLabel: 'TVA @ 16%',
+    total: 'TOTAL',
+    amountPaid: 'AMOUNT PAID',
+    balanceDue: 'BALANCE DUE',
+    totalInWords: 'TOTAL IN WORDS',
+    bank: 'BANK',
+    entitled: 'ENTITLED',
+    bankAccount: 'BANK ACCOUNT',
+    codeSwift: 'CODE SWIFT',
+    termsTitle: 'TERMS & CONDITIONS',
+    taxIncludedLabel: '(Tax Inclusive)',
+    taxExcludedLabel: '(Tax Excluded)'
+  },
+  fr: {
+    invoiceTitle: 'FACTURE',
+    quotationTitle: 'DEVIS',
+    billTo: 'Facturer à',
+    invoiceNo: 'Facture N°',
+    quotationNo: 'Devis N°',
+    date: 'Date',
+    dueDate: "Date d'échéance",
+    subject: 'Objet',
+    defect: 'Défaut',
+    action: 'ACTION',
+    note: 'NOTE',
+    colIndex: 'N°',
+    colItem: 'ARTICLE',
+    colDescription: 'DESCRIPTION',
+    colQty: 'QTÉ',
+    colRate: 'PRIX UNIT.',
+    colDiscount: 'REMISE',
+    colTotal: 'TOTAL',
+    thanks: 'MERCI POUR VOTRE CONFIANCE.',
+    subTotal: 'SOUS-TOTAL',
+    taxInclusive: '(TVA INCLUSE)',
+    taxExcluded: '(HORS TAXE)',
+    shipping: 'Livraison',
+    tvaLabel: 'TVA @ 16%',
+    total: 'TOTAL',
+    amountPaid: 'MONTANT PAYÉ',
+    balanceDue: 'SOLDE DÛ',
+    totalInWords: 'TOTAL EN LETTRES',
+    bank: 'BANQUE',
+    entitled: 'INTITULÉ',
+    bankAccount: 'COMPTE BANCAIRE',
+    codeSwift: 'CODE SWIFT',
+    termsTitle: 'CONDITIONS GÉNÉRALES',
+    taxIncludedLabel: '(TVA Incluse)',
+    taxExcludedLabel: '(Hors Taxe)'
+  }
+}));
+function translateTermsToFrench(terms) {
+  if (!terms) return '';
+  var upper = String(terms).toUpperCase();
+  if (upper.includes('ESTIMATES ARE FOR LABOR') || upper.includes('NOT RESPONSIBLE FOR LOSS')) {
+    return "LES ESTIMATIONS CONCERNENT UNIQUEMENT LA MAIN-D'ŒUVRE ET LE MATÉRIEL SUPPLÉMENTAIRE. LES ARTICLES VENDUS NE SONT NI REPRIS NI ÉCHANGÉS. NOUS NE SOMMES PAS RESPONSABLES DES PERTES OU DOMMAGES CAUSÉS PAR UN INCENDIE, UN VOL, DES TESTS, DES PIÈCES DÉFECTUEUSES OU TOUTE AUTRE CAUSE INDÉPENDANTE DE NOTRE VOLONTÉ.";
+  }
+  if (upper.includes('QUOTE VALID FOR 30 DAYS') || upper.includes('40% DEPOSIT')) {
+    return "DEVIS VALABLE 30 JOURS (SOUS RÉSERVE DE DISPONIBILITÉ ET VARIATION DU MARCHÉ). PAIEMENT : 40 % D'ACOMPTE / 50 % À MI-PROJET / 10 % À L'ACHÈVEMENT. TOUTES LES VENTES DE MATÉRIEL SONT DÉFINITIVES.";
+  }
+  return terms;
+}
+var UNITS_FR = ['', 'un', 'deux', 'trois', 'quatre', 'cinq', 'six', 'sept', 'huit', 'neuf', 'dix', 'onze', 'douze', 'treize', 'quatorze', 'quinze', 'seize', 'dix-sept', 'dix-huit', 'dix-neuf'];
+var TENS_FR = ['', '', 'vingt', 'trente', 'quarante', 'cinquante', 'soixante', 'soixante', 'quatre-vingt', 'quatre-vingt'];
+function under100Fr(n) {
+  if (n < 20) return UNITS_FR[n];
+  var ten = Math.floor(n / 10);
+  var unit = n % 10;
+  if (ten === 7 || ten === 9) {
+    var sub = 10 + unit;
+    var sep = sub === 11 && ten === 7 ? ' et ' : '-';
+    return TENS_FR[ten] + sep + UNITS_FR[sub];
+  }
+  if (unit === 0) {
+    return ten === 8 ? 'quatre-vingts' : TENS_FR[ten];
+  }
+  if (unit === 1 && ten !== 8) {
+    return "".concat(TENS_FR[ten], " et un");
+  }
+  return "".concat(TENS_FR[ten], "-").concat(UNITS_FR[unit]);
+}
+function under1000Fr(n) {
+  if (n < 100) return under100Fr(n);
+  var h = Math.floor(n / 100);
+  var rem = n % 100;
+  var hStr = h === 1 ? 'cent' : "".concat(UNITS_FR[h], " cent").concat(rem === 0 ? 's' : '');
+  return rem === 0 ? hStr : "".concat(hStr, " ").concat(under100Fr(rem));
+}
+function intToFrenchWords(n) {
+  if (n === 0) return 'zéro';
+  var parts = [];
+  var billions = Math.floor(n / 1e9);
+  var millions = Math.floor(n % 1e9 / 1e6);
+  var thousands = Math.floor(n % 1e6 / 1e3);
+  var rest = n % 1000;
+  if (billions > 0) parts.push("".concat(under1000Fr(billions), " milliard").concat(billions > 1 ? 's' : ''));
+  if (millions > 0) parts.push("".concat(under1000Fr(millions), " million").concat(millions > 1 ? 's' : ''));
+  if (thousands > 0) {
+    parts.push(thousands === 1 ? 'mille' : "".concat(under1000Fr(thousands), " mille"));
+  }
+  if (rest > 0) parts.push(under1000Fr(rest));
+  return parts.join(' ');
+}
+function numberToFrenchWords(amount) {
+  var num = Number(amount) || 0;
+  var rounded = Math.round(Math.abs(num) * 100);
+  var whole = Math.floor(rounded / 100);
+  var cents = rounded % 100;
+  var wholeWords = intToFrenchWords(whole);
+  var centWords = cents === 0 ? 'zéro centime' : "".concat(intToFrenchWords(cents), " centime").concat(cents > 1 ? 's' : '');
+  return "".concat(wholeWords, " et ").concat(centWords).toUpperCase();
 }
 
 /***/ },

@@ -275,14 +275,14 @@ const inspectionReportRoutes = require('./routes/inspectionReportRoutes');
 app.use('/api/inspection-reports', inspectionReportRoutes);
 app.use('/endpoint/inspection-reports', inspectionReportRoutes);
 
-app.get('/', (req, res) => res.json({ name: 'Global Gate API', version: '3.7.9', minSupportedVersion: '3.7.0', status: 'online', uptime: process.uptime(), cloudWhatsApp: true }));
+app.get('/', (req, res) => res.json({ name: 'Global Gate API', version: '3.7.10', minSupportedVersion: '3.7.0', status: 'online', uptime: process.uptime(), cloudWhatsApp: true }));
 app.get('/robots.txt', (req, res) => {
   res.type('text/plain');
   res.send("User-agent: *\nDisallow: /\n");
 });
 app.get('/favicon.ico', (req, res) => res.status(204).end());
-app.get('/test', (req, res) => res.send('Backend is LIVE and UPDATED! [v3.7.9-message-badge-payment-fix]'));
-app.get('/status', (req, res) => res.json({ status: 'ok', version: '3.7.9', minSupportedVersion: '3.7.0', attachments: true, cloudWhatsApp: true, uptime: process.uptime() })); // health check
+app.get('/test', (req, res) => res.send('Backend is LIVE and UPDATED! [v3.7.10-vat-and-fr-print]'));
+app.get('/status', (req, res) => res.json({ status: 'ok', version: '3.7.10', minSupportedVersion: '3.7.0', attachments: true, cloudWhatsApp: true, uptime: process.uptime() })); // health check
 
 // SECURITY GUARD FOR INTERNAL INIT & DEBUG ROUTES
 // Key comes ONLY from env (ADMIN_SETUP_KEY, else SECRET_KEY). No hardcoded fallback; timing-safe compare.

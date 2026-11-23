@@ -8,7 +8,7 @@ import '../Chartview.css'
 import SearchIcon from '@mui/icons-material/Search';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { MenuItem, Grid, IconButton, Paper, TableContainer, TextField, FormControl, InputLabel, Select, Typography, styled, Autocomplete, Box, Modal, Backdrop, OutlinedInput, InputAdornment, Divider } from '@mui/material'
+import { MenuItem, Grid, IconButton, Paper, TableContainer, TextField, FormControl, InputLabel, Select, Typography, styled, Autocomplete, Box, Modal, Backdrop, OutlinedInput, InputAdornment, Divider, Checkbox, FormControlLabel } from '@mui/material'
 import axios from 'axios';
 import { useDocumentLock } from '../../../hooks/useDocumentLock';
 
@@ -220,6 +220,8 @@ function InvoiceFormUpdate() {
   const [adjustment, setAdjustment] = useState('Adjustment')
   const [adjustmentNumber, setAdjustmentNumber] = useState(0)
   const [totalInvoice, setTotalInvoice] = useState(0);
+  const [CheckTvA, setCheckTvA] = useState(false);
+  const [tax, setTax] = useState(0);
   const [terms, setTerms] = useState('');
   const [balanceDue, setBalanceDue] = useState(0);
   const [totalW, setTotalW] = useState("");
@@ -246,6 +248,8 @@ function InvoiceFormUpdate() {
         setTerms(res.data.data.terms);
         setNoteInfo(res.data.data.noteInfo);
         setActionTaken(res.data.data.actionTaken);
+        setCheckTvA(Boolean(res.data.data.CheckTvA));
+        setTax(Number(res.data.data.tax || 0));
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -835,7 +839,7 @@ function InvoiceFormUpdate() {
       balanceDue,
       totalW, invoiceName,
       noteInfo, actionTaken,
-      note, shipping, adjustment, adjustmentNumber, totalInvoice, terms, updateS: false
+      note, shipping, adjustment, adjustmentNumber, totalInvoice, CheckTvA, tax, terms, updateS: false
     };
 
     if (navigator.onLine) {
@@ -976,6 +980,14 @@ function InvoiceFormUpdate() {
                 {customerName?.billingAddress || customerName?.address}
               </Typography>
             )}
+
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
+              <FormControlLabel
+                control={<Checkbox size="small" checked={CheckTvA} onChange={(e) => setCheckTvA(e.target.checked)} />}
+                label={<Typography variant="body2" sx={{ color: '#64748B' }}>TVA @ 16%:</Typography>}
+              />
+              <Typography variant="body2" sx={{ fontWeight: 700, color: '#1E293B' }}>{formatMoney(tax)}</Typography>
+            </Box>
 
             <Divider sx={{ my: 1.5 }} />
 
@@ -1995,6 +2007,19 @@ function InvoiceFormUpdate() {
                                   onChange={(e) => setAdjustmentNumber(e.target.value)}
                                   startAdornment={<InputAdornment position="start">$</InputAdornment>}
                                 />
+                              </FormControl>
+                            </td>
+                          </tr>
+                          <tr style={{ borderBottom: '1px solid black' }}>
+                            <th style={{ textAlign: 'left' }}>
+                              <FormControlLabel
+                                control={<Checkbox checked={CheckTvA} onChange={(e) => setCheckTvA(e.target.checked)} />}
+                                label="TVA @ 16%"
+                              />
+                            </th>
+                            <td align="center">
+                              <FormControl sx={{ width: '100%', backgroundColor: 'white' }}>
+                                <OutlinedInput disabled type='number' id='tax' size="small" name='tax' value={tax} startAdornment={<InputAdornment position="start">$</InputAdornment>} />
                               </FormControl>
                             </td>
                           </tr>

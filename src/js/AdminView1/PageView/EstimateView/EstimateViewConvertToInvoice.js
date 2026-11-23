@@ -180,6 +180,8 @@ function EstimateViewConvertToInvoice() {
   const [adjustment, setAdjustment] = useState('Adjustment')
   const [adjustmentNumber, setAdjustmentNumber] = useState(0)
   const [totalInvoice, setTotalInvoice] = useState(0);
+  const [CheckTvA, setCheckTvA] = useState(false);
+  const [tax, setTax] = useState(0);
   const [shipping, setShipping] = useState(0);
   const [balanceDue, setBalanceDue] = useState(0);
   const [totalW, setTotalW] = useState("");
@@ -233,6 +235,8 @@ function EstimateViewConvertToInvoice() {
           return { ...item, itemName: itemNameObj, itemRate: calculatedRate };
         }));
         setSubTotal(res.data.data.subTotal);
+        setCheckTvA(Boolean(res.data.data.CheckTvA));
+        setTax(Number(res.data.data.tax || 0));
         setTotal(res.data.data.total);
         setRef(res.data.data.Ref);
         setEstimateDefect(res.data.data.estimateDefect);
@@ -529,7 +533,9 @@ function EstimateViewConvertToInvoice() {
   useEffect(() => {
     const result1 = items.reduce((sum, row) => sum + row.itemAmount, 0)
     setSubTotal(result1.toFixed(2))
-    let newTotal = Math.round((Number(subTotal) + Number(shipping) + Number(adjustmentNumber)) * 100) / 100
+    const computedTax = CheckTvA ? Math.round((result1 * 0.16) * 100) / 100 : 0;
+    setTax(computedTax);
+    let newTotal = Math.round((Number(result1) + Number(shipping) + Number(adjustmentNumber) + computedTax) * 100) / 100
     setTotalInvoice(newTotal)
     let newBalance = Math.round((totalInvoice - total) * 100) / 100
     setBalanceDue(newBalance)
@@ -619,7 +625,7 @@ function EstimateViewConvertToInvoice() {
         invoicePurchase, noteInfo,
         ReferenceName: id
         , items, subTotal, total, balanceDue,
-        totalW, Ref, note, shipping, adjustment, adjustmentNumber, totalInvoice, terms
+        totalW, Ref, note, shipping, adjustment, adjustmentNumber, totalInvoice, CheckTvA, tax, terms
       })
       if (res) {
         const ReferenceInfo2 = res.data.data._id

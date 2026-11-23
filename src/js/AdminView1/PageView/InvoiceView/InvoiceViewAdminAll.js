@@ -44,6 +44,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { logOut, selectCurrentUser, setUser } from '../../../features/auth/authSlice';
 import Logout from '../../../component/NetworkLogoutIcon';
 import ReactToPrint, { useReactToPrint } from 'react-to-print';
+import { PRINT_LABELS, translateTermsToFrench, numberToFrenchWords } from '../../../utils/frenchPrintHelper';
 import Loader from '../../../component/Loader';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
@@ -1634,12 +1635,12 @@ function InvoiceViewAdminAll() {
                                           <tr>
                                             <td>
                                               <div>
-                                                <p className='invoicehr'>INVOICE</p>
+                                                <p className='invoicehr'>{L.invoiceTitle}</p>
                                                 <div className='content' style={{ marginBottom: '20px', position: 'relative' }}>
                                                   <section style={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', boxSizing: 'border-box', padding: '0px', marginBottom: '10px' }}>
                                                     <address style={{ marginLeft: config['--client-block-left-offset'] || '0px', position: 'relative', lineHeight: 1.35, width: 'fit-content', minWidth: '200px' }}>
                                                       <p >
-                                                        <span style={{ fontSize: '10px' }}>Bill To</span> <br />
+                                                        <span style={{ fontSize: '10px' }}>{L.billTo}</span> <br />
                                                         <span style={{ fontWeight: 'bold', fontSize: '15px' }}>{row.customerName.customerName.toUpperCase()}</span>
                                                         <br />
                                                         <span style={{ fontSize: '10px' }}>{row.customerName.billingAddress.toUpperCase()},{row.customerName.billingCity.toUpperCase()}</span>
@@ -1649,25 +1650,25 @@ function InvoiceViewAdminAll() {
 
                                                     <div style={{ marginLeft: 'auto', marginRight: config['--metadata-block-right-offset'] || '0px', width: 'fit-content', display: 'block', marginBottom: '10px' }}>
                                                       <div style={{ display: 'grid', gridTemplateColumns: 'auto 1fr', columnGap: '24px', rowGap: '6px', fontSize: '70%', alignContent: 'start', position: 'relative' }}>
-                                                        <div style={{ fontWeight: 'bold', textAlign: 'left' }}>Invoice #</div>
+                                                        <div style={{ fontWeight: 'bold', textAlign: 'left' }}>{L.invoiceNo}</div>
                                                         <div style={{ textAlign: 'left' }}>INV-{String(row.invoiceNumber).padStart(6, '0')}</div>
                                                       
-                                                        <div style={{ fontWeight: 'bold', textAlign: 'left' }}>Date</div>
+                                                        <div style={{ fontWeight: 'bold', textAlign: 'left' }}>{L.date}</div>
                                                         <div style={{ textAlign: 'left' }}>{dayjs(row.invoiceDate).format('DD/MM/YYYY')}</div>
                                                         
-                                                        <div style={{ fontWeight: 'bold', textAlign: 'left' }}>Due Date</div>
+                                                        <div style={{ fontWeight: 'bold', textAlign: 'left' }}>{L.dueDate}</div>
                                                         <div style={{ textAlign: 'left' }}>{dayjs(row.invoiceDueDate).format('DD/MM/YYYY')}</div>
                                                       
                                                       {row.invoiceSubject !== undefined && row.invoiceSubject !== "" && (
                                                         <>
-                                                          <div style={{ fontWeight: 'bold', textAlign: 'left' }}>Subject</div>
+                                                          <div style={{ fontWeight: 'bold', textAlign: 'left' }}>{L.subject}</div>
                                                           <div style={{ textAlign: 'left', wordBreak: 'break-word', maxWidth: '400px' }}>{row.invoiceSubject.toUpperCase()}</div>
                                                         </>
                                                       )}
                                                       
                                                       {row.invoiceDefect !== undefined && row.invoiceDefect !== "" && (
                                                         <>
-                                                          <div style={{ fontWeight: 'bold', textAlign: 'left' }}>Defect</div>
+                                                          <div style={{ fontWeight: 'bold', textAlign: 'left' }}>{L.defect}</div>
                                                           <div style={{ textAlign: 'left', wordBreak: 'break-word', maxWidth: '400px' }}>{row.invoiceDefect.toUpperCase()}</div>
                                                         </>
                                                       )}
@@ -1680,7 +1681,7 @@ function InvoiceViewAdminAll() {
                                                         <table style={{ position: 'relative', fontSize: '70%', float: 'left', clear: 'both', left: '0', width: '100%', marginBottom: '5px' }}>
                                                           <tbody>
                                                             <tr>
-                                                              <th style={{ textAlign: 'left', width: '40px' }}>Action</th>
+                                                              <th style={{ textAlign: 'left', width: '40px' }}>{L.action}</th>
                                                               <td style={{ textAlign: 'left' }}>{row.actionTaken.toUpperCase()}</td>
                                                             </tr>
                                                           </tbody>
@@ -1691,7 +1692,7 @@ function InvoiceViewAdminAll() {
                                                         <table style={{ position: 'relative', fontSize: '70%', float: 'left', left: '0', width: '50%', marginBottom: '5px' }}>
                                                           <tbody>
                                                             <tr>
-                                                              <th>Note</th>
+                                                              <th>{L.note}</th>
                                                               <td>{row.noteInfo !== undefined ? row.noteInfo : ''}</td>
                                                             </tr>
                                                           </tbody>
@@ -1701,13 +1702,13 @@ function InvoiceViewAdminAll() {
                                                     <table className="secondTable" style={{ fontSize: '70%', marginBottom: '5px', border: '1px solid #DDD' }}>
                                                       <thead>
                                                         <tr>
-                                                          <th style={{ textAlign: 'center', border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}>#</th>
-                                                          <th style={{ textAlign: 'center', border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}>Item</th>
-                                                          <th style={{ border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}>Description</th>
-                                                          <th style={{ textAlign: 'right', border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}>Qty</th>
-                                                          <th style={{ textAlign: 'right', border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}>Rate</th>
-                                                          {showDiscount && <th style={{ textAlign: 'right', border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}>Discount</th>}
-                                                          <th style={{ textAlign: 'right', border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}>Total</th>
+                                                          <th style={{ textAlign: 'center', border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}>{L.colIndex}</th>
+                                                          <th style={{ textAlign: 'center', border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}>{L.colItem}</th>
+                                                          <th style={{ border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}>{L.colDescription}</th>
+                                                          <th style={{ textAlign: 'right', border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}>{L.colQty}</th>
+                                                          <th style={{ textAlign: 'right', border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}>{L.colRate}</th>
+                                                          {showDiscount && <th style={{ textAlign: 'right', border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}>{L.colDiscount}</th>}
+                                                          <th style={{ textAlign: 'right', border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}>{L.colTotal}</th>
                                                         </tr>
                                                       </thead>
                                                       <tbody>
@@ -1771,8 +1772,8 @@ function InvoiceViewAdminAll() {
                                                           <td style={{ textAlign: 'left', width: '200px' }} colSpan={3}>{row.note}</td>
                                                           <td style={{ textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}>
                                                             <span>
-                                                              Sub Total
-                                                              {row.CheckTvA ? '' : <><br /><span style={{ color: 'gray' }}>(Tax Inclusive)</span></>}
+                                                              {L.subTotal}
+                                                              <br /><span style={{ color: 'gray' }}>{row.CheckTvA ? L.taxIncludedLabel : L.taxExcludedLabel}</span>
                                                             </span>
                                                           </td>
                                                           <td style={{ textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span data-prefix>$</span><span>{row.subTotal}</span></td>
@@ -1782,7 +1783,7 @@ function InvoiceViewAdminAll() {
                                                             (
                                                               <tr>
                                                                 <td style={{ textAlign: 'left', width: '200px' }} colSpan={3}></td>
-                                                                <td style={{ textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span>Shipping</span></td>
+                                                                <td style={{ textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span>{L.shipping}</span></td>
                                                                 <td style={{ textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span data-prefix>$</span><span>{row.shipping?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
                                                               </tr>
                                                             )
@@ -1804,7 +1805,7 @@ function InvoiceViewAdminAll() {
                                                             (
                                                               <tr>
                                                                 <td style={{ textAlign: 'left', width: '200px' }} colSpan={3}></td>
-                                                                <td style={{ textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span>TVA @ 16%</span></td>
+                                                                <td style={{ textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span>{L.tvaLabel}</span></td>
                                                                 <td style={{ textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span data-prefix>$</span><span>{row.tax?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
                                                               </tr>
                                                             )
@@ -1812,7 +1813,7 @@ function InvoiceViewAdminAll() {
                                                         }
                                                         <tr>
                                                           <td style={{ textAlign: 'left', width: '200px' }} colSpan={3}></td>
-                                                          <td style={{ textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span>Total</span></td>
+                                                          <td style={{ textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span>{L.total}</span></td>
                                                           <td style={{ textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span data-prefix>$</span><span>{row.totalInvoice?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
                                                         </tr>
                                                         {
@@ -1820,7 +1821,7 @@ function InvoiceViewAdminAll() {
                                                             (
                                                               <tr>
                                                                 <td style={{ textAlign: 'left', width: '200px' }} colSpan={3}></td>
-                                                                <td style={{ textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span>Amount Paid</span></td>
+                                                                <td style={{ textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span>{L.amountPaid}</span></td>
                                                                 <td style={{ textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span data-prefix>$</span><span>{row.total?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
                                                               </tr>
                                                             )
@@ -1828,25 +1829,25 @@ function InvoiceViewAdminAll() {
                                                         }
                                                         <tr>
                                                           <td style={{ textAlign: 'left', width: '200px' }} colSpan={3}></td>
-                                                          <td style={{ textAlign: 'right', borderBottom: '1px solid #DDD', color: '#093170', fontWeight: 'bold' }} colSpan={2}><span>Balance Due</span></td>
+                                                          <td style={{ textAlign: 'right', borderBottom: '1px solid #DDD', color: '#093170', fontWeight: 'bold' }} colSpan={2}><span>{L.balanceDue}</span></td>
                                                           <td style={{ textAlign: 'right', borderBottom: '1px solid #DDD', color: '#093170', fontWeight: 'bold' }} colSpan={2}><span data-prefix>$</span><span>{row.balanceDue?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
                                                         </tr>
                                                         <tr>
                                                           <td style={{ textAlign: 'left', width: '200px' }} colSpan={3}></td>
-                                                          <td style={{ textAlign: 'center' }} colSpan={2}><span>Total In Words</span></td>
-                                                          <td style={{ textAlign: 'left', width: '150px' }} colSpan={2}><span>{row.totalW}</span></td>
+                                                          <td style={{ textAlign: 'center' }} colSpan={2}><span>{L.totalInWords}</span></td>
+                                                          <td style={{ textAlign: 'left', width: '150px' }} colSpan={2}><span>{printLang === 'fr' ? numberToFrenchWords(row.totalInvoice) : row.totalW}</span></td>
                                                         </tr>
                                                       </tbody>
                                                     </table>
                                                     <address style={{ float: 'left', fontSize: '70%', textAlign: 'left' }}>
                                                       <p style={{ lineHeight: '14px', fontWeight: 'bold' }}>
-                                                        Bank: SOFIBANQUE SA <br />
-                                                        Entitled: GLOBAL GATE SARL<br />
-                                                        Bank Account: 00023233330214247020073<br />
-                                                        Code Swift: SFBXCDKIXXX
+                                                        {L.bank}: SOFIBANQUE SA <br />
+                                                        {L.entitled}: GLOBAL GATE SARL<br />
+                                                        {L.bankAccount}: 00023233330214247020073<br />
+                                                        {L.codeSwift}: SFBXCDKIXXX
                                                       </p>
-                                                      <p style={{ fontWeight: 'bold' }}>Terms & Conditions </p>
-                                                      <p>{row.terms.toUpperCase()}</p>
+                                                      <p style={{ fontWeight: 'bold' }}>{L.termsTitle} </p>
+                                                      <p>{printLang === 'fr' ? translateTermsToFrench(row.terms) : row.terms.toUpperCase()}</p>
                                                     </address>
                                                   </section>
                                                 </div>

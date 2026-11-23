@@ -2167,14 +2167,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(86531);
 /* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(844);
 /* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(8239);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(71543);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(60538);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(50779);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(29571);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(8641);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(25239);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(68864);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(27558);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(68864);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(27558);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(71543);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(60538);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(50779);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(29571);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(8641);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(25239);
 /* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(47419);
 /* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(35406);
 /* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(11848);
@@ -2521,65 +2521,73 @@ function EstimateInvoiceForm() {
     _useState24 = _slicedToArray(_useState23, 2),
     balanceDue = _useState24[0],
     setBalanceDue = _useState24[1];
-  var _useState25 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
+  var _useState25 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState26 = _slicedToArray(_useState25, 2),
-    totalW = _useState26[0],
-    setTotalW = _useState26[1];
+    CheckTvA = _useState26[0],
+    setCheckTvA = _useState26[1];
+  var _useState27 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
+    _useState28 = _slicedToArray(_useState27, 2),
+    tax = _useState28[0],
+    setTax = _useState28[1];
+  var _useState29 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
+    _useState30 = _slicedToArray(_useState29, 2),
+    totalW = _useState30[0],
+    setTotalW = _useState30[1];
   var _React$useState = react__WEBPACK_IMPORTED_MODULE_0__.useState(''),
     _React$useState2 = _slicedToArray(_React$useState, 2),
     inputValue = _React$useState2[0],
     setInputValue = _React$useState2[1];
-  var _useState27 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
-    _useState28 = _slicedToArray(_useState27, 2),
-    estimateNumber = _useState28[0],
-    setEstimateNumber = _useState28[1];
-  var _useState29 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
-    _useState30 = _slicedToArray(_useState29, 2),
-    noteInfo = _useState30[0],
-    setNoteInfo = _useState30[1];
-  var _useState31 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+  var _useState31 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
     _useState32 = _slicedToArray(_useState31, 2),
-    shopOpen = _useState32[0],
-    setShopOpen = _useState32[1];
-  var _useState33 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    estimateNumber = _useState32[0],
+    setEstimateNumber = _useState32[1];
+  var _useState33 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
     _useState34 = _slicedToArray(_useState33, 2),
-    shopItems = _useState34[0],
-    setShopItems = _useState34[1];
-  var _useState35 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+    noteInfo = _useState34[0],
+    setNoteInfo = _useState34[1];
+  var _useState35 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState36 = _slicedToArray(_useState35, 2),
-    shopSearch = _useState36[0],
-    setShopSearch = _useState36[1];
-  var _useState37 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(1),
+    shopOpen = _useState36[0],
+    setShopOpen = _useState36[1];
+  var _useState37 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState38 = _slicedToArray(_useState37, 2),
-    shopPage = _useState38[0],
-    setShopPage = _useState38[1];
-  var _useState39 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(1),
+    shopItems = _useState38[0],
+    setShopItems = _useState38[1];
+  var _useState39 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
     _useState40 = _slicedToArray(_useState39, 2),
-    shopTotalPages = _useState40[0],
-    setShopTotalPages = _useState40[1];
-  var _useState41 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
+    shopSearch = _useState40[0],
+    setShopSearch = _useState40[1];
+  var _useState41 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(1),
     _useState42 = _slicedToArray(_useState41, 2),
-    rate = _useState42[0],
-    setRate = _useState42[1];
-  var _useState43 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    shopPage = _useState42[0],
+    setShopPage = _useState42[1];
+  var _useState43 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(1),
     _useState44 = _slicedToArray(_useState43, 2),
-    shopLoading = _useState44[0],
-    setShopLoading = _useState44[1];
-  var dateComment = new Date();
-  var estimateName = "Q-" + String(estimateNumber).padStart(6, '0');
-  var _useState45 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    shopTotalPages = _useState44[0],
+    setShopTotalPages = _useState44[1];
+  var _useState45 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
     _useState46 = _slicedToArray(_useState45, 2),
-    ItemInformation = _useState46[0],
-    setItemInformation = _useState46[1];
+    rate = _useState46[0],
+    setRate = _useState46[1];
   var _useState47 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState48 = _slicedToArray(_useState47, 2),
-    includeLetter = _useState48[0],
-    setIncludeLetter = _useState48[1];
-  var PROFESSIONAL_COVER_LETTER = "Dear Valued Customer,\n\nThank you for giving us the opportunity to provide you with this quotation for your upcoming project.\n\nAt GLOBAL GATE SARL, we pride ourselves on delivering high-quality services and materials tailored to meet your specific needs. Our team has carefully reviewed your requirements, and we are confident that the proposed solution offers the best value and technical excellence.\n\nWe remain at your disposal for any further information or clarification you may require. We look forward to the possibility of working together.\n\nBest regards,\n\nThe GLOBAL GATE Team";
-  var _useState49 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(PROFESSIONAL_COVER_LETTER),
+    shopLoading = _useState48[0],
+    setShopLoading = _useState48[1];
+  var dateComment = new Date();
+  var estimateName = "Q-" + String(estimateNumber).padStart(6, '0');
+  var _useState49 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState50 = _slicedToArray(_useState49, 2),
-    attachedLetter = _useState50[0],
-    setAttachedLetter = _useState50[1];
+    ItemInformation = _useState50[0],
+    setItemInformation = _useState50[1];
+  var _useState51 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState52 = _slicedToArray(_useState51, 2),
+    includeLetter = _useState52[0],
+    setIncludeLetter = _useState52[1];
+  var PROFESSIONAL_COVER_LETTER = "Dear Valued Customer,\n\nThank you for giving us the opportunity to provide you with this quotation for your upcoming project.\n\nAt GLOBAL GATE SARL, we pride ourselves on delivering high-quality services and materials tailored to meet your specific needs. Our team has carefully reviewed your requirements, and we are confident that the proposed solution offers the best value and technical excellence.\n\nWe remain at your disposal for any further information or clarification you may require. We look forward to the possibility of working together.\n\nBest regards,\n\nThe GLOBAL GATE Team";
+  var _useState53 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(PROFESSIONAL_COVER_LETTER),
+    _useState54 = _slicedToArray(_useState53, 2),
+    attachedLetter = _useState54[0],
+    setAttachedLetter = _useState54[1];
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     var fetchlastNumber = /*#__PURE__*/function () {
       var _ref8 = _asyncToGenerator(function* () {
@@ -2931,10 +2939,10 @@ function EstimateInvoiceForm() {
       setTotalW("".concat(wholeWords, " and ").concat(fractionalWords, " cents"));
     }
   }, [totalInvoice]);
-  var _useState51 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
-    _useState52 = _slicedToArray(_useState51, 2),
-    customer = _useState52[0],
-    setCustomer = _useState52[1];
+  var _useState55 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    _useState56 = _slicedToArray(_useState55, 2),
+    customer = _useState56[0],
+    setCustomer = _useState56[1];
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     var fetchCustomer = /*#__PURE__*/function () {
       var _ref1 = _asyncToGenerator(function* () {
@@ -2956,10 +2964,10 @@ function EstimateInvoiceForm() {
     }();
     fetchCustomer();
   }, []);
-  var _useState53 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({}),
-    _useState54 = _slicedToArray(_useState53, 2),
-    customerName = _useState54[0],
-    setCustomerName = _useState54[1];
+  var _useState57 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({}),
+    _useState58 = _slicedToArray(_useState57, 2),
+    customerName = _useState58[0],
+    setCustomerName = _useState58[1];
 
   // Auto-fill customer from inspection report or previous route state
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
@@ -3051,15 +3059,17 @@ function EstimateInvoiceForm() {
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     var result1 = items.reduce((sum, row) => sum + row.itemAmount, 0);
     setSubTotal(result1.toFixed(2));
-    var newTotal = Math.round((Number(subTotal) + Number(shipping) + Number(adjustmentNumber)) * 100) / 100;
+    var computedTax = CheckTvA ? Math.round(result1 * 0.16 * 100) / 100 : 0;
+    setTax(computedTax);
+    var newTotal = Math.round((Number(result1) + Number(shipping) + Number(adjustmentNumber) + computedTax) * 100) / 100;
     setTotalInvoice(newTotal);
-    var newBalance = Math.round((totalInvoice - total) * 100) / 100;
+    var newBalance = Math.round((newTotal - total) * 100) / 100;
     setBalanceDue(newBalance);
   });
-  var _useState55 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState56 = _slicedToArray(_useState55, 2),
-    openAutocomplete1 = _useState56[0],
-    setOpenAutocomplete1 = _useState56[1];
+  var _useState59 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState60 = _slicedToArray(_useState59, 2),
+    openAutocomplete1 = _useState60[0],
+    setOpenAutocomplete1 = _useState60[1];
   var handleOpenOpenAutocomplete1 = e => {
     e.stopPropagation();
     setOpenAutocomplete1(true);
@@ -3067,14 +3077,14 @@ function EstimateInvoiceForm() {
   var handleCloseOpenAutocomplete1 = () => {
     setOpenAutocomplete1(false);
   };
-  var _useState57 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState58 = _slicedToArray(_useState57, 2),
-    openItemUpdate = _useState58[0],
-    setOpenItemUpdate = _useState58[1];
-  var _useState59 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
-    _useState60 = _slicedToArray(_useState59, 2),
-    idItem = _useState60[0],
-    setIdItem = _useState60[1];
+  var _useState61 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState62 = _slicedToArray(_useState61, 2),
+    openItemUpdate = _useState62[0],
+    setOpenItemUpdate = _useState62[1];
+  var _useState63 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    _useState64 = _slicedToArray(_useState63, 2),
+    idItem = _useState64[0],
+    setIdItem = _useState64[1];
   var handleOpenItemUpdate = /*#__PURE__*/function () {
     var _ref10 = _asyncToGenerator(function* (id) {
       setOpenItemUpdate(true);
@@ -3123,10 +3133,10 @@ function EstimateInvoiceForm() {
   var handleCreateCustomer = newCustomer => {
     setCustomer([newCustomer, ...customer]);
   };
-  var _useState61 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState62 = _slicedToArray(_useState61, 2),
-    openAutocomplete2 = _useState62[0],
-    setOpenAutocomplete2 = _useState62[1];
+  var _useState65 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState66 = _slicedToArray(_useState65, 2),
+    openAutocomplete2 = _useState66[0],
+    setOpenAutocomplete2 = _useState66[1];
   var handleOpenOpenAutocomplete2 = e => {
     e.stopPropagation();
     setOpenAutocomplete2(true);
@@ -3137,10 +3147,10 @@ function EstimateInvoiceForm() {
   var handleCreateItem = newItem => {
     setItemInformation([newItem, ...ItemInformation]);
   };
-  var _useState63 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState64 = _slicedToArray(_useState63, 2),
-    open1 = _useState64[0],
-    setOpen1 = _useState64[1];
+  var _useState67 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState68 = _slicedToArray(_useState67, 2),
+    open1 = _useState68[0],
+    setOpen1 = _useState68[1];
   var handleOpenUpdate = e => {
     e.preventDefault();
     setOpen1(true);
@@ -3148,18 +3158,18 @@ function EstimateInvoiceForm() {
   var handleCloseUpdate = () => {
     setOpen1(false);
   };
-  var _useState65 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState66 = _slicedToArray(_useState65, 2),
-    loading = _useState66[0],
-    setLoading = _useState66[1];
-  var _useState67 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState68 = _slicedToArray(_useState67, 2),
-    loadingOpenModal = _useState68[0],
-    setLoadingOpenModal = _useState68[1];
   var _useState69 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState70 = _slicedToArray(_useState69, 2),
-    ErrorOpenModal = _useState70[0],
-    setErrorOpenModal = _useState70[1];
+    loading = _useState70[0],
+    setLoading = _useState70[1];
+  var _useState71 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState72 = _slicedToArray(_useState71, 2),
+    loadingOpenModal = _useState72[0],
+    setLoadingOpenModal = _useState72[1];
+  var _useState73 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState74 = _slicedToArray(_useState73, 2),
+    ErrorOpenModal = _useState74[0],
+    setErrorOpenModal = _useState74[1];
   var handleOpen = () => {
     setOpen1(false);
     setLoadingOpenModal(true);
@@ -3213,10 +3223,10 @@ function EstimateInvoiceForm() {
       return _ref12.apply(this, arguments);
     };
   }();
-  var _useState71 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
-    _useState72 = _slicedToArray(_useState71, 2),
-    saving = _useState72[0],
-    setSaving = _useState72[1];
+  var _useState75 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+    _useState76 = _slicedToArray(_useState75, 2),
+    saving = _useState76[0],
+    setSaving = _useState76[1];
   var handleSubmit = /*#__PURE__*/function () {
     var _ref13 = _asyncToGenerator(function* (e) {
       e.preventDefault();
@@ -3254,6 +3264,8 @@ function EstimateInvoiceForm() {
         adjustmentNumber,
         totalInvoice,
         balanceDue,
+        CheckTvA,
+        tax,
         synced: false,
         includeLetter,
         attachedLetter
@@ -3701,7 +3713,32 @@ function EstimateInvoiceForm() {
       sx: {
         width: 120
       }
-    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, {
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
+      sx: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        mb: 1
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, {
+      control: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, {
+        size: "small",
+        checked: CheckTvA,
+        onChange: e => setCheckTvA(e.target.checked)
+      }),
+      label: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+        variant: "body2",
+        sx: {
+          color: '#64748B'
+        }
+      }, "TVA @ 16%:")
+    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+      variant: "body2",
+      sx: {
+        fontWeight: 700,
+        color: '#1E293B'
+      }
+    }, formatMoney(tax))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
       sx: {
         my: 1.5
       }
@@ -3847,7 +3884,7 @@ function EstimateInvoiceForm() {
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
     onClick: toggleDrawer
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_ChevronLeft__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A, null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_List__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_ChevronLeft__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A, null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_List__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A, {
     sx: {
       height: '700px'
     }
@@ -3874,7 +3911,7 @@ function EstimateInvoiceForm() {
       padding: '15px'
     },
     spacing: 2,
-    component: _mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A
+    component: _mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .Ay, {
     item: true,
     xs: 12
@@ -3922,21 +3959,21 @@ function EstimateInvoiceForm() {
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .Ay, {
     item: true,
     xs: 6
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
     sx: {
       width: '100%',
       backgroundColor: 'white'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
     htmlFor: "estimateNumber"
-  }, "Quotation Number"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
+  }, "Quotation Number"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
     required: true,
     type: "number",
     id: "estimateNumber",
     label: "Quotation Number",
     value: estimateNumber,
     onChange: e => setEstimateNumber(e.target.value),
-    startAdornment: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+    startAdornment: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .A, {
       position: "start"
     }, "Q-00")
   }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .Ay, {
@@ -4569,19 +4606,50 @@ function EstimateInvoiceForm() {
     }
   }, "Sub-Total"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
     align: "center"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
     sx: {
       width: '100%',
       backgroundColor: 'white'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
     disabled: true,
     type: "number",
     id: "subTotal",
     size: "small",
     name: "subTotal",
     value: subTotal,
-    startAdornment: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+    startAdornment: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .A, {
+      position: "start"
+    }, "$")
+  })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("tr", {
+    style: {
+      borderBottom: '1px solid black'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("th", {
+    style: {
+      textAlign: 'left'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, {
+    control: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, {
+      checked: CheckTvA,
+      onChange: e => setCheckTvA(e.target.checked)
+    }),
+    label: "TVA @ 16%"
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
+    align: "center"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
+    sx: {
+      width: '100%',
+      backgroundColor: 'white'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
+    disabled: true,
+    type: "number",
+    id: "tax",
+    size: "small",
+    name: "tax",
+    value: tax,
+    startAdornment: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .A, {
       position: "start"
     }, "$")
   })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("tr", {
@@ -4594,19 +4662,19 @@ function EstimateInvoiceForm() {
     }
   }, "Total"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
     align: "center"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
     sx: {
       width: '100%',
       backgroundColor: 'white'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
     disabled: true,
     type: "number",
     id: "totalInvoice",
     size: "small",
     name: "totalInvoice",
     value: totalInvoice,
-    startAdornment: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+    startAdornment: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .A, {
       position: "start"
     }, "$")
   })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("tr", {
@@ -4619,18 +4687,18 @@ function EstimateInvoiceForm() {
     }
   }, "Balance Due"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
     align: "center"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
     sx: {
       width: '100%',
       backgroundColor: 'white'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
     type: "number",
     id: "balanceDue",
     size: "small",
     name: "balanceDue",
     value: balanceDue,
-    startAdornment: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+    startAdornment: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .A, {
       position: "start"
     }, "$")
   })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("th", {
@@ -4669,7 +4737,7 @@ function EstimateInvoiceForm() {
       mt: 2,
       mb: 1
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
     orientation: "horizontal",
     flexItem: true,
     sx: {
@@ -4678,8 +4746,8 @@ function EstimateInvoiceForm() {
   }, " COVER LETTER (Optional) ")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .Ay, {
     item: true,
     xs: 12
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
-    control: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, {
+    control: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, {
       checked: includeLetter,
       onChange: e => setIncludeLetter(e.target.checked),
       sx: {

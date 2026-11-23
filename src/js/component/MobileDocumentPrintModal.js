@@ -520,7 +520,7 @@ export default function MobileDocumentPrintModal({ open, onClose, record, type =
               <Box sx={{ width: '50%' }}>
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', py: 0.5, borderBottom: '1px solid #e2e8f0', fontSize: '12px' }}>
                   <Typography variant="caption" sx={{ color: '#475569' }}>
-                    Sub Total {isEstimate && <span style={{ color: '#94a3b8' }}>(Tax Inclusive)</span>}
+                    Sub Total <span style={{ color: '#94a3b8' }}>{doc?.CheckTvA ? '(Tax Inclusive)' : '(Tax Excluded)'}</span>
                   </Typography>
                   <Typography variant="caption" sx={{ fontWeight: 700, color: '#0f172a' }}>
                     {formatMoney(subTotal)}

@@ -962,44 +962,52 @@ function EstimateViewConvertToInvoice() {
     _useState22 = _slicedToArray(_useState21, 2),
     totalInvoice = _useState22[0],
     setTotalInvoice = _useState22[1];
-  var _useState23 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
+  var _useState23 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState24 = _slicedToArray(_useState23, 2),
-    shipping = _useState24[0],
-    setShipping = _useState24[1];
+    CheckTvA = _useState24[0],
+    setCheckTvA = _useState24[1];
   var _useState25 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
     _useState26 = _slicedToArray(_useState25, 2),
-    balanceDue = _useState26[0],
-    setBalanceDue = _useState26[1];
-  var _useState27 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
+    tax = _useState26[0],
+    setTax = _useState26[1];
+  var _useState27 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
     _useState28 = _slicedToArray(_useState27, 2),
-    totalW = _useState28[0],
-    setTotalW = _useState28[1];
-  var invoiceDate = dayjs__WEBPACK_IMPORTED_MODULE_43___default()(Date());
-  var _useState29 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+    shipping = _useState28[0],
+    setShipping = _useState28[1];
+  var _useState29 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
     _useState30 = _slicedToArray(_useState29, 2),
-    invoiceDueDate = _useState30[0],
-    setDueDate = _useState30[1];
-  var _useState31 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
+    balanceDue = _useState30[0],
+    setBalanceDue = _useState30[1];
+  var _useState31 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
     _useState32 = _slicedToArray(_useState31, 2),
-    invoiceNumber = _useState32[0],
-    setInvoiceNumber = _useState32[1];
-  var _useState33 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
+    totalW = _useState32[0],
+    setTotalW = _useState32[1];
+  var invoiceDate = dayjs__WEBPACK_IMPORTED_MODULE_43___default()(Date());
+  var _useState33 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
     _useState34 = _slicedToArray(_useState33, 2),
-    noteInfo = _useState34[0],
-    setNoteInfo = _useState34[1];
-  var invoiceName = "INV-" + String(invoiceNumber).padStart(6, '0');
-  var _useState35 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)("Thanks For your Business."),
+    invoiceDueDate = _useState34[0],
+    setDueDate = _useState34[1];
+  var _useState35 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
     _useState36 = _slicedToArray(_useState35, 2),
-    note = _useState36[0],
-    setNote = _useState36[1];
-  var _useState37 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)("QUOTE VALID FOR 30 DAYS (SUBJECT TO STOCK/MARKET CHANGES). PAYMENT: 40% DEPOSIT / 50% MID-PROJECT / 10% UPON COMPLETION. ALL MATERIAL SALES ARE FINAL. WE ARE NOT RESPONSIBLE FOR LOSS, THEFT, OR DAMAGE CAUSED BY DEFECTIVE PARTS OR EXTERNAL FACTORS."),
+    invoiceNumber = _useState36[0],
+    setInvoiceNumber = _useState36[1];
+  var _useState37 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
     _useState38 = _slicedToArray(_useState37, 2),
-    terms = _useState38[0],
-    setTerms = _useState38[1];
-  var _useState39 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    noteInfo = _useState38[0],
+    setNoteInfo = _useState38[1];
+  var invoiceName = "INV-" + String(invoiceNumber).padStart(6, '0');
+  var _useState39 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)("Thanks For your Business."),
     _useState40 = _slicedToArray(_useState39, 2),
-    ItemInformation = _useState40[0],
-    setItemInformation = _useState40[1];
+    note = _useState40[0],
+    setNote = _useState40[1];
+  var _useState41 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)("QUOTE VALID FOR 30 DAYS (SUBJECT TO STOCK/MARKET CHANGES). PAYMENT: 40% DEPOSIT / 50% MID-PROJECT / 10% UPON COMPLETION. ALL MATERIAL SALES ARE FINAL. WE ARE NOT RESPONSIBLE FOR LOSS, THEFT, OR DAMAGE CAUSED BY DEFECTIVE PARTS OR EXTERNAL FACTORS."),
+    _useState42 = _slicedToArray(_useState41, 2),
+    terms = _useState42[0],
+    setTerms = _useState42[1];
+  var _useState43 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    _useState44 = _slicedToArray(_useState43, 2),
+    ItemInformation = _useState44[0],
+    setItemInformation = _useState44[1];
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     var fetchlastNumber = /*#__PURE__*/function () {
       var _ref0 = _asyncToGenerator(function* () {
@@ -1052,6 +1060,8 @@ function EstimateViewConvertToInvoice() {
             });
           }));
           setSubTotal(res.data.data.subTotal);
+          setCheckTvA(Boolean(res.data.data.CheckTvA));
+          setTax(Number(res.data.data.tax || 0));
           setTotal(res.data.data.total);
           setRef(res.data.data.Ref);
           setEstimateDefect(res.data.data.estimateDefect);
@@ -1272,14 +1282,14 @@ function EstimateViewConvertToInvoice() {
       newItemOut: 0
     }) : row));
   };
-  var _useState41 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState42 = _slicedToArray(_useState41, 2),
-    openItemUpdate = _useState42[0],
-    setOpenItemUpdate = _useState42[1];
-  var _useState43 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
-    _useState44 = _slicedToArray(_useState43, 2),
-    idItem = _useState44[0],
-    setIdItem = _useState44[1];
+  var _useState45 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState46 = _slicedToArray(_useState45, 2),
+    openItemUpdate = _useState46[0],
+    setOpenItemUpdate = _useState46[1];
+  var _useState47 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    _useState48 = _slicedToArray(_useState47, 2),
+    idItem = _useState48[0],
+    setIdItem = _useState48[1];
   var handleOpenItemUpdate = /*#__PURE__*/function () {
     var _ref11 = _asyncToGenerator(function* (id) {
       setOpenItemUpdate(true);
@@ -1388,7 +1398,9 @@ function EstimateViewConvertToInvoice() {
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     var result1 = items.reduce((sum, row) => sum + row.itemAmount, 0);
     setSubTotal(result1.toFixed(2));
-    var newTotal = Math.round((Number(subTotal) + Number(shipping) + Number(adjustmentNumber)) * 100) / 100;
+    var computedTax = CheckTvA ? Math.round(result1 * 0.16 * 100) / 100 : 0;
+    setTax(computedTax);
+    var newTotal = Math.round((Number(result1) + Number(shipping) + Number(adjustmentNumber) + computedTax) * 100) / 100;
     setTotalInvoice(newTotal);
     var newBalance = Math.round((totalInvoice - total) * 100) / 100;
     setBalanceDue(newBalance);
@@ -1402,10 +1414,10 @@ function EstimateViewConvertToInvoice() {
       setTotalW("".concat(wholeWords, " and ").concat(fractionalWords, " cents"));
     }
   }, [totalInvoice]);
-  var _useState45 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState46 = _slicedToArray(_useState45, 2),
-    openBack = _useState46[0],
-    setOpenBack = _useState46[1];
+  var _useState49 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState50 = _slicedToArray(_useState49, 2),
+    openBack = _useState50[0],
+    setOpenBack = _useState50[1];
   var handleOpenBack = e => {
     e.preventDefault();
     setOpenBack(true);
@@ -1413,18 +1425,18 @@ function EstimateViewConvertToInvoice() {
   var handleCloseBack = () => {
     setOpenBack(false);
   };
-  var _useState47 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState48 = _slicedToArray(_useState47, 2),
-    loading = _useState48[0],
-    setLoading = _useState48[1];
-  var _useState49 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState50 = _slicedToArray(_useState49, 2),
-    loadingOpenModal = _useState50[0],
-    setLoadingOpenModal = _useState50[1];
   var _useState51 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState52 = _slicedToArray(_useState51, 2),
-    ErrorOpenModal = _useState52[0],
-    setErrorOpenModal = _useState52[1];
+    loading = _useState52[0],
+    setLoading = _useState52[1];
+  var _useState53 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState54 = _slicedToArray(_useState53, 2),
+    loadingOpenModal = _useState54[0],
+    setLoadingOpenModal = _useState54[1];
+  var _useState55 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState56 = _slicedToArray(_useState55, 2),
+    ErrorOpenModal = _useState56[0],
+    setErrorOpenModal = _useState56[1];
   var handleOpen = () => {
     setLoadingOpenModal(true);
     setLoading(true);
@@ -1465,14 +1477,14 @@ function EstimateViewConvertToInvoice() {
     };
   }();
   var invoicePurchase = '';
-  var _useState53 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
-    _useState54 = _slicedToArray(_useState53, 2),
-    idInvoice = _useState54[0],
-    setIdInvoice = _useState54[1];
-  var _useState55 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
-    _useState56 = _slicedToArray(_useState55, 2),
-    saving = _useState56[0],
-    setSaving = _useState56[1];
+  var _useState57 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+    _useState58 = _slicedToArray(_useState57, 2),
+    idInvoice = _useState58[0],
+    setIdInvoice = _useState58[1];
+  var _useState59 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+    _useState60 = _slicedToArray(_useState59, 2),
+    saving = _useState60[0],
+    setSaving = _useState60[1];
   var handleSubmit = /*#__PURE__*/function () {
     var _ref16 = _asyncToGenerator(function* (e) {
       e.preventDefault();
@@ -1510,6 +1522,8 @@ function EstimateViewConvertToInvoice() {
           adjustment,
           adjustmentNumber,
           totalInvoice,
+          CheckTvA,
+          tax,
           terms
         });
         if (res) {
@@ -1543,10 +1557,10 @@ function EstimateViewConvertToInvoice() {
   var toggleDrawer = () => {
     setSideBar(!sideBar);
   };
-  var _useState57 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState58 = _slicedToArray(_useState57, 2),
-    openAutocomplete2 = _useState58[0],
-    setOpenAutocomplete2 = _useState58[1];
+  var _useState61 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState62 = _slicedToArray(_useState61, 2),
+    openAutocomplete2 = _useState62[0],
+    setOpenAutocomplete2 = _useState62[1];
   var handleOpenOpenAutocomplete2 = e => {
     e.preventDefault();
     setOpenAutocomplete2(true);

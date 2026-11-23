@@ -6231,3 +6231,22 @@ Implemented a zero-manual-intervention in-app update pipeline across Electron Wi
    - Synchronized `3.7.9` across `package.json`, `server/package.json`, `server/index.js`, `server/routes/downloadRoutes.js`, and `android/app/build.gradle` (`versionCode 30709`).
    - Verified `pre-build-check.js` (252 files, 0 errors), `security-check.js --auto-start` (21/21 passed), and `regression-check.js --auto-start` (12/12 passed).
    - Built Web Portal (`dist_web/`), Electron Desktop (`dist/Global Gate Setup 3.7.9.exe` + `latest.yml`), and Capacitor Android APK (`GlobalGate-v3.7.9.apk`), synced to `server/public/downloads/` via `scripts/sync-releases.js`, and pushed to `origin main`.
+
+
+### Rule 104: Optional `TVA @ 16%` in Quotations & Invoices, VAT Account Statement Link & EN/FR Print (Ver 3.7.10)
+
+#### Changes Implemented
+1. **Optional `TVA @ 16%` Checkbox in Quotations & Invoices (`EstimateInvoiceForm.js`, `InvoiceForm.js`, `InvoiceFormUpdate.js`, `EstimateViewConvertToInvoice.js`)**:
+   - Added an optional `TVA @ 16%` checkbox (default `false`, matching POS `ShopPosForm.js`) that computes `tax = CheckTvA ? Math.round(subTotal * 0.16 * 100) / 100 : 0` and includes `tax` in `totalInvoice` and `balanceDue`.
+   - Updated `EstimateViewConvertToInvoice.js` to carry over `CheckTvA` and `tax` when converting a Quotation to an Invoice.
+2. **Corrected `(Tax Excluded)` / `(Tax Inclusive)` Labels (`EstimateViewAdminAll.js`, `InvoiceViewAdminAll.js`, `ProjectViewInformation.js`, `MobileDocumentPrintModal.js`)**:
+   - Fixed the inverted condition so untaxed documents (`!CheckTvA`) display **`(Tax Excluded)`** (FR: `(Hors Taxe)`) and taxed documents (`CheckTvA === true`) display **`(Tax Inclusive)`** (FR: `(TVA Incluse)`) plus the `TVA @ 16%` breakdown row.
+3. **Dashboard VAT Account Statement Link (`AdminHome.js`, `VatAccountView.js`)**:
+   - Updated `AdminHome.js` `vatCollected` to include non-draft/non-voided taxed Invoices (`CheckTvA` / `tax > 0`) alongside `payment`, matching `VatAccountView.js` without double-counting when a payment already carries tax, and fixed `INV-INV-` reference prefix duplication in `VatAccountView.js`.
+4. **English & French Print Option (`src/js/utils/frenchPrintHelper.js`, `EstimateViewAdminAll.js`, `InvoiceViewAdminAll.js`)**:
+   - Added `Print (English)` and `Print (French)` in the `OPTIONS` menu of both Quotation Information and Invoice Information.
+   - French print translates all document headers, metadata labels, table headers, totals, bank details, terms, and `TOTAL EN LETTRES` (`numberToFrenchWords`) into French while keeping **Item names and Item descriptions in English**.
+5. **Version Synchronization & Multi-Platform Release (`v3.7.10`)**:
+   - Synchronized `3.7.10` across `package.json`, `server/package.json`, `server/index.js`, `server/routes/downloadRoutes.js`, and `android/app/build.gradle` (`versionCode 30710`).
+   - Verified `pre-build-check.js` (253 files, 0 errors), `security-check.js --auto-start` (21/21 passed), and `regression-check.js --auto-start` (12/12 passed).
+   - Built Web Portal (`dist_web/`), Electron Desktop (`dist/Global Gate Setup 3.7.10.exe` + `latest.yml`), and Capacitor Android APK (`GlobalGate-v3.7.10.apk`), synced to `server/public/downloads/` via `scripts/sync-releases.js`, and pushed to `origin main`.

@@ -92,15 +92,19 @@ const VatAccountView = ({
             const taxAmount = getTaxAmount(inv, totalVal);
 
             if (taxAmount > 0 && !['Draft', 'Voided', 'Void', 'Decline'].includes(inv.status)) {
-                const paymentExists = payments.some(p => p.invoiceNumber === inv.invoiceName || p.ReferenceNumber === inv.invoiceName);
-                if (!paymentExists) {
+                const paymentRecordedTax = payments.some(
+                    p => p.status !== 'Voided' && (p.invoiceNumber === inv.invoiceName || p.ReferenceNumber === inv.invoiceName) && getTaxAmount(p, getItemAmount(p)) > 0
+                );
+                if (!paymentRecordedTax) {
+                    const invRef = inv.invoiceName
+                        ? (String(inv.invoiceName).startsWith('INV-') ? inv.invoiceName : `INV-${inv.invoiceName}`)
+                        : (inv.invoiceNumber ? `INV-${String(inv.invoiceNumber).padStart(6, '0')}` : 'INV-N/A');
                     transactions.push({
                         id: inv._id || inv.id,
                         date: inv.invoiceDate,
                         type: 'Collected (TVA +)',
                         source: 'Direct Invoice',
-                        reference: inv.invoiceName ? `INV-${inv.invoiceName}` : 
-                                   inv.invoiceNumber ? `INV-${inv.invoiceNumber}` : 'INV-N/A',
+                        reference: invRef,
                         amount: taxAmount,
                         rawDate: new Date(inv.invoiceDate),
                         isPositive: true

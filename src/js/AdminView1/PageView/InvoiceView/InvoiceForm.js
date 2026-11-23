@@ -10,7 +10,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { MenuItem, Grid, IconButton, Paper, TextField, FormControl, InputLabel, Select, Typography, styled, Box, Autocomplete, Modal, Backdrop, TableContainer, OutlinedInput, InputAdornment, Divider } from '@mui/material'
+import { MenuItem, Grid, IconButton, Paper, TextField, FormControl, InputLabel, Select, Typography, styled, Box, Autocomplete, Modal, Backdrop, TableContainer, OutlinedInput, InputAdornment, Divider, Checkbox, FormControlLabel } from '@mui/material'
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -202,6 +202,8 @@ function InvoiceForm() {
   const [adjustmentNumber, setAdjustmentNumber] = useState(0)
   const [totalInvoice, setTotalInvoice] = useState(0);
   const [balanceDue, setBalanceDue] = useState(0);
+  const [CheckTvA, setCheckTvA] = useState(false);
+  const [tax, setTax] = useState(0);
   const [totalW, setTotalW] = useState("");
   const [ItemInformation, setItemInformation] = useState([]);
   const [note, setNote] = useState("Thanks For your Business.");
@@ -712,7 +714,9 @@ function InvoiceForm() {
     const result1 = items.reduce((sum, row) => sum + (parseFloat(row.itemAmount) || 0), 0)
     const val = isFinite(result1) ? result1 : 0;
     setSubTotal(val.toFixed(2))
-    let newTotal = Math.round((Number(val) + Number(shipping) + Number(adjustmentNumber)) * 100) / 100
+    const computedTax = CheckTvA ? Math.round((val * 0.16) * 100) / 100 : 0;
+    setTax(computedTax);
+    let newTotal = Math.round((Number(val) + Number(shipping) + Number(adjustmentNumber) + computedTax) * 100) / 100
     setTotalInvoice(newTotal)
     let newBalance = Math.round((newTotal - total) * 100) / 100
     setBalanceDue(newBalance)
@@ -837,7 +841,7 @@ function InvoiceForm() {
       balanceDue,
       totalW,
       invoiceName,
-      note, shipping, adjustment, adjustmentNumber, totalInvoice, terms, synced: false
+      note, shipping, adjustment, adjustmentNumber, totalInvoice, CheckTvA, tax, terms, synced: false
     }
     if (navigator.onLine) {
       try {
@@ -1122,6 +1126,20 @@ function InvoiceForm() {
                 onChange={(e) => setAdjustmentNumber(e.target.value)}
                 sx={{ width: 120 }}
               />
+            </Box>
+
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    size="small"
+                    checked={CheckTvA}
+                    onChange={(e) => setCheckTvA(e.target.checked)}
+                  />
+                }
+                label={<Typography variant="body2" sx={{ color: '#64748B' }}>TVA @ 16%:</Typography>}
+              />
+              <Typography variant="body2" sx={{ fontWeight: 700, color: '#1E293B' }}>{formatMoney(tax)}</Typography>
             </Box>
 
             <Divider sx={{ my: 1.5 }} />
@@ -1891,6 +1909,19 @@ function InvoiceForm() {
                                   onChange={(e) => setAdjustmentNumber(e.target.value)}
                                   startAdornment={<InputAdornment position="start">$</InputAdornment>}
                                 />
+                              </FormControl>
+                            </td>
+                          </tr>
+                          <tr style={{ borderBottom: '1px solid black' }}>
+                            <th style={{ textAlign: 'left' }}>
+                              <FormControlLabel
+                                control={<Checkbox checked={CheckTvA} onChange={(e) => setCheckTvA(e.target.checked)} />}
+                                label="TVA @ 16%"
+                              />
+                            </th>
+                            <td align="center">
+                              <FormControl sx={{ width: '100%', backgroundColor: 'white' }}>
+                                <OutlinedInput disabled type='number' id='tax' size="small" name='tax' value={tax} startAdornment={<InputAdornment position="start">$</InputAdornment>} />
                               </FormControl>
                             </td>
                           </tr>

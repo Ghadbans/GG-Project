@@ -702,23 +702,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_46___default = /*#__PURE__*/__webpack_require__.n(dayjs__WEBPACK_IMPORTED_MODULE_46__);
 /* harmony import */ var react_to_print__WEBPACK_IMPORTED_MODULE_47__ = __webpack_require__(57240);
 /* harmony import */ var react_to_print__WEBPACK_IMPORTED_MODULE_47___default = /*#__PURE__*/__webpack_require__.n(react_to_print__WEBPACK_IMPORTED_MODULE_47__);
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_48__ = __webpack_require__(13561);
-/* harmony import */ var _features_auth_authSlice__WEBPACK_IMPORTED_MODULE_49__ = __webpack_require__(32005);
-/* harmony import */ var _component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_50__ = __webpack_require__(40301);
-/* harmony import */ var _component_Loader__WEBPACK_IMPORTED_MODULE_51__ = __webpack_require__(65821);
-/* harmony import */ var _mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_52__ = __webpack_require__(20889);
-/* harmony import */ var _mui_icons_material_Cancel__WEBPACK_IMPORTED_MODULE_53__ = __webpack_require__(82299);
-/* harmony import */ var _mui_icons_material_Close__WEBPACK_IMPORTED_MODULE_54__ = __webpack_require__(39781);
-/* harmony import */ var _mui_icons_material_ArrowBack__WEBPACK_IMPORTED_MODULE_55__ = __webpack_require__(92659);
-/* harmony import */ var _mui_icons_material_KeyboardArrowDown__WEBPACK_IMPORTED_MODULE_56__ = __webpack_require__(9483);
-/* harmony import */ var _MessageAdminView__WEBPACK_IMPORTED_MODULE_57__ = __webpack_require__(83818);
-/* harmony import */ var _NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_58__ = __webpack_require__(95236);
-/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_59__ = __webpack_require__(67626);
-/* harmony import */ var exceljs__WEBPACK_IMPORTED_MODULE_60__ = __webpack_require__(24974);
-/* harmony import */ var exceljs__WEBPACK_IMPORTED_MODULE_60___default = /*#__PURE__*/__webpack_require__.n(exceljs__WEBPACK_IMPORTED_MODULE_60__);
-/* harmony import */ var file_saver__WEBPACK_IMPORTED_MODULE_61__ = __webpack_require__(4213);
-/* harmony import */ var file_saver__WEBPACK_IMPORTED_MODULE_61___default = /*#__PURE__*/__webpack_require__.n(file_saver__WEBPACK_IMPORTED_MODULE_61__);
-/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_62__ = __webpack_require__(85781);
+/* harmony import */ var _utils_frenchPrintHelper__WEBPACK_IMPORTED_MODULE_48__ = __webpack_require__(33753);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_49__ = __webpack_require__(13561);
+/* harmony import */ var _features_auth_authSlice__WEBPACK_IMPORTED_MODULE_50__ = __webpack_require__(32005);
+/* harmony import */ var _component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_51__ = __webpack_require__(40301);
+/* harmony import */ var _component_Loader__WEBPACK_IMPORTED_MODULE_52__ = __webpack_require__(65821);
+/* harmony import */ var _mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_53__ = __webpack_require__(20889);
+/* harmony import */ var _mui_icons_material_Cancel__WEBPACK_IMPORTED_MODULE_54__ = __webpack_require__(82299);
+/* harmony import */ var _mui_icons_material_Close__WEBPACK_IMPORTED_MODULE_55__ = __webpack_require__(39781);
+/* harmony import */ var _mui_icons_material_ArrowBack__WEBPACK_IMPORTED_MODULE_56__ = __webpack_require__(92659);
+/* harmony import */ var _mui_icons_material_KeyboardArrowDown__WEBPACK_IMPORTED_MODULE_57__ = __webpack_require__(9483);
+/* harmony import */ var _MessageAdminView__WEBPACK_IMPORTED_MODULE_58__ = __webpack_require__(83818);
+/* harmony import */ var _NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_59__ = __webpack_require__(95236);
+/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_60__ = __webpack_require__(67626);
+/* harmony import */ var exceljs__WEBPACK_IMPORTED_MODULE_61__ = __webpack_require__(24974);
+/* harmony import */ var exceljs__WEBPACK_IMPORTED_MODULE_61___default = /*#__PURE__*/__webpack_require__.n(exceljs__WEBPACK_IMPORTED_MODULE_61__);
+/* harmony import */ var file_saver__WEBPACK_IMPORTED_MODULE_62__ = __webpack_require__(4213);
+/* harmony import */ var file_saver__WEBPACK_IMPORTED_MODULE_62___default = /*#__PURE__*/__webpack_require__.n(file_saver__WEBPACK_IMPORTED_MODULE_62__);
+/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_63__ = __webpack_require__(85781);
 var _excluded = ["className"],
   _excluded2 = ["className"],
   _excluded3 = ["className"];
@@ -739,6 +740,7 @@ function _extends() { return _extends = Object.assign ? Object.assign.bind() : f
 function _objectWithoutProperties(e, t) { if (null == e) return {}; var o, r, i = _objectWithoutPropertiesLoose(e, t); if (Object.getOwnPropertySymbols) { var n = Object.getOwnPropertySymbols(e); for (r = 0; r < n.length; r++) o = n[r], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]); } return i; }
 function _objectWithoutPropertiesLoose(r, e) { if (null == r) return {}; var t = {}; for (var n in r) if ({}.hasOwnProperty.call(r, n)) { if (-1 !== e.indexOf(n)) continue; t[n] = r[n]; } return t; }
 ;
+
 
 
 
@@ -920,8 +922,8 @@ function EstimateViewAdminAll() {
   var _useParams = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_27__/* .useParams */ .g)(),
     id = _useParams.id;
   var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_27__/* .useNavigate */ .Zp)();
-  var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_48__/* .useDispatch */ .wA)();
-  var user = (0,react_redux__WEBPACK_IMPORTED_MODULE_48__/* .useSelector */ .d4)(_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_49__/* .selectCurrentUser */ .xu);
+  var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_49__/* .useDispatch */ .wA)();
+  var user = (0,react_redux__WEBPACK_IMPORTED_MODULE_49__/* .useSelector */ .d4)(_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_50__/* .selectCurrentUser */ .xu);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     var storesUserId = localStorage.getItem('user');
     var fetchUser = /*#__PURE__*/function () {
@@ -931,7 +933,7 @@ function EstimateViewAdminAll() {
             var res = yield axios__WEBPACK_IMPORTED_MODULE_28__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_30__/* .ENDPOINT_URL */ .m, "/get-employeeuser/").concat(storesUserId));
             var Name = res.data.data.employeeName;
             var Role = res.data.data.role;
-            dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_49__/* .setUser */ .gV)({
+            dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_50__/* .setUser */ .gV)({
               userName: Name,
               role: Role
             }));
@@ -1225,7 +1227,7 @@ function EstimateViewAdminAll() {
   }();
   var handleLogout = () => {
     localStorage.removeItem('user');
-    dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_49__/* .logOut */ .je)());
+    dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_50__/* .logOut */ .je)());
     navigate('/');
   };
   var _useState39 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(1),
@@ -1316,7 +1318,7 @@ function EstimateViewAdminAll() {
   });
   var exportToExcel = /*#__PURE__*/function () {
     var _ref13 = _asyncToGenerator(function* () {
-      var workbook = new (exceljs__WEBPACK_IMPORTED_MODULE_60___default().Workbook)();
+      var workbook = new (exceljs__WEBPACK_IMPORTED_MODULE_61___default().Workbook)();
       var workSheet = workbook.addWorksheet('Sheet1');
       var columns1 = [{
         header: "#",
@@ -1421,7 +1423,7 @@ function EstimateViewAdminAll() {
       var bold = new Blob([buffer], {
         type: 'application/octet-stream'
       });
-      (0,file_saver__WEBPACK_IMPORTED_MODULE_61__.saveAs)(bold, "".concat('Q-' + String(estimateNumber).padStart(6, '0') + ' for ' + customerName1, ".xlsx"));
+      (0,file_saver__WEBPACK_IMPORTED_MODULE_62__.saveAs)(bold, "".concat('Q-' + String(estimateNumber).padStart(6, '0') + ' for ' + customerName1, ".xlsx"));
     });
     return function exportToExcel() {
       return _ref13.apply(this, arguments);
@@ -1463,11 +1465,11 @@ function EstimateViewAdminAll() {
     }
   }, "Quotation Information"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
     onClick: () => navigate('/EstimateViewAdmin')
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_ArrowBack__WEBPACK_IMPORTED_MODULE_55__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_ArrowBack__WEBPACK_IMPORTED_MODULE_56__/* ["default"] */ .A, {
     style: {
       color: 'white'
     }
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_58__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_MessageAdminView__WEBPACK_IMPORTED_MODULE_57__/* ["default"] */ .A, {
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_59__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_MessageAdminView__WEBPACK_IMPORTED_MODULE_58__/* ["default"] */ .A, {
     name: user.data.userName,
     role: user.data.role
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
@@ -1478,7 +1480,7 @@ function EstimateViewAdminAll() {
   }, user.data.userName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
     color: "inherit",
     onClick: handleLogout
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_50__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_51__/* ["default"] */ .A, {
     style: {
       color: 'white'
     }
@@ -1517,7 +1519,7 @@ function EstimateViewAdminAll() {
       position: 'relative',
       top: '120px'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_51__/* ["default"] */ .A, null))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .Ay, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_52__/* ["default"] */ .A, null))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .Ay, {
     container: true,
     spacing: 2
   }, show1 === 1 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .Ay, {
@@ -1592,7 +1594,7 @@ function EstimateViewAdminAll() {
       variant: "contained",
       disableElevation: true,
       onClick: handleClick,
-      endIcon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_KeyboardArrowDown__WEBPACK_IMPORTED_MODULE_56__/* ["default"] */ .A, null),
+      endIcon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_KeyboardArrowDown__WEBPACK_IMPORTED_MODULE_57__/* ["default"] */ .A, null),
       sx: {
         bgcolor: 'gray',
         '&:hover': {
@@ -1630,7 +1632,7 @@ function EstimateViewAdminAll() {
         alignItems: 'center',
         color: 'gray'
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_59__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, null, "Clone"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_60__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, null, "Clone"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, {
       onClick: handleOpenPrint,
       sx: {
         display: 'flex',
@@ -1644,7 +1646,7 @@ function EstimateViewAdminAll() {
         gap: '20px',
         color: 'gray'
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_62__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, "Export to Excel")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_63__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, "Export to Excel")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, {
       onClick: () => {
         handleCloseMenu();
         setOpenAttachments(true);
@@ -1890,7 +1892,7 @@ function EstimateViewAdminAll() {
         position: 'relative',
         float: 'right'
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Close__WEBPACK_IMPORTED_MODULE_54__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Close__WEBPACK_IMPORTED_MODULE_55__/* ["default"] */ .A, {
       style: {
         color: '#202a5a'
       }
@@ -1917,7 +1919,7 @@ function EstimateViewAdminAll() {
       branchId: typeof row !== "undefined" ? row === null || row === void 0 ? void 0 : row.branchId : typeof data !== "undefined" ? (_data = data) === null || _data === void 0 ? void 0 : _data.branchId : ""
     }))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("tbody", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
       className: "invoicehr"
-    }, "QUOTATION"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    }, L.quotationTitle), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
       className: "content",
       style: {
         marginBottom: '20px',
@@ -1945,7 +1947,7 @@ function EstimateViewAdminAll() {
       style: {
         fontSize: '10px'
       }
-    }, "Quotation For"), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
+    }, printLang === 'fr' ? L.billTo : 'Quotation For'), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
       style: {
         fontWeight: 'bold',
         fontSize: '15px'
@@ -1977,7 +1979,7 @@ function EstimateViewAdminAll() {
         fontWeight: 'bold',
         textAlign: 'left'
       }
-    }, "Quotation #"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    }, L.quotationNo), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
       style: {
         textAlign: 'left'
       }
@@ -1986,7 +1988,7 @@ function EstimateViewAdminAll() {
         fontWeight: 'bold',
         textAlign: 'left'
       }
-    }, "Date"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    }, L.date), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
       style: {
         textAlign: 'left'
       }
@@ -1995,7 +1997,7 @@ function EstimateViewAdminAll() {
         fontWeight: 'bold',
         textAlign: 'left'
       }
-    }, "Subject"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    }, L.subject), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
       style: {
         textAlign: 'left',
         wordBreak: 'break-word',
@@ -2006,7 +2008,7 @@ function EstimateViewAdminAll() {
         fontWeight: 'bold',
         textAlign: 'left'
       }
-    }, "Defect"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    }, L.defect), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
       style: {
         textAlign: 'left',
         wordBreak: 'break-word',
@@ -2023,7 +2025,7 @@ function EstimateViewAdminAll() {
         width: '50%',
         marginBottom: '5px'
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("tbody", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("th", null, "Note"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", null, row.noteInfo !== undefined ? row.noteInfo : '')))) : '', /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("table", {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("tbody", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("th", null, L.note), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", null, row.noteInfo !== undefined ? row.noteInfo : '')))) : '', /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("table", {
       className: "secondTable",
       style: {
         width: '100%',
@@ -2038,42 +2040,42 @@ function EstimateViewAdminAll() {
         border: '1px solid #DDD',
         backgroundColor: '#e8f7fe'
       }
-    }, "#"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("th", {
+    }, L.colIndex), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("th", {
       style: {
         textAlign: 'center',
         border: '1px solid #DDD',
         backgroundColor: '#e8f7fe'
       }
-    }, "Item"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("th", {
+    }, L.colItem), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("th", {
       style: {
         border: '1px solid #DDD',
         backgroundColor: '#e8f7fe'
       }
-    }, "Description"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("th", {
-      style: {
-        textAlign: 'right',
-        border: '1px solid #DDD',
-        backgroundColor: '#e8f7fe'
-      }
-    }, "Qty"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("th", {
+    }, L.colDescription), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("th", {
       style: {
         textAlign: 'right',
         border: '1px solid #DDD',
         backgroundColor: '#e8f7fe'
       }
-    }, "Rate"), showDiscount && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("th", {
+    }, L.colQty), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("th", {
       style: {
         textAlign: 'right',
         border: '1px solid #DDD',
         backgroundColor: '#e8f7fe'
       }
-    }, "Discount"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("th", {
+    }, L.colRate), showDiscount && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("th", {
       style: {
         textAlign: 'right',
         border: '1px solid #DDD',
         backgroundColor: '#e8f7fe'
       }
-    }, "Total"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("tbody", null, (_row$items = row.items) === null || _row$items === void 0 ? void 0 : _row$items.map((Item, i) => {
+    }, L.colDiscount), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("th", {
+      style: {
+        textAlign: 'right',
+        border: '1px solid #DDD',
+        backgroundColor: '#e8f7fe'
+      }
+    }, L.colTotal))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("tbody", null, (_row$items = row.items) === null || _row$items === void 0 ? void 0 : _row$items.map((Item, i) => {
       var _Item$itemName2, _Item$itemName3, _Item$itemName4, _Item$itemName5;
       var relatedUnit = item.find(Item1 => {
         var _Item$itemName;
@@ -2176,11 +2178,11 @@ function EstimateViewAdminAll() {
         borderBottom: '1px solid #DDD'
       },
       colSpan: 2
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, "Sub Total", row.CheckTvA ? '' : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, L.subTotal, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
       style: {
         color: 'gray'
       }
-    }, "(Tax Inclusive)")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
+    }, row.CheckTvA ? L.taxIncludedLabel : L.taxExcludedLabel))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
       style: {
         textAlign: 'right',
         borderBottom: '1px solid #DDD'
@@ -2200,7 +2202,7 @@ function EstimateViewAdminAll() {
         borderBottom: '1px solid #DDD'
       },
       colSpan: 2
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, "Shipping")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, L.shipping)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
       style: {
         textAlign: 'right',
         borderBottom: '1px solid #DDD'
@@ -2240,7 +2242,7 @@ function EstimateViewAdminAll() {
         borderBottom: '1px solid #DDD'
       },
       colSpan: 2
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, "TVA @ 16%")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, L.tvaLabel)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
       style: {
         textAlign: 'right',
         borderBottom: '1px solid #DDD'
@@ -2260,7 +2262,7 @@ function EstimateViewAdminAll() {
         borderBottom: '1px solid #DDD'
       },
       colSpan: 2
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, "Total")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, L.total)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
       style: {
         textAlign: 'right',
         borderBottom: '1px solid #DDD'
@@ -2280,7 +2282,7 @@ function EstimateViewAdminAll() {
         borderBottom: '1px solid #DDD'
       },
       colSpan: 2
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, "Amount Paid")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, L.amountPaid)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
       style: {
         textAlign: 'right',
         borderBottom: '1px solid #DDD'
@@ -2302,7 +2304,7 @@ function EstimateViewAdminAll() {
         fontWeight: 'bold'
       },
       colSpan: 2
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, "Balance Due")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, L.balanceDue)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
       style: {
         textAlign: 'right',
         borderBottom: '1px solid #DDD',
@@ -2323,13 +2325,13 @@ function EstimateViewAdminAll() {
         textAlign: 'center'
       },
       colSpan: 2
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, "Total In Words")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, L.totalInWords)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
       style: {
         textAlign: 'left',
         width: '150px'
       },
       colSpan: 2
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, row.totalW))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("address", {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, printLang === 'fr' ? (0,_utils_frenchPrintHelper__WEBPACK_IMPORTED_MODULE_48__/* .numberToFrenchWords */ .Am)(row.totalInvoice) : row.totalW))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("address", {
       style: {
         float: 'left',
         fontSize: '70%',
@@ -2340,11 +2342,11 @@ function EstimateViewAdminAll() {
         lineHeight: '14px',
         fontWeight: 'bold'
       }
-    }, "Bank: SOFIBANQUE SA ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("br", null), "Entitled: GLOBAL GATE SARL", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("br", null), "Bank Account: 00023233330214247020073", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("br", null), "Code Swift: SFBXCDKIXXX"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
+    }, L.bank, ": SOFIBANQUE SA ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("br", null), L.entitled, ": GLOBAL GATE SARL", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("br", null), L.bankAccount, ": 00023233330214247020073", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("br", null), L.codeSwift, ": SFBXCDKIXXX"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
       style: {
         fontWeight: 'bold'
       }
-    }, "Terms & Conditions "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, row.terms.toUpperCase())))))))), row.includeLetter && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("tbody", {
+    }, L.termsTitle, " "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, printLang === 'fr' ? (0,_utils_frenchPrintHelper__WEBPACK_IMPORTED_MODULE_48__/* .translateTermsToFrench */ .Fq)(row.terms) : row.terms.toUpperCase())))))))), row.includeLetter && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("tbody", {
       style: {
         pageBreakBefore: 'always'
       }
@@ -3047,7 +3049,7 @@ function EstimateViewAdminAll() {
       position: 'relative',
       float: 'right'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Close__WEBPACK_IMPORTED_MODULE_54__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Close__WEBPACK_IMPORTED_MODULE_55__/* ["default"] */ .A, {
     style: {
       color: '#202a5a'
     }
@@ -3150,7 +3152,7 @@ function EstimateViewAdminAll() {
       position: 'relative',
       float: 'right'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Close__WEBPACK_IMPORTED_MODULE_54__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Close__WEBPACK_IMPORTED_MODULE_55__/* ["default"] */ .A, {
     style: {
       color: '#202a5a'
     }
@@ -3181,12 +3183,12 @@ function EstimateViewAdminAll() {
     sx: _objectSpread(_objectSpread({}, style), {}, {
       width: 500
     })
-  }, loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_51__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+  }, loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_52__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     style: {
       justifyContent: 'center',
       textAlign: 'center'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_52__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_53__/* ["default"] */ .A, {
     style: {
       color: 'green',
       height: '40px',
@@ -3216,12 +3218,12 @@ function EstimateViewAdminAll() {
     sx: _objectSpread(_objectSpread({}, style), {}, {
       width: 500
     })
-  }, loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_51__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+  }, loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_52__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     style: {
       justifyContent: 'center',
       textAlign: 'center'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Cancel__WEBPACK_IMPORTED_MODULE_53__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Cancel__WEBPACK_IMPORTED_MODULE_54__/* ["default"] */ .A, {
     style: {
       color: 'red',
       height: '40px',
@@ -4425,6 +4427,160 @@ function DocumentAttachmentsModal(_ref) {
     onClose: () => setPreviewAttachment(null),
     attachment: previewAttachment
   }));
+}
+
+/***/ },
+
+/***/ 33753
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Am: () => (/* binding */ numberToFrenchWords),
+/* harmony export */   Fq: () => (/* binding */ translateTermsToFrench)
+/* harmony export */ });
+/* unused harmony export PRINT_LABELS */
+/**
+ * French / English Print Labels & Number-to-Words Helper
+ * Used by Quotation (EstimateViewAdminAll) and Invoice (InvoiceViewAdminAll) print views.
+ * Item names and item descriptions are intentionally preserved in English.
+ */
+
+var PRINT_LABELS = (/* unused pure expression or super */ null && ({
+  en: {
+    invoiceTitle: 'INVOICE',
+    quotationTitle: 'QUOTATION',
+    billTo: 'Bill To',
+    invoiceNo: 'Invoice #',
+    quotationNo: 'Quotation #',
+    date: 'Date',
+    dueDate: 'Due Date',
+    subject: 'Subject',
+    defect: 'Defect',
+    action: 'ACTION',
+    note: 'NOTE',
+    colIndex: '#',
+    colItem: 'ITEM',
+    colDescription: 'DESCRIPTION',
+    colQty: 'QTY',
+    colRate: 'RATE',
+    colDiscount: 'DISCOUNT',
+    colTotal: 'TOTAL',
+    thanks: 'THANKS FOR YOUR BUSINESS.',
+    subTotal: 'SUB TOTAL',
+    taxInclusive: '(TAX INCLUSIVE)',
+    taxExcluded: '(TAX EXCLUDED)',
+    shipping: 'Shipping',
+    tvaLabel: 'TVA @ 16%',
+    total: 'TOTAL',
+    amountPaid: 'AMOUNT PAID',
+    balanceDue: 'BALANCE DUE',
+    totalInWords: 'TOTAL IN WORDS',
+    bank: 'BANK',
+    entitled: 'ENTITLED',
+    bankAccount: 'BANK ACCOUNT',
+    codeSwift: 'CODE SWIFT',
+    termsTitle: 'TERMS & CONDITIONS',
+    taxIncludedLabel: '(Tax Inclusive)',
+    taxExcludedLabel: '(Tax Excluded)'
+  },
+  fr: {
+    invoiceTitle: 'FACTURE',
+    quotationTitle: 'DEVIS',
+    billTo: 'Facturer à',
+    invoiceNo: 'Facture N°',
+    quotationNo: 'Devis N°',
+    date: 'Date',
+    dueDate: "Date d'échéance",
+    subject: 'Objet',
+    defect: 'Défaut',
+    action: 'ACTION',
+    note: 'NOTE',
+    colIndex: 'N°',
+    colItem: 'ARTICLE',
+    colDescription: 'DESCRIPTION',
+    colQty: 'QTÉ',
+    colRate: 'PRIX UNIT.',
+    colDiscount: 'REMISE',
+    colTotal: 'TOTAL',
+    thanks: 'MERCI POUR VOTRE CONFIANCE.',
+    subTotal: 'SOUS-TOTAL',
+    taxInclusive: '(TVA INCLUSE)',
+    taxExcluded: '(HORS TAXE)',
+    shipping: 'Livraison',
+    tvaLabel: 'TVA @ 16%',
+    total: 'TOTAL',
+    amountPaid: 'MONTANT PAYÉ',
+    balanceDue: 'SOLDE DÛ',
+    totalInWords: 'TOTAL EN LETTRES',
+    bank: 'BANQUE',
+    entitled: 'INTITULÉ',
+    bankAccount: 'COMPTE BANCAIRE',
+    codeSwift: 'CODE SWIFT',
+    termsTitle: 'CONDITIONS GÉNÉRALES',
+    taxIncludedLabel: '(TVA Incluse)',
+    taxExcludedLabel: '(Hors Taxe)'
+  }
+}));
+function translateTermsToFrench(terms) {
+  if (!terms) return '';
+  var upper = String(terms).toUpperCase();
+  if (upper.includes('ESTIMATES ARE FOR LABOR') || upper.includes('NOT RESPONSIBLE FOR LOSS')) {
+    return "LES ESTIMATIONS CONCERNENT UNIQUEMENT LA MAIN-D'ŒUVRE ET LE MATÉRIEL SUPPLÉMENTAIRE. LES ARTICLES VENDUS NE SONT NI REPRIS NI ÉCHANGÉS. NOUS NE SOMMES PAS RESPONSABLES DES PERTES OU DOMMAGES CAUSÉS PAR UN INCENDIE, UN VOL, DES TESTS, DES PIÈCES DÉFECTUEUSES OU TOUTE AUTRE CAUSE INDÉPENDANTE DE NOTRE VOLONTÉ.";
+  }
+  if (upper.includes('QUOTE VALID FOR 30 DAYS') || upper.includes('40% DEPOSIT')) {
+    return "DEVIS VALABLE 30 JOURS (SOUS RÉSERVE DE DISPONIBILITÉ ET VARIATION DU MARCHÉ). PAIEMENT : 40 % D'ACOMPTE / 50 % À MI-PROJET / 10 % À L'ACHÈVEMENT. TOUTES LES VENTES DE MATÉRIEL SONT DÉFINITIVES.";
+  }
+  return terms;
+}
+var UNITS_FR = ['', 'un', 'deux', 'trois', 'quatre', 'cinq', 'six', 'sept', 'huit', 'neuf', 'dix', 'onze', 'douze', 'treize', 'quatorze', 'quinze', 'seize', 'dix-sept', 'dix-huit', 'dix-neuf'];
+var TENS_FR = ['', '', 'vingt', 'trente', 'quarante', 'cinquante', 'soixante', 'soixante', 'quatre-vingt', 'quatre-vingt'];
+function under100Fr(n) {
+  if (n < 20) return UNITS_FR[n];
+  var ten = Math.floor(n / 10);
+  var unit = n % 10;
+  if (ten === 7 || ten === 9) {
+    var sub = 10 + unit;
+    var sep = sub === 11 && ten === 7 ? ' et ' : '-';
+    return TENS_FR[ten] + sep + UNITS_FR[sub];
+  }
+  if (unit === 0) {
+    return ten === 8 ? 'quatre-vingts' : TENS_FR[ten];
+  }
+  if (unit === 1 && ten !== 8) {
+    return "".concat(TENS_FR[ten], " et un");
+  }
+  return "".concat(TENS_FR[ten], "-").concat(UNITS_FR[unit]);
+}
+function under1000Fr(n) {
+  if (n < 100) return under100Fr(n);
+  var h = Math.floor(n / 100);
+  var rem = n % 100;
+  var hStr = h === 1 ? 'cent' : "".concat(UNITS_FR[h], " cent").concat(rem === 0 ? 's' : '');
+  return rem === 0 ? hStr : "".concat(hStr, " ").concat(under100Fr(rem));
+}
+function intToFrenchWords(n) {
+  if (n === 0) return 'zéro';
+  var parts = [];
+  var billions = Math.floor(n / 1e9);
+  var millions = Math.floor(n % 1e9 / 1e6);
+  var thousands = Math.floor(n % 1e6 / 1e3);
+  var rest = n % 1000;
+  if (billions > 0) parts.push("".concat(under1000Fr(billions), " milliard").concat(billions > 1 ? 's' : ''));
+  if (millions > 0) parts.push("".concat(under1000Fr(millions), " million").concat(millions > 1 ? 's' : ''));
+  if (thousands > 0) {
+    parts.push(thousands === 1 ? 'mille' : "".concat(under1000Fr(thousands), " mille"));
+  }
+  if (rest > 0) parts.push(under1000Fr(rest));
+  return parts.join(' ');
+}
+function numberToFrenchWords(amount) {
+  var num = Number(amount) || 0;
+  var rounded = Math.round(Math.abs(num) * 100);
+  var whole = Math.floor(rounded / 100);
+  var cents = rounded % 100;
+  var wholeWords = intToFrenchWords(whole);
+  var centWords = cents === 0 ? 'zéro centime' : "".concat(intToFrenchWords(cents), " centime").concat(cents > 1 ? 's' : '');
+  return "".concat(wholeWords, " et ").concat(centWords).toUpperCase();
 }
 
 /***/ },
