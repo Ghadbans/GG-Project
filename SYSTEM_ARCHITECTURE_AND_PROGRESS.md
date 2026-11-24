@@ -6373,3 +6373,15 @@ Implemented a zero-manual-intervention in-app update pipeline across Electron Wi
    - Synchronized `3.7.18` across `package.json`, `server/package.json`, `server/index.js`, `server/routes/downloadRoutes.js`, and `android/app/build.gradle` (`versionCode 30718`).
    - Verified `pre-build-check.js` (253 files, 0 errors), `security-check.js --auto-start` (21/21 passed), and `regression-check.js --auto-start` (12/12 passed).
    - Built Web Portal (`dist_web/`), Electron Desktop (`dist/Global Gate Setup 3.7.18.exe` + `latest.yml`), and Capacitor Android APK (`GlobalGate-v3.7.18.apk`), synced to `server/public/downloads/` via `scripts/sync-releases.js`, and pushed to `origin main`.
+
+
+### Rule 113: MongoDB Auto-Retry & `MONGO_URL`/`DATABASE_URL` Fallback on Boot (`server/index.js` — Ver 3.7.19)
+
+#### Root Cause & Fix
+- **Diagnosis**: `POST /auth/login` HTTP `500` on Railway was caused by `MongooseError: Operation 'employeeuserschemas.findOne()' buffering timed out after 10000ms` (alongside `purchase.find()` and `itemPurchase.find()` timeouts), indicating MongoDB was not connected (`MONGODB_URI` mismatch after secret rotation or transient Railway internal DNS delay at boot) and `server/index.js` only attempted `mongoDbConnection()` once on startup without retrying.
+- **Fix (`server/index.js`)**:
+  - Added `MONGO_URL` and `DATABASE_URL` fallbacks to `MONGODB_URI` (`process.env.MONGODB_URI || process.env.MONGO_URL || process.env.DATABASE_URL`).
+  - Wrapped `mongoDbConnection()` in `connectWithRetry(attempt = 1)` so failed startup connections log the error reason and automatically retry every 5 seconds instead of leaving the API permanently disconnected.
+- **Verification**:
+  - Verified `server/Controller/auth.js`, `server/routes/AuthRoutes.js`, `server/Middleware/authValidation.js`, and `server/Middleware/rateLimiter.js` had no breaking changes.
+  - Verified `pre-build-check.js` (253 files, 0 errors), `security-check.js --auto-start` (21/21 passed), and `regression-check.js --auto-start` (12/12 passed), and pushed `v3.7.19` to `origin main`.

@@ -14,8 +14,9 @@ const { Server } = require('socket.io')
 // Security: cap every query at 60s server-side so one slow/abusive query cannot lock the database
 // (long enough for backups/exports, short enough to stop runaway scans).
 mongoose.set('maxTimeMS', 60000);
+let mongoInitDone = false;
 async function mongoDbConnection() {
-  const mongoUri = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/globalgatedb";
+  const mongoUri = process.env.MONGODB_URI || process.env.MONGO_URL || process.env.DATABASE_URL || "mongodb://127.0.0.1:27017/globalgatedb";
   await mongoose.connect(
     mongoUri,
     {
@@ -29,8 +30,11 @@ async function mongoDbConnection() {
     }
   );
 }
-mongoDbConnection().then(() => {
-  console.log("globalgate successfully connected.");
+function connectWithRetry(attempt = 1) {
+  mongoDbConnection().then(() => {
+    console.log("globalgate successfully connected.");
+    if (mongoInitDone) return;
+    mongoInitDone = true;
 
   // Run background maintenance non-blockingly so server handles user requests immediately
   setImmediate(async () => {
@@ -119,9 +123,12 @@ mongoDbConnection().then(() => {
       console.warn('⚠️ Cloud WhatsApp initialization warning:', waErr.message);
     }
   });
-}).catch((err) => {
-  console.log("Could not connect to database : " + err);
-});
+  }).catch((err) => {
+    console.error(`Could not connect to database (attempt ${attempt}): ${err.message}`);
+    setTimeout(() => connectWithRetry(attempt + 1), 5000);
+  });
+}
+connectWithRetry();
 
 const authRoutes = require('./routes/AuthRoutes');
 const lockRoutes = require('./routes/lockRoutes');
@@ -275,14 +282,14 @@ const inspectionReportRoutes = require('./routes/inspectionReportRoutes');
 app.use('/api/inspection-reports', inspectionReportRoutes);
 app.use('/endpoint/inspection-reports', inspectionReportRoutes);
 
-app.get('/', (req, res) => res.json({ name: 'Global Gate API', version: '3.7.18', minSupportedVersion: '3.7.0', status: 'online', uptime: process.uptime(), cloudWhatsApp: true }));
+app.get('/', (req, res) => res.json({ name: 'Global Gate API', version: '3.7.19', minSupportedVersion: '3.7.0', status: 'online', uptime: process.uptime(), cloudWhatsApp: true }));
 app.get('/robots.txt', (req, res) => {
   res.type('text/plain');
   res.send("User-agent: *\nDisallow: /\n");
 });
 app.get('/favicon.ico', (req, res) => res.status(204).end());
-app.get('/test', (req, res) => res.send('Backend is LIVE and UPDATED! [v3.7.18-security-hardening]'));
-app.get('/status', (req, res) => res.json({ status: 'ok', version: '3.7.18', minSupportedVersion: '3.7.0', attachments: true, cloudWhatsApp: true, uptime: process.uptime() })); // health check
+app.get('/test', (req, res) => res.send('Backend is LIVE and UPDATED! [v3.7.19-mongo-retry]'));
+app.get('/status', (req, res) => res.json({ status: 'ok', version: '3.7.19', minSupportedVersion: '3.7.0', attachments: true, cloudWhatsApp: true, uptime: process.uptime() })); // health check
 
 // SECURITY GUARD FOR INTERNAL INIT & DEBUG ROUTES
 // Key comes ONLY from env (ADMIN_SETUP_KEY, else SECRET_KEY). No hardcoded fallback; timing-safe compare.
