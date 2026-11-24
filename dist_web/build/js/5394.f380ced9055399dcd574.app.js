@@ -2195,7 +2195,8 @@ function EstimateViewAdminAll() {
       colSpan: 2
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, L.subTotal, !(row.CheckTvA || Number(row.tax || 0) > 0) && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
       style: {
-        color: 'gray'
+        color: '#111827',
+        fontWeight: 600
       }
     }, L.taxExcludedLabel)))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
       style: {
@@ -2718,7 +2719,8 @@ function EstimateViewAdminAll() {
       colSpan: 2
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, "Sub Total", !(row.CheckTvA || Number(row.tax || 0) > 0) && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
       style: {
-        color: 'gray'
+        color: '#111827',
+        fontWeight: 600
       }
     }, "(Tax Excluded)")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
       style: {

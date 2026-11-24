@@ -6298,3 +6298,18 @@ Implemented a zero-manual-intervention in-app update pipeline across Electron Wi
    - Synchronized `3.7.13` across `package.json`, `server/package.json`, `server/index.js`, `server/routes/downloadRoutes.js`, and `android/app/build.gradle` (`versionCode 30713`).
    - Verified `pre-build-check.js` (253 files, 0 errors), `security-check.js --auto-start` (21/21 passed), and `regression-check.js --auto-start` (12/12 passed).
    - Built Web Portal (`dist_web/`), Electron Desktop (`dist/Global Gate Setup 3.7.13.exe` + `latest.yml`), and Capacitor Android APK (`GlobalGate-v3.7.13.apk`), synced to `server/public/downloads/` via `scripts/sync-releases.js`, and pushed to `origin main`.
+
+
+### Rule 108: `EstimateViewConvertToInvoice.js` TVA Checkbox UI & Sharp Print Font for `(Tax Excluded)` / `(Hors Taxe)` (Ver 3.7.14)
+
+#### Changes Implemented
+1. **Added `TVA @ 16%` Checkbox & Tax Row to All Convert-to-Invoice Flows (`EstimateViewConvertToInvoice.js`, `MaintenanceConvertToInvoice.js`, `PurchasesView/ConvertToInvoice.js`)**:
+   - Imported `Checkbox` and `FormControlLabel` and added the `TVA @ 16%` checkbox + disabled `$` tax `OutlinedInput` row between `Adjustment` and `Total` across Quotation-to-Invoice, Maintenance-to-Invoice, and Project/Purchase-to-Invoice conversion screens.
+   - Initialized `setCheckTvA(Boolean(res.data.data.CheckTvA || Number(res.data.data.tax || 0) > 0))` in `EstimateViewConvertToInvoice.js` and defaulted `CheckTvA` to `false` (user-selectable) in `MaintenanceConvertToInvoice.js` and `PurchasesView/ConvertToInvoice.js`, passing `CheckTvA` and `tax` to `POST /endpoint/create-invoice`.
+   - Updated `newBalance` in the calculation `useEffect` of all 3 forms to use `newTotal - (parseFloat(total) || 0)` so `Balance Due` updates immediately when toggling `TVA @ 16%`.
+2. **Sharp Printer-Readable `(Tax Excluded)` / `(Hors Taxe)` Label (`InvoiceViewAdminAll.js`, `EstimateViewAdminAll.js`)**:
+   - Replaced `style={{ color: 'gray' }}` with `style={{ color: '#111827', fontWeight: 600 }}` on `(Tax Excluded)` / `(Hors Taxe)` in both Overview and Print views so physical printers render the label crisply without fading.
+3. **Version Synchronization & Multi-Platform Release (`v3.7.14`)**:
+   - Synchronized `3.7.14` across `package.json`, `server/package.json`, `server/index.js`, `server/routes/downloadRoutes.js`, and `android/app/build.gradle` (`versionCode 30714`).
+   - Verified `pre-build-check.js` (253 files, 0 errors), `security-check.js --auto-start` (21/21 passed), and `regression-check.js --auto-start` (12/12 passed).
+   - Built Web Portal (`dist_web/`), Electron Desktop (`dist/Global Gate Setup 3.7.14.exe` + `latest.yml`), and Capacitor Android APK (`GlobalGate-v3.7.14.apk`), synced to `server/public/downloads/` via `scripts/sync-releases.js`, and pushed to `origin main`.

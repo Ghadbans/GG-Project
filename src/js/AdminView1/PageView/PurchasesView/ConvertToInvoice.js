@@ -5,7 +5,7 @@ import '../Chartview.css'
 import SearchIcon from '@mui/icons-material/Search';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { Backdrop, MenuItem, Grid, IconButton, Paper, TableContainer, TextField, FormControl, InputLabel, Select, Typography, Autocomplete, Modal, Box, styled, OutlinedInput, InputAdornment, Divider } from '@mui/material';
+import { Backdrop, MenuItem, Grid, IconButton, Paper, TableContainer, TextField, FormControl, FormControlLabel, Checkbox, InputLabel, Select, Typography, Autocomplete, Modal, Box, styled, OutlinedInput, InputAdornment, Divider } from '@mui/material';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -191,6 +191,8 @@ function ConvertToInvoice() {
   const [adjustment, setAdjustment] = useState('Adjustment')
   const [adjustmentNumber, setAdjustmentNumber] = useState(0)
   const [totalInvoice, setTotalInvoice] = useState(0);
+  const [CheckTvA, setCheckTvA] = useState(false);
+  const [tax, setTax] = useState(0);
   const [balanceDue, setBalanceDue] = useState(0);
   const [totalW, setTotalW] = useState("");
   const [ItemInformation, setItemInformation] = useState([]);
@@ -766,11 +768,13 @@ function ConvertToInvoice() {
     setItemInformation([...ItemInformation, newItem])
   }
   useEffect(() => {
-    const result1 = items.reduce((sum, row) => sum + row.itemAmount, 0)
+    const result1 = items.reduce((sum, row) => sum + (parseFloat(row.itemAmount) || 0), 0)
     setSubTotal(result1.toFixed(2))
-    let newTotal = Number(subTotal) + Number(shipping) + Number(adjustmentNumber)
+    const computedTax = CheckTvA ? Math.round((result1 * 0.16) * 100) / 100 : 0;
+    setTax(computedTax);
+    let newTotal = Math.round((Number(result1) + Number(shipping || 0) + Number(adjustmentNumber || 0) + computedTax) * 100) / 100
     setTotalInvoice(newTotal)
-    let newBalance = totalInvoice - total
+    let newBalance = Math.round((newTotal - (parseFloat(total) || 0)) * 100) / 100
     setBalanceDue(newBalance)
   })
   useEffect(() => {
@@ -904,7 +908,7 @@ function ConvertToInvoice() {
         total: finalPaidAmount,
         balanceDue: finalBalanceDue,
         totalW,
-        note, Create, shipping, adjustment, adjustmentNumber, totalInvoice, terms
+        note, Create, shipping, adjustment, adjustmentNumber, totalInvoice, CheckTvA, tax, terms
       });
       if (res) {
         if (overage > 0) {
@@ -1600,6 +1604,27 @@ function ConvertToInvoice() {
                                   name='adjustmentNumber'
                                   value={adjustmentNumber}
                                   onChange={(e) => setAdjustmentNumber(e.target.value)}
+                                  startAdornment={<InputAdornment position="start">$</InputAdornment>}
+                                />
+                              </FormControl>
+                            </td>
+                          </tr>
+                          <tr style={{ borderBottom: '1px solid black' }}>
+                            <th style={{ textAlign: 'left' }}>
+                              <FormControlLabel
+                                control={<Checkbox checked={CheckTvA} onChange={(e) => setCheckTvA(e.target.checked)} />}
+                                label="TVA @ 16%"
+                              />
+                            </th>
+                            <td align="center">
+                              <FormControl sx={{ width: '100%', backgroundColor: 'white' }}>
+                                <OutlinedInput
+                                  disabled
+                                  type='number'
+                                  id='tax'
+                                  size="small"
+                                  name='tax'
+                                  value={tax}
                                   startAdornment={<InputAdornment position="start">$</InputAdornment>}
                                 />
                               </FormControl>

@@ -1781,7 +1781,7 @@ function InvoiceViewAdminAll() {
                                                           <td style={{ textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}>
                                                             <span>
                                                               {L.subTotal}
-                                                              {!(row.CheckTvA || Number(row.tax || 0) > 0) && <><br /><span style={{ color: 'gray' }}>{L.taxExcludedLabel}</span></>}
+                                                              {!(row.CheckTvA || Number(row.tax || 0) > 0) && <><br /><span style={{ color: '#111827', fontWeight: 600 }}>{L.taxExcludedLabel}</span></>}
                                                             </span>
                                                           </td>
                                                           <td style={{ textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span data-prefix>$</span><span>{row.subTotal}</span></td>
@@ -2019,7 +2019,7 @@ function InvoiceViewAdminAll() {
                                                 <td style={{ textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}>
                                                   <span>
                                                     Sub Total
-                                                    {!(row.CheckTvA || Number(row.tax || 0) > 0) && <><br /><span style={{ color: 'gray' }}>(Tax Excluded)</span></>}
+                                                    {!(row.CheckTvA || Number(row.tax || 0) > 0) && <><br /><span style={{ color: '#111827', fontWeight: 600 }}>(Tax Excluded)</span></>}
                                                   </span>
                                                 </td>
                                                 <td style={{ textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span data-prefix>$</span><span>{row.subTotal}</span></td>

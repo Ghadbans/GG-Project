@@ -3194,7 +3194,8 @@ function InvoiceViewAdminAll() {
       colSpan: 2
     }, /*#__PURE__*/react.createElement("span", null, L.subTotal, !(row.CheckTvA || Number(row.tax || 0) > 0) && /*#__PURE__*/react.createElement(react.Fragment, null, /*#__PURE__*/react.createElement("br", null), /*#__PURE__*/react.createElement("span", {
       style: {
-        color: 'gray'
+        color: '#111827',
+        fontWeight: 600
       }
     }, L.taxExcludedLabel)))), /*#__PURE__*/react.createElement("td", {
       style: {
@@ -3692,7 +3693,8 @@ function InvoiceViewAdminAll() {
       colSpan: 2
     }, /*#__PURE__*/react.createElement("span", null, "Sub Total", !(row.CheckTvA || Number(row.tax || 0) > 0) && /*#__PURE__*/react.createElement(react.Fragment, null, /*#__PURE__*/react.createElement("br", null), /*#__PURE__*/react.createElement("span", {
       style: {
-        color: 'gray'
+        color: '#111827',
+        fontWeight: 600
       }
     }, "(Tax Excluded)")))), /*#__PURE__*/react.createElement("td", {
       style: {
