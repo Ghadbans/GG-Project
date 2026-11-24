@@ -53,6 +53,7 @@ let SupplierSchema = require("../model/suppliersSchema");
 let RateReturnSchema = require("../model/rateReturnSchema");
 let itemTransferHistorySchema = require("../model/itemTransferHistorySchema");
 const { calculateQuantity } = require("../model/stockUtils");
+const { parseSafeIdList, toSafeObjectId } = require("../utils/objectIdUtils");
 
 const { object } = require("joi");
 const { default: mongoose } = require("mongoose");
@@ -941,25 +942,42 @@ Route.route("/itemPurchase", cors(corsOptionsDelegate)).get(
     try {
       const projection = {};
       const filter = req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {};
-      if (req.query.projectId || req.query.projectName) {
-        let objectId = null;
-        try { objectId = new require('mongoose').Types.ObjectId(req.query.projectId); } catch (e) {}
-        const pIds = objectId ? [req.query.projectId, objectId] : (req.query.projectId ? [req.query.projectId] : []);
+      if (req.query.projectId || req.query.projectName || req.query.projectNumber || req.query.purchaseIds) {
+        const safeProjId = toSafeObjectId(req.query.projectId);
+        const pIds = safeProjId ? [String(safeProjId), safeProjId] : [];
+        const { allIds: purIds } = parseSafeIdList(req.query.purchaseIds);
+        const allRefIds = [...pIds, ...purIds];
         let orConditions = [];
-        if (pIds.length > 0) {
+        if (allRefIds.length > 0) {
           orConditions.push(
-            { 'projectName._id': { $in: pIds } },
-            { 'projectName': { $in: pIds } },
-            { 'POID': { $in: pIds } }
+            { 'projectName._id': { $in: allRefIds } },
+            { 'projectName': { $in: allRefIds } },
+            { 'POID': { $in: allRefIds } },
+            { 'reference._id': { $in: allRefIds } },
+            { 'reference': { $in: allRefIds } }
           );
         }
         if (req.query.projectName) {
-          const rawName = req.query.projectName.trim();
-          const escapedName = rawName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+          const rawName = String(req.query.projectName).trim();
+          if (rawName && rawName !== 'null' && rawName !== 'undefined') {
+            const escapedName = rawName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            orConditions.push(
+              { 'projectName.projectName': new RegExp('^' + escapedName + '$', 'i') },
+              { 'projectName.name': new RegExp('^' + escapedName + '$', 'i') },
+              { 'projectName': new RegExp('^' + escapedName + '$', 'i') }
+            );
+            if (rawName.length >= 3) {
+              orConditions.push({ 'description': new RegExp(escapedName, 'i') });
+            }
+          }
+        }
+        const pNum = Number(req.query.projectNumber);
+        if (!isNaN(pNum) && pNum > 0) {
+          const pNumRegex = new RegExp(`\\bP-?0*${pNum}\\b`, 'i');
           orConditions.push(
-            { 'projectName.projectName': new RegExp('^' + escapedName + '$', 'i') },
-            { 'projectName.name': new RegExp('^' + escapedName + '$', 'i') },
-            { 'projectName': new RegExp('^' + escapedName + '$', 'i') }
+            { 'description': pNumRegex },
+            { 'projectName.projectName': pNumRegex },
+            { 'projectName': pNumRegex }
           );
         }
         if (orConditions.length > 0) {

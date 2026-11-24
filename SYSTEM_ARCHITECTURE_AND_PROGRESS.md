@@ -6342,3 +6342,18 @@ Implemented a zero-manual-intervention in-app update pipeline across Electron Wi
    - Synchronized `3.7.16` across `package.json`, `server/package.json`, `server/index.js`, `server/routes/downloadRoutes.js`, and `android/app/build.gradle` (`versionCode 30716`).
    - Verified `pre-build-check.js` (253 files, 0 errors), `security-check.js --auto-start` (21/21 passed), and `regression-check.js --auto-start` (12/12 passed).
    - Built Web Portal (`dist_web/`), Electron Desktop (`dist/Global Gate Setup 3.7.16.exe` + `latest.yml`), and Capacitor Android APK (`GlobalGate-v3.7.16.apk`), synced to `server/public/downloads/` via `scripts/sync-releases.js`, and pushed to `origin main`.
+
+
+### Rule 111: Project `TOTAL-NEED` (`qty × unit price`) & Expanded `GET /endpoint/itemPurchase` Movement Matching (Ver 3.7.17)
+
+#### Changes Implemented
+1. **`TOTAL-NEED` Calculation Fix (`ProjectViewInformation.js`, `PurchasesViewAdminAll.js`)**:
+   - Updated `TOTAL-NEED` cell rendering to compute `(parseFloat(row.itemQty || 0) * parseFloat(row.itemCost || 0)) || Number(row.totalCost || 0)` so stale `row.totalCost` values left over from earlier edits or `IPU` price updates no longer override `qty × unit price`.
+2. **Expanded `GET /endpoint/itemPurchase` Movement Matching (`server/routes/itemRoutes.js`, `ProjectViewInformation.js`)**:
+   - Imported `parseSafeIdList` and `toSafeObjectId` from `server/utils/objectIdUtils.js` in `itemRoutes.js`.
+   - Expanded `GET /endpoint/itemPurchase` to match `reference._id` / `reference` alongside `projectName._id` / `projectName` / `POID`, match `description` containing the project name or `P-0*<projectNumber>`, and accept sanitized `purchaseIds`.
+   - Passed `projectNumber` in `fetchItemsMovement` (`ProjectViewInformation.js`) so Item Purchase movements (`IP-xxxxxx`) linked by description or reference expand cleanly in `ITEM MOVEMENT INFO`.
+3. **Version Synchronization & Multi-Platform Release (`v3.7.17`)**:
+   - Synchronized `3.7.17` across `package.json`, `server/package.json`, `server/index.js`, `server/routes/downloadRoutes.js`, and `android/app/build.gradle` (`versionCode 30717`).
+   - Verified `pre-build-check.js` (253 files, 0 errors), `security-check.js --auto-start` (21/21 passed), and `regression-check.js --auto-start` (12/12 passed).
+   - Built Web Portal (`dist_web/`), Electron Desktop (`dist/Global Gate Setup 3.7.17.exe` + `latest.yml`), and Capacitor Android APK (`GlobalGate-v3.7.17.apk`), synced to `server/public/downloads/` via `scripts/sync-releases.js`, and pushed to `origin main`.

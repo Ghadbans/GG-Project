@@ -1851,7 +1851,8 @@ function ProjectViewInformation() {
       try {
         var _resOut$data, _resReturn$data, _resPrec$data;
         var pNameQuery = targetPName ? "&projectName=".concat(encodeURIComponent(targetPName)) : '';
-        var _yield$Promise$all7 = yield Promise.all([axios__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_33__/* .ENDPOINT_URL */ .m, "/itemOut?projectId=").concat(targetId).concat(pNameQuery)), axios__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_33__/* .ENDPOINT_URL */ .m, "/itemReturn?projectId=").concat(targetId).concat(pNameQuery)), axios__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_33__/* .ENDPOINT_URL */ .m, "/itemPurchase?projectId=").concat(targetId).concat(pNameQuery))]),
+        var pNumQuery = targetPNum ? "&projectNumber=".concat(encodeURIComponent(targetPNum)) : '';
+        var _yield$Promise$all7 = yield Promise.all([axios__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_33__/* .ENDPOINT_URL */ .m, "/itemOut?projectId=").concat(targetId).concat(pNameQuery)), axios__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_33__/* .ENDPOINT_URL */ .m, "/itemReturn?projectId=").concat(targetId).concat(pNameQuery)), axios__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_33__/* .ENDPOINT_URL */ .m, "/itemPurchase?projectId=").concat(targetId).concat(pNameQuery).concat(pNumQuery))]),
           _yield$Promise$all8 = _slicedToArray(_yield$Promise$all7, 3),
           resOut = _yield$Promise$all8[0],
           resReturn = _yield$Promise$all8[1],
@@ -2922,7 +2923,7 @@ function ProjectViewInformation() {
         border: '1px solid #DDD'
       },
       align: "left"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "$"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, Number(row.totalCost || parseFloat(row.itemQty || 0) * parseFloat(row.itemCost || 0) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "$"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, Number(parseFloat(row.itemQty || 0) * parseFloat(row.itemCost || 0) || row.totalCost || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
       style: {
         border: '1px solid #DDD'
       },

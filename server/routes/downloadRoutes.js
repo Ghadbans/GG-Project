@@ -3,12 +3,12 @@ const router = express.Router();
 const path = require('path');
 const fs = require('fs');
 
-const APP_VERSION = '3.7.16';
+const APP_VERSION = '3.7.17';
 const MIN_SUPPORTED_VERSION = '3.7.0';
 const RELEASE_NOTES = [
-  'Project Overview & Purchase: All custom EMPTY-box items (qty × unit price) now count in Material Expense & Total Cost.',
-  'Convert to Invoice: Added optional TVA @ 16% checkbox across Quotation, Maintenance & Project/Purchase conversions.',
-  'Payments & Print: Payment invoice list restricted to Sent & Partially-Paid; sharper (Tax Excluded)/(Hors Taxe) print font.'
+  'Project & Purchase Requests: Fixed TOTAL-NEED to always reflect qty × unit price and expanded Item Purchase movement matching.',
+  'Project Overview & Purchase: All custom EMPTY-box items (qty × unit price) count in Material Expense & Total Cost.',
+  'Convert to Invoice & Payments: Added optional TVA @ 16% checkbox across conversions; Payment invoice list restricted to Sent & Partially-Paid.'
 ];
 
 const DOWNLOADS_DIR = path.join(__dirname, '../public/downloads');

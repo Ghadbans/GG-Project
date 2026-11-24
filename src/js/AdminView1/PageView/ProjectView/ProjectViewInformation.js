@@ -426,10 +426,11 @@ const isItemMatch = (item1, item2) => {
   const fetchItemsMovement = async (targetId = id, targetPNum = projectNumber, targetPName = projectName) => {
     try {
       const pNameQuery = targetPName ? `&projectName=${encodeURIComponent(targetPName)}` : '';
+      const pNumQuery = targetPNum ? `&projectNumber=${encodeURIComponent(targetPNum)}` : '';
       const [resOut, resReturn, resPrec] = await Promise.all([
         axios.get(`${ENDPOINT_URL}/itemOut?projectId=${targetId}${pNameQuery}`),
         axios.get(`${ENDPOINT_URL}/itemReturn?projectId=${targetId}${pNameQuery}`),
-        axios.get(`${ENDPOINT_URL}/itemPurchase?projectId=${targetId}${pNameQuery}`)
+        axios.get(`${ENDPOINT_URL}/itemPurchase?projectId=${targetId}${pNameQuery}${pNumQuery}`)
       ]);
 
       const isMatchingProjectOrPurchase = (row) => {
@@ -1247,7 +1248,7 @@ const isItemMatch = (item1, item2) => {
           </td>
           <td style={{ border: '1px solid #DDD' }} align="left">{row.itemQty} {relatedUnit?.unit ? String(relatedUnit.unit).toUpperCase() : ''}</td>
           <td style={{ border: '1px solid #DDD' }} align="left">{row.itemCost}</td>
-          <td style={{ border: '1px solid #DDD' }} align="left"><span>$</span><span>{ Number(row.totalCost || (parseFloat(row.itemQty || 0) * parseFloat(row.itemCost || 0)) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') }</span></td>
+          <td style={{ border: '1px solid #DDD' }} align="left"><span>$</span><span>{ Number((parseFloat(row.itemQty || 0) * parseFloat(row.itemCost || 0)) || row.totalCost || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') }</span></td>
           <td style={{ border: '1px solid #DDD' }} align="left">{buyQty}</td>
           <td style={{ border: '1px solid #DDD' }} align="left"><span>$</span><span>{ Number(totalBuy || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') }</span></td>
           <td style={{ border: '1px solid #DDD' }} align="left"><span>{netOutQty} {relatedUnit?.unit ? String(relatedUnit.unit).toUpperCase() : ''}</span></td>

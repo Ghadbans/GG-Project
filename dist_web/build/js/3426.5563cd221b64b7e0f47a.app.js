@@ -431,7 +431,7 @@ function PurchaseItemRow(_ref9) {
       border: '1px solid #DDD'
     },
     align: "left"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "$"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, Number(Item.totalCost || parseFloat(Item.itemQty || 0) * parseFloat(Item.itemCost || 0) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "$"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, Number(parseFloat(Item.itemQty || 0) * parseFloat(Item.itemCost || 0) || Item.totalCost || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     style: {
       border: '1px solid #DDD'
     },
@@ -1731,7 +1731,7 @@ function PurchasesViewAdminAll() {
           border: '1px solid #DDD'
         },
         align: "left"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "$"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, Number(Item.totalCost || parseFloat(Item.itemQty || 0) * parseFloat(Item.itemCost || 0) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "$"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, Number(parseFloat(Item.itemQty || 0) * parseFloat(Item.itemCost || 0) || Item.totalCost || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
         style: {
           border: '1px solid #DDD'
         },
