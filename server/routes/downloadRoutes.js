@@ -6,9 +6,9 @@ const fs = require('fs');
 const APP_VERSION = '3.7.15';
 const MIN_SUPPORTED_VERSION = '3.7.0';
 const RELEASE_NOTES = [
-  'Invoices & Quotations: Optional TVA @ 16% checkbox (Tax Excluded / Tax Inclusive) linked to Dashboard VAT Statement.',
-  'Invoices & Quotations: Print in English or French (headers, totals, terms & total in words in French; items stay in English).',
-  'Message Center red unread badge & Daily Expenses Customer Credit fix.'
+  'Project Overview & Purchase: Purchased non-catalog (EMPTY-box) items now count in Material Expense & Total Cost.',
+  'Convert to Invoice: Added optional TVA @ 16% checkbox across Quotation, Maintenance & Project/Purchase conversions.',
+  'Payments & Print: Payment invoice list restricted to Sent & Partially-Paid; sharper (Tax Excluded)/(Hors Taxe) print font.'
 ];
 
 const DOWNLOADS_DIR = path.join(__dirname, '../public/downloads');
