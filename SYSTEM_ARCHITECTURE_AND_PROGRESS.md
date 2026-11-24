@@ -6357,3 +6357,19 @@ Implemented a zero-manual-intervention in-app update pipeline across Electron Wi
    - Synchronized `3.7.17` across `package.json`, `server/package.json`, `server/index.js`, `server/routes/downloadRoutes.js`, and `android/app/build.gradle` (`versionCode 30717`).
    - Verified `pre-build-check.js` (253 files, 0 errors), `security-check.js --auto-start` (21/21 passed), and `regression-check.js --auto-start` (12/12 passed).
    - Built Web Portal (`dist_web/`), Electron Desktop (`dist/Global Gate Setup 3.7.17.exe` + `latest.yml`), and Capacitor Android APK (`GlobalGate-v3.7.17.apk`), synced to `server/public/downloads/` via `scripts/sync-releases.js`, and pushed to `origin main`.
+
+
+### Rule 112: `.env` Untracked, `.gitignore` Hardened & Full-Stack Security Audit (Ver 3.7.18)
+
+#### Changes Implemented
+1. **Git Secret Hygiene (`.gitignore` & `git rm --cached .env`)**:
+   - Untracked root `.env` from Git index via `git rm --cached .env` (preserving local `.env` on disk).
+   - Added `.env*` and `server/.env` explicitly to `.gitignore`.
+   - Verified `src/` contains zero `process.env`, `REACT_APP_`, database URIs, or API keys.
+2. **Full-Stack Security & Dependency Audit (`server/index.js`, `server/Middleware/security.js`, `npm audit fix --omit=dev`)**:
+   - Confirmed `helmet()` (`security.helmetMiddleware`), strict CORS allow-list (`https://portal.globalgate.sarl`, Capacitor `capacitor://localhost` / `http://localhost` / `https://localhost`, Electron, and local dev), global `express-mongo-sanitize`, `globalLimiter` + route limiters, `10mb`/`50mb` tiered JSON payload limits, and non-leaking production error handler (`Internal Server Error` for `status >= 500`) are active.
+   - Ran non-breaking `npm audit fix --omit=dev` in root and `server/` (leaving only breaking-major advisories: `react-router-dom@7`/`uuid@14` in root, `nodemailer@10`/`uuid@14`/`@mapbox/node-pre-gyp -> tar` in `server/`).
+3. **Version Synchronization & Multi-Platform Release (`v3.7.18`)**:
+   - Synchronized `3.7.18` across `package.json`, `server/package.json`, `server/index.js`, `server/routes/downloadRoutes.js`, and `android/app/build.gradle` (`versionCode 30718`).
+   - Verified `pre-build-check.js` (253 files, 0 errors), `security-check.js --auto-start` (21/21 passed), and `regression-check.js --auto-start` (12/12 passed).
+   - Built Web Portal (`dist_web/`), Electron Desktop (`dist/Global Gate Setup 3.7.18.exe` + `latest.yml`), and Capacitor Android APK (`GlobalGate-v3.7.18.apk`), synced to `server/public/downloads/` via `scripts/sync-releases.js`, and pushed to `origin main`.

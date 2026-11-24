@@ -6,6 +6,8 @@ node_modules/
 /www/build/
 !dist_web/
 .env
+.env*
+server/.env
 *.log
 GG Backup 08Feb26/
 *.bson

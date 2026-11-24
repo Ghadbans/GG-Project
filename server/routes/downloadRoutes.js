@@ -3,7 +3,7 @@ const router = express.Router();
 const path = require('path');
 const fs = require('fs');
 
-const APP_VERSION = '3.7.17';
+const APP_VERSION = '3.7.18';
 const MIN_SUPPORTED_VERSION = '3.7.0';
 const RELEASE_NOTES = [
   'Project & Purchase Requests: Fixed TOTAL-NEED to always reflect qty × unit price and expanded Item Purchase movement matching.',
