@@ -1704,12 +1704,9 @@ function ProjectViewInformation() {
         var pNamesQuery = projectPurchaseNames.length > 0 ? "&purchaseNames=".concat(encodeURIComponent(projectPurchaseNames.join(','))) : '';
         var resInvoices = yield axios__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_33__/* .ENDPOINT_URL */ .m, "/invoice?summary=true").concat(pIdQuery).concat(pIdsQuery).concat(invIdsQuery).concat(pNamesQuery).concat(pNameQuery).concat(pNumQuery));
         var relatedInvoices = ((_resInvoices$data = resInvoices.data) === null || _resInvoices$data === void 0 ? void 0 : _resInvoices$data.data) || [];
-        var allProjectItems = relatedPurchases.flatMap(row => (row.items || []).map(Item => {
-          var _Item$itemName, _Item$itemName2;
-          return _objectSpread(_objectSpread({}, Item), {}, {
-            totalCostOut: (((_Item$itemName = Item.itemName) === null || _Item$itemName === void 0 ? void 0 : _Item$itemName._id) === undefined || ((_Item$itemName2 = Item.itemName) === null || _Item$itemName2 === void 0 ? void 0 : _Item$itemName2._id) === "") && (Number(Item.itemOut) || 0) === 0 ? Number(Item.totalGenerale) || 0 : (Number(Item.itemOut) || 0) * (Number(Item.itemCost) || 0)
-          });
-        }));
+        var allProjectItems = relatedPurchases.flatMap(row => (row.items || []).map(Item => _objectSpread(_objectSpread({}, Item), {}, {
+          totalCostOut: isEmptyBoxItem(Item) && (Number(Item.itemOut) || 0) === 0 ? Number(Item.totalGenerale) || 0 : (Number(Item.itemOut) || 0) * (Number(Item.itemCost) || 0)
+        })));
         setItem(allProjectItems);
         setPurchase(relatedPurchases);
         setInvoice(relatedInvoices.map(row => _objectSpread(_objectSpread({}, row), {}, {
@@ -1770,6 +1767,11 @@ function ProjectViewInformation() {
     };
   }();
   var cleanStr = str => String(str || '').trim().toLowerCase().replace(/[^a-z0-9]/g, '');
+  var isEmptyBoxItem = row => {
+    var _row$itemName, _row$itemName2;
+    var nameStr = typeof (row === null || row === void 0 ? void 0 : row.itemName) === 'string' ? row.itemName : row === null || row === void 0 || (_row$itemName = row.itemName) === null || _row$itemName === void 0 ? void 0 : _row$itemName.itemName;
+    return !(row !== null && row !== void 0 && row.itemName) || !(row !== null && row !== void 0 && (_row$itemName2 = row.itemName) !== null && _row$itemName2 !== void 0 && _row$itemName2._id) || String(nameStr || '').trim() === '' || String(nameStr || '').trim().toLowerCase() === 'empty';
+  };
   var isItemMatch = (item1, item2) => {
     var _item1$itemName, _item2$itemName, _item1$itemName2, _item2$itemName2;
     if (!item1 || !item2) return false;
@@ -1981,7 +1983,6 @@ function ProjectViewInformation() {
     advances = _useState48[0],
     setAdvances = _useState48[1];
   var totalGeneralOutCost = items.length > 0 ? items.reduce((sum, row) => {
-    var _row$itemName, _row$itemName2;
     var matchedPurchases = (itemPurchase || []).flatMap(ip => (ip.itemsQtyArray || ip.items || []).filter(it => isItemMatch(it, row)).map(it => ({
       qty: parseFloat(it.newItemOut || it.itemQty || 0),
       total: parseFloat(it.totalAmount || it.totalAmountUSD || parseFloat(it.newItemOut || it.itemQty || 0) * parseFloat(it.itemRate || it.cost || 0) || 0)
@@ -1995,7 +1996,7 @@ function ProjectViewInformation() {
     var hasOutMovements = (itemOut || []).length > 0 || (itemReturn || []).length > 0;
     var netOutQty = hasOutMovements ? Math.max(0, matchedOutQty - matchedReturnQty) : parseFloat(row.itemOut) || 0;
     var unitCost = parseFloat(row.itemCost) || (buyQty > 0 ? totalBuy / buyQty : 0);
-    var costOut = (((_row$itemName = row.itemName) === null || _row$itemName === void 0 ? void 0 : _row$itemName._id) === undefined || ((_row$itemName2 = row.itemName) === null || _row$itemName2 === void 0 ? void 0 : _row$itemName2._id) === "") && netOutQty === 0 && totalBuy > 0 ? totalBuy : netOutQty * unitCost;
+    var costOut = isEmptyBoxItem(row) && netOutQty === 0 && totalBuy > 0 ? totalBuy : netOutQty * unitCost;
     return sum + (costOut || 0);
   }, 0) : 0;
   var newOutR = [...itemPurchase, ...itemOut, ...itemReturn];
@@ -2192,8 +2193,8 @@ function ProjectViewInformation() {
   }) : null;
   var relatedPurchase = purchase.map(row => _objectSpread(_objectSpread({}, row), {}, {
     items: (row.items || []).map(Item => {
-      var _Item$itemName3;
-      var itemIdStr = String(((_Item$itemName3 = Item.itemName) === null || _Item$itemName3 === void 0 ? void 0 : _Item$itemName3._id) || Item.itemName || '');
+      var _Item$itemName;
+      var itemIdStr = String(((_Item$itemName = Item.itemName) === null || _Item$itemName === void 0 ? void 0 : _Item$itemName._id) || Item.itemName || '');
       var newAllOutReturnInfo = newAllOutReturn !== null ? newAllOutReturn.find(Item1 => String(Item1.Id) === itemIdStr) : null;
       return _objectSpread(_objectSpread({}, Item), {}, {
         itemOut: newAllOutReturnInfo ? newAllOutReturnInfo.total : Item.itemOut || 0
@@ -2526,10 +2527,10 @@ function ProjectViewInformation() {
     };
   });
   var data5 = items.map((Item, i) => {
-    var _Item$itemName4;
+    var _Item$itemName2;
     return {
       no: i + 1,
-      item: ((_Item$itemName4 = Item.itemName) === null || _Item$itemName4 === void 0 ? void 0 : _Item$itemName4.itemName) || (typeof Item.itemName === 'string' ? Item.itemName : ''),
+      item: ((_Item$itemName2 = Item.itemName) === null || _Item$itemName2 === void 0 ? void 0 : _Item$itemName2.itemName) || (typeof Item.itemName === 'string' ? Item.itemName : ''),
       itemDescription: Item.itemDescription,
       itemQty: Item.itemQty,
       itemCost: '$' + Item.itemCost,
@@ -2828,7 +2829,7 @@ function ProjectViewInformation() {
     };
   }();
   function Row3(props) {
-    var _row$itemName3, _row$itemName4, _row$itemName5, _row$itemName6;
+    var _row$itemName3, _row$itemName4;
     var row = props.row;
     var index = props.index;
     var relatedUnit = props.relatedUnit;
@@ -2873,7 +2874,7 @@ function ProjectViewInformation() {
     var hasOutMovements = (itemOut || []).length > 0 || (itemReturn || []).length > 0;
     var netOutQty = hasOutMovements ? Math.max(0, matchedOutQty - matchedReturnQty) : parseFloat(row.itemOut) || 0;
     var unitCost = parseFloat(row.itemCost) || (buyQty > 0 ? totalBuy / buyQty : 0);
-    var totalCostOut = (((_row$itemName3 = row.itemName) === null || _row$itemName3 === void 0 ? void 0 : _row$itemName3._id) === undefined || ((_row$itemName4 = row.itemName) === null || _row$itemName4 === void 0 ? void 0 : _row$itemName4._id) === "") && netOutQty === 0 && totalBuy > 0 ? totalBuy : netOutQty * unitCost;
+    var totalCostOut = isEmptyBoxItem(row) && netOutQty === 0 && totalBuy > 0 ? totalBuy : netOutQty * unitCost;
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(react__WEBPACK_IMPORTED_MODULE_2__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", {
       style: {
         '& > *': {
@@ -2896,8 +2897,8 @@ function ProjectViewInformation() {
       },
       align: "left"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
-      hidden: Boolean(!row.itemName || String(typeof row.itemName === 'string' ? row.itemName : (_row$itemName5 = row.itemName) === null || _row$itemName5 === void 0 ? void 0 : _row$itemName5.itemName).trim().toLowerCase() === 'empty')
-    }, ((_row$itemName6 = row.itemName) === null || _row$itemName6 === void 0 ? void 0 : _row$itemName6.itemName) || (typeof row.itemName === 'string' && row.itemName.toLowerCase() !== 'empty' ? row.itemName : '')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, row.itemDescription, " ", relatedUnit !== null && relatedUnit !== void 0 && relatedUnit.itemBrand ? "( ".concat(String(relatedUnit.itemBrand).toUpperCase(), " )") : '', " ")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+      hidden: Boolean(!row.itemName || String(typeof row.itemName === 'string' ? row.itemName : (_row$itemName3 = row.itemName) === null || _row$itemName3 === void 0 ? void 0 : _row$itemName3.itemName).trim().toLowerCase() === 'empty')
+    }, ((_row$itemName4 = row.itemName) === null || _row$itemName4 === void 0 ? void 0 : _row$itemName4.itemName) || (typeof row.itemName === 'string' && row.itemName.toLowerCase() !== 'empty' ? row.itemName : '')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, row.itemDescription, " ", relatedUnit !== null && relatedUnit !== void 0 && relatedUnit.itemBrand ? "( ".concat(String(relatedUnit.itemBrand).toUpperCase(), " )") : '', " ")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
       style: {
         border: '1px solid #DDD'
       },
@@ -3869,8 +3870,8 @@ function ProjectViewInformation() {
           backgroundColor: '#e8f7fe'
         }
       }, "Total"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tbody", null, (_row$items = row.items) === null || _row$items === void 0 ? void 0 : _row$items.map((Item, i) => {
-        var _Item$itemName5, _Item$itemName6, _Item$itemName8;
-        if (Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!((_Item$itemName5 = Item.itemName) !== null && _Item$itemName5 !== void 0 && _Item$itemName5._id) || ((_Item$itemName6 = Item.itemName) === null || _Item$itemName6 === void 0 ? void 0 : _Item$itemName6.itemName) === 'empty' || !Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName.itemName)))) {
+        var _Item$itemName3, _Item$itemName4, _Item$itemName6;
+        if (Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!((_Item$itemName3 = Item.itemName) !== null && _Item$itemName3 !== void 0 && _Item$itemName3._id) || ((_Item$itemName4 = Item.itemName) === null || _Item$itemName4 === void 0 ? void 0 : _Item$itemName4.itemName) === 'empty' || !Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName.itemName)))) {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", {
             key: Item.idRow
           }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
@@ -3889,8 +3890,8 @@ function ProjectViewInformation() {
           }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, Item.newDescription)));
         }
         var relatedUnit = item.find(Item1 => {
-          var _Item$itemName7;
-          return Item1._id === ((_Item$itemName7 = Item.itemName) === null || _Item$itemName7 === void 0 ? void 0 : _Item$itemName7._id) || Item1._id === Item.itemName;
+          var _Item$itemName5;
+          return Item1._id === ((_Item$itemName5 = Item.itemName) === null || _Item$itemName5 === void 0 ? void 0 : _Item$itemName5._id) || Item1._id === Item.itemName;
         });
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", {
           key: Item.idRow
@@ -3905,7 +3906,7 @@ function ProjectViewInformation() {
             padding: '10px',
             border: '1px solid #DDD'
           }
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, ((_Item$itemName8 = Item.itemName) === null || _Item$itemName8 === void 0 ? void 0 : _Item$itemName8.itemName) || (typeof Item.itemName === 'string' ? Item.itemName : ''))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, ((_Item$itemName6 = Item.itemName) === null || _Item$itemName6 === void 0 ? void 0 : _Item$itemName6.itemName) || (typeof Item.itemName === 'string' ? Item.itemName : ''))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
           style: {
             padding: '10px',
             textAlign: 'left',
@@ -4407,8 +4408,8 @@ function ProjectViewInformation() {
         },
         align: "left"
       }, "Total-Cost"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tbody", null, (_row$items2 = row.items) === null || _row$items2 === void 0 ? void 0 : _row$items2.filter(Item => parseFloat(Item.itemQty) >= 0 || parseFloat(Item.itemBuy) > 0 || parseFloat(Item.itemOut) > 0 || Boolean(Item.newDescription && String(Item.newDescription).trim() !== '')).map((Item, i) => {
-        var _Item$itemName9;
-        var relatedUnit = itemMap[(_Item$itemName9 = Item.itemName) === null || _Item$itemName9 === void 0 ? void 0 : _Item$itemName9._id];
+        var _Item$itemName7;
+        var relatedUnit = itemMap[(_Item$itemName7 = Item.itemName) === null || _Item$itemName7 === void 0 ? void 0 : _Item$itemName7._id];
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(Row3, {
           key: i,
           row: Item,
@@ -4893,9 +4894,9 @@ function ProjectViewInformation() {
       backgroundColor: '#e8f7fe'
     },
     align: "left"
-  }, "Total-Cost"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tbody", null, (_printData$items = printData.items) === null || _printData$items === void 0 ? void 0 : _printData$items.filter(Item => parseFloat(Item.itemQty) >= 0 || parseFloat(Item.itemBuy) > 0 || parseFloat(Item.itemOut) > 0).map((Item, i) => {
-    var _Item$itemName0;
-    var relatedUnit = itemMap[(_Item$itemName0 = Item.itemName) === null || _Item$itemName0 === void 0 ? void 0 : _Item$itemName0._id];
+  }, "Total-Cost"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tbody", null, (_printData$items = printData.items) === null || _printData$items === void 0 ? void 0 : _printData$items.filter(Item => parseFloat(Item.itemQty) >= 0 || parseFloat(Item.itemBuy) > 0 || parseFloat(Item.itemOut) > 0 || Boolean(Item.newDescription && String(Item.newDescription).trim() !== '')).map((Item, i) => {
+    var _Item$itemName8;
+    var relatedUnit = itemMap[(_Item$itemName8 = Item.itemName) === null || _Item$itemName8 === void 0 ? void 0 : _Item$itemName8._id];
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(Row3, {
       key: i,
       row: Item,

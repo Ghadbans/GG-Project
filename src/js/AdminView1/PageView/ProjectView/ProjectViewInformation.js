@@ -303,7 +303,7 @@ function ProjectViewInformation() {
 
       const allProjectItems = relatedPurchases.flatMap((row) => (row.items || []).map((Item) => ({
         ...Item,
-        totalCostOut: (Item.itemName?._id === undefined || Item.itemName?._id === "") && (Number(Item.itemOut) || 0) === 0
+        totalCostOut: isEmptyBoxItem(Item) && (Number(Item.itemOut) || 0) === 0
           ? (Number(Item.totalGenerale) || 0)
           : (Number(Item.itemOut) || 0) * (Number(Item.itemCost) || 0)
       })));
@@ -343,6 +343,11 @@ function ProjectViewInformation() {
   };
 
 const cleanStr = (str) => String(str || '').trim().toLowerCase().replace(/[^a-z0-9]/g, '');
+
+const isEmptyBoxItem = (row) => {
+  const nameStr = typeof row?.itemName === 'string' ? row.itemName : row?.itemName?.itemName;
+  return !row?.itemName || !row?.itemName?._id || String(nameStr || '').trim() === '' || String(nameStr || '').trim().toLowerCase() === 'empty';
+};
 
 const isItemMatch = (item1, item2) => {
   if (!item1 || !item2) return false;
@@ -523,7 +528,7 @@ const isItemMatch = (item1, item2) => {
     const netOutQty = hasOutMovements ? Math.max(0, matchedOutQty - matchedReturnQty) : (parseFloat(row.itemOut) || 0);
 
     const unitCost = parseFloat(row.itemCost) || (buyQty > 0 ? totalBuy / buyQty : 0);
-    const costOut = (row.itemName?._id === undefined || row.itemName?._id === "") && netOutQty === 0 && totalBuy > 0
+    const costOut = isEmptyBoxItem(row) && netOutQty === 0 && totalBuy > 0
       ? totalBuy
       : (netOutQty * unitCost);
 
@@ -1221,7 +1226,7 @@ const isItemMatch = (item1, item2) => {
     const netOutQty = hasOutMovements ? Math.max(0, matchedOutQty - matchedReturnQty) : (parseFloat(row.itemOut) || 0);
 
     const unitCost = parseFloat(row.itemCost) || (buyQty > 0 ? totalBuy / buyQty : 0);
-    const totalCostOut = (row.itemName?._id === undefined || row.itemName?._id === "") && netOutQty === 0 && totalBuy > 0
+    const totalCostOut = isEmptyBoxItem(row) && netOutQty === 0 && totalBuy > 0
       ? totalBuy
       : (netOutQty * unitCost);
 
@@ -2441,7 +2446,7 @@ const isItemMatch = (item1, item2) => {
                             </tr>
                           </thead>
                           <tbody>
-                            {printData.items?.filter(Item => parseFloat(Item.itemQty) >= 0 || parseFloat(Item.itemBuy) > 0 || parseFloat(Item.itemOut) > 0).map((Item, i) => {
+                            {printData.items?.filter(Item => parseFloat(Item.itemQty) >= 0 || parseFloat(Item.itemBuy) > 0 || parseFloat(Item.itemOut) > 0 || Boolean(Item.newDescription && String(Item.newDescription).trim() !== '')).map((Item, i) => {
                               const relatedUnit = itemMap[Item.itemName?._id]
                               return (
                                 <Row3 key={i} row={Item} index={i} relatedUnit={relatedUnit} />

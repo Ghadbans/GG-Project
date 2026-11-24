@@ -6313,3 +6313,17 @@ Implemented a zero-manual-intervention in-app update pipeline across Electron Wi
    - Synchronized `3.7.14` across `package.json`, `server/package.json`, `server/index.js`, `server/routes/downloadRoutes.js`, and `android/app/build.gradle` (`versionCode 30714`).
    - Verified `pre-build-check.js` (253 files, 0 errors), `security-check.js --auto-start` (21/21 passed), and `regression-check.js --auto-start` (12/12 passed).
    - Built Web Portal (`dist_web/`), Electron Desktop (`dist/Global Gate Setup 3.7.14.exe` + `latest.yml`), and Capacitor Android APK (`GlobalGate-v3.7.14.apk`), synced to `server/public/downloads/` via `scripts/sync-releases.js`, and pushed to `origin main`.
+
+
+### Rule 109: Project Material Expense & Total Cost Inclusion for Purchased `"EMPTY"` Box Items (Ver 3.7.15)
+
+#### Changes Implemented
+1. **`isEmptyBoxItem(row)` Helper (`ProjectViewInformation.js`)**:
+   - Added `isEmptyBoxItem(row)` checking `!row?.itemName || !row?.itemName?._id || String(nameStr || '').trim() === '' || String(nameStr || '').trim().toLowerCase() === 'empty'` so non-catalog `"EMPTY"` box items with a placeholder `itemName: { _id, itemName: 'empty' }` are properly recognized.
+   - Applied `isEmptyBoxItem(row)` in `fetchInvoices`, `totalGeneralOutCost` (`OVERVIEW -> Material Expense`, `Total Expense`, `Invoiced Profit`, `Balance Remaining`, and `PURCHASE -> SubTotal` / `Total Generale`), and `Row3` (`Total-Cost` column in `PURCHASE` & Print).
+   - Purchased `"EMPTY"` box items (`totalBuy > 0`, e.g., `MIROIR INVOICE $2,120` via `IP-003899`) are now included in `TOTAL-COST`, `MATERIAL EXPENSE`, and `TOTAL GENERALE`, while unbought `TOTAL-NEED` estimates (`BUY = 0`) remain excluded.
+   - Updated the Print items filter to include custom-description rows (`Boolean(Item.newDescription && String(Item.newDescription).trim() !== '')`).
+2. **Version Synchronization & Multi-Platform Release (`v3.7.15`)**:
+   - Synchronized `3.7.15` across `package.json`, `server/package.json`, `server/index.js`, `server/routes/downloadRoutes.js`, and `android/app/build.gradle` (`versionCode 30715`).
+   - Verified `pre-build-check.js` (253 files, 0 errors), `security-check.js --auto-start` (21/21 passed), and `regression-check.js --auto-start` (12/12 passed).
+   - Built Web Portal (`dist_web/`), Electron Desktop (`dist/Global Gate Setup 3.7.15.exe` + `latest.yml`), and Capacitor Android APK (`GlobalGate-v3.7.15.apk`), synced to `server/public/downloads/` via `scripts/sync-releases.js`, and pushed to `origin main`.

@@ -3,7 +3,7 @@ const router = express.Router();
 const path = require('path');
 const fs = require('fs');
 
-const APP_VERSION = '3.7.14';
+const APP_VERSION = '3.7.15';
 const MIN_SUPPORTED_VERSION = '3.7.0';
 const RELEASE_NOTES = [
   'Invoices & Quotations: Optional TVA @ 16% checkbox (Tax Excluded / Tax Inclusive) linked to Dashboard VAT Statement.',
