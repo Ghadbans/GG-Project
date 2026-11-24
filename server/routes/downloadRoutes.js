@@ -3,10 +3,10 @@ const router = express.Router();
 const path = require('path');
 const fs = require('fs');
 
-const APP_VERSION = '3.7.15';
+const APP_VERSION = '3.7.16';
 const MIN_SUPPORTED_VERSION = '3.7.0';
 const RELEASE_NOTES = [
-  'Project Overview & Purchase: Purchased non-catalog (EMPTY-box) items now count in Material Expense & Total Cost.',
+  'Project Overview & Purchase: All custom EMPTY-box items (qty × unit price) now count in Material Expense & Total Cost.',
   'Convert to Invoice: Added optional TVA @ 16% checkbox across Quotation, Maintenance & Project/Purchase conversions.',
   'Payments & Print: Payment invoice list restricted to Sent & Partially-Paid; sharper (Tax Excluded)/(Hors Taxe) print font.'
 ];

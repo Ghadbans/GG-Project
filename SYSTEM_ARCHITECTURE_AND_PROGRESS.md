@@ -6327,3 +6327,18 @@ Implemented a zero-manual-intervention in-app update pipeline across Electron Wi
    - Synchronized `3.7.15` across `package.json`, `server/package.json`, `server/index.js`, `server/routes/downloadRoutes.js`, and `android/app/build.gradle` (`versionCode 30715`).
    - Verified `pre-build-check.js` (253 files, 0 errors), `security-check.js --auto-start` (21/21 passed), and `regression-check.js --auto-start` (12/12 passed).
    - Built Web Portal (`dist_web/`), Electron Desktop (`dist/Global Gate Setup 3.7.15.exe` + `latest.yml`), and Capacitor Android APK (`GlobalGate-v3.7.15.apk`), synced to `server/public/downloads/` via `scripts/sync-releases.js`, and pushed to `origin main`.
+
+
+### Rule 110: All `"EMPTY"` Box Items (`qty × unit price`) Counted in Project `TOTAL-COST` & `MATERIAL EXPENSE` + Updated `RELEASE_NOTES` (Ver 3.7.16)
+
+#### Changes Implemented
+1. **`getRowCostOut` Helper (`ProjectViewInformation.js`)**:
+   - Added `getRowCostOut(row, netOutQty, totalBuy, unitCost)` shared across `fetchInvoices`, `totalGeneralOutCost`, and `Row3`.
+   - For any custom/non-catalog `"EMPTY"` box item (`isEmptyBoxItem(row)`), `TOTAL-COST` and `MATERIAL EXPENSE` always count `(parseFloat(row.itemQty) || 0) * (parseFloat(row.itemCost) || 0)` (falling back to `totalCost` / `totalBuy` if `qty * cost === 0`), regardless of `BUY` / `Item Purchase` status (so both `MIROIR INVOICE $2,120` = `$2,120.00` and `SIGN BOARD UPGRADING PAINT / INSTALLATION` = `$150.00` are included, alongside catalog `Item Out` costs such as `BLACK TUBE` = `$0.28` -> `$2,270.28`).
+   - Catalog items (`!isEmptyBoxItem(row)`) continue to count `netOutQty * unitCost` only.
+2. **Release Notes Synchronization (`server/routes/downloadRoutes.js`)**:
+   - Updated `RELEASE_NOTES` served by `GET /downloads/version` so the Desktop/Web "WHAT'S NEW" auto-update dialog displays the latest `v3.7.16` changes.
+3. **Version Synchronization & Multi-Platform Release (`v3.7.16`)**:
+   - Synchronized `3.7.16` across `package.json`, `server/package.json`, `server/index.js`, `server/routes/downloadRoutes.js`, and `android/app/build.gradle` (`versionCode 30716`).
+   - Verified `pre-build-check.js` (253 files, 0 errors), `security-check.js --auto-start` (21/21 passed), and `regression-check.js --auto-start` (12/12 passed).
+   - Built Web Portal (`dist_web/`), Electron Desktop (`dist/Global Gate Setup 3.7.16.exe` + `latest.yml`), and Capacitor Android APK (`GlobalGate-v3.7.16.apk`), synced to `server/public/downloads/` via `scripts/sync-releases.js`, and pushed to `origin main`.

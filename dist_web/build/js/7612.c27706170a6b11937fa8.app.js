@@ -1705,7 +1705,7 @@ function ProjectViewInformation() {
         var resInvoices = yield axios__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_33__/* .ENDPOINT_URL */ .m, "/invoice?summary=true").concat(pIdQuery).concat(pIdsQuery).concat(invIdsQuery).concat(pNamesQuery).concat(pNameQuery).concat(pNumQuery));
         var relatedInvoices = ((_resInvoices$data = resInvoices.data) === null || _resInvoices$data === void 0 ? void 0 : _resInvoices$data.data) || [];
         var allProjectItems = relatedPurchases.flatMap(row => (row.items || []).map(Item => _objectSpread(_objectSpread({}, Item), {}, {
-          totalCostOut: isEmptyBoxItem(Item) && (Number(Item.itemOut) || 0) === 0 ? Number(Item.totalGenerale) || 0 : (Number(Item.itemOut) || 0) * (Number(Item.itemCost) || 0)
+          totalCostOut: getRowCostOut(Item, Number(Item.itemOut) || 0, Number(Item.totalGenerale) || 0, Number(Item.itemCost) || 0)
         })));
         setItem(allProjectItems);
         setPurchase(relatedPurchases);
@@ -1771,6 +1771,15 @@ function ProjectViewInformation() {
     var _row$itemName, _row$itemName2;
     var nameStr = typeof (row === null || row === void 0 ? void 0 : row.itemName) === 'string' ? row.itemName : row === null || row === void 0 || (_row$itemName = row.itemName) === null || _row$itemName === void 0 ? void 0 : _row$itemName.itemName;
     return !(row !== null && row !== void 0 && row.itemName) || !(row !== null && row !== void 0 && (_row$itemName2 = row.itemName) !== null && _row$itemName2 !== void 0 && _row$itemName2._id) || String(nameStr || '').trim() === '' || String(nameStr || '').trim().toLowerCase() === 'empty';
+  };
+  var getRowCostOut = (row, netOutQty, totalBuy, unitCost) => {
+    if (isEmptyBoxItem(row)) {
+      var qtyCost = (parseFloat(row.itemQty) || 0) * (parseFloat(row.itemCost) || 0);
+      if (qtyCost > 0) return qtyCost;
+      if (Number(row.totalCost) > 0) return Number(row.totalCost);
+      return totalBuy > 0 ? totalBuy : 0;
+    }
+    return (netOutQty || 0) * (unitCost || 0);
   };
   var isItemMatch = (item1, item2) => {
     var _item1$itemName, _item2$itemName, _item1$itemName2, _item2$itemName2;
@@ -1996,7 +2005,7 @@ function ProjectViewInformation() {
     var hasOutMovements = (itemOut || []).length > 0 || (itemReturn || []).length > 0;
     var netOutQty = hasOutMovements ? Math.max(0, matchedOutQty - matchedReturnQty) : parseFloat(row.itemOut) || 0;
     var unitCost = parseFloat(row.itemCost) || (buyQty > 0 ? totalBuy / buyQty : 0);
-    var costOut = isEmptyBoxItem(row) && netOutQty === 0 && totalBuy > 0 ? totalBuy : netOutQty * unitCost;
+    var costOut = getRowCostOut(row, netOutQty, totalBuy, unitCost);
     return sum + (costOut || 0);
   }, 0) : 0;
   var newOutR = [...itemPurchase, ...itemOut, ...itemReturn];
@@ -2874,7 +2883,7 @@ function ProjectViewInformation() {
     var hasOutMovements = (itemOut || []).length > 0 || (itemReturn || []).length > 0;
     var netOutQty = hasOutMovements ? Math.max(0, matchedOutQty - matchedReturnQty) : parseFloat(row.itemOut) || 0;
     var unitCost = parseFloat(row.itemCost) || (buyQty > 0 ? totalBuy / buyQty : 0);
-    var totalCostOut = isEmptyBoxItem(row) && netOutQty === 0 && totalBuy > 0 ? totalBuy : netOutQty * unitCost;
+    var totalCostOut = getRowCostOut(row, netOutQty, totalBuy, unitCost);
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(react__WEBPACK_IMPORTED_MODULE_2__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", {
       style: {
         '& > *': {

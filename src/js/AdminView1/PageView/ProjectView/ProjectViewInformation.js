@@ -303,9 +303,7 @@ function ProjectViewInformation() {
 
       const allProjectItems = relatedPurchases.flatMap((row) => (row.items || []).map((Item) => ({
         ...Item,
-        totalCostOut: isEmptyBoxItem(Item) && (Number(Item.itemOut) || 0) === 0
-          ? (Number(Item.totalGenerale) || 0)
-          : (Number(Item.itemOut) || 0) * (Number(Item.itemCost) || 0)
+        totalCostOut: getRowCostOut(Item, Number(Item.itemOut) || 0, Number(Item.totalGenerale) || 0, Number(Item.itemCost) || 0)
       })));
 
       setItem(allProjectItems);
@@ -347,6 +345,16 @@ const cleanStr = (str) => String(str || '').trim().toLowerCase().replace(/[^a-z0
 const isEmptyBoxItem = (row) => {
   const nameStr = typeof row?.itemName === 'string' ? row.itemName : row?.itemName?.itemName;
   return !row?.itemName || !row?.itemName?._id || String(nameStr || '').trim() === '' || String(nameStr || '').trim().toLowerCase() === 'empty';
+};
+
+const getRowCostOut = (row, netOutQty, totalBuy, unitCost) => {
+  if (isEmptyBoxItem(row)) {
+    const qtyCost = (parseFloat(row.itemQty) || 0) * (parseFloat(row.itemCost) || 0);
+    if (qtyCost > 0) return qtyCost;
+    if (Number(row.totalCost) > 0) return Number(row.totalCost);
+    return totalBuy > 0 ? totalBuy : 0;
+  }
+  return (netOutQty || 0) * (unitCost || 0);
 };
 
 const isItemMatch = (item1, item2) => {
@@ -528,9 +536,7 @@ const isItemMatch = (item1, item2) => {
     const netOutQty = hasOutMovements ? Math.max(0, matchedOutQty - matchedReturnQty) : (parseFloat(row.itemOut) || 0);
 
     const unitCost = parseFloat(row.itemCost) || (buyQty > 0 ? totalBuy / buyQty : 0);
-    const costOut = isEmptyBoxItem(row) && netOutQty === 0 && totalBuy > 0
-      ? totalBuy
-      : (netOutQty * unitCost);
+    const costOut = getRowCostOut(row, netOutQty, totalBuy, unitCost);
 
     return sum + (costOut || 0);
   }, 0) : 0;
@@ -1226,9 +1232,7 @@ const isItemMatch = (item1, item2) => {
     const netOutQty = hasOutMovements ? Math.max(0, matchedOutQty - matchedReturnQty) : (parseFloat(row.itemOut) || 0);
 
     const unitCost = parseFloat(row.itemCost) || (buyQty > 0 ? totalBuy / buyQty : 0);
-    const totalCostOut = isEmptyBoxItem(row) && netOutQty === 0 && totalBuy > 0
-      ? totalBuy
-      : (netOutQty * unitCost);
+    const totalCostOut = getRowCostOut(row, netOutQty, totalBuy, unitCost);
 
     return (
       <React.Fragment>
