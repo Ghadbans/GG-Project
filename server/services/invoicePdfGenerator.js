@@ -122,9 +122,9 @@ function generateInvoicePdfBuffer(invoice) {
       doc.fillColor('#475569').fontSize(7.5).font('Helvetica')
         .text('RCCM RCM CD/KWZ/RCCM/22-B-00317', 330, 40, { width: 235, align: 'right' })
         .text('ID NAT ID NAT 14-H5300N11179P', 330, 50, { width: 235, align: 'right' })
-        .text('AVENUE DES ROCHES N° 20 QUARTIER INDUSTRIEL', 330, 60, { width: 235, align: 'right' })
-        .text('LUALABA KOLWEZI', 330, 70, { width: 235, align: 'right' })
-        .text('DEMOCRATIC REPUBLIC OF CONGO', 330, 80, { width: 235, align: 'right' });
+        .text('AVENUE SALONGO Q/INDUSTRIEL C/MANIKA', 330, 60, { width: 235, align: 'right' })
+        .text('KOLWEZI LUALABA', 330, 70, { width: 235, align: 'right' })
+        .text('DRC', 330, 80, { width: 235, align: 'right' });
 
       // Horizontal separator line
       doc.rect(32, 94, 533, 1.2).fill('#093170');
@@ -369,12 +369,22 @@ function drawCompanyHeader(doc, title) {
   doc.fillColor('#475569').fontSize(7.5).font('Helvetica')
     .text('RCCM RCM CD/KWZ/RCCM/22-B-00317', 330, 40, { width: 235, align: 'right' })
     .text('ID NAT ID NAT 14-H5300N11179P', 330, 50, { width: 235, align: 'right' })
-    .text('AVENUE DES ROCHES N° 20 QUARTIER INDUSTRIEL', 330, 60, { width: 235, align: 'right' })
-    .text('LUALABA KOLWEZI', 330, 70, { width: 235, align: 'right' })
-    .text('DEMOCRATIC REPUBLIC OF CONGO', 330, 80, { width: 235, align: 'right' });
+    .text('AVENUE SALONGO Q/INDUSTRIEL C/MANIKA', 330, 60, { width: 235, align: 'right' })
+    .text('KOLWEZI LUALABA', 330, 70, { width: 235, align: 'right' })
+    .text('DRC', 330, 80, { width: 235, align: 'right' });
 
   doc.rect(32, 94, 533, 1.2).fill('#093170');
   doc.fillColor('#093170').fontSize(13).font('Helvetica-Bold').text(title, 32, 102, { width: 533, align: 'center', characterSpacing: 1.5 });
+}
+
+function drawBankDetailsBlock(doc, startY) {
+  let y = startY;
+  doc.fillColor('#0f172a').fontSize(7.5).font('Helvetica-Bold')
+    .text('BANK: SOFIBANQUE SA', 32, y)
+    .text('ENTITLED: GLOBAL GATE SARL', 32, y + 11)
+    .text('BANK ACCOUNT: 00023233330214247020073', 32, y + 22)
+    .text('CODE SWIFT: SFBXCDKIXXX', 32, y + 33);
+  return y + 48;
 }
 
 function drawCompanyFooter(doc) {
@@ -420,7 +430,7 @@ function drawCompanyFooter(doc) {
 }
 
 /**
- * Generates an official Global Gate S.A.R.L Payment Receipt PDF buffer.
+ * Generates an official Global Gate S.A.R.L Payment PDF buffer matching the system Print-to-PDF template.
  */
 function generatePaymentPdfBuffer(payment) {
   return new Promise((resolve, reject) => {
@@ -440,32 +450,41 @@ function generatePaymentPdfBuffer(payment) {
       const payDate = formatDate(payment.paymentDate || new Date());
       const cust = payment.customerName || {};
       const custName = (typeof cust === 'string' ? cust : (cust.Customer || cust.customerName || cust.customerFullName || 'VALUED CUSTOMER')).toUpperCase();
-      const custAddress = (typeof cust === 'object' ? (cust.billingAddress || cust.address || 'DRC CONGO, KOLWEZI') : 'DRC CONGO, KOLWEZI').toUpperCase();
+      const custAddress = (typeof cust === 'object' ? (cust.billingAddress || cust.address || '') : '').toUpperCase();
 
-      drawCompanyHeader(doc, 'PAYMENT RECEIPT');
+      drawCompanyHeader(doc, 'PAYMENT');
 
       const metaY = 124;
-      doc.fillColor('#64748b').fontSize(7.5).font('Helvetica-Bold').text('PAYMENT FROM', 32, metaY);
+      doc.fillColor('#64748b').fontSize(7.5).font('Helvetica-BoldOblique').text('PAYMENT FROM', 32, metaY);
       doc.fillColor('#0f172a').fontSize(9.5).font('Helvetica-Bold').text(custName, 32, metaY + 11, { width: 250 });
-      doc.fillColor('#475569').fontSize(8).font('Helvetica').text(custAddress, 32, metaY + 24, { width: 250 });
+      if (custAddress) {
+        doc.fillColor('#475569').fontSize(8).font('Helvetica').text(custAddress, 32, metaY + 24, { width: 250 });
+      }
 
       let rCurY = metaY;
-      const drawMeta = (label, val) => {
+      const modeText = safeString(payment.modes || payment.mode || 'CASH').toUpperCase();
+      const drawMeta = (label, val, highlight = false) => {
         if (!val) return;
-        doc.fillColor('#475569').fontSize(7.5).font('Helvetica-Bold').text(label, 370, rCurY, { width: 70 });
-        doc.fillColor('#0f172a').fontSize(7.5).font('Helvetica').text(String(val), 445, rCurY, { width: 120 });
-        rCurY += 12;
+        doc.fillColor('#0f172a').fontSize(7.5).font('Helvetica-Bold').text(label, 375, rCurY, { width: 55 });
+        if (highlight) {
+          doc.rect(433, rCurY - 2, 42, 12).fill('#fef08a');
+          doc.fillColor('#0f172a').fontSize(7.5).font('Helvetica-Bold').text(String(val), 435, rCurY, { width: 125 });
+        } else {
+          doc.fillColor('#0f172a').fontSize(7.5).font('Helvetica').text(String(val), 435, rCurY, { width: 125 });
+        }
+        rCurY += 13;
       };
       drawMeta('PAY #', payNum);
       drawMeta('DATE', payDate);
-      drawMeta('MODE', safeString(payment.modes || payment.mode || 'CASH').toUpperCase());
-      drawMeta('REASON', safeString(payment.reason || 'Invoice'));
-      drawMeta('STATUS', safeString(payment.status || 'Cleared'));
+      drawMeta('MODE', modeText, true);
+      drawMeta('REASON', safeString(payment.reason || 'INVOICE').toUpperCase());
+      drawMeta('TYPE', 'PAYMENT');
+      drawMeta('STATUS', safeString(payment.status || 'CLEARED').toUpperCase());
 
       let y = Math.max(metaY + 56, rCurY + 12);
       if (payment.description) {
-        doc.fillColor('#475569').fontSize(7.5).font('Helvetica-Bold').text('DESCRIPTION: ', 32, y, { continued: true });
-        doc.fillColor('#0f172a').font('Helvetica').text(safeString(payment.description).toUpperCase(), { width: 450 });
+        doc.fillColor('#0f172a').fontSize(7.5).font('Helvetica-Bold').text('DESCRIPTION', 32, y, { width: 75 });
+        doc.fillColor('#334155').font('Helvetica').text(safeString(payment.description).toUpperCase(), 115, y, { width: 440 });
         y += 18;
       }
 
@@ -473,11 +492,12 @@ function generatePaymentPdfBuffer(payment) {
         doc.rect(32, topY, 533, 18).fill('#eff6ff');
         doc.rect(32, topY, 533, 18).strokeColor('#cbd5e1').lineWidth(0.5).stroke();
         doc.fillColor('#093170').fontSize(7.5).font('Helvetica-Bold');
-        doc.text('INVOICE #', 38, topY + 5, { width: 85 });
-        doc.text('DATE', 128, topY + 5, { width: 75 });
-        doc.text('SUBJECT', 208, topY + 5, { width: 185 });
-        doc.text('INVOICE AMT', 398, topY + 5, { width: 78, align: 'right' });
-        doc.text('AMOUNT PAID', 480, topY + 5, { width: 80, align: 'right' });
+        doc.text('#', 36, topY + 5, { width: 18, align: 'center' });
+        doc.text('REFERENCE', 58, topY + 5, { width: 65 });
+        doc.text('DATE', 128, topY + 5, { width: 60 });
+        doc.text('SUBJECT', 194, topY + 5, { width: 200 });
+        doc.text('INVOICE AMOUNT', 398, topY + 5, { width: 80, align: 'right' });
+        doc.text('AMOUNT PAID', 482, topY + 5, { width: 78, align: 'right' });
       };
 
       drawTableHeader(y);
@@ -489,12 +509,16 @@ function generatePaymentPdfBuffer(payment) {
 
       if (refs.length === 0) {
         doc.rect(32, y, 533, 20).strokeColor('#e2e8f0').lineWidth(0.5).stroke();
-        doc.fillColor('#0f172a').fontSize(8).font('Helvetica').text('Direct Payment / Credit Settlement', 38, y + 6, { width: 350 });
-        doc.text(formatCurrency(payment.amount || payment.PaymentReceived || 0), 480, y + 6, { width: 80, align: 'right' });
+        doc.fillColor('#0f172a').fontSize(7.5).font('Helvetica').text('1', 36, y + 6, { width: 18, align: 'center' });
+        doc.text('-', 58, y + 6, { width: 65 });
+        doc.text(payDate, 128, y + 6, { width: 60 });
+        doc.text('DIRECT PAYMENT / CREDIT SETTLEMENT', 194, y + 6, { width: 200 });
+        doc.text(formatCurrency(payment.amount || payment.PaymentReceived || 0), 398, y + 6, { width: 80, align: 'right' });
+        doc.text(formatCurrency(payment.amount || payment.PaymentReceived || 0), 482, y + 6, { width: 78, align: 'right' });
         y += 20;
       } else {
-        for (const row of refs) {
-          if (y > 700) {
+        refs.forEach((row, idx) => {
+          if (y > 680) {
             drawCompanyFooter(doc);
             doc.addPage();
             drawTableHeader(32);
@@ -506,34 +530,40 @@ function generatePaymentPdfBuffer(payment) {
           const invAmt = formatCurrency(row.totalInvoice || row.total || row.amount || 0);
           const paidAmt = formatCurrency(row.total || row.amountPaid || row.Amount || 0);
 
-          const subjH = doc.heightOfString(subj, { width: 185 });
+          const subjH = doc.heightOfString(subj, { width: 200 });
           const rowH = Math.max(20, subjH + 10);
           doc.rect(32, y, 533, rowH).strokeColor('#e2e8f0').lineWidth(0.5).stroke();
           doc.fillColor('#0f172a').fontSize(7.5).font('Helvetica');
-          doc.text(refNum, 38, y + 6, { width: 85 });
-          doc.text(refDate, 128, y + 6, { width: 75 });
-          doc.text(subj, 208, y + 6, { width: 185 });
-          doc.text(invAmt, 398, y + 6, { width: 78, align: 'right' });
-          doc.font('Helvetica-Bold').text(paidAmt, 480, y + 6, { width: 80, align: 'right' });
+          doc.text(String(idx + 1), 36, y + 6, { width: 18, align: 'center' });
+          doc.text(refNum, 58, y + 6, { width: 65 });
+          doc.text(refDate, 128, y + 6, { width: 60 });
+          doc.text(subj, 194, y + 6, { width: 200 });
+          doc.text(invAmt, 398, y + 6, { width: 80, align: 'right' });
+          doc.text(paidAmt, 482, y + 6, { width: 78, align: 'right' });
           y += rowH;
-        }
+        });
       }
 
-      y += 14;
+      y += 10;
       const amtUsd = Number(payment.amount || payment.PaymentReceived || payment.AmountPaidDollar || 0);
       const amtFc = Number(payment.AmountPaidFC || 0);
-      const drawSummaryLine = (label, val, bold = false) => {
-        doc.rect(340, y, 225, 18).strokeColor('#e2e8f0').lineWidth(0.5).stroke();
-        doc.fillColor('#334155').fontSize(8).font(bold ? 'Helvetica-Bold' : 'Helvetica').text(label, 348, y + 5, { width: 120 });
-        doc.fillColor('#093170').font(bold ? 'Helvetica-Bold' : 'Helvetica').text(val, 470, y + 5, { width: 88, align: 'right' });
-        y += 18;
-      };
-      drawSummaryLine('AMOUNT RECEIVED', formatCurrency(amtUsd), true);
-      drawSummaryLine('AMOUNT PAID FC', `FC ${amtFc.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`);
-      drawSummaryLine('AMOUNT PAID $', formatCurrency(amtUsd), true);
+      const totalPaidUsd = Number(payment.PaymentReceived || payment.amount || amtUsd);
+      const creditVal = Number(payment.remaining || payment.credit || 0);
 
-      y += 18;
-      doc.fillColor('#093170').fontSize(8.5).font('Helvetica-Bold').text('THANK YOU FOR YOUR BUSINESS & PAYMENT!', 32, y, { width: 533, align: 'center' });
+      const drawSummaryLine = (label, val) => {
+        doc.moveTo(310, y + 18).lineTo(565, y + 18).strokeColor('#cbd5e1').lineWidth(0.5).stroke();
+        doc.fillColor('#334155').fontSize(7.5).font('Helvetica').text(label, 315, y + 5, { width: 150, align: 'center' });
+        doc.fillColor('#0f172a').font('Helvetica').text(val, 470, y + 5, { width: 92, align: 'right' });
+        y += 20;
+      };
+      drawSummaryLine('AMOUNT RECEIVED', formatCurrency(amtUsd));
+      drawSummaryLine('AMOUNT PAID FC', `FC${amtFc.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`);
+      drawSummaryLine('AMOUNT PAID $', formatCurrency(amtUsd));
+      drawSummaryLine('TOTAL PAID USD', formatCurrency(totalPaidUsd));
+      drawSummaryLine('CREDIT', formatCurrency(creditVal));
+
+      y += 12;
+      drawBankDetailsBlock(doc, y);
       drawCompanyFooter(doc);
       doc.end();
     } catch (err) {
@@ -543,7 +573,7 @@ function generatePaymentPdfBuffer(payment) {
 }
 
 /**
- * Generates an official Global Gate S.A.R.L Quotation PDF buffer.
+ * Generates an official Global Gate S.A.R.L Quotation PDF buffer matching the system Print-to-PDF template.
  */
 function generateQuotationPdfBuffer(estimate) {
   return new Promise((resolve, reject) => {
@@ -568,76 +598,104 @@ function generateQuotationPdfBuffer(estimate) {
       drawCompanyHeader(doc, 'QUOTATION');
 
       const metaY = 124;
-      doc.fillColor('#64748b').fontSize(7.5).font('Helvetica-Bold').text('QUOTE FOR', 32, metaY);
+      doc.fillColor('#64748b').fontSize(7.5).font('Helvetica-Bold').text('QUOTATION FOR', 32, metaY);
       doc.fillColor('#0f172a').fontSize(9.5).font('Helvetica-Bold').text(custName, 32, metaY + 11, { width: 250 });
       doc.fillColor('#475569').fontSize(8).font('Helvetica').text(custAddress, 32, metaY + 24, { width: 250 });
 
       let rCurY = metaY;
       const drawMeta = (label, val) => {
         if (!val) return;
-        doc.fillColor('#475569').fontSize(7.5).font('Helvetica-Bold').text(label, 370, rCurY, { width: 70 });
-        doc.fillColor('#0f172a').fontSize(7.5).font('Helvetica').text(String(val), 445, rCurY, { width: 120 });
-        rCurY += 12;
+        doc.fillColor('#0f172a').fontSize(7.5).font('Helvetica-Bold').text(label, 355, rCurY, { width: 70 });
+        doc.fillColor('#0f172a').fontSize(7.5).font('Helvetica').text(String(val), 430, rCurY, { width: 135 });
+        rCurY += 13;
       };
       drawMeta('QUOTATION #', estNum);
       drawMeta('DATE', estDate);
-      drawMeta('STATUS', safeString(estimate.status || 'Draft'));
       if (estimate.estimateSubject) drawMeta('SUBJECT', safeString(estimate.estimateSubject).toUpperCase());
 
-      let y = Math.max(metaY + 56, rCurY + 12);
+      let y = Math.max(metaY + 54, rCurY + 10);
+      const topNote = safeString(estimate.estimateNote || '', '');
+      if (topNote) {
+        doc.fillColor('#0f172a').fontSize(7.5).font('Helvetica-Bold').text('NOTE', 32, y);
+        y += 11;
+        doc.fillColor('#334155').fontSize(7.5).font('Helvetica').text(topNote.toUpperCase(), 32, y, { width: 533 });
+        y += doc.heightOfString(topNote.toUpperCase(), { width: 533 }) + 10;
+      }
+
       const drawHeader = (topY) => {
         doc.rect(32, topY, 533, 18).fill('#eff6ff');
         doc.rect(32, topY, 533, 18).strokeColor('#cbd5e1').lineWidth(0.5).stroke();
         doc.fillColor('#093170').fontSize(7.5).font('Helvetica-Bold');
-        doc.text('#', 38, topY + 5, { width: 22 });
-        doc.text('ITEM & DESCRIPTION', 64, topY + 5, { width: 245 });
-        doc.text('QTY', 315, topY + 5, { width: 45, align: 'right' });
-        doc.text('RATE', 368, topY + 5, { width: 70, align: 'right' });
-        doc.text('AMOUNT', 445, topY + 5, { width: 112, align: 'right' });
+        doc.text('#', 36, topY + 5, { width: 18, align: 'center' });
+        doc.text('ITEM', 58, topY + 5, { width: 120 });
+        doc.text('DESCRIPTION', 182, topY + 5, { width: 190 });
+        doc.text('QTY', 376, topY + 5, { width: 48, align: 'right' });
+        doc.text('RATE', 428, topY + 5, { width: 65, align: 'right' });
+        doc.text('TOTAL', 497, topY + 5, { width: 65, align: 'right' });
       };
 
       drawHeader(y);
       y += 18;
       const items = Array.isArray(estimate.items) ? estimate.items : [];
       items.forEach((item, idx) => {
-        if (y > 700) {
+        if (y > 680) {
           drawCompanyFooter(doc);
           doc.addPage();
           drawHeader(32);
           y = 50;
         }
-        const iName = safeString(item.itemName && typeof item.itemName === 'object' ? item.itemName.itemName : item.itemName, '');
-        const desc = safeString(item.itemDescription || item.newDescription || '', '');
-        const fullText = [iName, desc].filter(Boolean).join('\n').toUpperCase() || '-';
-        const qty = `${Number(item.itemQty || 0)} ${safeString(item.unit, '')}`.trim();
+        const iName = safeString(item.itemName && typeof item.itemName === 'object' ? item.itemName.itemName : item.itemName, '-').toUpperCase();
+        const desc = safeString(item.itemDescription || item.newDescription || '', '-').toUpperCase();
+        const qty = `${Number(item.itemQty || 0)} ${safeString(item.unit, '')}`.trim().toUpperCase();
         const rate = formatCurrency(item.itemRate || 0);
         const amt = formatCurrency(item.itemAmount || (Number(item.itemQty || 0) * Number(item.itemRate || 0)));
 
-        const textH = doc.heightOfString(fullText, { width: 245 });
-        const rowH = Math.max(20, textH + 10);
+        const nameH = doc.heightOfString(iName, { width: 120 });
+        const descH = doc.heightOfString(desc, { width: 190 });
+        const rowH = Math.max(20, Math.max(nameH, descH) + 10);
         doc.rect(32, y, 533, rowH).strokeColor('#e2e8f0').lineWidth(0.5).stroke();
         doc.fillColor('#0f172a').fontSize(7.5).font('Helvetica');
-        doc.text(String(idx + 1), 38, y + 6, { width: 22 });
-        doc.text(fullText, 64, y + 6, { width: 245 });
-        doc.text(qty, 315, y + 6, { width: 45, align: 'right' });
-        doc.text(rate, 368, y + 6, { width: 70, align: 'right' });
-        doc.font('Helvetica-Bold').text(amt, 445, y + 6, { width: 112, align: 'right' });
+        doc.text(String(idx + 1), 36, y + 6, { width: 18, align: 'center' });
+        doc.text(iName, 58, y + 6, { width: 120 });
+        doc.text(desc, 182, y + 6, { width: 190 });
+        doc.text(qty, 376, y + 6, { width: 48, align: 'right' });
+        doc.text(rate, 428, y + 6, { width: 65, align: 'right' });
+        doc.text(amt, 497, y + 6, { width: 65, align: 'right' });
         y += rowH;
       });
 
-      y += 14;
+      y += 10;
       const subTotal = Number(estimate.subTotal || 0);
       const tax = Number(estimate.total || 0);
       const totalInvoice = Number(estimate.totalInvoice ?? (subTotal + tax));
-      const drawTotal = (label, val, bold = false) => {
-        doc.rect(340, y, 225, 18).strokeColor('#e2e8f0').lineWidth(0.5).stroke();
-        doc.fillColor('#334155').fontSize(8).font(bold ? 'Helvetica-Bold' : 'Helvetica').text(label, 348, y + 5, { width: 115 });
-        doc.fillColor('#093170').font(bold ? 'Helvetica-Bold' : 'Helvetica').text(val, 468, y + 5, { width: 90, align: 'right' });
-        y += 18;
+      const noteText = safeString(estimate.note || 'WE LOOK FORWARD TO THE OPPORTUNITY TO DO BUSINESS WITH YOU.').toUpperCase();
+      doc.fillColor('#334155').fontSize(7.5).font('Helvetica').text(noteText, 32, y + 6, { width: 220 });
+
+      const drawTotalLine = (label, val, bold = false, highlightColor = '#0f172a') => {
+        doc.moveTo(270, y + 20).lineTo(565, y + 20).strokeColor('#cbd5e1').lineWidth(0.5).stroke();
+        doc.fillColor('#334155').fontSize(7.5).font(bold ? 'Helvetica-Bold' : 'Helvetica').text(label, 275, y + 6, { width: 155, align: 'center' });
+        doc.fillColor(highlightColor).font(bold ? 'Helvetica-Bold' : 'Helvetica').text(val, 435, y + 6, { width: 127, align: 'right' });
+        y += 22;
       };
-      drawTotal('SUBTOTAL', formatCurrency(subTotal));
-      if (tax > 0) drawTotal('TVA / TAX', formatCurrency(tax));
-      drawTotal('TOTAL QUOTATION', formatCurrency(totalInvoice), true);
+      drawTotalLine('SUB TOTAL (TAX EXCLUDED)', formatCurrency(subTotal));
+      if (tax > 0) drawTotalLine('TVA / TAX', formatCurrency(tax));
+      drawTotalLine('TOTAL', formatCurrency(totalInvoice));
+      drawTotalLine('BALANCE DUE', formatCurrency(totalInvoice), true, '#093170');
+
+      const totalWords = (estimate.totalW || numberToWords(totalInvoice)).toUpperCase();
+      doc.fillColor('#334155').fontSize(7.5).font('Helvetica').text('TOTAL IN WORDS', 275, y + 5, { width: 100 });
+      doc.fillColor('#0f172a').fontSize(7.5).font('Helvetica').text(totalWords, 378, y + 5, { width: 185 });
+      y += 32;
+
+      y = drawBankDetailsBlock(doc, y);
+      y += 6;
+      const terms = safeString(
+        estimate.terms ||
+        'QUOTE VALID FOR 7 DAYS (SUBJECT TO STOCK/MARKET CHANGES). PAYMENT: 50% DEPOSIT / 40% MID-PROJECT / 10% UPON COMPLETION. ALL MATERIAL SALES ARE FINAL. WE ARE NOT RESPONSIBLE FOR LOSS, THEFT, OR DAMAGE CAUSED BY DEFECTIVE PARTS OR EXTERNAL FACTORS.'
+      ).toUpperCase();
+      doc.fillColor('#0f172a').fontSize(7.5).font('Helvetica-Bold').text('TERMS & CONDITIONS', 32, y);
+      y += 11;
+      doc.fillColor('#334155').fontSize(7).font('Helvetica').text(terms, 32, y, { width: 533 });
 
       drawCompanyFooter(doc);
       doc.end();

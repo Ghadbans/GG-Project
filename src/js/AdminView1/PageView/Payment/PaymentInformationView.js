@@ -407,21 +407,7 @@ function PaymentInformationView() {
                                         </span>
                                       </Typography>
                                     </div>
-                                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                      <Button
-                                        variant="contained"
-                                        disableElevation
-                                        startIcon={<WhatsAppIcon />}
-                                        onClick={() => setWhatsAppDoc(row)}
-                                        sx={{
-                                          bgcolor: '#25D366',
-                                          '&:hover': { bgcolor: '#1ebe5d' },
-                                          fontWeight: 'bold',
-                                          textTransform: 'none'
-                                        }}
-                                      >
-                                        Send by WhatsApp
-                                      </Button>
+                                    <div>
                                       <Button
                                         aria-controls={open ? 'demo-customized-menu' : undefined}
                                         aria-haspopup="true"

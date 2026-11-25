@@ -3,12 +3,12 @@ const router = express.Router();
 const path = require('path');
 const fs = require('fs');
 
-const APP_VERSION = '3.7.20';
+const APP_VERSION = '3.7.21';
 const MIN_SUPPORTED_VERSION = '3.7.0';
 const RELEASE_NOTES = [
-  'Payment & Quotation WhatsApp: Send Payment Receipts (PAY-...) with Thank-You message & auto-PDF download, plus Quotation (Q-...) PDF WhatsApp dispatch.',
-  'Logout Backup: Controlled 4-concurrent collection queue eliminates ERR_INSUFFICIENT_RESOURCES on large 600MB+ backups.',
-  'Employee API: Added /endpoint/employee/:id alias alongside /endpoint/get-employee/:id.'
+  'Payment & Quotation PDF Templates: Matched official Print-to-PDF templates 1:1 (SOFIBANQUE SA bank details, terms, columns, and Payment OPTIONS menu placement).',
+  'Invoice PDF Template: Updated company address header to match official system Print-to-PDF layout.',
+  'Logout Backup & Employee API: 4-concurrent backup queue + /endpoint/employee/:id alias.'
 ];
 
 const DOWNLOADS_DIR = path.join(__dirname, '../public/downloads');

@@ -919,26 +919,7 @@ function PaymentInformationView() {
         fontSize: '14px',
         verticalAlign: 'middle'
       }
-    }, row.status || 'Cleared'))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.createElement("div", {
-      style: {
-        display: 'flex',
-        alignItems: 'center',
-        gap: '8px'
-      }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
-      variant: "contained",
-      disableElevation: true,
-      startIcon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.createElement(_mui_icons_material_WhatsApp__WEBPACK_IMPORTED_MODULE_52__/* ["default"] */ .A, null),
-      onClick: () => setWhatsAppDoc(row),
-      sx: {
-        bgcolor: '#25D366',
-        '&:hover': {
-          bgcolor: '#1ebe5d'
-        },
-        fontWeight: 'bold',
-        textTransform: 'none'
-      }
-    }, "Send by WhatsApp"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+    }, row.status || 'Cleared'))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
       "aria-controls": open ? 'demo-customized-menu' : undefined,
       "aria-haspopup": "true",
       "aria-expanded": open ? 'true' : undefined,

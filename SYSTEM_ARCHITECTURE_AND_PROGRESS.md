@@ -6403,3 +6403,18 @@ Implemented a zero-manual-intervention in-app update pipeline across Electron Wi
    - Synchronized `3.7.20` across `package.json`, `server/package.json`, `server/index.js`, `server/routes/downloadRoutes.js`, and `android/app/build.gradle` (`versionCode 30720`).
    - Verified `pre-build-check.js` (254 files, 0 errors), `security-check.js --auto-start` (21/21 passed), and `regression-check.js --auto-start` (12/12 passed).
    - Built Web Portal (`dist_web/`), Electron Desktop (`dist/Global Gate Setup 3.7.20.exe` + `latest.yml`), and Capacitor Android APK (`GlobalGate-v3.7.20.apk`), synced to `server/public/downloads/` via `scripts/sync-releases.js`, and pushed to `origin main`.
+
+
+### Rule 115: Official 1:1 Print-to-PDF Templates for Invoice, Payment & Quotation WhatsApp PDFs & Payment `OPTIONS` Placement (Ver 3.7.21)
+
+#### Changes Implemented
+1. **Payment Information `OPTIONS` Menu Cleanup (`src/js/AdminView1/PageView/Payment/PaymentInformationView.js`)**:
+   - Removed the standalone green **"Send by WhatsApp"** button beside `OPTIONS`, keeping **"Send by WhatsApp"** cleanly inside the `OPTIONS` dropdown menu.
+2. **1:1 Official System Print-to-PDF Templates (`server/services/invoicePdfGenerator.js`)**:
+   - Unified the official company address (`AVENUE SALONGO Q/INDUSTRIEL C/MANIKA`, `KOLWEZI LUALABA`, `DRC`) across `generateInvoicePdfBuffer`, `generatePaymentPdfBuffer`, and `generateQuotationPdfBuffer`, and added shared `drawBankDetailsBlock` (`SOFIBANQUE SA`, `GLOBAL GATE SARL`, `00023233330214247020073`, `SFBXCDKIXXX`).
+   - Updated `generatePaymentPdfBuffer` to match the official `PAYMENT` print template (`MODE` yellow badge, `# | REFERENCE | DATE | SUBJECT | INVOICE AMOUNT | AMOUNT PAID`, `AMOUNT RECEIVED`, `AMOUNT PAID FC`, `AMOUNT PAID $`, `TOTAL PAID USD`, `CREDIT`, and bank details).
+   - Updated `generateQuotationPdfBuffer` to match the official `QUOTATION` print template (`QUOTATION FOR`, `NOTE`, `# | ITEM | DESCRIPTION | QTY | RATE | TOTAL`, `SUB TOTAL (TAX EXCLUDED)`, `TOTAL`, `BALANCE DUE`, `TOTAL IN WORDS`, bank details, and `TERMS & CONDITIONS`).
+3. **Version Synchronization & Multi-Platform Release (`v3.7.21`)**:
+   - Synchronized `3.7.21` across `package.json`, `server/package.json`, `server/index.js`, `server/routes/downloadRoutes.js`, and `android/app/build.gradle` (`versionCode 30721`).
+   - Verified `pre-build-check.js` (254 files, 0 errors), `security-check.js --auto-start` (21/21 passed), and `regression-check.js --auto-start` (12/12 passed).
+   - Built Web Portal (`dist_web/`), Electron Desktop (`dist/Global Gate Setup 3.7.21.exe` + `latest.yml`), and Capacitor Android APK (`GlobalGate-v3.7.21.apk`), synced to `server/public/downloads/` via `scripts/sync-releases.js`, and pushed to `origin main`.
