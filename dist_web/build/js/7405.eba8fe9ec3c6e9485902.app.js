@@ -21,6 +21,49 @@ var _default = exports.A = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRun
 
 /***/ },
 
+/***/ 98984
+(__unused_webpack_module, exports, __webpack_require__) {
+
+var __webpack_unused_export__;
+
+"use client";
+
+var _interopRequireDefault = __webpack_require__(24994);
+__webpack_unused_export__ = ({
+  value: true
+});
+exports.A = void 0;
+var _createSvgIcon = _interopRequireDefault(__webpack_require__(42032));
+var _jsxRuntime = __webpack_require__(74848);
+var _default = exports.A = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRuntime.jsx)("path", {
+  d: "M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3m3-10H5V5h10z"
+}), 'Save');
+
+/***/ },
+
+/***/ 61451
+(__unused_webpack_module, exports, __webpack_require__) {
+
+var __webpack_unused_export__;
+
+'use client';
+
+var _interopRequireDefault = __webpack_require__(24994);
+__webpack_unused_export__ = ({
+  value: true
+});
+exports.A = void 0;
+var React = _interopRequireWildcard(__webpack_require__(96540));
+var _createSvgIcon = _interopRequireDefault(__webpack_require__(42032));
+var _jsxRuntime = __webpack_require__(74848);
+function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
+function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
+var _default = exports.A = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRuntime.jsx)("path", {
+  d: "M16.75 13.96c.25.13.41.2.46.3.06.11.04.61-.21 1.18-.2.56-1.24 1.1-1.7 1.12-.46.02-.47.36-2.96-.73-2.49-1.09-3.99-3.75-4.11-3.92-.12-.17-.96-1.38-.92-2.61.05-1.22.69-1.8.95-2.04.24-.26.51-.29.68-.26h.47c.15 0 .36-.06.55.45l.69 1.87c.06.13.1.28.01.44l-.27.41-.39.42c-.12.12-.26.25-.12.5.12.26.62 1.09 1.32 1.78.91.88 1.71 1.17 1.95 1.3.24.14.39.12.54-.04l.81-.94c.19-.25.35-.19.58-.11l1.67.88M12 2a10 10 0 0 1 10 10 10 10 0 0 1-10 10c-1.97 0-3.8-.57-5.35-1.55L2 22l1.55-4.65A9.969 9.969 0 0 1 2 12 10 10 0 0 1 12 2m0 2a8 8 0 0 0-8 8c0 1.72.54 3.31 1.46 4.61L4.5 19.5l2.89-.96A7.95 7.95 0 0 0 12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8z"
+}), 'WhatsApp');
+
+/***/ },
+
 /***/ 29220
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
@@ -324,8 +367,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _img_images_png__WEBPACK_IMPORTED_MODULE_49___default = /*#__PURE__*/__webpack_require__.n(_img_images_png__WEBPACK_IMPORTED_MODULE_49__);
 /* harmony import */ var _MessageAdminView__WEBPACK_IMPORTED_MODULE_50__ = __webpack_require__(83818);
 /* harmony import */ var _NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_51__ = __webpack_require__(95236);
-/* harmony import */ var _mui_icons_material_LocalPrintshop__WEBPACK_IMPORTED_MODULE_52__ = __webpack_require__(8659);
-/* harmony import */ var _mui_icons_material_Edit__WEBPACK_IMPORTED_MODULE_53__ = __webpack_require__(28597);
+/* harmony import */ var _mui_icons_material_WhatsApp__WEBPACK_IMPORTED_MODULE_52__ = __webpack_require__(61451);
+/* harmony import */ var _component_DocumentWhatsAppModal__WEBPACK_IMPORTED_MODULE_53__ = __webpack_require__(46344);
+/* harmony import */ var _mui_icons_material_LocalPrintshop__WEBPACK_IMPORTED_MODULE_54__ = __webpack_require__(8659);
+/* harmony import */ var _mui_icons_material_Edit__WEBPACK_IMPORTED_MODULE_55__ = __webpack_require__(28597);
 var _excluded = ["className"],
   _excluded2 = ["className"];
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
@@ -345,6 +390,8 @@ function _extends() { return _extends = Object.assign ? Object.assign.bind() : f
 function _objectWithoutProperties(e, t) { if (null == e) return {}; var o, r, i = _objectWithoutPropertiesLoose(e, t); if (Object.getOwnPropertySymbols) { var n = Object.getOwnPropertySymbols(e); for (r = 0; r < n.length; r++) o = n[r], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]); } return i; }
 function _objectWithoutPropertiesLoose(r, e) { if (null == r) return {}; var t = {}; for (var n in r) if ({}.hasOwnProperty.call(r, n)) { if (-1 !== e.indexOf(n)) continue; t[n] = r[n]; } return t; }
 ;
+
+
 
 
 
@@ -490,7 +537,7 @@ var Drawer = (0,_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .Ay
   };
 });
 function PaymentInformationView() {
-  var _payment$filter;
+  var _payment$filter, _user$data;
   var _useLayoutConfig = (0,_hooks_useLayoutConfig__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)(),
     config = _useLayoutConfig.config;
   var _useParams = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_33__/* .useParams */ .g)(),
@@ -700,6 +747,10 @@ function PaymentInformationView() {
     anchorEl = _React$useState4[0],
     setAnchorEl = _React$useState4[1];
   var open = Boolean(anchorEl);
+  var _useState21 = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)(null),
+    _useState22 = _slicedToArray(_useState21, 2),
+    whatsAppDoc = _useState22[0],
+    setWhatsAppDoc = _useState22[1];
   var handleClick = event => {
     setAnchorEl(event.currentTarget);
   };
@@ -715,10 +766,10 @@ function PaymentInformationView() {
     handlePrint();
     setAnchorEl(null);
   };
-  var _useState21 = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)(1),
-    _useState22 = _slicedToArray(_useState21, 2),
-    show1 = _useState22[0],
-    setShow1 = _useState22[1];
+  var _useState23 = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)(1),
+    _useState24 = _slicedToArray(_useState23, 2),
+    show1 = _useState24[0],
+    setShow1 = _useState24[1];
   var handleShow1 = e => {
     setShow1(e);
     setAnchorEl(null);
@@ -868,7 +919,26 @@ function PaymentInformationView() {
         fontSize: '14px',
         verticalAlign: 'middle'
       }
-    }, row.status || 'Cleared'))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+    }, row.status || 'Cleared'))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.createElement("div", {
+      style: {
+        display: 'flex',
+        alignItems: 'center',
+        gap: '8px'
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+      variant: "contained",
+      disableElevation: true,
+      startIcon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.createElement(_mui_icons_material_WhatsApp__WEBPACK_IMPORTED_MODULE_52__/* ["default"] */ .A, null),
+      onClick: () => setWhatsAppDoc(row),
+      sx: {
+        bgcolor: '#25D366',
+        '&:hover': {
+          bgcolor: '#1ebe5d'
+        },
+        fontWeight: 'bold',
+        textTransform: 'none'
+      }
+    }, "Send by WhatsApp"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
       "aria-controls": open ? 'demo-customized-menu' : undefined,
       "aria-haspopup": "true",
       "aria-expanded": open ? 'true' : undefined,
@@ -904,14 +974,29 @@ function PaymentInformationView() {
         alignItems: 'center',
         color: 'gray'
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.createElement(_mui_icons_material_Edit__WEBPACK_IMPORTED_MODULE_53__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, null, "Edit"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.createElement(_mui_icons_material_Edit__WEBPACK_IMPORTED_MODULE_55__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, null, "Edit"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
       onClick: handleOpenPrint,
       sx: {
         display: 'flex',
         gap: '20px',
         color: 'gray'
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.createElement(_mui_icons_material_LocalPrintshop__WEBPACK_IMPORTED_MODULE_52__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.createElement("span", null, "Print")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.createElement(_mui_icons_material_LocalPrintshop__WEBPACK_IMPORTED_MODULE_54__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.createElement("span", null, "Print")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
+      onClick: () => {
+        handleCloseMenu();
+        setWhatsAppDoc(row);
+      },
+      sx: {
+        display: 'flex',
+        gap: '20px',
+        color: '#15803d',
+        fontWeight: 600
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.createElement(_mui_icons_material_WhatsApp__WEBPACK_IMPORTED_MODULE_52__/* ["default"] */ .A, {
+      sx: {
+        color: '#25D366'
+      }
+    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.createElement("span", null, "Send by WhatsApp")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
       onClick: () => handleShow1(2)
     }, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.createElement("span", {
       style: {
@@ -2160,13 +2245,390 @@ function PaymentInformationView() {
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.createElement("h2", null, " Data Failed to Saved"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.createElement("button", {
     className: "btnCustomer",
     onClick: handleCloseError
-  }, "Try Again")))));
+  }, "Try Again")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.createElement(_component_DocumentWhatsAppModal__WEBPACK_IMPORTED_MODULE_53__/* ["default"] */ .A, {
+    open: Boolean(whatsAppDoc),
+    onClose: () => setWhatsAppDoc(null),
+    docType: "payment",
+    documentRecord: whatsAppDoc,
+    sentBy: (user === null || user === void 0 || (_user$data = user.data) === null || _user$data === void 0 ? void 0 : _user$data.userName) || 'GG'
+  }));
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (PaymentInformationView);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, [
 /* harmony export */   "default", 0, /* export default binding */ __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ ]);
 
+
+/***/ },
+
+/***/ 46344
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   A: () => (/* binding */ DocumentWhatsAppModal)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(96540);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(86701);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(77037);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(46831);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(69067);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(14073);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(82022);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(22477);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(844);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(86990);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(68864);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(27558);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(58763);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(73357);
+/* harmony import */ var _mui_icons_material_WhatsApp__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(61451);
+/* harmony import */ var _mui_icons_material_Download__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(10609);
+/* harmony import */ var _mui_icons_material_Save__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(98984);
+/* harmony import */ var react_toastify__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(99571);
+/* harmony import */ var _apiConfig__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(71510);
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+;
+
+
+
+
+
+
+
+var DEFAULT_MESSAGES = {
+  payment: 'Dear Valued Client,\nThank you for your payment! Please find attached your official Payment Receipt from Global Gate General Services SARL.\nWe truly appreciate your business and continued trust.',
+  quotation: 'Dear Valued Client,\nPlease find attached your official Quotation from Global Gate General Services SARL.\nFeel free to reply to this message if you have any questions or would like to confirm.'
+};
+function resolvePhoneFromCustomer(cust) {
+  if (!cust || typeof cust !== 'object') return '';
+  return String(cust.customerCompanyPhone || cust.customerPhone || cust.phone1 || cust.phone2 || cust.phone || cust.mobile || '').trim();
+}
+function getDocumentNumber(docType, doc) {
+  if (!doc) return '';
+  if (docType === 'payment') {
+    return typeof doc.paymentNumber === 'number' ? "PAY-".concat(String(doc.paymentNumber).padStart(6, '0')) : String(doc.paymentNumber || 'PAY-000000');
+  }
+  return typeof doc.estimateNumber === 'number' ? "Q-".concat(String(doc.estimateNumber).padStart(6, '0')) : String(doc.estimateNumber || 'Q-000000');
+}
+function getClientDisplayName(doc) {
+  var cust = doc === null || doc === void 0 ? void 0 : doc.customerName;
+  if (!cust) return 'Valued Client';
+  if (typeof cust === 'string') return cust;
+  return cust.Customer || cust.customerName || cust.customerFullName || 'Valued Client';
+}
+function DocumentWhatsAppModal(_ref) {
+  var open = _ref.open,
+    onClose = _ref.onClose,
+    _ref$docType = _ref.docType,
+    docType = _ref$docType === void 0 ? 'payment' : _ref$docType,
+    _ref$documentRecord = _ref.documentRecord,
+    documentRecord = _ref$documentRecord === void 0 ? null : _ref$documentRecord,
+    _ref$sentBy = _ref.sentBy,
+    sentBy = _ref$sentBy === void 0 ? 'GG' : _ref$sentBy;
+  var isPayment = docType === 'payment';
+  var docNum = getDocumentNumber(docType, documentRecord);
+  var clientName = getClientDisplayName(documentRecord);
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+    _useState2 = _slicedToArray(_useState, 2),
+    phone = _useState2[0],
+    setPhone = _useState2[1];
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(DEFAULT_MESSAGES[docType] || DEFAULT_MESSAGES.payment),
+    _useState4 = _slicedToArray(_useState3, 2),
+    message = _useState4[0],
+    setMessage = _useState4[1];
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(isPayment),
+    _useState6 = _slicedToArray(_useState5, 2),
+    downloadPdfToo = _useState6[0],
+    setDownloadPdfToo = _useState6[1];
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
+      status: 'CHECKING',
+      isReady: false
+    }),
+    _useState8 = _slicedToArray(_useState7, 2),
+    cloudStatus = _useState8[0],
+    setCloudStatus = _useState8[1];
+  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState0 = _slicedToArray(_useState9, 2),
+    sending = _useState0[0],
+    setSending = _useState0[1];
+  var _useState1 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState10 = _slicedToArray(_useState1, 2),
+    downloading = _useState10[0],
+    setDownloading = _useState10[1];
+  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState12 = _slicedToArray(_useState11, 2),
+    savingTpl = _useState12[0],
+    setSavingTpl = _useState12[1];
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    if (!open || !documentRecord) return;
+    setDownloadPdfToo(isPayment);
+    var active = true;
+    var directPhone = resolvePhoneFromCustomer(documentRecord.customerName);
+    setPhone(directPhone);
+
+    // Fallback: look up customer phone from /endpoint/customer if missing on embedded object
+    if (!directPhone && documentRecord.customerName) {
+      var custId = typeof documentRecord.customerName === 'object' ? documentRecord.customerName._id : null;
+      if (custId) {
+        axios__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_18__/* .ENDPOINT_URL */ .m, "/get-customer/").concat(custId)).then(r => {
+          var _r$data;
+          if (!active) return;
+          var p = resolvePhoneFromCustomer(r === null || r === void 0 || (_r$data = r.data) === null || _r$data === void 0 ? void 0 : _r$data.data);
+          if (p) setPhone(p);
+        }).catch(() => {});
+      }
+    }
+    axios__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_18__/* .ENDPOINT_URL */ .m, "/invoice-whatsapp/cloud-status")).then(r => {
+      if (active && r !== null && r !== void 0 && r.data) setCloudStatus(r.data);
+    }).catch(() => {});
+    axios__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_18__/* .ENDPOINT_URL */ .m, "/invoice-whatsapp/").concat(docType, "-template")).then(r => {
+      var _r$data2;
+      if (active && r !== null && r !== void 0 && (_r$data2 = r.data) !== null && _r$data2 !== void 0 && _r$data2.templateMessage) {
+        setMessage(r.data.templateMessage);
+      }
+    }).catch(() => {});
+    return () => {
+      active = false;
+    };
+  }, [open, documentRecord, docType, isPayment]);
+  var handleDownloadPdf = /*#__PURE__*/function () {
+    var _ref2 = _asyncToGenerator(function* () {
+      if (!documentRecord) return false;
+      setDownloading(true);
+      try {
+        var endpoint = isPayment ? 'download-payment-pdf' : 'download-quotation-pdf';
+        var body = isPayment ? {
+          payment: documentRecord
+        } : {
+          quotation: documentRecord
+        };
+        var res = yield axios__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_18__/* .ENDPOINT_URL */ .m, "/invoice-whatsapp/").concat(endpoint), body, {
+          responseType: 'blob'
+        });
+        var blob = new Blob([res.data], {
+          type: 'application/pdf'
+        });
+        var url = window.URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = "".concat(docNum, ".pdf");
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        window.URL.revokeObjectURL(url);
+        return true;
+      } catch (err) {
+        var _err$response;
+        react_toastify__WEBPACK_IMPORTED_MODULE_17__/* .toast */ .oR.error((err === null || err === void 0 || (_err$response = err.response) === null || _err$response === void 0 || (_err$response = _err$response.data) === null || _err$response === void 0 ? void 0 : _err$response.error) || 'Failed to generate PDF');
+        return false;
+      } finally {
+        setDownloading(false);
+      }
+    });
+    return function handleDownloadPdf() {
+      return _ref2.apply(this, arguments);
+    };
+  }();
+  var handleSaveTemplate = /*#__PURE__*/function () {
+    var _ref3 = _asyncToGenerator(function* () {
+      if (!message.trim()) return;
+      setSavingTpl(true);
+      try {
+        yield axios__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_18__/* .ENDPOINT_URL */ .m, "/invoice-whatsapp/").concat(docType, "-template"), {
+          templateMessage: message.trim(),
+          updatedBy: sentBy
+        });
+        react_toastify__WEBPACK_IMPORTED_MODULE_17__/* .toast */ .oR.success('Default WhatsApp message saved!');
+      } catch (err) {
+        var _err$response2;
+        react_toastify__WEBPACK_IMPORTED_MODULE_17__/* .toast */ .oR.error((err === null || err === void 0 || (_err$response2 = err.response) === null || _err$response2 === void 0 || (_err$response2 = _err$response2.data) === null || _err$response2 === void 0 ? void 0 : _err$response2.error) || 'Could not save template');
+      } finally {
+        setSavingTpl(false);
+      }
+    });
+    return function handleSaveTemplate() {
+      return _ref3.apply(this, arguments);
+    };
+  }();
+  var handleSend = /*#__PURE__*/function () {
+    var _ref4 = _asyncToGenerator(function* () {
+      if (!documentRecord) return;
+      if (!phone.trim()) {
+        react_toastify__WEBPACK_IMPORTED_MODULE_17__/* .toast */ .oR.warn('Please enter the client WhatsApp phone number.');
+        return;
+      }
+      setSending(true);
+      try {
+        var _res$data;
+        if (downloadPdfToo) {
+          yield handleDownloadPdf();
+        }
+        var docId = documentRecord._id || documentRecord.id;
+        var endpoint = isPayment ? 'send-payment' : 'send-quotation';
+        var res = yield axios__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_18__/* .ENDPOINT_URL */ .m, "/invoice-whatsapp/").concat(endpoint), {
+          items: [documentRecord],
+          templateMessage: message.trim(),
+          phoneOverrides: {
+            [docId]: phone.trim()
+          },
+          sentBy
+        });
+        if ((res === null || res === void 0 || (_res$data = res.data) === null || _res$data === void 0 ? void 0 : _res$data.sent) > 0) {
+          react_toastify__WEBPACK_IMPORTED_MODULE_17__/* .toast */ .oR.success("".concat(docNum, " PDF sent via WhatsApp to ").concat(clientName, "!"));
+          onClose();
+        } else {
+          var _res$data2, _res$data3;
+          var errDetail = (res === null || res === void 0 || (_res$data2 = res.data) === null || _res$data2 === void 0 || (_res$data2 = _res$data2.details) === null || _res$data2 === void 0 || (_res$data2 = _res$data2[0]) === null || _res$data2 === void 0 ? void 0 : _res$data2.error) || (res === null || res === void 0 || (_res$data3 = res.data) === null || _res$data3 === void 0 ? void 0 : _res$data3.error) || 'Failed to send on WhatsApp';
+          react_toastify__WEBPACK_IMPORTED_MODULE_17__/* .toast */ .oR.error(errDetail);
+        }
+      } catch (err) {
+        var _err$response3;
+        react_toastify__WEBPACK_IMPORTED_MODULE_17__/* .toast */ .oR.error((err === null || err === void 0 || (_err$response3 = err.response) === null || _err$response3 === void 0 || (_err$response3 = _err$response3.data) === null || _err$response3 === void 0 ? void 0 : _err$response3.error) || err.message || 'WhatsApp dispatch failed');
+      } finally {
+        setSending(false);
+      }
+    });
+    return function handleSend() {
+      return _ref4.apply(this, arguments);
+    };
+  }();
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, {
+    open: open,
+    onClose: onClose,
+    maxWidth: "sm",
+    fullWidth: true
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, {
+    sx: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      bgcolor: '#093170',
+      color: 'white'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
+    sx: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: 1
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_WhatsApp__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
+    sx: {
+      color: '#25D366'
+    }
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+    variant: "h6",
+    sx: {
+      fontWeight: 700,
+      fontSize: '1rem'
+    }
+  }, "Send ", isPayment ? 'Payment Receipt' : 'Quotation', " by WhatsApp (", docNum, ")")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+    size: "small",
+    label: cloudStatus.isReady ? 'Cloud WA Connected' : cloudStatus.status || 'Offline',
+    sx: {
+      bgcolor: cloudStatus.isReady ? '#25D366' : '#ef4444',
+      color: 'white',
+      fontWeight: 700
+    }
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+    sx: {
+      pt: 2.5,
+      display: 'flex',
+      flexDirection: 'column',
+      gap: 2
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+    variant: "body2",
+    sx: {
+      color: '#334155',
+      mt: 1
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("strong", null, "Client:"), " ", clientName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
+    label: "Client WhatsApp Phone",
+    value: phone,
+    onChange: e => setPhone(e.target.value),
+    placeholder: "+243...",
+    size: "small",
+    fullWidth: true
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
+    sx: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      mb: 0.5
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+    variant: "caption",
+    sx: {
+      fontWeight: 700,
+      color: '#475569'
+    }
+  }, isPayment ? 'Thank-You Message' : 'Quotation Message'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
+    size: "small",
+    startIcon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Save__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, null),
+    onClick: handleSaveTemplate,
+    disabled: savingTpl,
+    sx: {
+      textTransform: 'none',
+      fontSize: '0.75rem'
+    }
+  }, savingTpl ? 'Saving...' : 'Save as Default')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
+    multiline: true,
+    minRows: 4,
+    value: message,
+    onChange: e => setMessage(e.target.value),
+    fullWidth: true
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+    control: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+      checked: downloadPdfToo,
+      onChange: e => setDownloadPdfToo(e.target.checked),
+      color: "primary"
+    }),
+    label: "Also download ".concat(docNum, ".pdf to this PC when sending")
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+    sx: {
+      px: 3,
+      pb: 2,
+      justifyContent: 'space-between'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
+    variant: "outlined",
+    startIcon: downloading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
+      size: 16
+    }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Download__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, null),
+    onClick: handleDownloadPdf,
+    disabled: downloading || sending
+  }, "Download PDF Only"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
+    sx: {
+      display: 'flex',
+      gap: 1
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
+    onClick: onClose,
+    disabled: sending
+  }, "Cancel"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
+    variant: "contained",
+    startIcon: sending ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
+      size: 16,
+      color: "inherit"
+    }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_WhatsApp__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, null),
+    onClick: handleSend,
+    disabled: sending,
+    sx: {
+      bgcolor: '#25D366',
+      '&:hover': {
+        bgcolor: '#1ebe5d'
+      },
+      fontWeight: 700
+    }
+  }, sending ? 'Sending...' : 'Send by WhatsApp'))));
+}
 
 /***/ }
 

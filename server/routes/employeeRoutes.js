@@ -1,5 +1,6 @@
 const express = require("express");
 const Route = express.Router();
+const { toSafeObjectId } = require("../utils/objectIdUtils");
 
 function branchFilter(req) {
   const { branchId } = req.query;
@@ -208,10 +209,17 @@ Route.route("/get-last-saved-employee").get(async (req, res, next) => {
   }
 });
 
-Route.route("/get-employee/:id").get(async (req, res, next) => {
+const getEmployeeByIdHandler = async (req, res, next) => {
+  const safeId = toSafeObjectId(req.params.id);
+  if (!safeId) {
+    return res.status(400).json({ message: "Invalid employee ID", status: 400 });
+  }
   await employeeSchema
-    .findById(req.params.id, req.body)
+    .findById(safeId)
     .then((result) => {
+      if (!result) {
+        return res.status(404).json({ message: "Employee not found", status: 404 });
+      }
       res.json({
         data: result,
         message: "Data successfully retrieved.",
@@ -221,7 +229,10 @@ Route.route("/get-employee/:id").get(async (req, res, next) => {
     .catch((err) => {
       return next(err);
     });
-});
+};
+
+Route.route("/get-employee/:id").get(getEmployeeByIdHandler);
+Route.route("/employee/:id").get(getEmployeeByIdHandler);
 
 Route.route("/update-employee/:id").put(async (req, res, next) => {
   const id = req.params.id

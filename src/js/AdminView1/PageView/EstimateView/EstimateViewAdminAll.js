@@ -17,6 +17,8 @@ import AttachFileIcon from '@mui/icons-material/AttachFile';
 import SendIcon from '@mui/icons-material/Send';
 import EstimateInformation from './EstimateInformation';
 import DocumentAttachmentsModal from '../../../component/DocumentAttachmentsModal';
+import WhatsAppIcon from '@mui/icons-material/WhatsApp';
+import DocumentWhatsAppModal from '../../../component/DocumentWhatsAppModal';
 import { NavLink, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { cachedGet } from '../../../utils/apiCache';
@@ -273,6 +275,7 @@ function EstimateViewAdminAll() {
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+  const [whatsAppDoc, setWhatsAppDoc] = useState(null);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -713,6 +716,16 @@ function EstimateViewAdminAll() {
                                       <MenuItem onClick={exportToExcel} sx={{ display: 'flex', gap: '20px', color: 'gray' }}>
                                         <Explicit />
                                         <span>Export to Excel</span>
+                                      </MenuItem>
+                                      <MenuItem
+                                        onClick={() => {
+                                          handleCloseMenu();
+                                          setWhatsAppDoc(row);
+                                        }}
+                                        sx={{ display: 'flex', gap: '20px', color: '#15803d', fontWeight: 600 }}
+                                      >
+                                        <WhatsAppIcon sx={{ color: '#25D366' }} />
+                                        <span>Send by WhatsApp</span>
                                       </MenuItem>
                                       <MenuItem
                                         onClick={() => {
@@ -1687,6 +1700,13 @@ function EstimateViewAdminAll() {
         documentType="Estimation"
         documentNumber={estimateNumber !== undefined ? ('Q-' + String(estimateNumber).padStart(6, '0')) : ''}
         onAttachmentCountChange={(count) => setAttachmentCount(count)}
+      />
+      <DocumentWhatsAppModal
+        open={Boolean(whatsAppDoc)}
+        onClose={() => setWhatsAppDoc(null)}
+        docType="quotation"
+        documentRecord={whatsAppDoc}
+        sentBy={user?.data?.userName || 'GG'}
       />
     </div>
   )

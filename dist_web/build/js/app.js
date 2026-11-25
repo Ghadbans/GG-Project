@@ -126124,7 +126124,7 @@ Object.assign(esm_lookup, {
 (module) {
 
 "use strict";
-module.exports = {"rE":"3.7.19"};
+module.exports = {"rE":"3.7.20"};
 
 /***/ },
 
@@ -126256,7 +126256,7 @@ module.exports = /*#__PURE__*/JSON.parse('{"--header-logo-width":"240px","--glob
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames based on template
-/******/ 			return "" + chunkId + "." + {"67":"ea58a46eec037fcae82d","100":"2c3a3084bc6754b4007f","116":"136bba93ceb8842a736a","118":"41855f55e3314ec75bc2","223":"6870ff85cf3e508c3f63","296":"7ed5df9cc6d66c7aa203","302":"ef38ecb8f8374e467787","327":"3652c631ba8d0497d4de","441":"bfccd43a865bee7b2ea4","457":"cb7955e43df6e1d9d806","483":"86067c05aaae41ce2403","590":"fc6e0a06fa18522b6aae","614":"6fe1d0b23953a4d0fdc2","712":"dfbecb5133aef28e43f7","742":"b7407cb186728d0232c0","778":"92ce5882ca5899156566","806":"fb463ecdef0f5a7eb7f6","808":"6470e5c6b89600390959","864":"1e5dcba848ae4b88415e","885":"20a395a34fd3eb845493","956":"07beaf91ddd9f3b95dd4","1019":"12a11f6ffb6e02cc9beb","1096":"1048e225e4bb54a84593","1168":"b2f690e1d5399977dcaf","1195":"110972531e8589b2936f","1223":"895588666a9e1bbd8029","1251":"b554f70073e808097238","1364":"ff119bbaf7ee67bb816c","1390":"a0b0dc840553562655b2","1500":"b91a58320881048e6691","1624":"6d420f1d2907641b33f1","1645":"9a6f049d7004d8c9658b","1679":"8611fe4f3bd208a690a5","1722":"2ef9ab5b347b2c38e7e4","1853":"1c8088ed34defc896299","1861":"134b6d2231bf5626ddc8","1919":"c5cf4c28bd3e19880dde","1985":"f6d63ffa6a6609ae4fbe","2120":"fa850d0880b8085abb8a","2122":"c746ef73eb90eb859c73","2153":"aa79e4a38e016b956ee3","2400":"9a7b40b5406c1582af64","2410":"735f9f0426b831a5ac4c","2495":"0bc6fa1b258823bab07b","2517":"41ad854abfe9d517e073","2529":"b4b97d60807faa0669b4","2533":"5d67e6b56415239279dd","2572":"77369090a80671dc61be","2605":"c16f8e5eb969bddd2f67","2608":"a86e0ce81d9f46c9b9e6","2611":"a396bee9f5ffd935c18f","2756":"7ba597d1a872704f27e5","2757":"37b9ffcea8df7a64ba31","2778":"b14cd21290c03da91b2c","2821":"7118ff1dd624cd3c1cf6","2835":"fd4e0c02c3bf9b488fb1","2982":"1021f935b5cb2a3170c7","2992":"56cac3f86ea05e13a87b","3009":"ba89e06c7d53ceaab458","3058":"c7944621104b544d7c65","3094":"752bdf10d46f25f3759e","3229":"55d437b9da633f13ca04","3426":"98b077251f3d0bcade4d","3502":"5ab5c22a19bd3b24e0f7","3547":"af85ed1b60adcb0767b8","3636":"aa965b3361e4a0832992","3697":"9d2bba797a4414ead561","3741":"10f8f277505abd86be60","3808":"07f4d7bfcfe11945f5aa","3970":"eb708b8f33f97ace94bd","3976":"dd72fffd4a97763383c6","4001":"b4cb2fff74fed0664532","4006":"d5659372fe364ccf24b4","4107":"3782b7830a1c4ad9922e","4184":"54736b4293c814318bab","4237":"ae9e77c6d4f5a70c297a","4270":"7f8dca5a9266b48c99cd","4444":"eef09ebd8bc423e31ba2","4783":"8aa9f2092fce5fc76443","4796":"3388110bafd496d3dffd","5059":"9f6600542c17a5b04ef6","5117":"36319d3905c05cb056b7","5194":"24f1101be93157c12f0e","5391":"93a3e25ebac19e0ba566","5394":"e53965ba24c79d1a661e","5646":"7d7262b25455ffc69c6a","5669":"30bfd4b2d8c7168397e7","5754":"5d98f1dbc311dd866966","5824":"a70b4f192ab348b889a2","5881":"9e23f9ce4f061a67e1a5","5910":"7d7b00c553e28a3b1863","5919":"0d07a0a24b3b6bead0ac","5934":"b9df8e2d411b0f8ba5a9","6155":"61b12643602d5d124d69","6226":"306108450a0baada738f","6619":"861574c010e50b19e0ba","6671":"4b2ff5f3ea0a3423b2d2","6685":"c9a1b126e19ab6f83d7d","6725":"8e55ba855cbf2df81320","6744":"066aad422af9e71d0f89","7120":"a6b8614c78e07e762f3e","7171":"33980eadc62e3673564a","7269":"24956eae218a5492ab60","7270":"d4445b43c7c47f765416","7384":"158d59560a99a5e592a5","7405":"45ff0306f690139e7c5c","7444":"b53c12d6ba889fd7ff49","7445":"c10cd7e720704ceb9403","7539":"38b4e76ba28536bdba6f","7592":"e3d5b425e37d45250854","7612":"96d02d2e11ef603520b1","7645":"378d44d602e040a88964","7757":"259fa2b6afbac0c690e5","7801":"950cd7aa79d6c69e4e89","7897":"9860dd662bb0536be021","7941":"d80c6fc0c609153c393a","7997":"a7d639ec4c5bda5d7f8a","8011":"90ad8098cdf19542df00","8017":"6e04997b09da6af7e026","8027":"2a708e2d3d1411e0eb2d","8060":"1fc21f806cfed4186222","8117":"4832ff25f85ae904340c","8282":"b21e2702604eb265ed43","8354":"2659beecbc4d37fb883b","8442":"b49b7e1a46da29e6c2e0","8520":"ddece2da75e91301c443","8646":"f5e64a2d8c9b9aa3383c","8685":"668e75089eaab7ca5d74","8838":"e07fcd923fd22da63109","8849":"5b67041f14d74979e9c3","8970":"3bfbdca7cac168f75b28","8979":"bedb7b18cf89bf6a7ec9","9220":"4181006d8c7543128350","9246":"79d354354c30226b2baf","9250":"993a5b081080eba72db1","9260":"fd6ba8cd2e063ff68053","9419":"924d518de94dad6581bc","9528":"f27c4acb7274d2a6872a","9564":"8bb9dffef3aaab6ecc31","9573":"7134be0fa03b7f3d2b33","9575":"19e252df34e7b2892759","9670":"d836c000a0f5cf5b3219","9762":"5e6cd074d14100ccda09","9773":"d2d2e83567d45085e0a3","9846":"12042055f05ff78c0633","9971":"63405883ad2ede8101de"}[chunkId] + ".app.js";
+/******/ 			return "" + chunkId + "." + {"67":"ea58a46eec037fcae82d","100":"2c3a3084bc6754b4007f","116":"136bba93ceb8842a736a","118":"41855f55e3314ec75bc2","223":"6870ff85cf3e508c3f63","296":"7ed5df9cc6d66c7aa203","302":"ef38ecb8f8374e467787","327":"3652c631ba8d0497d4de","441":"bfccd43a865bee7b2ea4","457":"cb7955e43df6e1d9d806","483":"86067c05aaae41ce2403","590":"fc6e0a06fa18522b6aae","614":"6fe1d0b23953a4d0fdc2","712":"dfbecb5133aef28e43f7","742":"b7407cb186728d0232c0","778":"92ce5882ca5899156566","806":"620420e13404b994c34c","808":"6470e5c6b89600390959","864":"1e5dcba848ae4b88415e","885":"20a395a34fd3eb845493","956":"07beaf91ddd9f3b95dd4","1019":"12a11f6ffb6e02cc9beb","1096":"1048e225e4bb54a84593","1168":"b2f690e1d5399977dcaf","1195":"110972531e8589b2936f","1223":"895588666a9e1bbd8029","1251":"b554f70073e808097238","1364":"ff119bbaf7ee67bb816c","1390":"a0b0dc840553562655b2","1500":"b91a58320881048e6691","1624":"6d420f1d2907641b33f1","1645":"9a6f049d7004d8c9658b","1679":"8611fe4f3bd208a690a5","1722":"2ef9ab5b347b2c38e7e4","1853":"1c8088ed34defc896299","1861":"134b6d2231bf5626ddc8","1919":"c5cf4c28bd3e19880dde","1985":"f6d63ffa6a6609ae4fbe","2120":"fa850d0880b8085abb8a","2122":"c746ef73eb90eb859c73","2153":"aa79e4a38e016b956ee3","2400":"9a7b40b5406c1582af64","2410":"735f9f0426b831a5ac4c","2495":"0bc6fa1b258823bab07b","2517":"41ad854abfe9d517e073","2529":"b4b97d60807faa0669b4","2533":"5d67e6b56415239279dd","2572":"77369090a80671dc61be","2605":"c16f8e5eb969bddd2f67","2608":"a86e0ce81d9f46c9b9e6","2611":"a396bee9f5ffd935c18f","2756":"7ba597d1a872704f27e5","2757":"37b9ffcea8df7a64ba31","2778":"b14cd21290c03da91b2c","2821":"7118ff1dd624cd3c1cf6","2835":"fd4e0c02c3bf9b488fb1","2982":"1021f935b5cb2a3170c7","2992":"56cac3f86ea05e13a87b","3009":"ba89e06c7d53ceaab458","3058":"c7944621104b544d7c65","3094":"752bdf10d46f25f3759e","3229":"55d437b9da633f13ca04","3426":"98b077251f3d0bcade4d","3502":"5ab5c22a19bd3b24e0f7","3547":"af85ed1b60adcb0767b8","3636":"aa965b3361e4a0832992","3697":"9d2bba797a4414ead561","3741":"10f8f277505abd86be60","3808":"07f4d7bfcfe11945f5aa","3970":"eb708b8f33f97ace94bd","3976":"dd72fffd4a97763383c6","4001":"b4cb2fff74fed0664532","4006":"d5659372fe364ccf24b4","4107":"3782b7830a1c4ad9922e","4184":"54736b4293c814318bab","4237":"ae9e77c6d4f5a70c297a","4270":"7f8dca5a9266b48c99cd","4444":"eef09ebd8bc423e31ba2","4783":"8aa9f2092fce5fc76443","4796":"3388110bafd496d3dffd","5059":"9f6600542c17a5b04ef6","5117":"36319d3905c05cb056b7","5194":"24f1101be93157c12f0e","5391":"93a3e25ebac19e0ba566","5394":"14b32006f5dba5e6a32d","5646":"7d7262b25455ffc69c6a","5669":"30bfd4b2d8c7168397e7","5754":"5d98f1dbc311dd866966","5824":"a70b4f192ab348b889a2","5881":"9e23f9ce4f061a67e1a5","5910":"7d7b00c553e28a3b1863","5919":"0d07a0a24b3b6bead0ac","5934":"b9df8e2d411b0f8ba5a9","6155":"61b12643602d5d124d69","6226":"306108450a0baada738f","6619":"861574c010e50b19e0ba","6671":"4b2ff5f3ea0a3423b2d2","6685":"c9a1b126e19ab6f83d7d","6725":"8e55ba855cbf2df81320","6744":"066aad422af9e71d0f89","7120":"a6b8614c78e07e762f3e","7171":"33980eadc62e3673564a","7269":"24956eae218a5492ab60","7270":"d4445b43c7c47f765416","7384":"158d59560a99a5e592a5","7405":"eba8fe9ec3c6e9485902","7444":"b53c12d6ba889fd7ff49","7445":"c10cd7e720704ceb9403","7539":"38b4e76ba28536bdba6f","7592":"e3d5b425e37d45250854","7612":"96d02d2e11ef603520b1","7645":"378d44d602e040a88964","7757":"259fa2b6afbac0c690e5","7801":"950cd7aa79d6c69e4e89","7897":"9860dd662bb0536be021","7941":"d80c6fc0c609153c393a","7997":"a7d639ec4c5bda5d7f8a","8011":"90ad8098cdf19542df00","8017":"6e04997b09da6af7e026","8027":"2a708e2d3d1411e0eb2d","8060":"1fc21f806cfed4186222","8117":"4832ff25f85ae904340c","8282":"b21e2702604eb265ed43","8354":"2659beecbc4d37fb883b","8442":"b49b7e1a46da29e6c2e0","8520":"ddece2da75e91301c443","8646":"f5e64a2d8c9b9aa3383c","8685":"668e75089eaab7ca5d74","8838":"e07fcd923fd22da63109","8849":"5b67041f14d74979e9c3","8970":"3bfbdca7cac168f75b28","8979":"bedb7b18cf89bf6a7ec9","9220":"4181006d8c7543128350","9246":"79d354354c30226b2baf","9250":"993a5b081080eba72db1","9260":"fd6ba8cd2e063ff68053","9419":"924d518de94dad6581bc","9528":"f27c4acb7274d2a6872a","9564":"8bb9dffef3aaab6ecc31","9573":"7134be0fa03b7f3d2b33","9575":"19e252df34e7b2892759","9670":"d836c000a0f5cf5b3219","9762":"5e6cd074d14100ccda09","9773":"d2d2e83567d45085e0a3","9846":"12042055f05ff78c0633","9971":"63405883ad2ede8101de"}[chunkId] + ".app.js";
 /******/ 		};
 /******/ 	})();
 /******/ 	
@@ -136880,7 +136880,7 @@ var uData = (/* unused pure expression or super */ null && ([4000, 3000, 2000, 2
 var pData = (/* unused pure expression or super */ null && ([2400, 1398, 9800, 3908, 4800, 3800, 4300]));
 var xLabels = (/* unused pure expression or super */ null && (['Page A', 'Page B', 'Page C', 'Page D', 'Page E', 'Page F', 'Page G']));
 function AdminHome() {
-  var _user$data3, _ref23;
+  var _user$data3, _ref24;
   var navigate = (0,dist/* useNavigate */.Zp)();
   var isMobile = (0,utils_isMobile/* useIsMobile */.al)();
   var dispatch = (0,react_redux_es/* useDispatch */.wA)();
@@ -137015,20 +137015,36 @@ function AdminHome() {
           phase: 'Downloading...'
         });
 
-        // Step 2: Fetch ALL collections in PARALLEL for speed
+        // Step 2: Fetch collections with controlled concurrency (4 at a time) to prevent ERR_INSUFFICIENT_RESOURCES
         var doneCount = 0;
-        var results = yield Promise.all(collections.map(colName => axios/* default */.A.get("".concat(BASE, "&col=").concat(encodeURIComponent(colName)), {
-          timeout: 180000
-        }).then(r => {
-          doneCount++;
-          setBackupProgress(p => AdminHome_objectSpread(AdminHome_objectSpread({}, p), {}, {
-            done: doneCount
-          }));
-          return {
-            colName,
-            docs: r.data.data || []
+        var results = new Array(collections.length);
+        var nextIdx = 0;
+        var CONCURRENCY = 4;
+        var worker = /*#__PURE__*/function () {
+          var _ref8 = AdminHome_asyncToGenerator(function* () {
+            while (nextIdx < collections.length) {
+              var i = nextIdx++;
+              var colName = collections[i];
+              var r = yield axios/* default */.A.get("".concat(BASE, "&col=").concat(encodeURIComponent(colName)), {
+                timeout: 180000
+              });
+              doneCount++;
+              setBackupProgress(p => AdminHome_objectSpread(AdminHome_objectSpread({}, p), {}, {
+                done: doneCount
+              }));
+              results[i] = {
+                colName,
+                docs: r.data.data || []
+              };
+            }
+          });
+          return function worker() {
+            return _ref8.apply(this, arguments);
           };
-        })));
+        }();
+        yield Promise.all(Array.from({
+          length: Math.min(CONCURRENCY, collections.length)
+        }, worker));
 
         // Step 3: Build JSON as Blob byte-chunks (avoids V8 string length limit)
         setBackupProgress({
@@ -137039,9 +137055,9 @@ function AdminHome() {
         var chunks = [];
         chunks.push(encoder.encode("{\"exportedAt\":\"".concat(exportedAt, "\",\"database\":\"globalgatedb\",\"totalCollections\":").concat(collections.length, ",\"data\":{")));
         var firstCol = true;
-        for (var _ref9 of results) {
-          var colName = _ref9.colName;
-          var docs = _ref9.docs;
+        for (var _ref0 of results) {
+          var colName = _ref0.colName;
+          var docs = _ref0.docs;
           if (!firstCol) chunks.push(encoder.encode(','));
           firstCol = false;
           chunks.push(encoder.encode("\"".concat(colName, "\":")));
@@ -137189,7 +137205,7 @@ function AdminHome() {
     setDate = _useState52[1];
   (0,react.useEffect)(() => {
     var fetchAll = /*#__PURE__*/function () {
-      var _ref0 = AdminHome_asyncToGenerator(function* () {
+      var _ref1 = AdminHome_asyncToGenerator(function* () {
         // Use cachedGet so repeated dashboard visits reuse cached data instead of re-downloading
         var safeGet = url => (0,apiCache/* cachedGet */.Fe)(url).catch(err => {
           console.error("Error fetching ".concat(url, ":"), err);
@@ -137201,7 +137217,7 @@ function AdminHome() {
         });
         if (!user.data.role) return;
         var fetchRateWithRetry = /*#__PURE__*/function () {
-          var _ref1 = AdminHome_asyncToGenerator(function* () {
+          var _ref10 = AdminHome_asyncToGenerator(function* () {
             var retries = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 3;
             for (var i = 0; i < retries; i++) {
               try {
@@ -137216,7 +137232,7 @@ function AdminHome() {
             return null;
           });
           return function fetchRateWithRetry() {
-            return _ref1.apply(this, arguments);
+            return _ref10.apply(this, arguments);
           };
         }();
         fetchRateWithRetry().then(apiRateData => {
@@ -137305,11 +137321,11 @@ function AdminHome() {
           safeGet("".concat(apiConfig/* ENDPOINT_URL */.m, "/itemCode")).then(resCode => {
             setCategory(resCode.data.data);
           });
-          Promise.all([safeGet("".concat(apiConfig/* ENDPOINT_URL */.m, "/invoice?summary=true")), safeGet("".concat(apiConfig/* ENDPOINT_URL */.m, "/purchase?summary=true"))]).then(_ref10 => {
+          Promise.all([safeGet("".concat(apiConfig/* ENDPOINT_URL */.m, "/invoice?summary=true")), safeGet("".concat(apiConfig/* ENDPOINT_URL */.m, "/purchase?summary=true"))]).then(_ref11 => {
             var _resInvoice$data, _resPurchase$data;
-            var _ref11 = AdminHome_slicedToArray(_ref10, 2),
-              resInvoice = _ref11[0],
-              resPurchase = _ref11[1];
+            var _ref12 = AdminHome_slicedToArray(_ref11, 2),
+              resInvoice = _ref12[0],
+              resPurchase = _ref12[1];
             var processedInvoices = ((resInvoice === null || resInvoice === void 0 || (_resInvoice$data = resInvoice.data) === null || _resInvoice$data === void 0 ? void 0 : _resInvoice$data.data) || []).map(row => AdminHome_objectSpread(AdminHome_objectSpread({}, row), {}, {
               id: row._id,
               invoiceNumber: 'INV-' + (row.invoiceNumber || "").toString().padStart(6, '0'),
@@ -137363,13 +137379,13 @@ function AdminHome() {
         }
       });
       return function fetchAll() {
-        return _ref0.apply(this, arguments);
+        return _ref1.apply(this, arguments);
       };
     }();
     fetchAll();
   }, [date, user.data.role, dispatch]);
   var fetchValue = /*#__PURE__*/function () {
-    var _ref12 = AdminHome_asyncToGenerator(function* () {
+    var _ref13 = AdminHome_asyncToGenerator(function* () {
       try {
         var resItemOutItemReturn = yield axios/* default */.A.get("".concat(apiConfig/* ENDPOINT_URL */.m, "/item-usage"));
         setItemValue((resItemOutItemReturn.data || []).map(item => {
@@ -137384,7 +137400,7 @@ function AdminHome() {
       }
     });
     return function fetchValue() {
-      return _ref12.apply(this, arguments);
+      return _ref13.apply(this, arguments);
     };
   }();
   var payment = [];
@@ -137515,10 +137531,10 @@ function AdminHome() {
     acc[month].amount += item.transactionType === 'Refund' ? -val : val;
     return acc;
   }, {}) : '';
-  var newMonthArrayPayment = Object.entries(TotalMonthPayment).map(_ref13 => {
-    var _ref14 = AdminHome_slicedToArray(_ref13, 2),
-      month = _ref14[0],
-      total = _ref14[1];
+  var newMonthArrayPayment = Object.entries(TotalMonthPayment).map(_ref14 => {
+    var _ref15 = AdminHome_slicedToArray(_ref14, 2),
+      month = _ref15[0],
+      total = _ref15[1];
     return {
       month: total.month,
       total: parseFloat((total.amount || 0).toFixed(2))
@@ -137542,10 +137558,10 @@ function AdminHome() {
     acc[month].total += parseFloat(item.total);
     return acc;
   }, {}) : '';
-  var newMonthArrayDailyExpenses = Object.entries(TotalMonthDailyExpenses).map(_ref15 => {
-    var _ref16 = AdminHome_slicedToArray(_ref15, 2),
-      month = _ref16[0],
-      total = _ref16[1];
+  var newMonthArrayDailyExpenses = Object.entries(TotalMonthDailyExpenses).map(_ref16 => {
+    var _ref17 = AdminHome_slicedToArray(_ref16, 2),
+      month = _ref17[0],
+      total = _ref17[1];
     return {
       month: total.month,
       total: parseFloat((total.total || 0).toFixed(2))
@@ -137570,10 +137586,10 @@ function AdminHome() {
     acc[month].totalPaidDollars += parseFloat(item.totalPaidDollars);
     return acc;
   }, {}) : '';
-  var newMonthArrayPayRoll = Object.entries(TotalMonthPayRoll).map(_ref17 => {
-    var _ref18 = AdminHome_slicedToArray(_ref17, 2),
-      month = _ref18[0],
-      total = _ref18[1];
+  var newMonthArrayPayRoll = Object.entries(TotalMonthPayRoll).map(_ref18 => {
+    var _ref19 = AdminHome_slicedToArray(_ref18, 2),
+      month = _ref19[0],
+      total = _ref19[1];
     return {
       month: total.month,
       total: parseFloat(total.totalPaidDollars.toFixed(2))
@@ -137597,10 +137613,10 @@ function AdminHome() {
     acc[month].total += parseFloat(item.totalUSD || item.total || item.amount || 0);
     return acc;
   }, {}) : '';
-  var newMonthArrayItemPurchase = Object.entries(TotalMonthItemPurchase).map(_ref19 => {
-    var _ref20 = AdminHome_slicedToArray(_ref19, 2),
-      month = _ref20[0],
-      total = _ref20[1];
+  var newMonthArrayItemPurchase = Object.entries(TotalMonthItemPurchase).map(_ref20 => {
+    var _ref21 = AdminHome_slicedToArray(_ref20, 2),
+      month = _ref21[0],
+      total = _ref21[1];
     return {
       month: total.month,
       total: parseFloat(total.total.toFixed(2))
@@ -137642,10 +137658,10 @@ function AdminHome() {
     }
     return acc;
   }, {}) : {};
-  var newMonthArrayPaidItemPurchase = Object.entries(TotalMonthPaidItemPurchase).map(_ref21 => {
-    var _ref22 = AdminHome_slicedToArray(_ref21, 2),
-      month = _ref22[0],
-      total = _ref22[1];
+  var newMonthArrayPaidItemPurchase = Object.entries(TotalMonthPaidItemPurchase).map(_ref22 => {
+    var _ref23 = AdminHome_slicedToArray(_ref22, 2),
+      month = _ref23[0],
+      total = _ref23[1];
     return {
       month: total.month,
       total: parseFloat(total.total.toFixed(2))
@@ -139687,7 +139703,7 @@ function AdminHome() {
       fontWeight: 'bold',
       color: '#059669'
     }
-  }, "$", (_ref23 = totalMaintenanceRevenue - totalMaintenanceCost) === null || _ref23 === void 0 ? void 0 : _ref23.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')))))), /*#__PURE__*/react.createElement(Grid/* default */.Ay, {
+  }, "$", (_ref24 = totalMaintenanceRevenue - totalMaintenanceCost) === null || _ref24 === void 0 ? void 0 : _ref24.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')))))), /*#__PURE__*/react.createElement(Grid/* default */.Ay, {
     item: true,
     xs: 12
   }, /*#__PURE__*/react.createElement(Card/* default */.A, {

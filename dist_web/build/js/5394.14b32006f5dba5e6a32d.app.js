@@ -141,6 +141,49 @@ var _default = exports.A = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRun
 
 /***/ },
 
+/***/ 98984
+(__unused_webpack_module, exports, __webpack_require__) {
+
+var __webpack_unused_export__;
+
+"use client";
+
+var _interopRequireDefault = __webpack_require__(24994);
+__webpack_unused_export__ = ({
+  value: true
+});
+exports.A = void 0;
+var _createSvgIcon = _interopRequireDefault(__webpack_require__(42032));
+var _jsxRuntime = __webpack_require__(74848);
+var _default = exports.A = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRuntime.jsx)("path", {
+  d: "M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3m3-10H5V5h10z"
+}), 'Save');
+
+/***/ },
+
+/***/ 61451
+(__unused_webpack_module, exports, __webpack_require__) {
+
+var __webpack_unused_export__;
+
+'use client';
+
+var _interopRequireDefault = __webpack_require__(24994);
+__webpack_unused_export__ = ({
+  value: true
+});
+exports.A = void 0;
+var React = _interopRequireWildcard(__webpack_require__(96540));
+var _createSvgIcon = _interopRequireDefault(__webpack_require__(42032));
+var _jsxRuntime = __webpack_require__(74848);
+function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
+function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
+var _default = exports.A = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRuntime.jsx)("path", {
+  d: "M16.75 13.96c.25.13.41.2.46.3.06.11.04.61-.21 1.18-.2.56-1.24 1.1-1.7 1.12-.46.02-.47.36-2.96-.73-2.49-1.09-3.99-3.75-4.11-3.92-.12-.17-.96-1.38-.92-2.61.05-1.22.69-1.8.95-2.04.24-.26.51-.29.68-.26h.47c.15 0 .36-.06.55.45l.69 1.87c.06.13.1.28.01.44l-.27.41-.39.42c-.12.12-.26.25-.12.5.12.26.62 1.09 1.32 1.78.91.88 1.71 1.17 1.95 1.3.24.14.39.12.54-.04l.81-.94c.19-.25.35-.19.58-.11l1.67.88M12 2a10 10 0 0 1 10 10 10 10 0 0 1-10 10c-1.97 0-3.8-.57-5.35-1.55L2 22l1.55-4.65A9.969 9.969 0 0 1 2 12 10 10 0 0 1 12 2m0 2a8 8 0 0 0-8 8c0 1.72.54 3.31 1.46 4.61L4.5 19.5l2.89-.96A7.95 7.95 0 0 0 12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8z"
+}), 'WhatsApp');
+
+/***/ },
+
 /***/ 59849
 (__unused_webpack_module, exports, __webpack_require__) {
 
@@ -677,49 +720,51 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mui_icons_material_AttachFile__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(40530);
 /* harmony import */ var _EstimateInformation__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(7171);
 /* harmony import */ var _component_DocumentAttachmentsModal__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(44124);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(84976);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(47767);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(86701);
-/* harmony import */ var _utils_apiCache__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(46986);
-/* harmony import */ var _apiConfig__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(71510);
-/* harmony import */ var _mui_icons_material_Email__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(41845);
-/* harmony import */ var _mui_icons_material_Phone__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(19873);
-/* harmony import */ var _mui_icons_material_Web__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(67415);
-/* harmony import */ var _img_images_png__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(72761);
-/* harmony import */ var _img_images_png__WEBPACK_IMPORTED_MODULE_34___default = /*#__PURE__*/__webpack_require__.n(_img_images_png__WEBPACK_IMPORTED_MODULE_34__);
-/* harmony import */ var _mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(56655);
-/* harmony import */ var _mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(58331);
-/* harmony import */ var _mui_material_AppBar__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(89828);
-/* harmony import */ var _mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(8532);
-/* harmony import */ var _mui_material_CssBaseline__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(14519);
-/* harmony import */ var _mui_material_Drawer__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(88248);
-/* harmony import */ var _mui_material_List__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(49799);
-/* harmony import */ var _mui_material_Badge__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(11154);
-/* harmony import */ var _mui_material_Container__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(97834);
-/* harmony import */ var _mui_icons_material_Menu__WEBPACK_IMPORTED_MODULE_44__ = __webpack_require__(62274);
-/* harmony import */ var _mui_icons_material_ChevronLeft__WEBPACK_IMPORTED_MODULE_45__ = __webpack_require__(8451);
-/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_46__ = __webpack_require__(74353);
-/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_46___default = /*#__PURE__*/__webpack_require__.n(dayjs__WEBPACK_IMPORTED_MODULE_46__);
-/* harmony import */ var react_to_print__WEBPACK_IMPORTED_MODULE_47__ = __webpack_require__(57240);
-/* harmony import */ var react_to_print__WEBPACK_IMPORTED_MODULE_47___default = /*#__PURE__*/__webpack_require__.n(react_to_print__WEBPACK_IMPORTED_MODULE_47__);
-/* harmony import */ var _utils_frenchPrintHelper__WEBPACK_IMPORTED_MODULE_48__ = __webpack_require__(33753);
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_49__ = __webpack_require__(13561);
-/* harmony import */ var _features_auth_authSlice__WEBPACK_IMPORTED_MODULE_50__ = __webpack_require__(32005);
-/* harmony import */ var _component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_51__ = __webpack_require__(40301);
-/* harmony import */ var _component_Loader__WEBPACK_IMPORTED_MODULE_52__ = __webpack_require__(65821);
-/* harmony import */ var _mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_53__ = __webpack_require__(20889);
-/* harmony import */ var _mui_icons_material_Cancel__WEBPACK_IMPORTED_MODULE_54__ = __webpack_require__(82299);
-/* harmony import */ var _mui_icons_material_Close__WEBPACK_IMPORTED_MODULE_55__ = __webpack_require__(39781);
-/* harmony import */ var _mui_icons_material_ArrowBack__WEBPACK_IMPORTED_MODULE_56__ = __webpack_require__(92659);
-/* harmony import */ var _mui_icons_material_KeyboardArrowDown__WEBPACK_IMPORTED_MODULE_57__ = __webpack_require__(9483);
-/* harmony import */ var _MessageAdminView__WEBPACK_IMPORTED_MODULE_58__ = __webpack_require__(83818);
-/* harmony import */ var _NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_59__ = __webpack_require__(95236);
-/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_60__ = __webpack_require__(67626);
-/* harmony import */ var exceljs__WEBPACK_IMPORTED_MODULE_61__ = __webpack_require__(24974);
-/* harmony import */ var exceljs__WEBPACK_IMPORTED_MODULE_61___default = /*#__PURE__*/__webpack_require__.n(exceljs__WEBPACK_IMPORTED_MODULE_61__);
-/* harmony import */ var file_saver__WEBPACK_IMPORTED_MODULE_62__ = __webpack_require__(4213);
-/* harmony import */ var file_saver__WEBPACK_IMPORTED_MODULE_62___default = /*#__PURE__*/__webpack_require__.n(file_saver__WEBPACK_IMPORTED_MODULE_62__);
-/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_63__ = __webpack_require__(85781);
+/* harmony import */ var _mui_icons_material_WhatsApp__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(61451);
+/* harmony import */ var _component_DocumentWhatsAppModal__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(46344);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(84976);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(47767);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(86701);
+/* harmony import */ var _utils_apiCache__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(46986);
+/* harmony import */ var _apiConfig__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(71510);
+/* harmony import */ var _mui_icons_material_Email__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(41845);
+/* harmony import */ var _mui_icons_material_Phone__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(19873);
+/* harmony import */ var _mui_icons_material_Web__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(67415);
+/* harmony import */ var _img_images_png__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(72761);
+/* harmony import */ var _img_images_png__WEBPACK_IMPORTED_MODULE_36___default = /*#__PURE__*/__webpack_require__.n(_img_images_png__WEBPACK_IMPORTED_MODULE_36__);
+/* harmony import */ var _mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(56655);
+/* harmony import */ var _mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(58331);
+/* harmony import */ var _mui_material_AppBar__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(89828);
+/* harmony import */ var _mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(8532);
+/* harmony import */ var _mui_material_CssBaseline__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(14519);
+/* harmony import */ var _mui_material_Drawer__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(88248);
+/* harmony import */ var _mui_material_List__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(49799);
+/* harmony import */ var _mui_material_Badge__WEBPACK_IMPORTED_MODULE_44__ = __webpack_require__(11154);
+/* harmony import */ var _mui_material_Container__WEBPACK_IMPORTED_MODULE_45__ = __webpack_require__(97834);
+/* harmony import */ var _mui_icons_material_Menu__WEBPACK_IMPORTED_MODULE_46__ = __webpack_require__(62274);
+/* harmony import */ var _mui_icons_material_ChevronLeft__WEBPACK_IMPORTED_MODULE_47__ = __webpack_require__(8451);
+/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_48__ = __webpack_require__(74353);
+/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_48___default = /*#__PURE__*/__webpack_require__.n(dayjs__WEBPACK_IMPORTED_MODULE_48__);
+/* harmony import */ var react_to_print__WEBPACK_IMPORTED_MODULE_49__ = __webpack_require__(57240);
+/* harmony import */ var react_to_print__WEBPACK_IMPORTED_MODULE_49___default = /*#__PURE__*/__webpack_require__.n(react_to_print__WEBPACK_IMPORTED_MODULE_49__);
+/* harmony import */ var _utils_frenchPrintHelper__WEBPACK_IMPORTED_MODULE_50__ = __webpack_require__(33753);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_51__ = __webpack_require__(13561);
+/* harmony import */ var _features_auth_authSlice__WEBPACK_IMPORTED_MODULE_52__ = __webpack_require__(32005);
+/* harmony import */ var _component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_53__ = __webpack_require__(40301);
+/* harmony import */ var _component_Loader__WEBPACK_IMPORTED_MODULE_54__ = __webpack_require__(65821);
+/* harmony import */ var _mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_55__ = __webpack_require__(20889);
+/* harmony import */ var _mui_icons_material_Cancel__WEBPACK_IMPORTED_MODULE_56__ = __webpack_require__(82299);
+/* harmony import */ var _mui_icons_material_Close__WEBPACK_IMPORTED_MODULE_57__ = __webpack_require__(39781);
+/* harmony import */ var _mui_icons_material_ArrowBack__WEBPACK_IMPORTED_MODULE_58__ = __webpack_require__(92659);
+/* harmony import */ var _mui_icons_material_KeyboardArrowDown__WEBPACK_IMPORTED_MODULE_59__ = __webpack_require__(9483);
+/* harmony import */ var _MessageAdminView__WEBPACK_IMPORTED_MODULE_60__ = __webpack_require__(83818);
+/* harmony import */ var _NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_61__ = __webpack_require__(95236);
+/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_62__ = __webpack_require__(67626);
+/* harmony import */ var exceljs__WEBPACK_IMPORTED_MODULE_63__ = __webpack_require__(24974);
+/* harmony import */ var exceljs__WEBPACK_IMPORTED_MODULE_63___default = /*#__PURE__*/__webpack_require__.n(exceljs__WEBPACK_IMPORTED_MODULE_63__);
+/* harmony import */ var file_saver__WEBPACK_IMPORTED_MODULE_64__ = __webpack_require__(4213);
+/* harmony import */ var file_saver__WEBPACK_IMPORTED_MODULE_64___default = /*#__PURE__*/__webpack_require__.n(file_saver__WEBPACK_IMPORTED_MODULE_64__);
+/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_65__ = __webpack_require__(85781);
 var _excluded = ["className"],
   _excluded2 = ["className"],
   _excluded3 = ["className"];
@@ -797,10 +842,12 @@ function _objectWithoutPropertiesLoose(r, e) { if (null == r) return {}; var t =
 
 
 
+
+
 var EditTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .Ay)(_ref => {
   var className = _ref.className,
     props = _objectWithoutProperties(_ref, _excluded);
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A, _extends({}, props, {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_37__/* ["default"] */ .A, _extends({}, props, {
     classes: {
       popper: className
     }
@@ -808,7 +855,7 @@ var EditTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] *
 })(_ref2 => {
   var theme = _ref2.theme;
   return {
-    ["& .".concat(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_36__/* ["default"] */ .A.tooltip)]: {
+    ["& .".concat(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_38__/* ["default"] */ .A.tooltip)]: {
       backgroundColor: 'gray',
       color: 'white',
       boxShadow: theme.shadows[1],
@@ -819,7 +866,7 @@ var EditTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] *
 var PrintTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .Ay)(_ref3 => {
   var className = _ref3.className,
     props = _objectWithoutProperties(_ref3, _excluded2);
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A, _extends({}, props, {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_37__/* ["default"] */ .A, _extends({}, props, {
     classes: {
       popper: className
     }
@@ -827,7 +874,7 @@ var PrintTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] 
 })(_ref4 => {
   var theme = _ref4.theme;
   return {
-    ["& .".concat(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_36__/* ["default"] */ .A.tooltip)]: {
+    ["& .".concat(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_38__/* ["default"] */ .A.tooltip)]: {
       backgroundColor: 'white',
       color: 'black',
       boxShadow: theme.shadows[1],
@@ -838,7 +885,7 @@ var PrintTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] 
 var ViewTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .Ay)(_ref5 => {
   var className = _ref5.className,
     props = _objectWithoutProperties(_ref5, _excluded3);
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A, _extends({}, props, {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_37__/* ["default"] */ .A, _extends({}, props, {
     classes: {
       popper: className
     }
@@ -846,7 +893,7 @@ var ViewTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] *
 })(_ref6 => {
   var theme = _ref6.theme;
   return {
-    ["& .".concat(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_36__/* ["default"] */ .A.tooltip)]: {
+    ["& .".concat(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_38__/* ["default"] */ .A.tooltip)]: {
       backgroundColor: '#202a5a',
       color: 'white',
       boxShadow: theme.shadows[1],
@@ -867,7 +914,7 @@ var style = {
   pb: 3
 };
 var drawerWidth = 240;
-var AppBar = (0,_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .Ay)(_mui_material_AppBar__WEBPACK_IMPORTED_MODULE_37__/* ["default"] */ .A, {
+var AppBar = (0,_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .Ay)(_mui_material_AppBar__WEBPACK_IMPORTED_MODULE_39__/* ["default"] */ .A, {
   shouldForwardProp: prop => prop !== 'open'
 })(_ref7 => {
   var theme = _ref7.theme,
@@ -887,7 +934,7 @@ var AppBar = (0,_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .Ay
     })
   });
 });
-var Drawer = (0,_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .Ay)(_mui_material_Drawer__WEBPACK_IMPORTED_MODULE_40__/* ["default"] */ .Ay, {
+var Drawer = (0,_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .Ay)(_mui_material_Drawer__WEBPACK_IMPORTED_MODULE_42__/* ["default"] */ .Ay, {
   shouldForwardProp: prop => prop !== 'open'
 })(_ref8 => {
   var theme = _ref8.theme,
@@ -916,24 +963,24 @@ var Drawer = (0,_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .Ay
   };
 });
 function EstimateViewAdminAll() {
-  var _estimate$filter;
+  var _estimate$filter, _user$data;
   var _useLayoutConfig = (0,_hooks_useLayoutConfig__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A)(),
     config = _useLayoutConfig.config;
-  var _useParams = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_27__/* .useParams */ .g)(),
+  var _useParams = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_29__/* .useParams */ .g)(),
     id = _useParams.id;
-  var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_27__/* .useNavigate */ .Zp)();
-  var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_49__/* .useDispatch */ .wA)();
-  var user = (0,react_redux__WEBPACK_IMPORTED_MODULE_49__/* .useSelector */ .d4)(_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_50__/* .selectCurrentUser */ .xu);
+  var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_29__/* .useNavigate */ .Zp)();
+  var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_51__/* .useDispatch */ .wA)();
+  var user = (0,react_redux__WEBPACK_IMPORTED_MODULE_51__/* .useSelector */ .d4)(_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_52__/* .selectCurrentUser */ .xu);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     var storesUserId = localStorage.getItem('user');
     var fetchUser = /*#__PURE__*/function () {
       var _ref9 = _asyncToGenerator(function* () {
         if (storesUserId) {
           try {
-            var res = yield axios__WEBPACK_IMPORTED_MODULE_28__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_30__/* .ENDPOINT_URL */ .m, "/get-employeeuser/").concat(storesUserId));
+            var res = yield axios__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_32__/* .ENDPOINT_URL */ .m, "/get-employeeuser/").concat(storesUserId));
             var Name = res.data.data.employeeName;
             var Role = res.data.data.role;
-            dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_50__/* .setUser */ .gV)({
+            dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_52__/* .setUser */ .gV)({
               userName: Name,
               role: Role
             }));
@@ -959,7 +1006,7 @@ function EstimateViewAdminAll() {
       var _ref0 = _asyncToGenerator(function* () {
         try {
           var _res$data;
-          var res = yield (0,_utils_apiCache__WEBPACK_IMPORTED_MODULE_29__/* .cachedGet */ .Fe)("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_30__/* .ENDPOINT_URL */ .m, "/grantAccess"));
+          var res = yield (0,_utils_apiCache__WEBPACK_IMPORTED_MODULE_31__/* .cachedGet */ .Fe)("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_32__/* .ENDPOINT_URL */ .m, "/grantAccess"));
           (_res$data = res.data) === null || _res$data === void 0 || (_res$data = _res$data.data) === null || _res$data === void 0 || _res$data.filter(row => row.userID === user.data.id).map(row => setGrantAccess(row.modules));
         } catch (error) {
           console.error('Error fetching data:', error);
@@ -986,13 +1033,13 @@ function EstimateViewAdminAll() {
     SetItems = _useState8[1];
   // Store all invoices so the third useEffect reuses them without a second API call
   var allInvoicesRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)([]);
-  var apiUrl = "".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_30__/* .ENDPOINT_URL */ .m, "/estimation");
+  var apiUrl = "".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_32__/* .ENDPOINT_URL */ .m, "/estimation");
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     var fetchData = /*#__PURE__*/function () {
       var _ref1 = _asyncToGenerator(function* () {
         try {
           // Run both fetches IN PARALLEL instead of sequentially
-          var _yield$Promise$all = yield Promise.all([(0,_utils_apiCache__WEBPACK_IMPORTED_MODULE_29__/* .cachedGet */ .Fe)(apiUrl), (0,_utils_apiCache__WEBPACK_IMPORTED_MODULE_29__/* .cachedGet */ .Fe)("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_30__/* .ENDPOINT_URL */ .m, "/item"))]),
+          var _yield$Promise$all = yield Promise.all([(0,_utils_apiCache__WEBPACK_IMPORTED_MODULE_31__/* .cachedGet */ .Fe)(apiUrl), (0,_utils_apiCache__WEBPACK_IMPORTED_MODULE_31__/* .cachedGet */ .Fe)("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_32__/* .ENDPOINT_URL */ .m, "/item"))]),
             _yield$Promise$all2 = _slicedToArray(_yield$Promise$all, 2),
             res = _yield$Promise$all2[0],
             resItem = _yield$Promise$all2[1];
@@ -1024,7 +1071,7 @@ function EstimateViewAdminAll() {
     setAttachmentCount = _useState12[1];
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     if (id) {
-      axios__WEBPACK_IMPORTED_MODULE_28__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_30__/* .ENDPOINT_URL */ .m, "/attachments/").concat(id)).then(res => {
+      axios__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_32__/* .ENDPOINT_URL */ .m, "/attachments/").concat(id)).then(res => {
         var _res$data2, _res$data3;
         setAttachmentCount(((_res$data2 = res.data) === null || _res$data2 === void 0 ? void 0 : _res$data2.count) || (((_res$data3 = res.data) === null || _res$data3 === void 0 ? void 0 : _res$data3.data) || []).length || 0);
       }).catch(() => {});
@@ -1060,7 +1107,7 @@ function EstimateViewAdminAll() {
         try {
           var _invoiceResponse$data, _purchaseResponse$dat, _maintenanceResponse$;
           // All 3 requests now run IN PARALLEL (invoice, purchase, and this specific estimation)
-          var _yield$Promise$all3 = yield Promise.all([(0,_utils_apiCache__WEBPACK_IMPORTED_MODULE_29__/* .cachedGet */ .Fe)("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_30__/* .ENDPOINT_URL */ .m, "/invoice?summary=true")), (0,_utils_apiCache__WEBPACK_IMPORTED_MODULE_29__/* .cachedGet */ .Fe)("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_30__/* .ENDPOINT_URL */ .m, "/purchase")), (0,_utils_apiCache__WEBPACK_IMPORTED_MODULE_29__/* .cachedGet */ .Fe)("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_30__/* .ENDPOINT_URL */ .m, "/maintenance")), axios__WEBPACK_IMPORTED_MODULE_28__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_30__/* .ENDPOINT_URL */ .m, "/get-estimation/").concat(id)) // always fresh — no cache for specific record
+          var _yield$Promise$all3 = yield Promise.all([(0,_utils_apiCache__WEBPACK_IMPORTED_MODULE_31__/* .cachedGet */ .Fe)("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_32__/* .ENDPOINT_URL */ .m, "/invoice?summary=true")), (0,_utils_apiCache__WEBPACK_IMPORTED_MODULE_31__/* .cachedGet */ .Fe)("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_32__/* .ENDPOINT_URL */ .m, "/purchase")), (0,_utils_apiCache__WEBPACK_IMPORTED_MODULE_31__/* .cachedGet */ .Fe)("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_32__/* .ENDPOINT_URL */ .m, "/maintenance")), axios__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_32__/* .ENDPOINT_URL */ .m, "/get-estimation/").concat(id)) // always fresh — no cache for specific record
             ]),
             _yield$Promise$all4 = _slicedToArray(_yield$Promise$all3, 4),
             invoiceResponse = _yield$Promise$all4[0],
@@ -1102,19 +1149,23 @@ function EstimateViewAdminAll() {
     anchorEl = _React$useState2[0],
     setAnchorEl = _React$useState2[1];
   var open = Boolean(anchorEl);
+  var _useState25 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    _useState26 = _slicedToArray(_useState25, 2),
+    whatsAppDoc = _useState26[0],
+    setWhatsAppDoc = _useState26[1];
   var handleClick = event => {
     setAnchorEl(event.currentTarget);
   };
   var handleCloseMenu = () => {
     setAnchorEl(null);
   };
-  var _useState25 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('en'),
-    _useState26 = _slicedToArray(_useState25, 2),
-    printLang = _useState26[0],
-    setPrintLang = _useState26[1];
-  var L = _utils_frenchPrintHelper__WEBPACK_IMPORTED_MODULE_48__/* .PRINT_LABELS */ .w8[printLang] || _utils_frenchPrintHelper__WEBPACK_IMPORTED_MODULE_48__/* .PRINT_LABELS */ .w8.en;
+  var _useState27 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('en'),
+    _useState28 = _slicedToArray(_useState27, 2),
+    printLang = _useState28[0],
+    setPrintLang = _useState28[1];
+  var L = _utils_frenchPrintHelper__WEBPACK_IMPORTED_MODULE_50__/* .PRINT_LABELS */ .w8[printLang] || _utils_frenchPrintHelper__WEBPACK_IMPORTED_MODULE_50__/* .PRINT_LABELS */ .w8.en;
   var componentRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
-  var handlePrint = (0,react_to_print__WEBPACK_IMPORTED_MODULE_47__.useReactToPrint)({
+  var handlePrint = (0,react_to_print__WEBPACK_IMPORTED_MODULE_49__.useReactToPrint)({
     content: () => componentRef.current,
     documentTitle: (printLang === 'fr' ? 'DEVIS-' : 'Q-') + String(estimateNumber).padStart(6, '0') + ' For ' + customerName1,
     onAfterPrint: () => setPrintLang('en'),
@@ -1126,33 +1177,33 @@ function EstimateViewAdminAll() {
     setAnchorEl(null);
     setTimeout(() => handlePrint(), 60);
   };
-  var _useState27 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(1),
-    _useState28 = _slicedToArray(_useState27, 2),
-    show1 = _useState28[0],
-    setShow1 = _useState28[1];
+  var _useState29 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(1),
+    _useState30 = _slicedToArray(_useState29, 2),
+    show1 = _useState30[0],
+    setShow1 = _useState30[1];
   var handleShow1 = e => {
     setShow1(e);
     setAnchorEl(null);
   };
-  var _useState29 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
-    _useState30 = _slicedToArray(_useState29, 2),
-    reason = _useState30[0],
-    setReason = _useState30[1];
-  var _useState31 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+  var _useState31 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
     _useState32 = _slicedToArray(_useState31, 2),
-    Comments1 = _useState32[0],
-    setComments = _useState32[1];
+    reason = _useState32[0],
+    setReason = _useState32[1];
   var _useState33 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState34 = _slicedToArray(_useState33, 2),
-    notification = _useState34[0],
-    setNotification = _useState34[1];
+    Comments1 = _useState34[0],
+    setComments = _useState34[1];
+  var _useState35 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    _useState36 = _slicedToArray(_useState35, 2),
+    notification = _useState36[0],
+    setNotification = _useState36[1];
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     var fetchComment = /*#__PURE__*/function () {
       var _ref11 = _asyncToGenerator(function* () {
         try {
           var _resComment$data, _resNotification$data;
           // Fetch comment and notification IN PARALLEL instead of sequentially
-          var _yield$Promise$all5 = yield Promise.all([axios__WEBPACK_IMPORTED_MODULE_28__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_30__/* .ENDPOINT_URL */ .m, "/comment")), axios__WEBPACK_IMPORTED_MODULE_28__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_30__/* .ENDPOINT_URL */ .m, "/notification"))]),
+          var _yield$Promise$all5 = yield Promise.all([axios__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_32__/* .ENDPOINT_URL */ .m, "/comment")), axios__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_32__/* .ENDPOINT_URL */ .m, "/notification"))]),
             _yield$Promise$all6 = _slicedToArray(_yield$Promise$all5, 2),
             resComment = _yield$Promise$all6[0],
             resNotification = _yield$Promise$all6[1];
@@ -1174,18 +1225,18 @@ function EstimateViewAdminAll() {
     reason
   };
   {/** Loading Start */}
-  var _useState35 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState36 = _slicedToArray(_useState35, 2),
-    loading = _useState36[0],
-    setLoading = _useState36[1];
   var _useState37 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState38 = _slicedToArray(_useState37, 2),
-    loadingOpenModal = _useState38[0],
-    setLoadingOpenModal = _useState38[1];
+    loading = _useState38[0],
+    setLoading = _useState38[1];
   var _useState39 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState40 = _slicedToArray(_useState39, 2),
-    ErrorOpenModal = _useState40[0],
-    setErrorOpenModal = _useState40[1];
+    loadingOpenModal = _useState40[0],
+    setLoadingOpenModal = _useState40[1];
+  var _useState41 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState42 = _slicedToArray(_useState41, 2),
+    ErrorOpenModal = _useState42[0],
+    setErrorOpenModal = _useState42[1];
   var handleOpen = () => {
     setLoadingOpenModal(true);
     setLoading(true);
@@ -1207,7 +1258,7 @@ function EstimateViewAdminAll() {
     setErrorOpenModal(false);
   };
   {/** Loading End */}
-  var dateComment = dayjs__WEBPACK_IMPORTED_MODULE_46___default()(Date.now());
+  var dateComment = dayjs__WEBPACK_IMPORTED_MODULE_48___default()(Date.now());
   var handleSubmitEdit = /*#__PURE__*/function () {
     var _ref12 = _asyncToGenerator(function* (e) {
       e.preventDefault();
@@ -1216,7 +1267,7 @@ function EstimateViewAdminAll() {
         dateComment
       };
       try {
-        var res = yield axios__WEBPACK_IMPORTED_MODULE_28__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_30__/* .ENDPOINT_URL */ .m, "/create-comment/"), data);
+        var res = yield axios__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_32__/* .ENDPOINT_URL */ .m, "/create-comment/"), data);
         if (res) {
           setReason("");
           handleOpen();
@@ -1235,13 +1286,13 @@ function EstimateViewAdminAll() {
   }();
   var handleLogout = () => {
     localStorage.removeItem('user');
-    dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_50__/* .logOut */ .je)());
+    dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_52__/* .logOut */ .je)());
     navigate('/');
   };
-  var _useState41 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(1),
-    _useState42 = _slicedToArray(_useState41, 2),
-    showRef = _useState42[0],
-    setShowRef = _useState42[1];
+  var _useState43 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(1),
+    _useState44 = _slicedToArray(_useState43, 2),
+    showRef = _useState44[0],
+    setShowRef = _useState44[1];
   var handleShowRef = e => {
     setShowRef(e);
     setAnchorEl(null);
@@ -1255,7 +1306,7 @@ function EstimateViewAdminAll() {
   };
   var data0 = estimate.filter(row => row._id === id).map(row => ({
     number: 'Q-' + String(row.estimateNumber).padStart(6, '0'),
-    invoiceDate: dayjs__WEBPACK_IMPORTED_MODULE_46___default()(row.estimateDate).format('DD/MM/YYYY'),
+    invoiceDate: dayjs__WEBPACK_IMPORTED_MODULE_48___default()(row.estimateDate).format('DD/MM/YYYY'),
     customerName: row.customerName.customerName,
     Address: row.customerName.billingAddress.toUpperCase() + row.customerName.billingCity.toUpperCase(),
     status: row.status
@@ -1326,7 +1377,7 @@ function EstimateViewAdminAll() {
   });
   var exportToExcel = /*#__PURE__*/function () {
     var _ref13 = _asyncToGenerator(function* () {
-      var workbook = new (exceljs__WEBPACK_IMPORTED_MODULE_61___default().Workbook)();
+      var workbook = new (exceljs__WEBPACK_IMPORTED_MODULE_63___default().Workbook)();
       var workSheet = workbook.addWorksheet('Sheet1');
       var columns1 = [{
         header: "#",
@@ -1431,7 +1482,7 @@ function EstimateViewAdminAll() {
       var bold = new Blob([buffer], {
         type: 'application/octet-stream'
       });
-      (0,file_saver__WEBPACK_IMPORTED_MODULE_62__.saveAs)(bold, "".concat('Q-' + String(estimateNumber).padStart(6, '0') + ' for ' + customerName1, ".xlsx"));
+      (0,file_saver__WEBPACK_IMPORTED_MODULE_64__.saveAs)(bold, "".concat('Q-' + String(estimateNumber).padStart(6, '0') + ' for ' + customerName1, ".xlsx"));
     });
     return function exportToExcel() {
       return _ref13.apply(this, arguments);
@@ -1443,13 +1494,13 @@ function EstimateViewAdminAll() {
     sx: {
       display: 'flex'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_CssBaseline__WEBPACK_IMPORTED_MODULE_39__/* ["default"] */ .Ay, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(AppBar, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_CssBaseline__WEBPACK_IMPORTED_MODULE_41__/* ["default"] */ .Ay, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(AppBar, {
     position: "absolute",
     open: sideBar,
     sx: {
       backgroundColor: '#30368a'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_38__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_40__/* ["default"] */ .A, {
     sx: {
       pr: '24px' // keep right padding when drawer closed
     }
@@ -1463,7 +1514,7 @@ function EstimateViewAdminAll() {
     }, sideBar && {
       display: 'none'
     })
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Menu__WEBPACK_IMPORTED_MODULE_44__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Menu__WEBPACK_IMPORTED_MODULE_46__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
     component: "h1",
     variant: "h6",
     color: "inherit",
@@ -1473,11 +1524,11 @@ function EstimateViewAdminAll() {
     }
   }, "Quotation Information"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
     onClick: () => navigate('/EstimateViewAdmin')
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_ArrowBack__WEBPACK_IMPORTED_MODULE_56__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_ArrowBack__WEBPACK_IMPORTED_MODULE_58__/* ["default"] */ .A, {
     style: {
       color: 'white'
     }
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_59__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_MessageAdminView__WEBPACK_IMPORTED_MODULE_58__/* ["default"] */ .A, {
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_61__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_MessageAdminView__WEBPACK_IMPORTED_MODULE_60__/* ["default"] */ .A, {
     name: user.data.userName,
     role: user.data.role
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
@@ -1488,14 +1539,14 @@ function EstimateViewAdminAll() {
   }, user.data.userName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
     color: "inherit",
     onClick: handleLogout
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_51__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_53__/* ["default"] */ .A, {
     style: {
       color: 'white'
     }
   })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(Drawer, {
     variant: "permanent",
     open: sideBar
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_38__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_40__/* ["default"] */ .A, {
     sx: {
       display: 'flex',
       alignItems: 'center',
@@ -1504,7 +1555,7 @@ function EstimateViewAdminAll() {
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
     onClick: toggleDrawer
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_ChevronLeft__WEBPACK_IMPORTED_MODULE_45__/* ["default"] */ .A, null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_List__WEBPACK_IMPORTED_MODULE_41__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_ChevronLeft__WEBPACK_IMPORTED_MODULE_47__/* ["default"] */ .A, null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_List__WEBPACK_IMPORTED_MODULE_43__/* ["default"] */ .A, {
     sx: {
       height: '700px'
     }
@@ -1517,7 +1568,7 @@ function EstimateViewAdminAll() {
       height: '100vh',
       overflow: 'auto'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_38__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Container__WEBPACK_IMPORTED_MODULE_43__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_40__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Container__WEBPACK_IMPORTED_MODULE_45__/* ["default"] */ .A, {
     maxWidth: "none",
     sx: {
       mt: 2
@@ -1527,7 +1578,7 @@ function EstimateViewAdminAll() {
       position: 'relative',
       top: '120px'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_52__/* ["default"] */ .A, null))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .Ay, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_54__/* ["default"] */ .A, null))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .Ay, {
     container: true,
     spacing: 2
   }, show1 === 1 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .Ay, {
@@ -1573,7 +1624,7 @@ function EstimateViewAdminAll() {
         alignItems: 'center',
         gap: '8px'
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_37__/* ["default"] */ .A, {
       title: "Attachments"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
       onClick: () => setOpenAttachments(true),
@@ -1587,7 +1638,7 @@ function EstimateViewAdminAll() {
           bgcolor: '#e2e8f0'
         }
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Badge__WEBPACK_IMPORTED_MODULE_42__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Badge__WEBPACK_IMPORTED_MODULE_44__/* ["default"] */ .A, {
       badgeContent: attachmentCount,
       color: "primary",
       max: 99
@@ -1602,7 +1653,7 @@ function EstimateViewAdminAll() {
       variant: "contained",
       disableElevation: true,
       onClick: handleClick,
-      endIcon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_KeyboardArrowDown__WEBPACK_IMPORTED_MODULE_57__/* ["default"] */ .A, null),
+      endIcon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_KeyboardArrowDown__WEBPACK_IMPORTED_MODULE_59__/* ["default"] */ .A, null),
       sx: {
         bgcolor: 'gray',
         '&:hover': {
@@ -1622,7 +1673,7 @@ function EstimateViewAdminAll() {
       TransitionComponent: _mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, {
       disabled: row.status !== 'Draft' && estimationInfoU.length === 0
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_26__/* .NavLink */ .k2, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_28__/* .NavLink */ .k2, {
       to: "/EstimateInvoiceFormUpdate/".concat(row._id),
       className: "LinkName",
       style: {
@@ -1631,7 +1682,7 @@ function EstimateViewAdminAll() {
         alignItems: 'center',
         color: 'gray'
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Edit__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, null, "Edit"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_26__/* .NavLink */ .k2, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Edit__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, null, "Edit"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_28__/* .NavLink */ .k2, {
       to: "/EstimateFormClone/".concat(row._id),
       className: "LinkName",
       style: {
@@ -1640,7 +1691,7 @@ function EstimateViewAdminAll() {
         alignItems: 'center',
         color: 'gray'
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_60__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, null, "Clone"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_62__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, null, "Clone"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, {
       onClick: () => handleOpenPrint('en'),
       sx: {
         display: 'flex',
@@ -1661,7 +1712,22 @@ function EstimateViewAdminAll() {
         gap: '20px',
         color: 'gray'
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_63__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, "Export to Excel")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_65__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, "Export to Excel")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, {
+      onClick: () => {
+        handleCloseMenu();
+        setWhatsAppDoc(row);
+      },
+      sx: {
+        display: 'flex',
+        gap: '20px',
+        color: '#15803d',
+        fontWeight: 600
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_WhatsApp__WEBPACK_IMPORTED_MODULE_26__/* ["default"] */ .A, {
+      sx: {
+        color: '#25D366'
+      }
+    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, "Send by WhatsApp")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, {
       onClick: () => {
         handleCloseMenu();
         setOpenAttachments(true);
@@ -1693,37 +1759,37 @@ function EstimateViewAdminAll() {
       style: {
         color: 'gray'
       }
-    }, "No Related Reference")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, null, row.status !== 'Converted' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_26__/* .NavLink */ .k2, {
+    }, "No Related Reference")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, null, row.status !== 'Converted' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_28__/* .NavLink */ .k2, {
       to: "/EstimateViewConvertToInvoice/".concat(row._id),
       className: "LinkName",
       style: {
         color: 'gray'
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, "Convert To Invoice")), row.status === 'Converted' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_26__/* .NavLink */ .k2, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, "Convert To Invoice")), row.status === 'Converted' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_28__/* .NavLink */ .k2, {
       to: "/EstimateViewConvertToInvoice/".concat(row._id),
       className: "LinkName",
       style: {
         color: 'gray'
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, "Convert To Invoice (Again)"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, null, row.status !== 'Converted' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_26__/* .NavLink */ .k2, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, "Convert To Invoice (Again)"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, null, row.status !== 'Converted' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_28__/* .NavLink */ .k2, {
       to: "/MakePurchaseConvertToProject/".concat(row._id),
       className: "LinkName",
       style: {
         color: 'gray'
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, "Convert to Project")), row.status === 'Converted' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_26__/* .NavLink */ .k2, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, "Convert to Project")), row.status === 'Converted' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_28__/* .NavLink */ .k2, {
       to: "/MakePurchaseConvertToProject/".concat(row._id),
       className: "LinkName",
       style: {
         color: 'gray'
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, "Convert to Project (Again)"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, null, row.status !== 'Converted' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_26__/* .NavLink */ .k2, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, "Convert to Project (Again)"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, null, row.status !== 'Converted' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_28__/* .NavLink */ .k2, {
       to: "/EstimateConvertToMaintenance/".concat(row._id),
       className: "LinkName",
       style: {
         color: 'gray'
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, "Convert To Maintenance")), row.status === 'Converted' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_26__/* .NavLink */ .k2, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, "Convert To Maintenance")), row.status === 'Converted' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_28__/* .NavLink */ .k2, {
       to: "/EstimateConvertToMaintenance/".concat(row._id),
       className: "LinkName",
       style: {
@@ -1769,7 +1835,7 @@ function EstimateViewAdminAll() {
         textAlign: 'left',
         border: '1px solid #DDD'
       }
-    }, " Date ", dayjs__WEBPACK_IMPORTED_MODULE_46___default()(row.invoiceDate).format('DD/MM/YYYY')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
+    }, " Date ", dayjs__WEBPACK_IMPORTED_MODULE_48___default()(row.invoiceDate).format('DD/MM/YYYY')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
       style: {
         textAlign: 'left',
         border: '1px solid #DDD'
@@ -1794,7 +1860,7 @@ function EstimateViewAdminAll() {
         textAlign: 'center',
         border: '1px solid #DDD'
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(ViewTooltip, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_26__/* .NavLink */ .k2, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(ViewTooltip, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_28__/* .NavLink */ .k2, {
       to: "/InvoiceViewAdminAll/".concat(row._id),
       className: "LinkName"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
@@ -1808,7 +1874,7 @@ function EstimateViewAdminAll() {
         textAlign: 'left',
         border: '1px solid #DDD'
       }
-    }, " Date ", dayjs__WEBPACK_IMPORTED_MODULE_46___default()(row.invoiceDate).format('DD/MM/YYYY')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
+    }, " Date ", dayjs__WEBPACK_IMPORTED_MODULE_48___default()(row.invoiceDate).format('DD/MM/YYYY')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
       style: {
         textAlign: 'left',
         border: '1px solid #DDD'
@@ -1833,7 +1899,7 @@ function EstimateViewAdminAll() {
         textAlign: 'center',
         border: '1px solid #DDD'
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(ViewTooltip, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_26__/* .NavLink */ .k2, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(ViewTooltip, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_28__/* .NavLink */ .k2, {
       to: "/InvoiceViewAdminAll/".concat(row._id),
       className: "LinkName"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
@@ -1847,7 +1913,7 @@ function EstimateViewAdminAll() {
         textAlign: 'left',
         border: '1px solid #DDD'
       }
-    }, " Date ", dayjs__WEBPACK_IMPORTED_MODULE_46___default()(row.purchaseDate).format('DD/MM/YYYY')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
+    }, " Date ", dayjs__WEBPACK_IMPORTED_MODULE_48___default()(row.purchaseDate).format('DD/MM/YYYY')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
       style: {
         textAlign: 'left',
         border: '1px solid #DDD'
@@ -1862,7 +1928,7 @@ function EstimateViewAdminAll() {
         textAlign: 'center',
         border: '1px solid #DDD'
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(ViewTooltip, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_26__/* .NavLink */ .k2, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(ViewTooltip, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_28__/* .NavLink */ .k2, {
       to: "/PurchasesViewAdminAll/".concat(row._id),
       className: "LinkName"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
@@ -1876,7 +1942,7 @@ function EstimateViewAdminAll() {
         textAlign: 'left',
         border: '1px solid #DDD'
       }
-    }, " Date ", dayjs__WEBPACK_IMPORTED_MODULE_46___default()(row.serviceDate).format('DD/MM/YYYY')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
+    }, " Date ", dayjs__WEBPACK_IMPORTED_MODULE_48___default()(row.serviceDate).format('DD/MM/YYYY')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
       style: {
         textAlign: 'left',
         border: '1px solid #DDD'
@@ -1891,7 +1957,7 @@ function EstimateViewAdminAll() {
         textAlign: 'center',
         border: '1px solid #DDD'
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(ViewTooltip, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_26__/* .NavLink */ .k2, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(ViewTooltip, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_28__/* .NavLink */ .k2, {
       to: "/MaintenanceViewInformation/".concat(row._id),
       className: "LinkName"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
@@ -1907,7 +1973,7 @@ function EstimateViewAdminAll() {
         position: 'relative',
         float: 'right'
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Close__WEBPACK_IMPORTED_MODULE_55__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Close__WEBPACK_IMPORTED_MODULE_57__/* ["default"] */ .A, {
       style: {
         color: '#202a5a'
       }
@@ -2007,7 +2073,7 @@ function EstimateViewAdminAll() {
       style: {
         textAlign: 'left'
       }
-    }, dayjs__WEBPACK_IMPORTED_MODULE_46___default()(row.estimateDate).format('DD/MM/YYYY')), row.estimateSubject !== '' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    }, dayjs__WEBPACK_IMPORTED_MODULE_48___default()(row.estimateDate).format('DD/MM/YYYY')), row.estimateSubject !== '' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
       style: {
         fontWeight: 'bold',
         textAlign: 'left'
@@ -2187,7 +2253,7 @@ function EstimateViewAdminAll() {
         width: '200px'
       },
       colSpan: 3
-    }, printLang === 'fr' ? (0,_utils_frenchPrintHelper__WEBPACK_IMPORTED_MODULE_48__/* .translateNoteToFrench */ .Cm)(row.note) : row.note), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
+    }, printLang === 'fr' ? (0,_utils_frenchPrintHelper__WEBPACK_IMPORTED_MODULE_50__/* .translateNoteToFrench */ .Cm)(row.note) : row.note), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
       style: {
         textAlign: 'right',
         borderBottom: '1px solid #DDD'
@@ -2347,7 +2413,7 @@ function EstimateViewAdminAll() {
         width: '150px'
       },
       colSpan: 2
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, printLang === 'fr' ? (0,_utils_frenchPrintHelper__WEBPACK_IMPORTED_MODULE_48__/* .numberToFrenchWords */ .Am)(row.totalInvoice) : row.totalW))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("address", {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, printLang === 'fr' ? (0,_utils_frenchPrintHelper__WEBPACK_IMPORTED_MODULE_50__/* .numberToFrenchWords */ .Am)(row.totalInvoice) : row.totalW))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("address", {
       style: {
         float: 'left',
         fontSize: '70%',
@@ -2362,7 +2428,7 @@ function EstimateViewAdminAll() {
       style: {
         fontWeight: 'bold'
       }
-    }, L.termsTitle, " "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, printLang === 'fr' ? (0,_utils_frenchPrintHelper__WEBPACK_IMPORTED_MODULE_48__/* .translateTermsToFrench */ .Fq)(row.terms) : row.terms.toUpperCase())))))))), row.includeLetter && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("tbody", {
+    }, L.termsTitle, " "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, printLang === 'fr' ? (0,_utils_frenchPrintHelper__WEBPACK_IMPORTED_MODULE_50__/* .translateTermsToFrench */ .Fq)(row.terms) : row.terms.toUpperCase())))))))), row.includeLetter && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("tbody", {
       style: {
         pageBreakBefore: 'always'
       }
@@ -2394,7 +2460,7 @@ function EstimateViewAdminAll() {
         fontSize: '110%',
         margin: 0
       }
-    }, "Kolwezi, le ", dayjs__WEBPACK_IMPORTED_MODULE_46___default()(row.estimateDate).format('DD MMMM YYYY'))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    }, "Kolwezi, le ", dayjs__WEBPACK_IMPORTED_MODULE_48___default()(row.estimateDate).format('DD MMMM YYYY'))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
       style: {
         marginBottom: '5px'
       }
@@ -2528,7 +2594,7 @@ function EstimateViewAdminAll() {
       style: {
         textAlign: 'left'
       }
-    }, dayjs__WEBPACK_IMPORTED_MODULE_46___default()(row.estimateDate).format('DD/MM/YYYY')), row.estimateSubject !== '' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    }, dayjs__WEBPACK_IMPORTED_MODULE_48___default()(row.estimateDate).format('DD/MM/YYYY')), row.estimateSubject !== '' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
       style: {
         fontWeight: 'bold',
         textAlign: 'left'
@@ -2959,19 +3025,19 @@ function EstimateViewAdminAll() {
         gap: '5px',
         alignItems: 'center'
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Email__WEBPACK_IMPORTED_MODULE_31__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, "contact@globalgate.sarl")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Email__WEBPACK_IMPORTED_MODULE_33__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, "contact@globalgate.sarl")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
       style: {
         display: 'flex',
         gap: '5px',
         alignItems: 'center'
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Phone__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, "+243 827722222")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Phone__WEBPACK_IMPORTED_MODULE_34__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, "+243 827722222")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
       style: {
         display: 'flex',
         gap: '5px',
         alignItems: 'center'
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Web__WEBPACK_IMPORTED_MODULE_33__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, "www.GlobalGate.sarl"))), row.includeLetter && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Web__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, "www.GlobalGate.sarl"))), row.includeLetter && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
       style: {
         marginTop: '50px',
         borderTop: '1px dashed #ccc',
@@ -3001,7 +3067,7 @@ function EstimateViewAdminAll() {
         textAlign: 'right',
         marginBottom: '30px'
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, "Kolwezi, le ", dayjs__WEBPACK_IMPORTED_MODULE_46___default()(row.estimateDate).format('DD MMMM YYYY'))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, "Kolwezi, le ", dayjs__WEBPACK_IMPORTED_MODULE_48___default()(row.estimateDate).format('DD MMMM YYYY'))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
       style: {
         marginBottom: '30px'
       }
@@ -3066,7 +3132,7 @@ function EstimateViewAdminAll() {
       position: 'relative',
       float: 'right'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Close__WEBPACK_IMPORTED_MODULE_55__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Close__WEBPACK_IMPORTED_MODULE_57__/* ["default"] */ .A, {
     style: {
       color: '#202a5a'
     }
@@ -3144,7 +3210,7 @@ function EstimateViewAdminAll() {
       width: '100%',
       borderBottom: '1px solid black'
     }
-  }, Item.dateComment ? dayjs__WEBPACK_IMPORTED_MODULE_46___default()(Item.dateComment).format('DD/MM') : '', " ", Item.CommentInfo.person + ': ' + Item.CommentInfo.reason))))))))) : "", show1 === 3 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .Ay, {
+  }, Item.dateComment ? dayjs__WEBPACK_IMPORTED_MODULE_48___default()(Item.dateComment).format('DD/MM') : '', " ", Item.CommentInfo.person + ': ' + Item.CommentInfo.reason))))))))) : "", show1 === 3 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .Ay, {
     item: true,
     xs: 3
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
@@ -3169,7 +3235,7 @@ function EstimateViewAdminAll() {
       position: 'relative',
       float: 'right'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Close__WEBPACK_IMPORTED_MODULE_55__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Close__WEBPACK_IMPORTED_MODULE_57__/* ["default"] */ .A, {
     style: {
       color: '#202a5a'
     }
@@ -3186,7 +3252,7 @@ function EstimateViewAdminAll() {
     }
   }, notification.map(row => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
     key: row._id
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, row.person + ' on ' + dayjs__WEBPACK_IMPORTED_MODULE_46___default()(row.dateNotification).format('DD/MMMM'), ": ", row.reason))))))) : "")), " "))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, row.person + ' on ' + dayjs__WEBPACK_IMPORTED_MODULE_48___default()(row.dateNotification).format('DD/MMMM'), ": ", row.reason))))))) : "")), " "))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
     open: loadingOpenModal,
     onClose: handleClose,
     closeAfterTransition: true,
@@ -3200,12 +3266,12 @@ function EstimateViewAdminAll() {
     sx: _objectSpread(_objectSpread({}, style), {}, {
       width: 500
     })
-  }, loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_52__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+  }, loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_54__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     style: {
       justifyContent: 'center',
       textAlign: 'center'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_53__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_55__/* ["default"] */ .A, {
     style: {
       color: 'green',
       height: '40px',
@@ -3235,12 +3301,12 @@ function EstimateViewAdminAll() {
     sx: _objectSpread(_objectSpread({}, style), {}, {
       width: 500
     })
-  }, loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_52__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+  }, loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_54__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     style: {
       justifyContent: 'center',
       textAlign: 'center'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Cancel__WEBPACK_IMPORTED_MODULE_54__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Cancel__WEBPACK_IMPORTED_MODULE_56__/* ["default"] */ .A, {
     style: {
       color: 'red',
       height: '40px',
@@ -3256,6 +3322,12 @@ function EstimateViewAdminAll() {
     documentType: "Estimation",
     documentNumber: estimateNumber !== undefined ? 'Q-' + String(estimateNumber).padStart(6, '0') : '',
     onAttachmentCountChange: count => setAttachmentCount(count)
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_DocumentWhatsAppModal__WEBPACK_IMPORTED_MODULE_27__/* ["default"] */ .A, {
+    open: Boolean(whatsAppDoc),
+    onClose: () => setWhatsAppDoc(null),
+    docType: "quotation",
+    documentRecord: whatsAppDoc,
+    sentBy: (user === null || user === void 0 || (_user$data = user.data) === null || _user$data === void 0 ? void 0 : _user$data.userName) || 'GG'
   }));
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (EstimateViewAdminAll);
@@ -4444,6 +4516,377 @@ function DocumentAttachmentsModal(_ref) {
     onClose: () => setPreviewAttachment(null),
     attachment: previewAttachment
   }));
+}
+
+/***/ },
+
+/***/ 46344
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   A: () => (/* binding */ DocumentWhatsAppModal)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(96540);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(86701);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(77037);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(46831);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(69067);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(14073);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(82022);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(22477);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(844);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(86990);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(68864);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(27558);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(58763);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(73357);
+/* harmony import */ var _mui_icons_material_WhatsApp__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(61451);
+/* harmony import */ var _mui_icons_material_Download__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(10609);
+/* harmony import */ var _mui_icons_material_Save__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(98984);
+/* harmony import */ var react_toastify__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(99571);
+/* harmony import */ var _apiConfig__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(71510);
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+;
+
+
+
+
+
+
+
+var DEFAULT_MESSAGES = {
+  payment: 'Dear Valued Client,\nThank you for your payment! Please find attached your official Payment Receipt from Global Gate General Services SARL.\nWe truly appreciate your business and continued trust.',
+  quotation: 'Dear Valued Client,\nPlease find attached your official Quotation from Global Gate General Services SARL.\nFeel free to reply to this message if you have any questions or would like to confirm.'
+};
+function resolvePhoneFromCustomer(cust) {
+  if (!cust || typeof cust !== 'object') return '';
+  return String(cust.customerCompanyPhone || cust.customerPhone || cust.phone1 || cust.phone2 || cust.phone || cust.mobile || '').trim();
+}
+function getDocumentNumber(docType, doc) {
+  if (!doc) return '';
+  if (docType === 'payment') {
+    return typeof doc.paymentNumber === 'number' ? "PAY-".concat(String(doc.paymentNumber).padStart(6, '0')) : String(doc.paymentNumber || 'PAY-000000');
+  }
+  return typeof doc.estimateNumber === 'number' ? "Q-".concat(String(doc.estimateNumber).padStart(6, '0')) : String(doc.estimateNumber || 'Q-000000');
+}
+function getClientDisplayName(doc) {
+  var cust = doc === null || doc === void 0 ? void 0 : doc.customerName;
+  if (!cust) return 'Valued Client';
+  if (typeof cust === 'string') return cust;
+  return cust.Customer || cust.customerName || cust.customerFullName || 'Valued Client';
+}
+function DocumentWhatsAppModal(_ref) {
+  var open = _ref.open,
+    onClose = _ref.onClose,
+    _ref$docType = _ref.docType,
+    docType = _ref$docType === void 0 ? 'payment' : _ref$docType,
+    _ref$documentRecord = _ref.documentRecord,
+    documentRecord = _ref$documentRecord === void 0 ? null : _ref$documentRecord,
+    _ref$sentBy = _ref.sentBy,
+    sentBy = _ref$sentBy === void 0 ? 'GG' : _ref$sentBy;
+  var isPayment = docType === 'payment';
+  var docNum = getDocumentNumber(docType, documentRecord);
+  var clientName = getClientDisplayName(documentRecord);
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+    _useState2 = _slicedToArray(_useState, 2),
+    phone = _useState2[0],
+    setPhone = _useState2[1];
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(DEFAULT_MESSAGES[docType] || DEFAULT_MESSAGES.payment),
+    _useState4 = _slicedToArray(_useState3, 2),
+    message = _useState4[0],
+    setMessage = _useState4[1];
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(isPayment),
+    _useState6 = _slicedToArray(_useState5, 2),
+    downloadPdfToo = _useState6[0],
+    setDownloadPdfToo = _useState6[1];
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
+      status: 'CHECKING',
+      isReady: false
+    }),
+    _useState8 = _slicedToArray(_useState7, 2),
+    cloudStatus = _useState8[0],
+    setCloudStatus = _useState8[1];
+  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState0 = _slicedToArray(_useState9, 2),
+    sending = _useState0[0],
+    setSending = _useState0[1];
+  var _useState1 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState10 = _slicedToArray(_useState1, 2),
+    downloading = _useState10[0],
+    setDownloading = _useState10[1];
+  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState12 = _slicedToArray(_useState11, 2),
+    savingTpl = _useState12[0],
+    setSavingTpl = _useState12[1];
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    if (!open || !documentRecord) return;
+    setDownloadPdfToo(isPayment);
+    var active = true;
+    var directPhone = resolvePhoneFromCustomer(documentRecord.customerName);
+    setPhone(directPhone);
+
+    // Fallback: look up customer phone from /endpoint/customer if missing on embedded object
+    if (!directPhone && documentRecord.customerName) {
+      var custId = typeof documentRecord.customerName === 'object' ? documentRecord.customerName._id : null;
+      if (custId) {
+        axios__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_18__/* .ENDPOINT_URL */ .m, "/get-customer/").concat(custId)).then(r => {
+          var _r$data;
+          if (!active) return;
+          var p = resolvePhoneFromCustomer(r === null || r === void 0 || (_r$data = r.data) === null || _r$data === void 0 ? void 0 : _r$data.data);
+          if (p) setPhone(p);
+        }).catch(() => {});
+      }
+    }
+    axios__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_18__/* .ENDPOINT_URL */ .m, "/invoice-whatsapp/cloud-status")).then(r => {
+      if (active && r !== null && r !== void 0 && r.data) setCloudStatus(r.data);
+    }).catch(() => {});
+    axios__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_18__/* .ENDPOINT_URL */ .m, "/invoice-whatsapp/").concat(docType, "-template")).then(r => {
+      var _r$data2;
+      if (active && r !== null && r !== void 0 && (_r$data2 = r.data) !== null && _r$data2 !== void 0 && _r$data2.templateMessage) {
+        setMessage(r.data.templateMessage);
+      }
+    }).catch(() => {});
+    return () => {
+      active = false;
+    };
+  }, [open, documentRecord, docType, isPayment]);
+  var handleDownloadPdf = /*#__PURE__*/function () {
+    var _ref2 = _asyncToGenerator(function* () {
+      if (!documentRecord) return false;
+      setDownloading(true);
+      try {
+        var endpoint = isPayment ? 'download-payment-pdf' : 'download-quotation-pdf';
+        var body = isPayment ? {
+          payment: documentRecord
+        } : {
+          quotation: documentRecord
+        };
+        var res = yield axios__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_18__/* .ENDPOINT_URL */ .m, "/invoice-whatsapp/").concat(endpoint), body, {
+          responseType: 'blob'
+        });
+        var blob = new Blob([res.data], {
+          type: 'application/pdf'
+        });
+        var url = window.URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = "".concat(docNum, ".pdf");
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        window.URL.revokeObjectURL(url);
+        return true;
+      } catch (err) {
+        var _err$response;
+        react_toastify__WEBPACK_IMPORTED_MODULE_17__/* .toast */ .oR.error((err === null || err === void 0 || (_err$response = err.response) === null || _err$response === void 0 || (_err$response = _err$response.data) === null || _err$response === void 0 ? void 0 : _err$response.error) || 'Failed to generate PDF');
+        return false;
+      } finally {
+        setDownloading(false);
+      }
+    });
+    return function handleDownloadPdf() {
+      return _ref2.apply(this, arguments);
+    };
+  }();
+  var handleSaveTemplate = /*#__PURE__*/function () {
+    var _ref3 = _asyncToGenerator(function* () {
+      if (!message.trim()) return;
+      setSavingTpl(true);
+      try {
+        yield axios__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_18__/* .ENDPOINT_URL */ .m, "/invoice-whatsapp/").concat(docType, "-template"), {
+          templateMessage: message.trim(),
+          updatedBy: sentBy
+        });
+        react_toastify__WEBPACK_IMPORTED_MODULE_17__/* .toast */ .oR.success('Default WhatsApp message saved!');
+      } catch (err) {
+        var _err$response2;
+        react_toastify__WEBPACK_IMPORTED_MODULE_17__/* .toast */ .oR.error((err === null || err === void 0 || (_err$response2 = err.response) === null || _err$response2 === void 0 || (_err$response2 = _err$response2.data) === null || _err$response2 === void 0 ? void 0 : _err$response2.error) || 'Could not save template');
+      } finally {
+        setSavingTpl(false);
+      }
+    });
+    return function handleSaveTemplate() {
+      return _ref3.apply(this, arguments);
+    };
+  }();
+  var handleSend = /*#__PURE__*/function () {
+    var _ref4 = _asyncToGenerator(function* () {
+      if (!documentRecord) return;
+      if (!phone.trim()) {
+        react_toastify__WEBPACK_IMPORTED_MODULE_17__/* .toast */ .oR.warn('Please enter the client WhatsApp phone number.');
+        return;
+      }
+      setSending(true);
+      try {
+        var _res$data;
+        if (downloadPdfToo) {
+          yield handleDownloadPdf();
+        }
+        var docId = documentRecord._id || documentRecord.id;
+        var endpoint = isPayment ? 'send-payment' : 'send-quotation';
+        var res = yield axios__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_18__/* .ENDPOINT_URL */ .m, "/invoice-whatsapp/").concat(endpoint), {
+          items: [documentRecord],
+          templateMessage: message.trim(),
+          phoneOverrides: {
+            [docId]: phone.trim()
+          },
+          sentBy
+        });
+        if ((res === null || res === void 0 || (_res$data = res.data) === null || _res$data === void 0 ? void 0 : _res$data.sent) > 0) {
+          react_toastify__WEBPACK_IMPORTED_MODULE_17__/* .toast */ .oR.success("".concat(docNum, " PDF sent via WhatsApp to ").concat(clientName, "!"));
+          onClose();
+        } else {
+          var _res$data2, _res$data3;
+          var errDetail = (res === null || res === void 0 || (_res$data2 = res.data) === null || _res$data2 === void 0 || (_res$data2 = _res$data2.details) === null || _res$data2 === void 0 || (_res$data2 = _res$data2[0]) === null || _res$data2 === void 0 ? void 0 : _res$data2.error) || (res === null || res === void 0 || (_res$data3 = res.data) === null || _res$data3 === void 0 ? void 0 : _res$data3.error) || 'Failed to send on WhatsApp';
+          react_toastify__WEBPACK_IMPORTED_MODULE_17__/* .toast */ .oR.error(errDetail);
+        }
+      } catch (err) {
+        var _err$response3;
+        react_toastify__WEBPACK_IMPORTED_MODULE_17__/* .toast */ .oR.error((err === null || err === void 0 || (_err$response3 = err.response) === null || _err$response3 === void 0 || (_err$response3 = _err$response3.data) === null || _err$response3 === void 0 ? void 0 : _err$response3.error) || err.message || 'WhatsApp dispatch failed');
+      } finally {
+        setSending(false);
+      }
+    });
+    return function handleSend() {
+      return _ref4.apply(this, arguments);
+    };
+  }();
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, {
+    open: open,
+    onClose: onClose,
+    maxWidth: "sm",
+    fullWidth: true
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, {
+    sx: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      bgcolor: '#093170',
+      color: 'white'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
+    sx: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: 1
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_WhatsApp__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
+    sx: {
+      color: '#25D366'
+    }
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+    variant: "h6",
+    sx: {
+      fontWeight: 700,
+      fontSize: '1rem'
+    }
+  }, "Send ", isPayment ? 'Payment Receipt' : 'Quotation', " by WhatsApp (", docNum, ")")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+    size: "small",
+    label: cloudStatus.isReady ? 'Cloud WA Connected' : cloudStatus.status || 'Offline',
+    sx: {
+      bgcolor: cloudStatus.isReady ? '#25D366' : '#ef4444',
+      color: 'white',
+      fontWeight: 700
+    }
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+    sx: {
+      pt: 2.5,
+      display: 'flex',
+      flexDirection: 'column',
+      gap: 2
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+    variant: "body2",
+    sx: {
+      color: '#334155',
+      mt: 1
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("strong", null, "Client:"), " ", clientName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
+    label: "Client WhatsApp Phone",
+    value: phone,
+    onChange: e => setPhone(e.target.value),
+    placeholder: "+243...",
+    size: "small",
+    fullWidth: true
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
+    sx: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      mb: 0.5
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+    variant: "caption",
+    sx: {
+      fontWeight: 700,
+      color: '#475569'
+    }
+  }, isPayment ? 'Thank-You Message' : 'Quotation Message'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
+    size: "small",
+    startIcon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Save__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, null),
+    onClick: handleSaveTemplate,
+    disabled: savingTpl,
+    sx: {
+      textTransform: 'none',
+      fontSize: '0.75rem'
+    }
+  }, savingTpl ? 'Saving...' : 'Save as Default')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
+    multiline: true,
+    minRows: 4,
+    value: message,
+    onChange: e => setMessage(e.target.value),
+    fullWidth: true
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+    control: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+      checked: downloadPdfToo,
+      onChange: e => setDownloadPdfToo(e.target.checked),
+      color: "primary"
+    }),
+    label: "Also download ".concat(docNum, ".pdf to this PC when sending")
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+    sx: {
+      px: 3,
+      pb: 2,
+      justifyContent: 'space-between'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
+    variant: "outlined",
+    startIcon: downloading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
+      size: 16
+    }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Download__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, null),
+    onClick: handleDownloadPdf,
+    disabled: downloading || sending
+  }, "Download PDF Only"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
+    sx: {
+      display: 'flex',
+      gap: 1
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
+    onClick: onClose,
+    disabled: sending
+  }, "Cancel"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
+    variant: "contained",
+    startIcon: sending ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
+      size: 16,
+      color: "inherit"
+    }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_WhatsApp__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, null),
+    onClick: handleSend,
+    disabled: sending,
+    sx: {
+      bgcolor: '#25D366',
+      '&:hover': {
+        bgcolor: '#1ebe5d'
+      },
+      fontWeight: 700
+    }
+  }, sending ? 'Sending...' : 'Send by WhatsApp'))));
 }
 
 /***/ },

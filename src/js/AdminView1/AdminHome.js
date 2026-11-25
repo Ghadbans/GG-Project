@@ -243,18 +243,22 @@ function AdminHome() {
       const { collections, exportedAt } = listRes.data;
       setBackupProgress({ done: 0, total: collections.length, phase: 'Downloading...' });
 
-      // Step 2: Fetch ALL collections in PARALLEL for speed
+      // Step 2: Fetch collections with controlled concurrency (4 at a time) to prevent ERR_INSUFFICIENT_RESOURCES
       let doneCount = 0;
-      const results = await Promise.all(
-        collections.map(colName =>
-          axios.get(`${BASE}&col=${encodeURIComponent(colName)}`, { timeout: 180000 })
-            .then(r => {
-              doneCount++;
-              setBackupProgress(p => ({ ...p, done: doneCount }));
-              return { colName, docs: r.data.data || [] };
-            })
-        )
-      );
+      const results = new Array(collections.length);
+      let nextIdx = 0;
+      const CONCURRENCY = 4;
+      const worker = async () => {
+        while (nextIdx < collections.length) {
+          const i = nextIdx++;
+          const colName = collections[i];
+          const r = await axios.get(`${BASE}&col=${encodeURIComponent(colName)}`, { timeout: 180000 });
+          doneCount++;
+          setBackupProgress(p => ({ ...p, done: doneCount }));
+          results[i] = { colName, docs: r.data.data || [] };
+        }
+      };
+      await Promise.all(Array.from({ length: Math.min(CONCURRENCY, collections.length) }, worker));
 
       // Step 3: Build JSON as Blob byte-chunks (avoids V8 string length limit)
       setBackupProgress({ done: collections.length, total: collections.length, phase: 'Building file...' });

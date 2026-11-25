@@ -3,7 +3,7 @@ const makeWASocket = baileys.default || baileys.makeWASocket || baileys;
 const { DisconnectReason, fetchLatestBaileysVersion } = baileys;
 const qrcode = require('qrcode');
 const useMongoAuthState = require('./mongoAuthState');
-const { generateInvoicePdfBuffer } = require('./invoicePdfGenerator');
+const { generateInvoicePdfBuffer, generatePaymentPdfBuffer, generateQuotationPdfBuffer } = require('./invoicePdfGenerator');
 
 let sock = null;
 let currentStatus = 'DISCONNECTED'; // 'DISCONNECTED' | 'CONNECTING' | 'QR_READY' | 'CONNECTED'
@@ -298,6 +298,84 @@ async function dispatchInvoicesCloud({ invoices = [], templateMessage = '', phon
 }
 
 /**
+ * Shared Cloud WhatsApp document dispatcher for Payment Receipts and Quotations.
+ */
+async function dispatchDocumentsCloud({ docType, items = [], templateMessage = '', phoneOverrides = {} }) {
+  if (currentStatus !== 'CONNECTED' || !sock) {
+    throw new Error('Cloud WhatsApp engine is not connected. Please scan the QR code to link device.');
+  }
+  const list = Array.isArray(items) ? items : [];
+  if (list.length === 0) {
+    return { success: false, total: 0, sent: 0, failed: 0, error: `No ${docType} records selected.` };
+  }
+
+  const results = { success: true, total: list.length, sent: 0, failed: 0, details: [] };
+  const isPayment = docType === 'payment';
+
+  for (let idx = 0; idx < list.length; idx++) {
+    const docItem = list[idx];
+    const docId = docItem._id || docItem.id;
+    const cust = docItem.customerName || {};
+    const clientName = typeof cust === 'string' ? cust : (cust.Customer || cust.customerName || cust.customerFullName || 'Valued Client');
+    const rawPhone = phoneOverrides[docId] || (typeof cust === 'object' ? (cust.customerCompanyPhone || cust.customerPhone || cust.phone || cust.mobile || cust.phone1 || cust.phone2) : '') || '';
+    const cleanPhone = normalizePhoneNumber(rawPhone);
+
+    const docNum = isPayment
+      ? (typeof docItem.paymentNumber === 'number' ? `PAY-${String(docItem.paymentNumber).padStart(6, '0')}` : String(docItem.paymentNumber || 'PAY-000000'))
+      : (typeof docItem.estimateNumber === 'number' ? `Q-${String(docItem.estimateNumber).padStart(6, '0')}` : String(docItem.estimateNumber || 'Q-000000'));
+
+    if (!cleanPhone || cleanPhone.length < 9) {
+      results.failed++;
+      results.details.push({ documentNumber: docNum, documentId: docId, clientName, phone: rawPhone, status: 'failed', error: 'Invalid or missing phone number' });
+      continue;
+    }
+
+    const jid = `${cleanPhone}@s.whatsapp.net`;
+    try {
+      const [waCheck] = await sock.onWhatsApp(cleanPhone).catch(() => [{ exists: true }]);
+      if (waCheck && !waCheck.exists) {
+        results.failed++;
+        results.details.push({ documentNumber: docNum, documentId: docId, clientName, phone: cleanPhone, status: 'failed', error: `Phone +${cleanPhone} is not registered on WhatsApp` });
+        continue;
+      }
+
+      const pdfBuffer = isPayment
+        ? await generatePaymentPdfBuffer(docItem)
+        : await generateQuotationPdfBuffer(docItem);
+
+      const amountVal = isPayment
+        ? Number(docItem.amount || docItem.PaymentReceived || docItem.AmountPaidDollar || 0)
+        : Number(docItem.totalInvoice ?? docItem.total ?? 0);
+      const amountText = `$${amountVal.toFixed(2)}`;
+      const labelTitle = isPayment ? 'Payment Receipt' : 'Quotation';
+      const amountLabel = isPayment ? 'Amount Received' : 'Total Quotation';
+
+      const msgBody = templateMessage && templateMessage.trim() ? `${templateMessage.trim()}\n\n` : '';
+      const caption = `${msgBody}📄 *${labelTitle}:* ${docNum}\n💰 *${amountLabel}:* ${amountText}\n🏛️ *Global Gate S.A.R.L*`;
+
+      await sock.sendMessage(jid, {
+        document: pdfBuffer,
+        mimetype: 'application/pdf',
+        fileName: `${docNum}.pdf`,
+        caption
+      });
+
+      results.sent++;
+      results.details.push({ documentNumber: docNum, documentId: docId, clientName, phone: cleanPhone, amount: amountVal, status: 'sent' });
+      console.log(`✅ [CloudWhatsApp] Delivered ${docNum} to +${cleanPhone} (${clientName})`);
+      if (idx < list.length - 1) await new Promise(r => setTimeout(r, 1200));
+    } catch (err) {
+      console.error(`❌ [CloudWhatsApp] Failed to deliver ${docNum} to ${cleanPhone}:`, err.message);
+      results.failed++;
+      results.details.push({ documentNumber: docNum, documentId: docId, clientName, phone: cleanPhone, status: 'failed', error: err.message });
+    }
+  }
+
+  results.success = results.sent > 0;
+  return results;
+}
+
+/**
  * Dispatch marketing flyer image and caption via 24/7 Cloud WhatsApp (Baileys singleton)
  */
 async function dispatchMarketingFlyerCloud({ imageBuffer, caption, recipients = [], postToStatus = false }) {
@@ -430,5 +508,6 @@ module.exports = {
   getCloudWhatsAppStatus,
   disconnectCloudWhatsApp,
   dispatchInvoicesCloud,
+  dispatchDocumentsCloud,
   dispatchMarketingFlyerCloud
 };

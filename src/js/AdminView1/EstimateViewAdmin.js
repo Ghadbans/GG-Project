@@ -40,6 +40,8 @@ import MessageAdminView from './MessageAdminView';
 import NotificationVIewInfo from './NotificationVIewInfo';
 import { isNativeMobile, useIsMobile } from '../utils/isMobile';
 import MobileCardList from '../component/MobileCardList';
+import WhatsAppIcon from '@mui/icons-material/WhatsApp';
+import DocumentWhatsAppModal from '../component/DocumentWhatsAppModal';
 
 
 const DeleteTooltip = styled(({ className, ...props }) => (
@@ -177,6 +179,7 @@ function EstimateViewAdmin() {
 
 
   const [estimate, setEstimate] = useState([]);
+  const [whatsAppDoc, setWhatsAppDoc] = useState(null);
   const [loadingData, setLoadingData] = useState(true);
   const [hiddenRow, setHiddenRow] = useState([]);
   const [hidden, setHidden] = useState([]);
@@ -628,6 +631,17 @@ function EstimateViewAdmin() {
             </IconButton>
           </span>
         </EditTooltip>
+      )
+    },
+    {
+      field: 'whatsapp', headerName: 'WhatsApp', width: 70, minWidth: 70, renderCell: (params) => (
+        <Tooltip title="Send Quotation by WhatsApp">
+          <span>
+            <IconButton onClick={() => setWhatsAppDoc(params.row)} size="small">
+              <WhatsAppIcon style={{ color: '#25D366' }} />
+            </IconButton>
+          </span>
+        </Tooltip>
       )
     },
     {
@@ -1215,6 +1229,13 @@ function EstimateViewAdmin() {
 
         </Box>
       </Modal>
+      <DocumentWhatsAppModal
+        open={Boolean(whatsAppDoc)}
+        onClose={() => setWhatsAppDoc(null)}
+        docType="quotation"
+        documentRecord={whatsAppDoc}
+        sentBy={user?.data?.userName || 'GG'}
+      />
     </div>
   )
 }

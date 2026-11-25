@@ -42,6 +42,8 @@ import WebIcon from '@mui/icons-material/Web';
 import Image from '../../../img/images.png'
 import MessageAdminView from '../../MessageAdminView';
 import NotificationVIewInfo from '../../NotificationVIewInfo';
+import WhatsAppIcon from '@mui/icons-material/WhatsApp';
+import DocumentWhatsAppModal from '../../../component/DocumentWhatsAppModal';
 
 import LocalPrintshop from '@mui/icons-material/LocalPrintshop';
 import Edit from '@mui/icons-material/Edit';
@@ -273,6 +275,7 @@ function PaymentInformationView() {
   };
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+  const [whatsAppDoc, setWhatsAppDoc] = useState(null);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -404,7 +407,21 @@ function PaymentInformationView() {
                                         </span>
                                       </Typography>
                                     </div>
-                                    <div>
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                      <Button
+                                        variant="contained"
+                                        disableElevation
+                                        startIcon={<WhatsAppIcon />}
+                                        onClick={() => setWhatsAppDoc(row)}
+                                        sx={{
+                                          bgcolor: '#25D366',
+                                          '&:hover': { bgcolor: '#1ebe5d' },
+                                          fontWeight: 'bold',
+                                          textTransform: 'none'
+                                        }}
+                                      >
+                                        Send by WhatsApp
+                                      </Button>
                                       <Button
                                         aria-controls={open ? 'demo-customized-menu' : undefined}
                                         aria-haspopup="true"
@@ -442,6 +459,16 @@ function PaymentInformationView() {
                                         <MenuItem onClick={handleOpenPrint} sx={{ display: 'flex', gap: '20px', color: 'gray' }}>
                                           <LocalPrintshop />
                                           <span>Print</span>
+                                        </MenuItem>
+                                        <MenuItem
+                                          onClick={() => {
+                                            handleCloseMenu();
+                                            setWhatsAppDoc(row);
+                                          }}
+                                          sx={{ display: 'flex', gap: '20px', color: '#15803d', fontWeight: 600 }}
+                                        >
+                                          <WhatsAppIcon sx={{ color: '#25D366' }} />
+                                          <span>Send by WhatsApp</span>
                                         </MenuItem>
                                         <Divider />
                                         <MenuItem onClick={() => handleShow1(2)}> <span style={{ color: 'gray' }}>Comments</span> </MenuItem>
@@ -1059,6 +1086,13 @@ function PaymentInformationView() {
           )}
         </Box>
       </Modal>
+      <DocumentWhatsAppModal
+        open={Boolean(whatsAppDoc)}
+        onClose={() => setWhatsAppDoc(null)}
+        docType="payment"
+        documentRecord={whatsAppDoc}
+        sentBy={user?.data?.userName || 'GG'}
+      />
     </div>
   )
 }

@@ -351,6 +351,304 @@ function generateInvoicePdfBuffer(invoice) {
   });
 }
 
+function drawCompanyHeader(doc, title) {
+  const logoPath = path.resolve(__dirname, '../assets/logo.png');
+  if (fs.existsSync(logoPath)) {
+    try {
+      doc.image(logoPath, 32, 28, { width: 135 });
+    } catch (_) {
+      doc.fillColor('#093170').fontSize(16).font('Helvetica-Bold').text('GLOBAL GATE', 32, 35);
+      doc.fillColor('#64748b').fontSize(8).font('Helvetica').text('GENERAL SERVICES', 32, 53);
+    }
+  } else {
+    doc.fillColor('#093170').fontSize(16).font('Helvetica-Bold').text('GLOBAL GATE', 32, 35);
+    doc.fillColor('#64748b').fontSize(8).font('Helvetica').text('GENERAL SERVICES', 32, 53);
+  }
+
+  doc.fillColor('#093170').fontSize(10).font('Helvetica-Bold').text('GLOBAL GATE SARL', 330, 28, { width: 235, align: 'right' });
+  doc.fillColor('#475569').fontSize(7.5).font('Helvetica')
+    .text('RCCM RCM CD/KWZ/RCCM/22-B-00317', 330, 40, { width: 235, align: 'right' })
+    .text('ID NAT ID NAT 14-H5300N11179P', 330, 50, { width: 235, align: 'right' })
+    .text('AVENUE DES ROCHES N° 20 QUARTIER INDUSTRIEL', 330, 60, { width: 235, align: 'right' })
+    .text('LUALABA KOLWEZI', 330, 70, { width: 235, align: 'right' })
+    .text('DEMOCRATIC REPUBLIC OF CONGO', 330, 80, { width: 235, align: 'right' });
+
+  doc.rect(32, 94, 533, 1.2).fill('#093170');
+  doc.fillColor('#093170').fontSize(13).font('Helvetica-Bold').text(title, 32, 102, { width: 533, align: 'center', characterSpacing: 1.5 });
+}
+
+function drawCompanyFooter(doc) {
+  doc.rect(32, 790, 533, 0.8).fill('#cbd5e1');
+  const emailIconPath = 'M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z';
+  const phoneIconPath = 'M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z';
+  const webIconPath = 'M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm6.93 6h-2.95c-.32-1.25-.78-2.45-1.38-3.56 1.84.63 3.37 1.91 4.33 3.56zM12 4.04c.83 1.2 1.48 2.53 1.91 3.96h-3.82c.43-1.43 1.08-2.76 1.91-3.96zM4.26 14C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2 0 .68.06 1.34.14 2H4.26zm.82 2h2.95c.32 1.25.78 2.45 1.38 3.56-1.84-.63-3.37-1.9-4.33-3.56zm2.95-8H5.08c.96-1.66 2.49-2.93 4.33-3.56C8.81 5.55 8.35 6.75 8.03 8zM12 19.96c-.83-1.2-1.48-2.53-1.91-3.96h3.82c-.43 1.43-1.08 2.76-1.91 3.96zM14.34 14H9.66c-.09-.66-.16-1.32-.16-2 0-.68.07-1.35.16-2h4.68c.09.65.16 1.32.16 2 0 .68-.07 1.34-.16 2zm.25 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95c-.96 1.65-2.49 2.93-4.33 3.56zM16.36 14c.08-.66.14-1.32.14-2 0-.68-.06-1.34-.14-2h3.38c.16.64.26 1.31.26 2s-.1 1.36-.26 2h-3.38z';
+  const drawIcon = (svgPath, x, y, size, color) => {
+    doc.save();
+    doc.translate(x, y);
+    doc.scale(size / 24);
+    doc.path(svgPath).fillColor(color).fill();
+    doc.restore();
+  };
+
+  doc.fontSize(7.5).font('Helvetica-Bold');
+  const emailText = 'CONTACT@GLOBALGATE.SARL';
+  const phoneText = '+243 827 722 222';
+  const webText = 'WWW.GLOBALGATE.SARL';
+  const emailW = doc.widthOfString(emailText);
+  const phoneW = doc.widthOfString(phoneText);
+  const webW = doc.widthOfString(webText);
+  const iconSize = 8.5;
+  const iconGap = 4;
+  const secGap = 20;
+  const totalFooterW = (iconSize + iconGap + emailW) + secGap + (iconSize + iconGap + phoneW) + secGap + (iconSize + iconGap + webW);
+  let curFootX = 32 + (533 - totalFooterW) / 2;
+  const footY = 800;
+
+  drawIcon(emailIconPath, curFootX, footY - 0.5, iconSize, '#093170');
+  curFootX += iconSize + iconGap;
+  doc.fillColor('#093170').text(emailText, curFootX, footY, { lineBreak: false });
+  curFootX += emailW + secGap;
+
+  drawIcon(phoneIconPath, curFootX, footY - 0.5, iconSize, '#093170');
+  curFootX += iconSize + iconGap;
+  doc.fillColor('#093170').text(phoneText, curFootX, footY, { lineBreak: false });
+  curFootX += phoneW + secGap;
+
+  drawIcon(webIconPath, curFootX, footY - 0.5, iconSize, '#093170');
+  curFootX += iconSize + iconGap;
+  doc.fillColor('#093170').text(webText, curFootX, footY, { lineBreak: false });
+}
+
+/**
+ * Generates an official Global Gate S.A.R.L Payment Receipt PDF buffer.
+ */
+function generatePaymentPdfBuffer(payment) {
+  return new Promise((resolve, reject) => {
+    try {
+      const doc = new PDFDocument({
+        size: 'A4',
+        margins: { top: 28, bottom: 28, left: 32, right: 32 }
+      });
+      const buffers = [];
+      doc.on('data', chunk => buffers.push(chunk));
+      doc.on('end', () => resolve(Buffer.concat(buffers)));
+      doc.on('error', err => reject(err));
+
+      const payNum = typeof payment.paymentNumber === 'number'
+        ? `PAY-${String(payment.paymentNumber).padStart(6, '0')}`
+        : safeString(payment.paymentNumber, 'PAY-000000');
+      const payDate = formatDate(payment.paymentDate || new Date());
+      const cust = payment.customerName || {};
+      const custName = (typeof cust === 'string' ? cust : (cust.Customer || cust.customerName || cust.customerFullName || 'VALUED CUSTOMER')).toUpperCase();
+      const custAddress = (typeof cust === 'object' ? (cust.billingAddress || cust.address || 'DRC CONGO, KOLWEZI') : 'DRC CONGO, KOLWEZI').toUpperCase();
+
+      drawCompanyHeader(doc, 'PAYMENT RECEIPT');
+
+      const metaY = 124;
+      doc.fillColor('#64748b').fontSize(7.5).font('Helvetica-Bold').text('PAYMENT FROM', 32, metaY);
+      doc.fillColor('#0f172a').fontSize(9.5).font('Helvetica-Bold').text(custName, 32, metaY + 11, { width: 250 });
+      doc.fillColor('#475569').fontSize(8).font('Helvetica').text(custAddress, 32, metaY + 24, { width: 250 });
+
+      let rCurY = metaY;
+      const drawMeta = (label, val) => {
+        if (!val) return;
+        doc.fillColor('#475569').fontSize(7.5).font('Helvetica-Bold').text(label, 370, rCurY, { width: 70 });
+        doc.fillColor('#0f172a').fontSize(7.5).font('Helvetica').text(String(val), 445, rCurY, { width: 120 });
+        rCurY += 12;
+      };
+      drawMeta('PAY #', payNum);
+      drawMeta('DATE', payDate);
+      drawMeta('MODE', safeString(payment.modes || payment.mode || 'CASH').toUpperCase());
+      drawMeta('REASON', safeString(payment.reason || 'Invoice'));
+      drawMeta('STATUS', safeString(payment.status || 'Cleared'));
+
+      let y = Math.max(metaY + 56, rCurY + 12);
+      if (payment.description) {
+        doc.fillColor('#475569').fontSize(7.5).font('Helvetica-Bold').text('DESCRIPTION: ', 32, y, { continued: true });
+        doc.fillColor('#0f172a').font('Helvetica').text(safeString(payment.description).toUpperCase(), { width: 450 });
+        y += 18;
+      }
+
+      const drawTableHeader = (topY) => {
+        doc.rect(32, topY, 533, 18).fill('#eff6ff');
+        doc.rect(32, topY, 533, 18).strokeColor('#cbd5e1').lineWidth(0.5).stroke();
+        doc.fillColor('#093170').fontSize(7.5).font('Helvetica-Bold');
+        doc.text('INVOICE #', 38, topY + 5, { width: 85 });
+        doc.text('DATE', 128, topY + 5, { width: 75 });
+        doc.text('SUBJECT', 208, topY + 5, { width: 185 });
+        doc.text('INVOICE AMT', 398, topY + 5, { width: 78, align: 'right' });
+        doc.text('AMOUNT PAID', 480, topY + 5, { width: 80, align: 'right' });
+      };
+
+      drawTableHeader(y);
+      y += 18;
+
+      const refs = Array.isArray(payment.TotalAmount) && payment.TotalAmount.length > 0
+        ? payment.TotalAmount
+        : (Array.isArray(payment.referenceNumber) ? payment.referenceNumber : []);
+
+      if (refs.length === 0) {
+        doc.rect(32, y, 533, 20).strokeColor('#e2e8f0').lineWidth(0.5).stroke();
+        doc.fillColor('#0f172a').fontSize(8).font('Helvetica').text('Direct Payment / Credit Settlement', 38, y + 6, { width: 350 });
+        doc.text(formatCurrency(payment.amount || payment.PaymentReceived || 0), 480, y + 6, { width: 80, align: 'right' });
+        y += 20;
+      } else {
+        for (const row of refs) {
+          if (y > 700) {
+            drawCompanyFooter(doc);
+            doc.addPage();
+            drawTableHeader(32);
+            y = 50;
+          }
+          const refNum = row.Ref ? `INV-${String(row.Ref).padStart(6, '0')}` : (row.invoiceNumber ? `INV-${String(row.invoiceNumber).padStart(6, '0')}` : '-');
+          const refDate = row.invoiceDate ? formatDate(row.invoiceDate) : payDate;
+          const subj = safeString(row.invoiceSubject || row.subject || '-', '-').toUpperCase();
+          const invAmt = formatCurrency(row.totalInvoice || row.total || row.amount || 0);
+          const paidAmt = formatCurrency(row.total || row.amountPaid || row.Amount || 0);
+
+          const subjH = doc.heightOfString(subj, { width: 185 });
+          const rowH = Math.max(20, subjH + 10);
+          doc.rect(32, y, 533, rowH).strokeColor('#e2e8f0').lineWidth(0.5).stroke();
+          doc.fillColor('#0f172a').fontSize(7.5).font('Helvetica');
+          doc.text(refNum, 38, y + 6, { width: 85 });
+          doc.text(refDate, 128, y + 6, { width: 75 });
+          doc.text(subj, 208, y + 6, { width: 185 });
+          doc.text(invAmt, 398, y + 6, { width: 78, align: 'right' });
+          doc.font('Helvetica-Bold').text(paidAmt, 480, y + 6, { width: 80, align: 'right' });
+          y += rowH;
+        }
+      }
+
+      y += 14;
+      const amtUsd = Number(payment.amount || payment.PaymentReceived || payment.AmountPaidDollar || 0);
+      const amtFc = Number(payment.AmountPaidFC || 0);
+      const drawSummaryLine = (label, val, bold = false) => {
+        doc.rect(340, y, 225, 18).strokeColor('#e2e8f0').lineWidth(0.5).stroke();
+        doc.fillColor('#334155').fontSize(8).font(bold ? 'Helvetica-Bold' : 'Helvetica').text(label, 348, y + 5, { width: 120 });
+        doc.fillColor('#093170').font(bold ? 'Helvetica-Bold' : 'Helvetica').text(val, 470, y + 5, { width: 88, align: 'right' });
+        y += 18;
+      };
+      drawSummaryLine('AMOUNT RECEIVED', formatCurrency(amtUsd), true);
+      drawSummaryLine('AMOUNT PAID FC', `FC ${amtFc.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`);
+      drawSummaryLine('AMOUNT PAID $', formatCurrency(amtUsd), true);
+
+      y += 18;
+      doc.fillColor('#093170').fontSize(8.5).font('Helvetica-Bold').text('THANK YOU FOR YOUR BUSINESS & PAYMENT!', 32, y, { width: 533, align: 'center' });
+      drawCompanyFooter(doc);
+      doc.end();
+    } catch (err) {
+      reject(err);
+    }
+  });
+}
+
+/**
+ * Generates an official Global Gate S.A.R.L Quotation PDF buffer.
+ */
+function generateQuotationPdfBuffer(estimate) {
+  return new Promise((resolve, reject) => {
+    try {
+      const doc = new PDFDocument({
+        size: 'A4',
+        margins: { top: 28, bottom: 28, left: 32, right: 32 }
+      });
+      const buffers = [];
+      doc.on('data', chunk => buffers.push(chunk));
+      doc.on('end', () => resolve(Buffer.concat(buffers)));
+      doc.on('error', err => reject(err));
+
+      const estNum = typeof estimate.estimateNumber === 'number'
+        ? `Q-${String(estimate.estimateNumber).padStart(6, '0')}`
+        : safeString(estimate.estimateNumber, 'Q-000000');
+      const estDate = formatDate(estimate.estimateDate || new Date());
+      const cust = estimate.customerName || {};
+      const custName = (typeof cust === 'string' ? cust : (cust.Customer || cust.customerName || cust.customerFullName || 'VALUED CUSTOMER')).toUpperCase();
+      const custAddress = (typeof cust === 'object' ? (cust.billingAddress || cust.address || 'DRC CONGO, KOLWEZI') : 'DRC CONGO, KOLWEZI').toUpperCase();
+
+      drawCompanyHeader(doc, 'QUOTATION');
+
+      const metaY = 124;
+      doc.fillColor('#64748b').fontSize(7.5).font('Helvetica-Bold').text('QUOTE FOR', 32, metaY);
+      doc.fillColor('#0f172a').fontSize(9.5).font('Helvetica-Bold').text(custName, 32, metaY + 11, { width: 250 });
+      doc.fillColor('#475569').fontSize(8).font('Helvetica').text(custAddress, 32, metaY + 24, { width: 250 });
+
+      let rCurY = metaY;
+      const drawMeta = (label, val) => {
+        if (!val) return;
+        doc.fillColor('#475569').fontSize(7.5).font('Helvetica-Bold').text(label, 370, rCurY, { width: 70 });
+        doc.fillColor('#0f172a').fontSize(7.5).font('Helvetica').text(String(val), 445, rCurY, { width: 120 });
+        rCurY += 12;
+      };
+      drawMeta('QUOTATION #', estNum);
+      drawMeta('DATE', estDate);
+      drawMeta('STATUS', safeString(estimate.status || 'Draft'));
+      if (estimate.estimateSubject) drawMeta('SUBJECT', safeString(estimate.estimateSubject).toUpperCase());
+
+      let y = Math.max(metaY + 56, rCurY + 12);
+      const drawHeader = (topY) => {
+        doc.rect(32, topY, 533, 18).fill('#eff6ff');
+        doc.rect(32, topY, 533, 18).strokeColor('#cbd5e1').lineWidth(0.5).stroke();
+        doc.fillColor('#093170').fontSize(7.5).font('Helvetica-Bold');
+        doc.text('#', 38, topY + 5, { width: 22 });
+        doc.text('ITEM & DESCRIPTION', 64, topY + 5, { width: 245 });
+        doc.text('QTY', 315, topY + 5, { width: 45, align: 'right' });
+        doc.text('RATE', 368, topY + 5, { width: 70, align: 'right' });
+        doc.text('AMOUNT', 445, topY + 5, { width: 112, align: 'right' });
+      };
+
+      drawHeader(y);
+      y += 18;
+      const items = Array.isArray(estimate.items) ? estimate.items : [];
+      items.forEach((item, idx) => {
+        if (y > 700) {
+          drawCompanyFooter(doc);
+          doc.addPage();
+          drawHeader(32);
+          y = 50;
+        }
+        const iName = safeString(item.itemName && typeof item.itemName === 'object' ? item.itemName.itemName : item.itemName, '');
+        const desc = safeString(item.itemDescription || item.newDescription || '', '');
+        const fullText = [iName, desc].filter(Boolean).join('\n').toUpperCase() || '-';
+        const qty = `${Number(item.itemQty || 0)} ${safeString(item.unit, '')}`.trim();
+        const rate = formatCurrency(item.itemRate || 0);
+        const amt = formatCurrency(item.itemAmount || (Number(item.itemQty || 0) * Number(item.itemRate || 0)));
+
+        const textH = doc.heightOfString(fullText, { width: 245 });
+        const rowH = Math.max(20, textH + 10);
+        doc.rect(32, y, 533, rowH).strokeColor('#e2e8f0').lineWidth(0.5).stroke();
+        doc.fillColor('#0f172a').fontSize(7.5).font('Helvetica');
+        doc.text(String(idx + 1), 38, y + 6, { width: 22 });
+        doc.text(fullText, 64, y + 6, { width: 245 });
+        doc.text(qty, 315, y + 6, { width: 45, align: 'right' });
+        doc.text(rate, 368, y + 6, { width: 70, align: 'right' });
+        doc.font('Helvetica-Bold').text(amt, 445, y + 6, { width: 112, align: 'right' });
+        y += rowH;
+      });
+
+      y += 14;
+      const subTotal = Number(estimate.subTotal || 0);
+      const tax = Number(estimate.total || 0);
+      const totalInvoice = Number(estimate.totalInvoice ?? (subTotal + tax));
+      const drawTotal = (label, val, bold = false) => {
+        doc.rect(340, y, 225, 18).strokeColor('#e2e8f0').lineWidth(0.5).stroke();
+        doc.fillColor('#334155').fontSize(8).font(bold ? 'Helvetica-Bold' : 'Helvetica').text(label, 348, y + 5, { width: 115 });
+        doc.fillColor('#093170').font(bold ? 'Helvetica-Bold' : 'Helvetica').text(val, 468, y + 5, { width: 90, align: 'right' });
+        y += 18;
+      };
+      drawTotal('SUBTOTAL', formatCurrency(subTotal));
+      if (tax > 0) drawTotal('TVA / TAX', formatCurrency(tax));
+      drawTotal('TOTAL QUOTATION', formatCurrency(totalInvoice), true);
+
+      drawCompanyFooter(doc);
+      doc.end();
+    } catch (err) {
+      reject(err);
+    }
+  });
+}
+
 module.exports = {
-  generateInvoicePdfBuffer
+  generateInvoicePdfBuffer,
+  generatePaymentPdfBuffer,
+  generateQuotationPdfBuffer
 };

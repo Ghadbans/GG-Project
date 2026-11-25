@@ -6386,3 +6386,20 @@ Implemented a zero-manual-intervention in-app update pipeline across Electron Wi
   - Updated Railway `GG-Project` `MONGODB_URI` and `MONGO_URL` to match the live `MongoDB` service password (`globalgate successfully connected.` verified on Railway deployment `15f8c07e`).
   - Synchronized `android/app/build.gradle` (`versionCode 30719`, `versionName "3.7.19"`), verified `pre-build-check.js` (253 files, 0 errors), `security-check.js --auto-start` (21/21 passed), and `regression-check.js --auto-start` (12/12 passed).
   - Built Web Portal (`dist_web/`), Electron Desktop (`dist/Global Gate Setup 3.7.19.exe` + `latest.yml`), and Capacitor Android APK (`GlobalGate-v3.7.19.apk`), synced to `server/public/downloads/` via `scripts/sync-releases.js` (resolving the Desktop `v3.7.18 -> v3.7.19` update server hang), and pushed to `origin main`.
+
+
+### Rule 114: Payment & Quotation WhatsApp PDF Dispatch, Controlled Backup Queue & Employee Route Alias (Ver 3.7.20)
+
+#### Changes Implemented
+1. **Payment Receipt & Quotation WhatsApp PDF Dispatch**:
+   - **`server/services/invoicePdfGenerator.js`**: Added `drawCompanyHeader`, `drawCompanyFooter`, `generatePaymentPdfBuffer(payment)` (Official Payment Receipt `PAY-...` PDF with linked invoices & totals), and `generateQuotationPdfBuffer(estimate)` (`Q-...` PDF).
+   - **`server/services/cloudWhatsAppService.js` & `server/routes/invoiceWhatsAppRoutes.js`**: Added shared `dispatchDocumentsCloud` for `'payment'` and `'quotation'`, plus `/payment-template`, `/quotation-template`, `/download-payment-pdf`, `/download-quotation-pdf`, `/send-payment`, and `/send-quotation` (default Payment Thank-You message).
+   - **Frontend (`src/js/component/DocumentWhatsAppModal.js`, `PaymentInformationView.js`, `EstimateViewAdminAll.js`, `EstimateViewAdmin.js`)**: Created shared `DocumentWhatsAppModal` (phone override, editable Thank-You/Quotation message, PDF download + CloudWhatsApp dispatch) wired into `PaymentInformationView` (button beside `OPTIONS` + `OPTIONS` menu item), `EstimateViewAdminAll` (`OPTIONS` menu item), and `EstimateViewAdmin` (per-row WhatsApp icon).
+2. **Logout Backup Concurrency Fix (`src/js/AdminView1/AdminHome.js`)**:
+   - Replaced the 63-way simultaneous `Promise.all` in `handleDownloadBackup` with a controlled **4-concurrent worker queue** to eliminate `net::ERR_INSUFFICIENT_RESOURCES` / `ERR_QUIC_PROTOCOL_ERROR` on 600 MB+ backups.
+3. **Employee Single-Record Route Alias (`server/routes/employeeRoutes.js` & `whatsapp-gemini-bot/globalgateApi.js`)**:
+   - Added `GET /employee/:id` alias (validated with `toSafeObjectId`) alongside `GET /get-employee/:id`, and updated `globalgateApi.js` to call `/endpoint/get-employee/${emp.id}`.
+4. **Version Synchronization & Multi-Platform Release (`v3.7.20`)**:
+   - Synchronized `3.7.20` across `package.json`, `server/package.json`, `server/index.js`, `server/routes/downloadRoutes.js`, and `android/app/build.gradle` (`versionCode 30720`).
+   - Verified `pre-build-check.js` (254 files, 0 errors), `security-check.js --auto-start` (21/21 passed), and `regression-check.js --auto-start` (12/12 passed).
+   - Built Web Portal (`dist_web/`), Electron Desktop (`dist/Global Gate Setup 3.7.20.exe` + `latest.yml`), and Capacitor Android APK (`GlobalGate-v3.7.20.apk`), synced to `server/public/downloads/` via `scripts/sync-releases.js`, and pushed to `origin main`.

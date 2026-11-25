@@ -3,12 +3,12 @@ const router = express.Router();
 const path = require('path');
 const fs = require('fs');
 
-const APP_VERSION = '3.7.19';
+const APP_VERSION = '3.7.20';
 const MIN_SUPPORTED_VERSION = '3.7.0';
 const RELEASE_NOTES = [
-  'Project & Purchase Requests: Fixed TOTAL-NEED to always reflect qty × unit price and expanded Item Purchase movement matching.',
-  'Project Overview & Purchase: All custom EMPTY-box items (qty × unit price) count in Material Expense & Total Cost.',
-  'Convert to Invoice & Payments: Added optional TVA @ 16% checkbox across conversions; Payment invoice list restricted to Sent & Partially-Paid.'
+  'Payment & Quotation WhatsApp: Send Payment Receipts (PAY-...) with Thank-You message & auto-PDF download, plus Quotation (Q-...) PDF WhatsApp dispatch.',
+  'Logout Backup: Controlled 4-concurrent collection queue eliminates ERR_INSUFFICIENT_RESOURCES on large 600MB+ backups.',
+  'Employee API: Added /endpoint/employee/:id alias alongside /endpoint/get-employee/:id.'
 ];
 
 const DOWNLOADS_DIR = path.join(__dirname, '../public/downloads');

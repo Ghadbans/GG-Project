@@ -262,6 +262,27 @@ var _default = exports.A = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRun
 
 /***/ },
 
+/***/ 98984
+(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+var __webpack_unused_export__;
+
+"use client";
+
+var _interopRequireDefault = __webpack_require__(24994);
+__webpack_unused_export__ = ({
+  value: true
+});
+exports.A = void 0;
+var _createSvgIcon = _interopRequireDefault(__webpack_require__(42032));
+var _jsxRuntime = __webpack_require__(74848);
+var _default = exports.A = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRuntime.jsx)("path", {
+  d: "M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3m3-10H5V5h10z"
+}), 'Save');
+
+/***/ },
+
 /***/ 27305
 (__unused_webpack_module, exports, __webpack_require__) {
 
@@ -1155,6 +1176,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_55__ = __webpack_require__(95236);
 /* harmony import */ var _utils_isMobile__WEBPACK_IMPORTED_MODULE_56__ = __webpack_require__(2650);
 /* harmony import */ var _component_MobileCardList__WEBPACK_IMPORTED_MODULE_57__ = __webpack_require__(353);
+/* harmony import */ var _mui_icons_material_WhatsApp__WEBPACK_IMPORTED_MODULE_58__ = __webpack_require__(61451);
+/* harmony import */ var _component_DocumentWhatsAppModal__WEBPACK_IMPORTED_MODULE_59__ = __webpack_require__(46344);
 var _excluded = ["className"],
   _excluded2 = ["className"],
   _excluded3 = ["className"];
@@ -1175,6 +1198,8 @@ function _extends() { return _extends = Object.assign ? Object.assign.bind() : f
 function _objectWithoutProperties(e, t) { if (null == e) return {}; var o, r, i = _objectWithoutPropertiesLoose(e, t); if (Object.getOwnPropertySymbols) { var n = Object.getOwnPropertySymbols(e); for (r = 0; r < n.length; r++) o = n[r], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]); } return i; }
 function _objectWithoutPropertiesLoose(r, e) { if (null == r) return {}; var t = {}; for (var n in r) if ({}.hasOwnProperty.call(r, n)) { if (-1 !== e.indexOf(n)) continue; t[n] = r[n]; } return t; }
 ;
+
+
 
 
 
@@ -1335,6 +1360,7 @@ var Drawer = (0,_mui_material__WEBPACK_IMPORTED_MODULE_31__/* ["default"] */ .Ay
   };
 });
 function EstimateViewAdmin() {
+  var _user$data;
   var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_8__/* .useNavigate */ .Zp)();
   var isMobile = (0,_utils_isMobile__WEBPACK_IMPORTED_MODULE_56__/* .useIsMobile */ .al)();
   var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_48__/* .useDispatch */ .wA)();
@@ -1400,18 +1426,22 @@ function EstimateViewAdmin() {
     _useState4 = _slicedToArray(_useState3, 2),
     estimate = _useState4[0],
     setEstimate = _useState4[1];
-  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
     _useState6 = _slicedToArray(_useState5, 2),
-    loadingData = _useState6[0],
-    setLoadingData = _useState6[1];
-  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    whatsAppDoc = _useState6[0],
+    setWhatsAppDoc = _useState6[1];
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
     _useState8 = _slicedToArray(_useState7, 2),
-    hiddenRow = _useState8[0],
-    setHiddenRow = _useState8[1];
+    loadingData = _useState8[0],
+    setLoadingData = _useState8[1];
   var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState0 = _slicedToArray(_useState9, 2),
-    hidden = _useState0[0],
-    setHidden = _useState0[1];
+    hiddenRow = _useState0[0],
+    setHiddenRow = _useState0[1];
+  var _useState1 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    _useState10 = _slicedToArray(_useState1, 2),
+    hidden = _useState10[0],
+    setHidden = _useState10[1];
   var _useModuleSearchState = (0,_hooks_useModuleSearchState__WEBPACK_IMPORTED_MODULE_36__/* .useModuleSearchState */ .pi)('estimate'),
     searchTerm = _useModuleSearchState.searchTerm,
     setSearchTerm = _useModuleSearchState.setSearchTerm,
@@ -1423,37 +1453,37 @@ function EstimateViewAdmin() {
     setStatusFilter = _useModuleSearchState.setStatusFilter,
     page = _useModuleSearchState.page,
     setPage = _useModuleSearchState.setPage;
-  var _useState1 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
+  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
       all: 0,
       draft: 0,
       sent: 0,
       decline: 0,
       approved: 0
     }),
-    _useState10 = _slicedToArray(_useState1, 2),
-    statusCounts = _useState10[0],
-    setStatusCounts = _useState10[1];
-  var limit = isMobile ? 30 : 100;
-  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(searchTerm),
     _useState12 = _slicedToArray(_useState11, 2),
-    debouncedSearchTerm = _useState12[0],
-    setDebouncedSearchTerm = _useState12[1];
-  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
+    statusCounts = _useState12[0],
+    setStatusCounts = _useState12[1];
+  var limit = isMobile ? 30 : 100;
+  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(searchTerm),
     _useState14 = _slicedToArray(_useState13, 2),
-    totalPage = _useState14[0],
-    SetTotalPage = _useState14[1];
+    debouncedSearchTerm = _useState14[0],
+    setDebouncedSearchTerm = _useState14[1];
   var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
     _useState16 = _slicedToArray(_useState15, 2),
-    totalItemCount = _useState16[0],
-    setTotalItemCount = _useState16[1];
-  var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    totalPage = _useState16[0],
+    SetTotalPage = _useState16[1];
+  var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
     _useState18 = _slicedToArray(_useState17, 2),
-    selectedRows = _useState18[0],
-    setSelectedRows = _useState18[1];
-  var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
+    totalItemCount = _useState18[0],
+    setTotalItemCount = _useState18[1];
+  var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState20 = _slicedToArray(_useState19, 2),
-    reason = _useState20[0],
-    setReason = _useState20[1];
+    selectedRows = _useState20[0],
+    setSelectedRows = _useState20[1];
+  var _useState21 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
+    _useState22 = _slicedToArray(_useState21, 2),
+    reason = _useState22[0],
+    setReason = _useState22[1];
   var fetchItems = /*#__PURE__*/function () {
     var _ref1 = _asyncToGenerator(function* (page, searchTerm, filterField, filterValue, statusFilter) {
       try {
@@ -1504,22 +1534,22 @@ function EstimateViewAdmin() {
   var handlePageChange = newPage => {
     setPage(newPage);
   };
-  var _useState21 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState22 = _slicedToArray(_useState21, 2),
-    loading = _useState22[0],
-    setLoading = _useState22[1];
   var _useState23 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState24 = _slicedToArray(_useState23, 2),
-    ErrorOpenModal = _useState24[0],
-    setErrorOpenModal = _useState24[1];
+    loading = _useState24[0],
+    setLoading = _useState24[1];
   var _useState25 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState26 = _slicedToArray(_useState25, 2),
-    loadingOpenModal = _useState26[0],
-    setLoadingOpenModal = _useState26[1];
+    ErrorOpenModal = _useState26[0],
+    setErrorOpenModal = _useState26[1];
   var _useState27 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState28 = _slicedToArray(_useState27, 2),
-    modalDeleteOpenLoading = _useState28[0],
-    setModalDeleteOpenLoading = _useState28[1];
+    loadingOpenModal = _useState28[0],
+    setLoadingOpenModal = _useState28[1];
+  var _useState29 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState30 = _slicedToArray(_useState29, 2),
+    modalDeleteOpenLoading = _useState30[0],
+    setModalDeleteOpenLoading = _useState30[1];
   {/** Loading Update View Start */}
   var handleOpenLoading = () => {
     setLoadingOpenModal(true);
@@ -1606,10 +1636,10 @@ function EstimateViewAdmin() {
     }();
     fetchDataHidden();
   }, []);
-  var _useState29 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState30 = _slicedToArray(_useState29, 2),
-    openReasonDelete = _useState30[0],
-    setOpenReasonDelete = _useState30[1];
+  var _useState31 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState32 = _slicedToArray(_useState31, 2),
+    openReasonDelete = _useState32[0],
+    setOpenReasonDelete = _useState32[1];
   var handleOpenReasonDelete = e => {
     e.preventDefault();
     setOpenReasonDelete(true);
@@ -1617,14 +1647,14 @@ function EstimateViewAdmin() {
   var handleCloseReasonDelete = () => {
     setOpenReasonDelete(false);
   };
-  var _useState31 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState32 = _slicedToArray(_useState31, 2),
-    open = _useState32[0],
-    setOpen = _useState32[1];
-  var _useState33 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+  var _useState33 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState34 = _slicedToArray(_useState33, 2),
-    DeleteId = _useState34[0],
-    setDeleteId = _useState34[1];
+    open = _useState34[0],
+    setOpen = _useState34[1];
+  var _useState35 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    _useState36 = _slicedToArray(_useState35, 2),
+    DeleteId = _useState36[0],
+    setDeleteId = _useState36[1];
   var handleOpen = id => {
     setOpen(true);
     setDeleteId(id);
@@ -1633,18 +1663,18 @@ function EstimateViewAdmin() {
     setLoadingOpenModal(false);
     setOpen(false);
   };
-  var _useState35 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState36 = _slicedToArray(_useState35, 2),
-    open1 = _useState36[0],
-    setOpen1 = _useState36[1];
-  var _useState37 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+  var _useState37 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState38 = _slicedToArray(_useState37, 2),
-    updateId = _useState38[0],
-    setUpdateId = _useState38[1];
-  var _useState39 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
+    open1 = _useState38[0],
+    setOpen1 = _useState38[1];
+  var _useState39 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
     _useState40 = _slicedToArray(_useState39, 2),
-    status = _useState40[0],
-    setStatus = _useState40[1];
+    updateId = _useState40[0],
+    setUpdateId = _useState40[1];
+  var _useState41 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
+    _useState42 = _slicedToArray(_useState41, 2),
+    status = _useState42[0],
+    setStatus = _useState42[1];
   var handleOpenUpdate = id => {
     setOpen1(true);
     setUpdateId(id);
@@ -1654,20 +1684,20 @@ function EstimateViewAdmin() {
     setUpdateId(null);
   };
   {/** delete multiple && all modal start */}
-  var _useState41 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState42 = _slicedToArray(_useState41, 2),
-    openDeleteMultiple = _useState42[0],
-    setOpenDeleteMultiple = _useState42[1];
+  var _useState43 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState44 = _slicedToArray(_useState43, 2),
+    openDeleteMultiple = _useState44[0],
+    setOpenDeleteMultiple = _useState44[1];
   var handleOpenMultiple = () => {
     setOpenDeleteMultiple(true);
   };
   var handleCloseMultiple = () => {
     setOpenDeleteMultiple(false);
   };
-  var _useState43 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState44 = _slicedToArray(_useState43, 2),
-    openDeleteAll = _useState44[0],
-    setOpenDeleteAll = _useState44[1];
+  var _useState45 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState46 = _slicedToArray(_useState45, 2),
+    openDeleteAll = _useState46[0],
+    setOpenDeleteAll = _useState46[1];
   var handleOpenAll = () => {
     setOpenDeleteAll(true);
   };
@@ -1697,10 +1727,10 @@ function EstimateViewAdmin() {
       return _ref13.apply(this, arguments);
     };
   }();
-  var _useState45 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
-    _useState46 = _slicedToArray(_useState45, 2),
-    EstimateDeleted = _useState46[0],
-    setEstimateDeleted = _useState46[1];
+  var _useState47 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    _useState48 = _slicedToArray(_useState47, 2),
+    EstimateDeleted = _useState48[0],
+    setEstimateDeleted = _useState48[1];
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     var fetchFunction = /*#__PURE__*/function () {
       var _ref14 = _asyncToGenerator(function* () {
@@ -1785,10 +1815,10 @@ function EstimateViewAdmin() {
     };
   }();
   {/** DElete End */}
-  var _useState47 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
-    _useState48 = _slicedToArray(_useState47, 2),
-    estimateN = _useState48[0],
-    setEstimateN = _useState48[1];
+  var _useState49 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
+    _useState50 = _slicedToArray(_useState49, 2),
+    estimateN = _useState50[0],
+    setEstimateN = _useState50[1];
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     if (updateId !== null) {
       axios__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_35__/* .ENDPOINT_URL */ .m, "/get-estimation/").concat(updateId)).then(res => {
@@ -1874,19 +1904,19 @@ function EstimateViewAdmin() {
     }
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, params.row[params.field]);
   };
-  var _useState49 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
-    _useState50 = _slicedToArray(_useState49, 2),
-    filteredRows = _useState50[0],
-    setFilteredRows = _useState50[1];
+  var _useState51 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    _useState52 = _slicedToArray(_useState51, 2),
+    filteredRows = _useState52[0],
+    setFilteredRows = _useState52[1];
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     var Est = estimate.filter(row => !hiddenRow.includes(row._id));
     setFilteredRows(Est);
   }, [estimate]);
   {/** hide End */}
-  var _useState51 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
-    _useState52 = _slicedToArray(_useState51, 2),
-    searchEstimate = _useState52[0],
-    setSearchEstimate = _useState52[1];
+  var _useState53 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
+    _useState54 = _slicedToArray(_useState53, 2),
+    searchEstimate = _useState54[0],
+    setSearchEstimate = _useState54[1];
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(() => {
     var storedValue = localStorage.getItem('QuickFilterEstimate');
     if (storedValue) {
@@ -1901,10 +1931,10 @@ function EstimateViewAdmin() {
     _React$useState2 = _slicedToArray(_React$useState, 2),
     filterModel = _React$useState2[0],
     setFilterModel = _React$useState2[1];
-  var _useState53 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({}),
-    _useState54 = _slicedToArray(_useState53, 2),
-    columnVisibilityModel = _useState54[0],
-    setColumnVisibilityModel = _useState54[1];
+  var _useState55 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({}),
+    _useState56 = _slicedToArray(_useState55, 2),
+    columnVisibilityModel = _useState56[0],
+    setColumnVisibilityModel = _useState56[1];
   var handelHiddenColumn = newHidden => {
     setColumnVisibilityModel(newHidden);
     localStorage.setItem('HiddenColumnsEstimate', JSON.stringify(newHidden));
@@ -2014,6 +2044,21 @@ function EstimateViewAdmin() {
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Edit__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
       style: {
         color: 'gray'
+      }
+    }))))
+  }, {
+    field: 'whatsapp',
+    headerName: 'WhatsApp',
+    width: 70,
+    minWidth: 70,
+    renderCell: params => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
+      title: "Send Quotation by WhatsApp"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+      onClick: () => setWhatsAppDoc(params.row),
+      size: "small"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_WhatsApp__WEBPACK_IMPORTED_MODULE_58__/* ["default"] */ .A, {
+      style: {
+        color: '#25D366'
       }
     }))))
   }, {
@@ -2788,7 +2833,13 @@ function EstimateViewAdmin() {
     style: {
       width: '100%'
     }
-  }, "Save")))))));
+  }, "Save")))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_DocumentWhatsAppModal__WEBPACK_IMPORTED_MODULE_59__/* ["default"] */ .A, {
+    open: Boolean(whatsAppDoc),
+    onClose: () => setWhatsAppDoc(null),
+    docType: "quotation",
+    documentRecord: whatsAppDoc,
+    sentBy: (user === null || user === void 0 || (_user$data = user.data) === null || _user$data === void 0 ? void 0 : _user$data.userName) || 'GG'
+  }));
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (EstimateViewAdmin);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, [
@@ -3978,6 +4029,378 @@ function DocumentAttachmentsModal(_ref) {
     onClose: () => setPreviewAttachment(null),
     attachment: previewAttachment
   }));
+}
+
+/***/ },
+
+/***/ 46344
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   A: () => (/* binding */ DocumentWhatsAppModal)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(96540);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(86701);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(77037);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(46831);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(69067);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(14073);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(82022);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(22477);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(844);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(86990);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(68864);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(27558);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(58763);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(73357);
+/* harmony import */ var _mui_icons_material_WhatsApp__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(61451);
+/* harmony import */ var _mui_icons_material_Download__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(10609);
+/* harmony import */ var _mui_icons_material_Save__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(98984);
+/* harmony import */ var react_toastify__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(99571);
+/* harmony import */ var _apiConfig__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(71510);
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+;
+
+
+
+
+
+
+
+var DEFAULT_MESSAGES = {
+  payment: 'Dear Valued Client,\nThank you for your payment! Please find attached your official Payment Receipt from Global Gate General Services SARL.\nWe truly appreciate your business and continued trust.',
+  quotation: 'Dear Valued Client,\nPlease find attached your official Quotation from Global Gate General Services SARL.\nFeel free to reply to this message if you have any questions or would like to confirm.'
+};
+function resolvePhoneFromCustomer(cust) {
+  if (!cust || typeof cust !== 'object') return '';
+  return String(cust.customerCompanyPhone || cust.customerPhone || cust.phone1 || cust.phone2 || cust.phone || cust.mobile || '').trim();
+}
+function getDocumentNumber(docType, doc) {
+  if (!doc) return '';
+  if (docType === 'payment') {
+    return typeof doc.paymentNumber === 'number' ? "PAY-".concat(String(doc.paymentNumber).padStart(6, '0')) : String(doc.paymentNumber || 'PAY-000000');
+  }
+  return typeof doc.estimateNumber === 'number' ? "Q-".concat(String(doc.estimateNumber).padStart(6, '0')) : String(doc.estimateNumber || 'Q-000000');
+}
+function getClientDisplayName(doc) {
+  var cust = doc === null || doc === void 0 ? void 0 : doc.customerName;
+  if (!cust) return 'Valued Client';
+  if (typeof cust === 'string') return cust;
+  return cust.Customer || cust.customerName || cust.customerFullName || 'Valued Client';
+}
+function DocumentWhatsAppModal(_ref) {
+  var open = _ref.open,
+    onClose = _ref.onClose,
+    _ref$docType = _ref.docType,
+    docType = _ref$docType === void 0 ? 'payment' : _ref$docType,
+    _ref$documentRecord = _ref.documentRecord,
+    documentRecord = _ref$documentRecord === void 0 ? null : _ref$documentRecord,
+    _ref$sentBy = _ref.sentBy,
+    sentBy = _ref$sentBy === void 0 ? 'GG' : _ref$sentBy;
+  var isPayment = docType === 'payment';
+  var docNum = getDocumentNumber(docType, documentRecord);
+  var clientName = getClientDisplayName(documentRecord);
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+    _useState2 = _slicedToArray(_useState, 2),
+    phone = _useState2[0],
+    setPhone = _useState2[1];
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(DEFAULT_MESSAGES[docType] || DEFAULT_MESSAGES.payment),
+    _useState4 = _slicedToArray(_useState3, 2),
+    message = _useState4[0],
+    setMessage = _useState4[1];
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(isPayment),
+    _useState6 = _slicedToArray(_useState5, 2),
+    downloadPdfToo = _useState6[0],
+    setDownloadPdfToo = _useState6[1];
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
+      status: 'CHECKING',
+      isReady: false
+    }),
+    _useState8 = _slicedToArray(_useState7, 2),
+    cloudStatus = _useState8[0],
+    setCloudStatus = _useState8[1];
+  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState0 = _slicedToArray(_useState9, 2),
+    sending = _useState0[0],
+    setSending = _useState0[1];
+  var _useState1 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState10 = _slicedToArray(_useState1, 2),
+    downloading = _useState10[0],
+    setDownloading = _useState10[1];
+  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState12 = _slicedToArray(_useState11, 2),
+    savingTpl = _useState12[0],
+    setSavingTpl = _useState12[1];
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    if (!open || !documentRecord) return;
+    setDownloadPdfToo(isPayment);
+    var active = true;
+    var directPhone = resolvePhoneFromCustomer(documentRecord.customerName);
+    setPhone(directPhone);
+
+    // Fallback: look up customer phone from /endpoint/customer if missing on embedded object
+    if (!directPhone && documentRecord.customerName) {
+      var custId = typeof documentRecord.customerName === 'object' ? documentRecord.customerName._id : null;
+      if (custId) {
+        axios__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_18__/* .ENDPOINT_URL */ .m, "/get-customer/").concat(custId)).then(r => {
+          var _r$data;
+          if (!active) return;
+          var p = resolvePhoneFromCustomer(r === null || r === void 0 || (_r$data = r.data) === null || _r$data === void 0 ? void 0 : _r$data.data);
+          if (p) setPhone(p);
+        }).catch(() => {});
+      }
+    }
+    axios__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_18__/* .ENDPOINT_URL */ .m, "/invoice-whatsapp/cloud-status")).then(r => {
+      if (active && r !== null && r !== void 0 && r.data) setCloudStatus(r.data);
+    }).catch(() => {});
+    axios__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_18__/* .ENDPOINT_URL */ .m, "/invoice-whatsapp/").concat(docType, "-template")).then(r => {
+      var _r$data2;
+      if (active && r !== null && r !== void 0 && (_r$data2 = r.data) !== null && _r$data2 !== void 0 && _r$data2.templateMessage) {
+        setMessage(r.data.templateMessage);
+      }
+    }).catch(() => {});
+    return () => {
+      active = false;
+    };
+  }, [open, documentRecord, docType, isPayment]);
+  var handleDownloadPdf = /*#__PURE__*/function () {
+    var _ref2 = _asyncToGenerator(function* () {
+      if (!documentRecord) return false;
+      setDownloading(true);
+      try {
+        var endpoint = isPayment ? 'download-payment-pdf' : 'download-quotation-pdf';
+        var body = isPayment ? {
+          payment: documentRecord
+        } : {
+          quotation: documentRecord
+        };
+        var res = yield axios__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_18__/* .ENDPOINT_URL */ .m, "/invoice-whatsapp/").concat(endpoint), body, {
+          responseType: 'blob'
+        });
+        var blob = new Blob([res.data], {
+          type: 'application/pdf'
+        });
+        var url = window.URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = "".concat(docNum, ".pdf");
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        window.URL.revokeObjectURL(url);
+        return true;
+      } catch (err) {
+        var _err$response;
+        react_toastify__WEBPACK_IMPORTED_MODULE_17__/* .toast */ .oR.error((err === null || err === void 0 || (_err$response = err.response) === null || _err$response === void 0 || (_err$response = _err$response.data) === null || _err$response === void 0 ? void 0 : _err$response.error) || 'Failed to generate PDF');
+        return false;
+      } finally {
+        setDownloading(false);
+      }
+    });
+    return function handleDownloadPdf() {
+      return _ref2.apply(this, arguments);
+    };
+  }();
+  var handleSaveTemplate = /*#__PURE__*/function () {
+    var _ref3 = _asyncToGenerator(function* () {
+      if (!message.trim()) return;
+      setSavingTpl(true);
+      try {
+        yield axios__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_18__/* .ENDPOINT_URL */ .m, "/invoice-whatsapp/").concat(docType, "-template"), {
+          templateMessage: message.trim(),
+          updatedBy: sentBy
+        });
+        react_toastify__WEBPACK_IMPORTED_MODULE_17__/* .toast */ .oR.success('Default WhatsApp message saved!');
+      } catch (err) {
+        var _err$response2;
+        react_toastify__WEBPACK_IMPORTED_MODULE_17__/* .toast */ .oR.error((err === null || err === void 0 || (_err$response2 = err.response) === null || _err$response2 === void 0 || (_err$response2 = _err$response2.data) === null || _err$response2 === void 0 ? void 0 : _err$response2.error) || 'Could not save template');
+      } finally {
+        setSavingTpl(false);
+      }
+    });
+    return function handleSaveTemplate() {
+      return _ref3.apply(this, arguments);
+    };
+  }();
+  var handleSend = /*#__PURE__*/function () {
+    var _ref4 = _asyncToGenerator(function* () {
+      if (!documentRecord) return;
+      if (!phone.trim()) {
+        react_toastify__WEBPACK_IMPORTED_MODULE_17__/* .toast */ .oR.warn('Please enter the client WhatsApp phone number.');
+        return;
+      }
+      setSending(true);
+      try {
+        var _res$data;
+        if (downloadPdfToo) {
+          yield handleDownloadPdf();
+        }
+        var docId = documentRecord._id || documentRecord.id;
+        var endpoint = isPayment ? 'send-payment' : 'send-quotation';
+        var res = yield axios__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_18__/* .ENDPOINT_URL */ .m, "/invoice-whatsapp/").concat(endpoint), {
+          items: [documentRecord],
+          templateMessage: message.trim(),
+          phoneOverrides: {
+            [docId]: phone.trim()
+          },
+          sentBy
+        });
+        if ((res === null || res === void 0 || (_res$data = res.data) === null || _res$data === void 0 ? void 0 : _res$data.sent) > 0) {
+          react_toastify__WEBPACK_IMPORTED_MODULE_17__/* .toast */ .oR.success("".concat(docNum, " PDF sent via WhatsApp to ").concat(clientName, "!"));
+          onClose();
+        } else {
+          var _res$data2, _res$data3;
+          var errDetail = (res === null || res === void 0 || (_res$data2 = res.data) === null || _res$data2 === void 0 || (_res$data2 = _res$data2.details) === null || _res$data2 === void 0 || (_res$data2 = _res$data2[0]) === null || _res$data2 === void 0 ? void 0 : _res$data2.error) || (res === null || res === void 0 || (_res$data3 = res.data) === null || _res$data3 === void 0 ? void 0 : _res$data3.error) || 'Failed to send on WhatsApp';
+          react_toastify__WEBPACK_IMPORTED_MODULE_17__/* .toast */ .oR.error(errDetail);
+        }
+      } catch (err) {
+        var _err$response3;
+        react_toastify__WEBPACK_IMPORTED_MODULE_17__/* .toast */ .oR.error((err === null || err === void 0 || (_err$response3 = err.response) === null || _err$response3 === void 0 || (_err$response3 = _err$response3.data) === null || _err$response3 === void 0 ? void 0 : _err$response3.error) || err.message || 'WhatsApp dispatch failed');
+      } finally {
+        setSending(false);
+      }
+    });
+    return function handleSend() {
+      return _ref4.apply(this, arguments);
+    };
+  }();
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, {
+    open: open,
+    onClose: onClose,
+    maxWidth: "sm",
+    fullWidth: true
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, {
+    sx: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      bgcolor: '#093170',
+      color: 'white'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
+    sx: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: 1
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_WhatsApp__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
+    sx: {
+      color: '#25D366'
+    }
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+    variant: "h6",
+    sx: {
+      fontWeight: 700,
+      fontSize: '1rem'
+    }
+  }, "Send ", isPayment ? 'Payment Receipt' : 'Quotation', " by WhatsApp (", docNum, ")")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+    size: "small",
+    label: cloudStatus.isReady ? 'Cloud WA Connected' : cloudStatus.status || 'Offline',
+    sx: {
+      bgcolor: cloudStatus.isReady ? '#25D366' : '#ef4444',
+      color: 'white',
+      fontWeight: 700
+    }
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+    sx: {
+      pt: 2.5,
+      display: 'flex',
+      flexDirection: 'column',
+      gap: 2
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+    variant: "body2",
+    sx: {
+      color: '#334155',
+      mt: 1
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("strong", null, "Client:"), " ", clientName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
+    label: "Client WhatsApp Phone",
+    value: phone,
+    onChange: e => setPhone(e.target.value),
+    placeholder: "+243...",
+    size: "small",
+    fullWidth: true
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
+    sx: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      mb: 0.5
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+    variant: "caption",
+    sx: {
+      fontWeight: 700,
+      color: '#475569'
+    }
+  }, isPayment ? 'Thank-You Message' : 'Quotation Message'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
+    size: "small",
+    startIcon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Save__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, null),
+    onClick: handleSaveTemplate,
+    disabled: savingTpl,
+    sx: {
+      textTransform: 'none',
+      fontSize: '0.75rem'
+    }
+  }, savingTpl ? 'Saving...' : 'Save as Default')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
+    multiline: true,
+    minRows: 4,
+    value: message,
+    onChange: e => setMessage(e.target.value),
+    fullWidth: true
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+    control: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+      checked: downloadPdfToo,
+      onChange: e => setDownloadPdfToo(e.target.checked),
+      color: "primary"
+    }),
+    label: "Also download ".concat(docNum, ".pdf to this PC when sending")
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+    sx: {
+      px: 3,
+      pb: 2,
+      justifyContent: 'space-between'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
+    variant: "outlined",
+    startIcon: downloading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
+      size: 16
+    }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Download__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, null),
+    onClick: handleDownloadPdf,
+    disabled: downloading || sending
+  }, "Download PDF Only"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
+    sx: {
+      display: 'flex',
+      gap: 1
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
+    onClick: onClose,
+    disabled: sending
+  }, "Cancel"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
+    variant: "contained",
+    startIcon: sending ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
+      size: 16,
+      color: "inherit"
+    }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_WhatsApp__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, null),
+    onClick: handleSend,
+    disabled: sending,
+    sx: {
+      bgcolor: '#25D366',
+      '&:hover': {
+        bgcolor: '#1ebe5d'
+      },
+      fontWeight: 700
+    }
+  }, sending ? 'Sending...' : 'Send by WhatsApp'))));
 }
 
 /***/ },

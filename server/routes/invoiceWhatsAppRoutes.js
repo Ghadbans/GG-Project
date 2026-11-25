@@ -382,4 +382,121 @@ router.post('/send', async (req, res) => {
   }
 });
 
+const { generatePaymentPdfBuffer, generateQuotationPdfBuffer } = require('../services/invoicePdfGenerator');
+
+const DEFAULT_PAYMENT_WHATSAPP_MESSAGE =
+  'Dear Valued Client,\nThank you for your payment! Please find attached your official Payment Receipt from Global Gate General Services SARL.\nWe truly appreciate your business and continued trust.';
+
+const DEFAULT_QUOTATION_WHATSAPP_MESSAGE =
+  'Dear Valued Client,\nPlease find attached your official Quotation from Global Gate General Services SARL.\nFeel free to reply to this message if you have any questions or would like to confirm.';
+
+function registerTemplateRoutes(slug, key, defaultMsg) {
+  router.get(`/${slug}`, async (req, res) => {
+    try {
+      let doc = await InvoiceWhatsAppTemplate.findOne({ key }).lean();
+      if (!doc) {
+        doc = await InvoiceWhatsAppTemplate.create({ key, templateMessage: defaultMsg, updatedBy: 'System' });
+      }
+      return res.json({ success: true, templateMessage: doc.templateMessage || defaultMsg });
+    } catch (err) {
+      return res.status(500).json({ success: false, error: err.message, templateMessage: defaultMsg });
+    }
+  });
+
+  router.post(`/${slug}`, async (req, res) => {
+    try {
+      const { templateMessage, updatedBy } = req.body;
+      if (!templateMessage || !templateMessage.trim()) {
+        return res.status(400).json({ success: false, error: 'Template message cannot be empty' });
+      }
+      const doc = await InvoiceWhatsAppTemplate.findOneAndUpdate(
+        { key },
+        { $set: { templateMessage: templateMessage.trim(), updatedBy: updatedBy || 'GG' } },
+        { upsert: true, new: true, setDefaultsOnInsert: true }
+      );
+      return res.json({ success: true, message: 'Template saved successfully', data: doc });
+    } catch (err) {
+      return res.status(500).json({ success: false, error: err.message });
+    }
+  });
+}
+
+registerTemplateRoutes('payment-template', 'payment_whatsapp_message', DEFAULT_PAYMENT_WHATSAPP_MESSAGE);
+registerTemplateRoutes('quotation-template', 'quotation_whatsapp_message', DEFAULT_QUOTATION_WHATSAPP_MESSAGE);
+
+router.post('/download-payment-pdf', async (req, res) => {
+  try {
+    const payment = req.body?.payment || req.body;
+    if (!payment || typeof payment !== 'object') {
+      return res.status(400).json({ success: false, error: 'Payment payload is required' });
+    }
+    const pdfBuffer = await generatePaymentPdfBuffer(payment);
+    const payNum = typeof payment.paymentNumber === 'number'
+      ? `PAY-${String(payment.paymentNumber).padStart(6, '0')}`
+      : String(payment.paymentNumber || 'PAY-000000');
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', `attachment; filename="${payNum}.pdf"`);
+    return res.send(pdfBuffer);
+  } catch (err) {
+    return res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+router.post('/download-quotation-pdf', async (req, res) => {
+  try {
+    const quotation = req.body?.quotation || req.body;
+    if (!quotation || typeof quotation !== 'object') {
+      return res.status(400).json({ success: false, error: 'Quotation payload is required' });
+    }
+    const pdfBuffer = await generateQuotationPdfBuffer(quotation);
+    const estNum = typeof quotation.estimateNumber === 'number'
+      ? `Q-${String(quotation.estimateNumber).padStart(6, '0')}`
+      : String(quotation.estimateNumber || 'Q-000000');
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', `attachment; filename="${estNum}.pdf"`);
+    return res.send(pdfBuffer);
+  } catch (err) {
+    return res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+async function handleDocumentDispatch(req, res, docType, defaultMsg) {
+  try {
+    const items = Array.isArray(req.body?.items) ? req.body.items : [];
+    const { templateMessage, phoneOverrides = {}, sentBy = 'GG' } = req.body || {};
+    if (items.length === 0) {
+      return res.status(400).json({ success: false, error: `No ${docType} records provided.` });
+    }
+    const cloudStatus = cloudWhatsAppService.getCloudWhatsAppStatus();
+    if (!cloudStatus.isReady) {
+      return res.status(503).json({
+        success: false,
+        cloudStatus: cloudStatus.status,
+        qrCode: cloudStatus.qrCode,
+        error: 'WhatsApp Cloud Master is not linked yet. Please scan the QR code to link official business number (+243 827 722 222).'
+      });
+    }
+    const result = await cloudWhatsAppService.dispatchDocumentsCloud({
+      docType,
+      items,
+      templateMessage: (templateMessage || defaultMsg).trim(),
+      phoneOverrides,
+      sentBy
+    });
+    return res.json({
+      success: result.success,
+      total: result.total,
+      sent: result.sent,
+      failed: result.failed,
+      details: result.details || [],
+      report: result
+    });
+  } catch (err) {
+    return res.status(500).json({ success: false, error: err.message });
+  }
+}
+
+router.post('/send-payment', (req, res) => handleDocumentDispatch(req, res, 'payment', DEFAULT_PAYMENT_WHATSAPP_MESSAGE));
+router.post('/send-quotation', (req, res) => handleDocumentDispatch(req, res, 'quotation', DEFAULT_QUOTATION_WHATSAPP_MESSAGE));
+
 module.exports = router;
