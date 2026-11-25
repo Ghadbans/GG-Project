@@ -1,8 +1,8 @@
-version: 3.7.18
+version: 3.7.19
 files:
-  - url: Global Gate Setup 3.7.18.exe
-    sha512: QZU1F0Sia8Az9/8/jDl+xygDVhoHtf68UDwzCHWIOghlMbN0q47601iuz2rYPLz3ApYgFkWvwqAm2wud+HXx7Q==
-    size: 100739730
-path: Global Gate Setup 3.7.18.exe
-sha512: QZU1F0Sia8Az9/8/jDl+xygDVhoHtf68UDwzCHWIOghlMbN0q47601iuz2rYPLz3ApYgFkWvwqAm2wud+HXx7Q==
-releaseDate: '2026-11-24T20:11:14.712Z'
+  - url: Global Gate Setup 3.7.19.exe
+    sha512: /pDaqZjf+r0WfQ0lfEDEmOGix2lpYytgqeBlvx4R5yQQUvg51RfYntIcEMLfFpQWEztDnxfBmSkZ/7VmGYRTMQ==
+    size: 100739824
+path: Global Gate Setup 3.7.19.exe
+sha512: /pDaqZjf+r0WfQ0lfEDEmOGix2lpYytgqeBlvx4R5yQQUvg51RfYntIcEMLfFpQWEztDnxfBmSkZ/7VmGYRTMQ==
+releaseDate: '2026-11-25T05:16:33.211Z'
