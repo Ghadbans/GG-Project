@@ -6433,3 +6433,16 @@ Implemented a zero-manual-intervention in-app update pipeline across Electron Wi
    - Synchronized `3.7.22` across `package.json`, `server/package.json`, `server/index.js`, `server/routes/downloadRoutes.js`, and `android/app/build.gradle` (`versionCode 30722`).
    - Verified `pre-build-check.js` (254 files, 0 errors), `security-check.js --auto-start` (21/21 passed), and `regression-check.js --auto-start` (12/12 passed).
    - Built Web Portal (`dist_web/`), Electron Desktop (`dist/Global Gate Setup 3.7.22.exe` + `latest.yml`), and Capacitor Android APK (`GlobalGate-v3.7.22.apk`), synced to `server/public/downloads/` via `scripts/sync-releases.js`, and pushed to `origin main`.
+
+
+### Rule 117: Invoice Balance Reconciliation on Zero Payments & Payment Deletion (`InvoiceViewAdminAll.js`, `Routes.js` — Ver 3.7.23)
+
+#### Changes Implemented
+1. **Zero-Payment & Stale Invoice Reconciliation (`src/js/AdminView1/PageView/InvoiceView/InvoiceViewAdminAll.js`)**:
+   - Fixed the condition `if (id && roundedPaid > 0)` so `POST /reconcile-invoice-balance/${id}` is also triggered whenever `needsServerReconcile` is true (e.g., `roundedPaid === 0` after deleting a payment while MongoDB still holds stale `total`/`balanceDue`/`status`), and invalidated the `/invoice` cache after reconciliation.
+2. **Awaited Payment Balance Sync (`server/routes/Routes.js`)**:
+   - Added `collectPaymentInvoiceIds` (extracting linked invoice IDs from both `TotalAmount` and `referenceNumber`), sanitized `:id` via `toSafeObjectId`, and `await`ed `syncInvoiceBalances` in both `PUT /update-payment/:id` and `DELETE /delete-payment/:id`.
+3. **Version Synchronization & Multi-Platform Release (`v3.7.23`)**:
+   - Synchronized `3.7.23` across `package.json`, `server/package.json`, `server/index.js`, `server/routes/downloadRoutes.js`, and `android/app/build.gradle` (`versionCode 30723`).
+   - Verified `pre-build-check.js` (254 files, 0 errors), `security-check.js --auto-start` (21/21 passed), and `regression-check.js --auto-start` (12/12 passed).
+   - Built Web Portal (`dist_web/`), Electron Desktop (`dist/Global Gate Setup 3.7.23.exe` + `latest.yml`), and Capacitor Android APK (`GlobalGate-v3.7.23.apk`), synced to `server/public/downloads/` via `scripts/sync-releases.js`, and pushed to `origin main`.

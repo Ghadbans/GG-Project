@@ -569,7 +569,8 @@ function InvoiceViewAdminAll() {
           totalAP: (row.TotalAmount || []).reduce((sum, item) => sum + parseFloat(item.total || item.amount || 0), 0)
         })));
 
-        // Live-sync the active invoice state with true payment figures
+        // Live-sync the active invoice state with true payment figures & reconcile MongoDB if stale
+        let needsServerReconcile = false;
         setInvoice(prev => prev.map(inv => {
           if (inv._id === id) {
             const totInv = parseFloat(inv.totalInvoice || 0);
@@ -579,6 +580,11 @@ function InvoiceViewAdminAll() {
               if (totInv > 0 && roundedPaid >= totInv - 0.001) st = 'Paid';
               else if (roundedPaid > 0.001) st = 'Partially-Paid';
               else if (inv.status === 'Paid' || inv.status === 'Partially-Paid') st = 'Sent';
+            }
+            const storedPaid = parseFloat(inv.total || 0);
+            const storedBal = parseFloat(inv.balanceDue !== undefined ? inv.balanceDue : totInv);
+            if (Math.abs(storedPaid - roundedPaid) > 0.001 || Math.abs(storedBal - bal) > 0.001 || inv.status !== st) {
+              needsServerReconcile = true;
             }
             return {
               ...inv,
@@ -590,9 +596,11 @@ function InvoiceViewAdminAll() {
           return inv;
         }));
 
-        // If invoice has payments, trigger background server reconciliation
-        if (id && roundedPaid > 0) {
-          axios.post(`${ENDPOINT_URL}/reconcile-invoice-balance/${id}`).catch(() => {});
+        // Trigger server reconciliation whenever payments exist OR stored MongoDB invoice balance/status is stale
+        if (id && (roundedPaid > 0 || needsServerReconcile)) {
+          axios.post(`${ENDPOINT_URL}/reconcile-invoice-balance/${id}`)
+            .then(() => { invalidateCache('/invoice'); })
+            .catch(() => {});
         }
 
         const resNotification = await axios.get(`${ENDPOINT_URL}/notification`)

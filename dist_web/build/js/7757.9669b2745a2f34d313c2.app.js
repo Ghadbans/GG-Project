@@ -1604,7 +1604,8 @@ function InvoiceViewAdminAll() {
             totalAP: (row.TotalAmount || []).reduce((sum, item) => sum + parseFloat(item.total || item.amount || 0), 0)
           })));
 
-          // Live-sync the active invoice state with true payment figures
+          // Live-sync the active invoice state with true payment figures & reconcile MongoDB if stale
+          var needsServerReconcile = false;
           setInvoice(prev => prev.map(inv => {
             if (inv._id === id) {
               var totInv = parseFloat(inv.totalInvoice || 0);
@@ -1612,6 +1613,11 @@ function InvoiceViewAdminAll() {
               var st = inv.status;
               if (inv.status !== 'Void' && inv.status !== 'Free of Charge') {
                 if (totInv > 0 && roundedPaid >= totInv - 0.001) st = 'Paid';else if (roundedPaid > 0.001) st = 'Partially-Paid';else if (inv.status === 'Paid' || inv.status === 'Partially-Paid') st = 'Sent';
+              }
+              var storedPaid = parseFloat(inv.total || 0);
+              var storedBal = parseFloat(inv.balanceDue !== undefined ? inv.balanceDue : totInv);
+              if (Math.abs(storedPaid - roundedPaid) > 0.001 || Math.abs(storedBal - bal) > 0.001 || inv.status !== st) {
+                needsServerReconcile = true;
               }
               return _objectSpread(_objectSpread({}, inv), {}, {
                 total: roundedPaid,
@@ -1622,9 +1628,11 @@ function InvoiceViewAdminAll() {
             return inv;
           }));
 
-          // If invoice has payments, trigger background server reconciliation
-          if (id && roundedPaid > 0) {
-            axios/* default */.A.post("".concat(apiConfig/* ENDPOINT_URL */.m, "/reconcile-invoice-balance/").concat(id)).catch(() => {});
+          // Trigger server reconciliation whenever payments exist OR stored MongoDB invoice balance/status is stale
+          if (id && (roundedPaid > 0 || needsServerReconcile)) {
+            axios/* default */.A.post("".concat(apiConfig/* ENDPOINT_URL */.m, "/reconcile-invoice-balance/").concat(id)).then(() => {
+              (0,apiCache/* invalidateCache */.gm)('/invoice');
+            }).catch(() => {});
           }
           var resNotification = yield axios/* default */.A.get("".concat(apiConfig/* ENDPOINT_URL */.m, "/notification"));
           setNotification((_resNotification$data = resNotification.data) === null || _resNotification$data === void 0 || (_resNotification$data = _resNotification$data.data) === null || _resNotification$data === void 0 ? void 0 : _resNotification$data.filter(row => row.idInfo === id));

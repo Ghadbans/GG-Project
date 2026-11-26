@@ -3,12 +3,12 @@ const router = express.Router();
 const path = require('path');
 const fs = require('fs');
 
-const APP_VERSION = '3.7.22';
+const APP_VERSION = '3.7.23';
 const MIN_SUPPORTED_VERSION = '3.7.0';
 const RELEASE_NOTES = [
-  'Grant Access WhatsApp Enforcement: Payment & Quotation WhatsApp dispatch now respect Grant Access (Send WhatsApp Inv / Pay / Quote) on both frontend and backend.',
-  'Payment & Quotation PDF Templates: Matched official Print-to-PDF templates 1:1 (SOFIBANQUE SA bank details, terms, columns, and Payment OPTIONS menu placement).',
-  'Logout Backup & Employee API: 4-concurrent backup queue + /endpoint/employee/:id alias.'
+  'Invoice Balance Reconciliation: Fixed stale A-PAID / Partially-Paid status after deleting payments (awaited syncInvoiceBalances + zero-payment server reconciliation).',
+  'Grant Access WhatsApp Enforcement: Payment & Quotation WhatsApp dispatch respect Grant Access on both frontend and backend.',
+  'Payment & Quotation PDF Templates: Matched official Print-to-PDF templates 1:1.'
 ];
 
 const DOWNLOADS_DIR = path.join(__dirname, '../public/downloads');

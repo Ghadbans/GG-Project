@@ -1,6 +1,7 @@
 const express = require("express");
 const Route = express.Router();
 const { authenticate } = require("../Middleware/auth");
+const { toSafeObjectId } = require("../utils/objectIdUtils");
 const cors = require("cors");
 const multer = require("multer");
 let customerSchema = require("../model/Model");
@@ -875,18 +876,35 @@ Route.route("/get-payment/:id").get(async (req, res, next) => {
 
 // Update single payment
 
+function collectPaymentInvoiceIds(paymentDoc) {
+  if (!paymentDoc) return [];
+  const ids = [];
+  for (const item of (paymentDoc.TotalAmount || [])) {
+    const id = item?.id || item?._id || item?.invoiceId;
+    if (id) ids.push(String(id));
+  }
+  for (const ref of (paymentDoc.referenceNumber || [])) {
+    const id = typeof ref === 'object' ? (ref?.id || ref?._id || ref?.invoiceId) : ref;
+    if (id && String(id).length === 24) ids.push(String(id));
+  }
+  return Array.from(new Set(ids));
+}
+
 Route.route("/update-payment/:id").put(async (req, res, next) => {
   try {
-    const paymentBefore = await paymentSchema.findById(req.params.id);
-    const result = await paymentSchema.findByIdAndUpdate(req.params.id, {
+    const safeId = toSafeObjectId(req.params.id);
+    if (!safeId) return res.status(400).json({ msg: "Invalid payment ID" });
+    const paymentBefore = await paymentSchema.findById(safeId);
+    const result = await paymentSchema.findByIdAndUpdate(safeId, {
       $set: req.body,
     }, { new: true });
 
-    const beforeIds = (paymentBefore?.TotalAmount || []).map(i => i?.id).filter(Boolean);
-    const newIds = (req.body?.TotalAmount || []).map(i => i?.id).filter(Boolean);
-    const allIds = Array.from(new Set([...beforeIds, ...newIds]));
+    const allIds = Array.from(new Set([
+      ...collectPaymentInvoiceIds(paymentBefore),
+      ...collectPaymentInvoiceIds(req.body)
+    ]));
     if (allIds.length > 0) {
-      syncInvoiceBalances(allIds).catch(e => console.error("Error in syncInvoiceBalances:", e.message));
+      await syncInvoiceBalances(allIds).catch(e => console.error("Error in syncInvoiceBalances:", e.message));
     }
 
     res.json({
@@ -902,12 +920,14 @@ Route.route("/update-payment/:id").put(async (req, res, next) => {
 
 Route.route("/delete-payment/:id").delete(async (req, res, next) => {
   try {
-    const paymentBefore = await paymentSchema.findById(req.params.id);
-    await paymentSchema.findByIdAndRemove(req.params.id);
+    const safeId = toSafeObjectId(req.params.id);
+    if (!safeId) return res.status(400).json({ msg: "Invalid payment ID" });
+    const paymentBefore = await paymentSchema.findById(safeId);
+    await paymentSchema.findByIdAndRemove(safeId);
 
-    const invIds = (paymentBefore?.TotalAmount || []).map(i => i?.id).filter(Boolean);
+    const invIds = collectPaymentInvoiceIds(paymentBefore);
     if (invIds.length > 0) {
-      syncInvoiceBalances(invIds).catch(e => console.error("Error in syncInvoiceBalances:", e.message));
+      await syncInvoiceBalances(invIds).catch(e => console.error("Error in syncInvoiceBalances:", e.message));
     }
 
     res.json({
