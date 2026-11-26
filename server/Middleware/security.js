@@ -90,6 +90,13 @@ function originLock(req, res, next) {
   const secret = process.env.ORIGIN_VERIFY_SECRET;
   if (!secret) return next(); // not enabled yet
   if (ORIGIN_LOCK_EXEMPT.has(req.path)) return next();
+  if (
+    req.path.startsWith('/api/zayn-bridge') &&
+    process.env.ZAYN_WEBHOOK_SECRET &&
+    safeEqual(req.headers['x-gg-webhook-secret'], process.env.ZAYN_WEBHOOK_SECRET)
+  ) {
+    return next();
+  }
   if (safeEqual(req.headers['x-origin-verify'], secret)) return next();
   return res.status(403).json({ message: 'Forbidden' });
 }

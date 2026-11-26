@@ -1,6 +1,7 @@
 const baileys = require('@whiskeysockets/baileys');
 const makeWASocket = baileys.default || baileys.makeWASocket || baileys;
-const { DisconnectReason, fetchLatestBaileysVersion } = baileys;
+const { DisconnectReason, fetchLatestBaileysVersion, downloadMediaMessage } = baileys;
+const axios = require('axios');
 const qrcode = require('qrcode');
 const useMongoAuthState = require('./mongoAuthState');
 const { generateInvoicePdfBuffer, generatePaymentPdfBuffer, generateQuotationPdfBuffer } = require('./invoicePdfGenerator');
@@ -95,6 +96,34 @@ async function initCloudWhatsApp() {
         connectedPhone = '+' + jid.split(':')[0].split('@')[0];
         connectedName = sock?.user?.name || 'Global Gate S.A.R.L';
         console.log(`✅ [CloudWhatsApp] Successfully CONNECTED to WhatsApp Web! Linked Phone: ${connectedPhone} (${connectedName})`);
+      }
+    });
+
+    sock.ev.on('messages.upsert', async ({ messages, type }) => {
+      if (type !== 'notify' || !Array.isArray(messages)) return;
+      const zaynBaseUrl = String(process.env.ZAYN_AGENT_URL || '').trim().replace(/\/+$/, '');
+      if (!zaynBaseUrl) return;
+
+      for (const msg of messages) {
+        try {
+          if (!msg || !msg.key || msg.key.fromMe) continue;
+          const remoteJid = String(msg.key.remoteJid || '');
+          if (!remoteJid || remoteJid === 'status@broadcast') continue;
+          if (!msg.message) continue;
+
+          const payload = await buildZaynInboundPayload(msg, sock);
+          if (!payload || !payload.senderPhone) continue;
+
+          await axios.post(`${zaynBaseUrl}/api/company-whatsapp/inbound`, payload, {
+            headers: {
+              'Content-Type': 'application/json',
+              'X-GG-Webhook-Secret': String(process.env.ZAYN_WEBHOOK_SECRET || '')
+            },
+            timeout: 10000
+          });
+        } catch (fwdErr) {
+          console.warn('[CloudWhatsApp -> Zayn] Inbound forward warning:', fwdErr?.message || fwdErr);
+        }
       }
     });
 
@@ -503,11 +532,146 @@ async function dispatchMarketingFlyerCloud({ imageBuffer, caption, recipients = 
   return results;
 }
 
+async function buildZaynInboundPayload(msg, sockInstance) {
+  const remoteJid = String(msg.key.remoteJid || '');
+  const isGroup = remoteJid.endsWith('@g.us');
+
+  // Extract sender JID strictly from WhatsApp protocol metadata (never message body)
+  const rawSenderJid = isGroup
+    ? String(msg.key.participantPn || msg.key.participant || msg.participant || '')
+    : String(msg.key.senderPn || remoteJid);
+
+  const senderDigits = normalizePhoneNumber(rawSenderJid.split(':')[0].split('@')[0]);
+  if (!senderDigits) return null;
+
+  const unwrapped = msg.message?.ephemeralMessage?.message
+    || msg.message?.viewOnceMessage?.message
+    || msg.message?.viewOnceMessageV2?.message
+    || msg.message?.documentWithCaptionMessage?.message
+    || msg.message
+    || {};
+
+  const text = unwrapped.conversation
+    || unwrapped.extendedTextMessage?.text
+    || unwrapped.imageMessage?.caption
+    || unwrapped.videoMessage?.caption
+    || unwrapped.documentMessage?.caption
+    || '';
+
+  let mediaType = null;
+  if (unwrapped.imageMessage) mediaType = 'image';
+  else if (unwrapped.audioMessage) mediaType = 'audio';
+  else if (unwrapped.videoMessage) mediaType = 'video';
+  else if (unwrapped.documentMessage) mediaType = 'document';
+
+  let mediaBase64 = null;
+  if (mediaType && typeof downloadMediaMessage === 'function') {
+    try {
+      const buf = await downloadMediaMessage(
+        msg,
+        'buffer',
+        {},
+        { reuploadRequest: sockInstance.updateMediaMessage }
+      );
+      if (Buffer.isBuffer(buf) && buf.length > 0 && buf.length <= 15 * 1024 * 1024) {
+        mediaBase64 = buf.toString('base64');
+      }
+    } catch (dlErr) {
+      console.warn('[CloudWhatsApp -> Zayn] Media download skipped:', dlErr?.message || dlErr);
+    }
+  }
+
+  let groupName = null;
+  if (isGroup) {
+    try {
+      const meta = await sockInstance.groupMetadata(remoteJid);
+      groupName = meta?.subject || null;
+    } catch (_) {
+      groupName = null;
+    }
+  }
+
+  return {
+    companyLine: '+243827722222',
+    senderPhone: senderDigits,
+    messageId: msg.key.id || '',
+    timestamp: msg.messageTimestamp ? Number(msg.messageTimestamp) : Math.floor(Date.now() / 1000),
+    text,
+    mediaType,
+    mediaBase64,
+    isGroup,
+    groupId: isGroup ? remoteJid : null,
+    groupName
+  };
+}
+
+/**
+ * Send an approved reply or official PDF/media out via the linked company WhatsApp (+243 827 722 222)
+ */
+async function sendZaynMessage({ toPhone, text = '', pdfBase64 = null, fileName = 'document.pdf', mediaBase64 = null, mimeType = null, caption = '' }) {
+  if (currentStatus !== 'CONNECTED' || !sock) {
+    throw new Error('Cloud WhatsApp engine is not connected (+243 827 722 222).');
+  }
+
+  const rawTarget = String(toPhone || '').trim();
+  const isGroupTarget = rawTarget.endsWith('@g.us');
+  const cleanPhone = isGroupTarget ? '' : normalizePhoneNumber(rawTarget);
+  if (!isGroupTarget && (!cleanPhone || cleanPhone.length < 9)) {
+    throw new Error('Invalid recipient phone number.');
+  }
+
+  let jid = isGroupTarget ? rawTarget : `${cleanPhone}@s.whatsapp.net`;
+  if (!isGroupTarget) {
+    const [waCheck] = await sock.onWhatsApp(cleanPhone).catch(() => [{ exists: true }]);
+    if (waCheck && !waCheck.exists) {
+      throw new Error(`Phone +${cleanPhone} is not registered on WhatsApp`);
+    }
+    if (waCheck && waCheck.jid) {
+      jid = waCheck.jid;
+    }
+  }
+
+  if (pdfBase64) {
+    const pdfBuffer = Buffer.from(String(pdfBase64).replace(/^data:application\/pdf;base64,/i, ''), 'base64');
+    await sock.sendMessage(jid, {
+      document: pdfBuffer,
+      mimetype: 'application/pdf',
+      fileName: fileName || 'document.pdf',
+      caption: caption || text || ''
+    });
+    return { success: true, to: isGroupTarget ? jid : cleanPhone, type: 'pdf' };
+  }
+
+  if (mediaBase64 && mimeType) {
+    const cleanB64 = String(mediaBase64).replace(/^data:[^;]+;base64,/i, '');
+    const buf = Buffer.from(cleanB64, 'base64');
+    if (mimeType.startsWith('image/')) {
+      await sock.sendMessage(jid, { image: buf, caption: caption || text || '' });
+    } else if (mimeType.startsWith('audio/')) {
+      await sock.sendMessage(jid, { audio: buf, mimetype: mimeType });
+    } else if (mimeType.startsWith('video/')) {
+      await sock.sendMessage(jid, { video: buf, caption: caption || text || '' });
+    } else {
+      await sock.sendMessage(jid, { document: buf, mimetype: mimeType, fileName: fileName || 'attachment', caption: caption || text || '' });
+    }
+    return { success: true, to: isGroupTarget ? jid : cleanPhone, type: 'media' };
+  }
+
+  if (!text || !String(text).trim()) {
+    throw new Error('Message text or attachment is required.');
+  }
+
+  await sock.sendMessage(jid, { text: String(text) });
+  return { success: true, to: isGroupTarget ? jid : cleanPhone, type: 'text' };
+}
+
 module.exports = {
   initCloudWhatsApp,
   getCloudWhatsAppStatus,
   disconnectCloudWhatsApp,
   dispatchInvoicesCloud,
   dispatchDocumentsCloud,
-  dispatchMarketingFlyerCloud
+  dispatchMarketingFlyerCloud,
+  sendZaynMessage,
+  normalizePhoneNumber
 };

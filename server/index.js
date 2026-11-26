@@ -235,6 +235,9 @@ app.use('/auth', authRoutes);
 const PUBLIC_API_GETS = new Set(['/api/marketing/flyer', '/endpoint/marketing/flyer', '/api/marketing/status', '/endpoint/marketing/status']);
 app.use(['/endpoint', '/api'], (req, res, next) => {
   if (req.method === 'OPTIONS') return next();
+  if (req.baseUrl === '/api' && req.path.startsWith('/zayn-bridge')) {
+    return next(); // Authenticated via X-GG-Webhook-Secret inside zaynBridgeRoutes
+  }
   if (req.method === 'GET' && PUBLIC_API_GETS.has(req.baseUrl + req.path.replace(/\/$/, ''))) {
     return next();
   }
@@ -281,6 +284,9 @@ app.use("/endpoint/fleet", fleetRoute);
 const inspectionReportRoutes = require('./routes/inspectionReportRoutes');
 app.use('/api/inspection-reports', inspectionReportRoutes);
 app.use('/endpoint/inspection-reports', inspectionReportRoutes);
+
+const zaynBridgeRoutes = require('./routes/zaynBridgeRoutes');
+app.use('/api/zayn-bridge', zaynBridgeRoutes);
 
 app.get('/', (req, res) => res.json({ name: 'Global Gate API', version: '3.7.24', minSupportedVersion: '3.7.0', status: 'online', uptime: process.uptime(), cloudWhatsApp: true }));
 app.get('/robots.txt', (req, res) => {

@@ -6462,3 +6462,19 @@ Implemented a zero-manual-intervention in-app update pipeline across Electron Wi
    - Synchronized `3.7.24` across `package.json`, `server/package.json`, `server/index.js`, `server/routes/downloadRoutes.js`, and `android/app/build.gradle` (`versionCode 30724`).
    - Verified `pre-build-check.js` (254 files, 0 errors), `security-check.js --auto-start` (21/21 passed), and `regression-check.js --auto-start` (12/12 passed).
    - Built Web Portal (`dist_web/`), Electron Desktop (`dist/Global Gate Setup 3.7.24.exe` + `latest.yml`), and Capacitor Android APK (`GlobalGate-v3.7.24.apk`), synced to `server/public/downloads/` via `scripts/sync-releases.js`, and pushed to `origin main`.
+
+
+### Rule 119: Zayn Bridge & Zero-Leak Commercial Firewall (`cloudWhatsAppService.js`, `zaynBridgeRoutes.js`)
+
+#### Changes Implemented
+1. **Inbound Webhook Forwarder (`server/services/cloudWhatsAppService.js`)**:
+   - Added `messages.upsert` listener on the linked company WhatsApp (`+243 827 722 222`) to forward incoming non-`fromMe`, non-broadcast messages via signed `POST` (`X-GG-Webhook-Secret: process.env.ZAYN_WEBHOOK_SECRET`) to `${process.env.ZAYN_AGENT_URL}/api/company-whatsapp/inbound` with `companyLine`, JID-extracted E.164 `senderPhone`, `messageId`, `timestamp`, `text`, `mediaType`, `mediaBase64`, `isGroup`, `groupId`, and `groupName`.
+   - Added `sendZaynMessage()` for outbound replies, PDFs, and media via `+243 827 722 222`.
+2. **Zero-Leak Commercial Firewall & Identity Lookup (`server/routes/zaynBridgeRoutes.js`)**:
+   - `GET /api/zayn-bridge/verify-sender?phone=...` (protected by `X-GG-Webhook-Secret`):
+     - **Active Employees (`employeeSchema.js`)**: Enforces strict `status === 'EMPLOYED'` lock (non-`EMPLOYED` staff return `role: "FORMER_EMPLOYEE"` with zero ERP records). Active technicians (`isTechnician`) receive ONLY their assigned `Open` / `Pending` Maintenance Orders stripped of all pricing, discounts, labor fees, and item costs.
+     - **Customers (`Model.js`)**: Matches `customerCompanyPhone` / `customerPhone` and returns ONLY client-scoped `SENT`/`CONVERTED` Quotations, `SENT`/`PARTIALLY-PAID`/`CONVERTED` Invoices, `DELIVERED` Delivery Notes, and sanitized Maintenance Orders (plus linked `INV-` reference when `Converted`).
+     - **Unregistered Numbers**: Returns `role: "UNREGISTERED"` with zero ERP records.
+   - `POST /api/zayn-bridge/send-message` and `POST /api/zayn-bridge/maintenance-update` (protected by `X-GG-Webhook-Secret`): Allows Zayn to dispatch approved replies/PDFs and lets `EMPLOYED` technicians update their assigned `Open` / `Pending` Maintenance Orders while logging an internal notification for the Branch Manager.
+3. **Security & Route Mounting (`server/index.js`, `server/Middleware/security.js`)**:
+   - Mounted `/api/zayn-bridge` with `X-GG-Webhook-Secret` authentication (exempted from JWT `authenticate` and `originLock` only when the valid `X-GG-Webhook-Secret` header is present).
