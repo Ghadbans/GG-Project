@@ -6,7 +6,29 @@ const { execFile } = require('child_process');
 const axios = require('axios');
 const InvoiceWhatsAppTemplate = require('../model/invoiceWhatsAppTemplateSchema');
 const InvoiceWhatsAppHistory = require('../model/invoiceWhatsAppHistorySchema');
+const GrantAccess = require('../model/grantAccessSchema');
 const cloudWhatsAppService = require('../services/cloudWhatsAppService');
+
+async function verifyWhatsAppAccess(req, res, next) {
+  try {
+    const uName = String(req.user?.employeeName || req.user?.userName || req.body?.sentBy || '').trim();
+    if (uName === 'GG') return next();
+    const uid = String(req.user?.userId || req.user?.id || '').trim();
+    if (!uid && !uName) {
+      return res.status(403).json({ success: false, error: 'Permission denied. WhatsApp Dispatch is restricted in Grant Access.' });
+    }
+    const orQuery = [];
+    if (uid) orQuery.push({ userID: uid });
+    if (uName) orQuery.push({ employeeName: uName });
+    const grant = await GrantAccess.findOne({ $or: orQuery }).sort({ _id: -1 }).lean();
+    if (grant && grant.whatsappInvoice === true) {
+      return next();
+    }
+    return res.status(403).json({ success: false, error: 'Permission denied. WhatsApp Dispatch is restricted in Grant Access.' });
+  } catch (err) {
+    return res.status(500).json({ success: false, error: 'Permission check failed: ' + err.message });
+  }
+}
 
 const AGENT_DIR = 'C:\\Users\\GG\\fb-whatsapp-agent';
 const AGENT_SCRIPT = path.join(AGENT_DIR, 'agent.js');
@@ -141,7 +163,7 @@ router.post('/cloud-reconnect', async (req, res) => {
 });
 
 // 3. Dispatch Selected SENT Invoices via WhatsApp
-router.post('/send', async (req, res) => {
+router.post('/send', verifyWhatsAppAccess, async (req, res) => {
   try {
     const { invoices, templateMessage, phoneOverrides = {} } = req.body;
     if (!Array.isArray(invoices) || invoices.length === 0) {
@@ -496,7 +518,7 @@ async function handleDocumentDispatch(req, res, docType, defaultMsg) {
   }
 }
 
-router.post('/send-payment', (req, res) => handleDocumentDispatch(req, res, 'payment', DEFAULT_PAYMENT_WHATSAPP_MESSAGE));
-router.post('/send-quotation', (req, res) => handleDocumentDispatch(req, res, 'quotation', DEFAULT_QUOTATION_WHATSAPP_MESSAGE));
+router.post('/send-payment', verifyWhatsAppAccess, (req, res) => handleDocumentDispatch(req, res, 'payment', DEFAULT_PAYMENT_WHATSAPP_MESSAGE));
+router.post('/send-quotation', verifyWhatsAppAccess, (req, res) => handleDocumentDispatch(req, res, 'quotation', DEFAULT_QUOTATION_WHATSAPP_MESSAGE));
 
 module.exports = router;

@@ -963,7 +963,7 @@ var Drawer = (0,_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .Ay
   };
 });
 function EstimateViewAdminAll() {
-  var _estimate$filter, _user$data;
+  var _user$data, _estimate$filter, _user$data2;
   var _useLayoutConfig = (0,_hooks_useLayoutConfig__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A)(),
     config = _useLayoutConfig.config;
   var _useParams = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_29__/* .useParams */ .g)(),
@@ -1001,13 +1001,21 @@ function EstimateViewAdminAll() {
     _useState2 = _slicedToArray(_useState, 2),
     grantAccess = _useState2[0],
     setGrantAccess = _useState2[1];
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    _useState4 = _slicedToArray(_useState3, 2),
+    grantAccessRecord = _useState4[0],
+    setGrantAccessRecord = _useState4[1];
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     var fetchNumber = /*#__PURE__*/function () {
       var _ref0 = _asyncToGenerator(function* () {
         try {
           var _res$data;
           var res = yield (0,_utils_apiCache__WEBPACK_IMPORTED_MODULE_31__/* .cachedGet */ .Fe)("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_32__/* .ENDPOINT_URL */ .m, "/grantAccess"));
-          (_res$data = res.data) === null || _res$data === void 0 || (_res$data = _res$data.data) === null || _res$data === void 0 || _res$data.filter(row => row.userID === user.data.id).map(row => setGrantAccess(row.modules));
+          var userAccess = (_res$data = res.data) === null || _res$data === void 0 || (_res$data = _res$data.data) === null || _res$data === void 0 ? void 0 : _res$data.find(row => row.userID === user.data.id);
+          if (userAccess) {
+            setGrantAccess(userAccess.modules || []);
+            setGrantAccessRecord(userAccess);
+          }
         } catch (error) {
           console.error('Error fetching data:', error);
         }
@@ -1019,18 +1027,19 @@ function EstimateViewAdminAll() {
     fetchNumber();
   }, [user]);
   var estimationInfoU = grantAccess.filter(row => row.moduleName === "Estimate" && row.access.editM === true);
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
-    _useState4 = _slicedToArray(_useState3, 2),
-    estimate = _useState4[0],
-    setEstimate = _useState4[1];
-  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
+  var canSendWhatsApp = (user === null || user === void 0 || (_user$data = user.data) === null || _user$data === void 0 ? void 0 : _user$data.userName) === 'GG' || (grantAccessRecord === null || grantAccessRecord === void 0 ? void 0 : grantAccessRecord.whatsappInvoice) === true;
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState6 = _slicedToArray(_useState5, 2),
-    loadingData = _useState6[0],
-    setLoadingData = _useState6[1];
-  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    estimate = _useState6[0],
+    setEstimate = _useState6[1];
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
     _useState8 = _slicedToArray(_useState7, 2),
-    item = _useState8[0],
-    SetItems = _useState8[1];
+    loadingData = _useState8[0],
+    setLoadingData = _useState8[1];
+  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    _useState0 = _slicedToArray(_useState9, 2),
+    item = _useState0[0],
+    SetItems = _useState0[1];
   // Store all invoices so the third useEffect reuses them without a second API call
   var allInvoicesRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)([]);
   var apiUrl = "".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_32__/* .ENDPOINT_URL */ .m, "/estimation");
@@ -1057,18 +1066,18 @@ function EstimateViewAdminAll() {
     }();
     fetchData();
   }, []);
-  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
-    _useState0 = _slicedToArray(_useState9, 2),
-    invoice = _useState0[0],
-    setInvoice = _useState0[1];
-  var _useState1 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+  var _useState1 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState10 = _slicedToArray(_useState1, 2),
-    openAttachments = _useState10[0],
-    setOpenAttachments = _useState10[1];
-  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
+    invoice = _useState10[0],
+    setInvoice = _useState10[1];
+  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState12 = _slicedToArray(_useState11, 2),
-    attachmentCount = _useState12[0],
-    setAttachmentCount = _useState12[1];
+    openAttachments = _useState12[0],
+    setOpenAttachments = _useState12[1];
+  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
+    _useState14 = _slicedToArray(_useState13, 2),
+    attachmentCount = _useState14[0],
+    setAttachmentCount = _useState14[1];
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     if (id) {
       axios__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_32__/* .ENDPOINT_URL */ .m, "/attachments/").concat(id)).then(res => {
@@ -1077,30 +1086,30 @@ function EstimateViewAdminAll() {
       }).catch(() => {});
     }
   }, [id]);
-  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
-    _useState14 = _slicedToArray(_useState13, 2),
-    invoice2 = _useState14[0],
-    setInvoice2 = _useState14[1];
   var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState16 = _slicedToArray(_useState15, 2),
-    purchase = _useState16[0],
-    setPurchase = _useState16[1];
+    invoice2 = _useState16[0],
+    setInvoice2 = _useState16[1];
   var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState18 = _slicedToArray(_useState17, 2),
-    maintenance = _useState18[0],
-    setMaintenance = _useState18[1];
-  var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
+    purchase = _useState18[0],
+    setPurchase = _useState18[1];
+  var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState20 = _slicedToArray(_useState19, 2),
-    customerName1 = _useState20[0],
-    setCustomerName1 = _useState20[1];
-  var _useState21 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
+    maintenance = _useState20[0],
+    setMaintenance = _useState20[1];
+  var _useState21 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
     _useState22 = _slicedToArray(_useState21, 2),
-    estimateNumber = _useState22[0],
-    setEstimateNumber1 = _useState22[1];
-  var _useState23 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    customerName1 = _useState22[0],
+    setCustomerName1 = _useState22[1];
+  var _useState23 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
     _useState24 = _slicedToArray(_useState23, 2),
-    items = _useState24[0],
-    setItems = _useState24[1];
+    estimateNumber = _useState24[0],
+    setEstimateNumber1 = _useState24[1];
+  var _useState25 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    _useState26 = _slicedToArray(_useState25, 2),
+    items = _useState26[0],
+    setItems = _useState26[1];
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     var fetchData = /*#__PURE__*/function () {
       var _ref10 = _asyncToGenerator(function* () {
@@ -1149,20 +1158,20 @@ function EstimateViewAdminAll() {
     anchorEl = _React$useState2[0],
     setAnchorEl = _React$useState2[1];
   var open = Boolean(anchorEl);
-  var _useState25 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
-    _useState26 = _slicedToArray(_useState25, 2),
-    whatsAppDoc = _useState26[0],
-    setWhatsAppDoc = _useState26[1];
+  var _useState27 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    _useState28 = _slicedToArray(_useState27, 2),
+    whatsAppDoc = _useState28[0],
+    setWhatsAppDoc = _useState28[1];
   var handleClick = event => {
     setAnchorEl(event.currentTarget);
   };
   var handleCloseMenu = () => {
     setAnchorEl(null);
   };
-  var _useState27 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('en'),
-    _useState28 = _slicedToArray(_useState27, 2),
-    printLang = _useState28[0],
-    setPrintLang = _useState28[1];
+  var _useState29 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('en'),
+    _useState30 = _slicedToArray(_useState29, 2),
+    printLang = _useState30[0],
+    setPrintLang = _useState30[1];
   var L = _utils_frenchPrintHelper__WEBPACK_IMPORTED_MODULE_50__/* .PRINT_LABELS */ .w8[printLang] || _utils_frenchPrintHelper__WEBPACK_IMPORTED_MODULE_50__/* .PRINT_LABELS */ .w8.en;
   var componentRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
   var handlePrint = (0,react_to_print__WEBPACK_IMPORTED_MODULE_49__.useReactToPrint)({
@@ -1177,26 +1186,26 @@ function EstimateViewAdminAll() {
     setAnchorEl(null);
     setTimeout(() => handlePrint(), 60);
   };
-  var _useState29 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(1),
-    _useState30 = _slicedToArray(_useState29, 2),
-    show1 = _useState30[0],
-    setShow1 = _useState30[1];
+  var _useState31 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(1),
+    _useState32 = _slicedToArray(_useState31, 2),
+    show1 = _useState32[0],
+    setShow1 = _useState32[1];
   var handleShow1 = e => {
     setShow1(e);
     setAnchorEl(null);
   };
-  var _useState31 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
-    _useState32 = _slicedToArray(_useState31, 2),
-    reason = _useState32[0],
-    setReason = _useState32[1];
-  var _useState33 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+  var _useState33 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
     _useState34 = _slicedToArray(_useState33, 2),
-    Comments1 = _useState34[0],
-    setComments = _useState34[1];
+    reason = _useState34[0],
+    setReason = _useState34[1];
   var _useState35 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState36 = _slicedToArray(_useState35, 2),
-    notification = _useState36[0],
-    setNotification = _useState36[1];
+    Comments1 = _useState36[0],
+    setComments = _useState36[1];
+  var _useState37 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    _useState38 = _slicedToArray(_useState37, 2),
+    notification = _useState38[0],
+    setNotification = _useState38[1];
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     var fetchComment = /*#__PURE__*/function () {
       var _ref11 = _asyncToGenerator(function* () {
@@ -1225,18 +1234,18 @@ function EstimateViewAdminAll() {
     reason
   };
   {/** Loading Start */}
-  var _useState37 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState38 = _slicedToArray(_useState37, 2),
-    loading = _useState38[0],
-    setLoading = _useState38[1];
   var _useState39 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState40 = _slicedToArray(_useState39, 2),
-    loadingOpenModal = _useState40[0],
-    setLoadingOpenModal = _useState40[1];
+    loading = _useState40[0],
+    setLoading = _useState40[1];
   var _useState41 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState42 = _slicedToArray(_useState41, 2),
-    ErrorOpenModal = _useState42[0],
-    setErrorOpenModal = _useState42[1];
+    loadingOpenModal = _useState42[0],
+    setLoadingOpenModal = _useState42[1];
+  var _useState43 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState44 = _slicedToArray(_useState43, 2),
+    ErrorOpenModal = _useState44[0],
+    setErrorOpenModal = _useState44[1];
   var handleOpen = () => {
     setLoadingOpenModal(true);
     setLoading(true);
@@ -1289,10 +1298,10 @@ function EstimateViewAdminAll() {
     dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_52__/* .logOut */ .je)());
     navigate('/');
   };
-  var _useState43 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(1),
-    _useState44 = _slicedToArray(_useState43, 2),
-    showRef = _useState44[0],
-    setShowRef = _useState44[1];
+  var _useState45 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(1),
+    _useState46 = _slicedToArray(_useState45, 2),
+    showRef = _useState46[0],
+    setShowRef = _useState46[1];
   var handleShowRef = e => {
     setShowRef(e);
     setAnchorEl(null);
@@ -1713,6 +1722,7 @@ function EstimateViewAdminAll() {
         color: 'gray'
       }
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_65__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, "Export to Excel")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, {
+      disabled: !canSendWhatsApp,
       onClick: () => {
         handleCloseMenu();
         setWhatsAppDoc(row);
@@ -3327,7 +3337,7 @@ function EstimateViewAdminAll() {
     onClose: () => setWhatsAppDoc(null),
     docType: "quotation",
     documentRecord: whatsAppDoc,
-    sentBy: (user === null || user === void 0 || (_user$data = user.data) === null || _user$data === void 0 ? void 0 : _user$data.userName) || 'GG'
+    sentBy: (user === null || user === void 0 || (_user$data2 = user.data) === null || _user$data2 === void 0 ? void 0 : _user$data2.userName) || 'GG'
   }));
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (EstimateViewAdminAll);

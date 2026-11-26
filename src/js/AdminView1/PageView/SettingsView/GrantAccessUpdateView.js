@@ -616,7 +616,7 @@ fetchedModules = fetchedModules.map((m, index) => ({ ...m, id: index + 1 }));
                               onChange={(e) => setWhatsappInvoice(e.target.checked)}
                             />
                           }
-                          label={`Send WhatsApp Invoices: ${whatsappInvoice ? 'Granted' : 'Denied'}`}
+                          label={`Send WhatsApp (Inv / Pay / Quote): ${whatsappInvoice ? 'Granted' : 'Denied'}`}
                         />
                       </Grid>
                       <Grid item xs={12} sm={6} md={3}>

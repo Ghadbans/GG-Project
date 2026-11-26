@@ -537,7 +537,7 @@ var Drawer = (0,_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .Ay
   };
 });
 function PaymentInformationView() {
-  var _payment$filter, _user$data;
+  var _user$data, _payment$filter, _user$data2;
   var _useLayoutConfig = (0,_hooks_useLayoutConfig__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)(),
     config = _useLayoutConfig.config;
   var _useParams = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_33__/* .useParams */ .g)(),
@@ -575,13 +575,21 @@ function PaymentInformationView() {
     _useState2 = _slicedToArray(_useState, 2),
     grantAccess = _useState2[0],
     setGrantAccess = _useState2[1];
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)(null),
+    _useState4 = _slicedToArray(_useState3, 2),
+    grantAccessRecord = _useState4[0],
+    setGrantAccessRecord = _useState4[1];
   (0,react__WEBPACK_IMPORTED_MODULE_3__.useEffect)(() => {
     var fetchNumber = /*#__PURE__*/function () {
       var _ref8 = _asyncToGenerator(function* () {
         try {
           var _res$data;
           var res = yield (0,_utils_apiCache__WEBPACK_IMPORTED_MODULE_30__/* .cachedGet */ .Fe)("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_31__/* .ENDPOINT_URL */ .m, "/grantAccess"));
-          (_res$data = res.data) === null || _res$data === void 0 || (_res$data = _res$data.data) === null || _res$data === void 0 || _res$data.filter(row => row.userID === user.data.id).map(row => setGrantAccess(row.modules));
+          var userAccess = (_res$data = res.data) === null || _res$data === void 0 || (_res$data = _res$data.data) === null || _res$data === void 0 ? void 0 : _res$data.find(row => row.userID === user.data.id);
+          if (userAccess) {
+            setGrantAccess(userAccess.modules || []);
+            setGrantAccessRecord(userAccess);
+          }
         } catch (error) {
           console.error('Error fetching data:', error);
         }
@@ -593,27 +601,28 @@ function PaymentInformationView() {
     fetchNumber();
   }, [user]);
   var PaymentInfoU = grantAccess.filter(row => row.moduleName === "Payment" && row.access.editM === true);
+  var canSendWhatsApp = (user === null || user === void 0 || (_user$data = user.data) === null || _user$data === void 0 ? void 0 : _user$data.userName) === 'GG' || (grantAccessRecord === null || grantAccessRecord === void 0 ? void 0 : grantAccessRecord.whatsappInvoice) === true;
   var handleLogout = () => {
     localStorage.removeItem('user');
     dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_35__/* .logOut */ .je)());
     navigate('/');
   };
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)([]),
-    _useState4 = _slicedToArray(_useState3, 2),
-    payment = _useState4[0],
-    setPayment = _useState4[1];
   var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)([]),
     _useState6 = _slicedToArray(_useState5, 2),
-    invoice = _useState6[0],
-    setInvoice = _useState6[1];
+    payment = _useState6[0],
+    setPayment = _useState6[1];
   var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)([]),
     _useState8 = _slicedToArray(_useState7, 2),
-    paymentArray = _useState8[0],
-    setPaymentArray = _useState8[1];
-  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)(true),
+    invoice = _useState8[0],
+    setInvoice = _useState8[1];
+  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)([]),
     _useState0 = _slicedToArray(_useState9, 2),
-    loadingData = _useState0[0],
-    setLoadingData = _useState0[1];
+    paymentArray = _useState0[0],
+    setPaymentArray = _useState0[1];
+  var _useState1 = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)(true),
+    _useState10 = _slicedToArray(_useState1, 2),
+    loadingData = _useState10[0],
+    setLoadingData = _useState10[1];
   var apiUrl = "".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_31__/* .ENDPOINT_URL */ .m, "/payment");
   (0,react__WEBPACK_IMPORTED_MODULE_3__.useEffect)(() => {
     var fetchData = /*#__PURE__*/function () {
@@ -637,18 +646,18 @@ function PaymentInformationView() {
     }();
     fetchData();
   }, [id]);
-  var _useState1 = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)(""),
-    _useState10 = _slicedToArray(_useState1, 2),
-    reason = _useState10[0],
-    setReason = _useState10[1];
-  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)([]),
+  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)(""),
     _useState12 = _slicedToArray(_useState11, 2),
-    Comments1 = _useState12[0],
-    setComments = _useState12[1];
+    reason = _useState12[0],
+    setReason = _useState12[1];
   var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)([]),
     _useState14 = _slicedToArray(_useState13, 2),
-    notification = _useState14[0],
-    setNotification = _useState14[1];
+    Comments1 = _useState14[0],
+    setComments = _useState14[1];
+  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)([]),
+    _useState16 = _slicedToArray(_useState15, 2),
+    notification = _useState16[0],
+    setNotification = _useState16[1];
   var PaymentInfo = paymentArray !== null ? paymentArray.reduce((sum, row) => sum + parseFloat(row.total), 0) : 0;
   (0,react__WEBPACK_IMPORTED_MODULE_3__.useEffect)(() => {
     var fetchComment = /*#__PURE__*/function () {
@@ -676,18 +685,18 @@ function PaymentInformationView() {
     reason
   };
   {/** Loading Start */}
-  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)(false),
-    _useState16 = _slicedToArray(_useState15, 2),
-    loading = _useState16[0],
-    setLoading = _useState16[1];
   var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)(false),
     _useState18 = _slicedToArray(_useState17, 2),
-    loadingOpenModal = _useState18[0],
-    setLoadingOpenModal = _useState18[1];
+    loading = _useState18[0],
+    setLoading = _useState18[1];
   var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)(false),
     _useState20 = _slicedToArray(_useState19, 2),
-    ErrorOpenModal = _useState20[0],
-    setErrorOpenModal = _useState20[1];
+    loadingOpenModal = _useState20[0],
+    setLoadingOpenModal = _useState20[1];
+  var _useState21 = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)(false),
+    _useState22 = _slicedToArray(_useState21, 2),
+    ErrorOpenModal = _useState22[0],
+    setErrorOpenModal = _useState22[1];
   var handleOpen = () => {
     setLoadingOpenModal(true);
     setLoading(true);
@@ -747,10 +756,10 @@ function PaymentInformationView() {
     anchorEl = _React$useState4[0],
     setAnchorEl = _React$useState4[1];
   var open = Boolean(anchorEl);
-  var _useState21 = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)(null),
-    _useState22 = _slicedToArray(_useState21, 2),
-    whatsAppDoc = _useState22[0],
-    setWhatsAppDoc = _useState22[1];
+  var _useState23 = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)(null),
+    _useState24 = _slicedToArray(_useState23, 2),
+    whatsAppDoc = _useState24[0],
+    setWhatsAppDoc = _useState24[1];
   var handleClick = event => {
     setAnchorEl(event.currentTarget);
   };
@@ -766,10 +775,10 @@ function PaymentInformationView() {
     handlePrint();
     setAnchorEl(null);
   };
-  var _useState23 = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)(1),
-    _useState24 = _slicedToArray(_useState23, 2),
-    show1 = _useState24[0],
-    setShow1 = _useState24[1];
+  var _useState25 = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)(1),
+    _useState26 = _slicedToArray(_useState25, 2),
+    show1 = _useState26[0],
+    setShow1 = _useState26[1];
   var handleShow1 = e => {
     setShow1(e);
     setAnchorEl(null);
@@ -963,6 +972,7 @@ function PaymentInformationView() {
         color: 'gray'
       }
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.createElement(_mui_icons_material_LocalPrintshop__WEBPACK_IMPORTED_MODULE_54__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.createElement("span", null, "Print")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
+      disabled: !canSendWhatsApp,
       onClick: () => {
         handleCloseMenu();
         setWhatsAppDoc(row);
@@ -2231,7 +2241,7 @@ function PaymentInformationView() {
     onClose: () => setWhatsAppDoc(null),
     docType: "payment",
     documentRecord: whatsAppDoc,
-    sentBy: (user === null || user === void 0 || (_user$data = user.data) === null || _user$data === void 0 ? void 0 : _user$data.userName) || 'GG'
+    sentBy: (user === null || user === void 0 || (_user$data2 = user.data) === null || _user$data2 === void 0 ? void 0 : _user$data2.userName) || 'GG'
   }));
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (PaymentInformationView);

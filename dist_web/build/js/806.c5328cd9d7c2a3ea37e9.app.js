@@ -1360,7 +1360,7 @@ var Drawer = (0,_mui_material__WEBPACK_IMPORTED_MODULE_31__/* ["default"] */ .Ay
   };
 });
 function EstimateViewAdmin() {
-  var _user$data;
+  var _user$data, _user$data2;
   var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_8__/* .useNavigate */ .Zp)();
   var isMobile = (0,_utils_isMobile__WEBPACK_IMPORTED_MODULE_56__/* .useIsMobile */ .al)();
   var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_48__/* .useDispatch */ .wA)();
@@ -1401,13 +1401,21 @@ function EstimateViewAdmin() {
     _useState2 = _slicedToArray(_useState, 2),
     grantAccess = _useState2[0],
     setGrantAccess = _useState2[1];
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    _useState4 = _slicedToArray(_useState3, 2),
+    grantAccessRecord = _useState4[0],
+    setGrantAccessRecord = _useState4[1];
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     var fetchNumber = /*#__PURE__*/function () {
       var _ref0 = _asyncToGenerator(function* () {
         try {
           var _res$data;
           var res = yield (0,_utils_apiCache__WEBPACK_IMPORTED_MODULE_33__/* .cachedGet */ .Fe)("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_35__/* .ENDPOINT_URL */ .m, "/grantAccess"));
-          (_res$data = res.data) === null || _res$data === void 0 || (_res$data = _res$data.data) === null || _res$data === void 0 || _res$data.filter(row => row.userID === user.data.id).map(row => setGrantAccess(row.modules));
+          var userAccess = (_res$data = res.data) === null || _res$data === void 0 || (_res$data = _res$data.data) === null || _res$data === void 0 ? void 0 : _res$data.find(row => row.userID === user.data.id);
+          if (userAccess) {
+            setGrantAccess(userAccess.modules || []);
+            setGrantAccessRecord(userAccess);
+          }
         } catch (error) {
           console.error('Error fetching data:', error);
         }
@@ -1422,26 +1430,27 @@ function EstimateViewAdmin() {
   var estimationInfoV = grantAccess.filter(row => row.moduleName === "Estimate" && row.access.viewM === true);
   var estimationInfoU = grantAccess.filter(row => row.moduleName === "Estimate" && row.access.editM === true);
   var estimationInfoD = grantAccess.filter(row => row.moduleName === "Estimate" && row.access.deleteM === true);
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
-    _useState4 = _slicedToArray(_useState3, 2),
-    estimate = _useState4[0],
-    setEstimate = _useState4[1];
-  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+  var canSendWhatsApp = (user === null || user === void 0 || (_user$data = user.data) === null || _user$data === void 0 ? void 0 : _user$data.userName) === 'GG' || (grantAccessRecord === null || grantAccessRecord === void 0 ? void 0 : grantAccessRecord.whatsappInvoice) === true;
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState6 = _slicedToArray(_useState5, 2),
-    whatsAppDoc = _useState6[0],
-    setWhatsAppDoc = _useState6[1];
-  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
+    estimate = _useState6[0],
+    setEstimate = _useState6[1];
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
     _useState8 = _slicedToArray(_useState7, 2),
-    loadingData = _useState8[0],
-    setLoadingData = _useState8[1];
-  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    whatsAppDoc = _useState8[0],
+    setWhatsAppDoc = _useState8[1];
+  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
     _useState0 = _slicedToArray(_useState9, 2),
-    hiddenRow = _useState0[0],
-    setHiddenRow = _useState0[1];
+    loadingData = _useState0[0],
+    setLoadingData = _useState0[1];
   var _useState1 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState10 = _slicedToArray(_useState1, 2),
-    hidden = _useState10[0],
-    setHidden = _useState10[1];
+    hiddenRow = _useState10[0],
+    setHiddenRow = _useState10[1];
+  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    _useState12 = _slicedToArray(_useState11, 2),
+    hidden = _useState12[0],
+    setHidden = _useState12[1];
   var _useModuleSearchState = (0,_hooks_useModuleSearchState__WEBPACK_IMPORTED_MODULE_36__/* .useModuleSearchState */ .pi)('estimate'),
     searchTerm = _useModuleSearchState.searchTerm,
     setSearchTerm = _useModuleSearchState.setSearchTerm,
@@ -1453,37 +1462,37 @@ function EstimateViewAdmin() {
     setStatusFilter = _useModuleSearchState.setStatusFilter,
     page = _useModuleSearchState.page,
     setPage = _useModuleSearchState.setPage;
-  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
+  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
       all: 0,
       draft: 0,
       sent: 0,
       decline: 0,
       approved: 0
     }),
-    _useState12 = _slicedToArray(_useState11, 2),
-    statusCounts = _useState12[0],
-    setStatusCounts = _useState12[1];
-  var limit = isMobile ? 30 : 100;
-  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(searchTerm),
     _useState14 = _slicedToArray(_useState13, 2),
-    debouncedSearchTerm = _useState14[0],
-    setDebouncedSearchTerm = _useState14[1];
-  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
+    statusCounts = _useState14[0],
+    setStatusCounts = _useState14[1];
+  var limit = isMobile ? 30 : 100;
+  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(searchTerm),
     _useState16 = _slicedToArray(_useState15, 2),
-    totalPage = _useState16[0],
-    SetTotalPage = _useState16[1];
+    debouncedSearchTerm = _useState16[0],
+    setDebouncedSearchTerm = _useState16[1];
   var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
     _useState18 = _slicedToArray(_useState17, 2),
-    totalItemCount = _useState18[0],
-    setTotalItemCount = _useState18[1];
-  var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    totalPage = _useState18[0],
+    SetTotalPage = _useState18[1];
+  var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
     _useState20 = _slicedToArray(_useState19, 2),
-    selectedRows = _useState20[0],
-    setSelectedRows = _useState20[1];
-  var _useState21 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
+    totalItemCount = _useState20[0],
+    setTotalItemCount = _useState20[1];
+  var _useState21 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState22 = _slicedToArray(_useState21, 2),
-    reason = _useState22[0],
-    setReason = _useState22[1];
+    selectedRows = _useState22[0],
+    setSelectedRows = _useState22[1];
+  var _useState23 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
+    _useState24 = _slicedToArray(_useState23, 2),
+    reason = _useState24[0],
+    setReason = _useState24[1];
   var fetchItems = /*#__PURE__*/function () {
     var _ref1 = _asyncToGenerator(function* (page, searchTerm, filterField, filterValue, statusFilter) {
       try {
@@ -1534,22 +1543,22 @@ function EstimateViewAdmin() {
   var handlePageChange = newPage => {
     setPage(newPage);
   };
-  var _useState23 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState24 = _slicedToArray(_useState23, 2),
-    loading = _useState24[0],
-    setLoading = _useState24[1];
   var _useState25 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState26 = _slicedToArray(_useState25, 2),
-    ErrorOpenModal = _useState26[0],
-    setErrorOpenModal = _useState26[1];
+    loading = _useState26[0],
+    setLoading = _useState26[1];
   var _useState27 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState28 = _slicedToArray(_useState27, 2),
-    loadingOpenModal = _useState28[0],
-    setLoadingOpenModal = _useState28[1];
+    ErrorOpenModal = _useState28[0],
+    setErrorOpenModal = _useState28[1];
   var _useState29 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState30 = _slicedToArray(_useState29, 2),
-    modalDeleteOpenLoading = _useState30[0],
-    setModalDeleteOpenLoading = _useState30[1];
+    loadingOpenModal = _useState30[0],
+    setLoadingOpenModal = _useState30[1];
+  var _useState31 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState32 = _slicedToArray(_useState31, 2),
+    modalDeleteOpenLoading = _useState32[0],
+    setModalDeleteOpenLoading = _useState32[1];
   {/** Loading Update View Start */}
   var handleOpenLoading = () => {
     setLoadingOpenModal(true);
@@ -1636,10 +1645,10 @@ function EstimateViewAdmin() {
     }();
     fetchDataHidden();
   }, []);
-  var _useState31 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState32 = _slicedToArray(_useState31, 2),
-    openReasonDelete = _useState32[0],
-    setOpenReasonDelete = _useState32[1];
+  var _useState33 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState34 = _slicedToArray(_useState33, 2),
+    openReasonDelete = _useState34[0],
+    setOpenReasonDelete = _useState34[1];
   var handleOpenReasonDelete = e => {
     e.preventDefault();
     setOpenReasonDelete(true);
@@ -1647,14 +1656,14 @@ function EstimateViewAdmin() {
   var handleCloseReasonDelete = () => {
     setOpenReasonDelete(false);
   };
-  var _useState33 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState34 = _slicedToArray(_useState33, 2),
-    open = _useState34[0],
-    setOpen = _useState34[1];
-  var _useState35 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+  var _useState35 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState36 = _slicedToArray(_useState35, 2),
-    DeleteId = _useState36[0],
-    setDeleteId = _useState36[1];
+    open = _useState36[0],
+    setOpen = _useState36[1];
+  var _useState37 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    _useState38 = _slicedToArray(_useState37, 2),
+    DeleteId = _useState38[0],
+    setDeleteId = _useState38[1];
   var handleOpen = id => {
     setOpen(true);
     setDeleteId(id);
@@ -1663,18 +1672,18 @@ function EstimateViewAdmin() {
     setLoadingOpenModal(false);
     setOpen(false);
   };
-  var _useState37 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState38 = _slicedToArray(_useState37, 2),
-    open1 = _useState38[0],
-    setOpen1 = _useState38[1];
-  var _useState39 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+  var _useState39 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState40 = _slicedToArray(_useState39, 2),
-    updateId = _useState40[0],
-    setUpdateId = _useState40[1];
-  var _useState41 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
+    open1 = _useState40[0],
+    setOpen1 = _useState40[1];
+  var _useState41 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
     _useState42 = _slicedToArray(_useState41, 2),
-    status = _useState42[0],
-    setStatus = _useState42[1];
+    updateId = _useState42[0],
+    setUpdateId = _useState42[1];
+  var _useState43 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
+    _useState44 = _slicedToArray(_useState43, 2),
+    status = _useState44[0],
+    setStatus = _useState44[1];
   var handleOpenUpdate = id => {
     setOpen1(true);
     setUpdateId(id);
@@ -1684,20 +1693,20 @@ function EstimateViewAdmin() {
     setUpdateId(null);
   };
   {/** delete multiple && all modal start */}
-  var _useState43 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState44 = _slicedToArray(_useState43, 2),
-    openDeleteMultiple = _useState44[0],
-    setOpenDeleteMultiple = _useState44[1];
+  var _useState45 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState46 = _slicedToArray(_useState45, 2),
+    openDeleteMultiple = _useState46[0],
+    setOpenDeleteMultiple = _useState46[1];
   var handleOpenMultiple = () => {
     setOpenDeleteMultiple(true);
   };
   var handleCloseMultiple = () => {
     setOpenDeleteMultiple(false);
   };
-  var _useState45 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState46 = _slicedToArray(_useState45, 2),
-    openDeleteAll = _useState46[0],
-    setOpenDeleteAll = _useState46[1];
+  var _useState47 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState48 = _slicedToArray(_useState47, 2),
+    openDeleteAll = _useState48[0],
+    setOpenDeleteAll = _useState48[1];
   var handleOpenAll = () => {
     setOpenDeleteAll(true);
   };
@@ -1727,10 +1736,10 @@ function EstimateViewAdmin() {
       return _ref13.apply(this, arguments);
     };
   }();
-  var _useState47 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
-    _useState48 = _slicedToArray(_useState47, 2),
-    EstimateDeleted = _useState48[0],
-    setEstimateDeleted = _useState48[1];
+  var _useState49 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    _useState50 = _slicedToArray(_useState49, 2),
+    EstimateDeleted = _useState50[0],
+    setEstimateDeleted = _useState50[1];
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     var fetchFunction = /*#__PURE__*/function () {
       var _ref14 = _asyncToGenerator(function* () {
@@ -1815,10 +1824,10 @@ function EstimateViewAdmin() {
     };
   }();
   {/** DElete End */}
-  var _useState49 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
-    _useState50 = _slicedToArray(_useState49, 2),
-    estimateN = _useState50[0],
-    setEstimateN = _useState50[1];
+  var _useState51 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
+    _useState52 = _slicedToArray(_useState51, 2),
+    estimateN = _useState52[0],
+    setEstimateN = _useState52[1];
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     if (updateId !== null) {
       axios__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_35__/* .ENDPOINT_URL */ .m, "/get-estimation/").concat(updateId)).then(res => {
@@ -1904,19 +1913,19 @@ function EstimateViewAdmin() {
     }
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, params.row[params.field]);
   };
-  var _useState51 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
-    _useState52 = _slicedToArray(_useState51, 2),
-    filteredRows = _useState52[0],
-    setFilteredRows = _useState52[1];
+  var _useState53 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    _useState54 = _slicedToArray(_useState53, 2),
+    filteredRows = _useState54[0],
+    setFilteredRows = _useState54[1];
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     var Est = estimate.filter(row => !hiddenRow.includes(row._id));
     setFilteredRows(Est);
   }, [estimate]);
   {/** hide End */}
-  var _useState53 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
-    _useState54 = _slicedToArray(_useState53, 2),
-    searchEstimate = _useState54[0],
-    setSearchEstimate = _useState54[1];
+  var _useState55 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
+    _useState56 = _slicedToArray(_useState55, 2),
+    searchEstimate = _useState56[0],
+    setSearchEstimate = _useState56[1];
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(() => {
     var storedValue = localStorage.getItem('QuickFilterEstimate');
     if (storedValue) {
@@ -1931,10 +1940,10 @@ function EstimateViewAdmin() {
     _React$useState2 = _slicedToArray(_React$useState, 2),
     filterModel = _React$useState2[0],
     setFilterModel = _React$useState2[1];
-  var _useState55 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({}),
-    _useState56 = _slicedToArray(_useState55, 2),
-    columnVisibilityModel = _useState56[0],
-    setColumnVisibilityModel = _useState56[1];
+  var _useState57 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({}),
+    _useState58 = _slicedToArray(_useState57, 2),
+    columnVisibilityModel = _useState58[0],
+    setColumnVisibilityModel = _useState58[1];
   var handelHiddenColumn = newHidden => {
     setColumnVisibilityModel(newHidden);
     localStorage.setItem('HiddenColumnsEstimate', JSON.stringify(newHidden));
@@ -2052,13 +2061,14 @@ function EstimateViewAdmin() {
     width: 70,
     minWidth: 70,
     renderCell: params => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
-      title: "Send Quotation by WhatsApp"
+      title: canSendWhatsApp ? 'Send Quotation by WhatsApp' : 'Restricted in Grant Access'
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+      disabled: !canSendWhatsApp,
       onClick: () => setWhatsAppDoc(params.row),
       size: "small"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_WhatsApp__WEBPACK_IMPORTED_MODULE_58__/* ["default"] */ .A, {
       style: {
-        color: '#25D366'
+        color: canSendWhatsApp ? '#25D366' : '#cbd5e1'
       }
     }))))
   }, {
@@ -2838,7 +2848,7 @@ function EstimateViewAdmin() {
     onClose: () => setWhatsAppDoc(null),
     docType: "quotation",
     documentRecord: whatsAppDoc,
-    sentBy: (user === null || user === void 0 || (_user$data = user.data) === null || _user$data === void 0 ? void 0 : _user$data.userName) || 'GG'
+    sentBy: (user === null || user === void 0 || (_user$data2 = user.data) === null || _user$data2 === void 0 ? void 0 : _user$data2.userName) || 'GG'
   }));
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (EstimateViewAdmin);

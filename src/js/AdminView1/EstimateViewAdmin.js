@@ -159,12 +159,16 @@ function EstimateViewAdmin() {
     navigate('/')
   }
   const [grantAccess, setGrantAccess] = useState([]);
+  const [grantAccessRecord, setGrantAccessRecord] = useState(null);
   useEffect(() => {
     const fetchNumber = async () => {
       try {
         const res = await cachedGet(`${ENDPOINT_URL}/grantAccess`);
-        res.data?.data?.filter((row) => row.userID === user.data.id)
-          .map((row) => setGrantAccess(row.modules))
+        const userAccess = res.data?.data?.find((row) => row.userID === user.data.id);
+        if (userAccess) {
+          setGrantAccess(userAccess.modules || []);
+          setGrantAccessRecord(userAccess);
+        }
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -176,6 +180,7 @@ function EstimateViewAdmin() {
   const estimationInfoV = grantAccess.filter((row) => row.moduleName === "Estimate" && row.access.viewM === true);
   const estimationInfoU = grantAccess.filter((row) => row.moduleName === "Estimate" && row.access.editM === true);
   const estimationInfoD = grantAccess.filter((row) => row.moduleName === "Estimate" && row.access.deleteM === true);
+  const canSendWhatsApp = user?.data?.userName === 'GG' || grantAccessRecord?.whatsappInvoice === true;
 
 
   const [estimate, setEstimate] = useState([]);
@@ -635,10 +640,10 @@ function EstimateViewAdmin() {
     },
     {
       field: 'whatsapp', headerName: 'WhatsApp', width: 70, minWidth: 70, renderCell: (params) => (
-        <Tooltip title="Send Quotation by WhatsApp">
+        <Tooltip title={canSendWhatsApp ? 'Send Quotation by WhatsApp' : 'Restricted in Grant Access'}>
           <span>
-            <IconButton onClick={() => setWhatsAppDoc(params.row)} size="small">
-              <WhatsAppIcon style={{ color: '#25D366' }} />
+            <IconButton disabled={!canSendWhatsApp} onClick={() => setWhatsAppDoc(params.row)} size="small">
+              <WhatsAppIcon style={{ color: canSendWhatsApp ? '#25D366' : '#cbd5e1' }} />
             </IconButton>
           </span>
         </Tooltip>

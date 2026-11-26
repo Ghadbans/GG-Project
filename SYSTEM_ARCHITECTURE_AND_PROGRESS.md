@@ -6418,3 +6418,18 @@ Implemented a zero-manual-intervention in-app update pipeline across Electron Wi
    - Synchronized `3.7.21` across `package.json`, `server/package.json`, `server/index.js`, `server/routes/downloadRoutes.js`, and `android/app/build.gradle` (`versionCode 30721`).
    - Verified `pre-build-check.js` (254 files, 0 errors), `security-check.js --auto-start` (21/21 passed), and `regression-check.js --auto-start` (12/12 passed).
    - Built Web Portal (`dist_web/`), Electron Desktop (`dist/Global Gate Setup 3.7.21.exe` + `latest.yml`), and Capacitor Android APK (`GlobalGate-v3.7.21.apk`), synced to `server/public/downloads/` via `scripts/sync-releases.js`, and pushed to `origin main`.
+
+
+### Rule 116: Grant Access Enforcement on Payment & Quotation WhatsApp Dispatch (Ver 3.7.22)
+
+#### Changes Implemented
+1. **Frontend Grant Access Guard (`PaymentInformationView.js`, `EstimateViewAdminAll.js`, `EstimateViewAdmin.js`)**:
+   - Stored `grantAccessRecord` from `/endpoint/grantAccess` and enforced `const canSendWhatsApp = user?.data?.userName === 'GG' || grantAccessRecord?.whatsappInvoice === true;` on **"Send by WhatsApp"** in `PaymentInformationView` (`OPTIONS`), `EstimateViewAdminAll` (`OPTIONS`), and `EstimateViewAdmin` (per-row WhatsApp icon).
+2. **Grant Access Label Clarity (`GrantAccessFormView.js`, `GrantAccessUpdateView.js`)**:
+   - Updated the Special Permissions label to `Send WhatsApp (Inv / Pay / Quote): Granted/Denied` while preserving the existing `whatsappInvoice` boolean field in `grantAccessSchema.js`.
+3. **Backend Grant Access Guard (`server/routes/invoiceWhatsAppRoutes.js`)**:
+   - Added `verifyWhatsAppAccess` middleware on `POST /send`, `POST /send-payment`, and `POST /send-quotation`, allowing `GG` or users whose `GrantAccess` record has `whatsappInvoice === true` (`403 Forbidden` otherwise).
+4. **Version Synchronization & Multi-Platform Release (`v3.7.22`)**:
+   - Synchronized `3.7.22` across `package.json`, `server/package.json`, `server/index.js`, `server/routes/downloadRoutes.js`, and `android/app/build.gradle` (`versionCode 30722`).
+   - Verified `pre-build-check.js` (254 files, 0 errors), `security-check.js --auto-start` (21/21 passed), and `regression-check.js --auto-start` (12/12 passed).
+   - Built Web Portal (`dist_web/`), Electron Desktop (`dist/Global Gate Setup 3.7.22.exe` + `latest.yml`), and Capacitor Android APK (`GlobalGate-v3.7.22.apk`), synced to `server/public/downloads/` via `scripts/sync-releases.js`, and pushed to `origin main`.

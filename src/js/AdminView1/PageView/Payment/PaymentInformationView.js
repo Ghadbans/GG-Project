@@ -150,12 +150,16 @@ function PaymentInformationView() {
     fetchUser()
   }, [dispatch]);
   const [grantAccess, setGrantAccess] = useState([]);
+  const [grantAccessRecord, setGrantAccessRecord] = useState(null);
   useEffect(() => {
     const fetchNumber = async () => {
       try {
         const res = await cachedGet(`${ENDPOINT_URL}/grantAccess`);
-        res.data?.data?.filter((row) => row.userID === user.data.id)
-          .map((row) => setGrantAccess(row.modules))
+        const userAccess = res.data?.data?.find((row) => row.userID === user.data.id);
+        if (userAccess) {
+          setGrantAccess(userAccess.modules || []);
+          setGrantAccessRecord(userAccess);
+        }
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -163,6 +167,7 @@ function PaymentInformationView() {
     fetchNumber()
   }, [user])
   const PaymentInfoU = grantAccess.filter((row) => row.moduleName === "Payment" && row.access.editM === true);
+  const canSendWhatsApp = user?.data?.userName === 'GG' || grantAccessRecord?.whatsappInvoice === true;
 
   const handleLogout = () => {
     localStorage.removeItem('user');
@@ -447,6 +452,7 @@ function PaymentInformationView() {
                                           <span>Print</span>
                                         </MenuItem>
                                         <MenuItem
+                                          disabled={!canSendWhatsApp}
                                           onClick={() => {
                                             handleCloseMenu();
                                             setWhatsAppDoc(row);

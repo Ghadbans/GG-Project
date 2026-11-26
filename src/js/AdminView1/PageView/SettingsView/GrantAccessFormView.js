@@ -561,7 +561,7 @@ function GrantAccessFormView() {
                               onChange={(e) => setWhatsappInvoice(e.target.checked)}
                             />
                           }
-                          label={`Send WhatsApp Invoices: ${whatsappInvoice ? 'Granted' : 'Denied'}`}
+                          label={`Send WhatsApp (Inv / Pay / Quote): ${whatsappInvoice ? 'Granted' : 'Denied'}`}
                         />
                       </Grid>
                     </Grid>
