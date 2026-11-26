@@ -6446,3 +6446,19 @@ Implemented a zero-manual-intervention in-app update pipeline across Electron Wi
    - Synchronized `3.7.23` across `package.json`, `server/package.json`, `server/index.js`, `server/routes/downloadRoutes.js`, and `android/app/build.gradle` (`versionCode 30723`).
    - Verified `pre-build-check.js` (254 files, 0 errors), `security-check.js --auto-start` (21/21 passed), and `regression-check.js --auto-start` (12/12 passed).
    - Built Web Portal (`dist_web/`), Electron Desktop (`dist/Global Gate Setup 3.7.23.exe` + `latest.yml`), and Capacitor Android APK (`GlobalGate-v3.7.23.apk`), synced to `server/public/downloads/` via `scripts/sync-releases.js`, and pushed to `origin main`.
+
+
+### Rule 118: Signed & Stamped Invoice Printout with Grant Access Authorization (`InvoiceViewAdminAll.js`, `GrantAccess` — Ver 3.7.24)
+
+#### Changes Implemented
+1. **Official Signature & Stamp Assets (`src/js/img/signature.png`, `src/js/img/stamp.png`)**:
+   - Bundled the authorized signature and Global Gate SARL General Services stamp into `src/js/img/`.
+2. **Grant Access Permission (`server/model/grantAccessSchema.js`, `GrantAccessFormView.js`, `GrantAccessUpdateView.js`)**:
+   - Added `invoiceSignStamp: { type: Boolean, default: false }` and the **`Sign & Stamp Invoice: Granted/Denied`** checkbox under Special Permissions.
+3. **Invoice Print Confirmation & Conditional Stamp/Signature (`src/js/AdminView1/PageView/InvoiceView/InvoiceViewAdminAll.js`)**:
+   - Added `canSignStampInvoice = user?.data?.userName === 'GG' || grantAccessRecord?.invoiceSignStamp === true`.
+   - Clicking `OPTIONS -> Print (English)` or `Print (French)` prompts authorized users with a dialog (`[ ] Signed & Stamped` + **OK** / **Cancel**); when checked, renders `signature.png` + `stamp.png` directly below `TOTAL IN WORDS` on the printout. Unauthorized users print normally without the sign/stamp option.
+4. **Version Synchronization & Multi-Platform Release (`v3.7.24`)**:
+   - Synchronized `3.7.24` across `package.json`, `server/package.json`, `server/index.js`, `server/routes/downloadRoutes.js`, and `android/app/build.gradle` (`versionCode 30724`).
+   - Verified `pre-build-check.js` (254 files, 0 errors), `security-check.js --auto-start` (21/21 passed), and `regression-check.js --auto-start` (12/12 passed).
+   - Built Web Portal (`dist_web/`), Electron Desktop (`dist/Global Gate Setup 3.7.24.exe` + `latest.yml`), and Capacitor Android APK (`GlobalGate-v3.7.24.apk`), synced to `server/public/downloads/` via `scripts/sync-releases.js`, and pushed to `origin main`.

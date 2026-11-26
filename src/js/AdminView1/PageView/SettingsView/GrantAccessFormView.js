@@ -185,6 +185,7 @@ function GrantAccessFormView() {
   const [backupVisibility, setBackupVisibility] = useState(false);
   const [marketing, setMarketing] = useState(false);
   const [whatsappInvoice, setWhatsappInvoice] = useState(false);
+  const [invoiceSignStamp, setInvoiceSignStamp] = useState(false);
   const [branchOptions, setBranchOptions] = useState([]);
 
   useEffect(() => {
@@ -291,7 +292,8 @@ function GrantAccessFormView() {
       messageVisibility,
       backupVisibility,
       marketing,
-      whatsappInvoice
+      whatsappInvoice,
+      invoiceSignStamp
     };
     setSaving('true')
     try {
@@ -562,6 +564,17 @@ function GrantAccessFormView() {
                             />
                           }
                           label={`Send WhatsApp (Inv / Pay / Quote): ${whatsappInvoice ? 'Granted' : 'Denied'}`}
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={6} md={3}>
+                        <FormControlLabel
+                          control={
+                            <Checkbox
+                              checked={invoiceSignStamp}
+                              onChange={(e) => setInvoiceSignStamp(e.target.checked)}
+                            />
+                          }
+                          label={`Sign & Stamp Invoice: ${invoiceSignStamp ? 'Granted' : 'Denied'}`}
                         />
                       </Grid>
                     </Grid>

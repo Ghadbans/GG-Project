@@ -27,6 +27,9 @@ import PhoneIcon from '@mui/icons-material/Phone';
 import WebIcon from '@mui/icons-material/Web';
 import Image from '../../../img/images.png'
 import Image3 from '../../../img/Paid.png'
+import signatureImg from '../../../img/signature.png'
+import stampImg from '../../../img/stamp.png'
+import { Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material'
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -197,12 +200,20 @@ function InvoiceViewAdminAll() {
     navigate('/')
   }
   const [grantAccess, setGrantAccess] = useState([]);
+  const [grantAccessRecord, setGrantAccessRecord] = useState(null);
   useEffect(() => {
     const fetchNumber = async () => {
       try {
         const res = await cachedGet(`${ENDPOINT_URL}/grantAccess`);
-        res.data?.data?.filter((row) => row.userID === user.data.id)
-          .map((row) => setGrantAccess(row.modules))
+        const uid = user?.data?.id || localStorage.getItem('user');
+        const uName = user?.data?.userName;
+        const userAccess = res.data?.data?.find((row) =>
+          (uid && row.userID === uid) || (uName && row.employeeName === uName)
+        );
+        if (userAccess) {
+          setGrantAccess(userAccess.modules || []);
+          setGrantAccessRecord(userAccess);
+        }
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -212,6 +223,7 @@ function InvoiceViewAdminAll() {
 
   // console.log(grantAccess)
   const InvoiceInfoU = grantAccess.filter((row) => row.moduleName === "Invoice" && row.access.editM === true);
+  const canSignStampInvoice = user?.data?.userName === 'GG' || grantAccessRecord?.invoiceSignStamp === true;
 
 
   const [invoice, setInvoice] = useState([]);
@@ -525,10 +537,29 @@ function InvoiceViewAdminAll() {
     pageStyle: `@page { size: A4 portrait; margin: 8mm 10mm 10mm 10mm; } @media print { body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }`,
   });
 
+  const [printDialogOpen, setPrintDialogOpen] = useState(false);
+  const [pendingPrintLang, setPendingPrintLang] = useState('en');
+  const [wantSignStamp, setWantSignStamp] = useState(false);
+  const [printSignedStamped, setPrintSignedStamped] = useState(false);
+
   const handleOpenPrint = (lang = 'en') => {
     setPrintLang(lang);
     setAnchorEl(null);
-    setTimeout(() => handlePrint(), 60);
+    if (canSignStampInvoice) {
+      setPendingPrintLang(lang);
+      setWantSignStamp(false);
+      setPrintDialogOpen(true);
+    } else {
+      setPrintSignedStamped(false);
+      setTimeout(() => handlePrint(), 60);
+    }
+  };
+
+  const handleConfirmPrint = () => {
+    setPrintLang(pendingPrintLang);
+    setPrintSignedStamped(Boolean(wantSignStamp && canSignStampInvoice));
+    setPrintDialogOpen(false);
+    setTimeout(() => handlePrint(), 80);
   };
   const [show1, setShow1] = useState(1);
   const handleShow1 = (e) => {
@@ -1855,6 +1886,14 @@ function InvoiceViewAdminAll() {
                                                         </tr>
                                                       </tbody>
                                                     </table>
+                                                    {printSignedStamped && (
+                                                      <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', marginTop: '14px', paddingRight: '40px', pageBreakInside: 'avoid', breakInside: 'avoid' }}>
+                                                        <div style={{ position: 'relative', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+                                                          <img src={signatureImg} alt="Authorized Signature" style={{ height: '72px', width: 'auto', objectFit: 'contain', mixBlendMode: 'multiply' }} />
+                                                          <img src={stampImg} alt="Company Stamp" style={{ height: '64px', width: 'auto', objectFit: 'contain', mixBlendMode: 'multiply' }} />
+                                                        </div>
+                                                      </div>
+                                                    )}
                                                     <address style={{ float: 'left', fontSize: '70%', textAlign: 'left' }}>
                                                       <p style={{ lineHeight: '14px', fontWeight: 'bold' }}>
                                                         {L.bank}: SOFIBANQUE SA <br />
@@ -2929,6 +2968,32 @@ function InvoiceViewAdminAll() {
         documentNumber={invoiceNumber ? ('INV-' + String(invoiceNumber).padStart(6, '0')) : ''}
         onAttachmentCountChange={(count) => setAttachmentCount(count)}
       />
+      <Dialog open={printDialogOpen} onClose={() => setPrintDialogOpen(false)} maxWidth="xs" fullWidth>
+        <DialogTitle sx={{ bgcolor: '#093170', color: 'white', fontWeight: 700, fontSize: '1rem' }}>
+          Print Invoice ({pendingPrintLang === 'fr' ? 'French' : 'English'})
+        </DialogTitle>
+        <DialogContent sx={{ pt: 2.5 }}>
+          <Typography variant="body2" sx={{ mb: 1.5, mt: 1, color: '#334155' }}>
+            Do you want to print this invoice with the authorized signature and company stamp?
+          </Typography>
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={wantSignStamp}
+                onChange={(e) => setWantSignStamp(e.target.checked)}
+                color="primary"
+              />
+            }
+            label="Signed & Stamped"
+          />
+        </DialogContent>
+        <DialogActions sx={{ px: 3, pb: 2 }}>
+          <Button onClick={() => setPrintDialogOpen(false)}>Cancel</Button>
+          <Button variant="contained" onClick={handleConfirmPrint} sx={{ bgcolor: '#093170' }}>
+            OK
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   )
 }

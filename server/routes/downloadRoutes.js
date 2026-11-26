@@ -3,12 +3,12 @@ const router = express.Router();
 const path = require('path');
 const fs = require('fs');
 
-const APP_VERSION = '3.7.23';
+const APP_VERSION = '3.7.24';
 const MIN_SUPPORTED_VERSION = '3.7.0';
 const RELEASE_NOTES = [
-  'Invoice Balance Reconciliation: Fixed stale A-PAID / Partially-Paid status after deleting payments (awaited syncInvoiceBalances + zero-payment server reconciliation).',
-  'Grant Access WhatsApp Enforcement: Payment & Quotation WhatsApp dispatch respect Grant Access on both frontend and backend.',
-  'Payment & Quotation PDF Templates: Matched official Print-to-PDF templates 1:1.'
+  'Signed & Stamped Invoice Print: Added Print confirmation popup (Signed & Stamped checkbox) below TOTAL IN WORDS, gated by Grant Access (Sign & Stamp Invoice).',
+  'Invoice Balance Reconciliation: Fixed stale A-PAID / Partially-Paid status after deleting payments.',
+  'Grant Access WhatsApp Enforcement: Payment & Quotation WhatsApp dispatch respect Grant Access.'
 ];
 
 const DOWNLOADS_DIR = path.join(__dirname, '../public/downloads');

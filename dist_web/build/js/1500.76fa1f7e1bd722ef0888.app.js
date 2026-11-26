@@ -280,12 +280,16 @@ function GrantAccessUpdateView() {
     setWhatsappInvoice = _useState16[1];
   var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState18 = _slicedToArray(_useState17, 2),
-    inspectionReport = _useState18[0],
-    setInspectionReport = _useState18[1];
-  var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    invoiceSignStamp = _useState18[0],
+    setInvoiceSignStamp = _useState18[1];
+  var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState20 = _slicedToArray(_useState19, 2),
-    branchOptions = _useState20[0],
-    setBranchOptions = _useState20[1];
+    inspectionReport = _useState20[0],
+    setInspectionReport = _useState20[1];
+  var _useState21 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    _useState22 = _slicedToArray(_useState21, 2),
+    branchOptions = _useState22[0],
+    setBranchOptions = _useState22[1];
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     var fetchBranches = /*#__PURE__*/function () {
       var _ref8 = _asyncToGenerator(function* () {
@@ -320,6 +324,7 @@ function GrantAccessUpdateView() {
           setBackupVisibility(res.data.data.backupVisibility || false);
           setMarketing(res.data.data.marketing || false);
           setWhatsappInvoice(res.data.data.whatsappInvoice || false);
+          setInvoiceSignStamp(res.data.data.invoiceSignStamp || false);
           setInspectionReport(res.data.data.inspectionReport || false);
           var fetchedModules = res.data.data.modules;
           if (!fetchedModules.find(m => m.moduleName === 'Purchase-Order')) {
@@ -491,18 +496,18 @@ function GrantAccessUpdateView() {
     updateModule[i].access[type] = !updateModule[i].access[type];
     setModules(updateModule);
   };
-  var _useState21 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState22 = _slicedToArray(_useState21, 2),
-    loading = _useState22[0],
-    setLoading = _useState22[1];
   var _useState23 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState24 = _slicedToArray(_useState23, 2),
-    loadingOpenModal = _useState24[0],
-    setLoadingOpenModal = _useState24[1];
+    loading = _useState24[0],
+    setLoading = _useState24[1];
   var _useState25 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState26 = _slicedToArray(_useState25, 2),
-    ErrorOpenModal = _useState26[0],
-    setErrorOpenModal = _useState26[1];
+    loadingOpenModal = _useState26[0],
+    setLoadingOpenModal = _useState26[1];
+  var _useState27 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState28 = _slicedToArray(_useState27, 2),
+    ErrorOpenModal = _useState28[0],
+    setErrorOpenModal = _useState28[1];
   var handleOpen = () => {
     setLoadingOpenModal(true);
     setLoading(true);
@@ -566,6 +571,7 @@ function GrantAccessUpdateView() {
         backupVisibility,
         marketing,
         whatsappInvoice,
+        invoiceSignStamp,
         inspectionReport
       };
       try {
@@ -873,6 +879,17 @@ function GrantAccessUpdateView() {
       onChange: e => setInspectionReport(e.target.checked)
     }),
     label: "Inspection Report: ".concat(inspectionReport ? 'Granted' : 'Denied')
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .Ay, {
+    item: true,
+    xs: 12,
+    sm: 6,
+    md: 3
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+    control: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+      checked: invoiceSignStamp,
+      onChange: e => setInvoiceSignStamp(e.target.checked)
+    }),
+    label: "Sign & Stamp Invoice: ".concat(invoiceSignStamp ? 'Granted' : 'Denied')
   }))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .Ay, {
     item: true,
     xs: 12
