@@ -1545,8 +1545,9 @@ var _excluded = ["className"],
   _excluded2 = ["className"],
   _excluded3 = ["className"],
   _excluded4 = ["data", "contentType"],
-  _excluded5 = ["children"],
-  _excluded6 = ["children"];
+  _excluded5 = ["data", "contentType"],
+  _excluded6 = ["children"],
+  _excluded7 = ["children"];
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
@@ -1985,11 +1986,17 @@ function InvoiceFormUpdate() {
         setCheckTvA(Boolean(resLocal.CheckTvA || Number(resLocal.tax || 0) > 0));
         setTax(Number(resLocal.tax || 0));
       }
+      setInitialLoaded(true);
     });
     return function fetchData() {
       return _ref0.apply(this, arguments);
     };
   }();
+  var _useState63 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState64 = _slicedToArray(_useState63, 2),
+    initialLoaded = _useState64[0],
+    setInitialLoaded = _useState64[1];
+  var initialSnapshotRef = useRef(null);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     fetchData();
   }, [id]);
@@ -2311,10 +2318,10 @@ function InvoiceFormUpdate() {
     var _row$itemName;
     return option._id === ((_row$itemName = row.itemName) === null || _row$itemName === void 0 ? void 0 : _row$itemName._id) && option.typeItem === "Goods";
   }));
-  var _useState63 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState64 = _slicedToArray(_useState63, 2),
-    openAutocomplete2 = _useState64[0],
-    setOpenAutocomplete2 = _useState64[1];
+  var _useState65 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState66 = _slicedToArray(_useState65, 2),
+    openAutocomplete2 = _useState66[0],
+    setOpenAutocomplete2 = _useState66[1];
   var handleOpenOpenAutocomplete2 = e => {
     e.stopPropagation();
     setOpenAutocomplete2(true);
@@ -2325,13 +2332,13 @@ function InvoiceFormUpdate() {
   var handleCreateItem = newItem => {
     setItemInformation([newItem, ...ItemInformation]);
   };
-  var _useState65 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState66 = _slicedToArray(_useState65, 2),
-    openBack = _useState66[0],
-    setOpenBack = _useState66[1];
+  var _useState67 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState68 = _slicedToArray(_useState67, 2),
+    openBack = _useState68[0],
+    setOpenBack = _useState68[1];
   var handleOpenBack = e => {
-    e.preventDefault();
-    setOpenBack(true);
+    if (e && e.preventDefault) e.preventDefault();
+    navigate('/InvoiceViewAdmin');
   };
   var handleCloseBack = () => {
     setOpenBack(false);
@@ -2416,14 +2423,14 @@ function InvoiceFormUpdate() {
       newItemOut: 0
     }) : row));
   };
-  var _useState67 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState68 = _slicedToArray(_useState67, 2),
-    openItemUpdate = _useState68[0],
-    setOpenItemUpdate = _useState68[1];
-  var _useState69 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+  var _useState69 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState70 = _slicedToArray(_useState69, 2),
-    idItem = _useState70[0],
-    setIdItem = _useState70[1];
+    openItemUpdate = _useState70[0],
+    setOpenItemUpdate = _useState70[1];
+  var _useState71 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    _useState72 = _slicedToArray(_useState71, 2),
+    idItem = _useState72[0],
+    setIdItem = _useState72[1];
   var handleOpenItemUpdate = /*#__PURE__*/function () {
     var _ref11 = _asyncToGenerator(function* (id) {
       setOpenItemUpdate(true);
@@ -2466,10 +2473,10 @@ function InvoiceFormUpdate() {
     };
   }();
   {/** item End */}
-  var _useState71 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState72 = _slicedToArray(_useState71, 2),
-    open2 = _useState72[0],
-    setOpen2 = _useState72[1];
+  var _useState73 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState74 = _slicedToArray(_useState73, 2),
+    open2 = _useState74[0],
+    setOpen2 = _useState74[1];
   var handleOpenUpdateReason = e => {
     e.preventDefault();
     setOpen2(true);
@@ -2478,23 +2485,24 @@ function InvoiceFormUpdate() {
     setOpen2(false);
   };
   {/** Loading Start */}
-  var _useState73 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState74 = _slicedToArray(_useState73, 2),
-    loading = _useState74[0],
-    setLoading = _useState74[1];
   var _useState75 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState76 = _slicedToArray(_useState75, 2),
-    loadingOpenModal = _useState76[0],
-    setLoadingOpenModal = _useState76[1];
+    loading = _useState76[0],
+    setLoading = _useState76[1];
   var _useState77 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState78 = _slicedToArray(_useState77, 2),
-    loadingUpdateItemOpenModal = _useState78[0],
-    setLoadingUpdateItemOpenModal = _useState78[1];
+    loadingOpenModal = _useState78[0],
+    setLoadingOpenModal = _useState78[1];
   var _useState79 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState80 = _slicedToArray(_useState79, 2),
-    ErrorOpenModal = _useState80[0],
-    setErrorOpenModal = _useState80[1];
+    loadingUpdateItemOpenModal = _useState80[0],
+    setLoadingUpdateItemOpenModal = _useState80[1];
+  var _useState81 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState82 = _slicedToArray(_useState81, 2),
+    ErrorOpenModal = _useState82[0],
+    setErrorOpenModal = _useState82[1];
   var handleOpen = () => {
+    bypassGuard();
     setLoadingOpenModal(true);
     setLoading(true);
     setOpen2(false);
@@ -2511,6 +2519,7 @@ function InvoiceFormUpdate() {
     }, 500);
   };
   var handleClose = () => {
+    bypassGuard();
     setLoadingOpenModal(false);
     if ((0,_utils_isMobile__WEBPACK_IMPORTED_MODULE_1__/* .isNativeMobile */ .g1)()) {
       navigate('/InvoiceViewAdmin');
@@ -2558,15 +2567,15 @@ function InvoiceFormUpdate() {
       setTotalW("".concat(wholeWords, " and ").concat(fractionalWords, " cents"));
     }
   }, [totalInvoice]);
-  var _useState81 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
-    _useState82 = _slicedToArray(_useState81, 2),
-    reason = _useState82[0],
-    setReason = _useState82[1];
-  var dateComment = new Date();
-  var _useState83 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+  var _useState83 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
     _useState84 = _slicedToArray(_useState83, 2),
-    hideBack = _useState84[0],
-    setHideBack = _useState84[1];
+    reason = _useState84[0],
+    setReason = _useState84[1];
+  var dateComment = new Date();
+  var _useState85 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+    _useState86 = _slicedToArray(_useState85, 2),
+    hideBack = _useState86[0],
+    setHideBack = _useState86[1];
   var invoiceName = "INV-" + String(invoiceNumber).padStart(6, '0');
   var handleCreateComment = /*#__PURE__*/function () {
     var _ref14 = _asyncToGenerator(function* () {
@@ -2664,6 +2673,52 @@ function InvoiceFormUpdate() {
       return _ref15.apply(this, arguments);
     };
   }();
+  var formSnapshot = JSON.stringify({
+    customerId: (customerName === null || customerName === void 0 ? void 0 : customerName._id) || customerName || null,
+    invoiceDate: invoiceDate ? String(invoiceDate) : '',
+    invoiceDueDate: invoiceDueDate ? String(invoiceDueDate) : '',
+    invoiceSubject: invoiceSubject || '',
+    invoiceDefect: invoiceDefect || '',
+    items: (items || []).map(_ref17 => {
+      var data = _ref17.data,
+        contentType = _ref17.contentType,
+        rest = _objectWithoutProperties(_ref17, _excluded5);
+      return rest;
+    }),
+    status: status || '',
+    note: note || '',
+    shipping: shipping || 0,
+    adjustment: adjustment || '',
+    adjustmentNumber: adjustmentNumber || 0,
+    terms: terms || '',
+    noteInfo: noteInfo || '',
+    actionTaken: actionTaken || '',
+    CheckTvA: Boolean(CheckTvA)
+  });
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    if (!initialLoaded) return undefined;
+    if (initialSnapshotRef.current !== null) return undefined;
+    var t = setTimeout(() => {
+      initialSnapshotRef.current = formSnapshot;
+    }, 150);
+    return () => clearTimeout(t);
+  }, [initialLoaded, formSnapshot]);
+  var isDirty = Boolean(initialLoaded && initialSnapshotRef.current !== null && formSnapshot !== initialSnapshotRef.current);
+  var _useUnsavedChangesGua = useUnsavedChangesGuard({
+      isDirty,
+      entityLabel: 'invoice edits',
+      onSave: () => {
+        if (isMobile) {
+          handleSubmitEdit({
+            preventDefault: () => {}
+          });
+        } else {
+          setOpen2(true);
+        }
+      }
+    }),
+    bypassGuard = _useUnsavedChangesGua.bypassGuard,
+    UnsavedDialog = _useUnsavedChangesGua.UnsavedDialog;
   var _React$useState3 = react__WEBPACK_IMPORTED_MODULE_0__.useState(true),
     _React$useState4 = _slicedToArray(_React$useState3, 2),
     sideBar = _React$useState4[0],
@@ -2671,10 +2726,10 @@ function InvoiceFormUpdate() {
   var toggleDrawer = () => {
     setSideBar(!sideBar);
   };
-  var _useState85 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
-    _useState86 = _slicedToArray(_useState85, 2),
-    search2 = _useState86[0],
-    setSearch2 = _useState86[1];
+  var _useState87 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+    _useState88 = _slicedToArray(_useState87, 2),
+    search2 = _useState88[0],
+    setSearch2 = _useState88[1];
   var handleSearch2 = e => {
     var value = e.target.value;
     setSearch2(value);
@@ -3277,7 +3332,7 @@ function InvoiceFormUpdate() {
           backgroundColor: '#20265b'
         }
       }
-    }, loading ? 'Saving...' : 'Update Invoice')));
+    }, loading ? 'Saving...' : 'Update Invoice')), UnsavedDialog);
   }
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "Homeemployee"
@@ -3721,15 +3776,15 @@ function InvoiceFormUpdate() {
       onInputChange: (event, newInputValue) => {
         setInputValue(newInputValue);
       },
-      filterOptions: (options, _ref17) => {
-        var inputValue = _ref17.inputValue;
+      filterOptions: (options, _ref18) => {
+        var inputValue = _ref18.inputValue;
         return options.filter(option => option.itemName.toLowerCase().includes(inputValue.toLowerCase()) || option.itemBrand.toLowerCase().includes(inputValue.toLowerCase()) || option.itemDescription.toLowerCase().includes(inputValue.toLowerCase()));
       },
       onChange: (e, newValue) => handleChangeItem(Item.idRow, newValue),
       size: "small",
-      PaperComponent: _ref18 => {
-        var children = _ref18.children,
-          other = _objectWithoutProperties(_ref18, _excluded5);
+      PaperComponent: _ref19 => {
+        var children = _ref19.children,
+          other = _objectWithoutProperties(_ref19, _excluded6);
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, _extends({}, other, {
           sx: {
             backgroundColor: 'white',
@@ -3978,15 +4033,15 @@ function InvoiceFormUpdate() {
       onInputChange: (event, newInputValue) => {
         setInputValue(newInputValue);
       },
-      filterOptions: (options, _ref19) => {
-        var inputValue = _ref19.inputValue;
+      filterOptions: (options, _ref20) => {
+        var inputValue = _ref20.inputValue;
         return options.filter(option => option.itemName.toLowerCase().includes(inputValue.toLowerCase()) || option.itemBrand.toLowerCase().includes(inputValue.toLowerCase()) || option.itemDescription.toLowerCase().includes(inputValue.toLowerCase()));
       },
       onChange: (e, newValue) => handleChangeItem(Item.idRow, newValue),
       size: "small",
-      PaperComponent: _ref20 => {
-        var children = _ref20.children,
-          other = _objectWithoutProperties(_ref20, _excluded6);
+      PaperComponent: _ref21 => {
+        var children = _ref21.children,
+          other = _objectWithoutProperties(_ref21, _excluded7);
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, _extends({}, other, {
           sx: {
             backgroundColor: 'white',
@@ -4525,7 +4580,7 @@ function InvoiceFormUpdate() {
     container: true,
     spacing: 2
   }, shopItems.map(item => {
-    var _ref21, _item$itemSellingPric;
+    var _ref22, _item$itemSellingPric;
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .Ay, {
       item: true,
       xs: 6,
@@ -4556,7 +4611,7 @@ function InvoiceFormUpdate() {
     }, item.itemName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
       variant: "body2",
       color: "text.secondary"
-    }, "FC ", (_ref21 = item.itemSellingPrice * rate) === null || _ref21 === void 0 ? void 0 : _ref21.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+    }, "FC ", (_ref22 = item.itemSellingPrice * rate) === null || _ref22 === void 0 ? void 0 : _ref22.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
       variant: "body2",
       color: "primary",
       fontWeight: "bold"
@@ -4703,7 +4758,7 @@ function InvoiceFormUpdate() {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_ItemView_ItemUpdateView2__WEBPACK_IMPORTED_MODULE_65__["default"], {
     onClose: handleCloseItemUpdate,
     id: idItem
-  })))));
+  })))), UnsavedDialog);
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (InvoiceFormUpdate);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, [

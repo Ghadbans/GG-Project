@@ -7,8 +7,8 @@ android {
         applicationId "com.globalgate.app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 30724
-        versionName "3.7.24"
+        versionCode 30725
+        versionName "3.7.25"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         aaptOptions {
              // Files and dirs to omit from the packaged assets dir, modified to accommodate modern web apps.

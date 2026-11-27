@@ -3,12 +3,12 @@ const router = express.Router();
 const path = require('path');
 const fs = require('fs');
 
-const APP_VERSION = '3.7.24';
+const APP_VERSION = '3.7.25';
 const MIN_SUPPORTED_VERSION = '3.7.0';
 const RELEASE_NOTES = [
-  'Signed & Stamped Invoice Print: Added Print confirmation popup (Signed & Stamped checkbox) below TOTAL IN WORDS, gated by Grant Access (Sign & Stamp Invoice).',
-  'Invoice Balance Reconciliation: Fixed stale A-PAID / Partially-Paid status after deleting payments.',
-  'Grant Access WhatsApp Enforcement: Payment & Quotation WhatsApp dispatch respect Grant Access.'
+  'Unsaved Changes Guard (Invoice & Quotation Edit): Prompts Save Changes / Discard & Leave / Cancel when pressing Go Back or switching modules with unsaved edits.',
+  'Mobile App Auto-Update Prompt: Fixed Android APK version detection on foreground resume, network recovery, and cold-start retry.',
+  'Signed & Stamped Invoice Print: Added Print confirmation popup (Signed & Stamped checkbox) below TOTAL IN WORDS, gated by Grant Access.'
 ];
 
 const DOWNLOADS_DIR = path.join(__dirname, '../public/downloads');

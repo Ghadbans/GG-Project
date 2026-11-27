@@ -6478,3 +6478,17 @@ Implemented a zero-manual-intervention in-app update pipeline across Electron Wi
    - `POST /api/zayn-bridge/send-message` and `POST /api/zayn-bridge/maintenance-update` (protected by `X-GG-Webhook-Secret`): Allows Zayn to dispatch approved replies/PDFs and lets `EMPLOYED` technicians update their assigned `Open` / `Pending` Maintenance Orders while logging an internal notification for the Branch Manager.
 3. **Security & Route Mounting (`server/index.js`, `server/Middleware/security.js`)**:
    - Mounted `/api/zayn-bridge` with `X-GG-Webhook-Secret` authentication (exempted from JWT `authenticate` and `originLock` only when the valid `X-GG-Webhook-Secret` header is present).
+
+
+### Rule 120: Unsaved-Changes Navigation Guard (`InvoiceFormUpdate`, `EstimateInvoiceFormUpdate`) & Mobile APK Update Detection (`AppUpdateModal` — Ver 3.7.25)
+
+#### Changes Implemented
+1. **Unsaved-Changes Navigation Guard (`src/js/hooks/useUnsavedChangesGuard.js`, `NativeBackHandler.js`)**:
+   - Created `useUnsavedChangesGuard` using `UNSAFE_NavigationContext` (`navigator.block` for `HashRouter`) and `beforeunload` to intercept Go Back, sidebar/module switches, and tab closes whenever an edit form is dirty, presenting **Save Changes / Discard & Leave / Cancel**.
+   - Coordinated `NativeBackHandler.js` via `window.__ggUnsavedGuardActive` to avoid duplicate prompts on Android hardware back.
+2. **Invoice & Quotation Edit Forms (`InvoiceFormUpdate.js`, `EstimateInvoiceFormUpdate.js`)**:
+   - Tracked post-load editable snapshot diffs (`isDirty`), wired both Desktop and Mobile `<ArrowBack />` buttons and sidebar navigation through `useUnsavedChangesGuard`, and called `bypassGuard()` on successful save.
+3. **Mobile APK Update Detection (`src/js/component/AppUpdateModal.js`, `src/js/index.js`)**:
+   - Added Capacitor `App.getInfo()` native version lookup, `appStateChange` foreground-resume listener, `online` listener, 5s cold-start retry, 15m periodic check, and cache-busted `GET /download/version?t=...` (bypassing branch query injection in `src/js/index.js`).
+4. **Version Synchronization & Multi-Platform Release (`v3.7.25`)**:
+   - Synchronized `3.7.25` (`versionCode 30725`) across `package.json`, `server/package.json`, `server/index.js`, `server/routes/downloadRoutes.js`, and `android/app/build.gradle`.

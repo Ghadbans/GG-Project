@@ -21,6 +21,7 @@ import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 import DownloadIcon from '@mui/icons-material/Download';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import { useLocation } from 'react-router-dom';
+import { App as CapApp } from '@capacitor/app';
 import axios from 'axios';
 import pkg from '../../../package.json';
 import { API_BASE_URL } from '../apiConfig';
@@ -53,13 +54,13 @@ export default function AppUpdateModal() {
   const [statusMessage, setStatusMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const snoozedVersionRef = useRef(null);
-
-  // Web Portal skips update prompts completely
-  if (!isElectron && !isAndroid) {
-    return null;
-  }
+  const lastSuccessRef = useRef(false);
+  const checkingRef = useRef(false);
 
   const checkVersion = async () => {
+    if (!isElectron && !isAndroid) return;
+    if (checkingRef.current) return;
+    checkingRef.current = true;
     try {
       let localVer = pkg.version || '3.7.5';
       if (isElectron && window.electron?.updater?.getVersion) {
@@ -67,15 +68,21 @@ export default function AppUpdateModal() {
           const eVer = await window.electron.updater.getVersion();
           if (eVer) localVer = eVer;
         } catch (_) {}
+      } else if (isAndroid && typeof window.Capacitor !== 'undefined') {
+        try {
+          const info = await CapApp.getInfo();
+          if (info && info.version) localVer = info.version;
+        } catch (_) {}
       }
       setCurrentVersion(localVer);
 
-      const res = await axios.get(`${API_BASE_URL}/download/version`, {
+      const res = await axios.get(`${API_BASE_URL}/download/version?t=${Date.now()}`, {
         timeout: 8000,
         headers: { 'Cache-Control': 'no-cache' }
       });
       const data = res.data;
       if (!data || !data.version) return;
+      lastSuccessRef.current = true;
 
       const isBelowMin =
         data.minSupportedVersion && compareSemver(localVer, data.minSupportedVersion) < 0;
@@ -92,17 +99,56 @@ export default function AppUpdateModal() {
       setMandatory(isForced);
       setOpen(true);
     } catch (_) {
-      // Fail silently if offline so users are not blocked on transient network hiccups
+      // Fail silently if offline; retry timer / foreground resume / online event will re-check
+    } finally {
+      checkingRef.current = false;
     }
   };
 
   // Check on app launch and whenever returning to login screens
   useEffect(() => {
+    if (!isElectron && !isAndroid) return;
     const p = location.pathname || '';
     if (p === '/' || p === '/Loginadmin' || p === '/Loginemployee' || !serverInfo) {
       checkVersion();
     }
   }, [location.pathname]);
+
+  // Re-check on Android foreground resume, network recovery, cold-start retry, and 15m interval
+  useEffect(() => {
+    if (!isElectron && !isAndroid) return undefined;
+
+    const retryTimer = setTimeout(() => {
+      if (!lastSuccessRef.current) checkVersion();
+    }, 5000);
+
+    const periodicTimer = setInterval(() => {
+      checkVersion();
+    }, 15 * 60 * 1000);
+
+    const handleOnline = () => checkVersion();
+    window.addEventListener('online', handleOnline);
+
+    let appStateHandle = null;
+    if (isAndroid) {
+      Promise.resolve(
+        CapApp.addListener('appStateChange', ({ isActive }) => {
+          if (isActive) checkVersion();
+        })
+      ).then((handle) => {
+        appStateHandle = handle;
+      }).catch(() => {});
+    }
+
+    return () => {
+      clearTimeout(retryTimer);
+      clearInterval(periodicTimer);
+      window.removeEventListener('online', handleOnline);
+      if (appStateHandle && typeof appStateHandle.remove === 'function') {
+        appStateHandle.remove();
+      }
+    };
+  }, [isElectron, isAndroid]);
 
   // Subscribe to Electron autoUpdater events
   useEffect(() => {
@@ -202,6 +248,10 @@ export default function AppUpdateModal() {
   };
 
   const releaseNotes = Array.isArray(serverInfo?.releaseNotes) ? serverInfo.releaseNotes : [];
+
+  if (!isElectron && !isAndroid) {
+    return null;
+  }
 
   return (
     <Dialog

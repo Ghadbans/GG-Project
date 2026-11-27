@@ -275,7 +275,11 @@ function InvoiceFormUpdate() {
       setCheckTvA(Boolean(resLocal.CheckTvA || Number(resLocal.tax || 0) > 0));
       setTax(Number(resLocal.tax || 0));
     }
+    setInitialLoaded(true);
   }
+
+  const [initialLoaded, setInitialLoaded] = useState(false);
+  const initialSnapshotRef = useRef(null);
 
   useEffect(() => {
     fetchData()
@@ -601,8 +605,8 @@ function InvoiceFormUpdate() {
   const [openBack, setOpenBack] = useState(false);
 
   const handleOpenBack = (e) => {
-    e.preventDefault()
-    setOpenBack(true);
+    if (e && e.preventDefault) e.preventDefault();
+    navigate('/InvoiceViewAdmin');
   };
   const handleCloseBack = () => {
     setOpenBack(false);
@@ -745,6 +749,7 @@ function InvoiceFormUpdate() {
   const [ErrorOpenModal, setErrorOpenModal] = useState(false);
 
   const handleOpen = () => {
+    bypassGuard();
     setLoadingOpenModal(true);
     setLoading(true);
     setOpen2(false);
@@ -761,6 +766,7 @@ function InvoiceFormUpdate() {
     }, 500);
   };
   const handleClose = () => {
+    bypassGuard();
     setLoadingOpenModal(false);
     if (isNativeMobile()) {
       navigate('/InvoiceViewAdmin');
@@ -885,6 +891,51 @@ function InvoiceFormUpdate() {
       }
     }
   }
+  const formSnapshot = JSON.stringify({
+    customerId: customerName?._id || customerName || null,
+    invoiceDate: invoiceDate ? String(invoiceDate) : '',
+    invoiceDueDate: invoiceDueDate ? String(invoiceDueDate) : '',
+    invoiceSubject: invoiceSubject || '',
+    invoiceDefect: invoiceDefect || '',
+    items: (items || []).map(({ data, contentType, ...rest }) => rest),
+    status: status || '',
+    note: note || '',
+    shipping: shipping || 0,
+    adjustment: adjustment || '',
+    adjustmentNumber: adjustmentNumber || 0,
+    terms: terms || '',
+    noteInfo: noteInfo || '',
+    actionTaken: actionTaken || '',
+    CheckTvA: Boolean(CheckTvA),
+  });
+
+  useEffect(() => {
+    if (!initialLoaded) return undefined;
+    if (initialSnapshotRef.current !== null) return undefined;
+    const t = setTimeout(() => {
+      initialSnapshotRef.current = formSnapshot;
+    }, 150);
+    return () => clearTimeout(t);
+  }, [initialLoaded, formSnapshot]);
+
+  const isDirty = Boolean(
+    initialLoaded &&
+    initialSnapshotRef.current !== null &&
+    formSnapshot !== initialSnapshotRef.current
+  );
+
+  const { bypassGuard, UnsavedDialog } = useUnsavedChangesGuard({
+    isDirty,
+    entityLabel: 'invoice edits',
+    onSave: () => {
+      if (isMobile) {
+        handleSubmitEdit({ preventDefault: () => {} });
+      } else {
+        setOpen2(true);
+      }
+    }
+  });
+
   const [sideBar, setSideBar] = React.useState(true);
   const toggleDrawer = () => {
     setSideBar(!sideBar);
@@ -1261,6 +1312,7 @@ function InvoiceFormUpdate() {
             {loading ? 'Saving...' : 'Update Invoice'}
           </Button>
         </Box>
+        {UnsavedDialog}
       </Box>
     );
   }
@@ -2364,6 +2416,7 @@ function InvoiceFormUpdate() {
           </div>
         </Box>
       </Modal>
+      {UnsavedDialog}
     </div>
   )
 }

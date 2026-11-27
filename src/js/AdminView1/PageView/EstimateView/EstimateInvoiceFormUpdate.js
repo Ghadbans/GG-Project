@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useIsMobile, isNativeMobile } from '../../../utils/isMobile';
+import { useUnsavedChangesGuard } from '../../../hooks/useUnsavedChangesGuard';
 import LanguageFixerButton from '../../../component/LanguageFixerButton';
 import SmartTextInput from '../../../component/SmartTextInput';
 import SidebarDash1 from '../../../component/SidebarDash1';
@@ -255,10 +256,14 @@ The GLOBAL GATE Team`;
         setTax(res.data.data.tax || 0);
       } catch (error) {
         console.error('Error fetching data:', error);
+      } finally {
+        setInitialLoaded(true);
       }
     }
     fetchData()
   }, [id])
+  const [initialLoaded, setInitialLoaded] = useState(false);
+  const initialSnapshotRef = useRef(null);
   const [openAutocomplete2, setOpenAutocomplete2] = useState(false);
 
   const handleOpenOpenAutocomplete2 = (e) => {
@@ -607,8 +612,8 @@ The GLOBAL GATE Team`;
   const [openBack, setOpenBack] = useState(false);
 
   const handleOpenBack = (e) => {
-    e.preventDefault()
-    setOpenBack(true);
+    if (e && e.preventDefault) e.preventDefault();
+    navigate('/EstimateViewAdmin');
   };
   const handleCloseBack = () => {
     setOpenBack(false);
@@ -622,6 +627,7 @@ The GLOBAL GATE Team`;
     setLoadingOpenModal(true);
     setLoading(true);
     setOpen2(false);
+    bypassGuard();
     if (isNativeMobile()) {
       setTimeout(() => {
         setLoading(false);
@@ -651,6 +657,7 @@ The GLOBAL GATE Team`;
     }, 500)
   }
   const handleClose = () => {
+    bypassGuard();
     setLoadingOpenModal(false);
     if (isNativeMobile()) {
       navigate('/EstimateViewAdmin');
@@ -817,6 +824,50 @@ The GLOBAL GATE Team`;
       }
     }
   }
+  const formSnapshot = JSON.stringify({
+    customerId: customerName?._id || customerName || null,
+    estimateDate: estimateDate ? String(estimateDate) : '',
+    estimateSubject: estimateSubject || '',
+    estimateDefect: estimateDefect || '',
+    items: (items || []).map(({ data, contentType, ...rest }) => rest),
+    note: note || '',
+    shipping: shipping || 0,
+    adjustment: adjustment || '',
+    adjustmentNumber: adjustmentNumber || 0,
+    terms: terms || '',
+    noteInfo: noteInfo || '',
+    CheckTvA: Boolean(CheckTvA),
+    includeLetter: Boolean(includeLetter),
+    attachedLetter: attachedLetter || ''
+  });
+
+  useEffect(() => {
+    if (!initialLoaded) return undefined;
+    if (initialSnapshotRef.current !== null) return undefined;
+    const t = setTimeout(() => {
+      initialSnapshotRef.current = formSnapshot;
+    }, 150);
+    return () => clearTimeout(t);
+  }, [initialLoaded, formSnapshot]);
+
+  const isDirty = Boolean(
+    initialLoaded &&
+    initialSnapshotRef.current !== null &&
+    formSnapshot !== initialSnapshotRef.current
+  );
+
+  const { bypassGuard, UnsavedDialog } = useUnsavedChangesGuard({
+    isDirty,
+    entityLabel: 'quotation edits',
+    onSave: () => {
+      if (isMobile) {
+        handleSubmitEdit({ preventDefault: () => {} });
+      } else {
+        setOpen2(true);
+      }
+    }
+  });
+
   const [sideBar, setSideBar] = React.useState(true);
   const toggleDrawer = () => {
     setSideBar(!sideBar);
@@ -1132,6 +1183,7 @@ The GLOBAL GATE Team`;
             </Button>
           </Box>
         </Box>
+        {UnsavedDialog}
       </Box>
     );
   }
@@ -2253,6 +2305,7 @@ The GLOBAL GATE Team`;
           </div>
         </Box>
       </Modal>
+      {UnsavedDialog}
     </div >
   )
 }
