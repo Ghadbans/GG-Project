@@ -288,7 +288,7 @@ app.use('/endpoint/inspection-reports', inspectionReportRoutes);
 const zaynBridgeRoutes = require('./routes/zaynBridgeRoutes');
 app.use('/api/zayn-bridge', zaynBridgeRoutes);
 
-app.get('/', (req, res) => res.json({ name: 'Global Gate API', version: '3.7.25', minSupportedVersion: '3.7.0', status: 'online', uptime: process.uptime(), cloudWhatsApp: true }));
+app.get('/', (req, res) => res.json({ name: 'Global Gate API', version: '3.7.26', minSupportedVersion: '3.7.0', status: 'online', uptime: process.uptime(), cloudWhatsApp: true }));
 app.get('/robots.txt', (req, res) => {
   res.type('text/plain');
   res.send("User-agent: *\nDisallow: /\n");

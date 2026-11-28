@@ -17,6 +17,7 @@ import { syncModuleRoute } from './hooks/useModuleSearchState';
 import MobileLayout from './component/MobileLayout';
 import NativeBackHandler from './component/NativeBackHandler';
 import AppUpdateModal from './component/AppUpdateModal';
+import GlobalUnsavedGuard from './component/GlobalUnsavedGuard';
 
 import { isNativeMobile, useIsMobile } from './utils/isMobile';
 
@@ -78,6 +79,7 @@ function AppLayoutWrapper({ children }) {
   return (
     <>
       <NativeBackHandler />
+      <GlobalUnsavedGuard />
       <AppUpdateModal />
       {isMobile ? <MobileLayout>{children}</MobileLayout> : children}
     </>

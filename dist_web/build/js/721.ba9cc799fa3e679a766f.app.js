@@ -1512,6 +1512,7 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 /**
  * Intercepts React Router navigation (sidebar links, Back buttons, tabs) and
  * browser/Electron tab closes when a form has unsaved edits, offering Save / Discard / Cancel.
+ * Compatible with react-router-dom v6.15+ HashRouter (@remix-run/router) where navigator.block is absent.
  */
 function useUnsavedChangesGuard(_ref) {
   var isDirty = _ref.isDirty,
@@ -1524,21 +1525,24 @@ function useUnsavedChangesGuard(_ref) {
     _useState2 = _slicedToArray(_useState, 2),
     dialogOpen = _useState2[0],
     setDialogOpen = _useState2[1];
-  var pendingTxRef = (0,react.useRef)(null);
-  var unblockRef = (0,react.useRef)(null);
+  var pendingNavRef = (0,react.useRef)(null);
+  var restoreNavRef = (0,react.useRef)(null);
   var bypassRef = (0,react.useRef)(false);
   (0,react.useEffect)(() => {
     if (typeof window !== 'undefined') {
+      window.__ggPageGuardMounted = true;
       window.__ggUnsavedGuardActive = Boolean(isDirty);
     }
     return () => {
       if (typeof window !== 'undefined') {
+        window.__ggPageGuardMounted = false;
         window.__ggUnsavedGuardActive = false;
       }
     };
   }, [isDirty]);
   (0,react.useEffect)(() => {
     if (!isDirty) return undefined;
+    bypassRef.current = false;
     var handleBeforeUnload = e => {
       if (bypassRef.current) return;
       e.preventDefault();
@@ -1548,22 +1552,64 @@ function useUnsavedChangesGuard(_ref) {
     return () => window.removeEventListener('beforeunload', handleBeforeUnload);
   }, [isDirty]);
   (0,react.useEffect)(() => {
-    if (!isDirty || !navigator || typeof navigator.block !== 'function') {
+    if (!isDirty || !navigator) {
       return undefined;
     }
-    var unblock = navigator.block(tx => {
-      if (bypassRef.current) {
-        unblock();
-        tx.retry();
-        return;
-      }
-      pendingTxRef.current = tx;
-      setDialogOpen(true);
-    });
-    unblockRef.current = unblock;
+    bypassRef.current = false;
+    var origPush = typeof navigator.push === 'function' ? navigator.push.bind(navigator) : null;
+    var origReplace = typeof navigator.replace === 'function' ? navigator.replace.bind(navigator) : null;
+    var origGo = typeof navigator.go === 'function' ? navigator.go.bind(navigator) : null;
+    var restore = () => {
+      if (origPush) navigator.push = origPush;
+      if (origReplace) navigator.replace = origReplace;
+      if (origGo) navigator.go = origGo;
+    };
+    restoreNavRef.current = restore;
+    if (origPush) {
+      navigator.push = function () {
+        for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+          args[_key] = arguments[_key];
+        }
+        if (bypassRef.current) {
+          restore();
+          return origPush(...args);
+        }
+        pendingNavRef.current = () => origPush(...args);
+        setDialogOpen(true);
+        return undefined;
+      };
+    }
+    if (origReplace) {
+      navigator.replace = function () {
+        for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+          args[_key2] = arguments[_key2];
+        }
+        if (bypassRef.current) {
+          restore();
+          return origReplace(...args);
+        }
+        pendingNavRef.current = () => origReplace(...args);
+        setDialogOpen(true);
+        return undefined;
+      };
+    }
+    if (origGo) {
+      navigator.go = function () {
+        for (var _len3 = arguments.length, args = new Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
+          args[_key3] = arguments[_key3];
+        }
+        if (bypassRef.current) {
+          restore();
+          return origGo(...args);
+        }
+        pendingNavRef.current = () => origGo(...args);
+        setDialogOpen(true);
+        return undefined;
+      };
+    }
     return () => {
-      unblock();
-      unblockRef.current = null;
+      restore();
+      restoreNavRef.current = null;
     };
   }, [isDirty, navigator]);
   var bypassGuard = (0,react.useCallback)(() => {
@@ -1571,26 +1617,26 @@ function useUnsavedChangesGuard(_ref) {
     if (typeof window !== 'undefined') {
       window.__ggUnsavedGuardActive = false;
     }
-    if (unblockRef.current) {
-      unblockRef.current();
-      unblockRef.current = null;
+    if (restoreNavRef.current) {
+      restoreNavRef.current();
+      restoreNavRef.current = null;
     }
   }, []);
   var handleCancel = (0,react.useCallback)(() => {
-    pendingTxRef.current = null;
+    pendingNavRef.current = null;
     setDialogOpen(false);
   }, []);
   var handleDiscard = (0,react.useCallback)(() => {
-    var tx = pendingTxRef.current;
-    pendingTxRef.current = null;
+    var retry = pendingNavRef.current;
+    pendingNavRef.current = null;
     setDialogOpen(false);
     bypassGuard();
-    if (tx) {
-      tx.retry();
+    if (typeof retry === 'function') {
+      retry();
     }
   }, [bypassGuard]);
   var handleSave = (0,react.useCallback)(() => {
-    pendingTxRef.current = null;
+    pendingNavRef.current = null;
     setDialogOpen(false);
     if (typeof onSave === 'function') {
       onSave();

@@ -126223,7 +126223,7 @@ Object.assign(esm_lookup, {
 (module) {
 
 "use strict";
-module.exports = {"rE":"3.7.25"};
+module.exports = {"rE":"3.7.26"};
 
 /***/ },
 
@@ -126355,7 +126355,7 @@ module.exports = /*#__PURE__*/JSON.parse('{"--header-logo-width":"240px","--glob
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames based on template
-/******/ 			return "" + chunkId + "." + {"67":"ea58a46eec037fcae82d","100":"2c3a3084bc6754b4007f","116":"136bba93ceb8842a736a","118":"41855f55e3314ec75bc2","223":"6870ff85cf3e508c3f63","296":"7ed5df9cc6d66c7aa203","302":"ef38ecb8f8374e467787","327":"3652c631ba8d0497d4de","441":"bfccd43a865bee7b2ea4","457":"cb7955e43df6e1d9d806","483":"86067c05aaae41ce2403","590":"fc6e0a06fa18522b6aae","614":"6fe1d0b23953a4d0fdc2","712":"dfbecb5133aef28e43f7","721":"c0c0f1e583090f20cd3e","742":"b7407cb186728d0232c0","778":"92ce5882ca5899156566","806":"c5328cd9d7c2a3ea37e9","808":"6470e5c6b89600390959","864":"1e5dcba848ae4b88415e","885":"20a395a34fd3eb845493","956":"07beaf91ddd9f3b95dd4","1019":"12a11f6ffb6e02cc9beb","1096":"1048e225e4bb54a84593","1168":"b2f690e1d5399977dcaf","1195":"110972531e8589b2936f","1223":"895588666a9e1bbd8029","1251":"b554f70073e808097238","1364":"ff119bbaf7ee67bb816c","1390":"a0b0dc840553562655b2","1500":"76fa1f7e1bd722ef0888","1624":"6d420f1d2907641b33f1","1645":"9a6f049d7004d8c9658b","1679":"8611fe4f3bd208a690a5","1722":"2ef9ab5b347b2c38e7e4","1853":"1c8088ed34defc896299","1861":"134b6d2231bf5626ddc8","1919":"c5cf4c28bd3e19880dde","1985":"f6d63ffa6a6609ae4fbe","2120":"fa850d0880b8085abb8a","2122":"c746ef73eb90eb859c73","2153":"aa79e4a38e016b956ee3","2400":"9a7b40b5406c1582af64","2410":"735f9f0426b831a5ac4c","2495":"3e0f218afdcc37315890","2517":"41ad854abfe9d517e073","2529":"b4b97d60807faa0669b4","2533":"5d67e6b56415239279dd","2572":"77369090a80671dc61be","2605":"c16f8e5eb969bddd2f67","2608":"a86e0ce81d9f46c9b9e6","2611":"a396bee9f5ffd935c18f","2756":"7ba597d1a872704f27e5","2757":"37b9ffcea8df7a64ba31","2778":"b14cd21290c03da91b2c","2821":"7118ff1dd624cd3c1cf6","2835":"fd4e0c02c3bf9b488fb1","2982":"1021f935b5cb2a3170c7","2992":"56cac3f86ea05e13a87b","3009":"ba89e06c7d53ceaab458","3058":"c7944621104b544d7c65","3094":"752bdf10d46f25f3759e","3229":"55d437b9da633f13ca04","3426":"98b077251f3d0bcade4d","3502":"5ab5c22a19bd3b24e0f7","3547":"af85ed1b60adcb0767b8","3636":"aa965b3361e4a0832992","3697":"9d2bba797a4414ead561","3741":"10f8f277505abd86be60","3808":"07f4d7bfcfe11945f5aa","3970":"eb708b8f33f97ace94bd","3976":"dd72fffd4a97763383c6","4001":"b4cb2fff74fed0664532","4006":"d5659372fe364ccf24b4","4107":"3782b7830a1c4ad9922e","4184":"54736b4293c814318bab","4237":"ae9e77c6d4f5a70c297a","4270":"7f8dca5a9266b48c99cd","4444":"eef09ebd8bc423e31ba2","4783":"8aa9f2092fce5fc76443","4796":"3388110bafd496d3dffd","5059":"9f6600542c17a5b04ef6","5117":"36319d3905c05cb056b7","5194":"24f1101be93157c12f0e","5391":"93a3e25ebac19e0ba566","5394":"132fa7f123c520e662af","5646":"7d7262b25455ffc69c6a","5669":"30bfd4b2d8c7168397e7","5754":"5d98f1dbc311dd866966","5824":"a70b4f192ab348b889a2","5881":"9e23f9ce4f061a67e1a5","5910":"7d7b00c553e28a3b1863","5919":"0d07a0a24b3b6bead0ac","5934":"b9df8e2d411b0f8ba5a9","6155":"61b12643602d5d124d69","6226":"306108450a0baada738f","6619":"861574c010e50b19e0ba","6671":"4b2ff5f3ea0a3423b2d2","6685":"c9a1b126e19ab6f83d7d","6744":"066aad422af9e71d0f89","7120":"a6b8614c78e07e762f3e","7171":"33980eadc62e3673564a","7269":"24956eae218a5492ab60","7270":"d4445b43c7c47f765416","7384":"158d59560a99a5e592a5","7405":"09a6309e006c30f2b62b","7444":"b53c12d6ba889fd7ff49","7445":"c10cd7e720704ceb9403","7539":"38b4e76ba28536bdba6f","7592":"e3d5b425e37d45250854","7612":"96d02d2e11ef603520b1","7645":"378d44d602e040a88964","7757":"0837c39e5e1f39afe561","7801":"950cd7aa79d6c69e4e89","7897":"9860dd662bb0536be021","7941":"d80c6fc0c609153c393a","7997":"a7d639ec4c5bda5d7f8a","8011":"90ad8098cdf19542df00","8017":"6e04997b09da6af7e026","8027":"2a708e2d3d1411e0eb2d","8060":"1fc21f806cfed4186222","8117":"4832ff25f85ae904340c","8282":"33641507c301c5edb98d","8354":"2659beecbc4d37fb883b","8442":"b49b7e1a46da29e6c2e0","8520":"ddece2da75e91301c443","8646":"f5e64a2d8c9b9aa3383c","8685":"668e75089eaab7ca5d74","8838":"e07fcd923fd22da63109","8849":"5b67041f14d74979e9c3","8970":"3bfbdca7cac168f75b28","8979":"bedb7b18cf89bf6a7ec9","9220":"4181006d8c7543128350","9246":"79d354354c30226b2baf","9250":"993a5b081080eba72db1","9260":"fd6ba8cd2e063ff68053","9419":"924d518de94dad6581bc","9528":"f27c4acb7274d2a6872a","9564":"8bb9dffef3aaab6ecc31","9573":"7134be0fa03b7f3d2b33","9575":"19e252df34e7b2892759","9670":"d836c000a0f5cf5b3219","9762":"5e6cd074d14100ccda09","9773":"d2d2e83567d45085e0a3","9846":"12042055f05ff78c0633","9971":"63405883ad2ede8101de"}[chunkId] + ".app.js";
+/******/ 			return "" + chunkId + "." + {"67":"ea58a46eec037fcae82d","100":"2c3a3084bc6754b4007f","116":"136bba93ceb8842a736a","118":"41855f55e3314ec75bc2","223":"6870ff85cf3e508c3f63","296":"7ed5df9cc6d66c7aa203","302":"ef38ecb8f8374e467787","327":"3652c631ba8d0497d4de","441":"bfccd43a865bee7b2ea4","457":"cb7955e43df6e1d9d806","483":"86067c05aaae41ce2403","590":"fc6e0a06fa18522b6aae","614":"6fe1d0b23953a4d0fdc2","712":"dfbecb5133aef28e43f7","721":"ba9cc799fa3e679a766f","742":"b7407cb186728d0232c0","778":"92ce5882ca5899156566","806":"c5328cd9d7c2a3ea37e9","808":"6470e5c6b89600390959","864":"1e5dcba848ae4b88415e","885":"20a395a34fd3eb845493","956":"07beaf91ddd9f3b95dd4","1019":"12a11f6ffb6e02cc9beb","1096":"1048e225e4bb54a84593","1168":"b2f690e1d5399977dcaf","1195":"110972531e8589b2936f","1223":"895588666a9e1bbd8029","1251":"b554f70073e808097238","1364":"ff119bbaf7ee67bb816c","1390":"a0b0dc840553562655b2","1500":"76fa1f7e1bd722ef0888","1624":"6d420f1d2907641b33f1","1645":"9a6f049d7004d8c9658b","1679":"8611fe4f3bd208a690a5","1722":"2ef9ab5b347b2c38e7e4","1853":"1c8088ed34defc896299","1861":"134b6d2231bf5626ddc8","1919":"c5cf4c28bd3e19880dde","1985":"f6d63ffa6a6609ae4fbe","2120":"fa850d0880b8085abb8a","2122":"c746ef73eb90eb859c73","2153":"aa79e4a38e016b956ee3","2400":"9a7b40b5406c1582af64","2410":"735f9f0426b831a5ac4c","2495":"3e0f218afdcc37315890","2517":"41ad854abfe9d517e073","2529":"b4b97d60807faa0669b4","2533":"5d67e6b56415239279dd","2572":"77369090a80671dc61be","2605":"c16f8e5eb969bddd2f67","2608":"a86e0ce81d9f46c9b9e6","2611":"a396bee9f5ffd935c18f","2756":"7ba597d1a872704f27e5","2757":"37b9ffcea8df7a64ba31","2778":"b14cd21290c03da91b2c","2821":"7118ff1dd624cd3c1cf6","2835":"fd4e0c02c3bf9b488fb1","2982":"1021f935b5cb2a3170c7","2992":"56cac3f86ea05e13a87b","3009":"ba89e06c7d53ceaab458","3058":"c7944621104b544d7c65","3094":"752bdf10d46f25f3759e","3229":"55d437b9da633f13ca04","3426":"98b077251f3d0bcade4d","3502":"5ab5c22a19bd3b24e0f7","3547":"af85ed1b60adcb0767b8","3636":"aa965b3361e4a0832992","3697":"9d2bba797a4414ead561","3741":"10f8f277505abd86be60","3808":"07f4d7bfcfe11945f5aa","3970":"eb708b8f33f97ace94bd","3976":"dd72fffd4a97763383c6","4001":"b4cb2fff74fed0664532","4006":"d5659372fe364ccf24b4","4107":"3782b7830a1c4ad9922e","4184":"54736b4293c814318bab","4237":"ae9e77c6d4f5a70c297a","4270":"7f8dca5a9266b48c99cd","4444":"eef09ebd8bc423e31ba2","4783":"8aa9f2092fce5fc76443","4796":"3388110bafd496d3dffd","5059":"9f6600542c17a5b04ef6","5117":"36319d3905c05cb056b7","5194":"24f1101be93157c12f0e","5391":"93a3e25ebac19e0ba566","5394":"132fa7f123c520e662af","5646":"7d7262b25455ffc69c6a","5669":"30bfd4b2d8c7168397e7","5754":"5d98f1dbc311dd866966","5824":"a70b4f192ab348b889a2","5881":"9e23f9ce4f061a67e1a5","5910":"7d7b00c553e28a3b1863","5919":"0d07a0a24b3b6bead0ac","5934":"b9df8e2d411b0f8ba5a9","6155":"61b12643602d5d124d69","6226":"306108450a0baada738f","6619":"861574c010e50b19e0ba","6671":"4b2ff5f3ea0a3423b2d2","6685":"c9a1b126e19ab6f83d7d","6744":"066aad422af9e71d0f89","7120":"a6b8614c78e07e762f3e","7171":"33980eadc62e3673564a","7269":"24956eae218a5492ab60","7270":"d4445b43c7c47f765416","7384":"158d59560a99a5e592a5","7405":"09a6309e006c30f2b62b","7444":"b53c12d6ba889fd7ff49","7445":"c10cd7e720704ceb9403","7539":"38b4e76ba28536bdba6f","7592":"e3d5b425e37d45250854","7612":"96d02d2e11ef603520b1","7645":"378d44d602e040a88964","7757":"0837c39e5e1f39afe561","7801":"950cd7aa79d6c69e4e89","7897":"9860dd662bb0536be021","7941":"d80c6fc0c609153c393a","7997":"a7d639ec4c5bda5d7f8a","8011":"90ad8098cdf19542df00","8017":"6e04997b09da6af7e026","8027":"2a708e2d3d1411e0eb2d","8060":"1fc21f806cfed4186222","8117":"4832ff25f85ae904340c","8282":"33641507c301c5edb98d","8354":"2659beecbc4d37fb883b","8442":"b49b7e1a46da29e6c2e0","8520":"ddece2da75e91301c443","8646":"f5e64a2d8c9b9aa3383c","8685":"668e75089eaab7ca5d74","8838":"e07fcd923fd22da63109","8849":"5b67041f14d74979e9c3","8970":"3bfbdca7cac168f75b28","8979":"bedb7b18cf89bf6a7ec9","9220":"4181006d8c7543128350","9246":"79d354354c30226b2baf","9250":"993a5b081080eba72db1","9260":"fd6ba8cd2e063ff68053","9419":"924d518de94dad6581bc","9528":"f27c4acb7274d2a6872a","9564":"8bb9dffef3aaab6ecc31","9573":"7134be0fa03b7f3d2b33","9575":"19e252df34e7b2892759","9670":"d836c000a0f5cf5b3219","9762":"5e6cd074d14100ccda09","9773":"d2d2e83567d45085e0a3","9846":"12042055f05ff78c0633","9971":"63405883ad2ede8101de"}[chunkId] + ".app.js";
 /******/ 		};
 /******/ 	})();
 /******/ 	
@@ -142191,7 +142191,7 @@ function NativeBackHandler() {
             }
             if (isRootOrDashboard()) {
               setExitDialogOpen(true);
-            } else if (isFormOrEditPage() && !window.__ggUnsavedGuardActive) {
+            } else if (isFormOrEditPage() && !window.__ggUnsavedGuardActive && !window.__ggGlobalGuardActive) {
               setDiscardDialogOpen(true);
               setPendingBackAction(() => () => navigate(-1));
             } else {
@@ -142828,8 +142828,278 @@ function AppUpdateModal() {
     }
   }, phase === 'downloading' ? "Downloading ".concat(progress, "%...") : 'Update Now')));
 }
+;// ./src/js/component/GlobalUnsavedGuard.js
+function GlobalUnsavedGuard_slicedToArray(r, e) { return GlobalUnsavedGuard_arrayWithHoles(r) || GlobalUnsavedGuard_iterableToArrayLimit(r, e) || GlobalUnsavedGuard_unsupportedIterableToArray(r, e) || GlobalUnsavedGuard_nonIterableRest(); }
+function GlobalUnsavedGuard_nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function GlobalUnsavedGuard_unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return GlobalUnsavedGuard_arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? GlobalUnsavedGuard_arrayLikeToArray(r, a) : void 0; } }
+function GlobalUnsavedGuard_arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function GlobalUnsavedGuard_iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function GlobalUnsavedGuard_arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+;
+
+
+
+function isEditOrFormRoute(pathname) {
+  var p = String(pathname || '').toLowerCase();
+  return p.includes('form') || p.includes('update') || p.includes('clone') || p.includes('convertto') || p.includes('create');
+}
+function isSearchControl(target) {
+  var _target$getAttribute;
+  if (!target) return false;
+  var placeholder = String(((_target$getAttribute = target.getAttribute) === null || _target$getAttribute === void 0 ? void 0 : _target$getAttribute.call(target, 'placeholder')) || '').toLowerCase();
+  var id = String(target.id || '').toLowerCase();
+  var name = String(target.name || '').toLowerCase();
+  var type = String(target.type || '').toLowerCase();
+  return type === 'search' || placeholder.includes('search') || id.includes('search') || name.includes('search');
+}
+
+/**
+ * Universal unsaved-changes guard across all form/update/clone/convert modules
+ * that do not mount their own page-specific useUnsavedChangesGuard().
+ */
+function GlobalUnsavedGuard() {
+  var location = (0,dist/* useLocation */.zy)();
+  var _useContext = (0,react.useContext)(dist/* UNSAFE_NavigationContext */.jb),
+    navigator = _useContext.navigator;
+  var _useState = (0,react.useState)(false),
+    _useState2 = GlobalUnsavedGuard_slicedToArray(_useState, 2),
+    isDirty = _useState2[0],
+    setIsDirty = _useState2[1];
+  var _useState3 = (0,react.useState)(false),
+    _useState4 = GlobalUnsavedGuard_slicedToArray(_useState3, 2),
+    dialogOpen = _useState4[0],
+    setDialogOpen = _useState4[1];
+  var pendingNavRef = (0,react.useRef)(null);
+  var restoreNavRef = (0,react.useRef)(null);
+  var bypassRef = (0,react.useRef)(false);
+  var onFormRoute = isEditOrFormRoute(location.pathname);
+
+  // Reset dirty flag on route change
+  (0,react.useEffect)(() => {
+    setIsDirty(false);
+    setDialogOpen(false);
+    pendingNavRef.current = null;
+    bypassRef.current = false;
+  }, [location.pathname]);
+
+  // Track edits on active form routes (skip if page has its own useUnsavedChangesGuard)
+  (0,react.useEffect)(() => {
+    if (!onFormRoute) return undefined;
+    var markDirty = ev => {
+      if (typeof window !== 'undefined' && window.__ggPageGuardMounted) return;
+      if (isSearchControl(ev === null || ev === void 0 ? void 0 : ev.target)) return;
+      setIsDirty(true);
+    };
+    var handleFormSubmit = () => {
+      bypassRef.current = true;
+      setIsDirty(false);
+    };
+    document.addEventListener('input', markDirty, true);
+    document.addEventListener('change', markDirty, true);
+    document.addEventListener('submit', handleFormSubmit, true);
+    return () => {
+      document.removeEventListener('input', markDirty, true);
+      document.removeEventListener('change', markDirty, true);
+      document.removeEventListener('submit', handleFormSubmit, true);
+    };
+  }, [onFormRoute]);
+  var active = Boolean(onFormRoute && isDirty && !(typeof window !== 'undefined' && window.__ggPageGuardMounted));
+  (0,react.useEffect)(() => {
+    if (typeof window !== 'undefined') {
+      window.__ggGlobalGuardActive = active;
+    }
+    return () => {
+      if (typeof window !== 'undefined') {
+        window.__ggGlobalGuardActive = false;
+      }
+    };
+  }, [active]);
+  (0,react.useEffect)(() => {
+    if (!active) return undefined;
+    var handleBeforeUnload = e => {
+      if (bypassRef.current) return;
+      e.preventDefault();
+      e.returnValue = '';
+    };
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+  }, [active]);
+  (0,react.useEffect)(() => {
+    if (!active || !navigator) return undefined;
+    var origPush = typeof navigator.push === 'function' ? navigator.push.bind(navigator) : null;
+    var origReplace = typeof navigator.replace === 'function' ? navigator.replace.bind(navigator) : null;
+    var origGo = typeof navigator.go === 'function' ? navigator.go.bind(navigator) : null;
+    var restore = () => {
+      if (origPush) navigator.push = origPush;
+      if (origReplace) navigator.replace = origReplace;
+      if (origGo) navigator.go = origGo;
+    };
+    restoreNavRef.current = restore;
+    if (origPush) {
+      navigator.push = function () {
+        for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+          args[_key] = arguments[_key];
+        }
+        if (bypassRef.current) {
+          restore();
+          return origPush(...args);
+        }
+        pendingNavRef.current = () => origPush(...args);
+        setDialogOpen(true);
+        return undefined;
+      };
+    }
+    if (origReplace) {
+      navigator.replace = function () {
+        for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+          args[_key2] = arguments[_key2];
+        }
+        if (bypassRef.current) {
+          restore();
+          return origReplace(...args);
+        }
+        pendingNavRef.current = () => origReplace(...args);
+        setDialogOpen(true);
+        return undefined;
+      };
+    }
+    if (origGo) {
+      navigator.go = function () {
+        for (var _len3 = arguments.length, args = new Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
+          args[_key3] = arguments[_key3];
+        }
+        if (bypassRef.current) {
+          restore();
+          return origGo(...args);
+        }
+        pendingNavRef.current = () => origGo(...args);
+        setDialogOpen(true);
+        return undefined;
+      };
+    }
+    return () => {
+      restore();
+      restoreNavRef.current = null;
+    };
+  }, [active, navigator]);
+  var handleCancel = (0,react.useCallback)(() => {
+    pendingNavRef.current = null;
+    setDialogOpen(false);
+  }, []);
+  var handleDiscard = (0,react.useCallback)(() => {
+    var retry = pendingNavRef.current;
+    pendingNavRef.current = null;
+    bypassRef.current = true;
+    setIsDirty(false);
+    setDialogOpen(false);
+    if (restoreNavRef.current) {
+      restoreNavRef.current();
+      restoreNavRef.current = null;
+    }
+    if (typeof retry === 'function') {
+      retry();
+    }
+  }, []);
+  var handleSave = (0,react.useCallback)(() => {
+    pendingNavRef.current = null;
+    setDialogOpen(false);
+    var form = document.querySelector('form');
+    if (form) {
+      if (typeof form.requestSubmit === 'function') {
+        form.requestSubmit();
+      } else {
+        var submitBtn = form.querySelector('button[type="submit"], input[type="submit"]');
+        if (submitBtn) submitBtn.click();
+      }
+      return;
+    }
+    var mobileSaveBtn = Array.from(document.querySelectorAll('button')).find(b => /^(save|update|submit)\b/i.test(String(b.textContent || '').trim()));
+    if (mobileSaveBtn) {
+      mobileSaveBtn.click();
+    }
+  }, []);
+  if (!active && !dialogOpen) return null;
+  return /*#__PURE__*/react.createElement(Dialog/* default */.A, {
+    open: dialogOpen,
+    onClose: handleCancel,
+    maxWidth: "xs",
+    fullWidth: true,
+    PaperProps: {
+      sx: {
+        borderRadius: 2.5,
+        p: 0.5
+      }
+    }
+  }, /*#__PURE__*/react.createElement(DialogTitle/* default */.A, {
+    sx: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: 1.5,
+      pb: 1
+    }
+  }, /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      p: 0.9,
+      borderRadius: 2,
+      bgcolor: '#FFFBEB',
+      color: '#D97706',
+      display: 'flex'
+    }
+  }, /*#__PURE__*/react.createElement(WarningAmber/* default */.A, null)), /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    variant: "h6",
+    sx: {
+      fontWeight: 700,
+      fontSize: '1.05rem',
+      color: '#1E293B'
+    }
+  }, "Unsaved Changes")), /*#__PURE__*/react.createElement(DialogContent/* default */.A, {
+    sx: {
+      pb: 1.5
+    }
+  }, /*#__PURE__*/react.createElement(DialogContentText/* default */.A, {
+    sx: {
+      color: '#475569',
+      fontSize: '0.9rem'
+    }
+  }, "You have unsaved changes on this page. Would you like to save before leaving?")), /*#__PURE__*/react.createElement(DialogActions/* default */.A, {
+    sx: {
+      px: 2.5,
+      pb: 2,
+      gap: 1,
+      flexWrap: 'wrap'
+    }
+  }, /*#__PURE__*/react.createElement(Button/* default */.A, {
+    onClick: handleCancel,
+    variant: "outlined",
+    color: "inherit",
+    sx: {
+      textTransform: 'none',
+      fontWeight: 600
+    }
+  }, "Cancel"), /*#__PURE__*/react.createElement(Button/* default */.A, {
+    onClick: handleDiscard,
+    variant: "outlined",
+    color: "error",
+    sx: {
+      textTransform: 'none',
+      fontWeight: 600
+    }
+  }, "Discard & Leave"), /*#__PURE__*/react.createElement(Button/* default */.A, {
+    onClick: handleSave,
+    variant: "contained",
+    sx: {
+      bgcolor: '#202a5a',
+      '&:hover': {
+        bgcolor: '#161e42'
+      },
+      textTransform: 'none',
+      fontWeight: 700
+    }
+  }, "Save Changes")));
+}
 ;// ./src/js/App.js
 /* unused harmony import specifier */ var App_React;
+
 
 
 
@@ -142900,7 +143170,7 @@ function AppLayoutWrapper(_ref) {
       }
     }
   }, [isMobile]);
-  return /*#__PURE__*/react.createElement(react.Fragment, null, /*#__PURE__*/react.createElement(component_NativeBackHandler, null), /*#__PURE__*/react.createElement(AppUpdateModal, null), isMobile ? /*#__PURE__*/react.createElement(component_MobileLayout, null, children) : children);
+  return /*#__PURE__*/react.createElement(react.Fragment, null, /*#__PURE__*/react.createElement(component_NativeBackHandler, null), /*#__PURE__*/react.createElement(GlobalUnsavedGuard, null), /*#__PURE__*/react.createElement(AppUpdateModal, null), isMobile ? /*#__PURE__*/react.createElement(component_MobileLayout, null, children) : children);
 }
 
 // --- CORE ADMIN VIEWS ---

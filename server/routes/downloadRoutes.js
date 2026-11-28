@@ -3,10 +3,10 @@ const router = express.Router();
 const path = require('path');
 const fs = require('fs');
 
-const APP_VERSION = '3.7.25';
+const APP_VERSION = '3.7.26';
 const MIN_SUPPORTED_VERSION = '3.7.0';
 const RELEASE_NOTES = [
-  'Unsaved Changes Guard (Invoice & Quotation Edit): Prompts Save Changes / Discard & Leave / Cancel when pressing Go Back or switching modules with unsaved edits.',
+  'Universal Unsaved Changes Guard (All Modules): Fixed HashRouter sidebar navigation interception so clicking any module or Go Back while editing prompts Save Changes / Discard & Leave / Cancel across all form/update screens.',
   'Mobile App Auto-Update Prompt: Fixed Android APK version detection on foreground resume, network recovery, and cold-start retry.',
   'Signed & Stamped Invoice Print: Added Print confirmation popup (Signed & Stamped checkbox) below TOTAL IN WORDS, gated by Grant Access.'
 ];

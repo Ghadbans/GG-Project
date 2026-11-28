@@ -15,20 +15,23 @@ import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 /**
  * Intercepts React Router navigation (sidebar links, Back buttons, tabs) and
  * browser/Electron tab closes when a form has unsaved edits, offering Save / Discard / Cancel.
+ * Compatible with react-router-dom v6.15+ HashRouter (@remix-run/router) where navigator.block is absent.
  */
 export function useUnsavedChangesGuard({ isDirty, onSave, entityLabel = 'changes' }) {
   const { navigator } = useContext(NavigationContext);
   const [dialogOpen, setDialogOpen] = useState(false);
-  const pendingTxRef = useRef(null);
-  const unblockRef = useRef(null);
+  const pendingNavRef = useRef(null);
+  const restoreNavRef = useRef(null);
   const bypassRef = useRef(false);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
+      window.__ggPageGuardMounted = true;
       window.__ggUnsavedGuardActive = Boolean(isDirty);
     }
     return () => {
       if (typeof window !== 'undefined') {
+        window.__ggPageGuardMounted = false;
         window.__ggUnsavedGuardActive = false;
       }
     };
@@ -36,6 +39,7 @@ export function useUnsavedChangesGuard({ isDirty, onSave, entityLabel = 'changes
 
   useEffect(() => {
     if (!isDirty) return undefined;
+    bypassRef.current = false;
     const handleBeforeUnload = (e) => {
       if (bypassRef.current) return;
       e.preventDefault();
@@ -46,22 +50,61 @@ export function useUnsavedChangesGuard({ isDirty, onSave, entityLabel = 'changes
   }, [isDirty]);
 
   useEffect(() => {
-    if (!isDirty || !navigator || typeof navigator.block !== 'function') {
+    if (!isDirty || !navigator) {
       return undefined;
     }
-    const unblock = navigator.block((tx) => {
-      if (bypassRef.current) {
-        unblock();
-        tx.retry();
-        return;
-      }
-      pendingTxRef.current = tx;
-      setDialogOpen(true);
-    });
-    unblockRef.current = unblock;
+
+    bypassRef.current = false;
+    const origPush = typeof navigator.push === 'function' ? navigator.push.bind(navigator) : null;
+    const origReplace = typeof navigator.replace === 'function' ? navigator.replace.bind(navigator) : null;
+    const origGo = typeof navigator.go === 'function' ? navigator.go.bind(navigator) : null;
+
+    const restore = () => {
+      if (origPush) navigator.push = origPush;
+      if (origReplace) navigator.replace = origReplace;
+      if (origGo) navigator.go = origGo;
+    };
+    restoreNavRef.current = restore;
+
+    if (origPush) {
+      navigator.push = (...args) => {
+        if (bypassRef.current) {
+          restore();
+          return origPush(...args);
+        }
+        pendingNavRef.current = () => origPush(...args);
+        setDialogOpen(true);
+        return undefined;
+      };
+    }
+
+    if (origReplace) {
+      navigator.replace = (...args) => {
+        if (bypassRef.current) {
+          restore();
+          return origReplace(...args);
+        }
+        pendingNavRef.current = () => origReplace(...args);
+        setDialogOpen(true);
+        return undefined;
+      };
+    }
+
+    if (origGo) {
+      navigator.go = (...args) => {
+        if (bypassRef.current) {
+          restore();
+          return origGo(...args);
+        }
+        pendingNavRef.current = () => origGo(...args);
+        setDialogOpen(true);
+        return undefined;
+      };
+    }
+
     return () => {
-      unblock();
-      unblockRef.current = null;
+      restore();
+      restoreNavRef.current = null;
     };
   }, [isDirty, navigator]);
 
@@ -70,29 +113,29 @@ export function useUnsavedChangesGuard({ isDirty, onSave, entityLabel = 'changes
     if (typeof window !== 'undefined') {
       window.__ggUnsavedGuardActive = false;
     }
-    if (unblockRef.current) {
-      unblockRef.current();
-      unblockRef.current = null;
+    if (restoreNavRef.current) {
+      restoreNavRef.current();
+      restoreNavRef.current = null;
     }
   }, []);
 
   const handleCancel = useCallback(() => {
-    pendingTxRef.current = null;
+    pendingNavRef.current = null;
     setDialogOpen(false);
   }, []);
 
   const handleDiscard = useCallback(() => {
-    const tx = pendingTxRef.current;
-    pendingTxRef.current = null;
+    const retry = pendingNavRef.current;
+    pendingNavRef.current = null;
     setDialogOpen(false);
     bypassGuard();
-    if (tx) {
-      tx.retry();
+    if (typeof retry === 'function') {
+      retry();
     }
   }, [bypassGuard]);
 
   const handleSave = useCallback(() => {
-    pendingTxRef.current = null;
+    pendingNavRef.current = null;
     setDialogOpen(false);
     if (typeof onSave === 'function') {
       onSave();

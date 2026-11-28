@@ -65,7 +65,7 @@ function NativeBackHandler() {
 
           if (isRootOrDashboard()) {
             setExitDialogOpen(true);
-          } else if (isFormOrEditPage() && !window.__ggUnsavedGuardActive) {
+          } else if (isFormOrEditPage() && !window.__ggUnsavedGuardActive && !window.__ggGlobalGuardActive) {
             setDiscardDialogOpen(true);
             setPendingBackAction(() => () => navigate(-1));
           } else {

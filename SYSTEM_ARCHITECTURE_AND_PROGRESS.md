@@ -6492,3 +6492,16 @@ Implemented a zero-manual-intervention in-app update pipeline across Electron Wi
    - Added Capacitor `App.getInfo()` native version lookup, `appStateChange` foreground-resume listener, `online` listener, 5s cold-start retry, 15m periodic check, and cache-busted `GET /download/version?t=...` (bypassing branch query injection in `src/js/index.js`).
 4. **Version Synchronization & Multi-Platform Release (`v3.7.25`)**:
    - Synchronized `3.7.25` (`versionCode 30725`) across `package.json`, `server/package.json`, `server/index.js`, `server/routes/downloadRoutes.js`, and `android/app/build.gradle`.
+
+
+### Rule 121: Universal HashRouter Unsaved-Changes Guard Across All Modules (`useUnsavedChangesGuard`, `GlobalUnsavedGuard` — Ver 3.7.26)
+
+#### Changes Implemented
+1. **Fixed `HashRouter` Navigation Interception (`src/js/hooks/useUnsavedChangesGuard.js`)**:
+   - In `react-router-dom@6.15.0`, `<HashRouter>` uses `@remix-run/router`'s `createHashHistory()`, which provides `push`, `replace`, and `go` but does not implement `navigator.block()`.
+   - Updated `useUnsavedChangesGuard` to wrap `navigator.push`, `navigator.replace`, and `navigator.go` while `isDirty === true`, intercepting all sidebar `<NavLink>` clicks, `<ArrowBack />` clicks, and `navigate()` calls with **Save Changes / Discard & Leave / Cancel**.
+2. **Global Unsaved-Changes Guard for All Modules (`src/js/component/GlobalUnsavedGuard.js`, `src/js/App.js`, `NativeBackHandler.js`)**:
+   - Added `GlobalUnsavedGuard` inside `AppLayoutWrapper` to automatically protect all Create/Form/Update/Clone/Convert routes (`form|update|clone|convertto|create`) that do not mount a page-specific `useUnsavedChangesGuard`.
+   - Tracks non-search `input`/`change` edits, resets on route change or `<form>` submit, and intercepts sidebar/tab/back navigation with **Save Changes / Discard & Leave / Cancel**.
+3. **Version Synchronization & Multi-Platform Release (`v3.7.26`)**:
+   - Synchronized `3.7.26` (`versionCode 30726`) across `package.json`, `server/package.json`, `server/index.js`, `server/routes/downloadRoutes.js`, and `android/app/build.gradle`.
